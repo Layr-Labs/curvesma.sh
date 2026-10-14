@@ -1,0 +1,10 @@
+__pycache__/
+.venv/
+*.key
+.DS_Store
+*.pyc
+.env
+.env.*
+!.env.example
+.yukon/scores/
+.yukon/reports/
