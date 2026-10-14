@@ -1,0 +1,24 @@
+name: bls12-381-invert-g1
+on:
+  workflow_dispatch:
+    inputs:
+      review_run_id:
+        description: 'Optional completed review run to reuse; exact evidence/signatures must match'
+        required: false
+        default: ''
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: curvesmash-bls12-381-invert-g1-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  qualify:
+    uses: ./.github/workflows/qualification.yml
+    with:
+      track: bls12-381-invert-g1
+      review_run_id: ${{ inputs.review_run_id }}
+    secrets:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      CURVESMASH_REVIEW_SIGNING_KEYS: ${{ secrets.CURVESMASH_REVIEW_SIGNING_KEYS }}
