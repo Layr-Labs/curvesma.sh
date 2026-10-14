@@ -16,6 +16,8 @@ Open `http://127.0.0.1:4173`. No build tools, package installation, API keys or 
 
 ## Evidence and updates
 
+Like HashSmash, the page has a **Meet the Judges** button revealing names and affiliations. `dist/judges.json` contains only appointed human judges, as objects with `name` and `affiliation`. It is empty until appointments are confirmed; the button and banner stay hidden for an empty or unavailable roster. Add confirmed names and publish the website normally. This display does not grant Yukon reviewer permissions or change the review policy.
+
 The displayed scores and result details come from the [v0.2.0 qualification record](../docs/BASELINE_QUALIFICATION.md). Links point to the exact baseline source commit, signed review runs and durable evidence release. Publish new results only from authenticated qualification records; do not label an AI-reviewed baseline as human accepted or Yukon promoted.
 
 Website files are outside participant editable paths and the evaluator's evidence binding. Styling and website-only updates do not require new mathematical reviews. This page has no tracking, account flow, third-party fonts or browser-side provider access. The participation, privacy and review links point to the public repository policies.
