@@ -1,8 +1,6 @@
 """Organizer checks of analytic package data; never executes candidate content."""
 from bisect import bisect_left
 from decimal import Decimal, localcontext
-from fractions import Fraction
-import re
 import json
 from pathlib import Path
 import unittest
@@ -56,18 +54,11 @@ class BaselinePackages(unittest.TestCase):
         for target in profiles["targets"]:
             name = target["id"]
             with self.subTest(name=name):
-                directory = ROOT / "tracks" / name / "submission"
-                manifest = json.loads((directory / "submission.json").read_text())
-                declared = manifest['claims'][0]
-                value = declared['score']
-                score = Fraction(int(value['numerator']), int(value['denominator']))
-                statement = declared['statement']
-                claim = {'claim': {'time_log2': str(Decimal(score.numerator)/score.denominator),
-                    'memory_log2_bytes': re.search(r'Peak memory is at most 2\^([0-9.]+) bytes', statement)[1],
-                    'preprocessing_log2': re.search(r'preprocessing is at most 2\^([0-9.]+) target', statement)[1]}}
+                directory = ROOT / "submissions" / name
+                claim = json.loads((directory / "claim.json").read_text())
 
                 ledger = json.loads((ROOT / "tests/fixtures/baseline-accounting-v1.json").read_text())[name]
-                cost = json.loads((ROOT / "tracks" / name / "rules.md").read_text().split("```json\n")[1].split("```", 1)[0])["accounting"]
+                cost = json.loads((ROOT / "tracks" / name / "classical-group-work-v2.json").read_text())
                 C = cost["reference_operation_costs"][name]
                 work, parameters = ledger["work"], ledger["parameters"]
                 total = int(work["total"])

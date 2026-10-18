@@ -2,19 +2,19 @@
 
 Exploratory cryptanalysis of full-production secp256k1 discrete logarithms and
 BLS12-381 fixed-G2 pairing inversion. Each track contains protected `rules.md`
-and `verifier.json`, plus an editable `submission/` with the baseline argument.
+and `verifier.json`, with target and cost definitions in JSON files.
+Original baseline candidates are kept separately in the add-only `submissions/`.
 The sole metric is log2(total computation in target-group-operation equivalents),
 lower is better; success must be at least 39%. Memory is reported separately.
 
-With the pinned `llm-verifier` package installed:
+Run the scientific checks:
 
 ```sh
-llm-verifier check --root tracks/secp256k1-ecdlp
-llm-verifier check --root tracks/bls12-381-invert-g1
 python3 -m unittest discover -s tests
 ```
 
-Edit only the selected track's `submission/`. Declare the exact score in the first
+For an evaluation, supply the selected track's `submission/` directory; no candidate
+is bundled in the track. Declare the exact score in the first
 claim of `submission.json` and reference its supporting argument. One Astra
 reviewer applies exploratory acceptance; acceptance is not proof or a practical break.
 The existing baseline arguments are accounting controls, not best-known attacks.
