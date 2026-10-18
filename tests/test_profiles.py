@@ -4,7 +4,8 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-PROFILES = json.loads((ROOT / "target-profiles/production-v2.json").read_text())
+PROFILES = {"targets": [json.loads((ROOT / "tracks" / name / "rules.md").read_text().split("```json\n")[1].split("```", 1)[0])["target"]
+    for name in ("secp256k1-ecdlp", "bls12-381-invert-g1")]}
 VECTORS = json.loads((ROOT / "tests/fixtures/production-v1-vectors.json").read_text())
 
 
@@ -105,8 +106,8 @@ class ProfileArithmetic(unittest.TestCase):
         self.assertEqual(identity, gt_multiply(generator, negative, p))
 
     def test_profile_cost_version_and_reference_lock(self):
-        cost = json.loads((ROOT / "cost-models/classical-group-work-v2.json").read_text())
-        self.assertEqual(PROFILES["cost_model"], cost["id"])
+        cost = json.loads((ROOT / "tracks/secp256k1-ecdlp/rules.md").read_text().split("```json\n")[1].split("```", 1)[0])["accounting"]
+        self.assertEqual(cost["id"], "classical-group-work-v2")
         self.assertEqual(cost["success_probability_minimum"], 0.39)
         self.assertEqual(cost["word_bits"], 256)
         self.assertEqual(set(cost["primitive_operations"].values()), {1})

@@ -2,23 +2,23 @@ name: bls12-381-invert-g1
 on:
   workflow_dispatch:
     inputs:
-      review_run_id:
-        description: 'Optional completed review run to reuse; exact evidence/signatures must match'
+      yukon_evaluation:
+        type: string
         required: false
         default: ''
-        type: string
 permissions:
   contents: read
-  actions: read
-concurrency:
-  group: curvesmash-bls12-381-invert-g1-${{ github.ref }}
-  cancel-in-progress: false
 jobs:
-  qualify:
-    uses: ./.github/workflows/qualification.yml
+  verify:
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@PUBLISH_EXPLORATORY_VERIFIER_COMMIT
     with:
-      track: bls12-381-invert-g1
-      review_run_id: ${{ inputs.review_run_id }}
+      verifier_repository: Layr-Labs/llm-verifier
+      verifier_revision: PUBLISH_EXPLORATORY_VERIFIER_COMMIT
+      root_dir: 'tracks/bls12-381-invert-g1'
+      config_path: verifier.json
+      submission_path: submission
+      score_path: .yukon/bls12-381-invert-g1/score.json
+      yukon_evaluation: ${{ inputs.yukon_evaluation }}
     secrets:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      CURVESMASH_REVIEW_SIGNING_KEYS: ${{ secrets.CURVESMASH_REVIEW_SIGNING_KEYS }}
+      OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}
+      VERIFIER_CHECKOUT_TOKEN: ${{ secrets.VERIFIER_CHECKOUT_TOKEN }}
