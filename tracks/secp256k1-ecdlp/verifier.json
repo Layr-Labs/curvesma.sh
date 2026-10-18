@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "secp256k1-ecdlp",
-  "rules_path": "rules.md",
+  "rules_path": "tracks/secp256k1-ecdlp/rules.md",
   "review_standard": "exploratory-single-review-v1",
   "acceptance_policy": "exploratory-v1",
   "objectives": [
@@ -58,5 +58,13 @@
     "max_initial_runs": 1,
     "total_provider_requests": 2,
     "total_review_seconds": 360
+  },
+  "rules_files": [
+    "tracks/secp256k1-ecdlp/target-profile.json",
+    "tracks/secp256k1-ecdlp/classical-group-work-v2.json"
+  ],
+  "submission_selector": {
+    "path": "tracks/secp256k1-ecdlp/selected-submission.txt",
+    "directory": "submissions/secp256k1-ecdlp"
   }
 }

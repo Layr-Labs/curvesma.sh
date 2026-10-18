@@ -24,13 +24,16 @@
         }
       },
       "editablePaths": [
-        "tracks/secp256k1-ecdlp/submission"
+        "submissions/secp256k1-ecdlp",
+        "tracks/secp256k1-ecdlp/selected-submission.txt"
       ],
       "setupCommand": [
         "llm-verifier",
         "intake",
         "--root",
-        "tracks/secp256k1-ecdlp",
+        ".",
+        "--config",
+        "tracks/secp256k1-ecdlp/verifier.json",
         "--out",
         ".yukon/secp256k1-ecdlp/intake.json"
       ],
@@ -79,13 +82,16 @@
         }
       },
       "editablePaths": [
-        "tracks/bls12-381-invert-g1/submission"
+        "submissions/bls12-381-invert-g1",
+        "tracks/bls12-381-invert-g1/selected-submission.txt"
       ],
       "setupCommand": [
         "llm-verifier",
         "intake",
         "--root",
-        "tracks/bls12-381-invert-g1",
+        ".",
+        "--config",
+        "tracks/bls12-381-invert-g1/verifier.json",
         "--out",
         ".yukon/bls12-381-invert-g1/intake.json"
       ],

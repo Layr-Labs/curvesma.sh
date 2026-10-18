@@ -10,12 +10,12 @@ permissions:
   contents: read
 jobs:
   verify:
-    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@PUBLISH_EXPLORATORY_VERIFIER_COMMIT
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@64b3a2b01f21f1281383c673503964d2fc4c5c47
     with:
       verifier_repository: Layr-Labs/llm-verifier
-      verifier_revision: PUBLISH_EXPLORATORY_VERIFIER_COMMIT
-      root_dir: 'tracks/secp256k1-ecdlp'
-      config_path: verifier.json
+      verifier_revision: 64b3a2b01f21f1281383c673503964d2fc4c5c47
+      root_dir: '.'
+      config_path: tracks/secp256k1-ecdlp/verifier.json
       submission_path: submission
       score_path: .yukon/secp256k1-ecdlp/score.json
       yukon_evaluation: ${{ inputs.yukon_evaluation }}

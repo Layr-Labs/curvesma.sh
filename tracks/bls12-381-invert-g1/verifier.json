@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "bls12-381-invert-g1",
-  "rules_path": "rules.md",
+  "rules_path": "tracks/bls12-381-invert-g1/rules.md",
   "review_standard": "exploratory-single-review-v1",
   "acceptance_policy": "exploratory-v1",
   "objectives": [
@@ -58,5 +58,13 @@
     "max_initial_runs": 1,
     "total_provider_requests": 2,
     "total_review_seconds": 360
+  },
+  "rules_files": [
+    "tracks/bls12-381-invert-g1/target-profile.json",
+    "tracks/bls12-381-invert-g1/classical-group-work-v2.json"
+  ],
+  "submission_selector": {
+    "path": "tracks/bls12-381-invert-g1/selected-submission.txt",
+    "directory": "submissions/bls12-381-invert-g1"
   }
 }

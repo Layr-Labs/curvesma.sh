@@ -13,9 +13,11 @@ Run the scientific checks:
 python3 -m unittest discover -s tests
 ```
 
-For an evaluation, supply the selected track's `submission/` directory; no candidate
-is bundled in the track. Declare the exact score in the first
-claim of `submission.json` and reference its supporting argument. One Astra
+Add each new candidate in its own folder under `submissions/<track>/`, with a
+`submission.json`, argument and any supporting code/data. Existing files are
+add-only. Set `tracks/<track>/selected-submission.txt` to the new folder's
+repo-relative path; Yukon evaluates that folder. The first claim declares the score.
+One Astra
 reviewer applies exploratory acceptance; acceptance is not proof or a practical break.
 The existing baseline arguments are accounting controls, not best-known attacks.
 They have not been qualified under this new review configuration.
@@ -24,3 +26,15 @@ Yukon owns submission handling, promotion and UI. Actions calls the shared verif
 workflow using `OPEN_AI_EIGEN_KEY` and, for private checkout, `VERIFIER_CHECKOUT_TOKEN`.
 The manifest commands describe separate phases; local `yukon run` does not orchestrate
 the intervening review. Use the verifier's phase commands or the hosted workflow.
+
+Run a candidate's declared Python experiments with Docker and the local
+`llm-verifier` package installed (no API key needed):
+
+```sh
+bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp
+```
+
+Use `bls12-381-invert-g1` for the other track. Results are written to
+`.yukon/<track>/supporting-code/initial.json`. Experiments declare their Python
+entrypoint and permitted inputs in `submission.json`; they run inside the shared
+verifier's isolated container, using Python's standard library.
