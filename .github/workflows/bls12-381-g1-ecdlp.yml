@@ -1,0 +1,24 @@
+name: bls12-381-g1-ecdlp
+on:
+  workflow_dispatch:
+    inputs:
+      yukon_evaluation:
+        type: string
+        required: false
+        default: ''
+permissions:
+  contents: read
+jobs:
+  verify:
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@64b3a2b01f21f1281383c673503964d2fc4c5c47
+    with:
+      verifier_repository: Layr-Labs/llm-verifier
+      verifier_revision: 64b3a2b01f21f1281383c673503964d2fc4c5c47
+      root_dir: '.'
+      config_path: tracks/bls12-381-g1-ecdlp/verifier.json
+      submission_path: submission
+      score_path: .yukon/bls12-381-g1-ecdlp/score.json
+      yukon_evaluation: ${{ inputs.yukon_evaluation }}
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}
+      VERIFIER_CHECKOUT_TOKEN: ${{ secrets.VERIFIER_CHECKOUT_TOKEN }}
