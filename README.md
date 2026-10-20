@@ -2,10 +2,9 @@
 
 Exploratory cryptanalysis of full-production secp256k1 discrete logarithms and
 BLS12-381 fixed-G2 pairing inversion. Each track contains protected `rules.md`
-and `verifier.json`, with target definitions in JSON and the shared RAM framework
-in `tracks/docs/COST_MODEL.md`.
+and `verifier.json`, with target and cost definitions in JSON files.
 Original baseline candidates are kept separately in the add-only `submissions/`.
-The sole metric is log2(RAM execution work + algorithm-description length),
+The sole metric is log2(total computation in target-group-operation equivalents),
 lower is better; success must be at least 39%. Memory is reported separately.
 
 Run the scientific checks:
