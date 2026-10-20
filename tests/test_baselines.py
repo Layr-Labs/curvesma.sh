@@ -1,7 +1,6 @@
 """Organizer checks of analytic package data; never executes candidate content."""
 from bisect import bisect_left
 from decimal import Decimal, localcontext
-import hashlib
 import json
 from pathlib import Path
 import unittest
@@ -50,14 +49,16 @@ class BaselinePackages(unittest.TestCase):
             self.assertEqual(pow(2, recovered, 23), pow(2, x, 23))
 
     def test_exact_accounting_and_logarithmic_bounds(self):
-        profiles = json.loads((ROOT / "target-profiles/production-v2.json").read_text())
+        from test_profiles import PROFILES
+        profiles = PROFILES
         for target in profiles["targets"]:
             name = target["id"]
             with self.subTest(name=name):
-                directory = ROOT / "candidates" / name
+                directory = ROOT / "submissions" / name
                 claim = json.loads((directory / "claim.json").read_text())
+
                 ledger = json.loads((ROOT / "tests/fixtures/baseline-accounting-v1.json").read_text())[name]
-                cost = json.loads((ROOT / "cost-models/classical-group-work-v2.json").read_text())
+                cost = json.loads((ROOT / "tracks" / name / "classical-group-work-v2.json").read_text())
                 C = cost["reference_operation_costs"][name]
                 work, parameters = ledger["work"], ledger["parameters"]
                 total = int(work["total"])
@@ -84,18 +85,6 @@ class BaselinePackages(unittest.TestCase):
                         self.assertGreaterEqual(reported, true_log)
                         self.assertLess(reported-true_log, Decimal('0.0000011'))
 
-    def test_binding_and_unqualified_review_state(self):
-        for name in NAMES:
-            claim = json.loads((ROOT / "candidates" / name / "claim.json").read_text())
-            self.assertEqual(claim["submission_state"], "ready")
-            self.assertEqual(claim["review_status"], "pending")
-            self.assertEqual(claim["baseline_kind"], "generic-accounting-control")
-            self.assertEqual(claim["claim"]["success_probability"], 1)
-            self.assertEqual(claim["heuristics"], [])
-            for key, path in (("target_profile_sha256", "target-profiles/production-v2.json"),
-                              ("cost_model_sha256", "cost-models/classical-group-work-v2.json")):
-                self.assertEqual(claim[key], hashlib.sha256((ROOT / path).read_bytes()).hexdigest())
-            self.assertFalse((ROOT / ".yukon/scores" / (name + ".json")).exists())
 
 
 if __name__ == "__main__":

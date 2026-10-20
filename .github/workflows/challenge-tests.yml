@@ -1,0 +1,13 @@
+name: Challenge tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check curve parameters and baseline accounting
+        run: python3 -m unittest discover -s tests -v

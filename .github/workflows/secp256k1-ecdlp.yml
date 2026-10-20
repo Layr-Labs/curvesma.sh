@@ -2,23 +2,23 @@ name: secp256k1-ecdlp
 on:
   workflow_dispatch:
     inputs:
-      review_run_id:
-        description: 'Optional completed review run to reuse; exact evidence/signatures must match'
+      yukon_evaluation:
+        type: string
         required: false
         default: ''
-        type: string
 permissions:
   contents: read
-  actions: read
-concurrency:
-  group: curvesmash-secp256k1-ecdlp-${{ github.ref }}
-  cancel-in-progress: false
 jobs:
-  qualify:
-    uses: ./.github/workflows/qualification.yml
+  verify:
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@64b3a2b01f21f1281383c673503964d2fc4c5c47
     with:
-      track: secp256k1-ecdlp
-      review_run_id: ${{ inputs.review_run_id }}
+      verifier_repository: Layr-Labs/llm-verifier
+      verifier_revision: 64b3a2b01f21f1281383c673503964d2fc4c5c47
+      root_dir: '.'
+      config_path: tracks/secp256k1-ecdlp/verifier.json
+      submission_path: submission
+      score_path: .yukon/secp256k1-ecdlp/score.json
+      yukon_evaluation: ${{ inputs.yukon_evaluation }}
     secrets:
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      CURVESMASH_REVIEW_SIGNING_KEYS: ${{ secrets.CURVESMASH_REVIEW_SIGNING_KEYS }}
+      OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}
+      VERIFIER_CHECKOUT_TOKEN: ${{ secrets.VERIFIER_CHECKOUT_TOKEN }}
