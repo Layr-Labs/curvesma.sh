@@ -17,7 +17,7 @@
       ],
       "paretoPolicies": {
         "scoring": {
-          "version": "bernstein-lange-ram"
+          "version": "classical-group-work-v2"
         },
         "validity": {
           "version": "exploratory-single-review-v1"
@@ -75,7 +75,7 @@
       ],
       "paretoPolicies": {
         "scoring": {
-          "version": "bernstein-lange-ram"
+          "version": "classical-group-work-v2"
         },
         "validity": {
           "version": "exploratory-single-review-v1"
