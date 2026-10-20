@@ -62,7 +62,7 @@
     },
     {
       "name": "bls12-381-invert-g1",
-      "description": "Recover P in BLS12-381 G1 from e(P,Q0) = z, with fixed G2 generator Q0.",
+      "description": "Find any P in G1 and Q in G2 with e(P,Q)=z, with n auxiliary G1 powers; scored at n=2^20.",
       "category": "cryptanalysis",
       "mode": "pareto",
       "promotionMode": "manual",
@@ -114,6 +114,122 @@
       "runner": {
         "provider": "github-actions",
         "workflow": "bls12-381-invert-g1.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
+    },
+    {
+      "name": "bls12-381-g1-ecdlp",
+      "description": "Recover s from T=[s]P0 and A_i=[s^i]P0 on BLS12-381 G1; scored at n=2^20.",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/bls12-381-g1-ecdlp",
+        "tracks/bls12-381-g1-ecdlp/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/bls12-381-g1-ecdlp/verifier.json",
+        "--out",
+        ".yukon/bls12-381-g1-ecdlp/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/bls12-381-g1-ecdlp/intake.json",
+        "--initial",
+        ".yukon/bls12-381-g1-ecdlp/initial.json",
+        "--initial-review",
+        ".yukon/bls12-381-g1-ecdlp/review.json",
+        "--score",
+        ".yukon/bls12-381-g1-ecdlp/score.json",
+        "--dossier",
+        ".yukon/bls12-381-g1-ecdlp/dossier.json"
+      ],
+      "scorePath": ".yukon/bls12-381-g1-ecdlp/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "bls12-381-g1-ecdlp.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
+    },
+    {
+      "name": "bls12-381-miller-inversion",
+      "description": "Invert the pinned raw BLS12-381 Miller map M(P)=y with fixed Q0 and n auxiliary G1 powers; scored at n=2^20.",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/bls12-381-miller-inversion",
+        "tracks/bls12-381-miller-inversion/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/bls12-381-miller-inversion/verifier.json",
+        "--out",
+        ".yukon/bls12-381-miller-inversion/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/bls12-381-miller-inversion/intake.json",
+        "--initial",
+        ".yukon/bls12-381-miller-inversion/initial.json",
+        "--initial-review",
+        ".yukon/bls12-381-miller-inversion/review.json",
+        "--score",
+        ".yukon/bls12-381-miller-inversion/score.json",
+        "--dossier",
+        ".yukon/bls12-381-miller-inversion/dossier.json"
+      ],
+      "scorePath": ".yukon/bls12-381-miller-inversion/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "bls12-381-miller-inversion.yml",
         "scoreArtifactName": "benchmark-score",
         "maxConcurrentWorkflows": 2
       }

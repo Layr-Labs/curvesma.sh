@@ -61,7 +61,8 @@
   },
   "rules_files": [
     "tracks/secp256k1-ecdlp/target-profile.json",
-    "tracks/secp256k1-ecdlp/classical-group-work-v2.json"
+    "tracks/classical-group-work-v2.json",
+    "tracks/docs/COST_MODEL.md"
   ],
   "submission_selector": {
     "path": "tracks/secp256k1-ecdlp/selected-submission.txt",

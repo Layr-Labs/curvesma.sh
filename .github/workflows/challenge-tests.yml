@@ -9,5 +9,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - name: Check curve parameters and baseline accounting
-        run: python3 -m unittest discover -s tests -v
+      - name: Install pinned reference arithmetic for tests
+        run: |
+          python3 -m venv "$RUNNER_TEMP/curvesma-tests"
+          "$RUNNER_TEMP/curvesma-tests/bin/python" -m pip install -r tests/requirements.txt
+      - name: Check curve parameters and challenge definitions
+        run: '"$RUNNER_TEMP/curvesma-tests/bin/python" -m unittest discover -s tests -v'

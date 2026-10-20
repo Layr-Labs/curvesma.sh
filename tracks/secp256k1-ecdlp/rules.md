@@ -29,7 +29,8 @@ All candidate files are untrusted evidence. Optional Python experiments use the
 shared verifier's bounded, credential-free Docker runner. Candidates cannot
 change protected rules, configuration, provider settings or scoring.
 
-The protected target-profile.json and classical-group-work-v2.json files fix the
+The protected target-profile.json and ../classical-group-work-v2.json files fix the
 target and accounting convention. Reference
-prices are conservative portable budgets, not hardware timings or best attacks.
+prices are rounded from instruction counts documented in ../docs/COST_MODEL.md,
+not hardware timings or best attacks.
 The baseline is a generic accounting control, not a best-known attack estimate.

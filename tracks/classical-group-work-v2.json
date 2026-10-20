@@ -6,24 +6,16 @@
   "score_metric": "timeLog2",
   "direction": "-",
   "time_unit": "target-group-operations",
-  "word_bits": 256,
+  "word_bits": 64,
   "success_probability_minimum": 0.39,
   "score": "Submitted time_log2 = log2(total computation in target-group-operation equivalents), lower is better. All attack work must be justified in proof.md. Ordinary review checks the submitted bound; it does not automatically tighten it.",
   "probability_space": "Uniform challenge from the selected profile and fresh independent algorithm coins. The target parameters remain fixed. Reproducible seeds are experimental evidence, not a proof of ideal independent coins.",
   "scope": "One classical cold attack on one target. Precomputation is charged in full without amortization over future targets. Quantum algorithms and external advice/oracles with uncharged construction are out of scope.",
   "primitive_operations": {
-    "load_256_bits": 1,
-    "store_256_bits": 1,
-    "add_mod_2^256": 1,
-    "subtract_mod_2^256": 1,
-    "one_bitwise_AND_OR_XOR_NOT": 1,
-    "shift_or_rotate_256_bits": 1,
-    "compare_256_bits": 1,
-    "conditional_branch": 1,
-    "independent_uniform_256_bit_word": 1
+    "scalar_AArch64_instruction": 1
   },
-  "machine": "256-bit word RAM with 256-bit addresses and finite bounded-size instructions operating on a constant number of registers. A shift/rotation count is 0..255. Word arithmetic wraps modulo 2^256. Each listed instruction costs one operation; memory transfers are charged separately from arithmetic.",
-  "arithmetic": "Explain operation counts and their prices in proof.md. A reference operation costs one unit under its fixed reference implementation; other RAM primitives cost 1/C. Custom field/group kernels, pairings and precomputed tables must account for their actual work. Do not charge both a reference operation and its internal instructions.",
+  "machine": "Scalar AArch64 instruction-equivalent work, with 64-bit general-purpose registers. Arithmetic, logical operations, loads/stores, addressing and control instructions count. Larger arithmetic and data structures must account for their implementation. These are instruction counts, not CPU cycles.",
+  "arithmetic": "A reference operation costs one group-equivalent unit. Other work costs its justified scalar AArch64 instruction count divided by C. Analytical instruction-equivalent bounds are sufficient; machine code and a production-size run are not required. Do not double-count a reference operation and its implementation.",
   "total_time_includes": [
     "preprocessing and advice construction",
     "all trials and failures",
@@ -35,7 +27,7 @@
   "parallel_computation": "Sum all processors' work, including coordination; elapsed time does not define the score.",
   "nonuniform_advice": "Charge construction/search of embedded or stored precomputed results, including parameter-dependent tables. Include advice in peak memory. Public profile constants and algorithm design effort are excluded; embedding searched results in code does not make their construction free.",
   "organizer_work": "Challenge generation and organizer review/verification are excluded. Any equivalent work performed by the attack is charged. The attack receives only public inputs and profile constants, never the challenge sampling secret.",
-  "memory": "Report a reviewed bound in bytes on peak total storage, including code, advice, tables, processor state and retained randomness. Count allocated words as 32 bytes. Memory has no scalar contribution or tie-break.",
+  "memory": "Report a reviewed bound in bytes on peak total storage, including code, advice, tables, processor state and retained randomness. Memory has no scalar contribution or tie-break.",
   "claim_fields": {
     "time_log2": "log2(total computation in target-group-operation equivalents); justify in proof.md",
     "time_unit": "target-group-operations",
@@ -45,13 +37,18 @@
     "nonuniform_advice_log2_bytes": "log2(max(1,advice_bytes)); included in peak storage"
   },
   "candidate_prices_allowed": false,
-  "normalization": "HashSmash-style reference normalization: for the selected target, divide all charged 256-bit RAM work by fixed organizer reference cost C. The reference operation is affine point addition for secp256k1 and Fp12 multiplication for BLS12-381 GT. These are fixed portable reference upper-budget prices, not CPU timings. All algorithms may use faster implementations with justified full costs. No submitted ledger or pricing engine is required.",
+  "normalization": "Divide charged scalar reference-instruction work by the fixed C for the track. G1 addition uses the batched incomplete affine 6M convention, with S=M and A=0. Pairing and Miller inversion use dense Fp12 multiplication. Prices are rounded organizer normalization constants grounded in the pinned measurements; they are not CPU timings or exact measured instruction counts.",
   "reference_operation_costs": {
-    "secp256k1-ecdlp": 78037248,
-    "bls12-381-invert-g1": 45839872
+    "secp256k1-ecdlp": 1000,
+    "bls12-381-invert-g1": 20000,
+    "bls12-381-g1-ecdlp": 2000,
+    "bls12-381-miller-inversion": 20000
   },
   "reference_operations": {
-    "secp256k1-ecdlp": "affine secp256k1 point addition, including its exceptional branches",
-    "bls12-381-invert-g1": "multiplication in the pinned Fp12 polynomial basis"
-  }
+    "secp256k1-ecdlp": "batched incomplete affine secp256k1 addition, 6M with S=M and A=0",
+    "bls12-381-invert-g1": "dense Fp12 multiplication, calibrated with pinned blst",
+    "bls12-381-g1-ecdlp": "batched incomplete affine BLS12-381 G1 addition, 6M with S=M and A=0",
+    "bls12-381-miller-inversion": "dense Fp12 multiplication, calibrated with pinned blst"
+  },
+  "reference_measurement": "scripts/reference_costs/measurement.json"
 }

@@ -106,11 +106,18 @@ class ProfileArithmetic(unittest.TestCase):
         self.assertEqual(identity, gt_multiply(generator, negative, p))
 
     def test_profile_cost_version_and_reference_lock(self):
-        cost = json.loads((ROOT / "tracks/secp256k1-ecdlp/classical-group-work-v2.json").read_text())
+        cost = json.loads((ROOT / "tracks/classical-group-work-v2.json").read_text())
         self.assertEqual(cost["id"], "classical-group-work-v2")
         self.assertEqual(cost["success_probability_minimum"], 0.39)
-        self.assertEqual(cost["word_bits"], 256)
+        self.assertEqual(cost["word_bits"], 64)
         self.assertEqual(set(cost["primitive_operations"].values()), {1})
+        import runpy
+        calibration = runpy.run_path(str(ROOT / "scripts/reference_operation_costs.py"))
+        expected = calibration["reference_costs"]()
+        self.assertEqual(cost["reference_operation_costs"], expected)
+        self.assertEqual(expected, {"secp256k1-ecdlp": 1000, "bls12-381-invert-g1": 20000,
+                                    "bls12-381-g1-ecdlp": 2000,
+                                    "bls12-381-miller-inversion": 20000})
         reference = PROFILES["targets"][1]["pairing"]["reference"]
         self.assertEqual(reference["commit"], "04151f01f59f902ab932a51e0ca0ebce3883fc51")
         self.assertEqual(len(reference["source_sha256"]), 4)
