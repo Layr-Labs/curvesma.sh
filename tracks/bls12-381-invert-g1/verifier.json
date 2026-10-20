@@ -6,10 +6,10 @@
   "acceptance_policy": "exploratory-v1",
   "objectives": [
     {
-      "name": "time_log2",
+      "name": "ram_log2",
       "direction": "-",
-      "unit": "log2(target-group-operation equivalents)",
-      "semantics": "The submitted total classical computation bound for bls12-381-invert-g1 under rules.md; memory is supplementary.",
+      "unit": "log2(RAM execution work + algorithm-description length)",
+      "semantics": "The submitted log2(T + L) bound for bls12-381-invert-g1 under the protected Bernstein\u2013Lange RAM framework; memory is supplementary.",
       "score_source": {
         "claim": 0
       },
@@ -22,7 +22,7 @@
   "allow_unscored": false,
   "policies": {
     "scoring": {
-      "version": "classical-group-work-v2"
+      "version": "bernstein-lange-ram"
     },
     "validity": {
       "version": "exploratory-single-review-v1"
@@ -32,7 +32,7 @@
     "scoring": [
       {
         "selector": {
-          "version": "classical-group-work-v2"
+          "version": "bernstein-lange-ram"
         },
         "instructions": "Derive the first claim score unchanged only after complete exploratory acceptance; no confidence scores."
       }
@@ -61,7 +61,7 @@
   },
   "rules_files": [
     "tracks/bls12-381-invert-g1/target-profile.json",
-    "tracks/bls12-381-invert-g1/classical-group-work-v2.json"
+    "tracks/docs/COST_MODEL.md"
   ],
   "submission_selector": {
     "path": "tracks/bls12-381-invert-g1/selected-submission.txt",

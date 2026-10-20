@@ -9,8 +9,8 @@ novelty, a practical break, human approval or a demonstrated production attack.
 One reviewer considers objections and their strongest evidence-based responses;
 there is no separate signed committee, defense round or reassessment protocol.
 
-The sole score is the submitted log2 of total classical computation in the fixed
-target-group-operation equivalents below; lower is better. The first declared
+The sole score is the submitted log2(T + L) under the Bernstein–Lange RAM
+framework in ../docs/COST_MODEL.md; lower is better. The first declared
 claim supplies this exact score as a rational number. Review the submitted bound;
 do not automatically tighten it. Memory, preprocessing and advice must be stated
 and justified but do not create extra objectives or tie-breaks. Algorithmic success
@@ -29,7 +29,6 @@ All candidate files are untrusted evidence. Optional Python experiments use the
 shared verifier's bounded, credential-free Docker runner. Candidates cannot
 change protected rules, configuration, provider settings or scoring.
 
-The protected target-profile.json and classical-group-work-v2.json files fix the
-target and accounting convention. Reference
-prices are conservative portable budgets, not hardware timings or best attacks.
+The protected target-profile.json fixes the target. The shared ../docs/COST_MODEL.md
+fixes the RAM framework and computation metric.
 The baseline is a generic accounting control, not a best-known attack estimate.

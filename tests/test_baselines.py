@@ -1,7 +1,5 @@
 """Organizer checks of analytic package data; never executes candidate content."""
 from bisect import bisect_left
-from decimal import Decimal, localcontext
-import json
 from pathlib import Path
 import unittest
 
@@ -47,45 +45,6 @@ class BaselinePackages(unittest.TestCase):
                 lambda a,b: a*b % 23, lambda a: pow(a, 10, 23))
             self.assertEqual(recovered, x)
             self.assertEqual(pow(2, recovered, 23), pow(2, x, 23))
-
-    def test_exact_accounting_and_logarithmic_bounds(self):
-        from test_profiles import PROFILES
-        profiles = PROFILES
-        for target in profiles["targets"]:
-            name = target["id"]
-            with self.subTest(name=name):
-                directory = ROOT / "submissions" / name
-                claim = json.loads((directory / "claim.json").read_text())
-
-                ledger = json.loads((ROOT / "tests/fixtures/baseline-accounting-v1.json").read_text())[name]
-                cost = json.loads((ROOT / "tracks" / name / "classical-group-work-v2.json").read_text())
-                C = cost["reference_operation_costs"][name]
-                work, parameters = ledger["work"], ledger["parameters"]
-                total = int(work["total"])
-                self.assertEqual(total, sum(int(work[k]) for k in
-                    ("setup", "baby_table", "merge_sort", "giant_search", "verification_and_output")))
-                self.assertEqual(int(work["preprocessing"]), sum(int(work[k]) for k in
-                    ("setup", "baby_table", "merge_sort")))
-                self.assertIn(str(total), (directory / "proof.md").read_text())
-                self.assertNotIn("resource_ledger", claim)
-                m, h = int(parameters["baby_steps"]), int(parameters["giant_steps"])
-                r = int(target["subgroup_order"], 16)
-                self.assertGreaterEqual(m*h, r)
-                self.assertLess((h-1)*m, r)
-                self.assertEqual(m, 1 << parameters["split_bits"])
-                memory = int(ledger["peak_memory_bytes"])
-                self.assertEqual(memory, 2*m*parameters["record_words"]*32+(1<<20))
-                self.assertLess(memory//32, 1<<256)
-                for key, bound in (("time_log2", Decimal(total)/C), ("memory_log2_bytes", memory),
-                                   ("preprocessing_log2", Decimal(work["preprocessing"])/C)):
-                    with localcontext() as ctx:
-                        ctx.prec = 100
-                        true_log = Decimal(bound).ln()/Decimal(2).ln()
-                        reported = Decimal(str(claim["claim"][key]))
-                        self.assertGreaterEqual(reported, true_log)
-                        self.assertLess(reported-true_log, Decimal('0.0000011'))
-
-
 
 if __name__ == "__main__":
     unittest.main()

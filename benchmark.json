@@ -11,13 +11,13 @@
       "direction": "-",
       "objectives": [
         {
-          "name": "time_log2",
+          "name": "ram_log2",
           "direction": "-"
         }
       ],
       "paretoPolicies": {
         "scoring": {
-          "version": "classical-group-work-v2"
+          "version": "bernstein-lange-ram"
         },
         "validity": {
           "version": "exploratory-single-review-v1"
@@ -69,13 +69,13 @@
       "direction": "-",
       "objectives": [
         {
-          "name": "time_log2",
+          "name": "ram_log2",
           "direction": "-"
         }
       ],
       "paretoPolicies": {
         "scoring": {
-          "version": "classical-group-work-v2"
+          "version": "bernstein-lange-ram"
         },
         "validity": {
           "version": "exploratory-single-review-v1"
