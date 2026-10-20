@@ -6,6 +6,3 @@ __pycache__/
 .env
 .env.*
 .DS_Store
-website/dist/targets/
-website/dist/cost-model.json
-website/dist/cost-model.md
