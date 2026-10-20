@@ -71,7 +71,7 @@ For compressed data, count the encoded description in L and the decompression
 work in T. The algorithm must be specified before the random challenge is drawn;
 a challenge's unknown solution cannot be supplied as uncharged advice.
 
-The RAM metric is **T + L**. The sole score is **ram_log2 = log2(T + L)**,
+The RAM metric is **T + L**. The sole score is **time_log2 = log2(T + L)**,
 lower is better. Submit a justified upper bound on that logarithm, rounded
 upward, as the first claim's exact rational score. The RAM work and description
 length must both be included in the bound.

@@ -11,7 +11,7 @@
       "direction": "-",
       "objectives": [
         {
-          "name": "ram_log2",
+          "name": "time_log2",
           "direction": "-"
         }
       ],
@@ -69,7 +69,7 @@
       "direction": "-",
       "objectives": [
         {
-          "name": "ram_log2",
+          "name": "time_log2",
           "direction": "-"
         }
       ],
