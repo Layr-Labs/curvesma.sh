@@ -1,26 +1,24 @@
-# Reassessment and score history
+# Fresh review and score history
 
-Ordinary submissions use the submitted computation bound. To reassess existing content after a protected policy or price change, the organizer pins its previous review artifact in `reorg/plan.json`. Unlisted submissions receive ordinary four-role review. This follows HashSmash's distinction between current judging rules and reusable previous reasoning.
+The current shared verifier has no `reorg/plan.json`, signed-history import or
+`archive_review.py` reassessment flow. Those belonged to the retired evaluator.
+Do not provision those files or reuse its review artifacts as current acceptance.
 
-The current protected release must contain the pin before dispatch. Candidate packages cannot supply their own history. The intake job fetches only the exact artifact ID from this repository, verifies the ZIP and packet checksums, authenticates the original signed judgments, and rejects different algorithms or mathematical targets. It does not extract or execute artifact files. History is bounded to 32 judgments and 2 MiB.
+After changing protected rules, target definitions or reference prices, add a
+new candidate directory under `submissions/<track>/` and update its selector.
+Existing candidate files are add-only. The new claim must justify its computation
+under the current rules and be evaluated afresh. Preserve earlier candidates and
+reviews as historical evidence, including unsuccessful attempts.
 
-The review job makes one current-policy reassessment call with the original argument, previous judgments and current rules. Its decision is accepted, rejected or needs evidence. Previous acceptance is not binding. Rejected and incomplete results emit no score.
+The two historical baseline packages use reference prices of 78,037,248
+(secp256k1) and 45,839,872 (pairing) word operations. The current prices are
+1,000 and 20,000 respectively; BLS G1 uses 2,000 and Miller uses 20,000.
+Their old claimed scores therefore cannot serve as current baselines. A new
+candidate must reconcile its full accounting with the current convention rather
+than automatically relabeling or importing an old number. General pairing also
+requires both P and Q and a justified W(n) statement at n=2^20.
 
-- Unchanged cost model and reference price: preserve the latest accepted score exactly. No silent tightening.
-- Changed cost model or reference price: emit a newly justified computation bound, with the calculation recorded in the reassessment.
-
-The scorer authenticates the reassessment, source packet and scoring-policy identity again. The next artifact carries the previous judgments forward. Clearing the plan changes no historical result and triggers no retrospective evaluations.
-
-## Pin an existing artifact
-
-Download the chosen `curvesmash-review-<track>` artifact ZIP from GitHub. Then run:
-
-```sh
-.venv/bin/python scripts/archive_review.py --archive /absolute/path/review.zip --artifact-id ACTUAL_ID
-```
-
-The tool verifies the ZIP against GitHub's artifact digest, caches the packet outside Git and prints a proposed plan entry. Review the entry and commit it into the organizer-owned plan before updating `CURVESMASH_TRUSTED_SHA` and dispatching. It never edits the plan or grants approval automatically.
-
-GitHub artifacts expire after 30 days. Publish and retain release archives; an expired or mismatched pinned artifact stops explicitly. Restore a verified artifact through the supported transport or perform fresh ordinary review. Do not substitute a fabricated judgment.
-
-Version 1 baseline results are historical word-operation scores under the retired rigorous policy. Their values must not be relabeled as current group-operation scores. The version 2 baselines require fresh ordinary reviews.
+Current judging returns the submitted bound after acceptance; it does not silently
+tighten the score. This does not guarantee that a fresh review preserves an old
+score or decision. See the [historical qualification record](BASELINE_QUALIFICATION.md)
+and [current cost model](COST_MODEL.md).
