@@ -6,7 +6,7 @@
   "acceptance_policy": "exploratory-v1",
   "objectives": [
     {
-      "name": "ram_log2",
+      "name": "time_log2",
       "direction": "-",
       "unit": "log2(RAM execution work + algorithm-description length)",
       "semantics": "The submitted log2(T + L) bound for bls12-381-invert-g1 under the protected Bernstein\u2013Lange RAM framework; memory is supplementary.",

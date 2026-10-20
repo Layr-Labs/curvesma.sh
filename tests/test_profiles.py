@@ -116,7 +116,7 @@ class ProfileArithmetic(unittest.TestCase):
             config = json.loads((ROOT / "tracks" / name / "verifier.json").read_text())
             self.assertIn("tracks/docs/COST_MODEL.md", config["rules_files"])
             self.assertEqual(config["policies"]["scoring"]["version"], "bernstein-lange-ram")
-            self.assertEqual(config["objectives"][0]["name"], "ram_log2")
+            self.assertEqual(config["objectives"][0]["name"], "time_log2")
         reference = PROFILES["targets"][1]["pairing"]["reference"]
         self.assertEqual(reference["commit"], "04151f01f59f902ab932a51e0ca0ebce3883fc51")
         self.assertEqual(len(reference["source_sha256"]), 4)
