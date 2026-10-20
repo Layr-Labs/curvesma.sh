@@ -40,7 +40,8 @@ Run a candidate's declared Python experiments with Docker and the local
 bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp
 ```
 
-Use `bls12-381-invert-g1` for the other track. Results are written to
+Replace the track ID with `bls12-381-invert-g1`, `bls12-381-g1-ecdlp` or
+`bls12-381-miller-inversion` for the BLS tracks. Results are written to
 `.yukon/<track>/supporting-code/initial.json`. Experiments declare their Python
 entrypoint and permitted inputs in `submission.json`; they run inside the shared
 verifier's isolated container, using Python's standard library.
