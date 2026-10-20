@@ -13,6 +13,17 @@ DLOG target shares s; pairing and Miller targets are independent of s. General
 pairing inversion returns both P and Q. Miller inversion uses the exact pinned
 raw map with fixed Q0, without final exponentiation.
 
+## Yukon setup
+
+Python 3.11+, Git and read access to the pinned verifier repository are required.
+`yukon setup --track secp256k1-ecdlp` installs the verifier into the repo-local
+`.yukon/verifier/venv` and performs intake; no global `llm-verifier` is needed.
+See [local setup and evaluation](tracks/docs/LOCAL_SETUP.md) for prerequisites,
+all four tracks and the separate execution/review commands. `yukon run` finalizes
+completed review artifacts; it does not perform an automatic paid evaluation.
+
+## Organizer scientific checks
+
 Install `tests/requirements.txt` in a Python environment, then run the scientific checks:
 
 ```sh
@@ -34,7 +45,7 @@ The manifest commands describe separate phases; local `yukon run` does not orche
 the intervening review. Use the verifier's phase commands or the hosted workflow.
 
 Run a candidate's declared Python experiments with Docker and the local
-`llm-verifier` package installed (no API key needed):
+verifier installed by `yukon setup` (no API key needed):
 
 ```sh
 bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp

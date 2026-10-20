@@ -28,7 +28,9 @@ The output artifact is `benchmark-score`, containing
 `.yukon/<track>/score.json` at the manifest's exact `scorePath`. The dossier is
 uploaded separately. Promotion is manual.
 
-The manifest's setup and benchmark commands describe intake and finalization.
+The manifest's setup command installs the workflow-pinned verifier in a local
+virtual environment and performs intake. Its benchmark command finalizes completed
+artifacts with explicit missing-phase guidance. See [local setup](LOCAL_SETUP.md).
 They do not orchestrate review between those phases: a fresh local `yukon run`
 is not a complete substitute for the hosted workflow. Use the shared verifier's
 phase commands or the hosted workflow, as described in the root README.

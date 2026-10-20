@@ -105,8 +105,8 @@ class BLSChallenges(unittest.TestCase):
             self.assertEqual(track['paretoPolicies'], c['policies'])
             self.assertEqual(c['acceptance_policy'], 'exploratory-v1')
             self.assertEqual(track['promotionMode'], 'manual')
-            self.assertEqual(track['setupCommand'][:2], ['llm-verifier', 'intake'])
-            self.assertEqual(track['benchmarkCommand'][:2], ['llm-verifier', 'finalize'])
+            self.assertEqual(track['setupCommand'], ['python3', 'scripts/local_verifier.py', 'setup', name])
+            self.assertEqual(track['benchmarkCommand'], ['python3', 'scripts/local_verifier.py', 'run', name])
             for path in [c['rules_path'], *c['rules_files']]:
                 self.assertTrue((ROOT / path).is_file(), path)
             selector = c['submission_selector']

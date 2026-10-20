@@ -28,28 +28,16 @@
         "tracks/secp256k1-ecdlp/selected-submission.txt"
       ],
       "setupCommand": [
-        "llm-verifier",
-        "intake",
-        "--root",
-        ".",
-        "--config",
-        "tracks/secp256k1-ecdlp/verifier.json",
-        "--out",
-        ".yukon/secp256k1-ecdlp/intake.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "setup",
+        "secp256k1-ecdlp"
       ],
       "benchmarkCommand": [
-        "llm-verifier",
-        "finalize",
-        "--intake",
-        ".yukon/secp256k1-ecdlp/intake.json",
-        "--initial",
-        ".yukon/secp256k1-ecdlp/initial.json",
-        "--initial-review",
-        ".yukon/secp256k1-ecdlp/review.json",
-        "--score",
-        ".yukon/secp256k1-ecdlp/score.json",
-        "--dossier",
-        ".yukon/secp256k1-ecdlp/dossier.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "run",
+        "secp256k1-ecdlp"
       ],
       "scorePath": ".yukon/secp256k1-ecdlp/score.json",
       "maxSubmissionBytes": 262144,
@@ -86,28 +74,16 @@
         "tracks/bls12-381-invert-g1/selected-submission.txt"
       ],
       "setupCommand": [
-        "llm-verifier",
-        "intake",
-        "--root",
-        ".",
-        "--config",
-        "tracks/bls12-381-invert-g1/verifier.json",
-        "--out",
-        ".yukon/bls12-381-invert-g1/intake.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "setup",
+        "bls12-381-invert-g1"
       ],
       "benchmarkCommand": [
-        "llm-verifier",
-        "finalize",
-        "--intake",
-        ".yukon/bls12-381-invert-g1/intake.json",
-        "--initial",
-        ".yukon/bls12-381-invert-g1/initial.json",
-        "--initial-review",
-        ".yukon/bls12-381-invert-g1/review.json",
-        "--score",
-        ".yukon/bls12-381-invert-g1/score.json",
-        "--dossier",
-        ".yukon/bls12-381-invert-g1/dossier.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "run",
+        "bls12-381-invert-g1"
       ],
       "scorePath": ".yukon/bls12-381-invert-g1/score.json",
       "maxSubmissionBytes": 262144,
@@ -144,28 +120,16 @@
         "tracks/bls12-381-g1-ecdlp/selected-submission.txt"
       ],
       "setupCommand": [
-        "llm-verifier",
-        "intake",
-        "--root",
-        ".",
-        "--config",
-        "tracks/bls12-381-g1-ecdlp/verifier.json",
-        "--out",
-        ".yukon/bls12-381-g1-ecdlp/intake.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "setup",
+        "bls12-381-g1-ecdlp"
       ],
       "benchmarkCommand": [
-        "llm-verifier",
-        "finalize",
-        "--intake",
-        ".yukon/bls12-381-g1-ecdlp/intake.json",
-        "--initial",
-        ".yukon/bls12-381-g1-ecdlp/initial.json",
-        "--initial-review",
-        ".yukon/bls12-381-g1-ecdlp/review.json",
-        "--score",
-        ".yukon/bls12-381-g1-ecdlp/score.json",
-        "--dossier",
-        ".yukon/bls12-381-g1-ecdlp/dossier.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "run",
+        "bls12-381-g1-ecdlp"
       ],
       "scorePath": ".yukon/bls12-381-g1-ecdlp/score.json",
       "maxSubmissionBytes": 262144,
@@ -202,28 +166,16 @@
         "tracks/bls12-381-miller-inversion/selected-submission.txt"
       ],
       "setupCommand": [
-        "llm-verifier",
-        "intake",
-        "--root",
-        ".",
-        "--config",
-        "tracks/bls12-381-miller-inversion/verifier.json",
-        "--out",
-        ".yukon/bls12-381-miller-inversion/intake.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "setup",
+        "bls12-381-miller-inversion"
       ],
       "benchmarkCommand": [
-        "llm-verifier",
-        "finalize",
-        "--intake",
-        ".yukon/bls12-381-miller-inversion/intake.json",
-        "--initial",
-        ".yukon/bls12-381-miller-inversion/initial.json",
-        "--initial-review",
-        ".yukon/bls12-381-miller-inversion/review.json",
-        "--score",
-        ".yukon/bls12-381-miller-inversion/score.json",
-        "--dossier",
-        ".yukon/bls12-381-miller-inversion/dossier.json"
+        "python3",
+        "scripts/local_verifier.py",
+        "run",
+        "bls12-381-miller-inversion"
       ],
       "scorePath": ".yukon/bls12-381-miller-inversion/score.json",
       "maxSubmissionBytes": 262144,
