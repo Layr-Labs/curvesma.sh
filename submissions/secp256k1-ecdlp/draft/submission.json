@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp — incomplete draft",
+  "claims": [
+    "Incomplete draft: no attack, supported RAM bound or success argument has been submitted. This draft is not eligible for a score."
+  ],
+  "experiments": []
+}

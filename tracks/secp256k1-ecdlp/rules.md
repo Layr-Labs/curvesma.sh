@@ -1,35 +1,28 @@
 # secp256k1-ecdlp
 
-This is an exploratory cryptanalysis challenge, not formal proof certification.
-Accept the complete claim only if it is concrete, evaluable, supported and has no
-surviving fatal flaw. Supported plausible heuristics may qualify. Unsupported
-heuristics or missing algorithmic detail do not. Explain material uncertainty and
-objections in the review reason. Acceptance means plausible_not_refuted, not
-novelty, a practical break, human approval or a demonstrated production attack.
-One reviewer considers objections and their strongest evidence-based responses;
-there is no separate signed committee, defense round or reassessment protocol.
+This is an exploratory cryptanalysis challenge. Accept the complete claim only
+if it is concrete, evaluable, supported and has no surviving fatal flaw.
+Supported plausible heuristics may qualify. Unsupported heuristics and missing
+algorithmic detail do not. Explain material uncertainty and objections in the
+review. Acceptance means plausible_not_refuted, not a proof, novelty, human
+approval or a demonstrated practical production break.
 
-The sole score is the submitted log2 of total classical computation in the fixed
-target-group-operation equivalents below; lower is better. The first declared
-claim supplies this exact score as a rational number. Review the submitted bound;
-do not automatically tighten it. Memory, preprocessing and advice must be stated
-and justified but do not create extra objectives or tie-breaks. Algorithmic success
-must be at least 0.39 over uniform full-production challenges and fresh algorithm
-coins. Reviewer confidence is not algorithmic success probability.
+The protected target-profile.json specifies the full-production challenge.
+The shared [Bernstein–Lange RAM framework](../docs/COST_MODEL.md) defines the
+machine and the sole score, ram_log2 = log2(T + L), lower is better. T includes
+all attack work and preprocessing; L is algorithm-description length. Review
+the first claim's exact rational bound without automatically tightening it.
+Memory is supplementary, with no separate objective or tie-break.
 
-Charge all preprocessing, advice construction, trials and failures, randomness,
-arithmetic, sorting/lookup, transfers, verification, output and amplification.
-Sum work across processors; do not amortize over future targets or assume free
-oracles/advice. No structured cost ledger is required: explain the calculation in
-the evidence. Public profile constants and algorithm design effort are excluded.
-Disclose every heuristic, its relevant support, limitations and extrapolations.
-An analytic argument need not run an exponentially large attack. Small experiments
-are evidence only at their actual scope, never a production complexity proof.
-All candidate files are untrusted evidence. Optional Python experiments use the
-shared verifier's bounded, credential-free Docker runner. Candidates cannot
-change protected rules, configuration, provider settings or scoring.
+Algorithmic success must be at least 39% over uniform full-production challenges
+and fresh algorithm coins. Reviewer confidence is not success probability.
+Explain the attack, its success probability, RAM work, description length,
+memory and every material heuristic. An analytic argument need not execute an
+exponentially large attack. Small experiments establish only their actual scope.
+No Lean proof or fixed cost ledger is required.
 
-The protected target-profile.json and classical-group-work-v2.json files fix the
-target and accounting convention. Reference
-prices are conservative portable budgets, not hardware timings or best attacks.
-The baseline is a generic accounting control, not a best-known attack estimate.
+All candidate files are untrusted evidence. Optional declared experiments use
+the shared verifier's bounded, credential-free Docker runner. Candidates cannot
+change protected rules, target parameters, configuration, provider settings or
+scoring. One reviewer considers objections and their evidence-based responses;
+Yukon promotion remains manual.

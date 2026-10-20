@@ -1,28 +1,60 @@
-# Computation accounting
+# Bernstein–Lange RAM framework
 
-The score is the submitted **log2(total computation in target-group-operation equivalents)**. Lower is better. Explain the complete calculation in `proof.md`; no cost-ledger file, integer-budget field or intermediate pricing engine is required.
+Both tracks use the RAM metric described in Daniel J. Bernstein and Tanja Lange,
+[Non-uniform cracks in the concrete: the power of free precomputation](https://cr.yp.to/nonuniform/nonuniform-20130305.pdf)
+(5 March 2013), Appendix A.1, with the concrete RAM assumptions in §5.3.
+This file is protected review input for both tracks. The scoring policy is
+`bernstein-lange-ram`.
 
-This follows [HashSmash's accounting method](https://github.com/Layr-Labs/hash-smash/blob/main/docs/RESCORING.md): one fixed target operation costs 1, and another 256-bit RAM primitive costs 1/C. HashSmash uses hash compressions; our targets use group operations.
+## Machine
 
-| Target | Reference operation | Fixed C, in word operations |
-| --- | --- | ---: |
-| secp256k1 | Affine point addition, with exceptional branches covered | 78,037,248 |
-| BLS12-381 inversion | Multiplication in the pinned Fp12 basis | 45,839,872 |
+Use the paper's 128-bit pointers, unit-cost 256-bit vector operations and
+unit-cost 256-bit floating-point multiplications (§5.3). RAM memory accesses
+have unit cost. Count the bounded-word arithmetic, Boolean operations, shifts,
+comparisons and control needed by the algorithm. Arithmetic on larger values
+must be implemented and costed in RAM operations; a field operation, integer
+factorization or arbitrary-precision multiplication is not a unit-cost instruction.
+The floating-point multiplier is not an exact 256-by-256-bit integer multiplier.
 
-These fixed prices are conservative portable reference budgets, not hardware timings or claims that these implementations are fastest. They define units. They are set by the organizer and cannot be changed by a submission. Faster field, group, pairing or lookup algorithms are welcome; justify their actual work. Scores from different tracks are not directly comparable.
+The paper supplies a RAM analysis framework, rather than an executable instruction
+set. Give enough implementation detail to support the claimed RAM bound using
+these assumptions. Standard algorithm analyses and supported heuristics are
+admissible; a complete machine-code implementation is not required. The paper's
+own §5.3 illustrates FFT arithmetic, product/remainder trees and packed XOR linear
+algebra in this framework.
 
-Reproduce the prices:
+## Score
 
-```sh
-.venv/bin/python scripts/reference_operation_costs.py
-```
+The RAM metric is execution work plus algorithm-description length (Appendix A.1).
+For this challenge, write **W = T + L**:
 
-For a field of k bits stored in s words, the reference budgets are A=128(s+1) for reduced addition/subtraction, M=k(2A+64)+128(s+1) for fixed-bit modular multiplication, and I=2k(M+64)+128(s+1) for Fermat inversion. The reference point price is I+16M+32A+4096 at k=256,s=1. The reference Fp12 price is 144M+188A+65536 at k=381,s=2. Multiplication uses double-and-add: two reduced additions and bit/control work per bit. Inversion uses binary powering. Affine point formulas and the fixed polynomial reduction establish the group budgets; the baseline arguments spell out their branches and coefficient counts. These allowances include reference control/transfers and may deliberately overestimate them.
+- **T** is the expected total RAM work for one random challenge, including
+  preprocessing, retries, failed attempts, randomness, arithmetic, memory access,
+  sorting, verification and output. Sum operations across all processors.
+- **L** is the bit length of the executable algorithm description, including
+  embedded tables and advice. Describe its encoding and justify its size.
+  Prose, citations and experiment logs are not the algorithm description.
 
-Charge total work across processors, including preprocessing, advice construction, random sampling, all trials and failures, sorting, lookup, memory transfers, verification, output and success amplification. A stored answer does not make its search free. Do not charge both a reference operation and its internal instructions. Public profile constants and algorithm design effort are excluded.
+The sole objective is **ram_log2 = log2(W)**, lower is better. Submit a justified
+upper bound, rounded upward, as the first claim's exact rational score. The
+verifier publishes that declared bound after acceptance; it does not optimize it.
 
-Example: if the attack performs H reference operations and W other word operations, the cost is H+W/C, plus any other work. Submit its base-2 logarithm and justify the calculation. A success probability is about the algorithm, not reviewer confidence.
+Success probability must be at least **39%** over the full target distribution
+and the algorithm's randomness. Include the work of amplification needed to reach
+that probability. Report peak memory separately; it is not another objective.
 
-The required success probability is at least 0.39 over uniform production challenges and fresh algorithm coins. Peak memory includes code, advice, tables and scratch. Report memory, preprocessing and advice alongside the computation bound; memory has no scalar contribution or tie-break. Quantum algorithms are outside this classical benchmark.
+All attack-specific preprocessing and advice construction must be included in T;
+embedding the result in the program also contributes to L. Do not amortize over
+future targets. Published target parameters and human algorithm-design effort
+are outside the attack work. The paper also studies attacks with free
+precomputation; the challenge scores the complete attack, including its
+precomputation.
 
-A supported cost discrepancy must receive a fatal objection and defense/adjudication. Uncertain costs remain visible under the exploratory policy. An accepted submission receives its submitted bound; ordinary judging does not silently optimize it. Organizer-authorized [reassessment](RESCORING.md) preserves the accepted score when scoring rules are unchanged and recalculates it when prices or the cost model change.
+## Evidence
+
+Explain the algorithm, success argument, RAM work and description length in the
+submission. No fixed ledger or arithmetic implementation is prescribed. Elliptic
+curve formulas, batching, sieving, smoothness tests and linear algebra are all
+eligible when their full RAM work is accounted for. Report heuristic assumptions,
+supporting evidence and extrapolation honestly. A full-size attack need not be
+executed, and a Lean proof is not required.

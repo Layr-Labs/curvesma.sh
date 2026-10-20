@@ -1,1 +1,1 @@
-submissions/bls12-381-invert-g1
+submissions/bls12-381-invert-g1/draft
