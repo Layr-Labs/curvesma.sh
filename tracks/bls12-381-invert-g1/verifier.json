@@ -9,7 +9,7 @@
       "name": "time_log2",
       "direction": "-",
       "unit": "log2(target-group-operation equivalents)",
-      "semantics": "The submitted total classical computation bound for bls12-381-invert-g1 under rules.md; memory is supplementary.",
+      "semantics": "The submitted log2(W(1048576)) total-computation bound for general pairing inversion in target-group-operation equivalents under rules.md; memory is supplementary.",
       "score_source": {
         "claim": 0
       },

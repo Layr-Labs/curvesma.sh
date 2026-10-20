@@ -31,6 +31,19 @@ change protected rules, configuration, provider settings or scoring.
 
 The protected target-profile.json and ../classical-group-work-v2.json files fix the
 target and accounting convention. Reference
-prices are rounded normalization constants grounded in the measurements in
-../docs/COST_MODEL.md, not hardware timings or best attacks.
+prices are calibrated instruction counts documented in ../docs/COST_MODEL.md,
+not hardware timings or best attacks.
 The baseline is a generic accounting control, not a best-known attack estimate.
+
+The powers sequence is specified in target-profile.json. Give total work as a
+function W(n), with the stated applicability conditions. The published score
+is the bound on log2(W(2^20)); all submissions use this same n. Input generation
+is excluded, but every access and processing step performed by the attack counts.
+Supported attacks using these powers, including Cheon-type methods where their
+preconditions hold, are eligible. Do not assume that the pairing or Miller target
+exponent equals the independently sampled SRS secret.
+
+Any valid pair (P,Q) is eligible; returning ([a]P0,Q0) after solving
+z=e(P0,Q0)^a by a GT discrete-log algorithm is one admissible approach.
+Q0 is allowed but not required. Recovering the independent SRS secret alone
+does not solve the target equation.

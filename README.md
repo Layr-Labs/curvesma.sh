@@ -1,13 +1,19 @@
 # Curvesma.sh
 
-Exploratory cryptanalysis of full-production secp256k1 discrete logarithms and
-BLS12-381 fixed-G2 pairing inversion. Each track contains protected `rules.md`
+Exploratory cryptanalysis of full-production secp256k1 discrete logarithms,
+BLS12-381 G1 discrete logarithms, general pairing inversion and raw Miller inversion. Each track contains protected `rules.md`
 and `verifier.json`, with target and cost definitions in JSON files.
 Original baseline candidates are kept separately in the add-only `submissions/`.
 The sole metric is log2(total computation in target-group-operation equivalents),
 lower is better; success must be at least 39%. Memory is reported separately.
 
-Run the scientific checks:
+The three BLS12-381 tracks provide public powers A_i=[s^i]P0, i=1..n.
+Attacks state their cost W(n); Yukon compares log2(W(n)) at n=2^20. The G1
+DLOG target shares s; pairing and Miller targets are independent of s. General
+pairing inversion returns both P and Q. Miller inversion uses the exact pinned
+raw map with fixed Q0, without final exponentiation.
+
+Install `tests/requirements.txt` in a Python environment, then run the scientific checks:
 
 ```sh
 python3 -m unittest discover -s tests

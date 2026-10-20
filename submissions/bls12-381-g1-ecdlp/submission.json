@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: submission template",
+  "claims": [
+    "Incomplete template: supply an attack, its success argument and a justified cost function W(n). No score is claimed."
+  ],
+  "experiments": []
+}

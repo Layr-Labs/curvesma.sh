@@ -2,7 +2,7 @@
   "id": "bls12-381-invert-g1",
   "curve": "BLS12-381",
   "parameter_x": "-d201000000010000",
-  "problem": "fixed-generator-pairing-inversion",
+  "problem": "general-pairing-inversion",
   "scope": "unrestricted-production",
   "field_modulus": "1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab",
   "subgroup_order": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
@@ -27,7 +27,7 @@
   "field_Fp12": "Fp[w]/(w^12-2*w^6+2); coefficient list [c0,...,c11] means sum(ci*w^i); u maps to w^6-1",
   "group_GT": "Nonzero z in Fp12 with z^r=1; identity [1,0,...,0]",
   "pairing": {
-    "definition": "e(P,Q)=py_ecc.optimized_bls12_381.pairing(Q,P,final_exponentiate=True) at the pinned commit. Argument order is reversed in the library. Raw Miller output is not the target.",
+    "definition": "e(P,Q)=py_ecc.optimized_bls12_381.pairing(Q,P,final_exponentiate=True) at the pinned commit; the library takes G2 first. P and Q are both chosen by the attack. Raw Miller equality is not required.",
     "ate_loop_count": "d201000000010000",
     "final_exponent": "(p^12-1)/r",
     "reference": {
@@ -42,14 +42,25 @@
       }
     }
   },
-  "challenge": "Sample a uniformly from 0..r-1 by rejection sampling; give only z=e(P0,Q0)^a. Neither a nor [a]P0 nor sampling coins are given. This samples uniform GT, including identity.",
+  "challenge": "Independently sample a uniformly from 0..r-1 and s uniformly from 1..r-1. Give n, A and z=e(P0,Q0)^a. Neither a, [a]P0, s nor sampling coins are given. This samples uniform GT, including identity.",
   "input": {
+    "n": "powers-sequence length",
+    "A": "G1 powers A_1,...,A_n",
     "z": "GT coefficient list"
   },
   "output": {
-    "P": "BLS12-381 G1 point"
+    "P": "G1 point chosen by the attack",
+    "Q": "G2 point chosen by the attack"
   },
-  "acceptance": "Decode z canonically; require z!=0 and z^r=1. Decode P canonically, require P on G1 curve and [r]P=infinity. Accept exactly when e(P,Q0)=z, comparing all 12 coefficients. Infinity is valid exactly for z=1.",
-  "encoding": "UTF-8 JSON with exactly the stated keys. Each Fp coefficient: 96 lowercase hex characters, no prefix, big-endian integer less than p. GT: exactly 12 coefficients in increasing polynomial degree. Point: null for infinity, otherwise {x,y} with Fp coefficients. Reject duplicate keys, noncanonical values, off-curve and wrong-subgroup points.",
-  "source": "https://github.com/ethereum/py_ecc/tree/04151f01f59f902ab932a51e0ca0ebce3883fc51/py_ecc/optimized_bls12_381"
+  "acceptance": "Require z!=0 and z^r=1. Decode P and Q canonically; require the stated curve equations and [r]P=infinity, [r]Q=infinity. Accept exactly when e(P,Q)=z. For z!=1 both outputs must be nonidentity; for z=1 identity outputs are allowed. Q need not equal Q0.",
+  "encoding": "UTF-8 JSON with exactly the stated keys. n is an integer; A contains exactly n G1 points in increasing i order. Each Fp coefficient is 96 lowercase hex characters, no prefix, representing an integer less than p. A G1 point is null for infinity or {x,y} with Fp coefficients. A G2 point is null or {x,y} with each coordinate [c0,c1] in Fp2. An Fp12 value is exactly 12 coefficients in increasing polynomial degree. A scalar is 64 lowercase hex characters representing an integer less than r. Reject duplicate keys, noncanonical encodings, off-curve points and points outside the stated subgroups.",
+  "source": "https://github.com/ethereum/py_ecc/tree/04151f01f59f902ab932a51e0ca0ebce3883fc51/py_ecc/optimized_bls12_381",
+  "auxiliary_inputs": {
+    "parameter": "n is an integer with 1 <= n < r.",
+    "definition": "Sample s uniformly from 1..r-1. Provide A_i=[s^i mod r]P0 for i=1..n; A_0=P0 is already public. The input array A[i-1] encodes A_i. Neither s nor its sampling coins are given.",
+    "scoring_n": 1048576,
+    "work": "State total group-equivalent work W(n), its valid n range and any number-theoretic conditions. The scalar time_log2 bound is log2(W(1048576)); do not choose a different n to obtain a better score.",
+    "access": "The sequence is an honestly generated public input. Its generation is organizer work. Charge all accesses and processing performed by the attack; the attack may use a subset and need not read or validate the whole sequence.",
+    "correlation": "The SRS secret s is independent of the target exponent a; A contains powers of s, not powers of a."
+  }
 }
