@@ -105,12 +105,18 @@ class ProfileArithmetic(unittest.TestCase):
         self.assertEqual(doubled, gt_multiply(generator, generator, p))
         self.assertEqual(identity, gt_multiply(generator, negative, p))
 
-    def test_profile_cost_version_and_reference_lock(self):
-        cost = json.loads((ROOT / "tracks/secp256k1-ecdlp/classical-group-work-v2.json").read_text())
-        self.assertEqual(cost["id"], "classical-group-work-v2")
-        self.assertEqual(cost["success_probability_minimum"], 0.39)
-        self.assertEqual(cost["word_bits"], 256)
-        self.assertEqual(set(cost["primitive_operations"].values()), {1})
+    def test_ram_model_and_reference_lock(self):
+        model = (ROOT / "tracks/docs/COST_MODEL.md").read_text()
+        self.assertIn("nonuniform-20130305.pdf", model)
+        self.assertIn("128-bit pointers", model)
+        self.assertIn("256-bit vector operations", model)
+        self.assertIn("256-bit floating-point multiplications", model)
+        self.assertIn("log2(T + L)", model)
+        for name in ("secp256k1-ecdlp", "bls12-381-invert-g1"):
+            config = json.loads((ROOT / "tracks" / name / "verifier.json").read_text())
+            self.assertIn("tracks/docs/COST_MODEL.md", config["rules_files"])
+            self.assertEqual(config["policies"]["scoring"]["version"], "bernstein-lange-ram")
+            self.assertEqual(config["objectives"][0]["name"], "ram_log2")
         reference = PROFILES["targets"][1]["pairing"]["reference"]
         self.assertEqual(reference["commit"], "04151f01f59f902ab932a51e0ca0ebce3883fc51")
         self.assertEqual(len(reference["source_sha256"]), 4)
