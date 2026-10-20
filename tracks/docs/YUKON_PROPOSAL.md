@@ -1,17 +1,21 @@
 # Yukon challenge application
 
-Repository: [zac-williamson/curvesmash](https://github.com/zac-williamson/curvesmash), public. Owner: zac-williamson. This file is the application text, not evidence that Yukon has registered the challenge.
+Repository: [Layr-Labs/curvesma.sh](https://github.com/Layr-Labs/curvesma.sh).
+This document describes the intended import, not a completed registration.
 
-## Goal metric
+Import the four tracks from the root manifest: secp256k1 discrete logarithm,
+BLS12-381 G1 discrete logarithm with auxiliary powers, general pairing inversion,
+and exact raw Miller inversion. Each uses Pareto mode with a single minimizing
+`time_log2` objective and manual promotion. Success must be at least 39%; all
+preprocessing, attempts and failures count. BLS scores evaluate W(n) at n=2^20.
 
-Minimize the computation needed to solve secp256k1 discrete logarithms or invert the BLS12-381 pairing. Each problem has a separate leaderboard. Scores are log2 of total computation under a fixed reference-operation cost model; lower is better. Algorithms must succeed on at least 39% of uniformly random challenges. Preprocessing and failed attempts count.
+One Astra reviewer applies `exploratory-v1`, optionally requesting one follow-up
+experiment. Supported plausible heuristics may qualify; acceptance is not proof
+or a practical break. There is no separate defense/adjudication service.
 
-## Objective scoring
-
-Submissions describe the attack, justify its success probability and explain all computation costs in a written argument. AI reviewers assess the algorithm, costs and supporting experiments against published exploratory rules, following HashSmash. Fatal objections receive defense and adjudication. A concrete, supported submission with no confirmed fatal flaw receives its submitted computation bound as the score; remaining uncertainty is published. Review acceptance is not mathematical proof. Improved scores require owner approval before Yukon promotion.
-
-## Integration
-
-Both baseline workflows have completed live qualification under the current rules. Scores, signed reviews and earlier attempts are preserved in the [public release](https://github.com/zac-williamson/curvesmash/releases/tag/v0.2.0); the [qualification record](BASELINE_QUALIFICATION.md) describes the results and their limits.
-
-Please grant production benchmark-owner/import access, install the production GitHub App and import both tracks from the root manifest with submissions initially closed. We need to verify baseline runs, score-artifact ingestion, protected candidate paths and the manual promotion lifecycle before opening. No production Yukon import is claimed by this application.
+Start with closed, fresh registrations. Historical scalar benchmark identities,
+fixed-Q0 results and old price-based scores must not carry over. The original
+secp256k1 and pairing candidates remain selected for fresh evaluation; G1 and
+Miller select unscored templates. Historical qualification is not current qualification.
+Complete the [import and launch checks](EXECUTION.md) before opening submissions.
+The UI must bind the fresh IDs and read Pareto evaluations, not old scalar scores.

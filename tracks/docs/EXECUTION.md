@@ -1,27 +1,55 @@
 # Organizer execution
 
-Two GitHub Actions workflows implement the manifest's runner: `secp256k1-ecdlp.yml` and `bls12-381-invert-g1.yml`. Each calls the shared qualification workflow.
+The four workflows named in `benchmark.json` call
+`Layr-Labs/llm-verifier/.github/workflows/verify.yml` at the same immutable revision
+as their `verifier_revision` input. Keep both pins aligned when upgrading.
 
-1. Intake checks out the immutable organizer release and submitted commit separately, rejects changes outside the selected candidate directory, freezes all evidence and runs declared experiments on a credential-free worker. For a protected reassessment pin, it fetches and authenticates the exact previous review artifact using the GitHub read token.
-2. Review uses a new worker. Only its review step receives the provider credential and service signing keys. Ordinary submissions get four initial calls and any required defense/adjudication. Pinned reassessments get one current-policy call with previous judgments. Raw completed attempts and sanitized failure diagnostics are retained.
-3. Score uses another worker with no provider or signing credentials. It reconstructs acceptance and emits numeric `score` and `timeLog2` fields only on acceptance. The `benchmark-score-<track>` artifact contains the exact manifest-relative `.yukon/scores/<track>.json` path. Promotion remains manual.
+The shared workflow checks out the dispatched challenge commit and pinned verifier,
+resolves the track's selected submission, freezes intake, runs initial experiments,
+reviews, optionally runs one follow-up and final review, then finalizes the result.
+Experiment and finalization jobs do not receive provider credentials. The shared
+verifier owns execution, review and scoring; this repo does not implement a second
+runner or judge.
 
 ## Provisioning
 
-- `OPENROUTER_API_KEY`: repository Actions secret for the paid review provider; it is not a Yukon token.
-- `CURVESMASH_REVIEW_SIGNING_KEYS`: repository Actions secret holding the role-specific organizer service keys. Public authorities are in `evaluation/policy-v2.json`. Private keys remain outside the repository and experiment mounts.
-- `CURVESMASH_TRUSTED_SHA`: repository variable containing the full reviewed organizer commit. Participants cannot replace this release or its workflows.
+- `OPEN_AI_EIGEN_KEY`: repository Actions secret passed as the reusable workflow's
+  `OPENAI_API_KEY` for the configured review model.
+- `VERIFIER_CHECKOUT_TOKEN`: checkout credential if the verifier repository needs
+  private access. GitHub must also permit this repository to call that reusable
+  workflow. A checkout token alone does not grant reusable-workflow access.
+- Yukon must have the repository installation and permissions needed to dispatch
+  workflows and retrieve artifacts. Protect evaluator and workflow paths before
+  dispatch; a candidate-controlled workflow cannot secure its own credentials.
 
-The policy pins the exact provider model and immutable experiment image. Initial roles use separate requests and signing keys but the same model. There is no separate scientific-approval secret or receipt gate. A changed definition, review interface or price requires a new version and fresh review or a protected reassessment plan.
+The current caller does not use the retired OpenRouter, review-signing-key or
+trusted-SHA settings. `yukon_evaluation` is forwarded unchanged to the verifier.
+The output artifact is `benchmark-score`, containing
+`.yukon/<track>/score.json` at the manifest's exact `scorePath`. The dossier is
+uploaded separately. Promotion is manual.
 
-An optional workflow input `review_run_id` reuses an identical completed review without another provider call. All evidence, signatures, expiry and reconstructed acceptance are rechecked against fresh intake; changed evidence cannot reuse it.
+The manifest's setup and benchmark commands describe intake and finalization.
+They do not orchestrate review between those phases: a fresh local `yukon run`
+is not a complete substitute for the hosted workflow. Use the shared verifier's
+phase commands or the hosted workflow, as described in the root README.
 
-Tests use synthetic organizer records, not scientific approvals. Set `CURVESMASH_TEST_IMAGE` to the pinned Docker digest to include the live isolation check. The current ordinary baselines need no experiments because their argument is analytic.
+## Import and launch checks
 
-## Yukon
+Import all four tracks from the intended immutable source commit as fresh
+registrations, initially closed. These are Pareto evaluations with one objective,
+not the historical scalar registrations. `bls12-381-invert-g1` now names general
+pairing inversion; its historical fixed-Q0 registration must stay distinct.
+Do not update an old registration or transfer its scores merely because names match.
+Record the new benchmark IDs, source commit, objective and target semantics for
+UI configuration. The UI must read Pareto evaluations and the `time_log2` objective.
 
-The repository is public; the challenge is not yet imported. Request owner/import access through [Yukon's challenge form](https://www.yukon.org/create), including the production GitHub App installation and manual promotion permissions for `zac-williamson/curvesmash`. The installed solver CLI has no owner import command. A solver token does not establish importer authorization.
+The original secp256k1 and pairing candidates remain selected and require fresh
+evaluation; their historical scores are not current qualification. G1 and Miller
+select unscored templates. A completed invalid Pareto smoke result can test the
+evaluation pipeline but is not a qualified baseline. Verify
+actual import/smoke jobs, artifact ingestion, protected-path rejection, a valid
+candidate evaluation and manual promotion before opening submissions. Do not infer
+scientific qualification from successful intake or workflow completion.
 
-Once access is granted, import the root manifest with both tracks initially closed. Verify actual Yukon baseline jobs, score-artifact ingestion, a permitted candidate submission, protected-path rejection and manual promotion of the exact candidate commit. The platform must protect workflow files before dispatch; a check inside a replaced workflow cannot secure its own credentials. Do not invent successful registration or manually merge Yukon's submission PRs.
-
-GitHub artifacts expire after 30 days. Retain verified local exports and publish release archives containing the candidate, current rules, judgments, execution evidence and scores. Preserve unsuccessful attempts and earlier policies as historical records.
+Preserve every review attempt and export needed evidence before Actions artifacts
+expire. This document does not claim that a hosted import or qualification has run.

@@ -1,4 +1,10 @@
-# Baseline qualification
+# Historical baseline qualification
+
+**Historical evidence only.** The records below concern the retired evaluator,
+old reference prices and fixed-Q0 pairing target. They do not qualify the current
+four-track configuration. The original candidates remain selected, but their
+claimed scores are not qualified under the current rules. See
+[fresh review and score history](RESCORING.md).
 
 Both baselines passed ordinary live qualification on 12 October 2026 using protected source [`709b01339a7764a884a3a0554b0ae9152716f1c4`](https://github.com/zac-williamson/curvesmash/tree/709b01339a7764a884a3a0554b0ae9152716f1c4). Each run completed intake, four separate initial AI reviews and credential-free scoring. Both outcomes are `plausible_not_refuted`, with no confirmed fatal findings, blockers or infrastructure errors.
 
