@@ -1,5 +1,7 @@
 # Curvesma.sh
 
+Website source and publishing instructions: [website/README.md](website/README.md).
+
 Exploratory cryptanalysis of full-production secp256k1 discrete logarithms,
 BLS12-381 G1 discrete logarithms, general pairing inversion and raw Miller inversion. Each track contains protected `rules.md`
 and `verifier.json`, with target and cost definitions in JSON files.
