@@ -45,3 +45,18 @@ Replace the track ID with `bls12-381-invert-g1`, `bls12-381-g1-ecdlp` or
 `.yukon/<track>/supporting-code/initial.json`. Experiments declare their Python
 entrypoint and permitted inputs in `submission.json`; they run inside the shared
 verifier's isolated container, using Python's standard library.
+
+## License and hosted policies
+
+The original Curvesma.sh challenge materials by Zac Williamson, including the
+rules, cost model, documentation and two organizer baseline submissions, are
+licensed under the [Apache License 2.0](LICENSE). Copyright 2026 Zac Williamson.
+Third-party material retains its stated licence and attribution, including the
+[py_ecc MIT notice](submissions/bls12-381-invert-g1/py-ecc-LICENSE.txt). This notice
+does not relicense other participants' submissions or separately licensed
+Eigen Labs components.
+
+Eigen Labs hosts the Yukon challenge under the Terms of Service and Privacy
+Policy published on its challenge page; this repository adds no separate
+participation terms. See [terms](tracks/docs/legal/TERMS_OF_SERVICE.md) and
+[privacy](tracks/docs/legal/PRIVACY_POLICY.md).
