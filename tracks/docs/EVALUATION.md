@@ -1,6 +1,6 @@
 # Exploratory review
 
-All four tracks use `exploratory-single-review-v1` with the shared verifier's
+All six tracks use `exploratory-single-review-v1` with the shared verifier's
 `exploratory-v1` acceptance policy. The protected per-track `rules.md` and
 `verifier.json` are authoritative. Acceptance means plausible_not_refuted, not
 mathematical proof, novelty, human approval or a practical break.
@@ -27,10 +27,12 @@ reassessment protocol in this configuration. Infrastructure failures are not
 acceptance. Supporting heuristics must be concrete and supported; material
 uncertainty and surviving objections belong in the review reason.
 
-The sole objective is `time_log2`, lower is better. For BLS tracks it is evaluated
+The sole objective is `time_log2`, lower is better. For BLS tracks with auxiliary powers it is evaluated
 at n=2^20. Memory is supplementary. Manual promotion is a separate Yukon decision;
 review acceptance alone does not establish promotion or improvement.
 
 See [execution](EXECUTION.md), [experiments](EXPERIMENTS.md),
 [cost rules](COST_MODEL.md), [score history](RESCORING.md), and the
 [repository instructions](../../README.md).
+
+The additional `bls12-381-fixed-g1-invert-g2` track supplies P and z and returns Q. It has no auxiliary powers or n parameter and selects an unscored template. Register it separately and qualify a fresh candidate; no existing scores transfer.

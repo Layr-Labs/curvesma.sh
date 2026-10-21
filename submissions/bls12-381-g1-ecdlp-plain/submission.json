@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: submission template",
+  "claims": [
+    "Incomplete template: supply an attack, its success argument and a justified total computation bound. No score is claimed."
+  ],
+  "experiments": []
+}

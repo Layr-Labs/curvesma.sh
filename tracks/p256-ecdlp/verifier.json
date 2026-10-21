@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "bls12-381-miller-inversion",
-  "rules_path": "tracks/bls12-381-miller-inversion/rules.md",
+  "id": "p256-ecdlp",
+  "rules_path": "tracks/p256-ecdlp/rules.md",
   "review_standard": "exploratory-single-review-v1",
   "acceptance_policy": "exploratory-v1",
   "objectives": [
@@ -9,7 +9,7 @@
       "name": "time_log2",
       "direction": "-",
       "unit": "log2(target-group-operation equivalents)",
-      "semantics": "The submitted log2(W(1048576)) total-computation bound for bls12-381-miller-inversion in target-group-operation equivalents under rules.md; memory is supplementary.",
+      "semantics": "The submitted log2(total classical computation) bound for p256-ecdlp under rules.md, in the fixed reference-operation equivalents; no n parameter; memory is supplementary.",
       "score_source": {
         "claim": 0
       },
@@ -60,12 +60,12 @@
     "total_review_seconds": 360
   },
   "rules_files": [
-    "tracks/bls12-381-miller-inversion/target-profile.json",
+    "tracks/p256-ecdlp/target-profile.json",
     "tracks/classical-group-work-v2.json",
     "tracks/docs/COST_MODEL.md"
   ],
   "submission_selector": {
-    "path": "tracks/bls12-381-miller-inversion/selected-submission.txt",
-    "directory": "submissions/bls12-381-miller-inversion"
+    "path": "tracks/p256-ecdlp/selected-submission.txt",
+    "directory": "submissions/p256-ecdlp"
   }
 }

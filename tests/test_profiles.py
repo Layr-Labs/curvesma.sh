@@ -5,7 +5,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILES = {"targets": [json.loads((ROOT / "tracks" / name / "target-profile.json").read_text())
-    for name in ("secp256k1-ecdlp", "bls12-381-invert-g1")]}
+    for name in ("secp256k1-ecdlp", "bls12-381-fixed-g1-invert-g2")]}
+# The historical pairing fixtures also pin the unchanged BLS generators and field basis.
 VECTORS = json.loads((ROOT / "tests/fixtures/production-v1-vectors.json").read_text())
 
 
@@ -77,7 +78,7 @@ class ProfileArithmetic(unittest.TestCase):
             generator = self.decode_point(target["generator_P" if is_dlp else "generator_P0"], width, p)
             self.assertEqual((generator[1]**2 - generator[0]**3 - b) % p, 0)
             self.assertIsNone(multiply(generator, r, p))
-            for scalar, vector in zip((0, 1, 2, r-1), VECTORS[name], strict=True):
+            for scalar, vector in zip((0, 1, 2, r-1), VECTORS["bls12-381-invert-g1" if name == "bls12-381-fixed-g1-invert-g2" else name], strict=True):
                 with self.subTest(target=name, scalar=scalar):
                     encoded = vector["input"]["Q"] if is_dlp else vector["output"]["P"]
                     point = self.decode_point(encoded, width, p)
@@ -89,7 +90,7 @@ class ProfileArithmetic(unittest.TestCase):
         target = PROFILES["targets"][1]
         p, r = int(target["field_modulus"], 16), int(target["subgroup_order"], 16)
         values = []
-        for vector in VECTORS[target["id"]]:
+        for vector in VECTORS["bls12-381-invert-g1"]:
             encoded = vector["input"]["z"]
             self.assertEqual(len(encoded), 12)
             for c in encoded:
@@ -115,9 +116,12 @@ class ProfileArithmetic(unittest.TestCase):
         calibration = runpy.run_path(str(ROOT / "scripts/reference_operation_costs.py"))
         expected = calibration["reference_costs"]()
         self.assertEqual(cost["reference_operation_costs"], expected)
-        self.assertEqual(expected, {"secp256k1-ecdlp": 1000, "bls12-381-invert-g1": 20000,
+        self.assertEqual(expected, {"secp256k1-ecdlp": 1000,
                                     "bls12-381-g1-ecdlp": 2000,
-                                    "bls12-381-miller-inversion": 20000})
+                                    "bls12-381-fixed-g1-invert-g2": 20000,
+                                    "bls12-381-fixed-g2-invert-g1": 20000,
+                                    "bls12-381-g1-ecdlp-plain": 2000,
+                                    "p256-ecdlp": 1000})
         reference = PROFILES["targets"][1]["pairing"]["reference"]
         self.assertEqual(reference["commit"], "04151f01f59f902ab932a51e0ca0ebce3883fc51")
         self.assertEqual(len(reference["source_sha256"]), 4)

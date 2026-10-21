@@ -1,17 +1,15 @@
 # Curvesma.sh
 
-Exploratory cryptanalysis of full-production secp256k1 discrete logarithms,
-BLS12-381 G1 discrete logarithms, general pairing inversion and raw Miller inversion. Each track contains protected `rules.md`
+Exploratory cryptanalysis of full-production secp256k1 and P-256 discrete logarithms,
+BLS12-381 G1 discrete logarithms and both orientations of fixed-argument pairing inversion. Each track contains protected `rules.md`
 and `verifier.json`, with target and cost definitions in JSON files.
 Original baseline candidates are kept separately in the add-only `submissions/`.
 The sole metric is log2(total computation in target-group-operation equivalents),
 lower is better; success must be at least 39%. Memory is reported separately.
 
-The three BLS12-381 tracks provide public powers A_i=[s^i]P0, i=1..n.
-Attacks state their cost W(n); Yukon compares log2(W(n)) at n=2^20. The G1
-DLOG target shares s; pairing and Miller targets are independent of s. General
-pairing inversion returns both P and Q. Miller inversion uses the exact pinned
-raw map with fixed Q0, without final exponentiation.
+The auxiliary-powers G1 track (`bls12-381-g1-ecdlp`) provides public powers
+A_i=[s^i]P0, i=1..n, and asks for their secret s. Attacks state their cost W(n);
+Yukon compares log2(W(n)) at n=2^20. The other five tracks have no powers input.
 
 Install `tests/requirements.txt` in a Python environment, then run the scientific checks:
 
@@ -40,11 +38,42 @@ Run a candidate's declared Python experiments with Docker and the local
 bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp
 ```
 
-Replace the track ID with `bls12-381-invert-g1`, `bls12-381-g1-ecdlp` or
-`bls12-381-miller-inversion` for the BLS tracks. Results are written to
+Use any track ID from `benchmark.json` and its matching candidate directory.
+Results are written to
 `.yukon/<track>/supporting-code/initial.json`. Experiments declare their Python
 entrypoint and permitted inputs in `submission.json`; they run inside the shared
 verifier's isolated container, using Python's standard library.
+
+## Challenge tracks
+
+| Track | Input | Required output |
+| --- | --- | --- |
+| `secp256k1-ecdlp` | Q=[x]P on secp256k1 | Scalar x |
+| `p256-ecdlp` | Q=[x]P on NIST P-256 | Scalar x |
+| `bls12-381-g1-ecdlp-plain` | T=[x]P0 in BLS12-381 G1 | Scalar x |
+| `bls12-381-g1-ecdlp` | T=[s]P0 and powers A_i=[s^i]P0, i=1..n | Scalar s |
+| `bls12-381-fixed-g1-invert-g2` | Nonidentity P in G1 and z in GT | Q in G2 with e(P,Q)=z |
+| `bls12-381-fixed-g2-invert-g1` | Nonidentity Q in G2 and z in GT | P in G1 with e(P,Q)=z |
+
+Only the powers-assisted G1 track supplies auxiliary powers and evaluates
+work at n=2^20. The other five tracks have no auxiliary powers or n parameter.
+
+Both pairing tracks use BLS12-381. The supplied point is sampled uniformly
+from the nonidentity points of its group for each instance; z is independently
+uniform in GT. The solver must invert the pairing for that exact supplied point.
+Any justified classical method is eligible; no particular intermediate
+representation or inversion algorithm is required.
+
+BLS G1 discrete-log tracks use the G1 reference price C=2,000. Pairing
+inversion tracks use the dense Fp12 multiplication reference price C=20,000.
+P-256 uses the secp256k1 normalization unit C=1,000 instruction equivalents;
+this is not a measured P-256 addition cost. Actual P-256 arithmetic must be
+accounted for. See the [cost model](tracks/docs/COST_MODEL.md).
+
+P-256, both BLS G1 discrete-log tracks and both pairing orientations select
+unscored submission templates.
+Registration and baseline qualification are separate from defining a track;
+see the [import and launch checks](tracks/docs/EXECUTION.md).
 
 ## License and hosted policies
 

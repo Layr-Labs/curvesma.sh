@@ -37,18 +37,23 @@
     "nonuniform_advice_log2_bytes": "log2(max(1,advice_bytes)); included in peak storage"
   },
   "candidate_prices_allowed": false,
-  "normalization": "Divide charged scalar reference-instruction work by the fixed C for the track. G1 addition uses the batched incomplete affine 6M convention, with S=M and A=0. Pairing and Miller inversion use dense Fp12 multiplication. Prices are rounded organizer normalization constants grounded in the pinned measurements; they are not CPU timings or exact measured instruction counts.",
+  "normalization": "Divide charged scalar reference-instruction work by the fixed C for the track. G1 addition uses the batched incomplete affine 6M convention, with S=M and A=0. Pairing inversion use dense Fp12 multiplication. Prices are rounded organizer normalization constants grounded in the pinned measurements; they are not CPU timings or exact measured instruction counts.",
   "reference_operation_costs": {
     "secp256k1-ecdlp": 1000,
-    "bls12-381-invert-g1": 20000,
     "bls12-381-g1-ecdlp": 2000,
-    "bls12-381-miller-inversion": 20000
+    "bls12-381-fixed-g1-invert-g2": 20000,
+    "bls12-381-fixed-g2-invert-g1": 20000,
+    "bls12-381-g1-ecdlp-plain": 2000,
+    "p256-ecdlp": 1000
   },
   "reference_operations": {
     "secp256k1-ecdlp": "batched incomplete affine secp256k1 addition, 6M with S=M and A=0",
     "bls12-381-invert-g1": "dense Fp12 multiplication, calibrated with pinned blst",
     "bls12-381-g1-ecdlp": "batched incomplete affine BLS12-381 G1 addition, 6M with S=M and A=0",
-    "bls12-381-miller-inversion": "dense Fp12 multiplication, calibrated with pinned blst"
+    "bls12-381-fixed-g1-invert-g2": "dense Fp12 multiplication, calibrated with pinned blst",
+    "bls12-381-fixed-g2-invert-g1": "dense Fp12 multiplication, calibrated with pinned blst",
+    "bls12-381-g1-ecdlp-plain": "batched incomplete affine BLS12-381 G1 addition, 6M with S=M and A=0",
+    "p256-ecdlp": "Borrowed secp256k1 reference unit (1,000 instructions); not a P-256 addition price; account actual P-256 work in instructions"
   },
   "reference_measurement": "scripts/reference_costs/measurement.json"
 }

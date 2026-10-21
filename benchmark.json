@@ -61,64 +61,6 @@
       }
     },
     {
-      "name": "bls12-381-invert-g1",
-      "description": "Find any P in G1 and Q in G2 with e(P,Q)=z, with n auxiliary G1 powers; scored at n=2^20.",
-      "category": "cryptanalysis",
-      "mode": "pareto",
-      "promotionMode": "manual",
-      "direction": "-",
-      "objectives": [
-        {
-          "name": "time_log2",
-          "direction": "-"
-        }
-      ],
-      "paretoPolicies": {
-        "scoring": {
-          "version": "classical-group-work-v2"
-        },
-        "validity": {
-          "version": "exploratory-single-review-v1"
-        }
-      },
-      "editablePaths": [
-        "submissions/bls12-381-invert-g1",
-        "tracks/bls12-381-invert-g1/selected-submission.txt"
-      ],
-      "setupCommand": [
-        "llm-verifier",
-        "intake",
-        "--root",
-        ".",
-        "--config",
-        "tracks/bls12-381-invert-g1/verifier.json",
-        "--out",
-        ".yukon/bls12-381-invert-g1/intake.json"
-      ],
-      "benchmarkCommand": [
-        "llm-verifier",
-        "finalize",
-        "--intake",
-        ".yukon/bls12-381-invert-g1/intake.json",
-        "--initial",
-        ".yukon/bls12-381-invert-g1/initial.json",
-        "--initial-review",
-        ".yukon/bls12-381-invert-g1/review.json",
-        "--score",
-        ".yukon/bls12-381-invert-g1/score.json",
-        "--dossier",
-        ".yukon/bls12-381-invert-g1/dossier.json"
-      ],
-      "scorePath": ".yukon/bls12-381-invert-g1/score.json",
-      "maxSubmissionBytes": 262144,
-      "runner": {
-        "provider": "github-actions",
-        "workflow": "bls12-381-invert-g1.yml",
-        "scoreArtifactName": "benchmark-score",
-        "maxConcurrentWorkflows": 2
-      }
-    },
-    {
       "name": "bls12-381-g1-ecdlp",
       "description": "Recover s from T=[s]P0 and A_i=[s^i]P0 on BLS12-381 G1; scored at n=2^20.",
       "category": "cryptanalysis",
@@ -177,8 +119,8 @@
       }
     },
     {
-      "name": "bls12-381-miller-inversion",
-      "description": "Invert the pinned raw BLS12-381 Miller map M(P)=y with fixed Q0 and n auxiliary G1 powers; scored at n=2^20.",
+      "name": "bls12-381-fixed-g1-invert-g2",
+      "description": "Given a nonidentity P in G1 and z in GT, find Q in G2 with e(P,Q)=z; P is fixed by the challenge. No auxiliary powers.",
       "category": "cryptanalysis",
       "mode": "pareto",
       "promotionMode": "manual",
@@ -198,8 +140,8 @@
         }
       },
       "editablePaths": [
-        "submissions/bls12-381-miller-inversion",
-        "tracks/bls12-381-miller-inversion/selected-submission.txt"
+        "submissions/bls12-381-fixed-g1-invert-g2",
+        "tracks/bls12-381-fixed-g1-invert-g2/selected-submission.txt"
       ],
       "setupCommand": [
         "llm-verifier",
@@ -207,29 +149,203 @@
         "--root",
         ".",
         "--config",
-        "tracks/bls12-381-miller-inversion/verifier.json",
+        "tracks/bls12-381-fixed-g1-invert-g2/verifier.json",
         "--out",
-        ".yukon/bls12-381-miller-inversion/intake.json"
+        ".yukon/bls12-381-fixed-g1-invert-g2/intake.json"
       ],
       "benchmarkCommand": [
         "llm-verifier",
         "finalize",
         "--intake",
-        ".yukon/bls12-381-miller-inversion/intake.json",
+        ".yukon/bls12-381-fixed-g1-invert-g2/intake.json",
         "--initial",
-        ".yukon/bls12-381-miller-inversion/initial.json",
+        ".yukon/bls12-381-fixed-g1-invert-g2/initial.json",
         "--initial-review",
-        ".yukon/bls12-381-miller-inversion/review.json",
+        ".yukon/bls12-381-fixed-g1-invert-g2/review.json",
         "--score",
-        ".yukon/bls12-381-miller-inversion/score.json",
+        ".yukon/bls12-381-fixed-g1-invert-g2/score.json",
         "--dossier",
-        ".yukon/bls12-381-miller-inversion/dossier.json"
+        ".yukon/bls12-381-fixed-g1-invert-g2/dossier.json"
       ],
-      "scorePath": ".yukon/bls12-381-miller-inversion/score.json",
+      "scorePath": ".yukon/bls12-381-fixed-g1-invert-g2/score.json",
       "maxSubmissionBytes": 262144,
       "runner": {
         "provider": "github-actions",
-        "workflow": "bls12-381-miller-inversion.yml",
+        "workflow": "bls12-381-fixed-g1-invert-g2.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
+    },
+    {
+      "name": "bls12-381-fixed-g2-invert-g1",
+      "description": "Given a nonidentity Q in G2 and z in GT, recover P in G1 with e(P,Q)=z; no auxiliary powers.",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/bls12-381-fixed-g2-invert-g1",
+        "tracks/bls12-381-fixed-g2-invert-g1/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/bls12-381-fixed-g2-invert-g1/verifier.json",
+        "--out",
+        ".yukon/bls12-381-fixed-g2-invert-g1/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/bls12-381-fixed-g2-invert-g1/intake.json",
+        "--initial",
+        ".yukon/bls12-381-fixed-g2-invert-g1/initial.json",
+        "--initial-review",
+        ".yukon/bls12-381-fixed-g2-invert-g1/review.json",
+        "--score",
+        ".yukon/bls12-381-fixed-g2-invert-g1/score.json",
+        "--dossier",
+        ".yukon/bls12-381-fixed-g2-invert-g1/dossier.json"
+      ],
+      "scorePath": ".yukon/bls12-381-fixed-g2-invert-g1/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "bls12-381-fixed-g2-invert-g1.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
+    },
+    {
+      "name": "bls12-381-g1-ecdlp-plain",
+      "description": "Recover x from T=[x]P0 in BLS12-381 G1 without auxiliary powers.",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/bls12-381-g1-ecdlp-plain",
+        "tracks/bls12-381-g1-ecdlp-plain/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/bls12-381-g1-ecdlp-plain/verifier.json",
+        "--out",
+        ".yukon/bls12-381-g1-ecdlp-plain/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/bls12-381-g1-ecdlp-plain/intake.json",
+        "--initial",
+        ".yukon/bls12-381-g1-ecdlp-plain/initial.json",
+        "--initial-review",
+        ".yukon/bls12-381-g1-ecdlp-plain/review.json",
+        "--score",
+        ".yukon/bls12-381-g1-ecdlp-plain/score.json",
+        "--dossier",
+        ".yukon/bls12-381-g1-ecdlp-plain/dossier.json"
+      ],
+      "scorePath": ".yukon/bls12-381-g1-ecdlp-plain/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "bls12-381-g1-ecdlp-plain.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
+    },
+    {
+      "name": "p256-ecdlp",
+      "description": "Recover x from Q=[x]P on NIST P-256 (secp256r1).",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/p256-ecdlp",
+        "tracks/p256-ecdlp/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/p256-ecdlp/verifier.json",
+        "--out",
+        ".yukon/p256-ecdlp/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/p256-ecdlp/intake.json",
+        "--initial",
+        ".yukon/p256-ecdlp/initial.json",
+        "--initial-review",
+        ".yukon/p256-ecdlp/review.json",
+        "--score",
+        ".yukon/p256-ecdlp/score.json",
+        "--dossier",
+        ".yukon/p256-ecdlp/dossier.json"
+      ],
+      "scorePath": ".yukon/p256-ecdlp/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "p256-ecdlp.yml",
         "scoreArtifactName": "benchmark-score",
         "maxConcurrentWorkflows": 2
       }

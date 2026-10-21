@@ -6,7 +6,7 @@ if [[ $# != 2 ]]; then
 fi
 repo=$(cd "$(dirname "$0")/.." && pwd)
 case "$1" in
-  secp256k1-ecdlp|bls12-381-invert-g1|bls12-381-g1-ecdlp|bls12-381-miller-inversion) track=$1 ;;
+  secp256k1-ecdlp|bls12-381-g1-ecdlp|bls12-381-fixed-g1-invert-g2|bls12-381-fixed-g2-invert-g1|bls12-381-g1-ecdlp-plain|p256-ecdlp) track=$1 ;;
   *) echo "Unknown track: $1" >&2; exit 2 ;;
 esac
 source=$(cd "$2" && pwd)

@@ -1,4 +1,4 @@
-# bls12-381-invert-g1
+# bls12-381-fixed-g1-invert-g2
 
 This is an exploratory cryptanalysis challenge, not formal proof certification.
 Accept the complete claim only if it is concrete, evaluable, supported and has no
@@ -33,17 +33,22 @@ The protected target-profile.json and ../classical-group-work-v2.json files fix 
 target and accounting convention. Reference
 prices are rounded from instruction counts documented in ../docs/COST_MODEL.md,
 not hardware timings or best attacks.
-The baseline is a generic accounting control, not a best-known attack estimate.
+No baseline has been qualified for this track.
 
-The powers sequence is specified in target-profile.json. Give total work as a
-function W(n), with the stated applicability conditions. The published score
-is the bound on log2(W(2^20)); all submissions use this same n. Input generation
-is excluded, but every access and processing step performed by the attack counts.
-Supported attacks using these powers, including Cheon-type methods where their
-preconditions hold, are eligible. Do not assume that the pairing or Miller target
-exponent equals the independently sampled SRS secret.
+The challenge supplies a nonidentity P in G1 and a target z in GT. Return Q in
+G2 satisfying e(P,Q)=z for that exact P. P is fixed within the instance, not
+chosen by the solver or fixed to the same generator across all instances.
+This is fixed-argument pairing inversion (FAPI-1 in G1 x G2 argument order).
+The pinned library takes arguments in the reverse order: pairing(Q,P).
 
-Any valid pair (P,Q) is eligible; returning ([a]P0,Q0) after solving
-z=e(P0,Q0)^a by a GT discrete-log algorithm is one admissible approach.
-Q0 is allowed but not required. Recovering the independent SRS secret alone
-does not solve the target equation.
+There are no auxiliary powers and no n parameter. Submit log2(W) for the
+complete attack work, normalized by C=20,000 scalar instruction equivalents
+per reference dense Fp12 multiplication. The success probability is over both
+the independently uniform nonidentity input P and uniform GT target z, and
+fresh algorithm coins. The identity target is included; input P=infinity is
+excluded. All other shared accounting and exploratory review rules apply.
+
+The selected package is an unscored template, not a qualified baseline.
+Historical fixed-Q0/recover-G1 scores and any-pair inversion scores do not
+qualify this track. An admissible approach is to solve z=e(P,Q0)^a in GT and
+return Q=[a]Q0, but its complete work and success must be justified.
