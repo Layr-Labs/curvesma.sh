@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: exhaustive analytic control, 64-bit accounting",
+  "claims": [
+    {
+      "statement": "Deterministic full-order enumeration as specified in proof.md solves every honestly generated secp256k1-ecdlp input with success probability 1, total classical work at most 2^310 target-operation equivalents under classical-group-work-v2 (C=1000), no advice or heuristics, and the explicit preprocessing and memory bounds in proof.md. For BLS this holds for every 1<=n<r and is scored at n=2^20; secp has no auxiliary n. This is an analytic, deliberately noncompetitive baseline, not a measured practical attack.",
+      "score": {
+        "numerator": "310",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "kernels.md",
+        "py-ecc-LICENSE.txt"
+      ]
+    }
+  ],
+  "experiments": []
+}
