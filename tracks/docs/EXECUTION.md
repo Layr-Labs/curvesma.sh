@@ -1,6 +1,6 @@
 # Organizer execution
 
-The four workflows named in `benchmark.json` call
+The six workflows named in `benchmark.json` call
 `Layr-Labs/llm-verifier/.github/workflows/verify.yml` at the same immutable revision
 as their `verifier_revision` input. Keep both pins aligned when upgrading.
 
@@ -35,16 +35,16 @@ phase commands or the hosted workflow, as described in the root README.
 
 ## Import and launch checks
 
-Import all four tracks from the intended immutable source commit as fresh
+Import all six tracks from the intended immutable source commit as fresh
 registrations, initially closed. These are Pareto evaluations with one objective,
-not the historical scalar registrations. `bls12-381-invert-g1` now names general
-pairing inversion; its historical fixed-Q0 registration must stay distinct.
+not the historical scalar registrations. The retired any-pair and fixed-Q0
+registrations must stay distinct from the new fixed-argument tracks.
 Do not update an old registration or transfer its scores merely because names match.
 Record the new benchmark IDs, source commit, objective and target semantics for
 UI configuration. The UI must read Pareto evaluations and the `time_log2` objective.
 
-The original secp256k1 and pairing candidates remain selected and require fresh
-evaluation; their historical scores are not current qualification. G1 and Miller
+The secp256k1 candidate remains selected and requires fresh evaluation; its
+historical score is not current qualification. The remaining tracks
 select unscored templates. A completed invalid Pareto smoke result can test the
 evaluation pipeline but is not a qualified baseline. Verify
 actual import/smoke jobs, artifact ingestion, protected-path rejection, a valid
@@ -53,3 +53,10 @@ scientific qualification from successful intake or workflow completion.
 
 Preserve every review attempt and export needed evidence before Actions artifacts
 expire. This document does not claim that a hosted import or qualification has run.
+
+The additional `bls12-381-fixed-g1-invert-g2` track supplies P and z and returns Q. It has no auxiliary powers or n parameter and selects an unscored template. Register it separately and qualify a fresh candidate; no existing scores transfer.
+
+The manifest also includes `bls12-381-g1-ecdlp-plain`,
+`bls12-381-fixed-g2-invert-g1`, and `p256-ecdlp`. These have no auxiliary powers
+or n parameter and select unscored templates. Each needs a separate fresh
+registration and qualification before opening; existing results do not transfer.

@@ -1,4 +1,4 @@
-name: bls12-381-miller-inversion
+name: bls12-381-fixed-g2-invert-g1
 on:
   workflow_dispatch:
     inputs:
@@ -15,9 +15,9 @@ jobs:
       verifier_repository: Layr-Labs/llm-verifier
       verifier_revision: 64b3a2b01f21f1281383c673503964d2fc4c5c47
       root_dir: '.'
-      config_path: tracks/bls12-381-miller-inversion/verifier.json
+      config_path: tracks/bls12-381-fixed-g2-invert-g1/verifier.json
       submission_path: submission
-      score_path: .yukon/bls12-381-miller-inversion/score.json
+      score_path: .yukon/bls12-381-fixed-g2-invert-g1/score.json
       yukon_evaluation: ${{ inputs.yukon_evaluation }}
     secrets:
       OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}

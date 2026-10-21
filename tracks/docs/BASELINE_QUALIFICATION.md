@@ -2,7 +2,7 @@
 
 **Historical evidence only.** The records below concern the retired evaluator,
 old reference prices and fixed-Q0 pairing target. They do not qualify the current
-four-track configuration. The original candidates remain selected, but their
+six-track configuration. The secp256k1 candidate remains selected, but historical
 claimed scores are not qualified under the current rules. See
 [fresh review and score history](RESCORING.md).
 

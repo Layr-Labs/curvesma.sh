@@ -1,17 +1,15 @@
 # Curvesma.sh
 
-Exploratory cryptanalysis of full-production secp256k1 discrete logarithms,
-BLS12-381 G1 discrete logarithms, general pairing inversion and raw Miller inversion. Each track contains protected `rules.md`
+Exploratory cryptanalysis of full-production secp256k1 and P-256 discrete logarithms,
+BLS12-381 G1 discrete logarithms and both orientations of fixed-argument pairing inversion. Each track contains protected `rules.md`
 and `verifier.json`, with target and cost definitions in JSON files.
 Original baseline candidates are kept separately in the add-only `submissions/`.
 The sole metric is log2(total computation in target-group-operation equivalents),
 lower is better; success must be at least 39%. Memory is reported separately.
 
-The three BLS12-381 tracks provide public powers A_i=[s^i]P0, i=1..n.
-Attacks state their cost W(n); Yukon compares log2(W(n)) at n=2^20. The G1
-DLOG target shares s; pairing and Miller targets are independent of s. General
-pairing inversion returns both P and Q. Miller inversion uses the exact pinned
-raw map with fixed Q0, without final exponentiation.
+The auxiliary-powers G1 track (`bls12-381-g1-ecdlp`) provides public powers
+A_i=[s^i]P0, i=1..n, and asks for their secret s. Attacks state their cost W(n);
+Yukon compares log2(W(n)) at n=2^20. The other five tracks have no powers input.
 
 Install `tests/requirements.txt` in a Python environment, then run the scientific checks:
 
@@ -40,11 +38,51 @@ Run a candidate's declared Python experiments with Docker and the local
 bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp
 ```
 
-Replace the track ID with `bls12-381-invert-g1`, `bls12-381-g1-ecdlp` or
-`bls12-381-miller-inversion` for the BLS tracks. Results are written to
+Use any track ID from `benchmark.json` and its matching candidate directory.
+Results are written to
 `.yukon/<track>/supporting-code/initial.json`. Experiments declare their Python
 entrypoint and permitted inputs in `submission.json`; they run inside the shared
 verifier's isolated container, using Python's standard library.
+
+## Fixed-argument pairing inversion
+
+The track `bls12-381-fixed-g1-invert-g2` supplies a nonidentity P in G1
+and z in GT and asks for Q in G2 with e(P,Q)=z. The solver cannot choose P.
+It has no auxiliary powers or n parameter and uses the existing Fp12 reference
+price of 20,000. Its selected submission is an unscored template.
+
+Commit `0aee797` replaced the historical fixed-Q0/recover-P formulation with
+any-pair inversion. This new track restores the fixed-argument concept in the
+orientation requested here: supplied P, recover Q (FAPI-1). It does not reuse
+the historical track identity or its scores. The powers-assisted G1 discrete-log track remains alongside the ordinary DLOG tracks.
+A fresh Yukon registration and qualification are required before launch.
+
+## Additional tracks without auxiliary powers
+
+| Track | Input | Required output |
+| --- | --- | --- |
+| `bls12-381-g1-ecdlp-plain` | T=[x]P0 | Scalar x |
+| `bls12-381-fixed-g2-invert-g1` | Nonidentity Q in G2 and z in GT | P in G1 with e(P,Q)=z |
+| `p256-ecdlp` | Q=[x]P on NIST P-256 | Scalar x |
+
+These tracks have no auxiliary powers or n parameter. The ordinary BLS G1
+track is separate from the existing powers-assisted G1 track. Fixed-G2
+inversion supplies a random nonidentity Q per instance, unlike the historical
+fixed-generator Q0 formulation. Both fixed-argument orientations allow any
+justified solution method; neither requires raw Miller inversion.
+
+The BLS tracks reuse their corresponding existing reference prices. P-256
+borrows the secp256k1 1,000-instruction normalization unit; this does not price
+a P-256 addition at one unit. Its actual arithmetic must be accounted for.
+All three select unscored templates and require fresh registration and
+qualification. This branch defines six tracks; it does not open them on Yukon.
+
+## Retired tracks
+
+The any-pair inversion and standalone raw Miller-inversion tracks are no longer
+registered in the manifest and have no workflows or active configurations. Their
+submission files and historical calibration record are retained for provenance. Pairing
+inversion candidates may still use Miller-based or other methods.
 
 ## License and hosted policies
 

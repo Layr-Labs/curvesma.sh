@@ -12,11 +12,10 @@ reviews as historical evidence, including unsuccessful attempts.
 
 The two historical baseline packages use reference prices of 78,037,248
 (secp256k1) and 45,839,872 (pairing) word operations. The current prices are
-1,000 and 20,000 respectively; BLS G1 uses 2,000 and Miller uses 20,000.
+1,000 and 20,000 respectively; BLS G1 uses 2,000. The retired Miller track used 20,000.
 Their old claimed scores therefore cannot serve as current baselines. A new
 candidate must reconcile its full accounting with the current convention rather
-than automatically relabeling or importing an old number. General pairing also
-requires both P and Q and a justified W(n) statement at n=2^20.
+than automatically relabeling or importing an old number. The any-pair and raw Miller tracks are retired; their results remain historical.
 
 Current judging returns the submitted bound after acceptance; it does not silently
 tighten the score. This does not guarantee that a fresh review preserves an old

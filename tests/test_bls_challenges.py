@@ -6,31 +6,25 @@ import unittest
 
 import py_ecc
 from py_ecc.optimized_bls12_381 import (
-    FQ, FQ2, FQ12, G1, G2, Z1, Z2, b, curve_order, eq,
-    field_modulus, final_exponentiate, is_inf, is_on_curve,
+    FQ, FQ2, FQ12, G1, G2, Z1, Z2, b, b2, curve_order, eq,
+    field_modulus, is_inf, is_on_curve,
     multiply, normalize, pairing,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-PAIR = 'bls12-381-invert-g1'
 DLOG = 'bls12-381-g1-ecdlp'
-MILLER = 'bls12-381-miller-inversion'
+FIXED = 'bls12-381-fixed-g1-invert-g2'
+REVERSE = 'bls12-381-fixed-g2-invert-g1'
+PLAIN = 'bls12-381-g1-ecdlp-plain'
 
 
 def profile(name):
     return json.loads((ROOT / 'tracks' / name / 'target-profile.json').read_text())
 
 
-def miller(point):
-    if is_inf(point):
-        return FQ12.one()
-    x, y = normalize(point)
-    return pairing(G2, (x, y, FQ.one()), final_exponentiate=False)
-
-
 class BLSChallenges(unittest.TestCase):
     def test_reference_sources_and_curve_parameters(self):
-        for name in (PAIR, DLOG, MILLER):
+        for name in (DLOG, FIXED, REVERSE, PLAIN):
             p = profile(name)
             self.assertEqual(int(p['field_modulus'], 16), field_modulus)
             self.assertEqual(int(p['subgroup_order'], 16), curve_order)
@@ -49,41 +43,75 @@ class BLSChallenges(unittest.TestCase):
         self.assertTrue(eq(powers[0], multiply(G1, s)))
         for left, right in zip(powers, powers[1:]):
             self.assertTrue(eq(multiply(left, s), right))
-        for name in (PAIR, DLOG, MILLER):
+        for name in (DLOG,):
             p = profile(name)
             self.assertEqual(p['auxiliary_inputs']['scoring_n'], 1 << 20)
             self.assertEqual(set(p['input']) - {'n', 'A'},
-                             {'T'} if name == DLOG else {'z'} if name == PAIR else {'y'})
+                             {'T'})
         self.assertEqual((curve_order - 1) % (1 << 20), 0)
         self.assertEqual(set(profile(DLOG)['output']), {'s'})
         self.assertFalse(eq(multiply(G1, s + 1), powers[0]))
 
-    def test_general_pairing_accepts_a_nonfixed_g2_argument(self):
-        a, q = 7, 3
-        z = pairing(G2, multiply(G1, a))
-        P = multiply(G1, a * pow(q, -1, curve_order) % curve_order)
-        Q = multiply(G2, q)
-        self.assertFalse(eq(Q, G2))
-        self.assertEqual(pairing(Q, P), z)
-        self.assertNotEqual(pairing(Q, multiply(P, 2)), z)
-        self.assertEqual(set(profile(PAIR)['output']), {'P', 'Q'})
-        self.assertEqual(pairing(G2, Z1), FQ12.one())
-        self.assertEqual(pairing(Z2, G1), FQ12.one())
+    def test_fixed_g1_inversion_requires_the_supplied_point(self):
+        p = profile(FIXED)
+        self.assertEqual(set(p['input']), {'P', 'z'})
+        self.assertEqual(set(p['output']), {'Q'})
+        self.assertNotIn('auxiliary_inputs', p)
+        # Distinct supplied P values, including the generator; a=0 covers z=1.
+        for b_scalar, a in ((1, 0), (3, 7), (11, curve_order - 1)):
+            P = multiply(G1, b_scalar)
+            Q = multiply(G2, a)
+            z = pairing(G2, P) ** a
+            self.assertFalse(is_inf(P))
+            self.assertTrue(is_on_curve(Q, b2))
+            self.assertTrue(is_inf(multiply(Q, curve_order)))
+            self.assertEqual(pairing(Q, P), z)
+            self.assertEqual(is_inf(Q), z == FQ12.one())
+        # A pair acceptable to the any-pair track cannot replace the input P.
+        P = multiply(G1, 3)
+        Q = multiply(G2, 7)
+        z = pairing(Q, P)
+        replacement_P = multiply(P, 2)
+        replacement_Q = multiply(Q, pow(2, -1, curve_order))
+        self.assertEqual(pairing(replacement_Q, replacement_P), z)
+        self.assertNotEqual(pairing(replacement_Q, P), z)
+        self.assertNotEqual(pairing(Z2, P), z)
 
-    def test_miller_requires_raw_equality_not_only_final_exponentiation(self):
-        P = multiply(G1, 7)
-        y = miller(P)
-        self.assertNotEqual(y, FQ12.zero())
-        self.assertNotEqual(y ** curve_order, FQ12.one())
-        self.assertEqual(final_exponentiate(y), pairing(G2, P))
-        self.assertNotEqual(miller(multiply(P, 2)), y)
-        # Base-field factors disappear under final exponentiation. Such a
-        # changed value must not pass an exact raw-Miller equality check.
-        changed = y * FQ12([2] + [0] * 11)
-        self.assertNotEqual(changed, y)
-        self.assertEqual(final_exponentiate(changed), final_exponentiate(y))
-        self.assertEqual(miller(Z1), FQ12.one())
-        self.assertEqual(set(profile(MILLER)['output']), {'P'})
+    def test_fixed_g2_inversion_requires_the_supplied_point(self):
+        p = profile(REVERSE)
+        self.assertEqual(set(p['input']), {'Q', 'z'})
+        self.assertEqual(set(p['output']), {'P'})
+        self.assertNotIn('auxiliary_inputs', p)
+        for q_scalar, a in ((1, 0), (3, 7), (11, curve_order - 1)):
+            Q = multiply(G2, q_scalar)
+            P = multiply(G1, a)
+            z = pairing(Q, G1) ** a
+            self.assertFalse(is_inf(Q))
+            self.assertTrue(is_on_curve(P, b))
+            self.assertTrue(is_inf(multiply(P, curve_order)))
+            self.assertEqual(pairing(Q, P), z)
+            self.assertEqual(is_inf(P), z == FQ12.one())
+        P, Q = multiply(G1, 7), multiply(G2, 3)
+        z = pairing(Q, P)
+        replacement_Q = multiply(Q, 2)
+        replacement_P = multiply(P, pow(2, -1, curve_order))
+        self.assertEqual(pairing(replacement_Q, replacement_P), z)
+        self.assertNotEqual(pairing(Q, replacement_P), z)
+        self.assertNotEqual(pairing(Q, Z1), z)
+
+    def test_plain_g1_discrete_log_and_pairing_transfer(self):
+        p = profile(PLAIN)
+        self.assertEqual(set(p['input']), {'T'})
+        self.assertEqual(set(p['output']), {'x'})
+        self.assertNotIn('auxiliary_inputs', p)
+        generator = pairing(G2, G1)
+        for x in (0, 1, 7, curve_order - 1):
+            T = multiply(G1, x)
+            self.assertTrue(is_on_curve(T, b))
+            self.assertTrue(is_inf(multiply(T, curve_order)))
+            self.assertEqual(pairing(G2, T), generator ** x)
+            self.assertFalse(eq(T, multiply(G1, (x + 1) % curve_order)))
+            self.assertEqual(is_inf(T), x == 0)
 
     def test_subgroup_requirement_is_material(self):
         point = (FQ(0), FQ(2), FQ.one())
@@ -95,7 +123,11 @@ class BLSChallenges(unittest.TestCase):
     def test_yukon_tracks_keep_the_existing_interface(self):
         manifest = json.loads((ROOT / 'benchmark.json').read_text())
         self.assertEqual({t['name'] for t in manifest['tracks']},
-                         {'secp256k1-ecdlp', PAIR, DLOG, MILLER})
+                         {'secp256k1-ecdlp', 'p256-ecdlp', DLOG, FIXED, REVERSE, PLAIN})
+        for retired in ('bls12-381-invert-g1', 'bls12-381-miller-inversion'):
+            self.assertFalse((ROOT / 'tracks' / retired).exists())
+            self.assertFalse((ROOT / '.github/workflows' / (retired + '.yml')).exists())
+            self.assertNotIn(retired, (ROOT / 'scripts/run_experiments.sh').read_text())
         for track in manifest['tracks']:
             name = track['name']
             c = json.loads((ROOT / 'tracks' / name / 'verifier.json').read_text())
@@ -114,6 +146,7 @@ class BLSChallenges(unittest.TestCase):
             self.assertTrue(selected == selector['directory'] or
                             selected.startswith(selector['directory'] + '/'))
             self.assertTrue((ROOT / selected / 'submission.json').is_file())
+            self.assertIn(name, (ROOT / 'scripts/run_experiments.sh').read_text())
             workflow = (ROOT / '.github/workflows' / track['runner']['workflow']).read_text()
             self.assertIn('verify.yml@64b3a2b01f21f1281383c673503964d2fc4c5c47', workflow)
             self.assertIn(f'config_path: tracks/{name}/verifier.json', workflow)

@@ -37,7 +37,17 @@ def reference_costs(results=None):
                 'bls12-381-miller-inversion': slopes['fp12']}
     if measured != record['measured_reference_work']:
         raise ValueError('Measured work does not match the calibration record')
-    return record['fixed_reference_prices']
+    # The added fixed-argument track reuses the existing Fp12 calibration.
+    # Preserve the historical measurement record, but expose active tracks only.
+    prices = dict(record['fixed_reference_prices'])
+    prices.pop('bls12-381-miller-inversion')
+    prices['bls12-381-fixed-g1-invert-g2'] = prices['bls12-381-invert-g1']
+    prices['bls12-381-fixed-g2-invert-g1'] = prices['bls12-381-invert-g1']
+    prices['bls12-381-g1-ecdlp-plain'] = prices['bls12-381-g1-ecdlp']
+    # Borrowed normalization only; no P-256 measurement is claimed.
+    prices['p256-ecdlp'] = prices['secp256k1-ecdlp']
+    prices.pop('bls12-381-invert-g1')
+    return prices
 
 
 if __name__ == '__main__':

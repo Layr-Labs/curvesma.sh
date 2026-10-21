@@ -1,4 +1,4 @@
-# bls12-381-miller-inversion
+# bls12-381-g1-ecdlp-plain
 
 This is an exploratory cryptanalysis challenge, not formal proof certification.
 Accept the complete claim only if it is concrete, evaluable, supported and has no
@@ -33,11 +33,18 @@ The protected target-profile.json and ../classical-group-work-v2.json files fix 
 target and accounting convention. Reference
 prices are rounded from instruction counts documented in ../docs/COST_MODEL.md,
 not hardware timings or best attacks.
+Given only T=[x]P0 in G1, recover the scalar x in 0..r-1. There are no
+auxiliary powers, no SRS secret and no n parameter. The identity target is
+included and has scalar 0. This is distinct from bls12-381-g1-ecdlp, whose
+powers of the target secret are part of its input.
 
-The powers sequence is specified in target-profile.json. Give total work as a
-function W(n), with the stated applicability conditions. The published score
-is the bound on log2(W(2^20)); all submissions use this same n. Input generation
-is excluded, but every access and processing step performed by the attack counts.
-Supported attacks using these powers, including Cheon-type methods where their
-preconditions hold, are eligible. The G1 DLOG target shares the SRS secret; pairing and Miller targets are
-independent of it.
+Submit log2(W) for total work using the existing BLS G1 reference price
+C=2,000. Any justified classical method is eligible, including transferring
+the discrete logarithm to GT via the public pairing. In that case, charge
+all pairing, finite-field computation, preprocessing, descent, and other
+work in the same instruction-equivalent model. Recover the scalar, not just
+a preimage point. No method, including a number field sieve variant, is
+required or assumed to be optimal.
+
+No baseline has been qualified for this track. The selected package is an
+unscored template; historical scores do not qualify this target.

@@ -1,1 +1,0 @@
-submissions/bls12-381-invert-g1
