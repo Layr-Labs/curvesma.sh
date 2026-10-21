@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: bounded 32-adding rho with explicit heuristic",
+  "claims": [
+    {
+      "statement": "For ONLY bls12-381-g1-ecdlp, the bounded 32-adding Pollard rho algorithm and track reduction in proof.md have success probability at least 0.39 under the explicitly stated and supported random-walk heuristic H. Total computation is bounded by 2^166 target-operation equivalents under classical-group-work-v2 at the protected scoring parameters (C=2000), including every attempt, preprocessing and verification. The claim is heuristic in runtime success, not unconditional; output checks and the instruction cap are unconditional. Memory, zero advice, preprocessing and, where applicable, W(n) are specified in proof.md. No practical production solve is claimed.",
+      "score": {
+        "numerator": "166",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho",
+      "source": "experiment.py",
+      "purpose": "Check invariant, collision recovery and bounded restarts on four toy prime-order groups. Does not certify production mixing or instruction counts.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 64
+        }
+      ]
+    }
+  ]
+}
