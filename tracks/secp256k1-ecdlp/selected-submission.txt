@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/codex-bsgs-20261021-v2
