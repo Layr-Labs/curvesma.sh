@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: deterministic bsgs accounting control",
+  "claims": [
+    {
+      "statement": "The algorithm in proof.md solves this full-production track with success probability 1, total work at most 2^180 fixed reference-operation equivalents, peak memory at most 2^145 bytes, no nonuniform advice, and all preprocessing included. This is an analytic conservative accounting control, not a practical break.",
+      "score": {
+        "numerator": "180",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "finite-search",
+      "source": "experiment.py",
+      "purpose": "Check deterministic search with every target and invertible base in small cyclic groups, including identity. No production complexity inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 101
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 31
+        }
+      ]
+    }
+  ]
+}
