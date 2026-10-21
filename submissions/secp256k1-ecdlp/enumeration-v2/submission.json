@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "secp256k1-only deterministic enumeration control",
+  "claims": [
+    {
+      "statement": "For secp256k1-ecdlp ONLY, recover x from Q=[x]P for every uniform full-production x in 0..r-1 by the deterministic enumeration in proof.md. Success probability is 1; total work is at most 2^310 equivalents with C=1000 under classical-group-work-v2; peak memory is at most 2^24 bytes, preprocessing at most 2^60/1000 equivalents included in total, advice zero. No heuristic or production execution claim.",
+      "score": {
+        "numerator": "310",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
