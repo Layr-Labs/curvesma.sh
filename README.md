@@ -1,47 +1,114 @@
-# Curvesma.sh
+# CurveSmash
 
-Exploratory cryptanalysis of full-production secp256k1 discrete logarithms,
-BLS12-381 G1 discrete logarithms, general pairing inversion and raw Miller inversion. Each track contains protected `rules.md`
-and `verifier.json`, with target and cost definitions in JSON files.
-Original baseline candidates are kept separately in the add-only `submissions/`.
-The sole metric is log2(total computation in target-group-operation equivalents),
-lower is better; success must be at least 39%. Memory is reported separately.
+CurveSmash is a cryptanalysis challenge hosted on Yukon. Solvers submit an
+algorithm, an argument for why it works, and a justified computation bound.
+Yukon sends the package to the shared LLM verifier for hosted review.
 
-The three BLS12-381 tracks provide public powers A_i=[s^i]P0, i=1..n.
-Attacks state their cost W(n); Yukon compares log2(W(n)) at n=2^20. The G1
-DLOG target shares s; pairing and Miller targets are independent of s. General
-pairing inversion returns both P and Q. Miller inversion uses the exact pinned
-raw map with fixed Q0, without final exponentiation.
+## Four challenge tracks
 
-Install `tests/requirements.txt` in a Python environment, then run the scientific checks:
+| Track | Goal |
+| --- | --- |
+| `secp256k1-ecdlp` | Given Q = [x]P, recover x. |
+| `bls12-381-g1-ecdlp` | Recover s from a G1 target and auxiliary powers of s. |
+| `bls12-381-invert-g1` | Given z, find both P and Q such that e(P, Q) = z. |
+| `bls12-381-miller-inversion` | Recover P from the raw Miller map with fixed Q₀, without final exponentiation. |
+
+Each track has independent results. Lower total computation is better: the score
+is log₂ of work in that track's reference-operation units. Success probability
+must be at least 39%; memory is reported separately. The three BLS tracks provide
+auxiliary powers and are scored at n = 2²⁰. Their secret matches the target's
+secret in the G1 track and is independent of the pairing and Miller targets.
+Read your track's rules and target profile before developing a candidate.
+
+## What to submit
+
+A submission is a self-contained cryptanalytic claim: an algorithm, a mathematical
+argument supporting it, and a justified computation bound. Include supporting
+code or data when useful. You do not need to carry out an exponentially large
+attack; the reviewer assesses whether the claimed algorithm and accounting are
+supported by the submitted evidence.
+
+Each candidate folder contains `submission.json`, the argument files it references,
+and any declared experiment files. The first claim declares the score. Explain
+preprocessing, failed attempts, success probability and any heuristic assumptions
+under the track's rules. Existing candidates are examples to inspect, not proof
+that their claims have been accepted under the current rules.
+
+## Solver workflow
+
+**Clone → read the rules → prepare a candidate → submit to Yukon.**
+
+Do not use `yukon setup` or `yukon run` as part of this challenge's solver workflow,
+even if the generic CLI getting-started message suggests them. Solvers do not
+need to install the local verifier, configure a judge-provider key or produce a
+local score. Evaluation happens through the hosted submission workflow.
+
+1. Clone the challenge through Yukon and select your assigned track. Work from
+   the repository root and read `tracks/<track>/rules.md`, `target-profile.json`
+   and the shared [cost model](tracks/docs/COST_MODEL.md).
+2. Add a new candidate folder under `submissions/<track>/`. Preserve existing
+   submission files: this directory is add-only. Update
+   `tracks/<track>/selected-submission.txt` to your new folder's repo-relative
+   path. Those are the track's editable locations; leave rules, verifier
+   configuration and sibling tracks unchanged.
+3. When the package is ready and the track is open, submit through Yukon.
+   For example, replace the model and harness placeholders with your actual values:
+
+   ```sh
+   yukon submit --track secp256k1-ecdlp \
+     --note-file submission-note.md \
+     --model '<exact model>' --harness '<actual harness>' \
+     --dependencies-file dependencies.json
+   ```
+
+   Follow the installed Yukon CLI skill (`yukon skill`) for authentication,
+   track selection, public notes, dependency declarations and inspecting results.
+   Keep the note and dependency file outside the candidate folder. Use
+   `--no-dependencies` instead of the file only when no prior submissions were
+   materially reused.
+4. Read the hosted review's findings. If revising your argument, add a new
+   candidate folder, update the selector and submit the revision.
+
+## What happens after submission
+
+Yukon uploads the selected track's editable files and dispatches its GitHub Actions
+workflow. The shared LLM verifier validates the package and runs declared candidate
+experiments in isolated Docker containers with resource limits and no access to
+judge credentials. An AI reviewer uses the argument and experiment results to
+assess the claims, and may request one follow-up experiment batch before the
+result is finalized. Candidate code runs inside these containers; the separate
+review job holds the judge credentials and does not execute candidate code.
+
+The workflow returns the review result and a score when the claim is accepted
+and scoreable. Yukon records the result; promotion is manual. A submission does
+not need an existing local score file to enter this process.
+
+## Repository layout
+
+- `benchmark.json` registers the four tracks and their hosted workflows with Yukon.
+- `tracks/<track>/` holds the rules, target profile, verifier configuration and
+  candidate selector.
+- `submissions/<track>/` holds the candidate packages.
+- `.github/workflows/` connects each track to the shared hosted verifier.
+- `scripts/` and `tests/` contain supporting tools and organizer checks.
+
+Operator details are separate from the solver workflow: see the
+[execution notes](tracks/docs/EXECUTION.md),
+[experiment guide](tracks/docs/EXPERIMENTS.md), and the verifier's
+[optional local phases](https://github.com/Layr-Labs/llm-verifier/blob/64b3a2b01f21f1281383c673503964d2fc4c5c47/README.md#independent-phases).
+
+## Rules and interpretation
+
+The protected definitions live in `tracks/<track>/rules.md`, `target-profile.json`
+and `verifier.json`, with shared accounting in
+[the cost model](tracks/docs/COST_MODEL.md). AI acceptance is exploratory, not
+mathematical proof or evidence of a practical break. Included baseline arguments
+are accounting controls, not best-known attacks, and have not been qualified
+under the current review configuration.
+
+Organizer scientific tests are separate from hosted submission review. Install
+`tests/requirements.txt` in a Python environment, then run:
 
 ```sh
-python3 -m unittest discover -s tests
+python -m unittest discover -s tests
 ```
-
-Add each new candidate in its own folder under `submissions/<track>/`, with a
-`submission.json`, argument and any supporting code/data. Existing files are
-add-only. Set `tracks/<track>/selected-submission.txt` to the new folder's
-repo-relative path; Yukon evaluates that folder. The first claim declares the score.
-One Astra
-reviewer applies exploratory acceptance; acceptance is not proof or a practical break.
-The existing baseline arguments are accounting controls, not best-known attacks.
-They have not been qualified under this new review configuration.
-
-Yukon owns submission handling, promotion and UI. Actions calls the shared verifier
-workflow using `OPEN_AI_EIGEN_KEY` and, for private checkout, `VERIFIER_CHECKOUT_TOKEN`.
-The manifest commands describe separate phases; local `yukon run` does not orchestrate
-the intervening review. Use the verifier's phase commands or the hosted workflow.
-
-Run a candidate's declared Python experiments with Docker and the local
-`llm-verifier` package installed (no API key needed):
-
-```sh
-bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp
-```
-
-Replace the track ID with `bls12-381-invert-g1`, `bls12-381-g1-ecdlp` or
-`bls12-381-miller-inversion` for the BLS tracks. Results are written to
-`.yukon/<track>/supporting-code/initial.json`. Experiments declare their Python
-entrypoint and permitted inputs in `submission.json`; they run inside the shared
-verifier's isolated container, using Python's standard library.
