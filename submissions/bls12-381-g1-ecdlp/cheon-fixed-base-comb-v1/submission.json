@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon fixed-base comb bound",
+  "claims": [
+    {
+      "statement": "At the scoring width n = 2^20, given P0, T = [s]P0 and the public powers A_i = [s^i]P0 on BLS12-381 G1, the deterministic Cheon index search in proof.md, with each phase-1 scalar evaluated by a window-96 fixed-base comb, recovers s with probability 1. The search uses d = n, which divides r - 1. Total classical work is W(n) = 9388543893536700382679492616969018939 target-group-operation equivalents at C = 2000, with H = 0 and every elliptic operation charged as instructions. The declared score 122820313/1000000 = 122.820313 is a ceiling of log2(W(2^20)). Peak memory is 114494450711746397248685242361513508864 bytes (log2 ceiling 126.428546). Preprocessing is at most 2677278067682020495961037742178 reference units (log2 ceiling 101.078610) and is included in W. Nonuniform advice is 0 bytes. This is an accounting bound for the specified comb, not a production computation of s and not a citation of an uncosted square-root improvement.",
+      "score": {
+        "numerator": "122820313",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-toy",
+      "source": "experiment.py",
+      "purpose": "Factor r-1, check the primitive root, recompute W, check the score ceiling, run Cheon index arithmetic on small prime orders, and compare a width-8 comb with binary multiplication on one 64-bit secp256k1 scalar. This is not a production discrete log.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "toy_prime": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 65537
+          }
+        },
+        "required": [
+          "toy_prime"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "toy_prime": 101
+        }
+      ]
+    }
+  ]
+}
