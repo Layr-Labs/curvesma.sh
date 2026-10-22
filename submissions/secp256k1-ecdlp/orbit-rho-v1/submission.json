@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: orbit-collision r-adding walk on the six-element GLV automorphism quotient",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. The orbit-collision r-adding walk in proof.md succeeds with probability at least 1/2 over the uniform challenge and fresh algorithm coins, using at most 2^128.043099 total target-group-operation equivalents, including preprocessing, all increment construction, the complete T-step walk budget (success or failure), every collision-table insertion and lookup, memory transfers, verification and output. Peak memory is at most 2^135.001409 bytes; preprocessing is at most 2^30.584963 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes. The bound uses the protected secp256k1 reference price C=1000 and the pinned 5x52 field-multiplication count 179. It relies on the disclosed random-walk and random-hash heuristics for the six-element GLV automorphism quotient; the orbit count is exact, exceptional cases and all work are charged, and limitations and sensitivity are in proof.md. This is a classical cold attack: no quantum steps, uncharged advice, or amortization over future targets. It is an analytic bound with bounded supporting experiments, not a production break.",
+      "score": {
+        "numerator": "128043099",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "orbit-walk-toy-and-profile",
+      "source": "experiment.py",
+      "purpose": "Check the class-walk algebra and birthday scaling on small additive cyclic groups, verify the production secp256k1 endomorphism constants and orbit sizes, and recompute the exact analytic ledger integers and inequalities. This is supporting evidence at its stated scope; it does not establish production behavior, AArch64 instruction counts, or an executed production attack.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 1000003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "increments": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4096
+          }
+        },
+        "required": [
+          "order",
+          "trials",
+          "seed",
+          "increments"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 1000003,
+          "trials": 300,
+          "seed": 20261022,
+          "increments": 1024
+        }
+      ]
+    }
+  ]
+}
