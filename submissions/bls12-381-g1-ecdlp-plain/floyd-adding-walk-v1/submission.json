@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: Floyd adding-walk bound",
+  "claims": [
+    {
+      "statement": "For uniform x in [0, r) and T = [x]P0 in BLS12-381 G1, with no auxiliary powers, the single-seed Floyd adding walk specified in proof.md returns the scalar with probability at least 0.39 over the uniform production challenge and fresh algorithm coins. Total classical work is at most W = 14157004198877407514281507541999956855927 target-group-operation equivalents, including every online step, the jump setup, verification, and the instruction reserve. The declared score 133378640/1000000 = 133.378640 is a ceiling of log2(W) at resolution 10^(-6). Peak memory is at most 2^20 bytes. Preprocessing independent of the challenge is at most W_pre = 536871 target-group-operation equivalents (log2 ceiling 19.034216) and is included in W. Nonuniform advice is 0 bytes. The figure 0.39 is a lower bound under the random-mapping comparison stated in proof.md; it is not a theorem that the adding walk is a random mapping, and no production discrete logarithm is computed.",
+      "score": {
+        "numerator": "133378640",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-toy",
+      "source": "experiment.py",
+      "purpose": "Recompute W from the public order and the instruction constants, check that the declared rational is a 10^(-6) ceiling of log2(W), and recover scalars on three prime-order additive groups. This does not establish production mixing, memory, or cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30
+          }
+        },
+        "required": [
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 30
+        }
+      ]
+    }
+  ]
+}
