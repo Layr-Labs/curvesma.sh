@@ -1,0 +1,38 @@
+{
+  "kind": "analytic_ledger_not_official_score",
+  "parameters": {
+    "m": "170141183460469231731687303715884105728",
+    "h": "170141183460469231731687303715884105728",
+    "d": "340282366920938463463374607431768211455",
+    "block_size": 4096,
+    "C": 1000
+  },
+  "instructions": {
+    "fixed": "1099511627776",
+    "initialization": "178405961588244985132285746181186892047843328",
+    "babies": "67599133883045951397780146013965345815003136",
+    "giants": "67599133883045951397780146013965345815003136",
+    "streams": "89202980794122492566142873090593446023921664",
+    "intersection": "2787593149816327892691964784081045188247552"
+  },
+  "total_instructions": "405594803298275708386680876083793174401646592",
+  "submitted_log2_bound": {
+    "numerator": "553",
+    "denominator": "4"
+  },
+  "exact_bound_check": "T**4 < 1000**4 * 2**553",
+  "exact_bound_holds": true,
+  "coverage": "57896044618658097711785492504343953926464851149359812787997104700240680714240",
+  "twice_coverage_minus_order": "92138019644721193389046258963199934143",
+  "memory_bytes_bound": "44601490397061246283071436545296723028738048",
+  "memory_below_2_to_146": true,
+  "preprocessing_bound": "Included in T; same conservative log2 bound553/4",
+  "heuristics": [],
+  "rule_hashes": {
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/secp256k1-ecdlp/rules.md": "2408941d15e056e94477a6a28001c4beae32cf02aa2da7085353d5eb703c6cfb",
+    "tracks/secp256k1-ecdlp/target-profile.json": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+    "tracks/secp256k1-ecdlp/verifier.json": "8106a99d9cf04d712e3f9776d2edb2b2597c36abc66c513d1a8d77f3ddbffd83",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294"
+  }
+}
