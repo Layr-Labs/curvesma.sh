@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: parallel Pollard rho on size-6 classes with distinguished points",
+  "claims": [
+    {
+      "statement": "Problem: given T=[x]P0 in BLS12-381 G1 (y^2=x^3+4 over Fp, G1=<P0> of prime order r, log2 r=254.857), x uniform in 0..r-1, recover x. Algorithm: parallel Pollard rho with distinguished points on the N'=(r-1)/6 equivalence classes of G1 minus infinity under negation and the order-3 endomorphism (x,y)->(beta*x,y), with an r-adding walk over a table of 2^16 random points [a]P0+[c]T, 2^14 independent walkers, distinguished-point probability 2^-98 per step, fixed-period (64 steps) cycle detection whose escape doubles the smallest class of the detected cycle, and scalar recovery from the first useful collision of two distinguished classes, followed by verification [x]P0=T. Success probability at least 0.39: the run budget is 1.03*sqrt(2*ln(1/0.61)*N') walk steps, which gives 1-exp(-0.5244)=0.408 under the random-class model, plus an allowance of 24/theta steps per walker so that every collided trail reaches a distinguished point (miss probability e^-24 per collision). Total work at most 2^126.60 target-group-operation equivalents (W=2^126.5981 before rounding up): about 2^126.1723 walk steps, each charged one batched incomplete affine G1 addition (reference unit, C=2000) plus 650 scalar AArch64 instructions (0.325 unit) for the Fp multiplication by beta, the third class representative, canonical class choice, hashing, distinguished-point test, table lookup, scalar bookkeeping and the cycle check, plus 0.0183 unit per step (300 units per event, at most 2^-14 events per step) for detecting and escaping fruitless cycles; table construction, walker starts, distinguished-point processing, recovery and verification total below 2^41 units. Peak memory 2^36.5 bytes (distinguished-point store); preprocessing 2^29 units (included in the total); advice 2^0; classical, no quantum steps. Heuristics: the class walk behaves like a random function on classes (Teske 2001, van Oorschot-Wiener 1999), with a 3% length margin; the distinguished-point hash bits are independent of the table-index bits.",
+      "score": {
+        "numerator": "12660",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class6-rho",
+      "source": "experiment.py",
+      "purpose": "End-to-end run of the same method (class-6 canonical form, r-adding walk, distinguished points, fixed-period cycle escape, scalar recovery) on a toy prime-order curve y^2=x^3+2 over F_30091 with the same endomorphism structure. It checks correctness of the construction only, not production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 20
+        }
+      ]
+    }
+  ]
+}
