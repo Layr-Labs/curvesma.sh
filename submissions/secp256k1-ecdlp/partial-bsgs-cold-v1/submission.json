@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Deterministic half-coverage BSGS with conservative scalar-instruction accounting",
+  "claims": [
+    {
+      "statement": "For the unchanged unrestricted-production secp256k1 target, the deterministic classical cold algorithm in proof.md returns the exact canonical scalar for every x in [0,2^255), and otherwise reports failure. Its success probability over the protected uniform distribution is 2^255/r > 1/2, hence at least 0.5. On every valid target, including unsuccessful targets, total work is less than 2^146 target-group-operation equivalents at the fixed C=1000 scalar AArch64 instructions per equivalent. Peak total storage is less than 2^150 bytes. Preprocessing is less than 2^145 equivalents and is included in total work. Nonuniform advice is zero bytes (reported advice logarithm 0 under the protected max(1,bytes) convention). All preprocessing, routed transfers, sorting, lookup, arithmetic, verification and output are charged. There is no randomness, heuristic, quantum step, free oracle, or amortization. The construction is an analytic accounting control requiring astronomical resources, not a practical attack or best-known complexity claim.",
+      "score": {
+        "numerator": "146",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "evidence.md",
+        "verification.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
