@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "candidate-attack",
+  "algorithm": "gt-pollard-rho-frobenius-classes-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.19,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 92.5,
+    "preprocessing_log2": 50.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Random-mapping behaviour of the class walk with s = 2^20 adding-walk branches, covered by a 5% step margin",
+    "No unresolved fruitless cycle longer than 64 steps (probability below 2^-100 per step)",
+    "Key and jump-index hashes behave as random functions"
+  ],
+  "limitations": [
+    "Analytic cost; no full-size execution.",
+    "Memory is astronomical (2^92.5 bytes) and unscored.",
+    "Per-step instruction count is an estimate from blst's 383 instructions per Fp multiplication, charged with a margin."
+  ],
+  "lane": "exploratory"
+}

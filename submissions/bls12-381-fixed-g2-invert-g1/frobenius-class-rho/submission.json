@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Pollard rho in GT on Frobenius classes",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT (BLS12-381 fixed-argument pairing inversion into G1, C = 20,000), compute g = e(P0, Q) with one reduced pairing, find x = log_g z by parallel Pollard rho with distinguished points on classes under the order-12 Frobenius action z -> z^p (class size 12, N' = (r-1)/12 + 1), and output P = [x]P0. A fixed budget of T = 1.05 k + 2^64 walk steps, k = sqrt(0.98859 N'), halts with success probability at least 0.39 (birthday bound 1 - exp(-k(k-1)/(2N')) with a 5% margin). Total work is at most 2^126.19 dense Fp12 multiplication equivalents, including the pairing, jump table, 1.40 units per step (one dense multiplication plus 8,000 charged instructions of key computation), distinguished-point handling, walk starts, cycle handling, scalar multiplication and verification. Peak memory is at most 2^92.5 bytes; preprocessing is at most 2^50 units and is included in the total; nonuniform advice is 2^0 bytes. The attack is classical and relies on the stated heuristics: random-mapping behaviour of the class walk with s = 2^20 branches and no unresolved long fruitless cycles.",
+      "score": {
+        "numerator": "12619",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class-rho",
+      "source": "experiment.py",
+      "purpose": "End-to-end check of the Frobenius-class walk with conjugated jump tables on a small prime-order group with an order-12 exponent automorphism. This does not establish production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 90000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "seed": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 60000,
+          "trials": 20,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
