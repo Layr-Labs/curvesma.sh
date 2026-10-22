@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon p-1 at n=2^20",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r), input T=[s]P0 and powers A_i=[s^i]P0 for i=1..n on BLS12-381 G1, with n=2^20, recover s. Cheon's p-1 BSGS algorithm in proof.md (using A_1 and A_d with d=2^20 | (r-1) as stated by the track rules) succeeds with probability 1 using at most 2^118.598470 total target-group-operation equivalents at n=2^20, including preprocessing and verification. Peak memory at most 2^124.013508 bytes; preprocessing at most 2^15 group-equivalents (included in total); nonuniform advice 0. Classical cold attack; no quantum steps. Analytic claim; toy experiment does not prove production cost.",
+      "score": {
+        "numerator": "11859847",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-cheon",
+      "source": "experiment.py",
+      "purpose": "Check Cheon p-1 BSGS recovers secrets in a small prime field with d|r-1. Toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 28
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "bits",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 18,
+          "trials": 20,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}

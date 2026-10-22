@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "cheon-p-minus-1",
+  "algorithm": "cheon-p-1-bsgs-d20-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 118.59847,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 124.013508,
+    "preprocessing_log2": 15.0,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0,
+    "scoring_n": 1048576
+  },
+  "heuristics": [],
+  "limitations": [
+    "Analytic construction at production size; no full-size execution.",
+    "Uses Cheon's classical p-1 algorithm with the track's stated precondition d=2^20 | (r-1).",
+    "Hash-table BSGS rather than sorted BSGS; instruction budget for hashing is stated explicitly.",
+    "Not a new cryptanalytic technique; contribution is a cost-model-faithful W(2^20)."
+  ],
+  "lane": "exploratory"
+}
