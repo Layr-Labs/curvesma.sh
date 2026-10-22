@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "title": "Signed BSGS: deterministic half-space coverage with paid distributed storage",
+  "claims": [
+    {
+      "statement": "For unrestricted uniform full-production secp256k1 Q=[x]P, the deterministic classical cold attack in proof.md recovers x with probability at least 1/2 using at most 2^145 target-group-operation equivalents under C=1000. Peak storage is below 2^146 bytes; preprocessing is at most 2^145 equivalents included in total; zero nonuniform advice bytes (log convention 0). No heuristic assumptions. Analytic construction, not a practical or executed production attack.",
+      "score": {
+        "numerator": "145",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "research-note.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "signed-bsgs-evidence",
+      "source": "experiment.py",
+      "purpose": "Toy coverage, production-field small-table boundary fixtures, negative sign mutation controls and exact accounting; not production execution or timing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all",
+              "toy",
+              "curve",
+              "accounting"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 17,
+            "maximum": 257
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 16,
+          "h": 16
+        }
+      ]
+    }
+  ]
+}
