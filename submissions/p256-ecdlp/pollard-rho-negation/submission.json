@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: parallel Pollard rho with the negation map",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed NIST P-256 generator P, the parallel Pollard rho algorithm of proof.md with the negation map, R=2048 adding walks, look-ahead, distinguished points of 32 trailing zero bits, w=2^40 walks and k=27*2^123 useful steps recovers x with success probability at least 0.509 under the disclosed random-walk and fruitless-cycle heuristics, using at most 2^129.046492 total target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^103.754888 bytes; preprocessing is at most 2^27.288456 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice or quantum steps. Actual P-256 arithmetic is charged through justified scalar AArch64 instruction counts divided by C=1000; a P-256 addition is not one unit. The exponential memory is required. This is an analytic generic accounting, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "161308115",
+        "denominator": "1250000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-negation",
+      "source": "experiment.py",
+      "purpose": "Check negation-map Pollard rho with look-ahead and distinguished points on a small prime-order Weierstrass curve. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 8
+        }
+      ]
+    }
+  ]
+}

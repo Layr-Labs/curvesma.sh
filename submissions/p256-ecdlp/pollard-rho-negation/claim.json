@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "target_profile": "p256-ecdlp",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-pollard-rho-negation",
+  "algorithm": "parallel-pollard-rho-negation-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 129.046492,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 103.754888,
+    "preprocessing_log2": 27.288456,
+    "success_probability": 0.509,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    {
+      "id": "H1",
+      "name": "random-walk heuristic",
+      "statement": "On the N=(r+1)/2 classes the R-adding walk with look-ahead behaves, for collision purposes, like a random mapping up to a factor (1-1/R)^(-1/2) in expected collision time.",
+      "support": "Teske ANTS 1998; Brent-Pollard; Bernstein-Lange-Schwabe PKC 2011 for the negation-map variant.",
+      "limitations": "Not a theorem. A 1.4x degradation of the collision exponent still leaves success probability 0.398 >= 0.39.",
+      "extrapolation": "Applied from the literature and from the toy experiment to production P-256."
+    },
+    {
+      "id": "H2",
+      "name": "fruitless-cycle bound",
+      "statement": "Fruitless cycles longer than 64 steps are negligible for R=2048.",
+      "support": "Bernstein-Lange-Schwabe PKC 2011 analysis and measurements.",
+      "limitations": "Depends on R and the look-ahead escape. Stated only for R=2048.",
+      "extrapolation": "Applied from that analysis to this parameter choice."
+    }
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success uses standard Pollard-rho heuristics H1 and H2, disclosed in this file.",
+    "Instruction bounds are analytical upper bounds, not Callgrind measurements of a P-256 kernel.",
+    "This is a generic best-known-style accounting, not a novelty or practical-break claim."
+  ],
+  "lane": "exploratory"
+}
