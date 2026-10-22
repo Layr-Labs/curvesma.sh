@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: parallel Pollard rho with distinguished points and the negation map",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,n), input Q=[x]P on NIST P-256 with the standard generator, recover x. Algorithm: parallel Pollard rho with distinguished points (theta=2^-96), 2^14 lockstep walkers, an r-adding walk with a 2^24-entry table of 64-bit-coefficient points, the negation map (classes of size 2, N'=(n+1)/2), batched affine additions (6M with S=M plus amortised inversion), and fruitless-cycle handling: detection by a fixed 64-step checkpoint schedule, one lap walked to find the cycle's smallest-u member, and an escape addition from that member, so merged walks escape identically. Success probability at least 0.39 (analytic: collision probability 0.42 at k=1.0438 sqrt(N') steps, minus 2^-14 and 10^-10 failure terms). Total work at most 2^128.30 target-group-operation equivalents, including preprocessing and verification: each walk step is charged 1664.03 scalar AArch64 instructions (P-256 Montgomery multiplication M=220 instructions, A=24, plus lookup, canonicalisation, coefficient, cycle and distinguished-point work), i.e. 1.664028 units, over 2^127.5623 steps. Peak memory at most 2^41 bytes; preprocessing at most 2^33.2 units, included in total work; nonuniform advice 2^0 bytes. Classical. Heuristics: random-mapping behaviour of the r-adding walk with negation map (Teske 2001), and the fruitless-cycle model (escape from the cycle's smallest-u member, Bernstein-Lange-Schwabe 2011); both disclosed in proof.md.",
+      "score": {
+        "numerator": "12830",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
