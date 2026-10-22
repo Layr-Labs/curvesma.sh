@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "orbit-collision-r-adding-walk",
+  "algorithm": "glv-orbit-rho-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.644312,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 135.001409,
+    "preprocessing_log2": 30.584963,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "The deterministic r-adding class sequence behaves like independent uniform draws from the orbit classes until the first repeat (standard Pollard-rho random-walk heuristic).",
+    "The fixed 64-bit step-index mixer behaves as a random function.",
+    "The six-element automorphism orbit is exact, not a heuristic: beta^3=1 mod p, lambda^3=1 mod r, no nonzero point is fixed, and x=0 is off the curve.",
+    "A zero collision denominator occurs with probability O(1/r) and is counted as failure.",
+    "The 1.05 sqrt(N) budget claims 0.39 while the ideal is 0.4238 and the 2,000-trial full-storage toy measured 0.4245; an 8.2% efficiency loss is still tolerable."
+  ],
+  "limitations": [
+    "Analytic bound plus bounded toy and profile checks; no production execution or AArch64 instruction measurement.",
+    "Peak memory 2^135.001409 bytes is astronomical and mandatory for the full-storage collision search.",
+    "The random-walk and random-hash heuristics are not proved at production size; the 8.2% budget margin and the sensitivity figures in proof.md bound the disclosed uncertainty.",
+    "If the increment/table charge were the v1 conservative 320 instructions, the bound is 2^127.736278; if the budget were 1.10 sqrt(N), the bound is 2^127.711099.",
+    "The 179-instruction field multiplication and C=1000 are organizer normalization constants, not hardware timings."
+  ],
+  "lane": "exploratory"
+}
