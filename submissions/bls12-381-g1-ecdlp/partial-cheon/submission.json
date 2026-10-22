@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: partial-coverage Cheon attack at the scoring n=2^20",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r), inputs T=[s]P0 and the auxiliary powers A_i=[s^i mod r]P0 for i=1..n on BLS12-381 G1 with n=2^20, the single-shot classical two-phase Cheon algorithm in proof.md recovers s with success probability at least 0.39 using total work W(2^20) at most 2^123.777499 target-group-operation equivalents (time_log2 = 123.777499 = 123777499/1000000), including runtime factorization of r-1, generator and subgroup construction, fixed-base comb tables, all baby and giant scalar multiplications, scalar updates, table lookups, both BSGS phases, assembly, verification and output. The attack uses d=2^20 (the largest divisor of r-1 not exceeding the scoring n, since 2^32 || r-1) and reads only A_1 and A_d. Phase 1 solves s^d=eta^k1, eta=zeta^(2^20) of order N=(r-1)/2^20, by partial-coverage BSGS with m=ceil(sqrt(0.40*N)) baby steps and m fresh-random giant blocks; the success probability is exactly (m/M)*covered/N = 0.40 in expectation over fresh coins with concentration within 2^-57, not a walk heuristic. Phase 2 recovers the order-2^20 component t by full-coverage BSGS deterministically, and s=zeta^(k1+tN) is verified by [s]P0=T. Peak memory is at most 2^124.8 bytes (memory_log2_bytes = 124.8), the sqrt(N)-sized baby table; preprocessing is at most 2^21 target-group-operation equivalents (preprocessing_log2 = 21.0) and is included; nonuniform advice is 0 bytes. Each fixed-base scalar multiplication is charged at 64 units (2x the analytic comb cost); charging full double-and-add (384 units) everywhere instead would still give 2^126.35, below the generic automorphism-rho bound of 2^127.14 for this curve. All preconditions are verified exactly at production parameters by experiment.py Part A (2^20 | r-1, verified factorization of r-1 with all prime factors < 2^28, generator zeta=7 of Z_r*, eta of exact order N, zeta_e of exact order 2^20); Part B demonstrates the complete two-phase attack end-to-end on a 20-bit toy group with d=6: full coverage 200/200 exact recoveries with 0 wrong extractions, and the declared partial mode 85/200 = 0.425 vs 0.4019 predicted with 0 wrong extractions.",
+      "score": {
+        "numerator": "123777499",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "partial-cheon-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production BLS12-381 parameters (exact stdlib arithmetic): 2^20 divides r-1; the complete prime factorization of r-1 is verified (each listed factor proved prime by Miller-Rabin, product equal to r-1, all factors below 2^28); zeta=7 generates Z_r*; eta=zeta^(2^20) has exact order N=(r-1)/2^20 (log2 N = 234.857); zeta_e=zeta^N has exact order 2^20; d-th powers of random scalars land in the order-N subgroup; the A_d index rule for the input encoding. Part B runs the complete two-phase Cheon attack end-to-end on a toy prime-order group (20-bit, d=6 | n-1, N=174563) with auxiliary powers A_1=[s]P0 and A_d=[s^d]P0, in either full-coverage mode (deterministic success 1) or the partial-coverage mode used in the claim (expected success ~0.40), reporting measured success, wrong extractions and scalar-multiplication counts. Toy evidence is evidence at toy scope only; it does not establish production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "partial",
+              "full"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [
+          "trials",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "mode": "partial"
+        }
+      ]
+    }
+  ]
+}
