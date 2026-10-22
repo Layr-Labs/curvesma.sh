@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "secp256k1: deterministic 40 percent BSGS with 64-bit work and routed storage",
+  "claims": [
+    {
+      "statement": "For the unchanged full-production secp256k1 profile, input Q=[x]P with x uniform in [0,r), the deterministic algorithm in argument.md returns the canonical scalar x with probability at least 2/5. Its worst-case total classical work is less than 2^146 target-group-operation equivalents at the fixed price of 1000 scalar 64-bit AArch64 instructions per equivalent. The total includes all preprocessing, memory routing and initialization, sorting, lookup, failed searches, verification and output. Preprocessing is less than 2^145 equivalents and is included in total work. Peak total storage is less than 2^146 bytes. Nonuniform advice is zero bytes. No heuristic, random oracle, free precomputation, or quantum computation is assumed. These are analytic upper bounds, not a production execution, novelty claim, security estimate, or official score.",
+      "score": {
+        "numerator": "146",
+        "denominator": "1"
+      },
+      "evidence": [
+        "argument.md",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
