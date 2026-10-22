@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "scope": "Analytic integer certificate. No production execution, timing measurement, or official review.",
+  "base_commit": "467130d867499e7bbca7479f0f72af0df115b282",
+  "protected_sha256": {
+    "tracks/secp256k1-ecdlp/target-profile.json": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/secp256k1-ecdlp/rules.md": "2408941d15e056e94477a6a28001c4beae32cf02aa2da7085353d5eb703c6cfb"
+  },
+  "parameters": {
+    "r": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "m": "170141183460469231731687303715884105728",
+    "h": "272225893536750770770699685945414569164",
+    "L": 127,
+    "covered_scalars": "46316835694926478169428394003475163141171880919487850230397683760192544571392"
+  },
+  "success": {
+    "exact_numerator": "46316835694926478169428394003475163141171880919487850230397683760192544571392",
+    "exact_denominator": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "claimed_lower_bound": {
+      "numerator": "2",
+      "denominator": "5"
+    },
+    "coverage_check_5mh_minus_2r": "184276039289442386778092517926399868286",
+    "uncovered_scalars": "69475253542389717254142591005212744711665683359587054152207479381325616922945"
+  },
+  "instruction_constants": {
+    "word_bits": 64,
+    "field_limbs": 4,
+    "carry_limbs": 5,
+    "A": 256,
+    "M": 147712,
+    "I": 75661568,
+    "G": 78037248,
+    "record_words": 12,
+    "record_bytes": 96,
+    "F": 131072,
+    "B": 262400,
+    "D": 262400,
+    "V": 33882880,
+    "reference_price": 1000
+  },
+  "instruction_components": {
+    "fixed_setup": "1099511627776",
+    "routing_construction": "178405961588244985132285746181186892047843328",
+    "baby_generation_and_storage": "13321994775258162759421546327022817487297183744",
+    "sort": "17012528546828668548667429485422489351716597760",
+    "giant_search": "30467556849547518968755367500570599593899732992",
+    "verification_and_output": "1099511627776"
+  },
+  "total_instructions": "60980486133222595261976629059197095523984613376",
+  "preprocessing_instructions": "30512929283675076293221261558626494830573252608",
+  "work_equivalents": {
+    "numerator": "60980486133222595261976629059197095523984613376",
+    "denominator": "1000"
+  },
+  "peak_bytes_upper_bound": "44634157504285656375563920507610172761309184",
+  "nonuniform_advice_bytes": "0",
+  "claimed_bounds": {
+    "time_log2": 146,
+    "preprocessing_log2": 145,
+    "memory_log2_bytes": 146,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "exact_bound_slack": {
+    "total_instructions": "28222494660899897304166244031396350499937050624",
+    "preprocessing_instructions": "14088561113386169989850174986670228181387579392",
+    "peak_bytes": "44568823289836836190578952582983273262612480"
+  },
+  "heuristics": [],
+  "checks": {
+    "coverage_at_least_two_fifths": true,
+    "coverage_less_than_order": true,
+    "total_within_claim": true,
+    "preprocessing_within_claim": true,
+    "memory_within_claim": true
+  },
+  "validation_limits": [
+    "Checks recompute literal integer formulas; they do not run the attack or measure AArch64 kernels.",
+    "Local setup and finalize could not run: llm-verifier was not available.",
+    "The pinned verifier repository was not accessible. No substitute reviewer or score was created."
+  ]
+}
