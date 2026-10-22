@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class parallel Pollard rho in GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (compute g=e(P0,Q); solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key and deterministic fruitless-cycle escape; output P=[x]P0 and verify e(P,Q)=z) succeeds with probability at least 0.40 using at most 2^125.89 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, walk starts, distinguished-point handling, cycle handling, detection delay, output and verification. Peak memory is below 2^73 bytes; preprocessing is at most 2^31 units and is included; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for R-adding rho walks (with the Brent-Pollard R/(R-1) correction and 3% explicit step slack), supported by toy-field experiments; no production-size run is claimed.",
+      "score": {
+        "numerator": "12589",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements, check the Frobenius formula, the 4-multiplication conjugate-key formula, distinctness of the 12 keys, consistency of the canonical representative, p^6 = inversion, ord_r(p)=12. Part B: run the complete Frobenius-class rho walk (kappa trick, twisted table, 2-cycle and checkpoint escapes, distinguished points, collision solving) in a small field with the same tower shape and report collision times against the random-mapping model. Toy scale only; does not validate production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {"type": "integer", "enum": [163, 331, 787]},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 400},
+          "R": {"type": "integer", "minimum": 4, "maximum": 1024},
+          "dp_bits": {"type": "integer", "minimum": 0, "maximum": 8},
+          "walks": {"type": "integer", "minimum": 1, "maximum": 32},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000},
+          "production_checks": {"type": "integer", "minimum": 0, "maximum": 3},
+          "seconds": {"type": "number", "minimum": 1, "maximum": 14},
+          "dump": {"type": "boolean"}
+        },
+        "required": ["q", "trials", "R", "dp_bits", "walks", "seed"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"q": 163, "trials": 200, "R": 64, "dp_bits": 4, "walks": 4, "seed": 1, "production_checks": 2, "seconds": 10}
+      ]
+    }
+  ]
+}
