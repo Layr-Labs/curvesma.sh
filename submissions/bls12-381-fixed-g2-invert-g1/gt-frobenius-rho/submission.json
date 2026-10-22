@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: parallel rho on Frobenius classes of GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and independent uniform z in GT, the attack in proof.md computes g=e(P0,Q) and solves z=g^a with parallel distinguished-point Pollard rho. The walk runs on the (r-1)/12 orbits of the order-12 Frobenius automorphism of GT. Each step is one dense Fp12 multiplication plus at most 27136 scalar instructions for assembling the twelve conjugates by tower Frobenius maps and selecting the canonical class representative. The attack outputs P=[a]P0 with e(P,Q)=z. Under the disclosed random-mapping heuristic it succeeds with probability at least 0.39 (heuristic 0.451) using at most 2^127.04 total target-group-operation equivalents at C=20000. That total includes the pairing, the multiplier table, cycle handling, the distinguished-point tail, collision replay, output and verification. Peak memory is at most 2^95.5 bytes. Preprocessing is at most 2^27 units and is included. Nonuniform advice is 0 bytes. Classical cold attack.",
+      "score": {
+        "numerator": "12704",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-rho",
+      "source": "experiment.py",
+      "purpose": "On a 17-bit prime r=1 mod 12, check that a generator of (Z/rZ)* has an order-12 multiplication-by-p map, that orbits of non-identity elements have size 12, and that a deterministic adding walk on classes collides within 8*sqrt(N) steps. This does not establish production collision rates, memory bounds or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 13,
+            "maximum": 200000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 12289
+        }
+      ]
+    }
+  ]
+}
