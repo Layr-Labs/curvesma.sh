@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: Floyd adding-walk bound",
+  "claims": [
+    {
+      "statement": "For uniform x in [0, r) and Q = [x]P on the fixed secp256k1 generator P, the single-seed Floyd adding walk specified in proof.md returns the scalar with probability at least 0.39 over the uniform production challenge and fresh algorithm coins. Total classical work is at most W = 22213632912598862894889094373146928545838 target-group-operation equivalents, including every online step, the jump setup, verification, and the instruction reserve. The declared score 134028570/1000000 = 134.028570 is a ceiling of log2(W) at resolution 10^(-6). Peak memory is at most 2^20 bytes. Preprocessing independent of the challenge is at most W_pre = 1073742 target-group-operation equivalents (log2 ceiling 20.034216) and is included in W. Nonuniform advice is 0 bytes. The figure 0.39 is a lower bound under the random-mapping comparison stated in proof.md; it is not a theorem that the adding walk is a random mapping, and no production discrete logarithm is computed.",
+      "score": {
+        "numerator": "134028570",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-toy",
+      "source": "experiment.py",
+      "purpose": "Recompute W from the public order and the instruction constants, check that the declared rational is a 10^(-6) ceiling of log2(W), and recover scalars on three prime-order additive groups. This does not establish production mixing, memory, or cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30
+          }
+        },
+        "required": [
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 30
+        }
+      ]
+    }
+  ]
+}
