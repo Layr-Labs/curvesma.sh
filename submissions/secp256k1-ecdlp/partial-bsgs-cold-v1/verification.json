@@ -1,0 +1,259 @@
+{
+  "status": "pass",
+  "timestamp_utc": "2026-10-22T16:00:19.032643+00:00",
+  "method": "Separate host-authored audit reads candidate as data; executes no candidate code",
+  "scope": "Finite correctness, exact arithmetic inequalities and packaging. Not production execution, compiled instruction verification, independent scientific qualification or hosted review.",
+  "checks": [
+    {
+      "name": "submission_schema",
+      "status": "pass",
+      "detail": "One scored claim; no candidate code or experiment execution"
+    },
+    {
+      "name": "exact_score",
+      "status": "pass",
+      "detail": "146/1"
+    },
+    {
+      "name": "evidence_path_proof.md",
+      "status": "pass",
+      "detail": "Required supporting artifact"
+    },
+    {
+      "name": "evidence_path_evidence.md",
+      "status": "pass",
+      "detail": "Required supporting artifact"
+    },
+    {
+      "name": "evidence_path_verification.json",
+      "status": "pass",
+      "detail": "Required supporting artifact"
+    },
+    {
+      "name": "protected_hash_tracks/secp256k1-ecdlp/target-profile.json",
+      "status": "pass",
+      "detail": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086"
+    },
+    {
+      "name": "protected_hash_tracks/classical-group-work-v2.json",
+      "status": "pass",
+      "detail": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294"
+    },
+    {
+      "name": "full_production_success",
+      "status": "pass",
+      "detail": "Exactly 2^255/r; original uniform production input; no coin assumption"
+    },
+    {
+      "name": "fixed_normalization",
+      "status": "pass",
+      "detail": "64-bit scalar AArch64; C=1000; threshold=0.39"
+    },
+    {
+      "name": "arithmetic_envelopes",
+      "status": "pass",
+      "detail": {
+        "multiplication_subbound": 6656,
+        "point_step": 4366336,
+        "point_envelope": 8388608
+      }
+    },
+    {
+      "name": "generation_sorting_and_search_envelopes",
+      "status": "pass",
+      "detail": {
+        "per_baby": 76275712,
+        "baby_envelope": 134217728,
+        "per_giant": 43057152,
+        "giant_envelope": 67108864
+      }
+    },
+    {
+      "name": "complete_cold_budget",
+      "status": "pass",
+      "detail": {
+        "total_instruction_bound": "46028738089767206164129722514746499623320289280",
+        "preprocessing_instruction_bound": "23192775006471848067197147003554577441196343296",
+        "divisor": 1000,
+        "declared_total_log2": 146,
+        "declared_preprocessing_log2": 145
+      }
+    },
+    {
+      "name": "memory_envelope",
+      "status": "pass",
+      "detail": {
+        "conservative_bytes": "5618742442598535908707241517913356708610048",
+        "declared_log2_bytes": 150,
+        "advice_bytes": 0
+      }
+    },
+    {
+      "name": "selector",
+      "status": "pass",
+      "detail": "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1"
+    },
+    {
+      "name": "dependencies",
+      "status": "pass",
+      "detail": "Explicit none; organizer context only, no participant method/code/result reused"
+    },
+    {
+      "name": "public_note_size",
+      "status": "pass",
+      "detail": {
+        "bytes": 11744
+      }
+    },
+    {
+      "name": "public_note_secret_screen_YOUR_API_KEY",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "public_note_secret_screen_/home/",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "public_note_secret_screen_/work/",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "public_note_secret_screen_Bearer ",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "public_note_secret_screen_ghp_",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "public_note_secret_screen_github_pat_",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "public_note_secret_screen_sk-proj-",
+      "status": "pass",
+      "detail": "No matching private path/credential marker; additionally reviewed narrative"
+    },
+    {
+      "name": "tracked_edit_scope",
+      "status": "pass",
+      "detail": [
+        "tracks/secp256k1-ecdlp/selected-submission.txt"
+      ]
+    },
+    {
+      "name": "new_file_scope",
+      "status": "pass",
+      "detail": [
+        "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1/README.md",
+        "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1/dependencies.json",
+        "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1/evidence.md",
+        "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1/proof.md",
+        "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1/public-note.md",
+        "submissions/secp256k1-ecdlp/partial-bsgs-cold-v1/submission.json"
+      ]
+    },
+    {
+      "name": "existing_submissions_unchanged",
+      "status": "pass",
+      "detail": "No tracked submission modification, deletion or rename"
+    },
+    {
+      "name": "package_under_track_limit",
+      "status": "pass",
+      "detail": "Includes 20KB reserve for audit receipt"
+    },
+    {
+      "name": "exhaustive_additive_partial_bsgs",
+      "status": "pass",
+      "detail": {
+        "cases": [
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            5,
+            2,
+            2
+          ],
+          [
+            7,
+            2,
+            3
+          ],
+          [
+            11,
+            2,
+            3
+          ],
+          [
+            23,
+            4,
+            3
+          ],
+          [
+            101,
+            8,
+            7
+          ],
+          [
+            257,
+            8,
+            16
+          ],
+          [
+            521,
+            16,
+            17
+          ]
+        ],
+        "targets": 928,
+        "covered_and_uncovered_checked": true
+      }
+    },
+    {
+      "name": "exhaustive_small_curve_partial_bsgs",
+      "status": "pass",
+      "detail": {
+        "field": 211,
+        "curve": "y^2=x^3+7",
+        "generator": [
+          3,
+          33
+        ],
+        "subgroup_order": 199,
+        "m": 8,
+        "h": 13,
+        "covered": 104,
+        "targets": 199,
+        "infinity_and_exceptional_additions_included": true
+      }
+    },
+    {
+      "name": "finite_montgomery_reduction",
+      "status": "pass",
+      "detail": {
+        "radix": 4,
+        "limbs": 3,
+        "operand_pairs": 3320,
+        "scope": "Recurrence/correction only; not instruction measurements"
+      }
+    }
+  ],
+  "verified_files_sha256": {
+    "submission.json": "d719eb0384ecdb5c1f46943e9b1cded86a6f4a851a5da0c252583db58dec4f77",
+    "proof.md": "c0d5981e70592396b0a3382316784ad70ffc932ac60f4d7b959e09ba635a3430",
+    "evidence.md": "4946ff2657ebdc995df5dd6ffa9efd80acf9aa0a398bd3079965c81e8eba34ee",
+    "README.md": "4c72c81ff856262f2185b08352361746109fa5d68af74420ed37de70b385a1eb",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "public-note.md": "f59914940b165a5d8ab097e77b7993c2736c5060344c71f0b5feb0e84a61948c"
+  }
+}
