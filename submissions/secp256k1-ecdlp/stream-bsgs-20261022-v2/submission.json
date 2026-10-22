@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "title": "Streamed signed BSGS with batched Jacobian normalization",
+  "claims": [
+    {
+      "statement": "For the unrestricted uniform full-production secp256k1 target Q=[x]P, the deterministic classical cold attack in proof.md succeeds with probability at least1/2 using at most2^(553/4) target-group-operation equivalents under protected C=1000. Peak storage below2^146 bytes; preprocessing included in total and bounded by2^(553/4); zero nonuniform advice bytes(log convention0). No heuristic assumptions. Analytic construction, not a practical break or executed production attack.",
+      "score": {
+        "numerator": "553",
+        "denominator": "4"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "improvements.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stream-bsgs-evidence",
+      "source": "experiment.py",
+      "purpose": "Bounded stream sorting/intersection, exact coverage, Jacobian and zero-safe batch normalization, negative controls and analytic ledger; no production timing inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "toy",
+              "curve",
+              "accounting"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 17,
+            "maximum": 257
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "block_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 16,
+          "h": 16,
+          "block_size": 4
+        }
+      ]
+    }
+  ]
+}
