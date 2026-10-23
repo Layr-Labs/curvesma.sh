@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: odd-lift half-table BSGS with a 16-ary local merge",
+  "claims": [
+    {
+      "statement": "On the exact protected NIST P-256 profile, given only Q=[x]P, the deterministic cold odd-lift algorithm in proof.md recovers every canonical scalar x in [0,r), including x=0, with success probability exactly 1. The positive odd baby table stores m=2^127 points [2j+1]P. The giant stream has length h=ceil(r/2^128). The unique odd lift z=x if x is odd and z=x+r if x is even satisfies z=(2i+1)2^128 +/- (2j+1). Full y selects the sign; at most two charged scalar verifications accept the reduced candidate. Baby and giant records are ordered by two complete 16-ary local-memory merge trees of height 32 plus one engine hop. Every node holds at most 16384 bytes and addresses only 16-bit local offsets. There is no flat wide-address array. Jacobian generation keeps the chain projective, so each 1024-point batch exposes every Z before the single inversion. Total scalar AArch64 instruction work T=34594432522413595855694169752482540321299522 satisfies T < 1000*2^135 and (6/5)T < 1000*2^135, hence T/1000 < 2^(1351/10). The submitted score is 1351/10. Preprocessing is the baby side plus setup, 11451624578700418392471984676283525182691180 instructions, below 1000*2^134 target units, and is included in T with no reuse credit. Peak storage is 8920298079412249256614287309059344603463680 bytes, below 2^143. Nonuniform advice is 0 bytes. No random walk, index calculus, occupancy heuristic or uncharged advice is used. This is analytic accounting, not a production run.",
+      "score": {
+        "numerator": "1351",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-odd-lift",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the odd-lift decomposition and unique reduction on a small odd additive group, and check that base-16 leaf paths are no longer than the complete-tree digit count. This does not establish production curve behaviour, memory bounds or instruction costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
