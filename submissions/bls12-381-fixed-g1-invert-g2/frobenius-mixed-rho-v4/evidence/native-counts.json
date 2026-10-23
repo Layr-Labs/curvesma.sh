@@ -1,0 +1,31 @@
+{
+ "schema": "gt-walk-native-counts-v1",
+ "kernel": "measurement/step.c",
+ "inputs": "gen_inputs.py --s 0.447265625 --seed 1|2 --dp-bits 60 (production header DP_BITS = 60)",
+ "S": 458,
+ "walks": 64,
+ "rounds": 1048576,
+ "runs": {
+  "s1": {
+   "steps": 67108864,
+   "adds": 37092453,
+   "sqrs": 30022369,
+   "dps": 0,
+   "cyc2": 2979,
+   "cycl": 0,
+   "restarts": 0,
+   "cap_restarts": 0
+  },
+  "s2": {
+   "steps": 67108864,
+   "adds": 37096088,
+   "sqrs": 30018923,
+   "dps": 0,
+   "cyc2": 3071,
+   "cycl": 1,
+   "restarts": 0,
+   "cap_restarts": 0
+  }
+ },
+ "meaning": "adds and sqrs count every group operation including cycle-check steps and escapes; steps counts main steps; restarts counts restarts at a distinguished point (including chained ones) and cap_restarts those at the trail cap (spec section 6). At DP_BITS = 60 no distinguished point occurs in these runs, so restarts and dps are 0."
+}

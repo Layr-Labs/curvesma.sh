@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v9",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.823186,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 74.321929,
+    "preprocessing_log2": 29.575064,
+    "success_probability": 0.41,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the mixed add/square class walk on N = (r-1)/12 classes with r_a = 1024 and S = 458 behaves as a random map with collision rate V_low = 0.799412787.",
+    "H5: a closure whose exponent coefficient is nonzero is an event of probability 1/r over the coins (independence of the coins from the path).",
+    "H7: each fresh state's key is uniform given the past: its adder index is uniform, its square decision is Bernoulli(s), its DP flag has probability 2^-60, and the restart index (a fixed mixer of the walk's counter) is uniform. The closure rate is the unconditional per-step rate p (Markov), so the closure reserve needs no conditional concentration; the square-fraction deviation and the DP capacity use H7 through conditional probabilities."
+  ],
+  "limitations": [
+    "H1 is extrapolated from toy groups with N up to 2^17 and r_a = 32; production N is about 2^251 and r_a = 1024.",
+    "The toy's restart share is 23-25% of its steps; its success is above the model at that density and the cause is not isolated (proof.md, Section 5).",
+    "The closure reserve (K = 50, failure 0.02) and the join reserve (J_MAX = 1000, failure 0.0028) are Markov bounds and are paid in delta.",
+    "Restarts are verified by the replica at small densities (DP_BITS 2, 3, 4 and trail caps 50 and 24), not by a production-density run in which a restart occurs.",
+    "The bucketed table is measured with 64-bit indices at 2^21 and 2^22 slots; the production bucket size (2^31) is not run. The transfer cost is an explicit assumption.",
+    "Memory of about 2^74.321929 bytes is the enforced capacity of the distinguished-point table with its padding; it is reported, not scored.",
+    "The reference unit is priced by the organizer rule (1 unit); the organizer's measured reference count is 22,990 against C = 20,000 (blst_fp12_mul measured 22,997)."
+  ],
+  "lane": "exploratory"
+}
