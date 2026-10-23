@@ -1,0 +1,88 @@
+{
+ "schema": "gt-blst-step-measurement-v4",
+ "kernel": "measurement/step.c: per-walk anchors, every group operation counted, canonical DP exponents, 128-bit fingerprint from key bits 70..197, per-walk trail age (cap 2^66, restart specified, not reached)",
+ "generator": "measurement/gen_inputs.py --s 0.447265625 (S = 458), seeds 1 and 2; header version 2",
+ "measurement_tool": "organizer image via measurement/measure.sh (blst commit f7a88067, Valgrind 3.24.0 Callgrind Ir), N1=256 N2=512, MODE_N1=4096 MODE_N2=8192",
+ "c2_extraction": "zero distinguished-point density (header DP_BITS set to 60); DP work charged separately at 2^20 instructions per point",
+ "C": 20000,
+ "callgrind_interval": {
+  "walks": 64,
+  "rounds": [
+   256,
+   512
+  ],
+  "steps": 16384
+ },
+ "runs": {
+  "s1": {
+   "c2_other_over_C": 0.14485,
+   "kappa_sqr_over_C": 0.4902,
+   "ref_mul_over_C": 1.1499,
+   "per_main_step_instructions": {
+    "total": 19920.895,
+    "reference_blst_fp12_mul_per_call": 22998.0,
+    "cyclotomic_sqr_per_call": 9804.0,
+    "adds_times_mul": 12582.646,
+    "sqrs_times_sqr": 4441.241,
+    "other": 2897.008
+   },
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 8964,
+    "sqrs": 7422,
+    "dps": 0,
+    "cyc2": 1,
+    "cycl": 0
+   },
+   "per_step_fractions": {
+    "adds_a": 0.547119141,
+    "sqrs_q": 0.45300293,
+    "cycle_events_per_step": 6.1035e-05
+   }
+  },
+  "s2": {
+   "c2_other_over_C": 0.144836,
+   "kappa_sqr_over_C": 0.4902,
+   "ref_mul_over_C": 1.1499,
+   "per_main_step_instructions": {
+    "total": 19989.471,
+    "reference_blst_fp12_mul_per_call": 22998.0,
+    "cyclotomic_sqr_per_call": 9804.0,
+    "adds_times_mul": 12704.767,
+    "sqrs_times_sqr": 4387.984,
+    "other": 2896.72
+   },
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 9051,
+    "sqrs": 7333,
+    "dps": 0,
+    "cyc2": 0,
+    "cycl": 0
+   },
+   "per_step_fractions": {
+    "adds_a": 0.552429199,
+    "sqrs_q": 0.447570801,
+    "cycle_events_per_step": 0.0
+   }
+  }
+ },
+ "native_counts": "evidence/native-counts.json (2^20 rounds, 2^26 main steps per seed, uninstrumented)",
+ "replica": {
+  "seed1_512_rounds": "dump exact, 2074 distinguished-point records exact, counts exact (kernel v4)",
+  "earlier_checks": "v3 kernel: seeds 1 and 2 at 512 rounds and seed 1 at 4096 rounds (16585 records), all exact; the v4 change is the fingerprint and the age counter only"
+ },
+ "summary": {
+  "c2_charged": "0.1450 (max of 0.14485 and 0.144836, with a 0.1% margin, rounded up)",
+  "kappa_charged": "0.4902",
+  "reference_mul_charged": "1 (measured 22,998 instructions = 1.1499 units)"
+ },
+ "deviations": [
+  "v2 kernel refreshed anchors on a global step counter; fixed by the per-walk round counter (v3).",
+  "v2 kernel stored raw exponents in distinguished points; fixed by canonical exponents lambda^kn a, lambda^kn b (v3).",
+  "v3 fingerprint used key bits 10..197 and had 68 varying bits; v4 uses bits 70..197 (128 varying bits).",
+  "v4 adds the per-walk trail age (128-bit counter): the charged c2 rises by about 11 instructions per step.",
+  "The trail-cap restart is specified and charged but not exercised (the cap is 2^66 steps; measurement runs have 2^26 at most)."
+ ],
+ "notes": "One blst build, one compiler, two seeds."
+}

@@ -1,0 +1,61 @@
+{
+  "components_log2_units": {
+    "walk_steps": 125.719869,
+    "adder_table": 19.582053,
+    "walk_starts_and_restarts": 76.418468,
+    "distinguished_points": 72.557108,
+    "fingerprint_verification": 13.263288,
+    "solve_verify_output": 14.712288
+  },
+  "time_log2": "12571987/100000",
+  "time_log2_decimal": 125.71987,
+  "time_log2_float": 125.71986916686993,
+  "score_rational": {
+    "numerator": "12571987",
+    "denominator": "100000"
+  },
+  "preprocessing_log2": "19104617/250000",
+  "parameters": {
+    "N_log2": 251.272127,
+    "square_slots": 458,
+    "r_a": 1024,
+    "s": 0.447265625,
+    "V": 0.7994136810302734,
+    "walk_steps_T_log2": 125.836359,
+    "main_steps_log2": 125.84482,
+    "lag_steps_log2": 80.0,
+    "distinguished_points_log2": 66.84482,
+    "dp_bits": 60,
+    "walks": 1048576,
+    "adds_per_step": 0.5527477040886879,
+    "sqrs_per_step": 0.44734248518943787,
+    "cycle_events_per_step_bound": 4.60443223995642e-05,
+    "window": 127,
+    "wasted_fraction_charged": 0.005847628944744654,
+    "trail_cap_log2_steps": 66.0,
+    "detection_factor": 1.0,
+    "step_units": 0.9170349903285503,
+    "false_pairs_log2": 4.689641,
+    "fingerprint_bits": 128
+  },
+  "failure_terms": {
+    "formal_tail_per_step": 2.5982059645186342e-98,
+    "nonformal_candidates_per_step": 1.6886219836721313e-56,
+    "trap_per_step": 1.6886219836721313e-56,
+    "delta_trap": 1.2900252240535672e-18,
+    "delta_waste": 0.0,
+    "cap_loss": 2.0849541577132293e-26,
+    "delta": 1.2900252240535672e-18
+  },
+  "memory_log2_bytes": "73166749/1000000",
+  "success": {
+    "tau_eff": 0.5276327420834271,
+    "eps": 0.20058631896972656,
+    "model": 0.41000000000062253,
+    "delta": 1.2900252240535672e-18,
+    "lower_bound": 0.41000000000062253
+  },
+  "success_if_waste_not_charged": 0.406358681771373,
+  "c2": 0.145,
+  "kappa": 0.4902
+}
