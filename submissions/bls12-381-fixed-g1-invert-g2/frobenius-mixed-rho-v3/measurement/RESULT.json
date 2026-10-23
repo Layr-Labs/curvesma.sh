@@ -1,0 +1,77 @@
+{
+ "schema": "gt-blst-step-measurement-v6",
+ "kernel": "measurement/step.c (constant-instruction primitives: branch-free addmod, 6-limb comparisons, selection in the minimum; per-walk anchors; canonical DP exponents; 128-bit fingerprint from key bits 70..197; trail age)",
+ "measurement_tool": "organizer image via measurement/measure.sh (blst commit f7a88067, GCC 14.2.0, Valgrind 3.24.0 Callgrind Ir), N1=64/256, N2=128/512, MODE sizes 4096/8192",
+ "method": "Per-step instruction counts of forced-type runs: all-adder inputs (S=0), all-square inputs (S=1024), and the all-adder run with the distinguished-point density set to 1 (DP_BITS=0). The per-step count is the difference of Callgrind totals between 256 and 512 rounds divided by 256 * 64.",
+ "reference_unit": {
+  "blst_fp12_mul_instructions_measured": 22998,
+  "organizer_measurement": 22996,
+  "charged": "1 unit (the organizer's reference operation; the adder calls it)"
+ },
+ "cyclotomic_square_instructions": 9804,
+ "per_step_instructions": {
+  "all_add_seed1": {
+   "value": 26730.162,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 16388,
+    "sqrs": 4,
+    "cyc2": 4
+   },
+   "note": "includes 4 cycle events (conservative)"
+  },
+  "all_add_seed2": {
+   "value": 26722.869,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 16385,
+    "sqrs": 1,
+    "cyc2": 1
+   },
+   "note": "one cycle event"
+  },
+  "all_square_seed1": {
+   "value": 13511.438,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 0,
+    "sqrs": 16384,
+    "cyc2": 0
+   },
+   "note": "no events"
+  },
+  "all_add_dp_every_step": {
+   "value": 28209.162,
+   "interval_counts": {
+    "steps": 16384,
+    "dps": 16384,
+    "adds": 16388,
+    "sqrs": 4,
+    "cyc2": 4
+   }
+  }
+ },
+ "distinguished_point_store_instructions": 1479.0,
+ "sort_compare_exchange_instructions": {
+  "value": 48.0,
+  "measurement": "196632 at 4096 iterations, 393240 at 8192 iterations (mode sortbench: one 128-bit comparison and one 80-byte exchange per iteration)"
+ },
+ "charged": {
+  "A_units": "1 + (26730.2 - 22996 + 20) / 20000 = 1.18771 (adder step, including the reference operation charged 1)",
+  "Q_units": "(13511.44 + 20) / 20000 = 0.67657 (square step, including the cyclotomic square at 9804)",
+  "dp_units": "(1479 + 67 * 48 + 10) / 20000 = 0.23525 per distinguished point",
+  "events": "66 * A_units per detected cycle (walk-through of at most 64 steps, the check step and the escape)"
+ },
+ "replica": {
+  "seed1_512": "dump, distinguished-point records, counts, canonical and exponent invariants exact (kernel of this revision)",
+  "seed2_512": "same checks exact (this revision)",
+  "seed1_4096": "exact for the previous kernel revision (the constant-instruction change does not alter the walk)"
+ },
+ "native_counts": "evidence/native-counts.json (uninstrumented, previous kernel revision; the walk and counts are unchanged by the constant-instruction change, as the 512-round replica shows)",
+ "deviations": [
+  "The earlier random-walk c2 (0.1450) is no longer charged: the charges are per step type, measured on straight-line code.",
+  "The constant-instruction change raises the adder step by about 800 instructions (about 0.04 units); the charge follows the measured counts.",
+  "Memory transfers are charged as the instructions of the moves (exchanges), not as separate storage costs.",
+  "The solve/verify/output charge (2^29 instructions) is an assumed bound; its share of W_MAX is 2^14.7 of 2^125.8 units."
+ ]
+}
