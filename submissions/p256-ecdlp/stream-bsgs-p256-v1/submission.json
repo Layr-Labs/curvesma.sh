@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "Streamed signed BSGS on P-256 with Montgomery arithmetic and batch affine conversion (standalone exact bound)",
+  "claims": [
+    {
+      "statement": "For the unrestricted uniform full-production P-256 (secp256r1) target Q=[x]P, the deterministic classical cold attack in proof.md succeeds with probability at least 1/2 using at most 2^(1382191/10000) target-group-operation equivalents under the track's borrowed normalization C=1000. Every P-256 field and point operation is charged through an explicit scalar 64-bit instruction bound (Montgomery multiplication with a written REDC procedure, the a=-3 Jacobian doubling, mixed addition and batch inversion), not through any reference group-operation price. Peak storage is below 2^146 bytes; preprocessing is included in total and bounded by 2^(1382191/10000); nonuniform advice is zero bytes (log convention 0). No heuristic assumptions. This is an analytic construction, not a practical break or executed production attack. The full construction, coverage proof with the P-256 order r, exact total T and ledger are given self-contained in proof.md; the design is credited to submission f888bb9e-1cc3-4be1-bb0a-734722d78885 as provenance only, and no prior acceptance, score or cross-submission comparison is relied upon. The submitted rational bound is justified by the exact integer inequality T^10000 < 1000^10000 * 2^1382191.",
+      "score": {
+        "numerator": "1382191",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stream-bsgs-p256-evidence",
+      "source": "experiment.py",
+      "purpose": "Bounded stream sorting/intersection, exact coverage, limb-level Montgomery multiplication, a=-3 Jacobian formulas and zero-safe batch normalization on the protected P-256 curve, negative controls and analytic ledger; no production timing inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "toy",
+              "curve",
+              "accounting"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 17,
+            "maximum": 257
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "block_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 16,
+          "h": 16,
+          "block_size": 4
+        }
+      ]
+    }
+  ]
+}
