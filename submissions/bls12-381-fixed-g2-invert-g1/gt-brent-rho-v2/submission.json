@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g2-invert-g1: O(1)-memory Brent-cycle rho in GT with a hard evaluation cap",
+ "claims": [
+  {
+   "statement": "For a uniform nonidentity Q in G2 and a uniform target z in GT, with the pinned public pairing, compute g=e(Q,P0)=pairing(Q,P0) once (nondegeneracy and prime order r give <g>=GT), find a=log_g z by an O(1)-memory Pollard rho in GT and return P=[a]P0, which satisfies e(Q,P)=z for every z including z=1 (a=0,P=O). WALK: public table Th[h]=g^(A_h) z^(B_h), h=0..R-1, R=1024, built once (2048 scalar multiplications = 784384 units); state (X,a,b) with X=g^a z^b; step h=H(X) (one 64-bit limb of the canonical Fp12 encoding, fixed odd multiplier, xor-shift, top 10 bits), X<-X*Th[h] (one dense Fp12 multiplication, the reference operation), a<-a+A_h mod r, b<-b+B_h mod r. The step depends on the group element alone, so the trajectory is a deterministic map; no history, no dictionary, no distinguished points. DETECTION AND SOLVE: Brent's algorithm with a checkpoint pair and a hare pair, each carrying its exact exponent pair, O(1) memory; when the two elements agree, g^ta z^tb=g^ha z^hb gives a=(ta-ha)*(hb-tb)^-1 mod r, exact because the elements are equal, invertible with probability 1-1/r, a degenerate draw restarts inside the same cap. NO FRUITLESS CYCLE: a collision is useless only when the exponent pairs coincide, i.e. the walk returned to the identical state, and a two-step return needs Th[h]^2=1, impossible because Th[h] has odd prime order r; longer same-state returns are codimension-one coincidences at about 1/r. This is why no quotient or canonicalisation is used: an order-12 Frobenius-class quotient saves 1.79 bits but makes the inverse of a jump equal a conjugate of the same jump, creating the structured two-cycle family of density 1/(12R) that has been raised against quotient walks on this track; in this session the same toy walk with that quotient spent 22.9% of all steps in such traps and cost 2.99 sqrt(N) per solved instance instead of 1.36 sqrt(N) with an escape multiplier. HARD CAP AND SUCCESS: the run stops after B=2*S0 evaluations and reports FAILURE, S0=ceil(sqrt(2*r*ln(5/3)))=2^127.443997; Brent evaluates the map at most 2*rho+3 times, so the cap succeeds whenever rho+2<=S0, and the random-mapping model gives Pr[rho<=S0]>=0.40, above the required 0.39. COST: B=2^128.443997 evaluations at 1+400/20000=1.02 units each (one reference dense Fp12 multiplication plus hash 20, two 4-limb exponent additions 40, 12-limb comparison 120, amortized checkpoint copy 60, loop/address 160 instructions), the reference charged at the organizer's fixed 20000, not the measured 22996; main 2^128.472566. Additive 784384 (table) + 131072 (pairing for g) + 135168 (verification pairing and [a]Q0) + 64 = 1050688 units = 2^20.003, i.e. 2^-108 of the main term. W=2^128.472566 and the claim is 3212/25=128.48, i.e. log2 W rounded up to the next hundredth, checked with W^100<=2^12848 in exact integer arithmetic. Peak memory 724608 bytes; preprocessing is the public table only, no advice, no amortization. The single heuristic (random-mapping collision time) is disclosed and measured at toy scope: 2100 toy trials on prime-order groups at 21-25 bits solved 0.508-0.637 of the time at the declared cap (Wilson lower bounds 0.468-0.586, all above 0.39), with zero degenerate relations and zero bookkeeping failures.",
+   "score": {
+    "numerator": "3212",
+    "denominator": "25"
+   },
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "gt-brent-rho-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production facts on BLS12-381 itself with standard-library integer arithmetic: p and r prime, r | Phi_12(p), ord_r(p)=12 with p^6=-1, the blst tower Fp2=fp[u]/(u^2+1), Fp12=Fp2[w]/(w^6-(1+u)) is a field, gamma1=w^(p-1) lies in Fp2, a random element of GT computed as t^((p^12-1)/r) is nonidentity of order r, the collision identity g^ta z^tb=g^ha z^hb => a=(ta-ha)/(hb-tb) verified on real 381-bit GT elements by constructing two equal states from chosen exponents, and sampled table entries g^c nonidentity of order r. Section B runs the complete declared algorithm at toy scale on a cyclic group of prime order q (safe-prime subgroup of F_p^*, p=2q+1): the same two-exponent hash-derived adding walk, the same precomputed jump table, the same O(1)-memory Brent detection with checkpoint and hare exponent pairs, the same relation solve and verification, under the declared hard cap 2*S0. It reports the fraction solved inside the cap with a Wilson 95% interval, the evaluation counts divided by sqrt(q), degenerate relations and bookkeeping failures. Section C reports the exact ledger: S0 and the cap as exact integers, the per-step instruction ledger in units of C=20000, the additive items (table, pairing reduction, verification), the peak-memory bound and the claim m/100 with W^100<=2^m checked in integer arithmetic. Toy statistics are evidence at toy scope only; the production claim is analytic.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "table_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+     },
+     "toy_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 28
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4096
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 60
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     }
+    },
+    "required": [
+     "production_checks",
+     "trials",
+     "toy_bits",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "table_checks": 2,
+     "trials": 200,
+     "toy_bits": 21,
+     "R": 64,
+     "cap_factor": 2.0,
+     "seconds": 10,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
