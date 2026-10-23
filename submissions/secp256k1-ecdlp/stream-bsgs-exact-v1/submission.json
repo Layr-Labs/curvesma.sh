@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "Streamed signed BSGS with exact bound (revision of a1821252)",
+  "claims": [
+    {
+      "statement": "For the unrestricted uniform full-production secp256k1 target Q=[x]P, the deterministic classical cold attack in proof.md succeeds with probability at least 1/2 using at most 2^(1382191/10000) target-group-operation equivalents under protected C=1000. Peak storage is below 2^146 bytes; preprocessing is included in total and bounded by 2^(1382191/10000); nonuniform advice is zero bytes (log convention 0). No heuristic assumptions. This is an analytic construction, not a practical break or executed production attack. The construction and exact total T are reused from submission a1821252-b030-453e-bea7-160e26c54575 (official score 138.25); the only change is the tighter submitted rational bound, justified by the exact integer inequality T^10000 < 1000^10000 * 2^1382191. The predecessor is declared as a dependency.",
+      "score": {
+        "numerator": "1382191",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stream-bsgs-evidence",
+      "source": "experiment.py",
+      "purpose": "Bounded stream sorting/intersection, exact coverage, Jacobian and zero-safe batch normalization, negative controls and analytic ledger; no production timing inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "toy",
+              "curve",
+              "accounting"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 17,
+            "maximum": 257
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "block_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 16,
+          "h": 16,
+          "block_size": 4
+        }
+      ]
+    }
+  ]
+}

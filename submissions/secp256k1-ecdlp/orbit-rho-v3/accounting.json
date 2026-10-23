@@ -1,0 +1,68 @@
+{
+  "target_id": "secp256k1-ecdlp",
+  "curve": "secp256k1",
+  "algorithm": "glv-class-rho-dp-v3",
+  "reference_operation": "batched incomplete affine secp256k1 addition, 6M, S=M, A=0",
+  "reference_price_C_instructions": 1000,
+  "field_multiply_instructions": 179,
+  "orbit_size": 6,
+  "r": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+  "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+  "classes_N_prime": "19298681539552699237261830834781317975472927379845817397100860523586360249056",
+  "k0": 1.381248840114858e+38,
+  "k0_log2": 126.69924085874058,
+  "nu": 1.03,
+  "walk_steps": "142268630531830381701751720687840526336",
+  "walk_steps_log2": 126.74188519614908,
+  "E_instructions": 630,
+  "step_instructions": 1630,
+  "step_reference_equivalents": 1.63,
+  "step_breakdown": {
+    "reference_addition": 1000,
+    "two_field_multiplications": 358,
+    "four_normalizations": 160,
+    "comparisons_and_selects": 36,
+    "y_parity_and_negation": 20,
+    "table_index_and_load": 16,
+    "dp_test": 3,
+    "state_and_batch_loop": 28,
+    "itemized_total": 621,
+    "reserve": 9,
+    "E": 630
+  },
+  "other_ref_ops": "9671406556917033397649408",
+  "total_instructions": "231897867766893193580412221754577707335680",
+  "time_log2_exact_float": 127.44675716060549,
+  "submitted_time_log2": 127.446758,
+  "submitted_score_rational": "63723379/500000",
+  "ideal_success_rho_1": 0.4080881549056673,
+  "required_walk_quality_for_0_39": 0.9425984297686069,
+  "claimed_success_probability": 0.39,
+  "memory_log2_bytes": 76.6,
+  "preprocessing_log2": 32.01,
+  "nonuniform_advice_bytes": "0",
+  "sensitivity": {
+    "E_650_time_log2": 127.464352,
+    "E_621_time_log2": 127.43877,
+    "nu_1_02_E_630_time_log2": 127.42472
+  },
+  "cycle_omission": {
+    "two_cycle_rate_per_step": "1/(6r) = 2^-258.6",
+    "expected_cycle_entries_over_run": "< 2^-132",
+    "expected_cycle_waste": "< 2^-70 of walk",
+    "expected_cap_cut_waste": "< 2^-52 of walk"
+  },
+  "protected_sha256": {
+    "tracks/secp256k1-ecdlp/target-profile.json": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/secp256k1-ecdlp/rules.md": "2408941d15e056e94477a6a28001c4beae32cf02aa2da7085353d5eb703c6cfb",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  },
+  "checks": {
+    "total_below_2^128_ref_ops": true,
+    "memory_below_2^136_bytes": true,
+    "success_above_0_39": true,
+    "submitted_score_below_127_47": true,
+    "all_work_charged": true
+  }
+}

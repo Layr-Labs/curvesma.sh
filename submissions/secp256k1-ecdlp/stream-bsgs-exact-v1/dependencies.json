@@ -1,0 +1,7 @@
+[
+  {
+    "submissionId": "a1821252-b030-453e-bea7-160e26c54575",
+    "rationale": "This submission reuses the full streamed signed BSGS construction, the exact total T, the arithmetic/communication ledger, the exact signed-coverage proof and the memory bound of a1821252. The only change is the submitted rational upper bound, tightened from 553/4 = 138.25 to 1382191/10000 = 138.2191 using the same exact total T.",
+    "evidence": "Compare proof.md and accounting.json: the construction, T = 405594803298275708386680876083793174401646592, coverage, memory and all ledger terms are identical. Only submitted_log2_bound and the exact inequality change, from T^4 < 1000^4*2^553 to T^10000 < 1000^10000*2^1382191."
+  }
+]
