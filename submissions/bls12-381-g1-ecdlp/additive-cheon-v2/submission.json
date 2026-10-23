@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: additive Cheon, one batched affine addition per BSGS step, fixed-depth key store with a bounded charged overflow",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability 0.4055 (at least 0.39) over the uniform challenge. The algorithm is Cheon's p-1 baby-step/giant-step in the subgroup H of 2^20-th powers. Its baby and giant sets are small integers a*b in H (a a prime in (2^75, 2^76], b <= 2^70, chi(a)+chi(b)=0), walked in increasing order at one batched affine G1 addition per element. It uses the 6-element symmetry group {+/-1, +/-lambda, +/-lambda^2} via the store key min(y, p-y). Its total work W(n) = W(2^20) is at most 2^116.889745 target-group-operation equivalents. This includes the key-store inserts and lookups with their address translation, walk bookkeeping, per-prime tables, character precomputation and sieves, store and page-table initialisation, collision verification, the d-th root, the final mu_d search and input checks. The store is one flat array of blocks, each holding 1024 primary slots plus 4 overflow records of 72 bytes, indexed by the top 118 bits of the canonical y, which is uniform on its slot range; there are 2^106.700672 blocks and 2^122.876 bytes. A slot address is therefore 123 bits wide, and both page-table levels carry two-word (16-byte) entries of 128 bits, because a single 64-bit entry could hold neither pointer field. A block is named by a 107-bit block number, split into a 54-bit level-1 index and a 53-bit level-2 index. The level-2 entry holds the 123-bit byte address of its block's base in the heap, 5 bits spare; there are 2^53.700672 level-2 tables of 2^53 entries, 2^57 bytes each and 2^110.700672 bytes in total, and a level-1 entry holds the 111-bit byte address of one of them, 17 bits spare, with the level-1 table 2^54 entries and 2^58 bytes. Each access charges the multiword arithmetic explicitly: the 118-bit slot index and the 107-bit block number in two words, the level-1 index built as a shift/or of two words, the second word of each of the two entries, the in-block offset, and the record's two-word address formed by add and adc, 29 instructions before any slot is visited. An access probes a fixed window of 8 slots inside its block, wrapping at the block's end, and then the block's 4 overflow records, and it is charged at that worst case: 8 window probes plus 4 overflow comparisons, 12 slot visits, every time, each visit advancing the two-word record address by 72 with add and adc and charging the in-block wrap. A key that finds all 12 occupied is discarded; at most a fraction 0.01 of the stored keys is lost that way, charged by raising the coverage exponent from 0.52 to 52/99. No probe count, rate or load-factor estimate enters W, and no pointer is stored in fewer bits than the address space it indexes. Each access also charges the nine record words and the full key comparison. Per-element totals are 241 instructions for the baby walk and 388 for the giant walk on top of one reference addition, itemised in proof.md section 4.3. Preprocessing (challenge-independent work) is at most 2^115.898 and is included. Peak memory is at most 2^122.88 bytes, including the 2^110.701 bytes of two-word page tables; there is no nonuniform advice. Heuristics: H1 (the product set U*B*G^-1 has random-like coincidences apart from a bounded repeated-rational loss below 10^-4); H2 (characters of the primes a used are equidistributed, affecting only how many primes are needed, with at least 3x slack); and H3, the store's fixed-depth truncation rule, whose discard fraction is charged at 0.01 against a measured 0.000758 at the production load and paid for by raising the coverage exponent. All are disclosed and supported by experiments at their stated scope. This is an analytic bound, not a full-size execution.",
+      "score": {
+        "numerator": "23377949",
+        "denominator": "200000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One run with four parts. (1) It recomputes the proof.md cost ledger, the itemised per-element instruction budgets, the bit widths of the two-word page-table entries against the heap and the page-table region (the level-2 entry holds a 123-bit block base and the level-1 entry a 111-bit table base, neither of which fits in 64 bits), the probe rule's 12 slot visits, the slot and block counts and the load, the exact rational score and an exact integer inequality that proves the rounding, the preprocessing bound and the KKM c=3 baseline under the same budgets; this checks arithmetic only, not the per-element budgets. (2) It measures the store rule itself at the production load factor: a table of 2^store_bits slots at the production load, blocks of 1024 primary slots plus M overflow records, the fixed 8-slot window with its in-block wrap, and it reports the fraction of inserts whose window is full and the fraction discarded for M = 0, 2 and 4, so the charged allowance 0.01 can be compared with the measurement. (3) Toy evidence for H1/H2: the exact coverage |U*B*G^-1|/m for random sets, the smallest integers in H and the production product construction at X2/d = 4, 16, 64 and 256, against 1-exp(-K) and a conservative gcd bound, plus class-list spread. (4) The full algorithm on a toy j=0 curve with a small table bound gmax, so the overflow-chunk path runs. It reports success rate against prediction, with every recovered scalar checked; its key table is an exact dictionary, so it tests the walk and the coverage argument rather than the store's window rule, which part 2 measures. Parts 2 to 4 are evidence at reduced or toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "K": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 6
+          },
+          "cov_bits": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 29
+          },
+          "cov_logd": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10
+          },
+          "atk_bits": {
+            "type": "integer",
+            "minimum": 18,
+            "maximum": 24
+          },
+          "atk_logd": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 6
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1500
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "gmax": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 100000
+          },
+          "store_bits": {
+            "type": "integer",
+            "minimum": 14,
+            "maximum": 22
+          },
+          "store_seeds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          }
+        },
+        "required": [
+          "K",
+          "cov_bits",
+          "cov_logd",
+          "atk_bits",
+          "atk_logd",
+          "trials",
+          "gmax",
+          "seed",
+          "store_bits",
+          "store_seeds"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "K": "0.52",
+          "cov_bits": 29,
+          "cov_logd": 8,
+          "atk_bits": 24,
+          "atk_logd": 6,
+          "trials": 1500,
+          "gmax": 16,
+          "seed": 1,
+          "store_bits": 19,
+          "store_seeds": 3
+        }
+      ]
+    }
+  ]
+}
