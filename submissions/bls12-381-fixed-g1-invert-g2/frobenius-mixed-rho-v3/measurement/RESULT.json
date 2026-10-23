@@ -1,0 +1,154 @@
+{
+  "schema": "gt-blst-step-measurement-v8",
+  "kernel": "measurement/step.c (constant-instruction primitives: branch-free addmod, 6-limb comparisons, selection in the minimum; per-walk anchors; canonical DP exponents; 128-bit fingerprint from key bits 70..197; trail age; v8: each trail ends at its first distinguished point and at the trail cap, and the walk restarts at its start element)",
+  "measurement_tool": "organizer image via measurement/measure.sh (blst commit f7a88067, GCC 14.2.0, Valgrind 3.24.0 Callgrind Ir), walk runs N1=256/N2=512, MODE sizes 4096/8192 (mul, sqr, restartbench)",
+  "production_dp_bits": 60,
+  "method": "Per-step instruction counts of forced-type runs at the production header DP_BITS = 60 (no distinguished points): all-adder inputs (S=0), all-square inputs (S=1024). The DP path is the all-adder run with DP_BITS = 0 (every step a distinguished point, hence a restart at every step) minus the all-adder DP_BITS = 60 run. The restart is measured alone with mode restartbench. The per-step count is the difference of Callgrind totals between 256 and 512 rounds divided by 256 * 64 (analyze.py).",
+  "reference_unit": {
+    "blst_fp12_mul_instructions_measured": 22997.0,
+    "organizer_measurement": 22990.0,
+    "organizer_measurement_method": "REF_FUNCS=ref_mul toggle pass, (ref-512 - ref-256) / (adds-512 - adds-256) at seed 1",
+    "charged": "1 unit (the organizer's reference operation; the adder calls it)"
+  },
+  "cyclotomic_square_instructions": 9803.0,
+  "per_step_instructions": {
+    "all_add_seed1": {
+      "value": 26731.234,
+      "interval_counts": {
+        "steps": 16384,
+        "adds": 16388,
+        "sqrs": 4,
+        "dps": 0,
+        "cyc2": 4,
+        "cycl": 0,
+        "restarts": 0,
+        "cap_restarts": 0
+      },
+      "note": "forced all-adder, DP_BITS 60"
+    },
+    "all_add_seed2": {
+      "value": 26723.934,
+      "interval_counts": {
+        "steps": 16384,
+        "adds": 16385,
+        "sqrs": 1,
+        "dps": 0,
+        "cyc2": 1,
+        "cycl": 0,
+        "restarts": 0,
+        "cap_restarts": 0
+      },
+      "note": "forced all-adder, DP_BITS 60"
+    },
+    "all_square_seed1": {
+      "value": 13512.5,
+      "interval_counts": {
+        "steps": 16384,
+        "adds": 0,
+        "sqrs": 16384,
+        "dps": 0,
+        "cyc2": 0,
+        "cycl": 0,
+        "restarts": 0,
+        "cap_restarts": 0
+      },
+      "note": "forced all-square, DP_BITS 60"
+    },
+    "all_square_seed2": {
+      "value": 13512.5,
+      "interval_counts": {
+        "steps": 16384,
+        "adds": 0,
+        "sqrs": 16384,
+        "dps": 0,
+        "cyc2": 0,
+        "cycl": 0,
+        "restarts": 0,
+        "cap_restarts": 0
+      },
+      "note": "forced all-square, DP_BITS 60"
+    },
+    "all_add_dp_every_step_seed1": {
+      "value": 54658.5,
+      "interval_counts": {
+        "steps": 16384,
+        "adds": 16384,
+        "sqrs": 0,
+        "dps": 16384,
+        "cyc2": 0,
+        "cycl": 0,
+        "restarts": 16384,
+        "cap_restarts": 0
+      },
+      "note": "all-adder, DP_BITS 0: every step is a distinguished point and a restart"
+    },
+    "all_add_dp_every_step_seed2": {
+      "value": 54658.5,
+      "interval_counts": {
+        "steps": 16384,
+        "adds": 16384,
+        "sqrs": 0,
+        "dps": 16384,
+        "cyc2": 0,
+        "cycl": 0,
+        "restarts": 16384,
+        "cap_restarts": 0
+      },
+      "note": "all-adder, DP_BITS 0"
+    }
+  },
+  "restart_instructions": {
+    "value": 26507.0,
+    "measurement": "mode restartbench: (Ir(8192) - Ir(4096)) / 4096 for restart_walk on walk 0 (ref_mul by X0, two addmods, key_of, state clear)",
+    "charged": "one adder step (A_UNITS), per spec section 8"
+  },
+  "distinguished_point_path": {
+    "seed1": {
+      "all_add_dp0_minus_dp60": 27927.266,
+      "store_only_estimate": 1420.266
+    },
+    "seed2": {
+      "all_add_dp0_minus_dp60": 27934.566,
+      "store_only_estimate": 1427.566
+    },
+    "note": "the difference contains the store and one restart per step; store_only_estimate = difference - restart_instructions (restart measured in isolation, so the estimate is approximate)"
+  },
+  "distinguished_point_store_instructions": {
+    "value": 1423.916,
+    "measurement": "mean over seeds of (all_add_dp_every_step - all_add_seed) - restart_instructions"
+  },
+  "sort_compare_exchange_instructions": {
+    "value": 48.0,
+    "measurement": "mode sortbench of step.c at 4096 (196637) and 8192 (393245) iterations, v8 kernel: one 128-bit comparison and one 80-byte exchange per iteration"
+  },
+  "production_walk_dp60": {
+    "seed1": {
+      "total": 20741.024
+    },
+    "seed2": {
+      "total": 20809.537
+    },
+    "note": "mixed walk at S=458, DP_BITS 60 (adds about 0.547 of steps); the charges use the forced per-type counts"
+  },
+  "charged": {
+    "A_units": "1 + (adder - organizer mul + 20) / 20000 per seed: seed1 1.18806, seed2 1.18770",
+    "Q_units": "(square + 20) / 20000 per seed: seed1 0.67663, seed2 0.67663",
+    "dp_units": "per distinguished point: (store 1427.6 + 10 overflow) / C, plus one restart charged as A_UNITS, plus the bitonic network (sortnet.c measurement: 108.003 per compare-exchange, 13.0 per slot; see sortnet/RESULT-sortnet.json) charged at table capacity (accounting.py, dp_capacity; spec section 9.2)",
+    "events": "66 * A_units per detected cycle (walk-through of at most 64 steps, the check step and the escape), unchanged"
+  },
+  "replica": {
+    "seed1_dp60_512": "dump, distinguished-point records (none), counts and both invariants exact (replica-512.txt, reproduce.sh)",
+    "seed2_dp60_512": "same checks exact",
+    "seed1_dp4_512_restart_check": "dump, 2020 distinguished-point records and 2020 restarts exact (reproduce.sh, DP_BITS 4)",
+    "seed2_dp4_512_restart_check": "dump, 2046 records and 2046 restarts exact",
+    "verification_batch": "see RESULT-v8.json (DP_BITS 60, 4, 2, 3; trail-cap builds CAP 50 and 24): all 12 exact"
+  },
+  "native_counts": "evidence/native-counts.json (uninstrumented, production DP_BITS = 60, v8 kernel, 2^20 rounds per seed)",
+  "deviations": [
+    "v8 changes the walk only at distinguished points and at the trail cap; at the production DP_BITS = 60 no restart occurs, so the walk counts equal the previous revision's (verified against evidence/native-counts.json, which had the same adds, sqrs, cyc2, cycl).",
+    "The previous native-counts.json recorded dps = 4197588 per seed from DP_BITS = 4 runs; the production counts are DP_BITS = 60 (dps = 0). The DP_BITS = 4 walk differs under v8 (restarts about every 16 steps) and is used only for the restart check.",
+    "The constant-instruction change raises the adder step by about 800 instructions (about 0.04 units); the charge follows the measured counts.",
+    "Memory transfers are charged as the instructions of the moves (exchanges), not as separate storage costs.",
+    "The solve/verify/output charge (2^29 instructions) is an assumed bound; its share of W_MAX is 2^14.7 of 2^125.8 units."
+  ]
+}

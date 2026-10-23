@@ -1,0 +1,13 @@
+r - 1 = 2^32 * 3 * 11 * 19 * 10177 * 125527 * 859267 * 906349^2 * 2508409 * 2529403 * 52437899 * 254760293^2
+product of factors equals r - 1: True
+factor primality (Miller-Rabin, bases [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37], deterministic below 318665857834031151167461): True
+r is a probable prime with the same bases (standard constant): True
+r mod 12: 1
+order of 2 modulo r: 3277242198445386904965483781761622864855659531282977363912728668746161324032
+order bit length: 251
+order certificate primes (2^(o/p) != 1): [2, 3, 11, 19, 10177, 125527, 859267, 906349, 2508409, 2529403, 52437899, 254760293]
+primitive-root test 2^((r-1)/p) = 1 at primes: [2] (2 is not a primitive root)
+gcd(order, 12): 12
+smallest q >= 1 with 2^q a 12th root of unity, q0: 273103516537115575413790315146801905404638294273581446992727389062180110336
+q0 bit length: 248 (q0 > 2^247: True)
+completed
