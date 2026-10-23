@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: six-class (negation + GLV) parallel Pollard rho in G1, 128-instruction step ledger, R=2^16 twisted table, global work meter at 2^126.293",
+  "claims": [
+    {
+      "statement": "For a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm of proof.md outputs x with success probability at least 0.39 (0.3901314), and on every run its total work is at most 2^126.293 batched-affine-G1-addition equivalents (C=2,000 instructions), enforced by a global work meter that charges every action an upper-bound price before execution and halts with failure at 2^126.293. The algorithm is parallel distinguished-point Pollard rho (2^20 walks, distinguished probability 2^-64, trail cap 20*2^64) on the (r-1)/6 = 2^252.2721269 classes of G1 under negation and phi(x,y)=(beta*x,y)=[lambda]; class key |y|; the canonical twist index is decided exactly from a 12-limb-product truncated fixed-point product with a metered exact fallback on near-ties (0.25 units); an R=2^16 twisted table makes every step one batched affine addition plus 128 instructions, so an ordinary step costs 1.064 units, a cycle-traversal step 1.076 and a doubling 1.5; 2-cycles and cycles of length <=64 are escaped by doubling the cycle's minimum 192-bit-fingerprint class (a class map; no cancellation can close a cycle through doublings since the order of 2 mod r is 2^250.8571), so trails meeting a common class reunite by the merging lemma; fresh uniform trail coefficients are stored in full and collisions are solved by re-walking with coefficients reduced mod r and x=(e_2-e_1)/(f_1-f_2) mod r verified before output. Phase 1 stops when a hard operation counter reaches S_ops=1.05*S0=2^126.19938 with S0=sqrt(2N'*ln(1/0.6095)) and N'=((r-1)/6)*2^16/(2^16-1), so heuristic H1 gives P(T_c<=S_ops)>=0.3905; phase 2 completes open trails; report capacity 2^63.25 records and 8 processed matches are caps counted as failure; the meter's early-halt probability is at most 0.000368437 by Markov at a headroom of 2^117.838, and the remaining failure events total below 1.2e-7. Peak memory is 2^70.9504 bytes (below 2^72); preprocessing (jump table 2^28, report-table initialisation 2^57.1, first 2^20 trail starts, sampling) is at most 2^57.2 units under a meter sub-cap and lies inside W; no advice is used.",
+      "score": {
+        "numerator": "126293",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "glv-class-rho-tight2-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on BLS12-381 G1, check the GLV pair, orbit size 6 and the unit action, the |y| class key, uniqueness of the canonical member, the truncated-product twist index against the exact rule (random and adversarial near-tie inputs), the twisted-step identity, the doubling class map, the multiplicative order of 2 mod r, table entries, coefficient tracking on production steps, and recovery of a planted x from two production trails forced to merge. Part B: run the per-trail algorithm of proof.md on a toy curve y^2=x^3+4 over F_q and report class visits to the first inter-trail collision against 1.05*sqrt(2N'*ln(1/0.6095)) and the fruitless-cycle rate; with pipeline=true the scaled production rules (phase-1 budget, phase 2, report capacity, 8-match cap) are applied and the success rate is reported; classes=1 or 2 runs control walks. The cost block prints the whole cost model of proof.md sections 3-5 from exact integers and 80-digit decimals, including the exact-integer check of the claimed score. Toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 600
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 150,
+          "R": 64,
+          "dp_bits": 4,
+          "seed": 1,
+          "production_checks": 1,
+          "canon_random": 2000,
+          "canon_stress": 1000,
+          "pipeline": true
+        }
+      ]
+    }
+  ]
+}
