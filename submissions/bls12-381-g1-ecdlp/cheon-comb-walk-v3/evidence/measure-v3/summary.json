@@ -1,0 +1,76 @@
+{
+ "run": "out/run3",
+ "kernel": "cheon_step_v3.c (full walk step, 256 records, production tables)",
+ "per_point_total_Ir": 518340.2421875,
+ "adds_per_point_measured": 15.0,
+ "ref_add_Ir_per_point": 516444.7890625,
+ "ref_add_Ir_per_call": 34429.652604166666,
+ "R_point_instructions": 1895.453125,
+ "R_point_units": 0.9477265625,
+ "dp_R_instructions_per_dp": 762.5483870967741,
+ "restart_R_instructions_per_restart": 1691.99609375,
+ "restart_adds_per_restart": 15.0,
+ "build_total_Ir": 8429431517,
+ "build_ref_proj_Ir": 8429431284.0,
+ "build_proj_calls": 1048544,
+ "R_build_instructions": 233.0,
+ "raw": {
+  "prod": {
+   "256": 132696299,
+   "512": 265391401
+  },
+  "ref_union": {
+   "256": 8693851016,
+   "512": 8826060882
+  },
+  "dp4": {
+   "256": 132707762,
+   "512": 265415040
+  },
+  "cap1": {
+   "256": 265341339,
+   "512": 530677435
+  },
+  "build": 8429431517,
+  "counts_prod": {
+   "256": {
+    "steps": 256,
+    "dps": 0,
+    "matches": 0,
+    "overflow": 0,
+    "restarts": 0,
+    "adds": 7680,
+    "proj": 1048544
+   },
+   "512": {
+    "steps": 512,
+    "dps": 0,
+    "matches": 0,
+    "overflow": 0,
+    "restarts": 0,
+    "adds": 11520,
+    "proj": 1048544
+   }
+  },
+  "counts_dp4_512": {
+   "steps": 512,
+   "dps": 31,
+   "matches": 0,
+   "overflow": 0,
+   "restarts": 0,
+   "adds": 11520,
+   "proj": 1048544
+  },
+  "counts_cap1_512": {
+   "steps": 512,
+   "dps": 0,
+   "matches": 0,
+   "overflow": 0,
+   "restarts": 512,
+   "adds": 19200,
+   "proj": 1048544
+  }
+ },
+ "note_build": "R_build_instructions from the subtraction build_total_Ir - build_ref_proj_Ir is 233 and is not plausible for the batch normalisation (6 field multiplications and a squaring per entry), so accounting.py charges the build's non-addition work at an analytic bound of 10000 instructions per entry instead; the raw totals are kept here.",
+ "note_ref_toggles": "ref_fp_mul and ref_fr_mul are not toggled in this run; their instructions are part of R_point, and R_point = per_point_total_Ir - ref_add_Ir_per_point."
+}
