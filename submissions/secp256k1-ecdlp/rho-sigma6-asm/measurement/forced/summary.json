@@ -1,0 +1,972 @@
+{
+ "source": "measured by the rare-path forced-path harness (organizer image, -O3 -fno-tree-vectorize -mgeneral-regs-only)",
+ "full_results": "kept with the work, not in this package (the full file exceeds the package file limit)",
+ "subject": "worst-case Ir of the unbatched rare-path primitives of the secp256k1 rho kernel (step.c)",
+ "sources_sha256": {
+  "step.c": "dd2bcc6b078d9123acdee7085788062ac18f8f3bcd1b388eedec2ac10323fa9f",
+  "secp_field.h": "a4330ba28dc6ef24d7d4ae7e2aa84d180d4a20516a11b81103a368fbd3e58003",
+  "secp_sub.h": "ca6ff75dc635fd46fa21b599a5ba2c4f8f71b97f116c14e90a9077eda8f88430",
+  "forced.c": "7cc9f2fe8ef0af19dc09873f68af18f134e7d4002e0e6f2592d725076aa16c97",
+  "bl_ops.h": "251e099fa929feaabc444ca76026790afa33b084782c0b4cb0018b33c19c6c7c"
+ },
+ "toolchain": [
+  "cc (Debian 14.2.0-19) 14.2.0",
+  "valgrind-3.24.0"
+ ],
+ "compile_flags": "cc -O3 -fno-tree-vectorize -mgeneral-regs-only (plus -g, which does not change the generated code, verified by comparing disassembly; plus -DNO_LEAVES for the primitive builds and -DBRANCHY for the branchy build)",
+ "platform": "linux/arm64 container curvesma-reference-count, valgrind --tool=callgrind --collect-atstart=no, Ir between two CALLGRIND_TOGGLE_COLLECT",
+ "units": "ir_per_call is Ir per call of the noinline wrapper of the primitive as measured: it includes the measuring loop and the call (5 to 7 Ir, listed as harness_loop_ir per primitive). ir_per_call_net_of_harness_loop subtracts them. ir_per_call = (Ir(2N) - Ir(N)) / N, which equals floor(summary Ir / N) because the fixed Callgrind offset is below N; ir_over_n is summary / N.",
+ "worst_cases": {
+  "key_full_max": {
+   "ir_per_call": 26,
+   "ir_per_call_net_of_harness_loop": 20,
+   "harness_loop_ir": 6,
+   "max_variants": [
+    "yo"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 26,
+   "gap_static_minus_measured": 0,
+   "note": null
+  },
+  "same_class_max": {
+   "ir_per_call": 70,
+   "ir_per_call_net_of_harness_loop": 64,
+   "harness_loop_ir": 6,
+   "max_variants": [
+    "ao_bo_eq"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 70,
+   "gap_static_minus_measured": 0,
+   "note": null
+  },
+  "point_is_dp_max": {
+   "ir_per_call": 41,
+   "ir_per_call_net_of_harness_loop": 36,
+   "harness_loop_ir": 5,
+   "max_variants": [
+    "near_yo_dp0",
+    "near_yo_dp1"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 41,
+   "gap_static_minus_measured": 0,
+   "note": null
+  },
+  "is_dp_macro_max": {
+   "ir_per_call": 33,
+   "ir_per_call_net_of_harness_loop": 27,
+   "harness_loop_ir": 6,
+   "max_variants": [
+    "near_yo_dp0",
+    "near_yo_dp1"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 33,
+   "gap_static_minus_measured": 0,
+   "note": "IS_DP(kl, p) alone, without key_lo"
+  },
+  "canon_k_exact_max": {
+   "ir_per_call": 188,
+   "ir_per_call_net_of_harness_loop": 183,
+   "harness_loop_ir": 5,
+   "max_variants": [
+    "h1",
+    "zero"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 197,
+   "gap_static_minus_measured": 9,
+   "note": null
+  },
+  "canon_k_max": {
+   "ir_per_call": 244,
+   "ir_per_call_net_of_harness_loop": 239,
+   "harness_loop_ir": 5,
+   "max_variants": [
+    "h1",
+    "zero"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 253,
+   "gap_static_minus_measured": 9,
+   "note": null
+  },
+  "select_adder_max": {
+   "ir_per_call": 270,
+   "ir_per_call_net_of_harness_loop": 264,
+   "harness_loop_ir": 6,
+   "max_variants": [
+    "h1",
+    "zero"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 279,
+   "gap_static_minus_measured": 9,
+   "note": null
+  },
+  "canon_point_max": {
+   "ir_per_call": 370,
+   "ir_per_call_net_of_harness_loop": 364,
+   "harness_loop_ir": 6,
+   "max_variants": [
+    "latn_yo"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 382,
+   "gap_static_minus_measured": 12,
+   "note": null
+  },
+  "add_single_max": {
+   "ir_per_call": 23079,
+   "ir_per_call_net_of_harness_loop": 23072,
+   "harness_loop_ir": 7,
+   "max_variants": [
+    "dbl",
+    "dbl_bw",
+    "dbl_s1",
+    "dbl_s2",
+    "dbl_s3",
+    "dbl_s4"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 23079,
+   "gap_static_minus_measured": 0,
+   "note": null
+  },
+  "f_single_max": {
+   "ir_per_call": 23345,
+   "ir_per_call_net_of_harness_loop": 23339,
+   "harness_loop_ir": 6,
+   "max_variants": [
+    "h1.dbl",
+    "zero.dbl"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 23354,
+   "gap_static_minus_measured": 9,
+   "note": null
+  },
+  "escape_max_2": {
+   "ir_per_call": 23538,
+   "ir_per_call_net_of_harness_loop": 23531,
+   "harness_loop_ir": 7,
+   "max_variants": [
+    "L2.dec.d4.yo.latn.dbl"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 23550,
+   "gap_static_minus_measured": 12,
+   "note": null
+  },
+  "escape_max_65": {
+   "ir_per_call": 26436,
+   "ir_per_call_net_of_harness_loop": 26429,
+   "harness_loop_ir": 7,
+   "max_variants": [
+    "L65.dec.d4.yo.latn.dbl"
+   ],
+   "static_cfg_upper_bound_ir_per_call": 26448,
+   "gap_static_minus_measured": 12,
+   "note": null
+  }
+ },
+ "headline": {
+  "f_single_max": 23345,
+  "f_single_max_variant": [
+   "h1.dbl",
+   "zero.dbl"
+  ],
+  "escape_max_2": 23538,
+  "escape_max_2_variant": [
+   "L2.dec.d4.yo.latn.dbl"
+  ],
+  "escape_max_65": 26436,
+  "escape_max_65_variant": [
+   "L65.dec.d4.yo.latn.dbl"
+  ],
+  "same_class_max": 70,
+  "same_class_max_variant": [
+   "ao_bo_eq"
+  ],
+  "point_is_dp_max": 41,
+  "point_is_dp_max_variant": [
+   "near_yo_dp0",
+   "near_yo_dp1"
+  ],
+  "canon_point_max": 370,
+  "canon_point_max_variant": [
+   "latn_yo"
+  ],
+  "add_single_max": 23079,
+  "add_single_max_variant": [
+   "dbl",
+   "dbl_bw",
+   "dbl_s1",
+   "dbl_s2",
+   "dbl_s3",
+   "dbl_s4"
+  ]
+ },
+ "canon_k_exact_comparison_depth_feasibility": {
+  "claim": "The static bound exceeds the measured maximum only through canon_k_exact paths in which both four-limb comparison chains run to the last limb. For x != 0 the depth pair (d1, d2) needs a nonzero lattice point (d, e), e = c*d mod p, c = beta+1 or beta, with |d| < 2^(64(5-d1)) and |e| < 2^(64(5-d2)); the table shows there is none for (4,4), (4,3), (3,4) and that the boxes (4,2), (3,3), (2,4) hold a few points whose realized depths sum to at most 5. Equal chains happen only for x = 0 (beta x = x or beta^2 x = x forces x = 0). So the worst canon_k_exact path is x = 0 (all eight limbs equal, 182 Ir in the function), and the largest mismatch path is depth (4,1) at 179 Ir.",
+  "path_cost_by_chain_exit_ir_inside_canon_k_exact": {
+   "eq,eq": 182,
+   "eq,1": 173,
+   "eq,2": 177,
+   "eq,3": 181,
+   "eq,4": 185,
+   "1,eq": 175,
+   "1,1": 166,
+   "1,2": 170,
+   "1,3": 174,
+   "1,4": 178,
+   "2,eq": 179,
+   "2,1": 170,
+   "2,2": 174,
+   "2,3": 178,
+   "2,4": 182,
+   "3,eq": 183,
+   "3,1": 174,
+   "3,2": 178,
+   "3,3": 182,
+   "3,4": 186,
+   "4,eq": 188,
+   "4,1": 179,
+   "4,2": 183,
+   "4,3": 187,
+   "4,4": 191
+  },
+  "lattice": [
+   {
+    "depths_required": [
+     4,
+     4
+    ],
+    "second_chain_case": "bx>=x (second chain compares against x)",
+    "log2_shortest_weighted_vector": 127.9,
+    "log2_box_diagonal": 64.5,
+    "lattice_points_in_box": 0,
+    "depths_realized_by_those_points": []
+   },
+   {
+    "depths_required": [
+     4,
+     4
+    ],
+    "second_chain_case": "bx<x (second chain compares against bx)",
+    "log2_shortest_weighted_vector": 127.9,
+    "log2_box_diagonal": 64.5,
+    "lattice_points_in_box": 0,
+    "depths_realized_by_those_points": []
+   },
+   {
+    "depths_required": [
+     4,
+     3
+    ],
+    "second_chain_case": "bx>=x (second chain compares against x)",
+    "log2_shortest_weighted_vector": 159.8,
+    "log2_box_diagonal": 128.5,
+    "lattice_points_in_box": 0,
+    "depths_realized_by_those_points": []
+   },
+   {
+    "depths_required": [
+     4,
+     3
+    ],
+    "second_chain_case": "bx<x (second chain compares against bx)",
+    "log2_shortest_weighted_vector": 159.8,
+    "log2_box_diagonal": 128.5,
+    "lattice_points_in_box": 0,
+    "depths_realized_by_those_points": []
+   },
+   {
+    "depths_required": [
+     3,
+     4
+    ],
+    "second_chain_case": "bx>=x (second chain compares against x)",
+    "log2_shortest_weighted_vector": 159.8,
+    "log2_box_diagonal": 128.5,
+    "lattice_points_in_box": 0,
+    "depths_realized_by_those_points": []
+   },
+   {
+    "depths_required": [
+     3,
+     4
+    ],
+    "second_chain_case": "bx<x (second chain compares against bx)",
+    "log2_shortest_weighted_vector": 159.8,
+    "log2_box_diagonal": 128.5,
+    "lattice_points_in_box": 0,
+    "depths_realized_by_those_points": []
+   },
+   {
+    "depths_required": [
+     4,
+     2
+    ],
+    "second_chain_case": "bx>=x (second chain compares against x)",
+    "log2_shortest_weighted_vector": 192.0,
+    "log2_box_diagonal": 192.5,
+    "lattice_points_in_box": 4,
+    "depths_realized_by_those_points": [
+     [
+      3,
+      1
+     ]
+    ]
+   },
+   {
+    "depths_required": [
+     4,
+     2
+    ],
+    "second_chain_case": "bx<x (second chain compares against bx)",
+    "log2_shortest_weighted_vector": 192.0,
+    "log2_box_diagonal": 192.5,
+    "lattice_points_in_box": 4,
+    "depths_realized_by_those_points": [
+     [
+      3,
+      1
+     ]
+    ]
+   },
+   {
+    "depths_required": [
+     3,
+     3
+    ],
+    "second_chain_case": "bx>=x (second chain compares against x)",
+    "log2_shortest_weighted_vector": 127.9,
+    "log2_box_diagonal": 128.5,
+    "lattice_points_in_box": 2,
+    "depths_realized_by_those_points": [
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ]
+   },
+   {
+    "depths_required": [
+     3,
+     3
+    ],
+    "second_chain_case": "bx<x (second chain compares against bx)",
+    "log2_shortest_weighted_vector": 127.9,
+    "log2_box_diagonal": 128.5,
+    "lattice_points_in_box": 2,
+    "depths_realized_by_those_points": [
+     [
+      3,
+      2
+     ]
+    ]
+   },
+   {
+    "depths_required": [
+     2,
+     4
+    ],
+    "second_chain_case": "bx>=x (second chain compares against x)",
+    "log2_shortest_weighted_vector": 192.0,
+    "log2_box_diagonal": 192.5,
+    "lattice_points_in_box": 4,
+    "depths_realized_by_those_points": [
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      3
+     ]
+    ]
+   },
+   {
+    "depths_required": [
+     2,
+     4
+    ],
+    "second_chain_case": "bx<x (second chain compares against bx)",
+    "log2_shortest_weighted_vector": 192.0,
+    "log2_box_diagonal": 192.5,
+    "lattice_points_in_box": 4,
+    "depths_realized_by_those_points": [
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      3
+     ]
+    ]
+   }
+  ]
+ },
+ "x_selectors": {
+  "description": "x values for the canon_k variants: r0/r1/r2 random with exact k = 0/1/2 on the fast path; zero (x = 0, fallback, k = 0); latp/latn/lat2p/lat2n and h1..h12 from the lattice of x with beta*x or beta^2*x close to x; nearp (x = p-1, a3 above the fast-path limit, fallback); fb1/fb2 found by search with the fast path rejecting them",
+  "canon_k_path_info": {
+   "r0": "x_fallback=0;x_exact_k=0;",
+   "r1": "x_fallback=0;x_exact_k=1;",
+   "r2": "x_fallback=0;x_exact_k=2;",
+   "zero": "x_fallback=1;x_exact_k=0;",
+   "latp": "x_fallback=1;x_exact_k=0;",
+   "latn": "x_fallback=0;x_exact_k=2;",
+   "lat2p": "x_fallback=0;x_exact_k=1;",
+   "lat2n": "x_fallback=1;x_exact_k=2;",
+   "nearp": "x_fallback=1;x_exact_k=2;",
+   "fb1": "x_fallback=1;x_exact_k=1;",
+   "fb2": "x_fallback=1;x_exact_k=2;",
+   "h1": "x_fallback=1;x_exact_k=0;",
+   "h2": "x_fallback=1;x_exact_k=0;",
+   "h3": "x_fallback=1;x_exact_k=0;",
+   "h4": "x_fallback=1;x_exact_k=0;",
+   "h5": "x_fallback=1;x_exact_k=0;",
+   "h6": "x_fallback=1;x_exact_k=1;",
+   "h7": "x_fallback=1;x_exact_k=1;",
+   "h8": "x_fallback=1;x_exact_k=1;",
+   "h9": "x_fallback=1;x_exact_k=1;",
+   "h10": "x_fallback=1;x_exact_k=2;",
+   "h11": "x_fallback=1;x_exact_k=2;",
+   "h12": "x_fallback=1;x_exact_k=2;"
+  }
+ },
+ "variants": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 297186
+ },
+ "leaves": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 7568
+ },
+ "rare_function_forced_calls": {
+  "rare_2cycle": {
+   "forced_scenario": "random point nw0 with fast canon_k and generic additions; Wc[w] = f(nw0), so same_class holds; the escape adds a random ESC point (generic); the point after the escape takes the fast canon_k path and is not a distinguished point",
+   "whole_call_ir_per_call": 46318,
+   "primitives_on_the_same_data_ir_per_call": {
+    "f_single": 23003,
+    "same_class": 43,
+    "escape": 23180,
+    "select_adder": 78,
+    "is_dp": 10
+   },
+   "sum_of_primitives_net_of_their_harness_loops": 46283,
+   "whole_net_of_its_harness_loop": 46303,
+   "whole_minus_sum_of_primitives": 20
+  },
+  "rare_anchor": [
+   {
+    "cycle_length_L": 1,
+    "f_single_calls": 1,
+    "whole_call_ir_per_call": 46568,
+    "whole_net_of_its_harness_loop": 46557,
+    "replay_of_the_primitive_calls_ir_per_call": 46550,
+    "replay_with_empty_functions_ir_per_call": 35,
+    "sum_of_primitives_net": 46515,
+    "whole_net_minus_sum_of_primitives": 42
+   },
+   {
+    "cycle_length_L": 2,
+    "f_single_calls": 2,
+    "whole_call_ir_per_call": 69465,
+    "whole_net_of_its_harness_loop": 69454,
+    "replay_of_the_primitive_calls_ir_per_call": 69475,
+    "replay_with_empty_functions_ir_per_call": 50,
+    "sum_of_primitives_net": 69425,
+    "whole_net_minus_sum_of_primitives": 29
+   },
+   {
+    "cycle_length_L": 3,
+    "f_single_calls": 3,
+    "whole_call_ir_per_call": 92513,
+    "whole_net_of_its_harness_loop": 92502,
+    "replay_of_the_primitive_calls_ir_per_call": 92551,
+    "replay_with_empty_functions_ir_per_call": 65,
+    "sum_of_primitives_net": 92486,
+    "whole_net_minus_sum_of_primitives": 16
+   },
+   {
+    "cycle_length_L": 10,
+    "f_single_calls": 10,
+    "whole_call_ir_per_call": 254067,
+    "whole_net_of_its_harness_loop": 254056,
+    "replay_of_the_primitive_calls_ir_per_call": 254301,
+    "replay_with_empty_functions_ir_per_call": 170,
+    "sum_of_primitives_net": 254131,
+    "whole_net_minus_sum_of_primitives": -75
+   },
+   {
+    "cycle_length_L": 65,
+    "f_single_calls": 65,
+    "whole_call_ir_per_call": 1522560,
+    "whole_net_of_its_harness_loop": 1522549,
+    "replay_of_the_primitive_calls_ir_per_call": 1524334,
+    "replay_with_empty_functions_ir_per_call": 995,
+    "sum_of_primitives_net": 1523339,
+    "whole_net_minus_sum_of_primitives": -790
+   }
+  ],
+  "own_line_costs": {
+   "method": "the forced calls were rerun with debug line tables (identical machine code) and the Callgrind self cost of each rare function was split by step.c source line; \"own lines\" are the lines of the function body itself (rare_2cycle 288-300, rare_anchor 302-325), the rest belongs to the inlined primitives",
+   "rare_2cycle_own_lines_ir_per_call": 56.0,
+   "rare_2cycle_own_lines_detail": {
+    "289": 14.0,
+    "291": 3.0,
+    "292": 10.0,
+    "293": 9.0,
+    "294": 1.0,
+    "295": 5.0,
+    "296": 2.0,
+    "297": 1.0,
+    "298": 4.0,
+    "300": 7.0
+   },
+   "rare_anchor_own_lines_ir_per_call_by_L": {
+    "1": 41.0,
+    "2": 54.0,
+    "3": 67.0,
+    "10": 158.0,
+    "65": 873.0
+   },
+   "rare_anchor_own_lines_detail_L65": {
+    "302": 14.0,
+    "305": 8.0,
+    "306": 1.0,
+    "307": 128.0,
+    "316": 576.0,
+    "317": 130.0,
+    "319": 3.0,
+    "320": 4.0,
+    "325": 9.0
+   },
+   "rare_anchor_own_lines_fit": "28 + 13 * L  (exact for L = 1, 2, 3, 10, 65)"
+  },
+  "harness_loops_ir": {
+   "rare_2cycle": 15,
+   "rare_anchor": 11
+  },
+  "composed_from_maxima": {
+   "rare_2cycle_forced_worst_from_harness_maxima": 47281,
+   "rare_2cycle_formula": "f_single_max + same_class_max + escape_max_2 + select_adder_max + is_dp_macro_max + 56 (own lines), all net of harness loops",
+   "rare_anchor_len65_forced_worst_from_harness_maxima": 1551156,
+   "rare_anchor_len65_formula": "65 f_single_max + 66 same_class_max + 64 point_is_dp_max + escape_max_65 + select_adder_max + is_dp_macro_max + (28 + 13*65), all net of harness loops",
+   "note": "Derived by summation; every primitive taken at its own maximum, which the primitives can all attain together except as noted. Not itself measured. Compare with the whole-function static bounds of the unmodified step.c above."
+  }
+ },
+ "production_binary_cross_check": {
+  "finv_inclusive_ir_per_call": {
+   "production_step_c": 22435,
+   "harness_bounding": 22471,
+   "harness_branchy": 22471,
+   "note": "finv has no data-dependent branch (its 7 conditional branches are loop counters), so these are exact. The harness copy is 36 Ir more expensive than the one in the unmodified step.c (different inlining of sf_sqr); anything that calls finv is therefore conservative by about that much in the harness."
+  },
+  "static_longest_path_unmodified_step_c_ir": {
+   "add_single": 23021,
+   "canon_k_exact": 191,
+   "rare_2cycle": 47152,
+   "rare_anchor": 1547273,
+   "method": "longest path over all control-flow paths of the function in the binary built from the unmodified step.c with the organizer flags (every conditional branch free, abort paths excluded, finv at its measured cost). In this binary f_single, escape, canon_point, same_class, point_is_dp, select_adder and key_full are inlined into rare_2cycle / rare_anchor, so these two numbers include all of the rare functions' own code. rare_anchor: the while-loop header is visited at most 65 times (len 1..64 plus the failing test) and the escape loop header at most 64 times (len <= 65). The bounds contain paths that cannot occur together (for example canon_k_exact comparison chains at full depth in every call), so they are upper bounds, not attained values.",
+   "canon_k_exact_path_costs_by_comparison_depths": {
+    "eq,eq": 182,
+    "eq,1": 173,
+    "eq,2": 177,
+    "eq,3": 181,
+    "eq,4": 185,
+    "1,eq": 175,
+    "1,1": 166,
+    "1,2": 170,
+    "1,3": 174,
+    "1,4": 178,
+    "2,eq": 179,
+    "2,1": 170,
+    "2,2": 174,
+    "2,3": 178,
+    "2,4": 182,
+    "3,eq": 183,
+    "3,1": 174,
+    "3,2": 178,
+    "3,3": 182,
+    "3,4": 186,
+    "4,eq": 188,
+    "4,1": 179,
+    "4,2": 183,
+    "4,3": 187,
+    "4,4": 191
+   }
+  }
+ },
+ "checks": {
+  "i_branch_free_ops_equal_branchy_ops": {
+   "result": "pass",
+   "output": [
+    "random_domain_pairs=9000000 (3 draws per iteration incl. near-equal and equal)",
+    "domain_pairs_total=25859236 mismatches: sub=0 add=0 neg=0 alias=0",
+    "full_range_pairs=17892100 mismatches=0",
+    "test_ops exit 0"
+   ],
+   "covers": "sf_sub, sf_sub_bl, s_subb_bl, bl_sub; sf_add, sf_add_br, bl_add; sf_neg, bl_neg, each against a plain-C reference; random reduced pairs, near-equal and equal pairs, limb-pattern grid (8^4 values squared), named edge values (0, 1, 2, p-1, p-2, p-c, c, 2^255, 2^255-1, 2^256-1, p, p+1), aliasing r == a, and the whole 2^256 range for the branch-vs-mask pairs"
+  },
+  "i_primitive_outputs_identical_between_builds": {
+   "result": "pass",
+   "digest_bounding": "7673d765ff08b2b3",
+   "digest_branchy": "7673d765ff08b2b3",
+   "covers": "4000 random f_single/add_single (generic, doubling, zero)/canon_point/key_full/same_class/canon_k/canon_k_exact calls and 200 escapes of length 2..65"
+  },
+  "ii_per_call_stable_when_N_doubles": {
+   "result": "pass",
+   "method": "every variant was run at N and at 2N (N=1000 for most; 300 for escape len 65; 400/100/20 for the rare_anchor scenarios); ir_per_call = (Ir(2N) - Ir(N)) / N is an exact integer for every variant, and Ir(N) = N * ir_per_call + a fixed offset (the Callgrind toggle/client-request instructions, 23..43 Ir), so summary/N = ir_per_call + offset/N",
+   "builds": [
+    {
+     "build": "primitives_bounding",
+     "variants_run_at_N_and_2N": 559,
+     "non_integer_per_call": 0,
+     "fixed_offsets_ir": [
+      23,
+      25,
+      26,
+      27,
+      29,
+      31,
+      33,
+      38,
+      41,
+      43
+     ]
+    },
+    {
+     "build": "primitives_branchy",
+     "variants_run_at_N_and_2N": 559,
+     "non_integer_per_call": 0,
+     "fixed_offsets_ir": [
+      23,
+      25,
+      26,
+      27,
+      29,
+      31,
+      33,
+      38,
+      41,
+      43
+     ]
+    },
+    {
+     "build": "leaves_bounding",
+     "variants_run_at_N_and_2N": 18,
+     "non_integer_per_call": 0,
+     "fixed_offsets_ir": [
+      23,
+      25,
+      29,
+      31
+     ]
+    },
+    {
+     "build": "leaves_branchy",
+     "variants_run_at_N_and_2N": 20,
+     "non_integer_per_call": 0,
+     "fixed_offsets_ir": [
+      23,
+      25,
+      29,
+      31
+     ]
+    }
+   ]
+  },
+  "iii_bounding_ge_branchy": {
+   "result": "pass",
+   "variants_compared": 535,
+   "variants_with_branchy_greater": 0,
+   "violations": [],
+   "equal_in_both_builds": 269,
+   "bounding_minus_branchy_by_primitive": {
+    "add_single": [
+     0.0,
+     30.0
+    ],
+    "canon_k": [
+     0.0,
+     0.0
+    ],
+    "canon_k_exact": [
+     0.0,
+     0.0
+    ],
+    "canon_point": [
+     0.0,
+     0.0
+    ],
+    "escape": [
+     0.0,
+     30.0
+    ],
+    "f_single": [
+     0.0,
+     30.0
+    ],
+    "is_dp": [
+     0.0,
+     0.0
+    ],
+    "key_full": [
+     0.0,
+     0.0
+    ],
+    "point_is_dp": [
+     0.0,
+     0.0
+    ],
+    "same_class": [
+     0.0,
+     0.0
+    ],
+    "select_adder": [
+     0.0,
+     0.0
+    ]
+   },
+   "tightness_all_borrow_inputs_ir_bounding_branchy": {
+    "gen_bw": [
+     22931,
+     22931
+    ],
+    "dbl_bw": [
+     23079,
+     23079
+    ]
+   },
+   "static_longest_path_bounding_vs_branchy_ir": {
+    "add_single": {
+     "bounding": 23079,
+     "branchy": 23079
+    },
+    "f_single": {
+     "bounding": 23354,
+     "branchy": 23354
+    },
+    "escape_visits1": {
+     "bounding": 23550,
+     "branchy": 23550
+    },
+    "escape_visits64": {
+     "bounding": 26448,
+     "branchy": 26448
+    },
+    "canon_point": {
+     "bounding": 382,
+     "branchy": 382
+    }
+   },
+   "note": "The branchy longest path runs every correction, which is exactly what the masked op always runs, so the two static bounds are equal; on inputs where every sf_sub borrows (gen_bw: 6 borrows, dbl_bw: 4 borrows) the measured counts are equal. finv is compiled identically in the two primitive builds (22471 Ir inclusive in both)."
+  }
+ },
+ "branches": [
+  {
+   "id": "a1",
+   "where": "sf_sub (secp_field.h), 6 call sites in add_single",
+   "task_list": "a",
+   "found": "b.cs skips a 6-instruction correction when a >= b; the correction runs when a < b",
+   "handling": "bounding build uses bl_sub (correction always executed, masked by csel). Longest path of sf_sub = 25 Ir with the measuring loop, bl_sub = 25 (leaf rows), equal; branchy add_single is never longer than the bounding one (check iii)."
+  },
+  {
+   "id": "a2",
+   "where": "sf_add_br (secp_field.h)",
+   "task_list": "a",
+   "found": "b.cs; not called by step.c or any rare-path primitive",
+   "handling": "bl_add is its masked form (tested equal on the whole 2^256 range patterns); it is also what the bounding build uses for sf_add."
+  },
+  {
+   "id": "a3",
+   "where": "sf_add and sf_neg (secp_field.h)",
+   "task_list": "a (listed as branchy)",
+   "found": "NOT branchy in this header: both use csel for the correction; no conditional branch in their inlined bodies (see branch counts) ",
+   "handling": "the bounding build still swaps in bl_add / bl_neg; their counts equal the production ops (leaf rows: add 29, neg 22 including the 6-7 Ir measuring loop)."
+  },
+  {
+   "id": "a4",
+   "where": "sf_mul, sf_sqr, finv",
+   "task_list": "added",
+   "found": "sf_mul and sf_sqr have no conditional branch; finv has 7, all loop counters (subs w16, b.ne), so its cost is a constant",
+   "handling": "finv measured as inclusive cost: 22471 Ir in the harness, 22435 Ir in the unmodified step.c."
+  },
+  {
+   "id": "b1",
+   "where": "feq = memcmp(a, b, 32) == 0",
+   "task_list": "b",
+   "found": "compiled inline as a chain of four cmp/b.ne with early exit on the first differing limb; no call to libc memcmp anywhere in the analyzed functions",
+   "handling": "forced: same_class keys equal (all four limbs compared, the longest) and differing at limb 0..3 (ne0..ne3); add_single x-equal and y-equal paths."
+  },
+  {
+   "id": "b2",
+   "where": "fis_zero",
+   "task_list": "b",
+   "found": "orr chain and cbz, only reached when a.x == b.x and a.y == b.y",
+   "handling": "add_single variant zero_y0 (y = 0 and b = a) and doubling (y != 0)."
+  },
+  {
+   "id": "b3",
+   "where": "fcmp",
+   "task_list": "b",
+   "found": "compiled inline as two four-limb compare chains in canon_k_exact and one in the escape loop body, early exit at the first limb (from the top) that differs",
+   "handling": "escape loop variants: order dec/inc/eq x depth d4 (keys equal in the top three limbs) / d1 x parity ye/yo/alt; canon_k_exact: x selectors plus the lattice argument for which chain depths can occur."
+  },
+  {
+   "id": "c1",
+   "where": "add_single: if (feq(a.x, b.x))",
+   "task_list": "c",
+   "found": "b.eq into the equal-x block",
+   "handling": "generic (gen, gen_bw, gen_s1..6), doubling (dbl, dbl_bw, dbl_s1..4), zero (zero_y, zero_y0). Maximum is doubling."
+  },
+  {
+   "id": "c2",
+   "where": "add_single: if (!feq(a.y, b.y) || fis_zero(a.y)) return 0",
+   "task_list": "c",
+   "found": "b.ne chain on y and cbz",
+   "handling": "zero_y: y differ, zero_y0: y equal and zero; both return 0 early (50 and 66 Ir)."
+  },
+  {
+   "id": "d1",
+   "where": "canon_k / canon_pick (inlined into select_adder, f_single)",
+   "task_list": "d",
+   "found": "ok flag: b.eq to the fallback block (frac_fallbacks++ then canon_k_exact). Also, as compiled, canon_pick has one b.cc that skips 2 instructions of the k = 0/1 choice when g2 is the minimum (not in the task list)",
+   "handling": "fast variants r0, r1, r2 (k = 0, 1, 2); fallback variants zero (x = 0, verified x_fallback=1), nearp, latp, lat2n, fb1, fb2, h1..h12. x = 0 is a fallback input and the most expensive one (both comparison chains equal)."
+  },
+  {
+   "id": "d2",
+   "where": "canon_k_exact result selection",
+   "task_list": "added",
+   "found": "after a chain exit, b.ls skips two instructions (k = 1 assignment)",
+   "handling": "covered by the static path table (maximum taken over both directions) and by the variants with k = 0, 1, 2."
+  },
+  {
+   "id": "e1",
+   "where": "canon_point: if (k >= 1), if (k == 2), key_full parity",
+   "task_list": "e/f",
+   "found": "cbnz, b.ne, tbnz",
+   "handling": "canon_point variants: every x selector (k = 0, 1, 2, fallback and fast) x y even/odd. Maximum k = 2, y odd."
+  },
+  {
+   "id": "f1",
+   "where": "key_full: if (y & 1) sf_neg else copy",
+   "task_list": "f",
+   "found": "tbnz; sf_neg itself is branch-free",
+   "handling": "key_full variants ye, yo (odd is longer by 12)."
+  },
+  {
+   "id": "g1",
+   "where": "escape: for (i = 1; i < len; i++) { key_full; if (fcmp < 0) replace }",
+   "task_list": "g",
+   "found": "loop with len - 1 iterations; per iteration parity tbz, four-limb compare chain, replace b.cs",
+   "handling": "len 2 and len 65; least member each parity (ye, yo); order/depth/parity sweep; maximum is decreasing keys sharing the top 3 limbs, all y odd (every iteration takes sf_neg, the deepest compare and the replacement)."
+  },
+  {
+   "id": "h1",
+   "where": "point_is_dp / IS_DP",
+   "task_list": "added",
+   "found": "(kl >> 17) == 0 short circuit (b.eq), is_dp_rest: key_full parity (tbnz) and the mask test",
+   "handling": "variants far (short-circuits) / near x ye,yo x dp1,dp0; maximum near with y odd."
+  },
+  {
+   "id": "h2",
+   "where": "same_class",
+   "task_list": "added",
+   "found": "two parity branches (key_full a, key_full b) and the feq chain",
+   "handling": "4 parity combinations x (eq, ne0..ne3); maximum both odd with equal keys."
+  },
+  {
+   "id": "h3",
+   "where": "select_adder / key_lo",
+   "task_list": "added",
+   "found": "key_lo is branch-free (and/neg masks); the table index is a memory access only",
+   "handling": "none needed"
+  },
+  {
+   "id": "h4",
+   "where": "counters unbatched++, frac_fallbacks++, ahead_dps++, two_cycles++, long_cycles++",
+   "task_list": "added",
+   "found": "stores, no branch",
+   "handling": "included in the counts"
+  }
+ ],
+ "conditional_branch_counts_in_the_compiled_functions": {
+  "add_single": {
+   "bounding_build": 9,
+   "branchy_build": 15
+  },
+  "canon_k_exact": {
+   "bounding_build": 9,
+   "branchy_build": 9
+  },
+  "escape": {
+   "bounding_build": 11,
+   "branchy_build": 11
+  },
+  "w_f_single": {
+   "bounding_build": 2,
+   "branchy_build": 2
+  },
+  "w_select_adder": {
+   "bounding_build": 2,
+   "branchy_build": 2
+  },
+  "w_canon_k": {
+   "bounding_build": 2,
+   "branchy_build": 2
+  },
+  "w_canon_point": {
+   "bounding_build": 3,
+   "branchy_build": 3
+  },
+  "w_key_full": {
+   "bounding_build": 1,
+   "branchy_build": 1
+  },
+  "w_same_class": {
+   "bounding_build": 6,
+   "branchy_build": 6
+  },
+  "w_point_is_dp": {
+   "bounding_build": 2,
+   "branchy_build": 2
+  },
+  "w_is_dp": {
+   "bounding_build": 2,
+   "branchy_build": 2
+  },
+  "sf_mul": {
+   "bounding_build": 0,
+   "branchy_build": 0
+  },
+  "sf_sqr": {
+   "bounding_build": 0,
+   "branchy_build": 0
+  },
+  "finv": {
+   "bounding_build": 7,
+   "branchy_build": 7
+  }
+ },
+ "files": {
+  "forced.c": "harness (includes step.c with main renamed; wrappers, variants, drivers)",
+  "bl_ops.h": "branch-free bounding ops and the plain-C reference",
+  "test_ops.c": "equivalence test",
+  "gen_xtab.py / xtab.h": "lattice points for canon_k_exact comparison depths",
+  "build.sh, go.sh, run_all.sh, job.sh, lines.sh, cov.sh": "container build and Callgrind runs",
+  "cfg.py, cke_paths.py, static_all.py, cmp_static.py": "static longest-path analysis of the disassembly",
+  "post.py, fninfo.py, lines.py, analyze.py": "result processing"
+ },
+ "notes_and_limitations": [
+  "The task text lists sf_add and sf_neg among the ops with b.cs branches. In secp_field.h they use csel and contain no branch; only sf_sub and sf_add_br do, and sf_add_br is unused by the kernel.",
+  "ir_per_call includes the 5 to 7 Ir of the measuring loop and call (harness_loop_ir); the net values subtract it. Use the net values if the call is inlined at the use site.",
+  "The measured maximum is the true worst case of the harness build for every primitive; the static longest path over all control-flow paths is higher by at most 12 Ir only because it allows canon_k_exact comparison-chain depths that no input can reach ((4,4), (4,3), (3,4); see the lattice table). static_cfg_upper_bound_ir_per_call is the upper bound that does not rely on that argument.",
+  "Translation-unit effect: GCC compiles finv differently in the harness (22471 Ir) than in the unmodified step.c (22435 Ir) and inlines the rare functions differently (the harness rare_anchor is 493 instructions, the production one 824). Primitive numbers from the harness are therefore tied to this harness build; for finv-containing primitives they are conservative by about 36 Ir per finv call. The whole-function static bounds of the unmodified binary are given as the independent check. With the leaf wrappers present in the same translation unit, finv became 22569 (bounding) and 22573 (branchy) Ir and the bounding-vs-branchy comparison was off by 4 Ir; the leaf wrappers were therefore moved to separate binaries.",
+  "f_single variants gen_bw and dbl_bw (every sf_sub borrows) could not be built for 8 of the x selectors (16 variants) because no such input exists for the fixed x; add_single has them (22931 / 23079 in both builds, equal).",
+  "One Callgrind run (primitives, bounding build, canon_point h3_ye, N=2000) returned no summary under parallel load and was repeated alone; the repeated value (406025) is the one recorded.",
+  "The rare_2cycle and rare_anchor forced scenarios (generic path, fast canon_k, no distinguished point) are not worst cases; they only measure the cost outside the primitives. The inlined harness copies of those functions differ from the unmodified binary, so the own-line costs are an estimate for the production code.",
+  "Instruction counts only (Ir); no memory-system effects are measured. The measurement of a primitive covers one fixed input per call; the bounding build is data independent except for the control branches enumerated above, which are forced."
+ ]
+}

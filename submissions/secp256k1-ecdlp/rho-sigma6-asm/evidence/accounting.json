@@ -1,0 +1,68 @@
+{
+  "components_log2_units": {
+    "walk_steps": 126.472235,
+    "adder_table": 32.131219,
+    "initial_walk_starts": 47.131219,
+    "trail_restarts": 82.881178,
+    "distinguished_points": 77.784175,
+    "collision_replay": 83.607508,
+    "solve_verify_output": 15.684117,
+    "input_validation": 14.034216
+  },
+  "time_log2": "25294447/200000",
+  "time_log2_decimal": 126.472235,
+  "time_log2_float": 126.47223480155603,
+  "score_rational": {
+    "numerator": "25294447",
+    "denominator": "200000"
+  },
+  "preprocessing_log2": "736426/15625",
+  "L": "33310394024866356565296666183",
+  "log2_L": 94.74995907643508,
+  "log2_T": 126.74995907643508,
+  "log2_S_max": 126.74995907963083,
+  "step_units": "23775869606019850877/28823037615171174400",
+  "success": {
+    "tau": 0.5303,
+    "eps": 0.00015285611152648926,
+    "delta": 9.5367431640625e-07,
+    "model": 0.4115238856252056,
+    "lower_bound": 0.3958979319508892,
+    "delta_abandon": 9.46882942697077e-18,
+    "p_abandon_per_trail": 1.63865024183163e-28,
+    "escape_rate_per_step": 2.543830002347845e-06
+  },
+  "memory_bytes_log2": "1893749/25000",
+  "dp_max_log2": 67.74995907968076,
+  "meter": {
+    "c_common": 817,
+    "e_rare_per_walk_step": 0.12329973978939836,
+    "events": [
+      {
+        "name": "two_cycle_checks",
+        "rate": 2.543131510416775e-06,
+        "worst_case_instructions": 48039,
+        "expected_instructions_per_walk_step": 0.12216949462891145
+      },
+      {
+        "name": "anchor_checks",
+        "rate": 6.984919310700291e-10,
+        "worst_case_instructions": 1618122,
+        "expected_instructions_per_walk_step": 0.0011302451604868976
+      }
+    ],
+    "forced_maxima": {
+      "f": 23354,
+      "add": 23079,
+      "same": 70,
+      "pdp": 41,
+      "esc2": 23550,
+      "esc65": 26448,
+      "overhead": 1024
+    },
+    "reserve_per_walk_step": 7.891183346521495,
+    "charge_per_walk_step": 824.8911833465215,
+    "abort_probability_bound": "1/64",
+    "walk_steps_total": "143067053270587462275681420442867859456"
+  }
+}

@@ -1,0 +1,15 @@
+{
+ "purpose": "Shows that the record digest detects the round-5 omission: a kernel whose look-ahead distinguished point is not assigned as the record.",
+ "build": "measurement/step.c with the two look-ahead assignments removed (round-5 rare_anchor), 2^6 adders, 2^12 walks, DP_BITS=6, 8-bit filters, 200 batch steps, organizer image and flags, checked against the replica in its current form",
+ "kernel_last_line": "walk_steps=819200 two_cycles=2141 long_cycles=29 dps=13709 ahead_dps=1411 abandoned=0 exceptional=0 unbatched=120769 frac_fallbacks=0 dp_digest=afb59fdbd1659089",
+ "replica": {
+  "mismatches": 1,
+  "two_cycles": 2141,
+  "long_cycles": 29,
+  "dps": 13709,
+  "ahead_dps": 1411,
+  "abandoned": 0,
+  "dp_digest": "a7b31c0d072f4a1f"
+ },
+ "result": "the event counts agree, and the record digest does not: the omission is caught by the digest only, not by the counts"
+}
