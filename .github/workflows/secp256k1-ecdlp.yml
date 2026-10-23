@@ -8,6 +8,7 @@ on:
         default: ''
 permissions:
   contents: read
+  id-token: write
 jobs:
   verify:
     uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@8c1f098875fae0750c29ecfd641f7c9fc53a0f41
