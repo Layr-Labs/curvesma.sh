@@ -1,0 +1,318 @@
+{
+ "algebra": {
+  "cap_strictly_below_claim": "PASS",
+  "claim_below_gate_by_5_milli": "PASS",
+  "dp_amortised_row_dominates_itemised_store": "PASS",
+  "meter_rows_equal_production_loop": "PASS",
+  "nominal_strictly_below_cap": "PASS",
+  "peak_memory_below_2pow32": "PASS",
+  "predicate_match_100_prod_100_toy": "PASS",
+  "prod_dp_no_false_collision": "PASS",
+  "prod_dp_store_path_exercised": "PASS",
+  "prod_field_branch_frequency_3over8": "PASS",
+  "rho_is_conservative_side_of_reviewer_algebra": "PASS",
+  "toy_no_invariant_failures": "PASS",
+  "toy_recovery_at_least_0_39": "PASS",
+  "toy_squaring_fraction_3over8": "PASS"
+ },
+ "checks": {
+  "abort_debit_keeps_success_ge_0_39": "PASS",
+  "claim_at_or_below_gate_minus_0_005": "PASS",
+  "collision_model_scoped_and_channel_measured": "PASS",
+  "ledger_recomputed_from_evidence": "PASS",
+  "metered_cap_every_run": "PASS",
+  "storage_and_peak_memory_itemised": "PASS"
+ },
+ "constants": {
+  "C": 20000,
+  "N": 4369656264593849206620645042348830486474212708377303151883638224994881765376,
+  "Np": {
+   "denominator": 5115,
+   "numerator": 26033617541492954691371872135942995887415818550564994487440555883024051943243776
+  },
+  "R": 1024,
+  "S_steps": 70933784039754404319800682927445544128,
+  "W": {
+   "denominator": 50,
+   "numerator": 3515966006775501589619020475579353543449
+  },
+  "W_cap": {
+   "denominator": 25600,
+   "numerator": 1803690561475832315474557503972208367789337
+  },
+  "W_cap_log2_milli": {
+   "lower": 125728,
+   "upper": 125729
+  },
+  "W_log2_milli": {
+   "lower": 125725,
+   "upper": 125726
+  },
+  "abort_bound_den": 2582249878086908589655919172003011874329705792829223512830659356540647622016841194629645353280137831435903171972747493376,
+  "abort_bound_num": 1,
+  "abort_log2_bound": "2^-6071291529163368902564250953935653",
+  "beta": {
+   "denominator": 512,
+   "numerator": 1
+  },
+  "cap_instr_den": 32,
+  "cap_instr_num": 45092264036895807886863937599305209194733425,
+  "claim": {
+   "denominator": 100,
+   "numerator": 12573
+  },
+  "dp_bits": 100,
+  "dp_hit_instr": 12288,
+  "dp_shift": 13,
+  "eps": {
+   "denominator": 70933784039754404319800682927445544128,
+   "numerator": 386335927256450157087181398951669473
+  },
+  "fp_add": 45,
+  "fp_mul": 383,
+  "gate_seen": {
+   "claim_minus_gate_milli": -7,
+   "score": "125.74",
+   "state": "review",
+   "submission": "747ad6c9"
+  },
+  "hoeffding_exponent_milli": 4208303580856530828074605420218590546,
+  "k_min": 26213833087651451462838074698840409575,
+  "record_bytes": 52,
+  "records": 55956890,
+  "rho": {
+   "denominator": 65536,
+   "numerator": 56265
+  },
+  "rho_reviewer_form": {
+   "denominator": 65536,
+   "numerator": 56295
+  },
+  "s": {
+   "denominator": 8,
+   "numerator": 3
+  },
+  "setup_instr": 10475339776,
+  "success_lower": {
+   "denominator": 71550294995663637826023668185186909726049771840338584013743457327538294736283851491328417903064788771678892930622078533174917968521063509695797114551717068800,
+   "numerator": 30764008135649047351694166767872909102879628577708756674078100017746989829564932401627313082243998448496203250820191721180698843268291536667327954666633423109
+  }
+ },
+ "meter": {
+  "abort_bound": "2^-6071291529163368902564250953935653",
+  "aborts_in_executed_run": 0,
+  "cap_instr": {
+   "denominator": 32,
+   "numerator": 45092264036895807886863937599305209194733425
+  },
+  "charge_mul": 2493,
+  "charge_setup": 10475339776,
+  "charge_sqr": 15383,
+  "eps_shortfall": "386335927256450157087181398951669473/70933784039754404319800682927445544128",
+  "k_min": 26213833087651451462838074698840409575,
+  "prod_meter_instr": 10490212406,
+  "row_formula_instr": 10490212406,
+  "success_after_debit": "30764008135649047351694166767872909102879628577708756674078100017746989829564932401627313082243998448496203250820191721180698843268291536667327954666633423109/71550294995663637826023668185186909726049771840338584013743457327538294736283851491328417903064788771678892930622078533174917968521063509695797114551717068800"
+ },
+ "package": "gt-metered-squaring-40pct-v15",
+ "production_field": {
+  "class_agreeing": 33,
+  "class_tests": 33,
+  "dp_bits_executed": 8,
+  "dp_degenerate": 1,
+  "dp_hits": 12,
+  "dp_injected_duplicate": 1,
+  "dp_matches": 1,
+  "dp_records": 12,
+  "dp_replays": 1,
+  "dp_usable": 0,
+  "invariant_checks": 63,
+  "invariant_failures": 0,
+  "squaring_fraction_exact": "767/2000",
+  "squaring_fraction_milli": 383,
+  "squaring_steps": 767,
+  "steps": 2000,
+  "verdict": "PASS"
+ },
+ "rows": {
+  "I_COMMON": 301,
+  "I_MUL": 2493,
+  "I_SQR": 15383,
+  "c_avg": "79307/80000",
+  "c_mul": "22493/20000",
+  "c_sqr": "15383/20000",
+  "dp": [
+   [
+    [
+     "dp_bits",
+     100
+    ]
+   ],
+   [
+    [
+     "record_slot_bytes",
+     52
+    ]
+   ],
+   [
+    [
+     "records_expected",
+     55956890
+    ]
+   ],
+   [
+    [
+     "store_bytes",
+     2909758280
+    ]
+   ],
+   [
+    [
+     "table_bytes",
+     7077888
+    ]
+   ],
+   [
+    [
+     "code_bytes",
+     2097152
+    ]
+   ],
+   [
+    [
+     "scratch_bytes",
+     16777216
+    ]
+   ],
+   [
+    [
+     "sort_buffer_bytes",
+     33554432
+    ]
+   ],
+   [
+    [
+     "peak_bytes",
+     2969264968
+    ]
+   ],
+   [
+    [
+     "peak_bound_2pow32",
+     true
+    ]
+   ],
+   [
+    [
+     "per_hit_instr",
+     12288
+    ]
+   ],
+   [
+    [
+     "amortised_row_instr_total",
+     70933784039754404319800682927445544128
+    ]
+   ],
+   [
+    [
+     "itemised_hit_instr_total",
+     687598264320
+    ]
+   ]
+  ],
+  "every_step": [
+   [
+    "trace_re_plus_branch_bits",
+    60
+   ],
+   [
+    "exponent_pair_update",
+    100
+   ],
+   [
+    "cycle_compares_loop_margin",
+    140
+   ],
+   [
+    "dp_store_amortised",
+    1
+   ]
+  ],
+  "multiply_step_extra": [
+   [
+    "key_six_plusminus",
+    1802
+   ],
+   [
+    "min_six_argmax_index",
+    180
+   ],
+   [
+    "table_address_and_load",
+    150
+   ],
+   [
+    "exponent_pair_add",
+    60
+   ]
+  ],
+  "setup": [
+   [
+    [
+     "table_build",
+     "1024 x (510 ref mults + 12 Frobenius x 2400)"
+    ],
+    10474291200
+   ],
+   [
+    [
+     "code_tables_startpoints_pairings",
+     1048576
+    ],
+    1048576
+   ],
+   [
+    [
+     "total_setup_instr",
+     "supersedes the v14 2^65 allowance"
+    ],
+    10475339776
+   ]
+  ],
+  "squaring_step_extra": [
+   [
+    "cyclotomic_squaring",
+    15042
+   ],
+   [
+    "exponent_pair_double",
+    40
+   ]
+  ]
+ },
+ "scope": "Exact algebra and a production-field execution of a METERED step rule: every step charges its actual row to a running meter and the run aborts at the cap, so total work <= 2^125.73 holds by construction on every run.  The abort probability is bounded by Hoeffding on the branch bits under H2 and debited from the success probability. The DP collision-detection procedure is specified and its store is itemised; the collision law's no-merge property is demoted to a scoped heuristic with the shifted-image channel measured.  H1' (random-mapping walk) and H2 (trace-bit pseudorandomness) remain heuristics.",
+ "toy": {
+  "N": 43420,
+  "R": 128,
+  "S_ops": 223,
+  "branch_rule": "(T & 7) < 3 with T = Re(c0); h and DP bits from L(T)",
+  "channel_same_index": 1228,
+  "channel_shifted_image": 134,
+  "dp_bits": 4,
+  "dp_hits": 4171,
+  "dp_matches": 1370,
+  "dp_records": 2801,
+  "escapes": 28,
+  "invariant_failures": 0,
+  "q": 523,
+  "recovered_same_index": 11,
+  "recovered_shifted_image": 134,
+  "recovery_fraction": "57/180",
+  "squaring_fraction": "22205/73434",
+  "toy_branch_fraction_note": "small-field artifact: T mod 8 biased at q=523; production measures 3/8",
+  "trials": 180,
+  "verdict": "PASS"
+ },
+ "version": 1
+}

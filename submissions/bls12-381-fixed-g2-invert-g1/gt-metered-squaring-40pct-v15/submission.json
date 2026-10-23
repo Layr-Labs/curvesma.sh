@@ -1,0 +1,28 @@
+{
+ "version": 1,
+ "title": "Metered squaring-branch Frobenius-class rho in GT: a work cap that holds on every run by construction, full DP store/replay specification, and a re-scoped collision law, W=2^125.725, cap 2^125.728, claim 125.73",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/ledger15.json",
+    "evidence/predicate_match.json",
+    "evidence/prod_run15.json",
+    "evidence/toy_census15.json",
+    "public-note.md",
+    "scripts/gt_prod.py",
+    "scripts/ledger15.py",
+    "scripts/predicate_check.py",
+    "scripts/toy.py",
+    "scripts/toy15.py"
+   ],
+   "score": {
+    "numerator": "12573",
+    "denominator": "100"
+   },
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z. Steps are one dense Fp12 multiplication plus counted overhead, or a cyclotomic squaring taken with probability 3/8; branch, multiplier index and 100-bit distinguished-point bits are read as disjoint ranges of the class invariant T=Re(c0), and the twelve keys are computed as six +-pairs for four Fp multiplications. The algorithm METERS its charged work: every step adds its actual charge (22493 instructions for a multiply step, 15383 for a squaring step) and a step that would cross the cap is not taken, so total work is at most 2^(125728/1000)=2^125.728 < 2^(12573/100)=2^125.73 on EVERY run by construction, with the nominal 2^(125.725..125.726) well inside the cap. The only loss is the abort probability, bounded by Hoeffding on the branch bits at 2^-6.07e33, together with a DP-window detection loss of at most 2^-14, so success is at least 0.39 after both debits. The production distinguished-point collision procedure is specified with predicate, 52-byte record layout, sorted-array lookup, replay/verify, forced-multiply 2-cycle escape and checkpoint schedule, an itemised store and a peak memory of 2,969,264,968 bytes below 2^32. The no-merge collision lemma is withdrawn and replaced by the scoped heuristic H1' with the Frobenius j-shift gap explicit, charging the conservative ordinary merge rate rho=(1-s^2)(1-1/R)=0.858536 rather than the up-to-12/N match rate, and measuring both channels in the toy (134/134 shifted-image matches usable, 1225/1228 same-index matches degenerate cycle closures). C=20000 instructions per dense Fp12 multiplication. The gate seen at submission time is 125.74 (747ad6c9), so this claim is 0.01 below it."
+  }
+ ],
+ "experiments": []
+}
