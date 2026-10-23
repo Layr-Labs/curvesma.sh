@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of the track target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v2 (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v3 (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v4 (rejected: the order-3 automorphism identities generate mixed-index fruitless families whose rates were not bounded)",
+    "submissions/bls12-381-g1-ecdlp-plain/negation-rho-v5 (rejected: the fruitless-cycle census assumed per-symbol even multiplicity, missing the carry families 2^j + 2^j = 2^(j+1); all derived rates were invalid)",
+    "submissions/bls12-381-g1-ecdlp-plain/plain-rho-v6 (rejected: the constants c_j = jQ + 2^j admit the confining rescaling z = 32k mod r, whose steps 2^(j+5) - j <= 2^36 refute the mixing assumption at production scale; the generated claim statement additionally permuted the score figures)",
+    "submissions/bls12-381-g1-ecdlp-plain/plain-rho-v8 (rejected: the cycle-entry rate was stated as t/r instead of the self-pair birthday scale t^2/(2Kr), and the 4-bit windowed seeding multiplication was priced at 64 doublings + 16 additions instead of 256 + 64; both are corrected here)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "plain-rho-v9",
+  "work_function": "W = 1.0535 * 1.25 * sqrt(r-1) + < 2^24.5 (score = log2(W))",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.825664,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 104.1,
+    "preprocessing_log2": 24.5,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 (random-function model): with published pseudorandom constants c_j = sha512(...) mod r, walker states collide at the parallel-rho birthday rate t^2/(2(r-1)), distinguished-point counts are Binomial(t, 2^-32), and cycle entries occur at the self-pair birthday scale t^2/(2Kr) = 6.897e-01 with total waste <= t^2/(6K^2 r) = 1.311e-66 of the budget, subtracted in the success model (cycles containing a distinguished point are detected at the first DP revisit and reseeded; cycles containing none waste at most the remaining budget, bounded over the un-terminated budget). No rescaling of the scalar confines the step set: Part A measures every M <= 2^12 (narrowest window 0.0000 of r, and the same check detects the rejected v6 constants at 6.06e-11) and the counting heuristic 32*W^31/r^30 puts expected confiners of width <= 2^240 below 2^{heur_exp:.0f}. The toy measures 1.052 of the birthday ideal (two-sigma 0.129).",
+    "Efficiency floor 0.75: ~29% below the toy-measured ratio 1.052, and consistent with Teske's measured r-adding-walk collision factors (at most ~1.1x the random-walk ideal for r >= 16); the floor covers a production walk 33% slower than that worst measured factor; the claimed success is computed at this floor (0.4066249786 >= 0.39) and does not depend on the measurement beyond the floor's support."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold (modeled success 0.4066 at the 0.75 efficiency floor).",
+    "The distinguished-point table is a hard 2^97-slot allocation (2^104 bytes); overflow aborts with probability <= exp(-2^94.4) under H1, subtracted.",
+    "Standard cryptanalysis (parallel Pollard rho with distinguished points and pseudorandom published constants); the confinement analysis (executed rescaling certificate plus counting bound) and the itemized full-coverage ledger are the contribution under this cost model."
+  ],
+  "lane": "exploratory"
+}
