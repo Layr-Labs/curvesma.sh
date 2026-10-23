@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: GT adding walk, revision 2",
+  "claims": [
+    {
+      "statement": "For a uniform non-identity source point and a uniform target in GT, the reduction to a prime-order discrete log and the single-seed Floyd adding walk in proof.md return a valid output point with probability at least 0.39. The exponent is (alpha_h - alpha_t) * (beta_t - beta_h)^(-1). The partition function is the one in proof.md. Jump exponents are 512-bit blocks reduced modulo r, and that derivation is charged twice inside R. Total classical work is at most W = 2395039763148592466895916532144209349735 target-group-operation equivalents, H = 2060899291373846202583682192643547253372 and R = 6682809435494925286244686790013241927245824. The declared score 130815246/1000000 = 130.815246 is a ceiling of log2(W) at resolution 10^(-6). Peak memory is 2^20 bytes. Preprocessing independent of the challenge is at most 53688 reference units and is included in W. Nonuniform advice is 0 bytes. No production pairing is evaluated.",
+      "score": {
+        "numerator": "130815246",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-recover",
+      "source": "experiment.py",
+      "purpose": "Recompute W, check the score ceiling, and recover scalars on fresh seeds. The opposite numerator must differ from every nonzero secret. Elliptic tracks also recover scalars on one canonical affine curve.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 40,
+            "maximum": 80
+          },
+          "master": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          }
+        },
+        "required": [
+          "samples",
+          "master"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 80,
+          "master": 12648430
+        }
+      ]
+    }
+  ]
+}
