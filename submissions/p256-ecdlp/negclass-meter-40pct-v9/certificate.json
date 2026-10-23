@@ -1,0 +1,197 @@
+{
+ "check_count": 58,
+ "check_parts": [
+  "checks-1.json"
+ ],
+ "checks": {
+  "check_count_matches_split_files": true,
+  "claim_below_frontier_129_46": true,
+  "claim_is_reduced": true,
+  "claim_under_129_46_gate_by_0_48_bits": true,
+  "dependencies_empty": true,
+  "every_named_check_passes": true,
+  "itemisation_sums_to_stated_totals": true,
+  "margins_at_least_1_5x": true,
+  "no_copied_prices": true,
+  "no_false_pass": true,
+  "ord_2_claim_corrected_not_2_pow_255": true,
+  "step_strictly_cheaper_than_published_3_6": true
+ },
+ "claim": {
+  "denominator": "50",
+  "numerator": "6449"
+ },
+ "diagnostics_only_not_in_bounds": {
+  "nominal_claim_slack": 0.111368,
+  "saving_vs_frontier_129_46": 0.48,
+  "saving_vs_published_3_6_units": 0.5653
+ },
+ "field_op_itemisation": {
+  "A_itemised": 21,
+  "A_lines": [
+   [
+    "4 x (adds, adc) on 64-bit limbs",
+    8
+   ],
+   [
+    "conditional subtract of p: cmp + 4 sub + 4 sbc + 4 csel",
+    13
+   ]
+  ],
+  "A_priced": 32,
+  "I_itemised": 17700,
+  "I_lines": [
+   [
+    "safegcd-style 4-limb modular inversion: 590 bounded iterations x 30",
+    17700
+   ]
+  ],
+  "I_priced": 32768,
+  "M_itemised": 220,
+  "M_lines": [
+   [
+    "accumulator init: zero 5 limbs (5 stores)",
+    5
+   ],
+   [
+    "outer rounds i=0..3: load b[i] (4 loads)",
+    4
+   ],
+   [
+    "outer rounds: 16 x (mul, umulh, adds, adc, adc) = 16 limb products x 5",
+    80
+   ],
+   [
+    "outer rounds: 4 x m = t[0]*n0' mod 2^64 (mul)",
+    4
+   ],
+   [
+    "outer rounds: 16 x (mul, umulh, adds, adc, adc) for m*p[j] = 16 x 5",
+    80
+   ],
+   [
+    "outer rounds: 4 x final carry (adds, adc) + 4 x store t[4]",
+    12
+   ],
+   [
+    "final conditional subtraction of p: cmp + 4 sub + 4 sbc + 4 csel",
+    13
+   ],
+   [
+    "write result out: 4 loads + 4 stores",
+    8
+   ],
+   [
+    "call/return, stack frame, loop counters",
+    14
+   ]
+  ],
+  "M_priced": 352,
+  "control": 128,
+  "margin_A": "32/21",
+  "margin_I": "8192/4425",
+  "margin_M": "8/5",
+  "step_instructions": 2433,
+  "step_units": "2433/1000"
+ },
+ "integers": {
+  "A_itemised": 21,
+  "A_priced": 32,
+  "C": 1000,
+  "I_itemised": 17700,
+  "I_priced": 32768,
+  "M_itemised": 220,
+  "M_priced": 352,
+  "N": "57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "N_prime": "1264758393081651186485356647212729123143646742928160198300164194971031000889950208/21845",
+  "R_nodes": 65536,
+  "S_ops": "255369128538938759214127950159087039359",
+  "a": "115792089210356248762697446949407573530086143415290314195533631308867097853948",
+  "b": "41058363725152142129326129780047268409114441015993725554835256314039467401291",
+  "claim_x1e4": 1289800,
+  "control": 128,
+  "ord_r_of_2": "57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "p": "115792089210356248762697446949407573530086143415290314195533631308867097853951",
+  "phase1_log2_x1e6": 128868588,
+  "r": "115792089210356248762697446949407573529996955224135760342422259061068512044369",
+  "step_instructions": 2433,
+  "stress_log2_x1e6": 129131666,
+  "total_log2_x1e6": 128868632,
+  "v2_r_minus_1": 4
+ },
+ "ledger": {
+  "N": "57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "N_prime": "1264758393081651186485356647212729123143646742928160198300164194971031000889950208/21845",
+  "S_ops": "255369128538938759214127950159087039359",
+  "S_ops_log2": 127.58585173,
+  "claim": "6449/50",
+  "claim_log2": 128.98,
+  "hard_instr": "73015492608",
+  "hard_log2": 26.1217,
+  "ln_hi": "142181610680072460418547672501483340114221498997147076401580863291918045317467541977755670111840235578785149221592945104454356119334644872283188839440574634059960002564853312055234885067966138853165633779834061276322906029619036360962652043015573286369415654692959508012182128767156611073909556619323736252938947010023747147843039147067848054361276329668391650227834828489750236826628483420850406788799985911708973212279586999053687444460829561184582357/278336880659702152491146235320034438916574389508593885861830579072726114739098669572417093367996807630110348255164310271456458468464673128846576975219290728998072985365894967371707644921859296983203608005497465090830698867957129908217353516885349109125947130870353454893198998732934362657643645715752255344207051093274836399223817750196996694294735096607576633972524964187373383359993741733411368321257884296228192903411216223067085515266137339723776000",
+  "ln_lo": "284363221360144920837095345002966680228442997994294152803161726583836090634935083955511340223680471157570298443185890208908712238669289744566377678881149268119920005129706624110469770135932277706331267559668122552645812059238072721925304086031146572738831309385919015940849215201064491033636652141450730077833097980179885613426416926777418489743955887178797962423688980086290065210317320569588384784183485311006382094453063180728368160114160751356008189/556673761319404304982292470640068877833148779017187771723661158145452229478197339144834186735993615260220696510328620542912916936929346257693153950438581457996145970731789934743415289843718593966407216010994930181661397735914259816434707033770698218251894261740706909786397997465868725315287291431504510688414102186549672798447635500393993388589470193215153267945049928374746766719987483466822736642515768592456385806822432446134171030532274679447552000",
+  "phase1_log2": 128.86858805,
+  "random_log2": 113.8686,
+  "s_units": "2433/1000",
+  "saving_vs_3_6_units": 0.5653,
+  "saving_vs_frontier": 0.48,
+  "slack": 0.111368,
+  "stress_log2": 129.13166649,
+  "total_log2": 128.86863208,
+  "worst_success_log2": 128.868599
+ },
+ "pass_lines": [
+  "PASS all 58 named checks",
+  "PASS itemised M=220 A=21 I=17700, priced M=352 A=32 I=2^15, step 2433 < 3600 instructions",
+  "PASS ledger total 2^128.868632 <= claim 128.9800 - 0.10",
+  "PASS claim 128.9800 < stress 2^129.131666 + 0.06 and < 129.46",
+  "PASS toy census -0.8%/-0.1% of model, pooled P[T_c<=S_ops] = 0.4271",
+  "PASS trap test doubling [5, 1, 0, 0]/150 vs additive [150, 150, 150, 150]/150; 16-node routing overflows [0, 0]"
+ ],
+ "proofs": {
+  "claim": "total <= 2^128.868632 < 2^128.9800 = claim, and claim < 129.46",
+  "doubling_escape": "escape is 2*(minimum-fingerprint class of the cycle), a function of the cycle only, so merged walks stay merged",
+  "ord_2": "r-1 = 2^4*odd and ord_r(2) = (r-1)/2 = N; any doubling cancellation needs >= 2^254.99 steps versus a 2^127.59 walk",
+  "stress": "every row repriced by 6/5 gives 2^129.131666; claim < that + 0.06",
+  "success": "model P[T_c<=S_ops] = 1-0.60 = 0.40; the meter cap exceeds the worst-case successful cost (2^128.8686), so no successful trial is halted"
+ },
+ "protected_sha256": {},
+ "scope": "Exact analytic arithmetic plus a bounded captured toy. Not a production run, a measured P-256 kernel price or a formal proof.",
+ "source_sha256": {
+  "argument.md": "bb77ac816c2325a033d6be0c509f0d9fc3480b16d047ad687be64c0e6fd43319",
+  "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "experiments/partA-results.json": "a805bbe9d10d0f5419464ab01878205a1608178f49f57aa531ff04ca5a56b95a",
+  "experiments/toy-results.json": "29593daaaded781df0e853049e96bc77d394ba67dfc2be0360377e9d037c97da",
+  "experiments/toy.py": "9c580cb629be3f2d36d55fa5900696bf8fb7ed134350ebfe039de5dc26e7ce60",
+  "experiments/verify.py": "639c4781367e9aeb44567c06cb86b6c3579916372517a37747b2ba20014be357",
+  "public-note.md": "da877835dbec87d9f967976c8f1cd577cc13572ffda6f999d41e69f99616075b",
+  "submission.json": "3618e8c94a8e75e5f5102e6c796a995533cbf7e3367b6658f771e6dbea1a66a6"
+ },
+ "success_probability": {
+  "denominator": "100",
+  "numerator": "40"
+ },
+ "toy": {
+  "overflows": [
+   0,
+   0
+  ],
+  "pooled_P": 0.427083,
+  "pooled_trials": 2400,
+  "seconds": 24.3,
+  "steps": 5836302,
+  "trap_additive": [
+   150,
+   150,
+   150,
+   150
+  ],
+  "trap_doubling": [
+   5,
+   1,
+   0,
+   0
+  ]
+ },
+ "version": 1
+}

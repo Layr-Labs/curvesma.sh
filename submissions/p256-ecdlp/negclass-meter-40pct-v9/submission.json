@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "P-256 negation-class rho v9: self-itemised field pricing under the published global work meter",
+  "claims": [
+    {
+      "score": {
+        "numerator": "6449",
+        "denominator": "50"
+      },
+      "statement": "For the unrestricted-production P-256 challenge Q=[x]P, including the identity Q, the fully specified negation-class distinguished-point rho of argument.md recovers the canonical scalar with success at least 0.40, using total classical work at most 2^(6449/50) = 2^128.98 target-group-operation equivalents at the protected C=1000 scalar AArch64 instruction normalization. The architecture is the published live-head one: negation classes {P,-P}, class key x, canonical member (x,|y|), doubling escape from the minimum-fingerprint class of the detected cycle, 1.05 walk constant, N'=N*R/(R-1), a global work meter that halts at W_max, and 2^16 storage nodes with per-node caps, charged set-up and routing bits inside H1. The only change is pricing: M, A and I are re-itemised here from four 64-bit limbs (CIOS Montgomery multiplication with its full instruction schedule, modular addition, safegcd inversion) at 220, 21 and 17700 instructions, and priced with stated margins at 352, 32 and 2^15, giving a step of 6M+6A+I/2^15+128 control = 2433 instructions = 2.433 units, strictly cheaper than the published 3.6 units while every other row keeps its published value. The exact ledger is phase 1 2.433*(S_ops+2^60) = 2^128.86859, phase-2 hard extras 2^26.12, random escape extras 2^113.84, total 2^128.86863, and every row repriced by 6/5 gives 2^129.13167; the claim leaves 0.1114 bits of nominal slack and 0.1517 bits under the stress bound. r-1 factorises exactly as 2^4 times eleven odd primes, ord_r(2) = (r-1)/2 = 2^254.99999999966, so a doubling cancellation needs more than 2^127 times the walk length; note that r-1 has 2-adic valuation 4, so the published phrasing 'ord_r(2) = 2^255' is corrected to ord_r(2) = (r-1)/2 with the same consequence. The success constant is made more conservative than the published 0.605 by using 0.60, and because W_max exceeds the worst-case successful-trial cost, the meter cannot truncate a successful trial. Preprocessing is included, advice is zero, peak memory is below 2^73 bytes, and the bounded toy reports the census (-0.8%, -0.1% of model, pooled P[T_c<=S_ops] = 0.427), zero 2-cycles in 81920 production steps, zero routing overflows on 16 capped nodes, and the doubling-escape versus additive-escape trap contrast (0/150 versus 150/150 stalled trails). This is a supported exploratory analytic heuristic claim, not a theorem, a production run, a measured P-256 kernel price, an official score, novelty or a practical attack.",
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "checks-1.json",
+        "experiments/verify.py",
+        "experiments/toy.py",
+        "experiments/toy-results.json",
+        "experiments/partA-results.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

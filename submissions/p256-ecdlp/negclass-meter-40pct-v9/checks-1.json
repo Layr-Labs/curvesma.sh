@@ -1,0 +1,292 @@
+[
+ {
+  "detail": "",
+  "name": "A1 p is prime (P-256 field modulus)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A2 r is prime (P-256 subgroup order)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A3 a = -3 = p-3 and b matches SEC 2 2.4.2",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A4 generator on curve: y^2 = x^3 - 3x + b",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A5 [r]G = O (generator has order r)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A6 [r-1]G = -G = (x, p-y) (negation map is the curve inverse)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "factors=[2, 2, 2, 2, 3, 71, 131, 373, 3407, 17449, 38189, 187019741, 622491383, 1002328039319, 2624747550333869278416773953]",
+  "name": "A7 r-1 factorisation is complete and exact (product equals r-1)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "v_2(r-1)=4",
+  "name": "A8 r-1 = 2^4 * odd: the 2-primary part of r-1 is 2^4, NOT 2^255",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "ord=57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "name": "A9 ord_r(2) = (r-1)/2 = N (log2 = 254.99999999966)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A10 no 2^k = +-1 mod r for 1 <= k <= 10^6, so the shortest doubling cancellation gap is ord_r(2)/2 >= 2^253.9 steps",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A11 a cancellation needs i-j in {ord/2, ord}: 2^j is a unit and r is odd",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A12 N = (r-1)/2 non-identity negation classes; class key is x",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A13 class representative well defined: -P has the same x and y' = p-y",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "sum of 9 named lines",
+  "name": "B1 itemised Montgomery multiplication M = 220 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B2 itemised modular addition A = 21 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B3 itemised inversion I = 17700 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B4 priced M=352 >= 1.60x itemised 220 (no copied 227 or 512)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B5 priced A=32 >= 1.52x itemised 21",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B6 priced I=2^15 >= 1.85x itemised 17700",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B7 step = 6M+6A+I/2^15+control = 2433 instructions = 2433/1000 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B8 itemised-only step 6*220+6*21+1+128 = 1575 < priced step 2433 (pricing carries the margin)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B9 priced step 2.433 units is strictly cheaper than the published 3.6 units (saving 0.5653 bits)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B10 inversion amortised over 2^15 batched affine additions: I/2^15 = 1 instruction per step",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C1 ln(1/0.60) bracketed by exact rationals within 1e-60",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C2 S_ops = ceil(1.05*sqrt(2N'ln(1/0.60))) = 255369128538938759214127950159087039359",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C3 S_ops is the least such integer",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C4 phase 1 = s*(S_ops+2^60) = 2^128.868588 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C5 hard phase-2 extras 2^26.122 units and random escape extras 2^113.869 units are each < 2^-10 of phase 1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C6 total nominal work = 2^128.868632 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C7 stress repricing of every row by 6/5 = 2^129.131666 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C8 claim 6449/50 = 128.9800 and total <= claim - 0.10",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C9 claim < stress + 0.06",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C10 claim strictly below the 129.46 frontier gate",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C11 claim is a reduced rational",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C12 modelled success 1-0.60 = 0.40 >= 0.39",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C13 worst-case successful-trial cost 2^128.8686 <= claim cap 2^7.0110, so the global meter halts no successful trial",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C14 peak memory: 2^16 nodes x 2^50 records x 64 B = 2^72 B < 2^73 B",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C15 preprocessing is included in the ledger and below 2^70 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C16 advice is zero bytes",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D0 toy results file present",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 G_on_curve",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 N_is_half_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 p_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 rG_infinity",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 r_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 G_on_curve",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 N_is_half_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 p_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 rG_infinity",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 r_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D2 census mean T_c within 1%% of the random-mapping model at both sizes",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D3 pooled P[T_c<=S_ops] = 0.4271 >= 0.40",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D4 doubling transition shows no 2-cycle against the 1/(2R) row",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D5 additive control collapses into 2-cycles (>= 0.5 of steps) at R=4,8",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D6 16-node routing: 0 overflows with per-node caps",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D7 trap test: doubling escape traps <= 5/150 trails at R=4 and R=8",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D8 trap test: additive escape traps >= 149/150 trails at R=4 and R=8",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D9 toy run is bounded (24.3 s, 5836302 metered steps)",
+  "verdict": "PASS"
+ }
+]
