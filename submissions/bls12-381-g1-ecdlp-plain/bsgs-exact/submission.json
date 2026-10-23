@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: exact baby-step giant-step with negation keys and full-key radix sort (no heuristics)",
+  "claims": [
+    {
+      "statement": "Problem: given T=[x]P0 in BLS12-381 G1 (prime order r, log2 r = 254.857), x uniform in 0..r-1 including x=0 (T = identity), recover x. Algorithm: deterministic baby-step giant-step with negation-invariant keys (key = canonical 384-bit representation of the affine x-coordinate). Baby steps: x([j]P0) for j = 1..m, m = 102612065067735474799204578736712187904 (2^126.2705), in K = 2^20 descending chains of Lb = 97858491008506274031834200607979 points (start [(c+1)Lb]P0 by double-and-add, then repeated batched incomplete affine addition of -P0); every baby addition is [j]P0 + (-P0) with 2 <= j <= m < r-1, so no exceptional case can occur. Giant steps: A_i = T - [i s]P0, s = 2m+1, i = 0..g-1, g = 102202163343097383688155825426174836736 (2^126.2647), in K chains of Lg = 97467578261468299568324876238036 points (chain starts by the textbook affine group law with all cases; an identity start reveals x), with an exact test x(A) == x(sP0) before every batched addition of -sP0 that reveals x = (i+1)s or (i-1)s, verified. Matching: LSD radix sort of both record lists (6-word key + 128-bit index) on the full 384-bit key, 12 passes of 32-bit digits, then one two-pointer merge; the first equal key pair (baby j, giant i) gives x = i s + j or i s - j, verified by scalar multiplication. Success: exactly the g(2m+1) scalars i s + e (0 <= i < g, |e| <= m), pairwise distinct mod r because g s < r, plus x = r - s; success probability (g s + 1)/r >= 2/5 = 0.40 exactly over uniform x, with no heuristic and no randomness. Work: W = H + R/C with H = K(Lb-1) + K(Lg-1) = 204814228410832858487360404162884927488 batched incomplete affine additions (reference unit, C = 2000) and R = 204449018800288158121383429283075544909672 itemised worst-case scalar AArch64 instructions for everything else (213 extra per baby addition and 225 per giant addition for subtractions, loads, stores and the exceptional test; one 240,000-instruction inversion per batched round; 134 per record for canonical reduction, 12-digit histograms and the store; 50 per record per LSD pass x 12 passes; 45 per merge step for m+g steps; chain starts, S, verification), with every access to the over-2^64-byte arrays charged 2 instructions per word. W = 614077475621953875096104237608845399885672/2000 = 2^127.851688, full run charged with no early-stop credit; score log2 W rounded up = 127.86. Peak memory 19649049072251535499233038694524862332928 bytes = 2^133.8516 (sorted baby list, giant list and its scatter buffer, counters, chain state); no advice; the Q-independent baby phase (2^126.8298 units) is included in the total, not amortised. Classical. Assumption: a flat memory of that size with 128-bit addressing at the charged cost; memory carries no score.",
+      "score": {
+        "numerator": "6393",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-exact-bsgs",
+      "source": "experiment.py",
+      "purpose": "Recomputes every production number in proof.md (parameters, exact success count, itemised instruction totals, W, the rounded-up score 6393/50 and peak memory) with exact integer arithmetic, then runs the same algorithm (descending baby chains, giant chains with the exact x(A) == x(sG) test, batched incomplete affine additions with one inversion per round that raise on any exceptional input, a real LSD radix sort and two-pointer merge) on toy prime-order curves y^2 = x^3 + b with group orders 967, 4111 and 11827 and 4 chains, for every scalar x of each group. It checks that every output is correct, that the success set equals {i s + e} plus r - s exactly (count g(2m+1)+1), that no baby addition is exceptional, and that a full-length run performs exactly the giant additions and scatter moves of the ledger formulas and at most m+g-1 merge steps. Toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "groups": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          }
+        },
+        "required": [
+          "groups"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "groups": 3
+        }
+      ]
+    }
+  ]
+}

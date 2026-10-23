@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "candidate",
+  "algorithm": "bsgs-negation-keys-lsd-radix-merge-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.86,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 133.86,
+    "preprocessing_log2": 126.83,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "assumptions": [
+    "A1: a flat memory of at least 2^133.86 bytes addressed with 128-bit addresses; each 64-bit word access to the arrays above 2^64 bytes is charged 2 instructions, applying the cost model rule that larger data structures account for their implementation. Memory carries no score.",
+    "A2: the protected reference unit (batched incomplete affine G1 addition, 6M, C = 2000) prices each chain step; all other work is an itemised analytic worst-case instruction count, not machine code or a measurement."
+  ],
+  "limitations": [
+    "No full-size run; the toy experiment checks the algorithm and the counting formulas exhaustively at toy scale only. Production success follows from the exact counting argument, not from the toy.",
+    "Success probability is exactly (g(2m+1)+1)/r, just above 0.40; the algorithm is deterministic and uses no coins.",
+    "preprocessing_log2 (126.83, rounded up) is the Q-independent baby phase, 2^126.8298 units, included in the total and not amortised.",
+    "Memory of 2^133.8516 bytes (memory_log2_bytes 133.86 rounded up) is physically unrealistic; only negation symmetry is used.",
+    "The algorithm has no random walk, hash, distinguished points or scalar accumulators."
+  ],
+  "lane": "exploratory"
+}
