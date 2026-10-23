@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: plain additive parallel Pollard rho v6 (provable cycle-freedom, full-width mixing constants)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q = [x]P for the fixed standard generator of secp256k1: y^2 = x^3 + 7 over the 256-bit prime field, r prime, standard generator, the single-shot classical plain-walk parallel Pollard rho algorithm v6 in proof.md recovers x with success probability at least 0.39 using at most 2^16058573 total target-group-operation equivalents (time_log2 = 125000/128), including preprocessing (32 constant scalar multiples and seeding of 2^16 walkers with lazy representations), all walk steps of all walkers at the charged per-step price of 1.1070 units (107 other AArch64 instructions per step against the 1000-instruction reference operation), distinguished-point processing at 2^-32 density with a 2^98-slot table (2^105 bytes, overflow probability <= exp(-2^95.9) subtracted), and one scalar extraction; the walk has provably no fruitless cycles of length up to 2^220.00 (per-walker budget 2^112.32), so no cycle-detection work is charged; peak memory is strictly above 2^105 bytes and reported as memory_log2_bytes = 105.1; no nonuniform advice.",
+      "score": {
+        "numerator": "16058573",
+        "denominator": "125000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "plain-rho-v6-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at production parameters: p and r prime (Miller-Rabin); the generator on the curve with order exactly r; the 32 constants c_j = jQ + 2^j mod r pairwise distinct; the mixing span of the constant differences (>= 0.9 of the modulus); the no-cycle theorem premises (32Q = r - rho, per-walker budget < L* = r/(32*2^31)); the per-step ledger; the table capacity with its Chernoff overflow bound; and the success model at the 0.75 efficiency floor, asserted >= 0.39. Part B executes the complete v6 attack on a 20-bit prime-order toy curve with the production constants construction: lazy representations, (x, parity)-keyed distinguished-point table, extraction with verification, cycle-escape reseeds (toy-scale artifact, counted) - measuring 94/200 successes (0.4700 vs ideal 0.542016, ratio 0.867) with 0 wrong extractions - and a supplementary dbits=6 sparse-distinguished-point census (100 trials, 27 successes, 0 wrong extractions) exercising the production-density machinery, whose undetected-merge fraction matches the derived budget-end scaling law.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dbits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dbits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dbits": 0,
+          "walkers": 8
+        }
+      ]
+    }
+  ]
+}
