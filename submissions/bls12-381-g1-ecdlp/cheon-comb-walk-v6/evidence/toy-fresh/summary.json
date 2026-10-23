@@ -1,0 +1,153 @@
+{
+ "generator": "toy_stats.py (cscore.cheon, mult 64, dp_bits 3, trails 16); per-trial steps are in each batch file",
+ "batches": [
+  {
+   "file": "b32-k6-3000-s4101.json",
+   "bits": 32,
+   "k": 6,
+   "trials": 3000,
+   "recovered": 3000,
+   "wrong_collisions": 0
+  },
+  {
+   "file": "b36-k10-1000-s4102.json",
+   "bits": 36,
+   "k": 10,
+   "trials": 1000,
+   "recovered": 1000,
+   "wrong_collisions": 0
+  }
+ ],
+ "pooled": {
+  "trials": 4000,
+  "recovered": 4000,
+  "wrong_collisions": 0
+ },
+ "budgets": {
+  "tau=3/5": {
+   "model": 0.451188,
+   "pooled_successes": 1655,
+   "pooled_trials": 4000,
+   "pooled_rate": 0.41375,
+   "pooled_wilson95": [
+    0.3986,
+    0.4291
+   ],
+   "per_batch": [
+    {
+     "bits": 32,
+     "successes": 1242,
+     "trials": 3000,
+     "wilson95": [
+      0.3965,
+      0.4317
+     ]
+    },
+    {
+     "bits": 36,
+     "successes": 413,
+     "trials": 1000,
+     "wilson95": [
+      0.3829,
+      0.4438
+     ]
+    }
+   ]
+  },
+  "tau=31/50": {
+   "model": 0.462056,
+   "pooled_successes": 1703,
+   "pooled_trials": 4000,
+   "pooled_rate": 0.42575,
+   "pooled_wilson95": [
+    0.4105,
+    0.4411
+   ],
+   "per_batch": [
+    {
+     "bits": 32,
+     "successes": 1278,
+     "trials": 3000,
+     "wilson95": [
+      0.4084,
+      0.4438
+     ]
+    },
+    {
+     "bits": 36,
+     "successes": 425,
+     "trials": 1000,
+     "wilson95": [
+      0.3947,
+      0.4559
+     ]
+    }
+   ]
+  },
+  "tau=13/20": {
+   "model": 0.477954,
+   "pooled_successes": 1752,
+   "pooled_trials": 4000,
+   "pooled_rate": 0.438,
+   "pooled_wilson95": [
+    0.4227,
+    0.4534
+   ],
+   "per_batch": [
+    {
+     "bits": 32,
+     "successes": 1314,
+     "trials": 3000,
+     "wilson95": [
+      0.4203,
+      0.4558
+     ]
+    },
+    {
+     "bits": 36,
+     "successes": 438,
+     "trials": 1000,
+     "wilson95": [
+      0.4075,
+      0.4689
+     ]
+    }
+   ]
+  },
+  "tau=7/10": {
+   "model": 0.503415,
+   "pooled_successes": 1846,
+   "pooled_trials": 4000,
+   "pooled_rate": 0.4615,
+   "pooled_wilson95": [
+    0.4461,
+    0.477
+   ],
+   "per_batch": [
+    {
+     "bits": 32,
+     "successes": 1385,
+     "trials": 3000,
+     "wilson95": [
+      0.4439,
+      0.4795
+     ]
+    },
+    {
+     "bits": 36,
+     "successes": 461,
+     "trials": 1000,
+     "wilson95": [
+      0.4303,
+      0.492
+     ]
+    }
+   ]
+  }
+ },
+ "claim": {
+  "tau": "13/20",
+  "success_claim": 0.4,
+  "rule": "claim = 0.40 if the pooled Wilson 95% lower bound at tau is at least 0.40"
+ }
+}

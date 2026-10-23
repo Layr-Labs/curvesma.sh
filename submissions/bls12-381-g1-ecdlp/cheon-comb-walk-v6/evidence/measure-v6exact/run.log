@@ -1,0 +1,37 @@
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+==25== I   refs:      145,064,472
+summary: 145064472
+0000000000004160 t core_mul
+summary: 387922528
+==35== I   refs:      290,128,908
+summary: 290128908
+0000000000004160 t core_mul
+summary: 481793680
+summary: 145211929
+summary: 290423822
+summary: 1846780441
+summary: 3693560846
+summary: 145211929
+summary: 290423822
+exit=0
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+==26== I   refs:      145,064,472
+summary: 145064472
+0000000000004140 t core_sqr
+summary: 66338352
+==36== I   refs:      290,128,908
+summary: 290128908
+0000000000004140 t core_sqr
+summary: 82263600
+exit=0
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+==26== I   refs:      145,064,472
+summary: 145064472
+==29== I   refs:      290,128,908
+summary: 290128908
+summary: 101140227
+summary: 199202563
+exit=0
