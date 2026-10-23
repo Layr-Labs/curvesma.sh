@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: Floyd cycle-finding r-adding walk, affine steps",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 on BLS12-381 G1 with no auxiliary powers, the 32-jump Teske r-adding walk with Floyd cycle-finding and affine canonical states in proof.md recovers x with success probability at least 0.39 using at most 514,694,484,759,148,014,223,122,347,276,647,627,415,912,096 scalar AArch64 instruction-equivalents total, i.e. time_log2 = 137562769/1000000 target-group-operation equivalents at C=2000, including preprocessing, jump derivation, the walk, resolve and verification. Peak memory is at most 2^20 bytes; preprocessing is at most ceil(2^30/2000) units and is included in total work; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps. Success uses the random-mapping heuristic on r-adding walks stated in proof.md, supported by the reproducible toy experiments in experiment.py at their own scope. This is not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "137562769",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "adding-walk-toy",
+      "source": "experiment.py",
+      "purpose": "Recompute the production instruction ledger W from profile constants and pinned measurements, assert the claimed score is a ceiling of log2(W/2000), and execute the exact walk function (same jump derivation, partition, Floyd budget, recovery formula) on additive groups of order 10007, 100003, 1000003 and on the prime-order-3187 subgroup of y^2=x^3+4 over F_9613 with real affine curve arithmetic. This supports walk correctness and the iteration-length distribution at toy scope; it does not establish production behavior.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 40,
+            "maximum": 80
+          },
+          "master": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "samples",
+          "master"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 80,
+          "master": 12648430
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "unrestricted-production",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-rho",
+  "algorithm": "floyd-adding-walk-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 137.562769,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 20,
+    "preprocessing_log2": 19.034216,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "The 32-jump Teske r-adding walk with the seed-dependent mix64 partition behaves as an approximately random mapping on the r group elements, so the first Floyd collision occurs within 3*ceil(sqrt(r)) iterations with probability well above 0.39 (Teske; Bernstein-Lange-Schwabe). Supported by the exact-walk toy sample in experiment.py at its own scope.",
+    "Seed and jump coefficients derived from 512-bit mix blocks reduced mod r have bias below 2^-257 per coefficient; this does not measurably distort the walk."
+  ],
+  "limitations": [
+    "Analytic attack with a stated random-walk heuristic; no production-size execution or independent qualification. Toy experiments bound the iteration distribution at their own scope only.",
+    "Generic adding-walk rho, not a number-field-sieve estimate, a practical break, or a security bound.",
+    "Success probability 0.39 is a deliberately conservative supported lower bound; the toy sample is far higher but does not prove the production constant."
+  ],
+  "lane": "exploratory"
+}
