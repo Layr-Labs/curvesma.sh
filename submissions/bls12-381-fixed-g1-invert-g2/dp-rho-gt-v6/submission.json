@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: single-trail distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^127.85 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) (a generator) and solves z=g^a by a SINGLE-TRAIL distinguished-point Pollard rho on GT: one continuous trajectory F^i(X_0), F(X)=X*M_{H(X)} with R=2^20 adding entries, costs ONE dense Fp12 multiplication per step (no tortoise/hare factor). It stores each distinguished point keyed by the EXACT full reduced tower representation of the element (no fingerprint, hence no false matches) with its (A,B); the trajectory detects its own self-collision when a stored exact key repeats (it has re-entered its cycle), giving a=(A_j-A_i)/(B_i-B_j) mod r. The partition index H=bits 0..19 and the DP predicate (bits 20..83 zero) read w = the two least-significant 64-bit limbs of the first reduced tower coefficient the reference multiplication outputs (all 64 bits present; no Montgomery/flat export in the walk). The distinguished density is ~2^-64 by a counting argument (GT has ~2^255 elements, so a fixed 64-bit coefficient pattern is matched by ~2^191 of them) together with the standard rho pseudo-random-low-bits heuristic; this is the one modelling assumption beyond the random-mapping collision-time model and also gives the routing-bit balance. Table exponents are drawn from the rules' fresh uniform algorithm coins (512 bits reduced mod r, bias<2^-256). DP reports are routed to 2^16 separate storage nodes, each an independent machine addressing <2^64 bytes with a hard per-node cap of 2^49 records <=2^10 bytes each = <=2^59 bytes/node, and a hard global cap N_cap=2^65 reports (~2.3x the ~2^63.8 mean; Chernoff-negligible overflow-to-failure); routing and report work (2^17 instr/report) and node set-up (2^20 instr/node) are charged and negligible, and no >2^64-byte address space is assumed. The hard budget is T_total=ceil(1.3*k0)+L_cap (k0=sqrt(2*r*ln(1/0.61)), L_cap=20/theta); a single trajectory has rho<=T with probability 1-0.61^1.69=0.566 and is then detected within T_total unless its cycle is DP-free (short-cycle bound <=2^-28.7), the re-entry-to-DP gap exceeds L_cap (<=2^-28.9) or the repeat is unusable (<=1/r), giving a supported success lower bound >=0.566-2^-27.8>=0.39 (no transfer margin; the same clean P(rho<=T) bound as my accepted Floyd submission whose walk is identical). The analysis is single-processor (serial; score is processor-count independent). Each multiplication is <=1.014 units; W=(1.3*k0+L_cap)*1.014=2^127.819 plus negligible report/one-time work, rounded to 2^127.85. Peak memory <=2^75 bytes total, <=2^59 bytes/node (reported only; access charged). Preprocessing <=2^31 units included; nonuniform advice 0 bytes. Classical cold attack, no uncharged advice or quantum steps; generic square-root accounting, not a practical break.",
+      "score": {
+        "numerator": "2557",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-parallel-dp-rho",
+      "source": "experiment.py",
+      "purpose": "Run parallel distinguished-point Pollard rho on a prime-order-l subgroup of F_q^* (cyclic, standing in for GT) with a hard budget T=ceil(budget_factor*k0) total multiplications: trails walk, report DPs into a store, and a cross-trail DP collision solves the log. Report the fraction of trials finding a usable collision within T and the mean abandonments. One multiplication per step; no tortoise/hare. Toy-scale evidence for the random-mapping collision-time model only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 30
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1048576
+          },
+          "theta_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "seg_cap": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 8192
+          },
+          "budget_factor": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 3.0
+          }
+        },
+        "required": [
+          "bits",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 24,
+          "trials": 200,
+          "seed": 1,
+          "R": 2048,
+          "theta_bits": 4,
+          "walks": 8,
+          "seg_cap": 256,
+          "budget_factor": 1.3
+        }
+      ]
+    }
+  ]
+}
