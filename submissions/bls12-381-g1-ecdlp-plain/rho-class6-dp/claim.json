@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "candidate",
+  "algorithm": "parallel-pollard-rho-dp-class6-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.81,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 36.5,
+    "preprocessing_log2": 29,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the 128-bit hash of the canonical x-coordinate, from which the table index (bits 0..15 of lane a) and the distinguished test (bits 16..63 of lane a and 0..49 of lane b) are read, behaves as a random oracle on the visited classes; its instruction cost is charged and no claim is made about bits of the coordinate itself.",
+    "H2: the class walk collides like a uniform random function on N_eff = 1.10^2 (1+1/2^16) N' classes (standard additive-walk penalty plus an explicit 10% allowance in steps; the budget is 1.15 sqrt(1+1/2^16) k0). Teske 2001 covers ordinary r-adding walks, not this exact quotient walk; toy-scale runs of the exact walk are supporting evidence only.",
+    "H3: closing patterns of the class walk follow the random model: formal closures need every used table index at least twice (exact bound Q(L) for any units); canonical units are uniform and independent for lengths above 8192; non-formal closure has probability at most 6/r per start and length. Undetected cycles of length above 64 trap a walker with total probability at most 2^-27.9, subtracted from success; detected cycles are charged at 300 units per event and at most 2^-14 events per step."
+  ],
+  "limitations": [
+    "Analytic accounting; no full-size execution; the toy experiment covers groups of 390 to 21710 classes with tables of 16 or 64 entries and is supporting evidence only.",
+    "Costs use the fixed reference prices C=2000 and 383 instructions per Fp multiplication; per-step instruction counts are itemised estimates (640) with a reserve (750 charged).",
+    "Memory of about 2^36.5 bytes is needed for the distinguished-point store; memory carries no score.",
+    "Not a novel attack: textbook parallel collision search with automorphisms. No theorem covers the exact walk; success rests on H1-H3."
+  ],
+  "lane": "exploratory"
+}

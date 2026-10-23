@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: parallel Pollard rho on size-6 classes with distinguished points",
+  "claims": [
+    {
+      "statement": "Problem: given T=[x]P0 in BLS12-381 G1 (y^2=x^3+4 over Fp, G1=<P0> of prime order r, log2 r=254.857), x uniform in 0..r-1, recover x. Algorithm: parallel Pollard rho with distinguished points on the N'=(r-1)/6 equivalence classes of G1 minus infinity under negation and the order-3 endomorphism (x,y)->(beta*x,y), with an r-adding walk over a table of 2^16 random points [a]P0+[c]T, 2^14 independent walkers, canonical class point = smallest of the three x values (x, beta*x, beta^2*x) with y<p/2, table index and distinguished test both read from disjoint bit fields of a charged 128-bit multiply-xorshift hash of the canonical x (distinguished probability 2^-98 per step), fixed-period (64 steps) cycle detection whose escape doubles the smallest class of the detected cycle, and scalar recovery from the first useful collision of two distinguished classes, followed by verification [x]P0=T. Success probability at least 0.39: the run budget is k_B = 1.15*sqrt(1+1/2^16)*k0 class visits with k0=sqrt(2*ln(1/0.61)*N'); under the standard random-walk heuristic with effective class count N_eff = 1.10^2*(1+1/2^16)*N' (additive-walk penalty plus an explicit 10% allowance in steps) the collision probability is at least 1-exp(-0.54025)=0.4174, plus an allowance of 24/theta steps per walker so that every collided trail reaches a distinguished point (miss probability e^-24 per collision); fruitless cycles of every length are bounded (detected lengths up to 64 at event rate at most 2^-14 per step, all longer lengths including the closure term for lengths beyond any window at total probability at most 2^-27.9 over the run), so success is at least 0.4173. Total work at most 2^126.81 target-group-operation equivalents (W=2^126.80963 before rounding up): about 2^126.33111 walk steps, each charged one batched incomplete affine G1 addition (reference unit, C=2000) plus 750 scalar AArch64 instructions (0.375 unit; 640 itemised including 52 for the hash, index extraction and distinguished test) for the Fp multiplication by beta, the third class representative, canonical class choice, hashing, distinguished-point test, table lookup, scalar bookkeeping and the cycle check, plus 0.01831 unit per step (300 units per event, at most 2^-14 events per step) for detecting and escaping fruitless cycles; table construction, walker starts, distinguished-point processing, recovery and verification total below 2^41 units. Peak memory 2^36.5 bytes (distinguished-point store); preprocessing 2^29 units (included in the total); advice 2^0; classical, no quantum steps. Heuristics: the hash of the canonical x behaves as a random oracle; the class walk collides like a random function on N_eff classes (Teske 2001, van Oorschot-Wiener 1999, Bernstein-Lange-Schwabe 2011), with toy-scale measurements of this exact walk as supporting evidence only; cycle closure patterns follow the random model.",
+      "score": {
+        "numerator": "12681",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class6-rho",
+      "source": "experiment.py",
+      "purpose": "Runs the exact walk of the proof (class-6 canonical form with the smallest-x representative, the same 128-bit hash with the table index and the distinguished test read from disjoint bit fields, the r-adding walk and the fixed-period cycle check at the production period 64) on toy prime-order curves y^2=x^3+b with the same endomorphism structure: four configurations over groups of 390, 4980 and 21710 classes, with 4 or 8 walkers and tables of 16 or 64 entries. Prints the mean class visits to the first collision of two walkers as a ratio to sqrt(pi N'/2) and to a uniform control, each with a delta-method 95% interval, the cycle events and escape steps per visit, the table-index and joint uniformity of one toy group, and recovers x through distinguished points in 6 solves. Toy scale only; it does not validate production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 20
+        }
+      ]
+    }
+  ]
+}
