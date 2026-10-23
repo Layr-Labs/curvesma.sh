@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g1-invert-g2
+submissions/bls12-381-fixed-g1-invert-g2/gt-rho-tight-40pct-v4

@@ -1,0 +1,21 @@
+{
+ "groups": 40,
+ "hits": 26,
+ "recovered": 26,
+ "verified": 26,
+ "secret_match": 26,
+ "cap_losses": 0,
+ "aligned_fail": 0,
+ "singular": 0,
+ "p": 10647363907,
+ "r": 9831361,
+ "N": 819280,
+ "dp_bits": 7,
+ "segments": 16,
+ "store_cap": 4096,
+ "toy_x": -56,
+ "cap_probe_refused": true,
+ "cap_probe_hit": false,
+ "seconds": 18.5,
+ "all_verified": true
+}

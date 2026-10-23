@@ -1,0 +1,305 @@
+{
+ "package": "gt-rho-tight-40pct-v4",
+ "certificate": "PASS",
+ "checks": [
+  {
+   "check": "itemisation_fold_sum",
+   "result": "PASS",
+   "detail": "fold = 2850"
+  },
+  {
+   "check": "itemisation_mul_step",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "itemisation_sqr_step",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "itemisation_cyclo_row",
+   "result": "PASS",
+   "detail": "cyclo = 11632"
+  },
+  {
+   "check": "step_budget_is_least",
+   "result": "PASS",
+   "detail": "S = 74606256877941659446256116306965070709"
+  },
+  {
+   "check": "ledger_S_matches_constants",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "ledger_c_mul",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "ledger_c_sqr",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "ledger_w_raw",
+   "result": "PASS",
+   "detail": "W_raw = 2^125.78971"
+  },
+  {
+   "check": "ledger_w_stress",
+   "result": "PASS",
+   "detail": "W_stress = 2^125.85097"
+  },
+  {
+   "check": "claim_strictly_below_head",
+   "result": "PASS",
+   "detail": "claim 125.89 < head 125.90"
+  },
+  {
+   "check": "claim_at_least_raw_plus_0.10",
+   "result": "PASS",
+   "detail": "pad 0.10029"
+  },
+  {
+   "check": "claim_above_stress_plus_0.005",
+   "result": "PASS",
+   "detail": "pad 0.03903"
+  },
+  {
+   "check": "claim_below_stress_plus_0.06",
+   "result": "PASS",
+   "detail": "pad 0.03903"
+  },
+  {
+   "check": "budgeted_success_at_mu",
+   "result": "PASS",
+   "detail": "model 0.3920"
+  },
+  {
+   "check": "success_floor_above_requirement",
+   "result": "PASS",
+   "detail": "0.3920 - 0.0003 = 0.3917 > 0.39"
+  },
+  {
+   "check": "routing_fields_disjoint",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "routing_layout_production_width",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "routing_histogram_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "routing_no_collapse",
+   "result": "PASS",
+   "detail": "table_distinct 16369, dp_distinct 120000"
+  },
+  {
+   "check": "routing_table_spread",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_all_checks",
+   "result": "PASS",
+   "detail": "20 checks"
+  },
+  {
+   "check": "part_a_p_pow6_is_minus_one",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_ord_r_p_is_twelve",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_p4_plus_p8_plus_one_zero",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_n_classes_exact",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_gt_order",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_p6_conj",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_frob_ok",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_key_rule",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_keys_distinct",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_kappa_ok",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_min_ident",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_sqr_class_ok",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_cyclo_sqr_identity",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_minus_one_in_orbit",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_nondegenerate",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_order_r",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_bilinear_g1",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_bilinear_g2",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_planted_ePQ_equals_z",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_planted_wrong_Q_fails",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "sim_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "sim_group_count",
+   "result": "PASS",
+   "detail": "4500 groups"
+  },
+  {
+   "check": "sim_pooled_above_requirement",
+   "result": "PASS",
+   "detail": "pooled 0.4073 +- 0.0073"
+  },
+  {
+   "check": "sim_pooled_within_noise_of_model",
+   "result": "PASS",
+   "detail": "measured 0.4073 model 0.3961 se 0.0073"
+  },
+  {
+   "check": "sim_uses_production_constants",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "sim_injectivity_penalty_is_conservative",
+   "result": "PASS",
+   "detail": "measured 1.0295 charged 1.0787"
+  },
+  {
+   "check": "toy_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_end_to_end_verified",
+   "result": "PASS",
+   "detail": "26/26 recovered and verified"
+  },
+  {
+   "check": "toy_secret_match",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_cap_refusal",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_no_alignment_failure",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_production_shape",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "single_constant_import",
+   "result": "PASS",
+   "detail": "no restated constant"
+  }
+ ],
+ "numbers": {
+  "claim": "12589/100",
+  "claim_float": 125.89,
+  "W_raw_log2": 125.78971029961991,
+  "W_stress_log2": 125.85096750935409,
+  "S": 74606256877941659446256116306965070709,
+  "S_log2": 125.81063613847446,
+  "c_mul": 1.1425,
+  "c_sqr": 0.7241,
+  "c_raw": 0.9856,
+  "fold_instructions": 2850,
+  "cyclo_sqr_instructions": 11632,
+  "raw_pad": 0.10028970038008822,
+  "stress_pad": 0.039032490645908524,
+  "budgeted_success": 0.392,
+  "success_floor": 0.3917,
+  "N_classes_log2": 251.27212691232603,
+  "Fp12_multiplies": "the reference operation, C = 20000"
+ }
+}

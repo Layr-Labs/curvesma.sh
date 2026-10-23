@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 into G2 at 2^125.89: Frobenius-class rho with a mixed cyclotomic-squaring step and an itemised fold",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "constants.py",
+        "ledger.py",
+        "tower.py",
+        "pairing.py",
+        "part_a.py",
+        "part_a-out.json",
+        "sim.py",
+        "sim-out.json",
+        "toy.py",
+        "toy-out.json",
+        "routing.py",
+        "routing-out.json",
+        "verify_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "12589",
+        "denominator": "100"
+      },
+      "statement": "For independently uniform nonidentity P in BLS12-381 G1 and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.3917, and its complete classical work is at most 2^(12589/100) dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The algorithm solves a = log_g z in GT with g = e(P,Q0) on the twelve-element Frobenius classes of GT, N = (r-1)/12 = 2^251.272 classes, using a deterministic walk whose step is one dense Fp12 multiply by a tabulated multiplier (2^14 multipliers with all twelve Frobenius twists) or, on three of every eight classes, one Granger-Scott cyclotomic squaring charged at its itemised 11632 instructions, each followed by a class fold charged at 2850 itemised instructions; a two-cycle rule with a checkpoint escape, a 2^-80 distinguished-point density, an ordered store of full class keys with a fixed report cap, replay with (a,b) exponent bookkeeping, Frobenius alignment, an exponent solve and a verification against z. Included in the work bound: table construction (2^14 * 12 twisted elements), all trail starts, all reports, both replays per recovery, all failures and restarts, the output, and the verification. Peak memory is below 2^54 bytes with 48-byte class-key records. Success is conditional on three disclosed hypotheses: the class walk behaves as a random map to within the 10 per cent inefficiency allowance already carried in the step budget, the hash fields derived from the class key are pseudorandom, and the algorithm coins are ideal. Support at production constants is the exponent-domain simulation (4500 groups, pooled 0.4073 +- 0.0073 against a 0.3961 model and a 0.39 requirement), the end-to-end toy at N=819280 with 26 of 26 recoveries exact, and the exact BLS12-381 algebra checks including a real pairing evaluation of e(P,Q)=z on a planted instance. No production run, no unconditional success theorem, no novelty claim and no practical break is claimed."
+    }
+  ],
+  "experiments": []
+}
