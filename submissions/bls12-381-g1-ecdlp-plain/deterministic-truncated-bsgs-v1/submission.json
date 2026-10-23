@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: deterministic truncated BSGS",
+  "claims": [
+    {
+      "statement": "For a uniformly sampled x in [0,r) with input T=[x]P0 in BLS12-381 G1, the deterministic truncated baby-step/giant-step algorithm in proof.md recovers x on at least a 0.41 fraction of challenges (m*h/r with m=h=146624380038933968876996171018221320040 and m*h/r = 0.41 >= 0.39) using at most 2^128.092239 total target-group-operation equivalents, all preprocessing, table construction, sorting, lookup, verification, output and the failure path included. It is deterministic with no randomness, no heuristics, no uncharged advice and no quantum steps. Preprocessing is at most 2^127.085224 target-group-operation equivalents and is included in total work; peak memory is at most 2^135.829787 bytes; nonuniform advice is 0 bytes. The exponential memory is required. This is an analytic accounting control with an exact success fraction, not a claim of novelty or a practical production break.",
+      "score": {
+        "numerator": "128092239",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
