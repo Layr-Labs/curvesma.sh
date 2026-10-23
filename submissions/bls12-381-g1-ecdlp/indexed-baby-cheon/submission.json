@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: indexed baby-step Cheon on the supplied 2^20 power",
+  "claims": [
+    {
+      "statement": "For uniform s in 1..r-1 on BLS12-381 G1, with public P0, T=[s]P0 and A_i=[s^i]P0 for i=1..n at n=2^20, the deterministic algorithm in proof.md recovers s with probability 1. Total classical work satisfies W(2^20) <= 2^{124.1} = 2^{1241/10} target-group-operation equivalents under classical-group-work-v2 with C=2000, including preprocessing, input scanning, both searches, sorting, transfers, canonicalisation and verification. Peak memory is at most 2^{126.6} bytes. Preprocessing is at most 2^{93} target-group-operation equivalents and is included in W. Nonuniform advice is 0 bytes. No heuristic and no quotient by the order-6 automorphism is used. Applicability is exactly n=2^20, where 2^20 divides r-1 and A_n is supplied.",
+      "score": {
+        "numerator": "1241",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "indexed-cheon-arithmetic",
+      "source": "experiment.py",
+      "purpose": "Check the finite arithmetic identities used by proof.md (factorisation of r-1, primality by trial division, primitive root 7, baby-step cover, instruction-envelope inequality, memory inequality) and recover every secret in a 233-element toy group while reading the stored baby index rather than the sorted rank. This does not execute the production curve and does not measure AArch64 instruction counts.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all"
+            ]
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all"
+        }
+      ]
+    }
+  ]
+}
