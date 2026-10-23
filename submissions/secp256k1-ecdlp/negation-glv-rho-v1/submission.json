@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: negation + GLV-endomorphism Pollard rho",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on secp256k1, recover x. The negation+order-3-endomorphism canonicalized Pollard rho walk in proof.md, with full hash-table collision storage and a fixed budget of T=138125068694105619243702929568326221824 steps chosen to hit exactly the required 0.39 success probability, uses at most 2.122982e+38 total reference-group-operation equivalents (pinned C=1,000, batched incomplete-affine 6M addition), including preprocessing and verification. Peak memory is at most 2^133.699243 bytes; preprocessing is 16,384 reference-op equivalents (log2=14.0) and is included in total work; nonuniform advice is 0 bytes (the L=32 branch points are public algorithm constants). The GLV lambda=0x5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72 and its matching field-side beta were independently re-derived via Tonelli-Shanks and checked against the protected generator with real curve arithmetic, not copied without verification. This supersedes the retired-price baseline in submissions/secp256k1-ecdlp/, which cannot serve as a current-model comparison per RESCORING.md.",
+      "score": {
+        "numerator": "127319360",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-glv",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the orbit-canonicalization, fruitless-cycle escape and linear-solve logic on a toy additive group with a synthetic order-6 automorphism (multiplication by a cube root of unity mod a small prime). Does not validate production curve arithmetic, instruction costs or full-size timing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 5000
+          },
+          "w": {
+            "type": "integer",
+            "enum": [6]
+          },
+          "unit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          }
+        },
+        "required": ["order", "w", "unit"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 997,
+          "w": 6,
+          "unit": 304
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "secp256k1-ecdlp",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "candidate-attack",
+  "algorithm": "negation-glv-endomorphism-pollard-rho-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.31936,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 133.699243,
+    "preprocessing_log2": 14.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Canonicalized Pollard rho walk modeled as a uniform random function on an m=r/6-element set (standard, supported, not proven).",
+    "Fruitless-cycle escape step's overhead is folded into a generous per-step constant rather than computed via the exact Galbraith-Ruprai classification.",
+    "Final orbit-ambiguity resolution (up to 6 scalar candidates checked against Q) is charged at its worst case, not its expected case."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution. experiment.py only exercises the algorithm's collision/canonicalization/escape logic on a toy additive group with a synthetic order-6 automorphism.",
+    "The declared T-step budget is fixed and non-adaptive; success probability is exactly 0.39, not higher.",
+    "Supersedes but does not invalidate submissions/secp256k1-ecdlp/, which remains historical evidence under retired reference prices per RESCORING.md."
+  ],
+  "lane": "exploratory"
+}
