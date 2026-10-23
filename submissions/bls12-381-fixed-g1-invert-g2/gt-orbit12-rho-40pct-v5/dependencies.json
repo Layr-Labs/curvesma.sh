@@ -1,0 +1,7 @@
+[
+  {
+    "submissionId": "1c0ec6c4-10ab-481f-bf1d-13f7c10eedae",
+    "rationale": "Backport of the algorithm design of the historical branch-era submission submissions/bls12-381-fixed-g1-invert-g2/gt-class-rho (claimed 126.16, author unknown). Candidate-source publication audit (coordination/operations/dependency-publication-evidence.json): branch-era submissions persist as branches plus closed PRs and the four audited platform IDs published no source; the branch-era source of this idea is not on any public current submission list. This package independently re-derived every field identity and the complete cost ledger in host python3 against the current protected profile and COST_MODEL (certificate.json), corrected two negligible sub-terms, and repackaged under the current workspace convention. No code was reused or executed from the source.",
+    "evidence": "Compare the historical proof.md ledger (git show origin/submissions/1c0ec6c4-10ab-481f-bf1d-13f7c10eedae:submissions/bls12-381-fixed-g1-invert-g2/gt-class-rho/proof.md, sha256 6e0e2bbd72db392d3621a75eb22f605a5a0d9a50023e48d034b01d1dcd6c4ac7) with argument.md and certificate.json. All identities pass; preprocessing recomputed 2^38.2 -> 2^45; score unchanged at 126.16 (re-derived sum 126.15587)."
+  }
+]

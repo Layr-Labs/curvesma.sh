@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "scope": "Analytic bounds for the fixed-G1 pairing-inversion track. Backport of historical branch submission 1c0ec6c4-10ab-481f-bf1d-13f7c10eedae (submissions/bls12-381-fixed-g1-invert-g2/gt-class-rho, claimed 126.16), independently re-derived under the current protected profile and COST_MODEL. No attack execution, no measurement, no provider acceptance, no official score.",
+  "method": "Host python3 exact integer + float arithmetic (certificate.json). Historical branch read via git show only; no candidate python executed.",
+  "re_derived": {
+    "time_log2": 126.16,
+    "exact_sum_log2": 126.15587,
+    "success_probability_floor": 0.40,
+    "P_at_K_under_H1": 0.4081,
+    "memory_log2_bytes": 72,
+    "preprocessing_log2": 45,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "key_rederivations": {
+    "ord_r_p_equals_12": "verified: p^i != 1 mod r for 1<=i<12, p^12=1 mod r, p^6=-1 mod r (all via pow(p,i,r))",
+    "log2_r": 254.85709,
+    "log2_N_prime": 251.27213,
+    "log2_k_0_39": 125.62779,
+    "log2_k_0_40": 125.65151,
+    "log2_K_1p03k39": 125.67043,
+    "log2_step_cost_1p4": 0.48543,
+    "log2_main_Kc": 126.15586,
+    "omega_cycle_waste_log2": -17.25,
+    "undetected_cycle_loss_fraction_log2": -55.2,
+    "delay_relative_log2": -41.35,
+    "preprocessing_recomputed_log2": 44.6,
+    "step_instruction_recount": 4254,
+    "field_identity_trials": "8 random order-r GT elements in the profile's Fp12 model: v_i rotation under phi, v_{i+6}=-v_i, 6 distinct |v_i|, s^p^6 = Fp6 conjugate, gamma-form Frobenius == exponentiation by p^i (i=1,2): all pass",
+    "success_margin": "K/k(0.40)=1.0132; P(K)=0.4081; the 0.40 floor is carried on the historical margin"
+  },
+  "corrections_to_historical": [
+    "Preprocessing recomputed at 2^45 (historical 2^38.2 omitted the ~380 GT squarings/multiplications per random table exponent); relative effect below 2^-81, score unchanged.",
+    "Step overhead instruction recount 4254 vs historical 4454; both under the charged 8000.",
+    "Historical proof.md inconsistent table-index bit ranges (40..55 vs 200..215); resolved to 200..215, disjoint from the 60 DP bits."
+  ],
+  "historical_source": {
+    "ref": "origin/submissions/1c0ec6c4-10ab-481f-bf1d-13f7c10eedae",
+    "path": "submissions/bls12-381-fixed-g1-invert-g2/gt-class-rho",
+    "claimed_time_log2": 126.16,
+    "claimed_success": 0.39,
+    "author": "unknown",
+    "source_publication": "never published to a public track list per coordination/operations/dependency-publication-evidence.json audit",
+    "duplicate_refs": ["2b333be5-7c2a-4797-985e-42d33df13295", "4045dbba-6471-4bd4-87e5-328a527d08d8"]
+  },
+  "comparison": {
+    "selected_v3_inverse_bsgs_cached_tree_40pct": "699/5 = 139.8 (deterministic)",
+    "v4_inverse_bsgs_montgomery_40pct": "1381/10 = 138.1 (deterministic)",
+    "this_package": "12616/100 = 126.16 with one disclosed random-mapping heuristic (H1) and one cycle-rate bound (H2); 11.94 bits below v4, 13.64 below v3"
+  }
+}

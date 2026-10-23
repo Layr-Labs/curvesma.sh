@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 pairing inversion by parallel Pollard rho on order-12 Frobenius classes in GT, R=1024/theta=2^-60 parameter family (transplant of the fixed-G2 125.89 family; ledger independently re-derived)",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT (identity target included), a classical randomized algorithm returns Q in G2 with e(P,Q)=z for the exact supplied P with probability at least 0.40 over the challenge and fresh algorithm coins. Compute g=e(P,Q0) for the profile's fixed G2 generator Q0 via pairing(Q0,P) at the pinned commit (one reduced pairing, charged); g != 1 and generates GT since the reduced pairing is nondegenerate on prime-order groups and P is nonidentity. Solve x=log_g z by parallel Pollard rho with distinguished points (van Oorschot-Wiener) on the 12-element Frobenius classes {s^(p^i)} of GT\\{1}: the class key set is {a*zeta^j, B*zeta^j : j=0..5} where a=Re(c1), B=Re(conj(c1)*d1) for the w^1 coefficient c1 of the canonical input, d1=xi^((p-1)/6), zeta=xi^((p^2-1)/6) in Fp a primitive 6th root, costing 4 Fp multiplications and 8 sub/negations with no full Frobenius evaluated; K=min of the 12 canonical keys is a class invariant (v_{i+6}=-v_i via p^6=-1 mod r acting as inversion). One step: t=(12-kappa) mod 12, y <- y*T[h][t], exactly one dense Fp12 multiplication (the reference operation, C=20000 scalar AArch64 instruction equivalents), h=K mod R; exponents (alpha,beta) of the canonical element g^alpha z^beta are tracked mod r, so a collision class(g^A1 z^B1)=class(g^A2 z^B2) gives x=(A1-A2)/(B2-B1) mod r unless B1=B2 (probability 1/r), confirmed by g^x=z before output; output Q=[x]Q0 verified by pairing(Q,P)==z. Parameters: R=1024 partitions, distinguished-point rate theta=2^-60 (bits 10..69 of K), M=2^20 parallel walks, 3% step margin, collision budget S=1.03*sqrt(2 N' ln(5/3)) for N'=N*R/(R-1), N=(r-1)/12. Fruitless 2-cycles (rate exactly 1/(12R) per step) are escaped by squaring the smaller-K stored class representative; longer cycles by checkpoint keys every 64 steps and a 20/theta stuck-walk cut; merged walks stay merged because the class map is a function of the class. Total work at most 2^(12589/100)=2^125.89 dense Fp12 multiplication equivalents including all preprocessing, starts, distinguished-point handling, cycle waste, detection delay E=M*20/theta, and the G2 scalar multiplication and two pairing checks: exact rational verification W^100 <= 2^12589 in certificate.json (re-derived float ledger 2^125.8845). Peak storage below 2^73 bytes (2^65.7 distinguished reports x 80 bytes at 2/3 load + 7.1 MB jump table + 2^20 walk states); memory stated, justified, unscored. Nonuniform advice 0 bytes. Disclosed heuristics: (H1) the class-level R-adding walk behaves like a random mapping on the N classes with the Brent-Pollard correction (model success 1-exp(-1.03^2 ln(5/3)) minus the e^-20 detection tail = 0.4184); (H2) the key-set low/hash bits are pseudo-random and key ties (probability <= 2^-249 total) count as failure. Analytic upper-bound construction; no production-size run, no practical break, no novelty or acceptance claim.",
+      "score": {
+        "numerator": "12589",
+        "denominator": "100"
+      },
+      "evidence": [
+        "argument.md",
+        "evidence.json",
+        "certificate.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
