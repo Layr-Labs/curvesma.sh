@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: parallel Pollard rho in GT on Frobenius classes",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT (identity included), find Q in G2 with e(P,Q)=z. Compute g=e(P,Q0) for the profile's fixed G2 generator (one reduced pairing); g generates GT because P is nonidentity and the pairing is nondegenerate. Solve x=log_g z by parallel Pollard rho with distinguished points (van Oorschot-Wiener) on the 12-element classes {s^(p^i)} of the Frobenius action, canonicalised by one Fp coefficient of each conjugate, with an r-adding walk over a 2^16-entry table (Teske) and a class-defined cycle rule (revisit of a label within 24 steps, escape from the smallest cycle member; Bos et al., Bernstein-Lange-Schwabe); return Q=[x]Q0 and verify. Success probability at least 0.39 (collision of k=sqrt(0.9886 N') classes, N'=(r-1)/12+1, plus a 3% margin). Total work at most 2^126.16 target-group-operation equivalents (dense Fp12 multiplications at 1, a step charged 1.4, all other work in instructions/20000), including preprocessing, restarts, cycle waste, distinguished-point handling, recovery and two pairings. Peak memory at most 2^72 bytes (stored distinguished points, theta = 2^-60); preprocessing is only per-processor tables, included in the total; nonuniform advice 2^0 bytes. Classical. Heuristics: random-mapping behavior of the class-level walk, and rarity of fruitless cycles.",
+      "score": {
+        "numerator": "12616",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class-rho",
+      "source": "experiment.py",
+      "purpose": "Run the class-rho method end to end on a small cyclic group with an order-12 automorphism standing in for the Frobenius map. This does not establish production behavior or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 90000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 60000
+        }
+      ]
+    }
+  ]
+}
