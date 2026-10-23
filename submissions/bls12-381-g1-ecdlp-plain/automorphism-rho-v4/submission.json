@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: automorphism-aware Pollard rho v4 (16-state cycle detection, 2^-32 distinguished points)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed standard BLS12-381 G1 generator P0 (T=infinity iff x=0, answered immediately), the single-shot classical automorphism-aware Pollard rho algorithm v4 in proof.md recovers x with success probability at least 0.39 using at most 2^126.945561 total target-group-operation equivalents (time_log2 = 126.945561 = 126945561/1000000), including setup, seeding, all walk steps (useful, escape and trapped alike, each charged exactly once), canonicalization, lazy-representation updates, 16-state look-back cycle detection over distances 2..16 with one-addition escapes, epoch-limit reseeds, distinguished-point processing at 2^-32 density with the epoch E=2^44 sitting 2^12 above the reporting interval, extraction, verification and output. The walk runs on the (r-1)/6 classes of the order-6 automorphism group; its per-step cost is one reference batched incomplete affine G1 addition plus 1048 other instruction equivalents (worst case) and involves no per-step mod-r multiplication. Fruitless cycles are handled by exact enumeration: the zero-sum product-1 multiplier tuples over the six-multiplier group are enumerated exactly for lengths 2..8 (counts 1, 2, 15, 60, 340, 1680, 9135; entry rates 2^-7.58 down to 2^-42.5 per step, the order-3 identity 1+lam+lam^2=0 making them systematic), the 16-state look-back detects every cycle of length 2..16 deterministically at its first return, and lengths >= 17 are bounded by the trivial tuple count (entry <= 2^-80 per step) with the epoch fencing each trap at 2^44 steps (trapped fraction <= 2^-36). Waste: <= 3/64 + 2^-36 + 2^-36 = 0.0469 charged; missed-report loss 2^-11 computed by exact averaging of the geometric reporting over the reset phase and subtracted; table overflow <= exp(-2^89) subtracted. Budget t = 1.15*sqrt((r-1)/6) over 2^16 walkers; modeled success 0.4516 * 0.92 * (1 - 2^-11) = 0.415 >= 0.39. Peak memory is the hard 2^95-slot distinguished-point table, 2^102.0 bytes (memory_log2_bytes = 102.0); preprocessing 2^25.6 included; nonuniform advice 0 bytes. Classical cold attack; no uncharged advice, quantum steps or amortization. The algebra, the order-3 identity, the lazy-representation invariant and the exact tuple enumeration are verified at production parameters by experiment.py Part A; Part B runs the complete v4 attack on a 20-bit j=0 toy curve: 85/200 = 0.425 vs 0.4845 ideal (toy-scale lag, analyzed), 335 escapes, 0 extraction-verification failures, census rate 0.00868 per executed step at distance 2 and no returns at distances 3..16 above census resolution.",
+      "score": {
+        "numerator": "126945561",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "automorphism-rho-v4-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production parameters: the order-6 automorphism identities, the order-3 identity 1+lam+lam^2=0, G6 closure, the class count (r-1)/6, the pairwise class-disjoint constant setup check, the lazy-representation invariant along 96 production walk steps, and the exact enumeration of the zero-sum product-1 multiplier tuples N_L for L=2..8. Part B runs the complete v4 attack on a 20-bit j=0 toy curve (lazy representations, 16-state look-back cycle detection at distances 2..16, one-addition escapes, epoch limit, low-bits distinguished points, capped table, canonical-frame extraction) and a 40,000-step cycle-return census with per-executed-step denominators. Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dbits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dbits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dbits": 2,
+          "walkers": 8
+        }
+      ]
+    }
+  ]
+}

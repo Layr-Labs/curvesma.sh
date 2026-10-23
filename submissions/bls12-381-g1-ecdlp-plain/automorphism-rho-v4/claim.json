@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp-plain/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v2 (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v3 (rejected: epoch/reporting conflict; cycle-rate contradiction; escape-rate statistic outside stated band)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "automorphism-rho-dp-v4",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.945561,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 102.0,
+    "preprocessing_log2": 25.6,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the canonical 32-adding walk on the (r-1)/6 automorphism classes has first-collision time approximating the birthday tail 1 - exp(-t^2/(2N)); supported classically, by Teske's r-adding-walk experiments, and by the toy run (0.545 vs 0.4845 ideal in the lag-free regime).",
+    "Cycle handling: zero-sum product-1 multiplier tuples over G6 enumerated exactly for L=2..8 (1, 2, 15, 60, 340, 1680, 9135; entry rates 2^-7.58 down to 2^-42.5 per step); a 16-state look-back detects every cycle of length 2..16 deterministically at its first return; lengths >= 17 are bounded by the trivial tuple count (entry <= 2^-80 per step) and fenced by the epoch E=2^44 (trapped fraction <= 2^-36). Distinguished points have density 2^-32, so the reporting interval 2^32 sits 2^12 below the epoch; the missed-report loss 2^-11 is computed by exact averaging and subtracted."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack with success probability lower bound 0.39 exactly at the protected threshold; all failures charged.",
+    "The distinguished-point table is a hard 2^95-slot allocation (2^102 bytes); overflow aborts with probability <= exp(-2^89) (Chernoff, ratio 1.07).",
+    "Standard cryptanalysis, not a novel attack; the GT/NFS route is discussed and not claimed; first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}
