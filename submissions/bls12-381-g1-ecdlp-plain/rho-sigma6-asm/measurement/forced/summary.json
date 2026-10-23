@@ -1,0 +1,853 @@
+{
+ "source": "measured by the rare-path forced-path harness (organizer image, -O3 -fno-tree-vectorize -mgeneral-regs-only)",
+ "full_results": "kept with the work, not in this package (the full file exceeds the package file limit)",
+ "step_c_sha256": "cc984345e10d1e544fac3b0c21ea39128311d5597e57c353ed3ffa79dac8e1df",
+ "units": "Callgrind Ir per call. A call is one loop iteration that calls a noinline wrapper around the primitive (bl, ret, argument set-up and wrapper prologue included); the 16 Ir of the empty loop (counter, dump request, sink update) are subtracted. Inlined use in the kernel is cheaper by those few Ir.",
+ "keys": {
+  "f_max": 163118,
+  "f_max_ct": 29750,
+  "f_max_real_observed": 29534,
+  "add_max": 162442,
+  "add_max_ct": 29074,
+  "add_max_real_observed": 29007,
+  "same_max": 211,
+  "same_max_ct": 211,
+  "same_max_real_observed": 120,
+  "pdp_max": 99,
+  "pdp_max_ct": 99,
+  "pdp_max_real_observed": 55,
+  "esc2_max": 163780,
+  "esc2_max_ct": 30412,
+  "esc2_max_real_observed": 30025,
+  "esc65_max": 172474,
+  "esc65_max_ct": 39106,
+  "esc65_max_real_observed": 32860,
+  "sel_max": 682,
+  "sel_max_ct": 682,
+  "sel_max_real_observed": 547
+ },
+ "key_notes": {
+  "x_max": "branch-bounded maximum: every data-dependent branch inside the primitive replaced by a branch-free routine that costs at least as much, remaining control variants forced; includes the Fermat-chain fallback of blst_fp_inverse (133,370 Ir) executed unconditionally",
+  "x_max_ct": "as x_max but blst_fp_inverse costed as its constant-time half only, which is the path every tested input takes (3.4 million inputs, no fallback); not a proven bound if the fallback were reachable",
+  "x_max_real_observed": "largest value seen in the kernel's own code over the forced variants (all take the ct inversion)"
+ },
+ "primitives": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 44666
+ },
+ "components": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 26215
+ },
+ "inversion": {
+  "invct|rand": {
+   "calls": 1000,
+   "min": 27303,
+   "max": 27303,
+   "mean": 27303.0
+  },
+  "invct|edge": {
+   "calls": 1000,
+   "min": 27303,
+   "max": 27303,
+   "mean": 27303.0
+  },
+  "invflt|rand": {
+   "calls": 1000,
+   "min": 133370,
+   "max": 133370,
+   "mean": 133370.0
+  },
+  "invflt|edge": {
+   "calls": 1000,
+   "min": 133370,
+   "max": 133370,
+   "mean": 133370.0
+  },
+  "invblst|rand": {
+   "calls": 1000,
+   "min": 27310,
+   "max": 27310,
+   "mean": 27310.0
+  },
+  "invblst|edge": {
+   "calls": 1000,
+   "min": 27310,
+   "max": 27310,
+   "mean": 27310.0
+  }
+ },
+ "checks": {
+  "bound_ge_real": {
+   "variants_compared": 157,
+   "violations": []
+  },
+  "bound_constant_and_N_independent": {
+   "nonconstant": [],
+   "note": "bound variants: min == max within each run and equal for N=1000 and N=2000"
+  },
+  "real_max_changes_when_N_doubles": [],
+  "equality_with_kernel": [
+   "harness check add cases=250000 mismatches=0",
+   "harness check canon_k cases=250033 mismatches=0",
+   "harness check canon_k_exact cases=250033 mismatches=0",
+   "harness check canon_point cases=250000 mismatches=0",
+   "harness check escape cases=250000 mismatches=0",
+   "harness check f cases=250000 mismatches=0",
+   "harness check fcmp cases=251089 mismatches=0",
+   "harness check feq cases=251089 mismatches=0",
+   "harness check fsub cases=251089 mismatches=0",
+   "harness check inverse cases=250033 mismatches=0",
+   "harness check key_full cases=250000 mismatches=0",
+   "harness check pdp cases=250000 mismatches=0",
+   "harness check same cases=250000 mismatches=0",
+   "harness_ct check add cases=250000 mismatches=0",
+   "harness_ct check canon_k cases=250033 mismatches=0",
+   "harness_ct check canon_k_exact cases=250033 mismatches=0",
+   "harness_ct check canon_point cases=250000 mismatches=0",
+   "harness_ct check escape cases=250000 mismatches=0",
+   "harness_ct check f cases=250000 mismatches=0",
+   "harness_ct check fcmp cases=251089 mismatches=0",
+   "harness_ct check feq cases=251089 mismatches=0",
+   "harness_ct check fsub cases=251089 mismatches=0",
+   "harness_ct check inverse cases=250033 mismatches=0",
+   "harness_ct check key_full cases=250000 mismatches=0",
+   "harness_ct check pdp cases=250000 mismatches=0",
+   "harness_ct check same cases=250000 mismatches=0"
+  ],
+  "fermat_fallback_reachability": "random: valid=3000000 of 3000000; structured: invalid=0 of 400762",
+  "errors": []
+ },
+ "image": {
+  "name": "curvesma-reference-count (linux/arm64)",
+  "image_id_at_assembly": "e2c127839055 (the image was rebuilt from the same Dockerfile by another job during the session; compiler and Valgrind are the same)",
+  "cc": "Debian 14.2.0-19",
+  "valgrind": "3.24.0",
+  "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only; blst server.c as run.sh (-O3 -fno-builtin -fPIC -fno-tree-vectorize -mgeneral-regs-only), pinned commit f7a88067"
+ },
+ "harness_sources": {
+  "harness.c": "45abeb02c43746594647fec15ca201361b7f1f227a3bff77c65ff42f16ad3143",
+  "rare.c": "0971948f3eb65e90eb82ccff2819ebfe7936f53e5ba7990ffc9d49fe0b19a0db",
+  "ship_driver.c": "46991462cec2acea5a0b5177108799e755f351f15bfbf275aeef90ee7c981255",
+  "inv_probe.c": "72a93610c128e75c3f7af282cc919dcebb9d8fb0ad6ccce9ee717340cdd0bbee",
+  "drive.py": "642dd9e17bde6c721b006f60737abd6979e64883e80a6855fc11be0285e214af",
+  "rare_drive.py": "cae66f4ffc11e8e927758855f82f42ff92f3cd0c87692fe1ce4bf8f5f26c4aa8",
+  "build.sh": "fd432499f34b0e73f8f9f061065e5aba02570463d26cc5dd07ba36039642fdd3"
+ },
+ "method": [
+  "step.c is included unmodified into harness.c (main renamed); the primitives measured are its own static functions.",
+  "A real wrapper (wr_*) and a bounded wrapper (wb_*) exist for every primitive; the bounded one has the control structure of the kernel's but every data-dependent branch inside the primitives replaced by a branch-free routine of at least equal cost.",
+  "Each variant's N inputs are built before the loop; the loop holds only the wrapper call, a counter and a Callgrind dump request; the Ir of each call is one dump (collection on throughout), less the 16 Ir of an empty loop.",
+  "N = 1000 and 2000 calls per variant; bound variants are constant (min = max) and equal for both N.",
+  "Equality of every bounded routine with the kernel's: at least 250,000 random/edge cases each (run on two builds); the check is shown to detect four injected faults.",
+  "The Fermat-chain fallback of blst_fp_inverse cannot be forced by any input found; x_max includes it, x_max_ct does not."
+ ],
+ "control_overhead": {
+  "what_was_measured": "rare_2cycle and rare_anchor of step.c, compiled in step.c's own unit (rare_anchor is instruction for instruction the shipped code, rare_2cycle has the same instructions in another order; see code_identity), on cycles of real curve points built with the kernel's own tables: 2-cycle (L=2) and long cycles L = 2, 3, 10, 33, 65. A copy of their control flow with noinline wrapper calls, a dump between every call, separates the control code from the primitives. The control code includes esc_seen (the diagnostic ring) in its dearest state: ring full, no match.",
+  "control_overhead_2cycle_Ir": 93,
+  "control_overhead_anchor_cycle65_Ir": 1695,
+  "control_code_does": "copies of 96-byte points into cyc[] (cyc[0] = *nw, cyc[len++] = s) and of the two cycle members in rare_2cycle, the loop counter and the len <= MAX_CYCLE test, flag tests (*dp, !esc), counter increments (two_cycles, long_cycles), stores of *sel, *kl, *dp, and the argument set-up of each primitive call",
+  "scenarios": {
+   "2c:2": {
+    "rare_40.json": {
+     "N": 40,
+     "ship_exact_code_Ir": [
+      58757
+     ],
+     "harness_unit_code_Ir": [
+      58751
+     ],
+     "wrapped_copy_total_Ir": [
+      58772
+     ],
+     "control_overhead_Ir": [
+      93
+     ]
+    }
+   },
+   "anchor:2": {
+    "rare_40.json": {
+     "N": 40,
+     "ship_exact_code_Ir": [
+      87533
+     ],
+     "harness_unit_code_Ir": [
+      87522
+     ],
+     "wrapped_copy_total_Ir": [
+      87610
+     ],
+     "control_overhead_Ir": [
+      120
+     ]
+    }
+   },
+   "anchor:3": {
+    "rare_40.json": {
+     "N": 40,
+     "ship_exact_code_Ir": [
+      116227
+     ],
+     "harness_unit_code_Ir": [
+      116210
+     ],
+     "wrapped_copy_total_Ir": [
+      116352
+     ],
+     "control_overhead_Ir": [
+      145
+     ]
+    }
+   },
+   "anchor:10": {
+    "rare_40.json": {
+     "N": 40,
+     "ship_exact_code_Ir": [
+      316690
+     ],
+     "harness_unit_code_Ir": [
+      316636
+     ],
+     "wrapped_copy_total_Ir": [
+      317153
+     ],
+     "control_overhead_Ir": [
+      320
+     ]
+    }
+   },
+   "anchor:33": {
+    "rare_40.json": {
+     "N": 40,
+     "ship_exact_code_Ir": [
+      976474
+     ],
+     "harness_unit_code_Ir": [
+      976306
+     ],
+     "wrapped_copy_total_Ir": [
+      978053
+     ],
+     "control_overhead_Ir": [
+      895
+     ]
+    }
+   },
+   "anchor:65": {
+    "rare_40.json": {
+     "N": 40,
+     "ship_exact_code_Ir": [
+      1894088
+     ],
+     "harness_unit_code_Ir": [
+      1893768
+     ],
+     "wrapped_copy_total_Ir": [
+      1897223
+     ],
+     "control_overhead_Ir": [
+      1695
+     ]
+    }
+   }
+  },
+  "relation": "shipped code (exact) <= wrapped copy for every scenario; the wrapped copy adds call overhead for each primitive"
+ },
+ "control_overhead_detail": {
+  "2c:2": {
+   "rare_20.json": {
+    "N": 20,
+    "ship_exact_code_Ir": [
+     58757
+    ],
+    "harness_unit_code_Ir": [
+     58751
+    ],
+    "wrapped_copy_total_Ir": [
+     58772
+    ],
+    "control_overhead_Ir": [
+     93
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 1,
+      "total_Ir": 28593,
+      "max_Ir": 28593
+     },
+     "same": {
+      "calls": 1,
+      "total_Ir": 118,
+      "max_Ir": 118
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29869,
+      "max_Ir": 29869
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 99,
+      "max_Ir": 99
+     }
+    }
+   },
+   "rare_40.json": {
+    "N": 40,
+    "ship_exact_code_Ir": [
+     58757
+    ],
+    "harness_unit_code_Ir": [
+     58751
+    ],
+    "wrapped_copy_total_Ir": [
+     58772
+    ],
+    "control_overhead_Ir": [
+     93
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 1,
+      "total_Ir": 28593,
+      "max_Ir": 28593
+     },
+     "same": {
+      "calls": 1,
+      "total_Ir": 118,
+      "max_Ir": 118
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29869,
+      "max_Ir": 29869
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 99,
+      "max_Ir": 99
+     }
+    }
+   }
+  },
+  "anchor:2": {
+   "rare_20.json": {
+    "N": 20,
+    "ship_exact_code_Ir": [
+     87533
+    ],
+    "harness_unit_code_Ir": [
+     87522
+    ],
+    "wrapped_copy_total_Ir": [
+     87610
+    ],
+    "control_overhead_Ir": [
+     120
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 2,
+      "total_Ir": 57176,
+      "max_Ir": 28591
+     },
+     "same": {
+      "calls": 3,
+      "total_Ir": 311,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 1,
+      "total_Ir": 17,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29886,
+      "max_Ir": 29886
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   },
+   "rare_40.json": {
+    "N": 40,
+    "ship_exact_code_Ir": [
+     87533
+    ],
+    "harness_unit_code_Ir": [
+     87522
+    ],
+    "wrapped_copy_total_Ir": [
+     87610
+    ],
+    "control_overhead_Ir": [
+     120
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 2,
+      "total_Ir": 57176,
+      "max_Ir": 28591
+     },
+     "same": {
+      "calls": 3,
+      "total_Ir": 311,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 1,
+      "total_Ir": 17,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29886,
+      "max_Ir": 29886
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   }
+  },
+  "anchor:3": {
+   "rare_20.json": {
+    "N": 20,
+    "ship_exact_code_Ir": [
+     116227
+    ],
+    "harness_unit_code_Ir": [
+     116210
+    ],
+    "wrapped_copy_total_Ir": [
+     116352
+    ],
+    "control_overhead_Ir": [
+     145
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 3,
+      "total_Ir": 85740,
+      "max_Ir": 28585
+     },
+     "same": {
+      "calls": 4,
+      "total_Ir": 410,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 2,
+      "total_Ir": 34,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29923,
+      "max_Ir": 29923
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   },
+   "rare_40.json": {
+    "N": 40,
+    "ship_exact_code_Ir": [
+     116227
+    ],
+    "harness_unit_code_Ir": [
+     116210
+    ],
+    "wrapped_copy_total_Ir": [
+     116352
+    ],
+    "control_overhead_Ir": [
+     145
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 3,
+      "total_Ir": 85740,
+      "max_Ir": 28585
+     },
+     "same": {
+      "calls": 4,
+      "total_Ir": 410,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 2,
+      "total_Ir": 34,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29923,
+      "max_Ir": 29923
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   }
+  },
+  "anchor:10": {
+   "rare_20.json": {
+    "N": 20,
+    "ship_exact_code_Ir": [
+     316690
+    ],
+    "harness_unit_code_Ir": [
+     316636
+    ],
+    "wrapped_copy_total_Ir": [
+     317153
+    ],
+    "control_overhead_Ir": [
+     320
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 10,
+      "total_Ir": 285747,
+      "max_Ir": 28585
+     },
+     "same": {
+      "calls": 11,
+      "total_Ir": 1037,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 9,
+      "total_Ir": 153,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29796,
+      "max_Ir": 29796
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   },
+   "rare_40.json": {
+    "N": 40,
+    "ship_exact_code_Ir": [
+     316690
+    ],
+    "harness_unit_code_Ir": [
+     316636
+    ],
+    "wrapped_copy_total_Ir": [
+     317153
+    ],
+    "control_overhead_Ir": [
+     320
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 10,
+      "total_Ir": 285747,
+      "max_Ir": 28585
+     },
+     "same": {
+      "calls": 11,
+      "total_Ir": 1037,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 9,
+      "total_Ir": 153,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 29796,
+      "max_Ir": 29796
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   }
+  },
+  "anchor:33": {
+   "rare_20.json": {
+    "N": 20,
+    "ship_exact_code_Ir": [
+     976474
+    ],
+    "harness_unit_code_Ir": [
+     976306
+    ],
+    "wrapped_copy_total_Ir": [
+     978053
+    ],
+    "control_overhead_Ir": [
+     895
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 33,
+      "total_Ir": 943045,
+      "max_Ir": 28591
+     },
+     "same": {
+      "calls": 34,
+      "total_Ir": 3050,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 32,
+      "total_Ir": 544,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 30419,
+      "max_Ir": 30419
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   },
+   "rare_40.json": {
+    "N": 40,
+    "ship_exact_code_Ir": [
+     976474
+    ],
+    "harness_unit_code_Ir": [
+     976306
+    ],
+    "wrapped_copy_total_Ir": [
+     978053
+    ],
+    "control_overhead_Ir": [
+     895
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 33,
+      "total_Ir": 943045,
+      "max_Ir": 28591
+     },
+     "same": {
+      "calls": 34,
+      "total_Ir": 3050,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 32,
+      "total_Ir": 544,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 30419,
+      "max_Ir": 30419
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   }
+  },
+  "anchor:65": {
+   "rare_20.json": {
+    "N": 20,
+    "ship_exact_code_Ir": [
+     1894088
+    ],
+    "harness_unit_code_Ir": [
+     1893768
+    ],
+    "wrapped_copy_total_Ir": [
+     1897223
+    ],
+    "control_overhead_Ir": [
+     1695
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 65,
+      "total_Ir": 1857339,
+      "max_Ir": 28591
+     },
+     "same": {
+      "calls": 66,
+      "total_Ir": 5778,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 64,
+      "total_Ir": 1088,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 31223,
+      "max_Ir": 31223
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   },
+   "rare_40.json": {
+    "N": 40,
+    "ship_exact_code_Ir": [
+     1894088
+    ],
+    "harness_unit_code_Ir": [
+     1893768
+    ],
+    "wrapped_copy_total_Ir": [
+     1897223
+    ],
+    "control_overhead_Ir": [
+     1695
+    ],
+    "primitive_calls_in_copy": {
+     "f": {
+      "calls": 65,
+      "total_Ir": 1857339,
+      "max_Ir": 28591
+     },
+     "same": {
+      "calls": 66,
+      "total_Ir": 5778,
+      "max_Ir": 118
+     },
+     "pdp": {
+      "calls": 64,
+      "total_Ir": 1088,
+      "max_Ir": 17
+     },
+     "esc": {
+      "calls": 1,
+      "total_Ir": 31223,
+      "max_Ir": 31223
+     },
+     "sel": {
+      "calls": 1,
+      "total_Ir": 100,
+      "max_Ir": 100
+     }
+    }
+   }
+  }
+ },
+ "event_bounds": {
+  "conservative_(x_max)": {
+   "rare_2cycle": {
+    "formula": "f + same + esc2 + sel + pdp + control(2c)",
+    "Ir": 327983
+   },
+   "rare_anchor_cycle65": {
+    "formula": "65 f + 66 same + 64 pdp + esc65 + sel + pdp + control(anchor:65)",
+    "Ir": 10797882
+   }
+  },
+  "constant_time_inversion_only_(x_max_ct)": {
+   "rare_2cycle": {
+    "formula": "f + same + esc2 + sel + pdp + control(2c)",
+    "Ir": 61247
+   },
+   "rare_anchor_cycle65": {
+    "formula": "65 f + 66 same + 64 pdp + esc65 + sel + pdp + control(anchor:65)",
+    "Ir": 1995594
+   }
+  }
+ },
+ "branches": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 13232
+ },
+ "code_identity": {
+  "ship_unit_vs_step_alone": [
+   "rare_2cycle: step_alone rare_2cycle.constprop.0 582 lines, harness rare_2cycle 582 lines, identical=False",
+   "   first difference at line 161 | tbnz w1, #0, <rare_2cycle+0x79c> | tbnz w1, #0, <rare_2cycle+0x788>",
+   "rare_anchor: step_alone rare_anchor 871 lines, harness rare_anchor 871 lines, identical=True",
+   "new_trail: step_alone new_trail 159 lines, harness new_trail 159 lines, identical=True",
+   "dp_restart: step_alone dp_restart 65 lines, harness dp_restart 65 lines, identical=True",
+   "batch_step: step_alone batch_step 3022 lines, harness batch_step 3025 lines, identical=False",
+   "add_single: step_alone add_single 282 lines, harness add_single 282 lines, identical=True",
+   "key_full: step_alone key_full 42 lines, harness key_full 42 lines, identical=True",
+   "canon_k_exact: step_alone canon_k_exact 119 lines, harness canon_k_exact 119 lines, identical=True"
+  ],
+  "harness_unit_vs_step_alone": [
+   "rare_2cycle: step_alone rare_2cycle.constprop.0 582 lines, harness rare_2cycle.constprop.0 474 lines, identical=False",
+   "   first difference at line 0 | sub sp, sp, #0x290 | sub sp, sp, #0x250",
+   "rare_anchor: step_alone rare_anchor 871 lines, harness rare_anchor 669 lines, identical=False",
+   "   first difference at line 0 | mov x12, #0x1a60  | mov x12, #0x19d0 ",
+   "batch_step: step_alone batch_step 3022 lines, harness batch_step 3013 lines, identical=False",
+   "   first difference at line 16 | add x26, x2, #0x0 | add x0, x0, #0x0",
+   "add_single: step_alone add_single 282 lines, harness add_single 279 lines, identical=False",
+   "   first difference at line 8 | mov x21, x2 | mov x21, x1",
+   "key_full: step_alone key_full 42 lines, harness key_full 42 lines, identical=False",
+   "   first difference at line 13 | add x3, x2, #0x60 | add x1, x1, #0x30",
+   "canon_k_exact: step_alone canon_k_exact 119 lines, harness canon_k_exact 115 lines, identical=False",
+   "   first difference at line 0 | stp x29, x30, [sp, #-208]! | stp x29, x30, [sp, #-192]!"
+  ],
+  "meaning": "In ship_driver.c's unit rare_anchor, new_trail, dp_restart, batch_step, add_single, key_full and canon_k_exact are instruction-for-instruction identical to step.c compiled alone (batch_step has three trailing alignment nops); rare_2cycle has the same 582 instructions in a different order (the shipped object holds a constant-propagated clone), so the end-to-end figure for rare_anchor is for the shipped code and the one for rare_2cycle for equivalent code. In harness.c's unit rare_2cycle, rare_anchor, batch_step, add_single (3 fewer instructions), key_full (register choice) and canon_k_exact (4 fewer) are compiled differently, so the per-primitive figures are for that unit's code"
+ },
+ "reproduce": [
+  "docker run ... curvesma-reference-count sh /forced/build.sh   (blst checkout at /blst, bls-ir at /bls, this directory at /forced, build dir at /out)",
+  "sh /forced/run_all.sh        (per-call Ir, real and bound, N = 1000 and 2000)",
+  "sh /forced/run_checks.sh     (equality of the bounded routines with the kernel's, 250,000 cases each, two builds)",
+  "sh /forced/run_mutants.sh    (the checks must fail on injected faults)",
+  "python3 /forced/rare_drive.py raw/rare_20.json 20 2c:2 anchor:2 anchor:3 anchor:10 anchor:33 anchor:65   (and N = 40)",
+  "python3 branches.py /out/harness <roots>   (conditional-branch listing); python3 cmpcode.py (code identity); python3 assemble.py (this file)"
+ ],
+ "mutation_self_test_of_equality_checks": [
+  "MUT_FEQ check feq cases=51089 mismatches=1015",
+  "MUT_FEQ check same cases=50000 mismatches=6239",
+  "MUT_KEY check key_full cases=50000 mismatches=22577",
+  "MUT_KEY check escape cases=50000 mismatches=26138",
+  "MUT_CKX check canon_k_exact cases=50033 mismatches=15222",
+  "MUT_CKX check f cases=50000 mismatches=9849",
+  "MUT_FCMP check fcmp cases=51089 mismatches=44487",
+  "MUT_FCMP check escape cases=50000 mismatches=50000"
+ ],
+ "unmeasured_or_approximate": [
+  "Per-primitive figures are for the harness unit's compile of step.c's functions, not the shipped object: add_single, canon_k_exact and rare_* are compiled differently there (inlining, 3 and 4 fewer instructions in add_single and canon_k_exact). The bounded figures exceed the harness code's by 6 to 7,000+ Ir (components >= 6), which covers differences of this size; it is not a proof.",
+  "Each primitive figure includes the call into and return from a noinline wrapper and the argument set-up (about 8-10 Ir); inlined use in the kernel costs that much less (the shipped rare_anchor with L = 65 is 3,135 Ir below the wrapped copy).",
+  "Control overhead of rare_2cycle/rare_anchor is measured on the wrapped copy (code between primitive calls: struct copies of cyc[], loop control, flag tests, counters) and on cycle lengths 2..65; paths not taken in the scenario (look-ahead DP break, cycle longer than 65 without escape, false-alarm exits) are cheaper than the escape path and were not run.",
+  "Dumps are cut at the dump request; the 16 Ir of the empty loop are an upper estimate of the harness's own cost per call (subtracted once); one Ir in 1000 of the empty loop reads 19, not 16 (not seen in primitive runs).",
+  "The Fermat-chain fallback of blst_fp_inverse was never taken (3.4 million inputs); its cost is measured (133,370 Ir) but it is not shown unreachable.",
+  "libc bcmp is the ifunc variant chosen under this Valgrind; a CPU feature set that selects another variant could change feq's real cost (the padded bound exceeds the dearest measured path, over all positions and alignments, by 10 Ir)."
+ ],
+ "f_max": 163118,
+ "add_max": 162442,
+ "same_max": 211,
+ "pdp_max": 99,
+ "esc2_max": 163780,
+ "esc65_max": 172474
+}

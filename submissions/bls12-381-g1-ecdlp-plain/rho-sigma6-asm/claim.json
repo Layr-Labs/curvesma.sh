@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-order6-classes-sigma-walk-asm-trails-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.390705,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 75.178504,
+    "preprocessing_log2": 46.934918,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class-level r-adding walk with 2^16 adders behaves as a random mapping on the (r-1)/6 order-6 classes, up to an exponent penalty of at most 4/2^16. Used only for the collision statistics (proof.md section 2.1).",
+    "M1 (class data, extended in round 8): every class-level value the walk reads (the class key, the canonical rotation and sign, and the coordinate fractions of the canonical representative used by the exact-k test) is a function of the class alone, and the values of distinct classes are independent and uniform, independent of x. Derivation (proof.md sections 2.2 to 2.8): the closure rates 1/(6A) for 2-cycles and at most 3/A^2 for 3..64-cycles (c derived as 1.26 and bounded by 3, section 2.5); the within-trail coincidence bound DELTA_LOOP and the nondegenerate Lemma G (section 2.4); the first-moment abandonment bound Lemma T' (section 2.6, k = 2^50, bound 1.82e-28 per trail); the expected rare work Lemma M' (section 2.8); and the exact-k fallback rate 2^-55 per canon call from the fallback window of Lemma 1, 15*2^-60 < 2^-55 (section 1.2).",
+    "M2 (table): the table is fixed by the specification's seed random.Random(1) (the value used by every measurement), with a fixed stream position: the first draw rng.randrange(1, r) is discarded, then a = rng.randrange(r) and b = rng.randrange(r) for each adder, each start point and each spare point. The measured inputs are walk_ref.py gen output for seeds 1 and 2 (byte-identical). There is no randomness over the table; probabilities are over the uniform target x, and M2 is the premise that the fixed table behaves like independent uniform coefficients independent of x. It is a second premise next to M1 and is flagged for review.",
+    "H3: Callgrind instruction counts on production inputs represent the common path: 2248.94 (plain) and 2258.94 (anchor) instructions per walk step, plus at most 2 for the canon_pick branch (C_COMMON = 2263), with the rare paths out of line and charged at forced-path worst cases (the exact-k fallback at 682 instructions per canon call, the revisit row at TRAIL_MAX times the per-step worst case); the Markov reserve covers the expected rare work. This is a measurement premise, not a probabilistic heuristic."
+  ],
+  "limitations": [
+    "The argument is not established at production size. M1 is the heuristic that carries the claim; the toy runs (theta = 2^-5) cannot test it at production theta.",
+    "The model success bound is 0.411524 at tau = 0.5303, 0.0215 above 0.39; the lower bound after 1/64, 2^-20, DELTA_ABANDON = 2.83e-17 and DELTA_LOOP = 1.56e-16 is 0.395898. Pooled toy-curve success at that budget is in the evidence.",
+    "Analytic production cost; no production-size execution.",
+    "Needs about 2^67.1 stored distinguished points; not a practical attack.",
+    "The field multiplication is the package's own inline assembly, tested against Python big integers but not formally verified.",
+    "H1 is an unproved standard heuristic; M1 and M2 are round-8 premises, and the whole procedure, including resolution, is tested only on toy curves.",
+    "Distinguished points never occur in a production-parameter measurement sample; the restart and abandonment paths were checked on small builds.",
+    "The rare-path charges are forced-path maxima measured with a bounding build (proof.md section 3.1); the bounding build is checked for equality and for dominance on the forced paths, not proved for every input. The exact-k fallback is charged at 682 instructions per canon call, measured with the forced harness (sel, variant fb).",
+    "Off the good event (probability at most DELTA_LOOP) the success argument does not apply, and that event is counted in delta. The cost bound does not depend on the good event: each replay takes at most 65n steps on every run (proof.md section 1.3), and the collision-replay term is charged at 2^13 operations per live step in every run.",
+    "The fallback rate 2^-55 depends on the extension of M1 to coordinate fractions; if that failed, the fallback would need worst-case charging, about 2.4 bits on time_log2 (not applied).",
+    "The work meter's abort probability, 1/64, is a Markov bound on the expected metered rare work under M1 (Lemma M'), and is counted in delta."
+  ],
+  "lane": "exploratory"
+}

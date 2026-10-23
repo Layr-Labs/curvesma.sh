@@ -1,0 +1,254 @@
+{
+ "kernel_step_c_sha256": "cc984345e10d1e544fac3b0c21ea39128311d5597e57c353ed3ffa79dac8e1df",
+ "walks_per_batch": 16384,
+ "k_max": 2,
+ "c_common": 2263,
+ "runs": {
+  "seed1": {
+   "callgrind_total_Ir": {
+    "1": 36846673,
+    "2": 73693333,
+    "63": 2321461362,
+    "64": 2358530610
+   },
+   "events": {
+    "63": {
+     "two_cycles": 2,
+     "long_cycles": 0,
+     "dps": 0,
+     "ahead_dps": 0,
+     "abandoned": 0,
+     "frac_fallbacks": 0,
+     "loops": 0
+    },
+    "64": {
+     "two_cycles": 3,
+     "long_cycles": 0,
+     "dps": 0,
+     "ahead_dps": 0,
+     "abandoned": 0,
+     "frac_fallbacks": 0,
+     "loops": 0
+    }
+   },
+   "plain_batch_Ir": 36846660,
+   "anchor_batch_Ir": 37069248,
+   "canon_pick_branch_plain": {
+    "executions": 16383,
+    "taken": 5485,
+    "fall_through": 10898
+   },
+   "canon_pick_branch_anchor": {
+    "executions": 16383,
+    "taken": 5460,
+    "fall_through": 10923
+   }
+  },
+  "seed2": {
+   "callgrind_total_Ir": {
+    "1": 36846721,
+    "2": 73693575,
+    "63": 2321520743,
+    "64": 2358531190
+   },
+   "events": {
+    "63": {
+     "two_cycles": 3,
+     "long_cycles": 0,
+     "dps": 0,
+     "ahead_dps": 0,
+     "abandoned": 0,
+     "frac_fallbacks": 0,
+     "loops": 0
+    },
+    "64": {
+     "two_cycles": 3,
+     "long_cycles": 0,
+     "dps": 0,
+     "ahead_dps": 0,
+     "abandoned": 0,
+     "frac_fallbacks": 0,
+     "loops": 0
+    }
+   },
+   "plain_batch_Ir": 36846854,
+   "anchor_batch_Ir": 37010447,
+   "canon_pick_branch_plain": {
+    "executions": 16383,
+    "taken": 5388,
+    "fall_through": 10995
+   },
+   "canon_pick_branch_anchor": {
+    "executions": 16383,
+    "taken": 5512,
+    "fall_through": 10871
+   }
+  }
+ },
+ "per_walk_step": {
+  "plain": {
+   "measured_batch_ir": 36846660,
+   "measured_per_walk_step": 2248.9417,
+   "measured_plus_kmax_per_walk_step": 2250.9417,
+   "all_long_batch_ir": 36857630,
+   "all_long_per_walk_step": 2249.6112,
+   "input": "seed 1"
+  },
+  "anchor": {
+   "measured_batch_ir": 37010447,
+   "measured_per_walk_step": 2258.9384,
+   "measured_plus_kmax_per_walk_step": 2260.9384,
+   "all_long_batch_ir": 37021471,
+   "all_long_per_walk_step": 2259.6113,
+   "input": "seed 2 (event-free anchor batch; seed 1's contains one two-cycle escape)"
+  }
+ },
+ "confirmation": {
+  "seed1": {
+   "plain": {
+    "measured_batch_ir": 36846660,
+    "walks_on_the_short_path": 5485,
+    "all_long_batch_ir": 36857630
+   },
+   "anchor": {
+    "measured_batch_ir": 37069248,
+    "walks_on_the_short_path": 5460,
+    "all_long_batch_ir": 37080168
+   }
+  },
+  "seed2": {
+   "plain": {
+    "measured_batch_ir": 36846854,
+    "walks_on_the_short_path": 5388,
+    "all_long_batch_ir": 36857630
+   },
+   "anchor": {
+    "measured_batch_ir": 37010447,
+    "walks_on_the_short_path": 5512,
+    "all_long_batch_ir": 37021471
+   }
+  }
+ },
+ "period_average_64_steps": {
+  "measured_plus_kmax": 2251.0979,
+  "all_long": 2249.7675
+ },
+ "c_common_covers": {
+  "plain_measured_plus_kmax": true,
+  "anchor_measured_plus_kmax": true,
+  "anchor_all_long": true
+ },
+ "data_dependent_common_path_branches": {
+  "list": [
+   {
+    "branch": "canon_pick (g2 is the minimum): b.cc skips cmp + cset when k = 2",
+    "plain_addr": "0x48bc",
+    "anchor_addr": "0x53a0",
+    "also_in_the_anchor_version_for_the_last_walk": "0x664c (one execution per batch)",
+    "extra_instructions_when_k_is_0_or_1": 2
+   }
+  ],
+  "note": "Every other conditional branch executed on the loop is an event trigger, loop control or a batch-level test (table below); all event branches have a zero taken count in an event-free batch."
+ },
+ "branches_on_the_loop": {
+  "plain": [
+   {
+    "addr": "0x3edc",
+    "insn": "b.ne 3e40 <batch_step+0x120>",
+    "kind": "control",
+    "what": "loop control of the batch-product loop"
+   },
+   {
+    "addr": "0x4078",
+    "insn": "b.eq 49d4 <batch_step+0xcb4>",
+    "kind": "event",
+    "what": "predecessor filter match (rare_2cycle)"
+   },
+   {
+    "addr": "0x4090",
+    "insn": "b.eq 49a4 <batch_step+0xc84>",
+    "kind": "event",
+    "what": "anchor filter match (rare_anchor)"
+   },
+   {
+    "addr": "0x40dc",
+    "insn": "b.eq 55b8 <batch_step+0x1898>",
+    "kind": "control",
+    "what": "loop control (w = 0 exit)"
+   },
+   {
+    "addr": "0x48bc",
+    "insn": "b.cc 48c8 <batch_step+0xba8>",
+    "kind": "data",
+    "what": "canon_pick (g2 is the minimum): b.cc skips cmp + cset when k = 2"
+   },
+   {
+    "addr": "0x4908",
+    "insn": "b.eq 4a88 <batch_step+0xd68>",
+    "kind": "event",
+    "what": "canon_k ok flag (exact-k fallback, canon_k_exact)"
+   },
+   {
+    "addr": "0x493c",
+    "insn": "b.ne 4060 <batch_step+0x340>",
+    "kind": "event",
+    "what": "inline distinguished-point candidate test (kl >> 17 == 0); also the loop back edge"
+   }
+  ],
+  "anchor": [
+   {
+    "addr": "0x3edc",
+    "insn": "b.ne 3e40 <batch_step+0x120>",
+    "kind": "control",
+    "what": "loop control of the batch-product loop"
+   },
+   {
+    "addr": "0x4b34",
+    "insn": "b.eq 54b8 <batch_step+0x1798>",
+    "kind": "event",
+    "what": "predecessor filter match (rare_2cycle)"
+   },
+   {
+    "addr": "0x4b4c",
+    "insn": "b.eq 5488 <batch_step+0x1768>",
+    "kind": "event",
+    "what": "anchor filter match (rare_anchor)"
+   },
+   {
+    "addr": "0x4b74",
+    "insn": "b.hi 558c <batch_step+0x186c>",
+    "kind": "event",
+    "what": "trail abandon test (++tper > CAP)"
+   },
+   {
+    "addr": "0x4bc0",
+    "insn": "b.eq 5e84 <batch_step+0x2164>",
+    "kind": "control",
+    "what": "loop control (w = 0 exit)"
+   },
+   {
+    "addr": "0x53a0",
+    "insn": "b.cc 53ac <batch_step+0x168c>",
+    "kind": "data",
+    "what": "canon_pick (g2 is the minimum): b.cc skips cmp + cset when k = 2"
+   },
+   {
+    "addr": "0x53ec",
+    "insn": "b.eq 5570 <batch_step+0x1850>",
+    "kind": "event",
+    "what": "canon_k ok flag (exact-k fallback, canon_k_exact)"
+   },
+   {
+    "addr": "0x5420",
+    "insn": "b.ne 4b1c <batch_step+0xdfc>",
+    "kind": "event",
+    "what": "inline distinguished-point candidate test (kl >> 17 == 0); also the loop back edge"
+   }
+  ]
+ },
+ "batch_level_branches": "once per batch: anchor_now test, the zero test of the batch product (abort), the exact-k and abandon tests of the first and last walk; none depends on the walks' data except through events",
+ "assumptions": [
+  "the kernel is the pkg/measurement/step.c measured; the same binary was run on both inputs",
+  "events (filter matches, exact-k fallbacks, abandonments, distinguished points) are charged separately by the meter"
+ ]
+}

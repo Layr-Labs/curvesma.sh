@@ -1,0 +1,103 @@
+{
+  "components_log2_units": {
+    "walk_steps": 126.390705,
+    "adder_table": 32.934829,
+    "initial_walk_starts": 46.934829,
+    "trail_restarts": 84.113333,
+    "distinguished_points": 76.212719,
+    "collision_replay": 86.358801,
+    "solve_verify_output": 17.028243,
+    "input_validation": 17.028243
+  },
+  "time_log2": "25278141/200000",
+  "time_log2_decimal": 126.390705,
+  "time_log2_float": 126.39070499484512,
+  "score_rational": {
+    "numerator": "25278141",
+    "denominator": "200000"
+  },
+  "preprocessing_log2": "23467459/500000",
+  "L": "89663270682989036334838442605",
+  "log2_L": 96.17850378295867,
+  "log2_T": 126.17850378295867,
+  "log2_S_max": 126.1785037841459,
+  "step_units": "34427618964217892287487734636320644474196081294509955333629863828880815261206267346090029523433932836619875970692230964049002590128946577712167487790342010965644241675431879/29718580260679422140067324658898025775643247849689122479412334715969748148990467093236016696491862525208634318094386227068469648483006415637207208384701465585961291218944000",
+  "success": {
+    "tau": 0.5303,
+    "eps": 0.00015285611152648926,
+    "delta": 9.5367431640625e-07,
+    "model": 0.4115238856252056,
+    "lower_bound": 0.39589793195088896,
+    "delta_abandon": 2.826733080564713e-17,
+    "p_abandon_per_trail": 1.8173558296369182e-28,
+    "p_abandon_terms": {
+      "first_moment_closures": 0.0,
+      "fresh_points_no_dp": 1.8173558296369182e-28,
+      "structural_trap_ge_65": 4.276423536147513e-50
+    },
+    "closure_bound_per_step_p_c": 2.543830002347845e-06,
+    "lemma_t_k_closures": 1125899906842624,
+    "trails_started": "167010856343585728926",
+    "delta_loop": 1.560695287413977e-16,
+    "delta_loop_terms": {
+      "degenerate_pairs": 1.0404635249426512e-16,
+      "nondegenerate_coincidences": 5.202317624713256e-17,
+      "adder_table_pairs": 4.914536791830706e-67
+    }
+  },
+  "number_theory": {
+    "c_ord_holds": true,
+    "ord_r_2_is_(r-1)/16": true,
+    "log2_ord_r_2": 250.8570894130472,
+    "escape_depth_bound_E": "36893488147419103264",
+    "log2_6E": 67.58496250072116,
+    "r_probable_prime_12_bases": true
+  },
+  "memory_bytes_log2": "9397313/125000",
+  "dp_max_log2": 67.17850378416446,
+  "meter": {
+    "c_common": 2263,
+    "e_rare_per_walk_step": 0.8423238427701188,
+    "events": [
+      {
+        "name": "two_cycle_checks",
+        "rate": 2.543131510416775e-06,
+        "worst_case_instructions": 328232,
+        "expected_instructions_per_walk_step": 0.8347371419271189
+      },
+      {
+        "name": "anchor_checks",
+        "rate": 6.984919310700291e-10,
+        "worst_case_instructions": 10861544,
+        "expected_instructions_per_walk_step": 0.007586700842962088
+      },
+      {
+        "name": "exact_k_fallback",
+        "rate": 5.551115123125783e-17,
+        "worst_case_instructions": 682,
+        "expected_instructions_per_walk_step": 3.785860513971784e-14
+      },
+      {
+        "name": "within_trail_coincidence",
+        "rate": 2.532932975508197e-56,
+        "worst_case_instructions": 825977684537403945121986880,
+        "expected_instructions_per_walk_step": 2.0921461141986973e-29
+      }
+    ],
+    "forced_maxima": {
+      "f": 163118,
+      "add": 162442,
+      "same": 211,
+      "pdp": 99,
+      "esc2": 163780,
+      "esc65": 172474,
+      "overhead": 1024,
+      "exact_k_fallback": 682,
+      "w_step": 11194085
+    },
+    "reserve_per_walk_step": 53.908725937287606,
+    "charge_per_walk_step": 2316.9087259372877,
+    "abort_probability_bound": "1/64",
+    "walk_steps_total": "96275203888186536160436041770275438592"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "binary": "/out/harness",
+  "impl": "bound",
+  "N": 2000,
+  "note": "re-measured for round 8 with the existing forced harness binary (step.c sha256 cc984345...), drive.py, Callgrind Ir per call; raw per-call value includes the 16 Ir loop overhead",
+  "results": {
+    "ckx|k0": {
+      "calls": 2000,
+      "min": 594,
+      "max": 594,
+      "net_max_minus_16": 578,
+      "meaning": "canon_k_exact with its call alone (k0, k1 and k2 are equal)"
+    },
+    "ckx|k1": {
+      "calls": 2000,
+      "min": 594,
+      "max": 594,
+      "net_max_minus_16": 578
+    },
+    "ckx|k2": {
+      "calls": 2000,
+      "min": 594,
+      "max": 594,
+      "net_max_minus_16": 578
+    },
+    "empty|x": {
+      "calls": 2000,
+      "min": 16,
+      "max": 19,
+      "net_max_minus_16": 3,
+      "meaning": "empty loop overhead, the first iteration (19) is noise, minimum 16"
+    },
+    "sel|fast": {
+      "calls": 2000,
+      "min": 123,
+      "max": 123,
+      "net_max_minus_16": 107,
+      "meaning": "select_adder on the fast rotation path"
+    },
+    "sel|fb": {
+      "calls": 2000,
+      "min": 698,
+      "max": 698,
+      "net_max_minus_16": 682,
+      "meaning": "select_adder with the exact-k fallback forced (rotation test failed, canon_k_exact and its call); F_EXACT = 682"
+    }
+  },
+  "net_definition": "max over calls minus the 16 Ir loop overhead of the same driver"
+}
