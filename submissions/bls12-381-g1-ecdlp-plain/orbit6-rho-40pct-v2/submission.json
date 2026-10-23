@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: parallel Pollard rho on size-6 {±1,±λ,±λ²} classes with distinguished points (re-verified backport)",
+  "claims": [
+    {
+      "statement": "Given T=[x]P0 in BLS12-381 G1 (y²=x³+4 over Fp, G1=⟨P0⟩ of prime order r, log2 r = 254.85709), x uniform in 0..r-1, recover x. Method: parallel Pollard rho with distinguished points on the N'=(r-1)/6 classes of G1∖{∞} under negation and the order-3 endomorphism φ(x,y)=(βx,y)=[λ]P0 (β²+β+1≡0 mod p verified, λ=z²-1, λ²+λ+1≡0 mod r verified at production constants by direct scalar multiplication on P0), r-adding walk over 2^16 random points [a]P0+[c]T, 2^14 walkers, DP probability 2^-98, fixed-period-64 class-key cycle detection with smallest-class doubling escape, recovery from the first useful DP collision, verified by [x]P0=T. Success ≥ 0.39: budget 1.03·√(2·ln(1/0.61)·N') + 24·2^14·2^98 steps gives 1-e^-0.5244 = 0.408 under the random-class model (0.39 floor carried exactly as historically argued; 0.408 point estimate disclosed). Total work < 2^(633/5) = 2^126.60 target-group-operation equivalents at fixed C=2000: 2^126.17231 walk steps at 1.343310546875 units each (one batched incomplete affine addition = 1 unit + 650 instructions canonicalisation/bookkeeping + 300-unit charge per fruitless-cycle event at rate ≤ 2^-14 per step), plus < 2^41 units for table build, starts, DP processing, solve and verification. Preprocessing 2^29 units included in total; peak memory 2^36.5 bytes (unscored); nonuniform advice 2^0 bytes; classical, no quantum steps. Heuristics: random-class walk (Teske 2001, van Oorschot-Wiener 1999) with 3% length margin; DP/index bit independence; cycle rate bound Bell(L)·nT^-ceil(L/2). All numbers re-derived independently from the protected profile and cost model; certificate.json records the checks.",
+      "score": {
+        "numerator": "633",
+        "denominator": "5"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

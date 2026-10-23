@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "track": "bls12-381-g1-ecdlp-plain",
+  "status": "analytic_candidate_not_submitted",
+  "score": {
+    "numerator": "633",
+    "denominator": "5",
+    "decimal": 126.6,
+    "meaning": "log2 total computation upper bound in target-group-operation equivalents, C=2000"
+  },
+  "re_derived_exact": {
+    "log2_W": 126.5981,
+    "log2_walk_steps": 126.17231,
+    "log2_k0": 126.12779,
+    "per_step_units": 1.343310546875,
+    "success_point_estimate": 0.408089,
+    "success_floor_claimed": 0.39
+  },
+  "preprocessing_log2_bound": {
+    "value": 29,
+    "included_in_total": true
+  },
+  "success_lower_bound": {
+    "numerator": "39",
+    "denominator": "100"
+  },
+  "memory_log2_bytes_bound": 36.5,
+  "nonuniform_advice_bytes": 0,
+  "algorithm_random_bits": 256,
+  "heuristics": [
+    "H1 random-class walk (Teske 2001, van Oorschot-Wiener 1999) with 3% charged length margin",
+    "H2 DP/index bit independence on canonical class key",
+    "H3 fruitless-cycle rate <= 2^-14 per step (derived 2-cycle rate 2^-18.585)"
+  ],
+  "normalization": {
+    "C": 2000,
+    "reference": "batched incomplete affine G1 addition, 6M convention",
+    "fp_mul_reference_instructions": 383
+  },
+  "parameters": {
+    "p_bits": 381,
+    "log2_r": 254.85709,
+    "class_size": 6,
+    "log2_N_classes": 252.27213,
+    "table_size": 65536,
+    "walkers": 16384,
+    "dp_probability_log2": -98,
+    "cycle_period": 64
+  },
+  "provenance": {
+    "historical_ref": "origin/submissions/8f7f0414-556b-4dba-bd73-784667ad86e4",
+    "historical_path": "submissions/bls12-381-g1-ecdlp-plain/rho-class6-dp",
+    "historical_claim_time_log2": 126.6,
+    "publication_state": "never published per audit",
+    "re_derivation": "all identities and ledger numbers recomputed in independent host-side Python; see certificate.json"
+  },
+  "limits": [
+    "Analytic accounting; no full-size execution.",
+    "Itemised per-step instruction counts are estimates with a 52-instruction reserve.",
+    "Not a novelty claim: textbook parallel collision search with automorphisms."
+  ]
+}

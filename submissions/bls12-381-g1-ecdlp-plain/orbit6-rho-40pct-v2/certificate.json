@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "status": "PASS",
+  "scope": "Independent re-derivation of every group identity and ledger number in argument.md at the protected production constants, by plain Python 3 integer/float arithmetic on the reviewing host. Candidate attack code was not executed.",
+  "checked_at": "2026-10-22",
+  "protected_inputs": {
+    "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+    "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "C": 2000
+  },
+  "identities": [
+    {"id": "I1", "check": "p mod 3 == 1", "result": true},
+    {"id": "I2", "check": "lambda = z^2-1 mod r, z=0xd201000000010000: lambda != 1, (lambda^2+lambda+1) mod r == 0, lambda^3 mod r == 1", "result": true},
+    {"id": "I3", "check": "r prime: Miller-Rabin bases 2,3,5,7,11,13,17,19,23,29,31,37", "result": true},
+    {"id": "I4", "check": "beta: root of x^2+x+1 mod p, beta^3 mod p == 1, beta != 1; both roots computed", "result": true},
+    {"id": "I5", "check": "generator P0 on y^2=x^3+4 mod p (blst x,y)", "result": true},
+    {"id": "I6", "check": "endomorphism: [lambda]P0 == (beta*x_P0, y_P0) via affine double-and-add over Fp (other root pairs with lambda^2)", "result": true},
+    {"id": "I7", "check": "free class action: r prime, r does not divide 6, phi fixed-point-free on G1∖{∞} => classes of size exactly 6, N'=(r-1)/6 exact", "result": true},
+    {"id": "I8", "check": "log2 r = 254.85709; log2 N' = 252.27213; sqrt(6) gain = 1.29248 bits", "result": true},
+    {"id": "I9", "check": "k0 = sqrt(2 ln(1/0.61) N'), log2 k0 = 126.12779; 1.03^2 ln(1/0.61) = 0.524400; success 1-exp(-0.5244) = 0.408089 >= 0.39 + margins (e^-24 = 3.8e-11, 2^-120)", "result": true},
+    {"id": "I10", "check": "delay allowance 24*2^14*2^98 = 2^116.585 = 0.130% of 1.03 k0; log2 S = 126.17231", "result": true},
+    {"id": "I11", "check": "per-step 1 + 650/2000 + 300*2^-14 = 1.343310546875 exactly; log2 = 0.425793; itemised sum 598+52 = 650", "result": true},
+    {"id": "I12", "check": "2-cycle rate 1/(6*2^16) = 2^-18.585; 3-cycle Bell(3)*2^-32*log2 = -29.68; charged 4/2^16 = 2^-14 has 24x margin over derived 2-cycle rate", "result": true},
+    {"id": "I13", "check": "W = 2^126.17231 * 1.343310546875 + 2^41; log2 W = 126.59810 <= 126.60 = 633/5", "result": true},
+    {"id": "I14", "check": "success floor 0.39 met per rules; beats current selector claim 1127/8 = 140.875 by 14.275 bits", "result": true}
+  ],
+  "notes": [
+    "The historical branch named lambda = z^2-1 and phi(x,y)=(beta*x,y); the re-derivation shows the specific root pairing depends on which root is called beta; the six-map class set {±1,±phi,±phi^2} is identical either way, so the ledger is unaffected.",
+    "fp mul reference 383 instructions and C=2000 taken from the protected tracks/docs/COST_MODEL.md pinned measurement record.",
+    "Memory arithmetic (S*theta = 2^28.17 records x 128 B < 2^36.5 B) re-verified; unscored."
+  ]
+}
