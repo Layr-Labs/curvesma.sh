@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp/partial-cheon (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v2 (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v3 (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v4 (rejected: sort/lookup ledgers omitted record moves, addressing and index arithmetic; buffered merge sort needs linear auxiliary storage; equal-x keys identify points only up to negation)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v5 (rejected: exact-count claims contradicted by the implementation; memory lower-bound arithmetic wrong; incomplete comb/batching/factorization constructions)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v6 (rejected: rho bound was an expectation with a units normalization error; instruction allowances lacked line items; toy did not exercise the batched comb construction)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v7 and partial-cheon-v8 (both failed server-side during a platform incident before review; resubmitted unchanged in content as v9)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v9 (rejected: peak-memory accounting missed the layer-batched comb working storage during giant generation; rho cap enforcement was round-granular and the per-iteration charge undercounted the two-mulmod inner loop)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v10 (rejected: additive rho worst-case sum already exceeded the stated 2^30.63 instructions and the units figure was mis-normalized; the toy still allocated m-sized accumulator and giant-scalar arrays so the O(block) live storage was asserted but not demonstrated)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "partial-coverage-cheon-v11",
+  "work_function": "W(n) for n >= 2^20 equals W(2^20) = m*(64+0.256+3.8355) + m*(64+0.256+1.872) + <= 2^21.9 with m = isqrt(floor(2N/5)) + 1, N = (r-1)/2^20; the attack reads only A_1 and A_d. Score = log2(W(2^20)).",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 123.836032,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 124.8,
+    "preprocessing_log2": 21.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "None for the success probability: k1 is uniform over [0,N) (the d-th power map is exactly d-to-1 onto the order-N subgroup); block j covers exactly the m values {(m1*j + i) mod N : i < m} with consecutive arcs disjoint (start spacing m1 > m, no start collisions for window spans), so every offset covers at least (m-1)m values - an exact per-offset bound of 0.4 - 2^-118 >= 0.39 including all wrap-around hits; the closed form is additionally crosschecked against an exhaustive every-offset brute force on five smaller parameter sets.",
+    "All table machinery is deterministic with worst-case upper bounds enforced by assertion in the experiment, and every instruction allowance carries a complete line-item breakdown: merge sort over an auxiliary buffer (<= m*117 key compares at 15 instructions: six limb loads + compares + branch; <= m*118 record moves at 50 instructions including the final copy-back; <= 16 instructions key preparation per record), binary search (exactly floor(log2 m)+1 = 117 probes worst case - candidate range at most halves per probe - each <= 32 instructions: 2-word midpoint 6, pointer + record loads 4, six-limb key load/compare 12, parity bit 2, interval update + termination + branches 8), layer-batched BLOCKED fixed-base comb (2^24 scalars per block; 32 window additions per 255-bit scalar, each exactly one reference batched-incomplete-affine operation by the cost model's definition, every window layer's additions within a block sharing ONE Montgomery batched inversion; block working storage <= 256 bytes per record <= 2^32 bytes total; <= 304 instructions of addressing and control per multiplication; charged 64 units = 2x the construction) - the toy EXECUTES this blocked construction for its baby and giant point sets (5 blocks of 64, per-block pending and accumulator sizes recorded and bounded), with equality to plain double-and-add asserted in full on the baby side and on every giant point of trial 0 plus 8 random giants per trial, with addition/inversion counts reported, 512-instruction mod-r multiplication (explicit 5x52 schoolbook + Montgomery), and the runtime factorization of r-1 as a deterministic, hard-capped, counted Brent-Pollard rho construction on the fixed public input (cap checked BEFORE each consumed batch: a completed cycle provably uses at most 2^17 iterations; hard 12-cycle guard; per-iteration charge 1056 instructions = two 512-instruction modular multiplications plus 32 of loop work; joint worst case with the backtrack scan inside the shared per-cycle cap: 12 x 2^17 iterations x at most 1536 instructions per iteration = 2,415,919,104 = 2^31.169925 instructions = 2^20.204141 units, plus certification and comb tables <= 2^20.3 units total, inside the 2^21 preprocessing budget (every figure computed, not hand-rounded); Part A executes it on the production r-1, measuring 111,717 modular multiplications, 310 gcds and 9 cycles, and asserts the result equals the supplied factor list in both directions; a cap abort fails the run and demonstrably does not fire; no probabilistic model is used anywhere). The sort key is (x, y mod 2), which uniquely determines an affine point on this odd-prime curve (same-x points have opposite y-parities), so every key match is an exact point match and k1 = (i + m1*j) mod N is exact with no sign ambiguity."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold; deterministic full coverage costs about +0.86 log2.",
+    "The bound applies only for n >= 2^20; smaller n would force a smaller divisor of r-1.",
+    "Peak memory by phase: the global peak is the sort phase (main sorted array plus merge buffer = 256*m = 2^124.767581 bytes); during blocked giant generation only the sorted baby table (128m) plus O(2^32 bytes) of block scratch is live. Strictly above 2^124.7675 bytes, reported rounded up as 124.8.",
+    "Cheon's auxiliary-input attack is standard cryptanalysis, not a novel algorithm; first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}
