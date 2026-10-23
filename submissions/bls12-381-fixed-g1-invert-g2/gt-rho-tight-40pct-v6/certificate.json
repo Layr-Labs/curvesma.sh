@@ -1,0 +1,373 @@
+{
+ "package": "gt-rho-tight-40pct-v6",
+ "certificate": "PASS",
+ "checks": [
+  {
+   "check": "itemisation_fold_sum",
+   "result": "PASS",
+   "detail": "fold = 2906 from 10 rows"
+  },
+  {
+   "check": "itemisation_mul_step",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "itemisation_sqr_step",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "itemisation_cyclo_row",
+   "result": "PASS",
+   "detail": "cyclo = 11632"
+  },
+  {
+   "check": "step_budget_is_least",
+   "result": "PASS",
+   "detail": "S = 74606256877941659446256116306965070709"
+  },
+  {
+   "check": "ledger_S_matches_constants",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "ledger_c_mul",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "ledger_c_sqr",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "ledger_w_raw",
+   "result": "PASS",
+   "detail": "W_raw = 2^125.79380"
+  },
+  {
+   "check": "ledger_w_stress",
+   "result": "PASS",
+   "detail": "W_stress = 2^125.85607"
+  },
+  {
+   "check": "claim_strictly_below_gate",
+   "result": "PASS",
+   "detail": "claim 125.87 < live gate 125.90"
+  },
+  {
+   "check": "claim_above_raw_plus_2e_5",
+   "result": "PASS",
+   "detail": "raw pad 0.076197"
+  },
+  {
+   "check": "claim_above_stress_plus_0.005",
+   "result": "PASS",
+   "detail": "stress pad 0.013935"
+  },
+  {
+   "check": "claim_at_most_stress_plus_0.06",
+   "result": "PASS",
+   "detail": "stress pad 0.013935"
+  },
+  {
+   "check": "budgeted_success_at_mu",
+   "result": "PASS",
+   "detail": "model 0.3920"
+  },
+  {
+   "check": "success_floor_above_requirement",
+   "result": "PASS",
+   "detail": "0.3920 - 0.0003 = 0.3917 > 0.39"
+  },
+  {
+   "check": "routing_fields_disjoint",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "routing_layout_production_width",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "routing_histogram_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "routing_no_collapse",
+   "result": "PASS",
+   "detail": "table_distinct 16369, dp_distinct 120000"
+  },
+  {
+   "check": "routing_table_spread",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_all_checks",
+   "result": "PASS",
+   "detail": "20 checks"
+  },
+  {
+   "check": "part_a_p_pow6_is_minus_one",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_ord_r_p_is_twelve",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_p4_plus_p8_plus_one_zero",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_n_classes_exact",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_gt_order",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_p6_conj",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_frob_ok",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_key_rule",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_keys_distinct",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_kappa_ok",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_min_ident",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_sqr_class_ok",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_cyclo_sqr_identity",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_minus_one_in_orbit",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_nondegenerate",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_order_r",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_bilinear_g1",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_pairing_bilinear_g2",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_planted_ePQ_equals_z",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "part_a_planted_wrong_Q_fails",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "sim_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "sim_group_count",
+   "result": "PASS",
+   "detail": "9600 mixed groups, 9600 control groups"
+  },
+  {
+   "check": "recovery_row_above_requirement",
+   "result": "PASS",
+   "detail": "measured 396771/1000000 = 0.396771 >= 0.39"
+  },
+  {
+   "check": "recovery_row_within_3se_of_model",
+   "result": "PASS",
+   "detail": "measured 0.3968 model 0.3924 se 0.0050"
+  },
+  {
+   "check": "recovery_control_above_requirement",
+   "result": "PASS",
+   "detail": "f = 0 control 0.3971 >= 0.39"
+  },
+  {
+   "check": "recovery_control_within_3se_of_model",
+   "result": "PASS",
+   "detail": "measured 0.3971 model 0.3925 se 0.0050"
+  },
+  {
+   "check": "legacy_rule_reproduces_the_defect",
+   "result": "PASS",
+   "detail": "v5 rule 0.0688 vs v6 0.3968, model 0.3924"
+  },
+  {
+   "check": "equivariance_v6_all_samples",
+   "result": "PASS",
+   "detail": "v6 4000/4000 agree"
+  },
+  {
+   "check": "equivariance_v5_rule_fails",
+   "result": "PASS",
+   "detail": "v5-style fixed index 1716/4000"
+  },
+  {
+   "check": "matched_density_steps",
+   "result": "PASS",
+   "detail": "realised steps / S = 1.0090"
+  },
+  {
+   "check": "matched_density_reports",
+   "result": "PASS",
+   "detail": "reports/group 21.87 vs expected 21.90"
+  },
+  {
+   "check": "sim_uses_production_constants",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "sim_squaring_fraction_is_f",
+   "result": "PASS",
+   "detail": "measured 0.3751"
+  },
+  {
+   "check": "sim_control_squaring_fraction_zero",
+   "result": "PASS",
+   "detail": "measured 0.0000"
+  },
+  {
+   "check": "sim_injectivity_penalty_is_conservative",
+   "result": "PASS",
+   "detail": "measured 1.0815 charged 1.0787 (difference 0.0037 bits)"
+  },
+  {
+   "check": "toy_present",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_end_to_end_verified",
+   "result": "PASS",
+   "detail": "40/40 recovered and verified"
+  },
+  {
+   "check": "toy_secret_match",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_cap_refusal",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_no_alignment_failure",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_production_shape",
+   "result": "PASS",
+   "detail": ""
+  },
+  {
+   "check": "toy_cycle_regression_448",
+   "result": "PASS",
+   "detail": "448/448 (lengths 2..8 x 64 phases)"
+  },
+  {
+   "check": "toy_cycle_adversarial_all_fire",
+   "result": "PASS",
+   "detail": "{'2': 64, '4': 64, '8': 64, '16': 64, '32': 64, '64': 64, '67': 64}"
+  },
+  {
+   "check": "toy_equivariance_all_twelve",
+   "result": "PASS",
+   "detail": "60/60 samples"
+  },
+  {
+   "check": "single_constant_import",
+   "result": "PASS",
+   "detail": "no restated constant"
+  }
+ ],
+ "numbers": {
+  "claim": "12587/100",
+  "claim_float": 125.87,
+  "W_raw_log2": 125.7938030542538,
+  "W_stress_log2": 125.85606512956478,
+  "S": 74606256877941659446256116306965070709,
+  "S_log2": 125.81063613847446,
+  "c_mul": 1.1453,
+  "c_sqr": 0.7269,
+  "c_raw": 0.9884,
+  "fold_instructions": 2906,
+  "cyclo_sqr_instructions": 11632,
+  "raw_pad": 0.07619694574620439,
+  "stress_pad": 0.013934870435221569,
+  "budgeted_success": 0.392,
+  "success_floor": 0.3917015,
+  "measured_recovery": 0.39677083333333335,
+  "measured_recovery_se": 0.004993159269913121,
+  "measured_recovery_control": 0.39708333333333334,
+  "measured_recovery_model": 0.3924257586441037,
+  "measured_recovery_legacy_rule": 0.06875,
+  "equivariance_v6": 4000,
+  "equivariance_samples": 4000,
+  "equivariance_v5_rule": 1716,
+  "N_classes_log2": 251.27212691232603,
+  "Fp12_multiplies": "the reference operation, C = 20000"
+ }
+}

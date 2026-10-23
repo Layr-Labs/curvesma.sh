@@ -1,0 +1,108 @@
+{
+ "groups": 40,
+ "hits": 40,
+ "recovered": 40,
+ "verified": 40,
+ "secret_match": 40,
+ "cap_losses": 0,
+ "aligned_fail": 0,
+ "singular": 0,
+ "replay_mismatch": 0,
+ "aborts": 6,
+ "escapes": 131,
+ "fires_two": 0,
+ "fires_ckpt": 0,
+ "confirm_rejects": 0,
+ "p": 10647363907,
+ "r": 9831361,
+ "N": 819280,
+ "dp_bits": 7,
+ "segments": 80,
+ "store_cap": 33554440,
+ "w_trail": 1134,
+ "toy_x": -56,
+ "S": 1022,
+ "sqr_threshold": 3,
+ "trail_meters": 16,
+ "rule": "v6-equivariant",
+ "equivariance_probe": {
+  "samples": 60,
+  "all_twelve_agree": 60,
+  "fraction": 1.0
+ },
+ "cap_probe_refused": true,
+ "cap_probe_hit": false,
+ "detector_cycle_test": {
+  "lengths": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "window": 64,
+  "phases": 64,
+  "all_phases_fire": true,
+  "trapped": 0,
+  "fired": 448,
+  "phases_by_length": {
+   "2": 64,
+   "3": 64,
+   "4": 64,
+   "5": 64,
+   "6": 64,
+   "7": 64,
+   "8": 64
+  },
+  "within_window": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "beyond_window": []
+ },
+ "detector_cycle_adversarial": {
+  "lengths": [
+   2,
+   4,
+   8,
+   16,
+   32,
+   64,
+   67
+  ],
+  "window": 64,
+  "phases": 64,
+  "all_phases_fire": true,
+  "trapped": 0,
+  "fired": 448,
+  "phases_by_length": {
+   "2": 64,
+   "4": 64,
+   "8": 64,
+   "16": 64,
+   "32": 64,
+   "64": 64,
+   "67": 64
+  },
+  "within_window": [
+   2,
+   4,
+   8,
+   16,
+   32,
+   64
+  ],
+  "beyond_window": [
+   67
+  ]
+ },
+ "seconds": 3.3,
+ "all_verified": true
+}

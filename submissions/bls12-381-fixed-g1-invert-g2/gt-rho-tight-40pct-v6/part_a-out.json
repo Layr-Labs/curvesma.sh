@@ -1,0 +1,27 @@
+{
+ "checks": {
+  "p_pow6_is_minus_one": true,
+  "ord_r_p_is_twelve": true,
+  "p4_plus_p8_plus_one_zero": true,
+  "n_classes_exact": true,
+  "gt_order": true,
+  "p6_conj": true,
+  "frob_ok": true,
+  "key_rule": true,
+  "keys_distinct": true,
+  "kappa_ok": true,
+  "min_ident": true,
+  "sqr_class_ok": true,
+  "cyclo_sqr_identity": true,
+  "minus_one_in_orbit": true,
+  "pairing_nondegenerate": true,
+  "pairing_order_r": true,
+  "pairing_bilinear_g1": true,
+  "pairing_bilinear_g2": true,
+  "planted_ePQ_equals_z": true,
+  "planted_wrong_Q_fails": true
+ },
+ "part_a": true,
+ "seconds": 4.1,
+ "checks_n": 20
+}

@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 into G2 at 2^125.87: Frobenius-class rho with an equivariant step, a mixed cyclotomic-squaring step and an itemised fold",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "constants.py",
+        "classwalk.py",
+        "detector.py",
+        "ledger.py",
+        "tower.py",
+        "pairing.py",
+        "part_a.py",
+        "part_a-out.json",
+        "sim.py",
+        "sim-out.json",
+        "toy_core.py",
+        "toy-out.json",
+        "routing.py",
+        "routing-out.json",
+        "verify_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "12587",
+        "denominator": "100"
+      },
+      "statement": "For independently uniform nonidentity P in BLS12-381 G1 and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.39, and its complete classical work is at most 2^(12587/100) dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The algorithm solves a = log_g z in GT with g = e(P,Q0) on the twelve-element Frobenius classes of GT, N = (r-1)/12 = 2^251.272 classes, using a deterministic walk whose step is one dense Fp12 multiply by a tabulated multiplier (2^14 multipliers with all twelve Frobenius twists) or, on three of every eight classes, one Granger-Scott cyclotomic squaring charged at its itemised 11632 instructions, each followed by a class fold charged at 2906 itemised instructions in ten rows. The step is a class function: the table index is (routing twist - kappa), where kappa is the position of the fold's minimum, so two trails that meet at a common class take the identical next class. The walk uses a two-cycle rule with a checkpoint escape, a 2^-80 distinguished-point density, an ordered store of full class keys with a fixed report cap, replay with (a,b) exponent bookkeeping, Frobenius alignment, an exponent solve and a verification against z. Included in the work bound: table construction (2^14 * 12 twisted elements), all trail starts, all reports, both replays per recovery, all failures and restarts, the output, and the verification. Peak memory is below 2^54 bytes with 48-byte class-key records. Success is conditional on three disclosed hypotheses: the class walk behaves as a random map to within the 10 per cent inefficiency allowance already carried in the step budget, the hash fields derived from the class key are pseudorandom, and the algorithm's coins are ideal. Support at production constants is the exponent-domain simulation (9600 groups over eight independent fields, pooled 0.3968 +- 0.0050 against a 0.3923 model and a 0.39 requirement, with the pre-fix rule reproduced as a 0.0688 control on the same fields, tables and seeds), the end-to-end toy at N=819280 with 40 of 40 recoveries exact and the equivariance probe at 60/60, and the exact BLS12-381 algebra checks including a real pairing evaluation of e(P,Q)=z on a planted instance. No production run, no unconditional success theorem, no novelty claim and no practical break is claimed."
+    }
+  ],
+  "experiments": []
+}
