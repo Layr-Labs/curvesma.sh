@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: plain additive parallel Pollard rho v11 (pseudorandom published constants, confinement certificate)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q = [x]P for the fixed standard generator of BLS12-381 G1: y^2 = x^3 + 4 over the 381-bit prime field, r the 255-bit prime order, standard generator, the single-shot classical plain-walk parallel Pollard rho algorithm v11 in proof.md recovers x with success probability at least 0.39 using at most 2^128.088698 total target-group-operation equivalents (time_log2 = 64044349/500000), including preprocessing (32 published pseudorandom constants and seeding of 2^16 walkers with lazy representations by fixed-base comb and windowed double-and-add including the comb doublings and the final seed addition, 385 reference operations per walker, charged 2^25), all walk steps of all walkers at the charged per-step price of 1.0535 units (107 other AArch64 instructions per step against the 2000-instruction reference operation), distinguished-point processing at 2^-32 density at 48 instructions per insert (concrete chained hash construction) with a 2^98-slot table (2^105 bytes, overflow probability <= exp(-2^96.2) under the random-function premise, subtracted), and one verified extraction (modular inverse plus a verification scalar multiple, charged 2^9); no rescaling of the scalar confines the step set (executed certificate over all rescalings up to 2^12 with narrowest window 0.6897 of the modulus, counting heuristic 32*W^31/r^30 < 2^-200 below width 2^240), no cycle word of length <= 4 exists (executed enumeration), and longer cycle entries occur at the self-pair birthday scale t^2/(2Kr) with waste beyond a 2^-23 budget fraction of probability <= 2^-10.9 by Markov on the bounded expectation, reseed work charged; peak memory is strictly above 2^105 bytes and reported as memory_log2_bytes = 105.1; no nonuniform advice.",
+      "score": {
+        "numerator": "64044349",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "plain-rho-v11-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at production parameters: p and r prime (Miller-Rabin); the generator on the curve with order exactly r; the 32 published pseudorandom constants c_j = sha512(...) mod r pairwise distinct (sha256 of their concatenation recorded); no multiset of at most 4 constants sums to 0 mod r (executed enumeration over all such multisets, excluding every fruitless cycle of length <= 4); the confinement certificate - for every rescaling M <= 2^12 the narrowest window containing all 32 rescaled steps is 0.6897 of the modulus, while the same check applied to the rejected v6 constants c_j = jQ + 2^j detects their confinement at M = 32 (1.31e-66); the itemized ledger (per-step 107 other instructions; seeding 2^23; DP processing; extraction with verification 2^9); the table capacity with its Chernoff overflow bound under H1; and the success model with the collision-time-factor tolerance c <= 1.5086 asserted >= 0.39 (Teske's context factor 1.1 gives modeled 0.6053; the toy measures 1.014; factor 1.1 gives modeled success 0.4757). Part B executes the complete v11 attack on a 20-bit prime-order toy curve with the same published-constant construction: lazy representations, (x, parity)-keyed distinguished-point table, extraction with verification, cycle reseeds (counted) - measuring 133/200 successes (0.6650 vs ideal 0.675289, ratio 0.985) with 0 wrong extractions - and a supplementary dbits=6 sparse-distinguished-point census (100 trials, 41 successes, 0 wrong extractions) exercising the production-density machinery, recording the true-merge statistic: 64 of the census trials contain a true first-contact merge (diagnostic full-visit log), 41 detected, 23 undetected by budget end - the budget-end race scaled to toy size.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dbits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dbits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dbits": 0,
+          "walkers": 8
+        }
+      ]
+    }
+  ]
+}
