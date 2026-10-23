@@ -1,0 +1,72 @@
+{
+  "components_log2_units": {
+    "walk_steps": 125.784383,
+    "detected_cycles": 117.698779,
+    "adder_table": 19.582053,
+    "walk_starts_and_restarts": 76.418283,
+    "distinguished_points": 64.756902,
+    "fingerprint_verification": 73.262918,
+    "solve_verify_output": 14.712288
+  },
+  "time_log2": "31447421/250000",
+  "time_log2_decimal": 125.789684,
+  "time_log2_float": 125.78968373068808,
+  "score_rational": {
+    "numerator": "31447421",
+    "denominator": "250000"
+  },
+  "preprocessing_log2": "76418283/1000000",
+  "parameters": {
+    "N_log2": 251.272127,
+    "square_slots": 458,
+    "r_a": 1024,
+    "s": 0.447265625,
+    "V": 0.7994136810302734,
+    "walk_steps_T_log2": 125.836359,
+    "main_steps_log2": 125.844635,
+    "lag_steps_log2": 80.0,
+    "distinguished_points_log2": 66.844635,
+    "dp_bits": 60,
+    "walks": 1048576,
+    "square_fraction_lower": 0.447264625,
+    "step_charge": 0.95909605410675,
+    "event_charge": 0.0035306365715452957,
+    "event_rate_bound": 4.504002955962487e-05,
+    "window": 127,
+    "wasted_fraction_charged": 0.005720083754072358,
+    "trail_cap_log2_steps": 66.0,
+    "detection_factor": 1.0,
+    "fingerprint_bits": 128,
+    "false_pairs_mean_log2": 4.689271,
+    "dp_capacity_records": 132507452526498119680,
+    "dp_capacity_log2": 66.844635
+  },
+  "trap_bound": {
+    "union_65_400": 1.7699456400029617e-96,
+    "additive_tail_401": 1.2547025266974825e-103,
+    "nonformal_per_step": 1.6886219836721313e-56,
+    "per_step": 1.6886219836721313e-56
+  },
+  "failure_terms": {
+    "trap_formal_and_nonformal": 1.2898597409632568e-18,
+    "fingerprint_markov": 8.673617379884035e-19,
+    "square_count_hoeffding": 0.0,
+    "cycle_count_blocking_log2": -2.5851278474366933e+25,
+    "nonformal_short_expectation": 1.1187749866831623e-36,
+    "dp_count_overflow_log2": -3.186130744013426e+19
+  },
+  "delta_total": 2.1572214789516602e-18,
+  "memory_log2_bytes": "18291641/250000",
+  "success": {
+    "tau_eff": 0.5276327420834271,
+    "eps": 0.20058631896972656,
+    "model": 0.41000000000062253,
+    "delta": 2.1572214789516602e-18,
+    "lower_bound": 0.41000000000062253
+  },
+  "success_if_waste_not_charged": 0.40643811490485315,
+  "a_units": 1.18771,
+  "q_units": 0.676572,
+  "dp_charge_units": 0.23525,
+  "kappa": 0.4902
+}

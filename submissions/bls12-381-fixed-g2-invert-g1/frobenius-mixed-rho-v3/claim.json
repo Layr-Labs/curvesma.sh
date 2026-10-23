@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v5",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 125.789684,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 73.166564,
+    "preprocessing_log2": 76.418283,
+    "success_probability": 0.41,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the mixed add/square class walk on N = (r-1)/12 classes with r_a = 1024 and S = 458 behaves as a random map with collision rate V = 0.799413681.",
+    "H5: a closure whose exponent coefficient is nonzero is an event of probability 1/r over the coins (independence of the coins from the path).",
+    "H7: adder choices, square decisions, distinguished-point tests and fingerprint bits are uniform and independent across steps.",
+    "Proven by computation: the nonnegative vanishing sums of 12th roots of unity are 2-gon and 3-gon sums (Lam-Leung); the order of 2 modulo r is computed from the factorisation of r-1, so 2^q is not a 12th root of unity for q < 2^247."
+  ],
+  "limitations": [
+    "H1 is extrapolated from toy groups with N up to 2^17 and r_a = 32; production N is about 2^251 and r_a = 1024.",
+    "The trail-cap restart and the 3-to-64 cycle branch are not exercised by an exact-equality test.",
+    "c2 and kappa are measured averages with a margin; the distinguished-point charge (2^20 instructions per point) is an assumption.",
+    "Memory of about 2^73 bytes is the enforced capacity of the distinguished-point table; it is reported, not scored.",
+    "The reference unit is priced by the organizer rule (1 unit); the measured reference count is 22,998 against C = 20,000."
+  ],
+  "lane": "exploratory"
+}
