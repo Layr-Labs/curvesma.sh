@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: deterministic generic accounting control",
+  "claims": [
+    {
+      "statement": "For every n >= 1, for uniform s in [1,r), input T=[s]P0 and A_i=[s^i]P0 (i=1..n), recover s, the deterministic baby-step/giant-step algorithm in proof.md succeeds with probability at least 1 using at most 2^131.891255 total target-group-operation equivalents, including preprocessing and verification. W(n) is independent of n, so the bound holds at the scoring value n=2^20. The construction reads only A_1=T (and, when n>=2, A_2 for one independent check), a permitted subset of the powers. Peak memory is at most 2^134.807355 bytes; preprocessing is at most 2^130.141433 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps or heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "131891255",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
