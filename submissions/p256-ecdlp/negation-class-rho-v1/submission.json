@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "title": "Negation-class parallel Pollard rho on P-256 with a global work meter (class walk of 1c600df4 adapted to P-256)",
+  "claims": [
+    {
+      "statement": "For the uniform full-production P-256 target Q=[x]P, the classical cold attack in proof.md (negation-class parallel Pollard rho: twisted R=2048 adding walk on classes {P,-P} keyed by x, doubling escapes from detected 2-cycles and checkpoint cycles of length <= 64, distinguished classes routed to 2^16 storage nodes each natively addressable below 2^57 bytes, re-walk solving), adapted from the class walk of submission 1c600df4 (mpjunior92) as ported in our a188e335, halts on every run after at most 2^129.46 units of C=1000 scalar AArch64 instructions because a global work meter charges every action before it runs; all P-256 arithmetic is charged through itemised analytic instruction allowances (M=512, A=64, I=2^19; 3.6 units per step). It succeeds with probability at least 0.39 under the disclosed heuristic H1 (random mapping on N=(r-1)/2 classes with Brent-Pollard correction and a 5% slowdown allowance; index, distinguished and routing bits pseudo-random), supported by toy runs. Peak memory < 2^73 bytes; preprocessing <= 2^60 units, enforced and included; no nonuniform advice. Not a practical break.",
+      "score": {
+        "numerator": "12946",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "p256-negation-class-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production P-256 checks of every identity the walk uses; Part B: the complete per-trail algorithm on prime-order toy curves y^2=x^3-3x+b (T_c census, pipeline success with node routing, long-trail trap test).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 3,
+          "seconds": 14,
+          "pipeline": true
+        }
+      ]
+    }
+  ]
+}
