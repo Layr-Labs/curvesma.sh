@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "title": "Plain parallel Pollard rho on P-256 (no negation map) with a deterministic round meter",
+  "claims": [
+    {
+      "statement": "For the uniform full-production P-256 target Q=[x]P, the classical cold attack in proof.md (plain R=2048-adding parallel Pollard rho with distinguished points, no negation map or automorphism classes, start-replay recovery, and a round/event meter) halts on every run after at most W_max < 2^130.4566 target-group-operation equivalents under the protected C=1000 normalization, with all P-256 arithmetic charged through itemised analytic instruction allowances (M=512, A=64, I=2^19 per field operation). It succeeds with probability at least 0.39 under the disclosed random-mapping heuristic H1 with a factor-2 margin (kappa=2) in the birthday constant. Peak memory < 2^99 bytes; preprocessing < 2^34.2 units, included; no nonuniform advice. The submitted rational bound is justified by the exact inequality W_max^100 <= 2^13047 checked in experiment.py. Not a practical break.",
+      "score": {
+        "numerator": "13047",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Production curve checks and exact rational ledger/score inequality; end-to-end toy runs of the specified algorithm on small prime-order a=-3 curves measuring success, wrong outputs and the empirical birthday constant kappa.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "production",
+              "toy"
+            ]
+          },
+          "track": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "p256"
+            ]
+          },
+          "bits": {
+            "type": "integer",
+            "enum": [
+              20,
+              24,
+              28,
+              32
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 2048
+          },
+          "theta_log2_neg": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "kappa": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "track": "p256",
+          "bits": 20,
+          "trials": 40,
+          "theta_log2_neg": 4,
+          "walkers": 16,
+          "seed": 11
+        }
+      ]
+    }
+  ]
+}
