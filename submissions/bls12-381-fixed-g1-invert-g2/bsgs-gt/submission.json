@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: deterministic BSGS in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the deterministic attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^128.47 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000), with success probability exactly 1. It computes g=e(P,Q0) (a generator by nondegeneracy and prime order) and solves z=g^a by baby-step giant-step with m=ceil(sqrt(r)) baby steps g^0..g^{m-1} stored by 384-bit fingerprint and h=ceil(r/m)<=m+1 giant steps z*g^{-im}; a match at index j gives a=i*m+j, verified by g^a=z. Completeness is unconditional (writing a=i*m+j with j<m, i<h, the giant step i hits the stored g^j exactly), so the discrete logarithm is recovered for every valid z. The work is a hard deterministic bound: ops <= 2*sqrt(r) multiplications, each 1 dense Fp12 multiplication plus <=400 scalar instructions of auxiliary work (fingerprint hashing with a load-factor-1/2 linearly-probed table, whose total probing work is O(ops)), i.e. 1.02 units per operation; false fingerprint matches (<=2^-129 expected) are rejected by the g^a=z test without affecting success, their verifications are hard-capped at 2^20, and the one-time g^{-m} and setup cost <=2^10 units. Peak memory is 2^135 bytes (2*m slots of a 48-byte fingerprint plus 16-byte index; reported only, no scalar contribution); the exponential memory is mandatory for BSGS. Preprocessing is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps, a conservative deterministic generic control, not a best-known attack or a practical break.",
+      "score": {
+        "numerator": "12847",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs",
+      "source": "experiment.py",
+      "purpose": "Run deterministic baby-step/giant-step on a prime-order-l subgroup of F_q^* (cyclic, standing in for GT) for many random targets, and check that the discrete logarithm is recovered for EVERY instance (success probability exactly 1) using at most 2*ceil(sqrt(l)) group multiplications. Toy-scale confirmation of deterministic recovery and the operation bound only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 30},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 500},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"bits": 24, "trials": 300, "seed": 1}
+      ]
+    }
+  ]
+}
