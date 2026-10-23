@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: orientation-neutral Frobenius-class rho",
+  "claims": [
+    {
+      "statement": "For every protected nonidentity supplied G1 point P and uniform z in GT, the orientation-neutral order-twelve Frobenius-class rho in proof.md returns Q with e(P,Q)=z with claimed probability at least 0.40 under its disclosed production random-mapping heuristic. Its global-meter computation is less than 2^126 dense-Fp12 reference-operation equivalents, including cold table construction, storage routing, G2 output, verification, all failed paths and serialization. Peak storage is below 2^75 bytes, preprocessing is below 2^64 units, and advice is zero. This is an analytic submitted ceiling, not an executed attack or official score.",
+      "score": {
+        "numerator": "126",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py"
+      ]
+    }
+  ],
+  "experiments": []
+}
