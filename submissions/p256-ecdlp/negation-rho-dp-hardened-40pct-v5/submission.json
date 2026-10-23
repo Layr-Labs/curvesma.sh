@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "P-256 negation-class rho v5: doubled-add transition, charged Floyd detection and full-width coefficients",
+  "claims": [
+    {
+      "statement": "For the unrestricted-production P-256 challenge Q=[x]P, including identity Q, the fully specified algorithm in argument.md recovers the canonical scalar x with success at least 2/5 under its disclosed quantitative random-mapping/DP heuristic, using total classical work at most 2^132.44 target-group-operation equivalents at the protected C=1000 scalar AArch64 instruction normalization. The complete analytic ledger includes full preprocessing, uniform full-width starting and table labels, five-limb unsigned live coefficient arithmetic with reduction on every update, all three map calls per Floyd tick, every permitted restart, bounded deterministic DP tree operations, memory initialization/transfers, rare complete-addition paths, verification and output. Its exact nominal log2 work is below 132.2726; repricing every non-M row and all one-time charges by 6/5 remains below 132.3269, more than 0.10 bits below the submitted claim. A finite all-lag repeat envelope and explicit failure deductions give success above 419/1000 in the stated model, leaving a reserve greater than 19/1000 above the claimed 2/5. Preprocessing is below 2^38 units and included. Peak memory is strictly below 2^43 bytes with hard DP/restart/slow-path caps; nonuniform advice is zero. The point transition is canon([2]X+T_j(X)), not the rejected additive-negation escape walk. Floyd covers arbitrary cycle lengths. This is a supported exploratory analytic heuristic claim, not a theorem proving production random-mapping behavior, a full-size execution, a measured P-256 kernel price, an official score, novelty or a practical attack.",
+      "score": {
+        "numerator": "3311",
+        "denominator": "25"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "experiments/verify.py",
+        "experiments/toy.py",
+        "experiments/toy-results.json",
+        "experiments/inherited-failed-results.json",
+        "experiments/test_verify.py"
+      ]
+    }
+  ],
+  "experiments": []
+}

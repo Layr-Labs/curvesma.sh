@@ -1,0 +1,40 @@
+{
+  "status": "ABANDONED: negative evidence, not support for the repaired transition",
+  "old_results": [
+    {
+      "N_prime": 549755813844,
+      "birthday_p_repeat_le_1024": 9.546056390572679e-07,
+      "floyd_cap": 2097152,
+      "found_frac": 1.0,
+      "index": "high 14 bits of class rep",
+      "iterations": 2070,
+      "max_lam": 23,
+      "mean_lam": 11.7,
+      "model_elam_sqrt_piN_over_8": 464638.1,
+      "p_lam_gt_64": 0.0,
+      "p_lam_le_1024": 1.0,
+      "q": 1099511627689,
+      "table_R": 16384,
+      "trials": 2400
+    },
+    {
+      "alpha": 937668976087,
+      "distinct_matches_solved": 3,
+      "dp_records": 39697,
+      "mode": "dp_pipeline",
+      "q": 1099511627689,
+      "scope": "supports mechanism + tail exponent at toy scale (N'~2^39); NOT a production-partition proof",
+      "steps": 32768,
+      "theta": "2^-12",
+      "trivial_matches": 38163,
+      "verified": 0,
+      "walkers": 4096,
+      "wrong": 3
+    }
+  ],
+  "reasons": [
+    "high-bit additive negation walk was trapped in short cycles",
+    "numpy int64 overflow invalidated coefficient initialization",
+    "stale certificate had four failing checks"
+  ]
+}

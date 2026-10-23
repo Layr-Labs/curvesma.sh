@@ -1,0 +1,51 @@
+{
+  "continuation_rounds": 384,
+  "curve": {
+    "a": -3,
+    "b": 76,
+    "generator": [
+      2,
+      25056
+    ],
+    "order": 65447,
+    "order_method": "all affine x counted; trial-division primality",
+    "p": 65519
+  },
+  "dp_reports": 9362,
+  "first_phase_cross_collisions_observed_before_stop": 198,
+  "first_phase_rounds": 13,
+  "floyd_meetings": 75,
+  "floyd_restarts": 75,
+  "long_cycle_floyd_examples": [
+    {
+      "lambda": 1,
+      "meeting_tick": 1,
+      "mu": 0
+    },
+    {
+      "lambda": 257,
+      "meeting_tick": 257,
+      "mu": 0
+    },
+    {
+      "lambda": 193,
+      "meeting_tick": 193,
+      "mu": 100
+    },
+    {
+      "lambda": 1021,
+      "meeting_tick": 1021,
+      "mu": 513
+    }
+  ],
+  "max_observed_meeting_tick": 50,
+  "recovered_and_verified": 400,
+  "scope": "Mechanism and bounded toy pipeline only. Stop censors birthday count. Not production partition, probability, cost, or random-mapping certification.",
+  "seed": 20261023,
+  "starts_including_restarts": 6475,
+  "table_entries": 256,
+  "theta": "1/16",
+  "trials": 400,
+  "walkers": 16,
+  "wrong_verified_answers": 0
+}
