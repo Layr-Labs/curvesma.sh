@@ -1,0 +1,248 @@
+"""Deterministic three-scale, binding-envelope toy capture; stdlib only.
+python3 -B scripts/toy_sweep.py [--quick]
+Actual GLV coordinates choose branch and DP; exponent oracle only adds points.
+Bare-map first repeats and full ring-escape DP recovery are separate statistics.
+Neither finite toy evidence nor author arithmetic establishes production mixing.
+"""
+import hashlib
+import json
+import math
+import random
+import sys
+from collections import Counter
+from fractions import Fraction as F
+from pathlib import Path
+HERE=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(HERE))
+import ledger as z
+from toy_group import scale_groups
+from scripts.transports import delta_transport
+from scripts.renewal_law import new_capture, observe, merge, finish, lower_envelope, frac, PATHS, path_ratios
+
+
+def binding_budget(N,d):
+    delta=delta_transport(d,classes=N)
+    assert delta < F(3,10)
+    T=16
+    while True:
+        _,hi=z.exp_minus_bounds(F(7,10)*F(T*(T-1),2*N))
+        exact_lower=1-hi-delta
+        # Directed decimal rational keeps captures compact; never round up.
+        envelope=F(exact_lower.numerator*10**12//exact_lower.denominator,10**12)
+        if envelope>F(1,50): return T,envelope
+        T+=16
+
+
+def recover(q,a1,b1,a2,b2):
+    den=(a2-a1)%q
+    return (b1-b2)*pow(den,-1,q)%q if den else None
+
+
+def one(g,width,seed,d,trials,T,shift,trans):
+    q,N=g.Q,g.N
+    jumps,branch,dest,unit,hist=trans
+    rng=random.Random(seed*1000003+d*73)
+    kl,xs=g.kl,g.xs
+    dp=[(x & ((1<<d)-1))==0 for x in xs]
+    horizon=40*(1<<d)
+    pool_capacity,event_capacity=2**20,2**22
+    total=Counter(); repeats=[]; cycles=[]; cap=new_capture(); path_trials=Counter()
+    selected_digest=hashlib.sha256()
+    for _ in range(trials):
+        secret=rng.randrange(1,q)
+        ja=[rng.randrange(q) for _ in jumps]
+        jb=[(k-a*secret)%q for k,a in zip(jumps,ja)]
+        x=rng.randrange(N); seen={}; t=0
+        while x>=0 and x not in seen:
+            seen[x]=t; x=dest[x]; t+=1
+        if x>=0: repeats.append(t); cycles.append(t-seen[x])
+        else: total['bare_identity_trials']+=1
+        used=0; serial=0; good=False; any_recovery=False; core_repeat=False
+        selected=None; trails={}; pool_records=0
+        first={}; pool={}; st=Counter(); fired=set()
+        def start():
+            nonlocal serial
+            serial+=1; st['starts']+=1
+            x=rng.randrange(N); a=rng.randrange(q)
+            trails[serial]=dict(escapes=[],length=0,path=None)
+            return [x,a,(kl[x]-a*secret)%q,[],None,1,0,0,set(),serial]
+        def visit(v):
+            nonlocal core_repeat,selected
+            if used<T:
+                x=v[0]; v[8].add(x)
+                if x in first and first[x][0]!=v[9]:
+                    core_repeat=True
+                    if selected is None: selected=(first[x],(v[9],v[7]))
+                first.setdefault(x,(v[9],v[7]))
+        def endpoint(v):
+            nonlocal good,any_recovery,pool_records
+            x,a,b=v[:3]; st['dp_events']+=1
+            for oa,ob,oc in pool.get(x,[]):
+                candidate=recover(q,oa,ob,a,b)
+                if candidate is None: st['degenerate_relation_pairs']+=1; continue
+                if candidate!=secret or g.points[candidate]!=g.points[secret]:
+                    st['wrong_recoveries']+=1
+                    raise AssertionError('wrong recovered logarithm')
+                any_recovery=True
+                if v[8].intersection(oc): good=True
+            if pool_records>=pool_capacity: return 'pool_full'
+            pool.setdefault(x,[]).append((a,b,set(v[8]))); pool_records+=1
+            return 'dp'
+        def tick(v):
+            nonlocal used,any_recovery
+            if st['starts']>event_capacity: return 'event_cap'
+            if v[7]>=horizon: st['length_aborts']+=1; return 'trail_limit'
+            visit(v)
+            x=v[0]; j=branch[x]; u=unit[x]; xn=dest[x]
+            if xn<0 or jumps[j]==kl[x]:
+                st['exception_repairs']+=1
+                if st['exception_repairs']>2**16: return 'exception_cap'
+            if xn<0: u=1
+            v[1]=u*(v[1]+ja[j])%q; v[2]=u*(v[2]+jb[j])%q
+            used+=1; v[7]+=1; st['dp_tests']+=1
+            if xn<0:
+                st['identity_events']+=1
+                if v[1]:
+                    candidate=(-v[2]*pow(v[1],-1,q))%q
+                    assert candidate==secret
+                    any_recovery=True
+                return 'identity'
+            v[0]=xn
+            if dp[xn]: return endpoint(v)
+            ring=v[3]
+            if xn in ring:
+                cycle=ring[ring.index(xn):]; minimum=min(cycle)
+                while v[0]!=minimum and v[7]<horizon:
+                    visit(v); x=v[0]; j=branch[x]; u=unit[x]
+                    v[0]=dest[x]
+                    assert v[0]>=0
+                    v[1]=u*(v[1]+ja[j])%q; v[2]=u*(v[2]+jb[j])%q
+                    used+=1; v[7]+=1; st['rewind_ticks']+=1
+                if v[7]+2>horizon: st['length_aborts']+=1; return 'trail_limit'
+                visit(v); x=v[0]; u=g.double_unit[x]
+                v[0]=g.double[x]; v[1]=2*u*v[1]%q; v[2]=2*u*v[2]%q
+                used+=2; v[7]+=2; st['escapes']+=1; st['dp_tests']+=1
+                trails[v[9]]['escapes'].append(v[7])
+                v[3]=[]; ring=v[3]
+                if dp[v[0]]: return endpoint(v)
+            ring.append(v[0])
+            if len(ring)>8: ring.pop(0)
+            state=(v[0],tuple(ring)); v[6]+=1
+            if state==v[4]: st['detector_aborts']+=1; return 'detector'
+            if v[6]==v[5]: v[4]=state; v[5]*=2; v[6]=0
+            return True
+        def advance(v):
+            outcome=tick(v)
+            if outcome is True: return v
+            trails[v[9]].update(length=v[7],path=outcome,endpoint=v[0],a=v[1])
+            st['terminal_'+outcome]+=1; fired.add(outcome)
+            return None
+        active=[start() for _ in range(8)]; cursor=0
+        while used<T:
+            v=active[cursor]
+            if v is None: v=start()
+            active[cursor]=advance(v)
+            cursor=(cursor+1)%8
+        for v in active:
+            while v is not None: v=advance(v)
+        observe(cap,trails,selected,1<<d)
+        path_trials.update(fired)
+        selected_digest.update(json.dumps([selected,trails],sort_keys=True,separators=(',',':')).encode())
+        total.update(st)
+        total['ticks']+=used
+        total['recovered']+=good
+        total['all_recoveries']+=any_recovery
+        total['no_recovery']+=not good
+        total['core_repeat_trials']+=core_repeat
+    return dict(seed=seed,trials=trials,counters=dict(sorted(total.items())),
+        repeat_samples=len(repeats),repeat_sum=sum(repeats),repeat_sq_sum=sum(t*t for t in repeats),
+        repeat_min=min(repeats) if repeats else None,repeat_max=max(repeats) if repeats else None,
+        cycle_sum=sum(cycles),dp_classes=sum(dp),path_trial_counts=dict(sorted(path_trials.items())),
+        selected_trace_sha256=selected_digest.hexdigest(),_renewal=cap,
+        trajectory_sha256=hashlib.sha256(json.dumps([repeats,cycles],separators=(',',':')).encode()).hexdigest())
+
+
+def configs():
+    # Co-move the finite sensitivity matrix by one denser exponent step when
+    # production spacing widens. Clamp at each scale's exact delta<.30 cap;
+    # literal +10 bits is infeasible at these N and is NOT claimed simulated.
+    offset=min(1,max(0,z.d-54))
+    small=[(8,0,j) for j in range(8)]
+    medium=[(w,min(d+offset,1),j) for w in (8,64) for d in (0,1) for j in range(2)]
+    large=[(w,min(d+offset,4),0) for w,d in ((8,3),(8,4),(64,2),(64,3),(64,4),(256,2),(256,3),(256,4))]
+    return dict(small=small,medium=medium,large=large)
+
+
+def run():
+    groups=scale_groups(); points=[]; renewals=[]; per_table=25 if '--quick' in sys.argv else 250
+    evidence=HERE/'evidence'; evidence.mkdir(exist_ok=True)
+    for scale,settings in configs().items():
+        g=groups[scale]; rows=[]; scale_renewals=[]
+        for ci,(width,d,variant) in enumerate(settings):
+            T,envelope=binding_budget(g.N,d)
+            tables=[]; hist=None; shift=4
+            for tid in range(8):
+                seed=91001+100*width+10000*ci+1000000*len(points)+tid
+                tr=g.transitions(width,seed,shift)
+                hist=tr[4]
+                tables.append(one(g,width,seed,d,per_table,T,shift,tr))
+            capture=merge([row.pop('_renewal') for row in tables])
+            cc=Counter(); path_trials=Counter()
+            for row in tables:
+                cc.update(row['counters']); path_trials.update(row['path_trial_counts'])
+            n=8*per_table; samples=sum(t['repeat_samples'] for t in tables)
+            repeat_sum=sum(t['repeat_sum'] for t in tables)
+            assert samples>0
+            mean_repeat=repeat_sum/samples
+            mean_ratio=mean_repeat/math.sqrt(math.pi*g.N/2)
+            p=cc['recovered']/n; a=T*(T-1)/(2*g.N)
+            point=dict(id=f'{scale}-{ci:02d}',scale=scale,classes=g.N,order=g.Q,width=width,
+                variant=variant,dp_bits=d,spacing=1<<d,partition_shift=shift,T=T,
+                a=z.frac(F(T*(T-1),2*g.N)),delta_transport=z.frac(delta_transport(d,classes=g.N)),
+                delta_ratio_to_production=z.frac(delta_transport(d,classes=g.N)/z.transport),
+                envelope_lower=z.frac(envelope),envelope_display=float(envelope),
+                trials=n,recovered=cc['recovered'],wrong=cc['wrong_recoveries'],no_recovery=cc['no_recovery'],
+                measured_probability=p,observed_above_binding_envelope=F(cc['recovered'],n)>=envelope,
+                pipeline_rho=-math.log1p(-p)/a if p<1 else None,
+                repeat_samples=samples,repeat_sum=repeat_sum,mean_repeat=mean_repeat,rho_emp=mean_ratio,
+                rho_emp_definition='mean bare-map first-repeat length / sqrt(pi*N/2); NOT birthday exponent coefficient',
+                branch_histogram=hist,dp_classes=tables[0]['dp_classes'],counters=dict(sorted(cc.items())),tables=tables,
+                pool_capacity=2**20,event_capacity=2**22,path_trial_counts=dict(sorted(path_trials.items())))
+            renewal=finish(capture,point); scale_renewals.append(renewal); renewals.append(renewal)
+            fields=sorted(set().union(*(t['counters'] for t in tables)))
+            point['table_counter_fields']=fields
+            point['selected_trace_sha256']=hashlib.sha256(''.join(t['selected_trace_sha256'] for t in tables).encode()).hexdigest()
+            for t in tables:
+                t['counts']=[t['counters'].get(k,0) for k in fields]
+                for key in ('counters','repeat_sq_sum','repeat_min','repeat_max','cycle_sum','dp_classes','trajectory_sha256','selected_trace_sha256','path_trial_counts'):
+                    del t[key]
+            rows.append(point); points.append(point)
+            # Per-scale three-line output budget; full counts go into captures.
+        for k in (0,4):
+            (evidence/f'renewal-{scale}-{k:02d}-{k+3:02d}.json').write_text(json.dumps(scale_renewals[k:k+4],separators=(',',':'))+'\n')
+        print(json.dumps(dict(scale=scale,selected=sum(r['selected'] for r in scale_renewals),
+            lower_tail_ratio=frac(lower_envelope(scale_renewals)),
+            paths_dominate=all(all(v<=1 for v in path_ratios(r,p).values()) for r,p in zip(scale_renewals,rows)))),flush=True)
+        # Pair rows losslessly so the complete archive stays below 32 files.
+        for k in range(0,8,2):
+            data=json.dumps(rows[k:k+2],separators=(',',':'))+'\n'
+            (evidence/f'config-{scale}-{k:02d}-{k+1:02d}.json').write_text(data)
+    summary=dict(version=1,scope='Toy-coordinate mechanics and finite binding tests only; no production mixing, retention-rate, or instruction-price certification.',
+        groups={name:g.validation for name,g in groups.items()},
+        parameters=dict(tables_per_config=8,trials_per_table=per_table,workers=8,ring=8,
+            model_rho=z.frac(z.rho),budget_rule='smallest positive multiple of 16 with envelope > 1/50',
+            spacing_fixed_per_config=True,full_pool_no_evictions=True,
+            production_d=z.d,production_spacing=str(z.DP),
+            spacing_comovement='one-bit sensitivity step for d>54, clamped at exact scale feasibility (small0/medium1/large4); not literal production simulation',
+            matrix_scope='Small: width8 only, N216; medium: widths8/64, N908; large: widths8/64/256, N87328. Infeasible tiny-scale branch widths excluded, no dead-branch assertion relaxed.'),
+        points=[{k:v for k,v in p.items() if k not in ('tables','counters','branch_histogram','rho_emp_definition','table_counter_fields')} for p in points],
+        renewal_lower_envelope=frac(lower_envelope(renewals)),
+        renewal_scope='First cross-trail collision-selected pair; age/gap histograms; complete observed terminal paths; finite diagnostic, not production transfer proof.',
+        total_trials=sum(p['trials'] for p in points),
+        min_envelope_display=min(p['envelope_display'] for p in points),
+        rho_emp_band=[min(p['rho_emp'] for p in points),max(p['rho_emp'] for p in points)],
+        pipeline_rho_band=[min(p['pipeline_rho'] for p in points),max(p['pipeline_rho'] for p in points)],
+        envelope_compatibility_count=sum(p['observed_above_binding_envelope'] for p in points))
+    (HERE/'sweep-summary.json').write_text(json.dumps(summary,separators=(',',':'))+'\n')
+    # Three scale summaries above are the only stdout.
+if __name__=='__main__': run()

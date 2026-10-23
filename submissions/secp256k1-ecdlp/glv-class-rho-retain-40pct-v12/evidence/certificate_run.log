@@ -1,0 +1,3 @@
+PASS 982/982 conditional arithmetic/capture checks; claim 3267/25
+PASS selected-pair tails, path ratios and 34-row instruction derivation
+HOLD production qualification: detector calibration vacuous; measured monotonicity not observed
