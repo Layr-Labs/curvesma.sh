@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: compact-record radix-bucket BSGS truncated at 39/100",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the deterministic compact-record radix-bucket baby-step/giant-step procedure in proof.md recovers x on every scalar in the initial segment [0, m^2) and therefore succeeds with probability at least 39/100. It uses at most 2^128.797933 total target-group-operation equivalents under classical-group-work-v2 with C=1000, including preprocessing, the full failure path and verification. Peak memory is at most 2^135.320774 bytes. Preprocessing is at most 2^127.747307 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. No hash-uniformity, random-walk or automorphism heuristic is used. The score is the rational 128797933/1000000.",
+      "score": {
+        "numerator": "128797933",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-truncated-radix-bsgs",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check truncated radix-sorted BSGS recovery on a small additive cyclic group. This does not establish production field arithmetic, memory bounds, or instruction costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
