@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: plain parallel Pollard rho with distinguished points, conservatively charged",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and Q=[x]P with the fixed standard secp256k1 generator P, the plain parallel Pollard rho in proof.md (1024-adding walk, 76-bit distinguished points, 2^32 walks with batched inversion, uniform segment restarts, 2^82-step segment cap and a fully charged completion phase) recovers x with probability at least 0.40 using at most 2^(12903/100) total target-group-operation equivalents under protected C=1000. Each walk step is charged as one batched incomplete affine addition plus at most 1000 scalar instructions; preprocessing, restarts, storage, sorting, collision resolution and verification are charged. Peak memory is below 2^63.01 bytes; preprocessing is below 2^25 equivalents and included in total; nonuniform advice is zero bytes (log convention 0). The success bound relies on the disclosed random-walk heuristic H for r-adding walks, supported by literature and toy runs of the same algorithm. No negation map or endomorphism is used, so there are no fruitless cycles. Classical single-target cold attack; analytic bound, not an executed production attack.",
+      "score": {
+        "numerator": "12903",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-parallel-rho",
+      "source": "experiment.py",
+      "purpose": "Run the same parallel r-adding rho as proof.md (DP segments, uniform restarts, segment cap, completion phase, sort-and-match, verification) on small prime-order y^2=x^3+7 curves; measure whether a repeated element occurs among the phase-1 visited points and compare that rate with 1-exp(-k1^2/(2n/(1-2/R))) (heuristic H), and report full-algorithm success and solved/repeat counts. Toy-scale evidence only; the verifier allows one initial run, the full pooled table with seeds is in proof.md.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 32,
+            "enum": [
+              20,
+              22,
+              24,
+              26,
+              28,
+              30,
+              32
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "c_milli": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 3000
+          },
+          "partitions": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1024,
+            "enum": [
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024
+            ]
+          },
+          "theta": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "cap_mult": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "c_milli",
+          "partitions",
+          "theta",
+          "walks",
+          "cap_mult",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 28,
+          "trials": 40,
+          "c_milli": 1011,
+          "partitions": 1024,
+          "theta": 7,
+          "walks": 2,
+          "cap_mult": 16,
+          "seed": 101
+        }
+      ]
+    }
+  ]
+}
