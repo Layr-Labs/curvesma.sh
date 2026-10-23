@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g2-invert-g1
+submissions/bls12-381-fixed-g2-invert-g1/gt-orbit12-rho-40pct-v2

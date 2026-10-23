@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "scope": "Analytic re-derivation of the cost and success ledger of the historical unpublished Frobenius-class rho candidate for all uniform logical challenges of bls12-381-fixed-g2-invert-g1, under tracks/docs/COST_MODEL.md (classical-group-work-v2, C=20000). No production run, provider review or official score is claimed.",
+  "backport_of": {
+    "ref": "origin/submissions/04399700-428c-4db7-9268-1719315b0883",
+    "submission_uuid": "04399700-428c-4db7-9268-1719315b0883",
+    "package_path_in_ref": "submissions/bls12-381-fixed-g2-invert-g1/frobenius-rho",
+    "historical_claim": "125.89 (12589/100), success >= 0.40, memory < 2^73 bytes",
+    "duplicates": [
+      "92aaa480-a383-4319-ad88-64b008ff6acc",
+      "a23a707d-d7aa-43de-bc64-db846c80c089",
+      "d475b960-5643-4170-83d0-7718362dc298"
+    ],
+    "publication_status": "unpublished per frontier-mining audit (coordination/research/frontier-mining/report.md); author unknown"
+  },
+  "parameters": {
+    "p_dec": "4002409555221667393417789825735904156556882819939007885333983",
+    "r_dec": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+    "class_count_N_dec": "4369656264593849206620645042348830486474212708377303151883638224994881765376",
+    "log2_N": 251.2721,
+    "R": 1024,
+    "theta": "2^-60",
+    "M": "2^20",
+    "slack": "1.03",
+    "log2_S0": 125.6522,
+    "log2_S": 125.6949,
+    "step_cost_c": "1.14 = 1 + 2800/20000 (budgeted 2422 actual step instructions)",
+    "fruitless_overhead": "1 + 3/(12R) + 200/R^2 = 1.000435",
+    "detection_window_E": "M*20/theta = 2^84.33"
+  },
+  "rederived_ledger": {
+    "formula": "W = c*S*(1+3/(12R)+200/R^2) + c*E + 2^62",
+    "log2_W_rederived": 125.8845,
+    "submitted_log2": "12589/100 = 125.89",
+    "bound_holds": true,
+    "success_model_value": 0.418378,
+    "success_after_detection_tail": 0.418378,
+    "success_claimed": "0.40",
+    "track_floor": "0.39"
+  },
+  "setup_components_units": {
+    "pairing_g": "< 2^14",
+    "z_power_r_check": "<= 510",
+    "twisted_table_1024_exponentiations_and_frobenius": "<= 2^20.1",
+    "walk_starts_2pow20": "<= 2^30.1",
+    "distinguished_point_handling": "<= 2^61.4",
+    "output_scalar_mult_and_verification": "<= 2^14",
+    "combined_bound": "<= 2^62, included in W"
+  },
+  "memory_log2_bytes_reported": 73,
+  "nonuniform_advice_bytes": "0",
+  "heuristics": [
+    "H1: random-mapping behaviour of the R-adding class walk with Brent-Pollard correction; standard rho heuristic (Pollard 1978, Teske 2001, van Oorschot-Wiener 1999, Duursma-Gaudry-Morain 1999, Wiener-Zuccherato 1998, Bos-Kleinjung-Lenstra 2010); supported by 3,096 historical toy instances (mean collision time 1.23-1.27 sqrt(N) vs 1.253-1.263 predicted; P[T<=S0] 0.375-0.410 vs 0.40 model); toy evidence valid only at toy scale; unproved.",
+    "Distinguished-point and partition bits taken from the class-key minimum are pseudo-random (standard heuristic).",
+    "Key ties counted as failure; total probability <= 2^-249."
+  ],
+  "checks": {
+    "ord_r_p_is_12": true,
+    "p6_is_minus_one_mod_r": true,
+    "one_plus_p4_plus_p8_zero_mod_r": true,
+    "class_key_B_formula_identity": true,
+    "zeta_primitive_6th_root": true,
+    "exact_rational_work_bound": true,
+    "all": "see certificate.json checks map, recomputed in exact integer arithmetic"
+  },
+  "validation_limits": [
+    "Independent re-derivation used host python3 integer/Fraction arithmetic only. No candidate python (this or the historical experiment.py) was executed on the host.",
+    "The historical toy experiment is cited as historical scope-limited evidence, not re-run here.",
+    "No production run, kernel measurement, provider review or substitute score is claimed."
+  ],
+  "material_sources": [
+    {
+      "name": "historical local submission 04399700-428c-4db7-9268-1719315b0883 (frobenius-rho), this track",
+      "status": "unpublished; author unknown per audit; backported with independent ledger re-derivation, constants unchanged"
+    }
+  ]
+}
