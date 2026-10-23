@@ -1,0 +1,24 @@
+{
+  "Ir_total": {
+    "4": 214067395,
+    "8": 428387652
+  },
+  "events_n2": {
+    "walk_steps": 524288,
+    "two_cycles": 3,
+    "long_cycles": 0,
+    "dps": 0,
+    "exceptional": 0,
+    "unbatched": 6
+  },
+  "per_step_total_Ir": 817.567,
+  "C": 1000,
+  "per_step_units_all_instructions": 0.817567,
+  "mode_single": {
+    "Ir": {
+      "1024": 41851925,
+      "2048": 83703829
+    },
+    "per_unit_Ir": 40871.0
+  }
+}

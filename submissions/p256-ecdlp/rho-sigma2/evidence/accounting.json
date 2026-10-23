@@ -1,0 +1,33 @@
+{
+  "components_log2_units": {
+    "walk_steps": 127.273624,
+    "adder_table": 32.619413,
+    "walk_starts_and_restarts": 49.619413,
+    "distinguished_points": 78.576656,
+    "collision_replay": 102.599024,
+    "solve_verify_output": 16.841571,
+    "input_validation": 14.034216
+  },
+  "time_log2": "15909203/125000",
+  "time_log2_decimal": 127.273624,
+  "time_log2_float": 127.27362362391905,
+  "score_rational": {
+    "numerator": "15909203",
+    "denominator": "125000"
+  },
+  "preprocessing_log2": "1984777/40000",
+  "L": "57695294864490661436112010649",
+  "log2_L": 95.5424403266277,
+  "log2_T": 127.5424403266277,
+  "log2_S_max": 127.54244032847276,
+  "step_units": "83/100",
+  "success": {
+    "tau": 0.5303,
+    "eps": 0.00015267729759216309,
+    "delta": 9.5367431640625e-07,
+    "model": 0.41152394142746773,
+    "lower_bound": 0.4115229877531513
+  },
+  "memory_bytes_log2": "75542441/1000000",
+  "dp_max_log2": 68.5424403285016
+}

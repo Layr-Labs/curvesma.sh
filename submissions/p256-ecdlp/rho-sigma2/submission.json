@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: parallel Pollard rho on negation classes with a sigma walk",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and input Q=[x]P on NIST P-256, the parallel distinguished-point Pollard rho algorithm in proof.md recovers x with probability at least 0.39. It walks on the negation classes {W,-W}, using 2^32 walks, 2^16 adders, batched affine additions (Montgomery simultaneous inversion, 5M+1S per step) and deterministic fruitless-cycle escapes. The walk stores actual points and adds +-R_i from a table according to the parity of the Montgomery y, so the class sequence equals the standard canonical walk while no point is negated. Total computation is at most 2^127.273624 target-group-operation equivalents, including preprocessing, distinguished-point storage and lookup, all failures and restarts, collision replay, verification and output. No reference operation is used: every instruction, including all P-256 field arithmetic, is charged at 1/C with the borrowed C=1000. Each walk step is charged 830 scalar AArch64 instructions against 816.9 and 817.6 measured with the organizer's Callgrind toolchain; field multiplication is Montgomery arithmetic in inline AArch64 assembly (p = -1 mod 2^64, so reduction uses shifts and adds). Peak memory is at most 2^75.542441 bytes. Preprocessing is at most 2^49.619425 units and is included in total work. Nonuniform advice is 0 bytes. This is a classical cold attack on one target with no uncharged advice or quantum steps. The success bound of 0.411523 relies on the disclosed heuristics H1-H3 in proof.md: H1 the standard random-mapping model for r-adding class walks with an exponent penalty of at most 4/2^16, H2 bounds on fruitless-cycle rates, H3 the representativeness of the measured instruction counts. These are supported by toy-curve experiments with the identical walk and by production-curve measurements, not proved. This is a carefully accounted generic attack, not a claim of a practical break.",
+      "score": {
+        "numerator": "15909203",
+        "denominator": "125000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "measurement/step.c",
+        "measurement/p256_field.h",
+        "measurement/p256_sub.h",
+        "measurement/walk_ref.py",
+        "measurement/run.sh",
+        "measurement/reproduce.sh",
+        "measurement/summarize.py",
+        "evidence/measurement/seed1.json",
+        "evidence/measurement/seed2.json",
+        "experiment.py",
+        "evidence/small-curves/summary.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-curve-rho",
+      "source": "experiment.py",
+      "purpose": "Run the exact sigma walk from proof.md on random prime-order toy curves y^2=x^3-3x+b (the P-256 shape): Montgomery-representative class key M(x), sign from the parity of M(y) applied to the adder, the same adder index, both cycle rules and escapes, distinguished points and walk abandonment. The run counts all steps to the first useful class collision, solves each instance end to end and checks [x]P=Q, and compares the empirical success curve with 1-exp(-T^2/(2N)). Toy scale only: it tests the H1/H2 collision statistics and says nothing about production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "a3"
+            ]
+          },
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 26
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 150
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 11
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "curve",
+          "bits",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "a3",
+          "bits": 26,
+          "trials": 150,
+          "seed": 2601
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2, preprocessing, memory and success lower bound from the stated parameters with exact integer arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
