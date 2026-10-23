@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "square-root-collision",
+  "algorithm": "parallel-distinguished-point-rho-in-GT",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.027863,
+    "time_unit": "target-group-operation-equivalents",
+    "memory_log2_bytes": 80,
+    "preprocessing_log2": 128.027863,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0,
+    "hard_cap_steps_log2": 128.013507,
+    "per_step_price": 1.01,
+    "overhead_cap_units_log2": 31,
+    "dp_density_log2": -60,
+    "walks_log2": 20,
+    "storage_capacity_records_log2": 70,
+    "insert_cost_cap_units_log2": 66.51
+  },
+  "heuristics": [
+    "The walk is modelled as a random mapping on the r group elements (standard rho heuristic, Brent-Pollard correction for R-adding walks). The claim's success is 0.39, not the model's 0.675; the model is used only to choose the cap.",
+    "The 1.01 per-step price is an analytic instruction ledger: one dense Fp12 multiplication (the reference operation) plus 200 charged scalar instructions for the hash, table index, two 255-bit modular exponent updates, distinguished-point test, loop and cache-miss allowances.",
+    "A flat overhead is charged by summation, not rounding: setup pairing 2^15, 2^20-multiplier table 2^30, 2^20 walk starts 2^30, verification 2^17, and record inserts at most 2^70 * 2000 instructions = 2^66.51 units; the total is below 2^67.001 and is 2^-61 of the search term.",
+    "Records store the exact 576-byte Fp12 element, not a fingerprint, so stored-key matches are true element matches and no false-match resolution is needed.",
+    "The success probability claimed is the rule threshold 0.39, well below the random-mapping model value 0.675 at the cap; it is not a confidence score."
+  ],
+  "limitations": [
+    "Analytic complexity claim for a 2^128-step computation, not an executed attack; the rules allow an analytic argument.",
+    "Toy-scale experiment supports the mechanism and the collision-time heuristic at toy scope only, never a production complexity proof.",
+    "No group quotient is used: an earlier two-class inversion-quotient draft was withdrawn after review showed its transition is not a function on classes. The quotient saving (about 0.5 bits) is not claimed.",
+    "Peak storage is hard-capped at 2^80 bytes: capacity 2^70 records x 640 B = 2^79.321928 B, plus 2^29.2 B multiplier table and <2^40 B index/state/scratch, all added up. Memory does not enter this track's score."
+  ]
+}
