@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: inversion-class distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For each production instance with nonidentity P in G1 and z in GT, compute g=e(P,Q0)=pairing(Q0,P,final_exponentiate=True) once (nondegeneracy and prime order make g a generator of GT), solve x=log_g z by a parallel distinguished-point Pollard rho on the quotient of GT by the inversion map y->y^-1 (the p^6-Frobenius; p^6=-1 mod r, so y^(p^6)=y^-1), return Q=[x]Q0 and verify e(P,Q)=z and [r]Q=O; z=1 is answered directly with Q=O. The quotient has N=(r-1)/2=2^253.857089 classes, so the square-root search costs sqrt(2) less than rho in GT. The class key is K(y)=|Re a1| (the Fp component of the w^1 coefficient of y), invariant under inversion and computed without inverting; the walk step y<-y*M_{h}, h=K(y) mod 2^20, depends only on the class, and canonical representatives are formed only when storing a distinguished point (density theta=2^-60 on K). Records are compared exactly (576-byte Fp12 elements plus two 256-bit exponents), so K never yields a false match; a collision gives x=(alpha1-alpha2)/(beta2-beta1) mod r, and because the quotient can also return -x both candidates are verified with a pairing, so a wrong answer is never returned as success. The search is HARD-CAPPED at W_max = 1.5*sqrt(N) = 2^127.513507 steps at 1.01 target-group-operation equivalents per step (one dense Fp12 multiplication plus 200 charged scalar instructions for the class key, bucket index, two 255-bit modular exponent updates, distinguished-point test, loop and cache-miss allowances), plus 2^16 reference operations charged explicitly for the setup pairing, one or two verification pairings and two G2 scalar multiplications. Hence W = 1.01*2^127.513507 + 2^16 = 2^127.527862 target-group-operation equivalents and the score is log2(W)=127.527863. Success probability is at least 0.39 over uniform nonidentity P, uniform z and fresh coins: the random-mapping model on N classes gives 1-exp(-1.5^2/2)=0.675 at this cap (the detected-collision delay M*theta^-1=2^80 is 2^-47 of the cap and is inside it), the claim is only the rule threshold 0.39, and the bounded toy run measures 0.375 at the same relative budget. Peak storage is at most 2^78 bytes (2^67.51 distinguished-point records of 640 bytes plus a 2^29.2-byte multiplier table). Preprocessing (multiplier table, walk starts) is charged in full per instance with no reuse credit and reported as the same bound 127.527863; nonuniform advice is 0; no auxiliary powers are used. This is an analytic complexity claim for a 2^127 computation, not a production-size execution. The class-rho idea for this track pair is public (sibling-track submissions 3da91365, 41c34165, 7da5f23a, full 12-class version); this package is an independent two-class implementation with its own accounting, cap and evidence, and claims only the two-class case.",
+      "score": {
+        "numerator": "127527863",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "class-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A checks on BLS12-381 itself, with a standard-library Fp12 tower implementation: r is prime, p^6 = -1 mod r, random GT elements satisfy y^r = 1 and conj(y) = y^-1 (the tower Fp6-conjugation), the class key K(y)=|Re a1| is invariant under inversion, and K behaves as a hash over distinct classes (so exact element comparison is required). Part B runs the complete algorithm (same class key, canonicalisation only at distinguished points, exact element keys, exponent recovery and verification) in a toy prime field with a large prime-order subgroup, under a hard step cap, and reports the success rate at 1.5 and 2.5 sqrt(N) together with the model prediction. Toy-scale statistics are evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "q": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 48
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "mults": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 65536
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 120
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "production_checks",
+          "q",
+          "trials",
+          "walks",
+          "mults",
+          "dp_bits",
+          "seed",
+          "seconds"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "production_checks": 4,
+          "q": 31,
+          "trials": 40,
+          "walks": 16,
+          "mults": 1024,
+          "dp_bits": 6,
+          "seed": 7,
+          "seconds": 40
+        }
+      ]
+    }
+  ]
+}

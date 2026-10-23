@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "index-calculus",
+  "algorithm": "stnfs-gt-dlp-hard-capped",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 120.858891,
+    "time_unit": "target-group-operation-equivalents",
+    "memory_log2_bytes": 72.389801,
+    "preprocessing_log2": 120.858891,
+    "success_probability": 0.5,
+    "nonuniform_advice_log2_bytes": 0,
+    "hard_work_cap_instructions_log2": 135.146602479037,
+    "expected_work_instructions_log2": 134.146602479037
+  },
+  "heuristics": [
+    "Smoothness probabilities, relation counts and the factor-base size use Dickman's rho with the GS21 alpha correction, as estimated by the GS21 simulator; this is the standard heuristic basis of NFS analyses and is not re-proved here.",
+    "The model-to-hardware calibration charges 16 cycle-equivalents per GS21 model operation, 1.41x the worst measured ratio published for this model family (BD19 Table 6, log2(c_sieve) <= 3.5), times the widest current AArch64 scalar retirement width of 8 instructions per cycle; hence 128 instructions per model operation. No measured quantity is extrapolated.",
+    "The individual-logarithm descent (BP14: L[1/3,1.44] vs L[1/3,1.923], about 28 bits below the sieving term at p^12 = 2^4572) and ECM cofactorization (about 2^87.6, 38 bits below) are covered by the 1.41x surplus, roughly 2^27 times their estimated cost; GS21 states the descent is very small in comparison with the other two steps.",
+    "The retry multiplicity is charged pessimistically as 2 (a single capped attempt assumed to succeed with probability only 1/2), so E[T] <= 2 * single-attempt budget. An expectation appears only here, as the left side of a Markov inequality.",
+    "The algorithm is hard-truncated at 2*E[T] instructions and returns FAILURE when the cap is reached, so the submitted work bound is the enforced cap, not an expected value; Markov's inequality gives success probability at least 1/2 over uniform P, uniform z and fresh coins.",
+    "The matrix weight (200), filtering factor (20), block-Wiedemann word cost and the sieving arithmetic are GS21's published model constants for BLS-381."
+  ],
+  "limitations": [
+    "This is an analytic reproduction of a published cost model at production parameters, not an executed 2^120 computation; the rules allow an analytic argument for exponentially large attacks.",
+    "The 2023 BD19-based survey figure 2^122.54 is not used because it is not reproducible from its own stated parameters (its sieving space alone exceeds the reported total); the self-consistent GS21 total is used, which is the larger and therefore conservative choice.",
+    "Peak memory 2^72.39 bytes (relation file) is large; it is reported as required but does not enter this track's score."
+  ]
+}

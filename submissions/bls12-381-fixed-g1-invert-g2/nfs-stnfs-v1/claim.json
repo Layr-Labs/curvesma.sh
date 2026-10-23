@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "index-calculus",
+  "algorithm": "stnfs-gt-dlp",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 117.858891,
+    "time_unit": "target-group-operation-equivalents",
+    "memory_log2_bytes": 72.389801,
+    "preprocessing_log2": 115.858891,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Smoothness probabilities, relation counts and the factor-base size use Dickman's rho with the GS21 alpha correction, as estimated by the GS21 simulator; this is the standard heuristic basis of NFS analyses.",
+    "Relation collection is charged ln(ln B) cycles per enumated tuple, calibrated on record NFS computations by BD19 and GS21; the single measured STNFS data point (GGMT17, about 27 cycles/tuple) is about 7x larger, which is inside the 64x conversion allowance.",
+    "The individual-logarithm descent and ECM cofactorization are subdominant as stated by GS21 and BP14; the ledger additionally charges a 4x overhead for them, for failed relations and retries, filtering, final verification and output.",
+    "The matrix weight (200), filtering factor (20) and block-Wiedemann word cost are GS21's modeling choices; moderate deviations are absorbed by the 64x conversion allowance."
+  ],
+  "limitations": [
+    "The total is an analytic upper bound in the published STNFS cost model, not a theorem and not a production-size execution; no attack was run at BLS12-381 scale.",
+    "A 2023 survey applying the Barbulescu-Duquesne model reports a lower BLS12-381 figure (2^122.54), but it is not reproducible from its stated parameters (its 2^122.85 sieving space already exceeds the reported total, and its factor-base count is inconsistent); the submission uses the self-consistent GS21 2^126.15, the conservative choice.",
+    "Peak storage of about 2^72.4 bytes is analytically justified but astronomically large; memory is supplementary in this track.",
+    "Preprocessing (relation collection and linear algebra) is charged in full to this instance under the no-amortization rule; no benefit from hypothetical future instances is taken.",
+    "The 16 instructions/cycle and 4x overhead factors are conservative bookkeeping conventions, not measurements of a specific binary.",
+    "The reduction is to the GT discrete logarithm with base e(P,Q0); no auxiliary powers are used and P is never replaced."
+  ],
+  "lane": "exploratory"
+}

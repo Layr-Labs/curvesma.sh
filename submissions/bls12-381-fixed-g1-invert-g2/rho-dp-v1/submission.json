@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Pollard-rho distinguished-point inversion in GT",
+  "claims": [
+    {
+      "statement": "For each production instance with nonidentity P in G1 and z in GT (including z=1), compute g=e(P,Q0)=pairing(Q0,P,final_exponentiate=True), solve a=log_g z by a distinguished-point Pollard-rho walk in the prime-order group GT, and return Q=[a]Q0. The Las Vegas algorithm succeeds with probability 1 over uniform P, z and fresh coins, retrying the negligible degenerate or aborted walk events. Its expected total computation is at most 2^127.798437 target-group-operation equivalents (C=20,000 instructions per dense Fp12 multiplication), including preprocessing, all walks and restarts, detection delay, hashing and lookup, verification, scalar multiplication and output. Peak memory is at most 2^57.484435 bytes; preprocessing is at most 2^22 target-group-operation equivalents and is included in the total; nonuniform advice is 0. No auxiliary powers are used. The score is log2(W)=127.798437. This is a generic attack bound, not a claim of novelty or practical execution; the disclosed heuristic is the standard random-mapping model for the walk.",
+      "score": {
+        "numerator": "127798437",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-dp",
+      "source": "experiment.py",
+      "purpose": "Run the exact exponent bookkeeping, distinguished-endpoint walks and collision equation in an additive group of prime order. This validates the algebra and the retry path for degenerate collisions at toy scope; it does not establish production curve behavior, Fp12 costs, memory bounds or the random-mapping constant.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 257,
+            "maximum": 1000000
+          },
+          "instances": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "order",
+          "instances"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 524287,
+          "instances": 32,
+          "dp_bits": 4
+        }
+      ]
+    }
+  ]
+}
