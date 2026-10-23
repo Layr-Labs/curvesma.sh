@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class mixed add/square rho on GT (revision v4)",
+  "claims": [
+    {
+      "statement": "For uniform z in GT and uniform nonidentity input (the challenge of rules.md), the algorithm in proof.md returns P with e(P, Q) = z with probability at least 0.41, using at most 2^125.719870 target-group-operation equivalents (score 12571987/100000) counting every operation of the procedure (a hard work cutoff), with preprocessing 2^76.418468. Peak memory is at most 2^73.166749 bytes. Nonuniform advice is 0 bytes. Each walk step costs its group operations (one Fp12 multiplication charged 1, one cyclotomic squaring kappa = 0.4902) plus c2 = 0.1450 units of other work, measured by Callgrind on the organizer's blst build at the production square count. The bound rests on the heuristics and derived failure terms in proof.md. This is a classical generic attack, not a practical break.",
+      "score": {
+        "numerator": "12571987",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "walk-spec.md",
+        "measurement/step.c",
+        "measurement/replica.py",
+        "measurement/gen_inputs.py",
+        "measurement/analyze.py",
+        "measurement/native_run.sh",
+        "measurement/RESULT.json",
+        "experiment.py",
+        "evidence/initial-run.json",
+        "evidence/sweep-b14-add.json",
+        "evidence/sweep-b14-mixed.json",
+        "evidence/sweep-b18-add.json",
+        "evidence/sweep-b18-mixed.json",
+        "evidence/sweep-inputs.txt",
+        "evidence/native-counts.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-rho",
+      "source": "experiment.py",
+      "purpose": "Run the Frobenius-class mixed walk (cscore.gt) on toy order-ell subgroups of F_{q^12}^* with ell dividing q^4 - q^2 + 1, solve each instance end to end and verify g^y = z, and compare the success curve of tau = T^2 V / (2N) with 1 - exp(-tau), reporting cycle rates. Toy scale only: it tests H1 and the solver, not production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 14
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.9
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 5
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "s",
+          "adder_bits",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 14,
+          "trials": 100,
+          "seed": 1,
+          "s": 0.46,
+          "adder_bits": 5,
+          "dp_bits": 2,
+          "walks": 2
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2 (hard work cutoff), preprocessing, memory and the failure terms and success bound from the stated parameters, the measured c2 and kappa, the measured operation counts, and cscore.exact.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}

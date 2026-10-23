@@ -1,0 +1,283 @@
+{
+ "schema": "gt-blst-step-measurement-v1",
+ "kernel": "curvesmash-core/examples/blst-gt-rho/step.c",
+ "generator": "curvesmash-core/examples/blst-gt-rho/gen_inputs.py",
+ "replica": {
+  "s46-seed1": {
+   "dump_exact_match": true,
+   "counts_match": true,
+   "key_formula_matches_direct": true,
+   "exponent_invariant_holds": true,
+   "walks_checked": 64,
+   "kernel_counts": {
+    "steps": 8192,
+    "adds": 4347,
+    "sqrs": 3845,
+    "dps": 495,
+    "cyc2": 0,
+    "cycl": 0
+   },
+   "key_checks": [
+    {
+     "walk": 0,
+     "formula": [
+      true,
+      11,
+      11
+     ],
+     "value_equal": true
+    },
+    {
+     "walk": 63,
+     "formula": [
+      true,
+      8,
+      8
+     ],
+     "value_equal": true
+    }
+   ]
+  },
+  "s46-seed2": {
+   "dump_exact_match": true,
+   "counts_match": true,
+   "key_formula_matches_direct": true,
+   "exponent_invariant_holds": true,
+   "walks_checked": 64,
+   "kernel_counts": {
+    "steps": 8192,
+    "adds": 4451,
+    "sqrs": 3741,
+    "dps": 524,
+    "cyc2": 1,
+    "cycl": 0
+   },
+   "key_checks": [
+    {
+     "walk": 0,
+     "formula": [
+      true,
+      6,
+      6
+     ],
+     "value_equal": true
+    },
+    {
+     "walk": 63,
+     "formula": [
+      true,
+      2,
+      2
+     ],
+     "value_equal": true
+    }
+   ]
+  },
+  "s00-seed1": {
+   "dump_exact_match": true,
+   "counts_match": true,
+   "key_formula_matches_direct": true,
+   "exponent_invariant_holds": true,
+   "walks_checked": 64,
+   "kernel_counts": {
+    "steps": 8192,
+    "adds": 8192,
+    "sqrs": 0,
+    "dps": 515,
+    "cyc2": 0,
+    "cycl": 0
+   },
+   "key_checks": [
+    {
+     "walk": 0,
+     "formula": [
+      true,
+      11,
+      11
+     ],
+     "value_equal": true
+    },
+    {
+     "walk": 63,
+     "formula": [
+      true,
+      0,
+      0
+     ],
+     "value_equal": true
+    }
+   ]
+  }
+ },
+ "analysis": "curvesmash-core/examples/blst-gt-rho/analyze.py",
+ "measurement_tool": "curvesmash-core/measure/measure.sh (LIB=blst, organizer image curvesma-reference-count, pinned blst f7a88067, valgrind 3.24.0, linux/arm64 Docker on Apple M2 Pro)",
+ "C": 20000,
+ "walks": 64,
+ "rounds_differenced": [
+  64,
+  128
+ ],
+ "adder_table_size_ra": 1024,
+ "dp_bits": 4,
+ "runs": {
+  "s46-seed1": {
+   "label": "s46 seed1 mixed",
+   "s_requested": 0.46,
+   "S_square_slots": 471,
+   "ra": 1024,
+   "C": 20000,
+   "per_step_instructions": {
+    "total_full_step": 19572.595,
+    "reference_blst_fp12_mul_per_call": 22997.0,
+    "cyclotomic_sqr_per_call": 9803.0,
+    "ref_part_add_fraction_times_mul": 12203.12,
+    "sqr_part_sqr_fraction_times_sqr": 4601.14,
+    "other_key_table_exponents_dp_cycles": 2768.336
+   },
+   "fractions": {
+    "adds": 0.53064,
+    "squares": 0.46936,
+    "distinguished_points": 0.060425,
+    "cycle2_events": 0,
+    "cycle_long_events": 0,
+    "steps": 8192
+   },
+   "c2_other_over_C": 0.138417,
+   "kappa_sqr_over_C": 0.49015,
+   "ref_mul_over_C": 1.14985,
+   "raw": {
+    "step_callgrind": [
+     "step-64.callgrind",
+     "step-128.callgrind"
+    ],
+    "mul_callgrind": [
+     "mode-mul-4096.callgrind",
+     "mode-mul-8192.callgrind"
+    ],
+    "sqr_callgrind": [
+     "mode-sqr-4096.callgrind",
+     "mode-sqr-8192.callgrind"
+    ],
+    "dump": "dump-128.txt",
+    "native_stderr": "native-128.stderr"
+   },
+   "description": "mixed square-probability 0.46, instance seed 1"
+  },
+  "s46-seed2": {
+   "label": "s46 seed2 mixed",
+   "s_requested": 0.46,
+   "S_square_slots": 471,
+   "ra": 1024,
+   "C": 20000,
+   "per_step_instructions": {
+    "total_full_step": 19788.773,
+    "reference_blst_fp12_mul_per_call": 22997.0,
+    "cyclotomic_sqr_per_call": 9803.0,
+    "ref_part_add_fraction_times_mul": 12495.074,
+    "sqr_part_sqr_fraction_times_sqr": 4476.687,
+    "other_key_table_exponents_dp_cycles": 2817.012
+   },
+   "fractions": {
+    "adds": 0.543335,
+    "squares": 0.456665,
+    "distinguished_points": 0.063965,
+    "cycle2_events": 1,
+    "cycle_long_events": 0,
+    "steps": 8192
+   },
+   "c2_other_over_C": 0.140851,
+   "kappa_sqr_over_C": 0.49015,
+   "ref_mul_over_C": 1.14985,
+   "raw": {
+    "step_callgrind": [
+     "step-64.callgrind",
+     "step-128.callgrind"
+    ],
+    "mul_callgrind": [
+     "mode-mul-4096.callgrind",
+     "mode-mul-8192.callgrind"
+    ],
+    "sqr_callgrind": [
+     "mode-sqr-4096.callgrind",
+     "mode-sqr-8192.callgrind"
+    ],
+    "dump": "dump-128.txt",
+    "native_stderr": "native-128.stderr"
+   },
+   "description": "mixed square-probability 0.46, instance seed 2"
+  },
+  "s00-seed1": {
+   "label": "s00 seed1 add-only",
+   "s_requested": 0.0,
+   "S_square_slots": 0,
+   "ra": 1024,
+   "C": 20000,
+   "per_step_instructions": {
+    "total_full_step": 25875.326,
+    "reference_blst_fp12_mul_per_call": 22997.0,
+    "cyclotomic_sqr_per_call": 9803.0,
+    "ref_part_add_fraction_times_mul": 22997.0,
+    "sqr_part_sqr_fraction_times_sqr": 0.0,
+    "other_key_table_exponents_dp_cycles": 2878.326
+   },
+   "fractions": {
+    "adds": 1.0,
+    "squares": 0.0,
+    "distinguished_points": 0.062866,
+    "cycle2_events": 0,
+    "cycle_long_events": 0,
+    "steps": 8192
+   },
+   "c2_other_over_C": 0.143916,
+   "kappa_sqr_over_C": 0.49015,
+   "ref_mul_over_C": 1.14985,
+   "raw": {
+    "step_callgrind": [
+     "step-64.callgrind",
+     "step-128.callgrind"
+    ],
+    "mul_callgrind": [
+     "mode-mul-4096.callgrind",
+     "mode-mul-8192.callgrind"
+    ],
+    "sqr_callgrind": [
+     "mode-sqr-4096.callgrind",
+     "mode-sqr-8192.callgrind"
+    ],
+    "dump": "dump-128.txt",
+    "native_stderr": "native-128.stderr"
+   },
+   "description": "add-only, instance seed 1"
+  }
+ },
+ "summary": {
+  "kappa": 0.49015,
+  "ref_mul_over_C": 1.14985,
+  "mixed_s0.46_c2_mean_of_two_inputs": 0.139634,
+  "mixed_s0.46_c2_range": [
+   0.138417,
+   0.140851
+  ],
+  "mixed_s0.46_square_fraction_observed": [
+   0.46936,
+   0.456665
+  ],
+  "add_only_c2": 0.143916,
+  "reference_mul_instructions": 22997.0,
+  "reference_mul_organizer_calibration": 22996,
+  "cyclotomic_sqr_instructions": 9803.0,
+  "cyclotomic_sqr_research_value": 9802
+ },
+ "deviations": [
+  "REF_FUNCS=ref_mul not used. --toggle-collect counted the whole kernel (ref-128 161,186,667 vs full step-128 161,196,826). Callees of blst_fp12_mul flip the toggle, so ref_mul is not a leaf. The reference op is priced instead by a dedicated mode 'mul' (same loop as organizer fp12.c). Evidence: m2-s46-seed1/invalid-ref-pass/.",
+  "Key ordering: the 12-way minimum compares Montgomery integers of each Fp value instead of canonical integers. This is a fixed injection of Fp, so the minimum is still a class invariant, and the replica verifies the choice.",
+  "Anchor period counts main steps only (cycle-check steps are excluded).",
+  "Mixed-walk square slots use the low adder_bits of the key's Montgomery integer (h = K mod RA); S = round(s*RA) = 471 for s = 0.46.",
+  "Key minimum uses the 4-multiplication formula in the kernel; the replica checks it against direct exponentiation sigma^n(x) = x^(p^n) on two states per input set."
+ ],
+ "notes": [
+  "Measured costs are per walk step on blst's dense Fp12 mul, cyclotomic squaring, and the rest of the step. DP storage is a ring-buffer append only; lookup and sorting are not measured and must be charged in accounting per DP.",
+  "Cycle-escape paths are not in the per-step average (cyc2 = 1 in one run, 0 in the others). Their extra work is negligible at this sample size and is charged analytically.",
+  "Projected c2 for accounting: the mean of the two mixed inputs (0.1396), with the range recorded above."
+ ]
+}

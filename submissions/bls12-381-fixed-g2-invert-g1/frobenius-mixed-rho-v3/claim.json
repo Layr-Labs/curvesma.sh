@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v4",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 125.71987,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 73.166749,
+    "preprocessing_log2": 76.418468,
+    "success_probability": 0.41,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the mixed add/square class walk on N = (r-1)/12 classes with r_a = 1024 and S = 458 square slots behaves as a random map with collision rate V = 0.799413681, the sum of squared branch probabilities of the actual partition (566 reachable additive adders).",
+    "H2: 2-cycles are checked every step and cycles of length 3 to 64 against a per-walk anchor; detections escape by squaring the least-key state. The 2-cycle branch is checked by exact replica equality; the 3-to-64 branch is mirrored and fired once in production.",
+    "H3: c2 = 0.1450 and kappa = 0.4902 are Callgrind measurements at S = 458 at zero distinguished-point density, from interval counts on two seeds (agreeing to 0.01%).",
+    "H5: undetected cycles of length above 64 are formal cancellations (rate (ell-1)!! ((1-s)/(12 r_a))^(ell/2)) or non-formal closures (probability 1/r per candidate). The formal part is checked against the measured 2-cycle rate (ratio 1.002).",
+    "H6: for every square count q <= 2^66, 2^q is not a 12th root of unity modulo r (checked for 2^(12k) != 1, k <= 200000)."
+  ],
+  "limitations": [
+    "H1 is extrapolated from toy groups with N up to 2^17 and r_a = 32; production N is about 2^251 and r_a = 1024.",
+    "The trail-cap restart is specified and charged but cannot be reached by measurement runs; no production-size execution of the walk to a collision.",
+    "The replica checks use distinguished-point density 1/16, not 2^-60.",
+    "Memory of about 2^73 bytes is not realisable; memory is reported, not scored.",
+    "The reference unit is priced by the organizer rule (1 unit); the measured reference count is 22,998 against C = 20,000."
+  ],
+  "lane": "exploratory"
+}
