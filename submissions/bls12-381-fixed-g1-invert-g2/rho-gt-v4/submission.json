@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: bounded single-processor rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the strictly-bounded single-processor attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^127.80 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) and solves z=g^a by serial van Oorschot-Wiener distinguished-point Pollard rho on the cyclic group GT of prime order r, with a HARD global charged-work cutoff W_max=ceil(1.25*k0) multiplications (k0=sqrt(2*r*ln(1/0.61))) checked before every multiplication, so all walk and restart multiplications are inside W_max. theta=2^-30; segments reaching 2^38 multiplications without a distinguished point are truncated, and the expected number of truncations over the whole budget is ~2^-271 (so with overwhelming probability none occur and no collision opportunity is lost). Distinguished points are stored as 384-bit fingerprints with (A,B); birthday false matches over <=2^100 records are ~2^-185 and are resolved by recomputation (continuing on a false match). The bounded success probability is at least 1-0.61^1.5625 minus exceptional losses (truncation ~2^-271, single-processor detection lag <=2^38/W_max ~2^-89.7, fingerprint ~2^-185), i.e. >= 0.39, under the random-mapping heuristic, supported by a strictly-bounded toy experiment. The total-work score is independent of the processor count. Peak memory is bounded hard by a fixed 2^100-slot table (record count mean 2^97.74, Chernoff): at most 2^108 bytes. Preprocessing is at most 2^32 units and is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps; generic square-root accounting, not a practical break.",
+      "score": {
+        "numerator": "639",
+        "denominator": "5"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bounded-serial-rho",
+      "source": "experiment.py",
+      "purpose": "Strictly-bounded single-processor serial-VW distinguished-point rho on a prime-order-l subgroup of F_q^* (cyclic, standing in for GT). Enforces the hard cutoff W_max=ceil(1.25*k0) before every multiplication (reports strictly_bounded_ok and the max observed multiplication count), counts walk and restart multiplications, truncates long segments, and reports the fraction of trials finding a usable collision within W_max plus mean truncations. Toy-scale evidence for the random-mapping collision-time model and the bounded algorithm only; the toy stores exact group elements (production uses 384-bit fingerprints with resolution).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 30},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 200},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000},
+          "theta_bits": {"type": "integer", "minimum": 1, "maximum": 6},
+          "partitions": {"type": "integer", "minimum": 4, "maximum": 4096},
+          "seg_cap": {"type": "integer", "minimum": 4, "maximum": 8192}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"bits": 26, "trials": 120, "seed": 1, "theta_bits": 4, "partitions": 256, "seg_cap": 256}
+      ]
+    }
+  ]
+}
