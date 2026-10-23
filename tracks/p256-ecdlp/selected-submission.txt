@@ -1,1 +1,1 @@
-submissions/p256-ecdlp
+submissions/p256-ecdlp/stream-bsgs-p256-v1
