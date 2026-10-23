@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon p-1 rectangle with mu_6 orbit keys",
+  "claims": [
+    {
+      "statement": "For uniform s in [1, r-1) and the scoring length n = 2^20, where A_i = [s^i mod r]P0 and T = A_1 = [s]P0, the deterministic Cheon p-1 attack in proof.md recovers s with probability at least 0.395 using at most 2^117.86 total target-group-operation equivalents. It reads only A_1 and A_2^20, searches the exponent k = log_eta(A_2^20) in the subgroup of N = (r-1)/2^20-th roots of unity with a rectangle of G = 57376919326004192012165322720755522 points per side, keys baby and giant points by the mu_6 orbit invariant min(y, p-y), matches them with a deterministic radix sort and merge-join, and lifts a hit k to a = k + t*N by testing the six orbit shifts t*N/6 and the 2^20 lifts. The bound includes table construction (2^90.17), both walks, sorting, lookup, the bounded 36*2^20 candidate lift, and attack-side verification, with no amortisation over other targets and no uncharged advice; it uses no randomness, no quantum step and no heuristic occupancy model. Peak storage is at most 2^123.466026 bytes, preprocessing is at most 2^90.170 target-group-operation equivalents and is included in total work, embedded nonuniform advice is 0 bytes, and the success probability is a worst-case figure over the uniform challenge distribution.",
+      "score": {
+        "numerator": "117860000",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-cheon-mu6-lift",
+      "source": "experiment.py",
+      "purpose": "Replay the orbit-shift identity, the exact covered-set size 6*G^2 and the lift rule in a small multiplicative group with d = 8. This is evidence only at that scope; it does not establish production instruction counts, memory bounds or the production success probability.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "bits"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 13
+        }
+      ]
+    }
+  ]
+}
