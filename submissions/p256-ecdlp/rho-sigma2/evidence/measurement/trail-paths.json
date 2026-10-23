@@ -1,0 +1,83 @@
+{
+ "purpose": "Exercise the rare paths of measurement/step.c that a production-parameter sample does not reach: restarts at distinguished points, abandonment at the trail cap, and false filter matches (8-bit filters) that launch exact cycle checks, including distinguished points first reached during a look-ahead (ahead_dps)",
+ "builds": "measurement/step.c compiled with the flags below (organizer image and flags), walk_ref.py run with the same values in its environment (ADDER_BITS, B, DP_BITS, CAP_PERIODS, FILTER_BITS)",
+ "inputs": "walk_ref.py gen with ADDER_BITS=6 B=4096, seed 7",
+ "record_check": "each distinguished point, including a look-ahead one, is recorded as its own point; kernel and replica agree on dp_digest, a digest of every record's key",
+ "runs": [
+  {
+   "flags": "-DADDER_BITS=6 -DB=4096 -DDP_BITS=4",
+   "batch_steps": 200,
+   "walk_steps": 819200,
+   "kernel": {
+    "two_cycles": 7045,
+    "long_cycles": 48,
+    "dps": 49976,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "exceptional": 0
+   },
+   "kernel_dp_digest": "1f6662284176285c",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 200,
+    "mismatches": 0,
+    "two_cycles": 7045,
+    "long_cycles": 48,
+    "dps": 49976,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "dp_digest": "1f6662284176285c"
+   }
+  },
+  {
+   "flags": "-DADDER_BITS=6 -DB=4096 -DDP_BITS=12 -DCAP_PERIODS=1",
+   "batch_steps": 200,
+   "walk_steps": 819200,
+   "kernel": {
+    "two_cycles": 6419,
+    "long_cycles": 22,
+    "dps": 200,
+    "ahead_dps": 0,
+    "abandoned": 4095,
+    "exceptional": 0
+   },
+   "kernel_dp_digest": "e4370dd39445ac35",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 200,
+    "mismatches": 0,
+    "two_cycles": 6419,
+    "long_cycles": 22,
+    "dps": 200,
+    "ahead_dps": 0,
+    "abandoned": 4095,
+    "dp_digest": "e4370dd39445ac35"
+   }
+  },
+  {
+   "flags": "-DADDER_BITS=6 -DB=4096 -DDP_BITS=6 -DFILTER_MASK=0xffULL",
+   "batch_steps": 200,
+   "walk_steps": 819200,
+   "kernel": {
+    "two_cycles": 6578,
+    "long_cycles": 88,
+    "dps": 13701,
+    "ahead_dps": 663,
+    "abandoned": 0,
+    "exceptional": 0
+   },
+   "kernel_dp_digest": "fbfedacc6dcf7a5e",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 200,
+    "mismatches": 0,
+    "two_cycles": 6578,
+    "long_cycles": 88,
+    "dps": 13701,
+    "ahead_dps": 663,
+    "abandoned": 0,
+    "dp_digest": "fbfedacc6dcf7a5e"
+   }
+  }
+ ]
+}

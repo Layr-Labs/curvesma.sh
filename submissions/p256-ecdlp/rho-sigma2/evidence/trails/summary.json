@@ -1,0 +1,250 @@
+{
+  "runs": [
+    {
+      "file": "a3-b30-s1.json",
+      "config": {
+        "bits": 30,
+        "trials": 1500,
+        "seed": 3001,
+        "curve": "a3",
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "filter_bits": 64,
+        "check_all_replays": 1,
+        "escape_table": 1
+      },
+      "curve": {
+        "p": 792753649,
+        "a": 792753646,
+        "b": 296932549,
+        "order": 792749057
+      },
+      "log2_N": 28.56,
+      "trials": 1500,
+      "success": 662,
+      "success_rate": 0.4413,
+      "wilson95": [
+        0.4164,
+        0.4666
+      ],
+      "model": 0.4118,
+      "tau_of_K_times_L": 0.5307,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 1,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.014,
+      "two_cycles_per_step": 0.00023526086668533103,
+      "long_cycles": 1,
+      "max_replay_ops": 529,
+      "mean_trails": 546.1,
+      "replays_checked": 808907,
+      "all_replay_mismatches": 0,
+      "ahead_dps": 0
+    },
+    {
+      "file": "a3-b32-s1.json",
+      "config": {
+        "bits": 32,
+        "trials": 1500,
+        "seed": 3201,
+        "curve": "a3",
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "filter_bits": 64,
+        "check_all_replays": 1,
+        "escape_table": 1
+      },
+      "curve": {
+        "p": 2262832081,
+        "a": 2262832078,
+        "b": 777287606,
+        "order": 2262772013
+      },
+      "log2_N": 30.08,
+      "trials": 1500,
+      "success": 651,
+      "success_rate": 0.434,
+      "wilson95": [
+        0.4091,
+        0.4592
+      ],
+      "model": 0.4119,
+      "tau_of_K_times_L": 0.5308,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0083,
+      "two_cycles_per_step": 0.0002307820817074769,
+      "long_cycles": 2,
+      "max_replay_ops": 672,
+      "mean_trails": 911.9,
+      "replays_checked": 1357766,
+      "all_replay_mismatches": 0,
+      "ahead_dps": 0
+    },
+    {
+      "file": "a3-b34-s1.json",
+      "config": {
+        "bits": 34,
+        "trials": 1000,
+        "seed": 3401,
+        "curve": "a3",
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "filter_bits": 64,
+        "check_all_replays": 1,
+        "escape_table": 1
+      },
+      "curve": {
+        "p": 15713805571,
+        "a": 15713805568,
+        "b": 12575327321,
+        "order": 15713685853
+      },
+      "log2_N": 32.87,
+      "trials": 1000,
+      "success": 412,
+      "success_rate": 0.412,
+      "wilson95": [
+        0.3819,
+        0.4428
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5304,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0032,
+      "two_cycles_per_step": 0.00022860977921567994,
+      "long_cycles": 1,
+      "max_replay_ops": 457,
+      "mean_trails": 2388.8,
+      "replays_checked": 2382228,
+      "all_replay_mismatches": 0,
+      "ahead_dps": 0
+    },
+    {
+      "file": "a3-b34-s2-a16.json",
+      "config": {
+        "bits": 34,
+        "trials": 600,
+        "seed": 3402,
+        "curve": "a3",
+        "adder_bits": 16,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "filter_bits": 64,
+        "check_all_replays": 1,
+        "escape_table": 1
+      },
+      "curve": {
+        "p": 11068274401,
+        "a": 11068274398,
+        "b": 5276250297,
+        "order": 11068372837
+      },
+      "log2_N": 32.37,
+      "trials": 600,
+      "success": 242,
+      "success_rate": 0.4033,
+      "wilson95": [
+        0.3648,
+        0.4431
+      ],
+      "model": 0.4117,
+      "tau_of_K_times_L": 0.5305,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0039,
+      "two_cycles_per_step": 6.384385055646838e-06,
+      "long_cycles": 0,
+      "max_replay_ops": 449,
+      "mean_trails": 1985.9,
+      "replays_checked": 1187738,
+      "all_replay_mismatches": 0,
+      "ahead_dps": 0
+    },
+    {
+      "file": "a3-b36-s1.json",
+      "config": {
+        "bits": 36,
+        "trials": 600,
+        "seed": 3601,
+        "curve": "a3",
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "filter_bits": 64,
+        "check_all_replays": 1,
+        "escape_table": 1
+      },
+      "curve": {
+        "p": 55027413983,
+        "a": 55027413980,
+        "b": 29348542031,
+        "order": 55027683539
+      },
+      "log2_N": 34.68,
+      "trials": 600,
+      "success": 241,
+      "success_rate": 0.4017,
+      "wilson95": [
+        0.3632,
+        0.4414
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5303,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0018,
+      "two_cycles_per_step": 0.0002313376730791796,
+      "long_cycles": 6,
+      "max_replay_ops": 603,
+      "mean_trails": 4427.2,
+      "replays_checked": 2652485,
+      "all_replay_mismatches": 0,
+      "ahead_dps": 0
+    }
+  ],
+  "pooled": {
+    "trials": 5200,
+    "success": 2208,
+    "success_rate": 0.4246,
+    "wilson95": [
+      0.4112,
+      0.4381
+    ],
+    "model_weighted": 0.4118,
+    "tau": 0.5303,
+    "degenerate_first_matches": 0,
+    "replay_mismatches": 0,
+    "all_successes_verified": true,
+    "abandoned_trails": 1,
+    "long_cycles": 10,
+    "max_finish_steps_over_K_L": 0.014,
+    "max_replay_ops": 672,
+    "trails_total": 8423660,
+    "replays_checked": 8389124,
+    "all_replay_mismatches": 0,
+    "ahead_dps": 0,
+    "filter_bits": [
+      64
+    ]
+  },
+  "scope": "toy curves only; the production procedure including resolution, not production cost"
+}

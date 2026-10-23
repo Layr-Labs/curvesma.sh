@@ -1,0 +1,673 @@
+{
+ "source": "measured by the rare-path forced-path harness (organizer image, -O3 -fno-tree-vectorize -mgeneral-regs-only)",
+ "full_results": "kept with the work, not in this package (the full file exceeds the package file limit)",
+ "step3_c_sha256": "d0f2184b01bc074d924fdb5145d417a1c7afd75f9370646c4701da0ba147b255",
+ "step3_c_copy_measured_sha256": "d0f2184b01bc074d924fdb5145d417a1c7afd75f9370646c4701da0ba147b255",
+ "measured_copy_is_identical": true,
+ "headers_sha256": {
+  "p256_field.h": "baf0c720aa34e9f2eea2fc7f94f169a3d6bad32be7ab3b68e6c97cd51437b5e9",
+  "p256_sub.h": "a58fa9db3d667bd11e376394e320a30284fa87d4f1d9700e45ec1bd17f8e2cf8"
+ },
+ "headers_identical_to_p256_dir": true,
+ "toolchain": [
+  "cc (Debian 14.2.0-19) 14.2.0",
+  "valgrind-3.24.0",
+  "aarch64",
+  "ldd (Debian GLIBC 2.41-12+deb13u4) 2.41"
+ ],
+ "organizer_image": {
+  "tag_id_when_assembled": "sha256:aa7071f37ef351395d2e152adaa026404c2200b1b0d6ce29c59aff9d994a85e9",
+  "note": "the tag was rebuilt (its id changed) while this ran; compiler, valgrind and libc versions are the ones listed; a sample of 9 jobs re-run on the tag as it stood at the end gave identical totals (out/verify_image.txt)"
+ },
+ "build": {
+  "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only",
+  "defines": "none (production ADDER_BITS=16 DP_BITS=60 B=65536)",
+  "callgrind": "--collect-atstart=no with CALLGRIND_TOGGLE_COLLECT around the loop of calls",
+  "rare_functions": "per-instruction costs (--dump-instr=yes), attributed by address range"
+ },
+ "units": "Ir per call = Callgrind instructions of one call: the slope between N = 1000 and N = 2000 calls, minus the harness loop measured without a call or with an empty call (the cheaper), so the call, argument setup, the wrapper's tail branch, the body and the return are included and up to about 3 instructions of loop control may remain: a figure slightly above the body alone",
+ "f_max": 41190,
+ "add_max": 41185,
+ "same_max": 32,
+ "pdp_max": 10,
+ "esc2_max": 41267,
+ "esc65_max": 43094,
+ "keys_meaning": {
+  "f_max": "select_adder + add_single, max over the 10 original paths and the bounded variants",
+  "add_max": "add_single alone, same variants (addition, doubling, the zero returns)",
+  "same_max": "max of the inline limb chain (original, bounded) and the library memcmp call that rare_anchor uses",
+  "pdp_max": "point_is_dp as a function (original and bounded)",
+  "esc2_max": "escape(cyc, 2) including the add_single into ESC[j]; max over loop type, parity and add path",
+  "esc65_max": "escape(cyc, 65), same"
+ },
+ "per_primitive": {
+  "add_single": {
+   "variants_ir_per_call": {
+    "a0": {
+     "original": 40878,
+     "bounded": 40892
+    },
+    "a1": {
+     "original": 40882,
+     "bounded": 40892
+    },
+    "a2": {
+     "original": 40886,
+     "bounded": 40892
+    },
+    "a3": {
+     "original": 40890,
+     "bounded": 40892
+    },
+    "d": {
+     "original": 41183,
+     "bounded": 41185
+    },
+    "z0": {
+     "original": 45,
+     "bounded": 61
+    },
+    "z1": {
+     "original": 49,
+     "bounded": 61
+    },
+    "z2": {
+     "original": 53,
+     "bounded": 61
+    },
+    "z3": {
+     "original": 57,
+     "bounded": 61
+    },
+    "zz": {
+     "original": 61,
+     "bounded": 65
+    }
+   },
+   "max_original": 41183,
+   "max_bounded": 41185,
+   "max": 41185,
+   "loop_baseline_subtracted": 5
+  },
+  "f_single": {
+   "variants_ir_per_call": {
+    "a0": {
+     "original": 40883,
+     "bounded": 40897
+    },
+    "a1": {
+     "original": 40887,
+     "bounded": 40897
+    },
+    "a2": {
+     "original": 40891,
+     "bounded": 40897
+    },
+    "a3": {
+     "original": 40895,
+     "bounded": 40897
+    },
+    "d": {
+     "original": 41188,
+     "bounded": 41190
+    },
+    "z0": {
+     "original": 50,
+     "bounded": 66
+    },
+    "z1": {
+     "original": 54,
+     "bounded": 66
+    },
+    "z2": {
+     "original": 58,
+     "bounded": 66
+    },
+    "z3": {
+     "original": 62,
+     "bounded": 66
+    },
+    "zz": {
+     "original": 66,
+     "bounded": 70
+    }
+   },
+   "max_original": 41188,
+   "max_bounded": 41190,
+   "max": 41190,
+   "loop_baseline_subtracted": 5
+  },
+  "same_class": {
+   "inline_chain_variants_ir_per_call": {
+    "s0": {
+     "original": 9,
+     "bounded": 22
+    },
+    "s1": {
+     "original": 13,
+     "bounded": 22
+    },
+    "s2": {
+     "original": 17,
+     "bounded": 22
+    },
+    "s3": {
+     "original": 21,
+     "bounded": 22
+    },
+    "se": {
+     "original": 22,
+     "bounded": 22
+    }
+   },
+   "library_memcmp_variants_ir_per_call": {
+    "m0": 26,
+    "m1": 26,
+    "m2": 26,
+    "m3": 26,
+    "m4": 26,
+    "m5": 26,
+    "m6": 26,
+    "m7": 26,
+    "m8": 26,
+    "m9": 26,
+    "m10": 26,
+    "m11": 26,
+    "m12": 26,
+    "m13": 26,
+    "m14": 26,
+    "m15": 26,
+    "m16": 32,
+    "m17": 32,
+    "m18": 32,
+    "m19": 32,
+    "m20": 32,
+    "m21": 32,
+    "m22": 32,
+    "m23": 32,
+    "m24": 32,
+    "m25": 32,
+    "m26": 32,
+    "m27": 32,
+    "m28": 32,
+    "m29": 32,
+    "m30": 32,
+    "m31": 32,
+    "me": 32
+   },
+   "max_inline_original": 22,
+   "max_inline_bounded": 22,
+   "max_library_memcmp": 32,
+   "max": 32,
+   "note": "rare_anchor calls the library memcmp for same_class; the other sites inline a limb-by-limb chain"
+  },
+  "point_is_dp": {
+   "variants_ir_per_call": {
+    "p0": {
+     "original": 7,
+     "bounded": 10
+    },
+    "p1": {
+     "original": 9,
+     "bounded": 10
+    },
+    "p2": {
+     "original": 9,
+     "bounded": 10
+    }
+   },
+   "max_original": 9,
+   "max_bounded": 10,
+   "max": 10
+  },
+  "escape2": {
+   "original_variants_ir_per_call": {
+    "a0.t3.p0": 40922,
+    "a3.t3.p0": 40934,
+    "d.t3.p0": 41227,
+    "z0.t3.p0": 89,
+    "z3.t3.p0": 101,
+    "zz.t3.p0": 105,
+    "a0.t3.p1": 40946,
+    "a3.t3.p1": 40958,
+    "d.t3.p1": 41251,
+    "z0.t3.p1": 113,
+    "z3.t3.p1": 125,
+    "a0.t2.p0": 40924,
+    "a3.t2.p0": 40936,
+    "d.t2.p0": 41229,
+    "z0.t2.p0": 91,
+    "z3.t2.p0": 103,
+    "zz.t2.p0": 107,
+    "a0.t2.p1": 40948,
+    "a3.t2.p1": 40960,
+    "d.t2.p1": 41253,
+    "z0.t2.p1": 115,
+    "z3.t2.p1": 127,
+    "a0.t1.p0": 40928,
+    "a3.t1.p0": 40940,
+    "d.t1.p0": 41233,
+    "z0.t1.p0": 95,
+    "z3.t1.p0": 107,
+    "zz.t1.p0": 111,
+    "a0.t1.p1": 40952,
+    "a3.t1.p1": 40964,
+    "d.t1.p1": 41257,
+    "z0.t1.p1": 119,
+    "z3.t1.p1": 131,
+    "a0.t0.p0": 40932,
+    "a3.t0.p0": 40944,
+    "d.t0.p0": 41237,
+    "z0.t0.p0": 99,
+    "z3.t0.p0": 111,
+    "zz.t0.p0": 115,
+    "a0.t0.p1": 40956,
+    "a3.t0.p1": 40968,
+    "d.t0.p1": 41261,
+    "z0.t0.p1": 123,
+    "z3.t0.p1": 135,
+    "a0.te.p0": 40927,
+    "a3.te.p0": 40939,
+    "d.te.p0": 41232,
+    "z0.te.p0": 94,
+    "z3.te.p0": 106,
+    "zz.te.p0": 110,
+    "a0.te.p1": 40951,
+    "a3.te.p1": 40963,
+    "d.te.p1": 41256,
+    "z0.te.p1": 118,
+    "z3.te.p1": 130
+   },
+   "bounded_variants_ir_per_call": {
+    "a0.t3.p0": 40950,
+    "a1.t3.p0": 40950,
+    "a2.t3.p0": 40950,
+    "a3.t3.p0": 40950,
+    "d.t3.p0": 41243,
+    "z0.t3.p0": 119,
+    "z1.t3.p0": 119,
+    "z2.t3.p0": 119,
+    "z3.t3.p0": 119,
+    "zz.t3.p0": 123,
+    "a0.t3.p1": 40974,
+    "a1.t3.p1": 40974,
+    "a2.t3.p1": 40974,
+    "a3.t3.p1": 40974,
+    "d.t3.p1": 41267,
+    "z0.t3.p1": 143,
+    "z1.t3.p1": 143,
+    "z2.t3.p1": 143,
+    "z3.t3.p1": 143,
+    "a0.te.p0": 40950,
+    "a1.te.p0": 40950,
+    "a2.te.p0": 40950,
+    "a3.te.p0": 40950,
+    "d.te.p0": 41243,
+    "z0.te.p0": 119,
+    "z1.te.p0": 119,
+    "z2.te.p0": 119,
+    "z3.te.p0": 119,
+    "zz.te.p0": 123,
+    "a0.te.p1": 40974,
+    "a1.te.p1": 40974,
+    "a2.te.p1": 40974,
+    "a3.te.p1": 40974,
+    "d.te.p1": 41267,
+    "z0.te.p1": 143,
+    "z1.te.p1": 143,
+    "z2.te.p1": 143,
+    "z3.te.p1": 143
+   },
+   "max_original": 41261,
+   "max_bounded": 41267,
+   "max": 41267,
+   "bounded_independent_of_loop_type": true
+  },
+  "escape65": {
+   "original_variants_ir_per_call": {
+    "a0.t3.p0": 41930,
+    "a3.t3.p0": 41942,
+    "d.t3.p0": 42235,
+    "z0.t3.p0": 1097,
+    "z3.t3.p0": 1109,
+    "zz.t3.p0": 1113,
+    "a0.t3.p1": 41954,
+    "a3.t3.p1": 41966,
+    "d.t3.p1": 42259,
+    "z0.t3.p1": 1121,
+    "z3.t3.p1": 1133,
+    "a0.t2.p0": 42058,
+    "a3.t2.p0": 42070,
+    "d.t2.p0": 42363,
+    "z0.t2.p0": 1225,
+    "z3.t2.p0": 1237,
+    "zz.t2.p0": 1241,
+    "a0.t2.p1": 42082,
+    "a3.t2.p1": 42094,
+    "d.t2.p1": 42387,
+    "z0.t2.p1": 1249,
+    "z3.t2.p1": 1261,
+    "a0.t1.p0": 42314,
+    "a3.t1.p0": 42326,
+    "d.t1.p0": 42619,
+    "z0.t1.p0": 1481,
+    "z3.t1.p0": 1493,
+    "zz.t1.p0": 1497,
+    "a0.t1.p1": 42338,
+    "a3.t1.p1": 42350,
+    "d.t1.p1": 42643,
+    "z0.t1.p1": 1505,
+    "z3.t1.p1": 1517,
+    "a0.t0.p0": 42570,
+    "a3.t0.p0": 42582,
+    "d.t0.p0": 42875,
+    "z0.t0.p0": 1737,
+    "z3.t0.p0": 1749,
+    "zz.t0.p0": 1753,
+    "a0.t0.p1": 42594,
+    "a3.t0.p1": 42606,
+    "d.t0.p1": 42899,
+    "z0.t0.p1": 1761,
+    "z3.t0.p1": 1773,
+    "a0.te.p0": 42250,
+    "a3.te.p0": 42262,
+    "d.te.p0": 42555,
+    "z0.te.p0": 1417,
+    "z3.te.p0": 1429,
+    "zz.te.p0": 1433,
+    "a0.te.p1": 42274,
+    "a3.te.p1": 42286,
+    "d.te.p1": 42579,
+    "z0.te.p1": 1441,
+    "z3.te.p1": 1453
+   },
+   "bounded_variants_ir_per_call": {
+    "a0.t3.p0": 42777,
+    "a1.t3.p0": 42777,
+    "a2.t3.p0": 42777,
+    "a3.t3.p0": 42777,
+    "d.t3.p0": 43070,
+    "z0.t3.p0": 1946,
+    "z1.t3.p0": 1946,
+    "z2.t3.p0": 1946,
+    "z3.t3.p0": 1946,
+    "zz.t3.p0": 1950,
+    "a0.t3.p1": 42801,
+    "a1.t3.p1": 42801,
+    "a2.t3.p1": 42801,
+    "a3.t3.p1": 42801,
+    "d.t3.p1": 43094,
+    "z0.t3.p1": 1970,
+    "z1.t3.p1": 1970,
+    "z2.t3.p1": 1970,
+    "z3.t3.p1": 1970,
+    "a0.te.p0": 42777,
+    "a1.te.p0": 42777,
+    "a2.te.p0": 42777,
+    "a3.te.p0": 42777,
+    "d.te.p0": 43070,
+    "z0.te.p0": 1946,
+    "z1.te.p0": 1946,
+    "z2.te.p0": 1946,
+    "z3.te.p0": 1946,
+    "zz.te.p0": 1950,
+    "a0.te.p1": 42801,
+    "a1.te.p1": 42801,
+    "a2.te.p1": 42801,
+    "a3.te.p1": 42801,
+    "d.te.p1": 43094,
+    "z0.te.p1": 1970,
+    "z1.te.p1": 1970,
+    "z2.te.p1": 1970,
+    "z3.te.p1": 1970
+   },
+   "max_original": 42899,
+   "max_bounded": 43094,
+   "max": 43094,
+   "bounded_independent_of_loop_type": true
+  }
+ },
+ "baselines_ir_per_call": {
+  "add": {
+   "loop_only": 6,
+   "empty_call": 5
+  },
+  "f": {
+   "loop_only": 6,
+   "empty_call": 5
+  },
+  "same": {
+   "loop_only": 5,
+   "empty_call": 5
+  },
+  "pdp": {
+   "loop_only": 4,
+   "empty_call": 5
+  },
+  "esc2": {
+   "loop_only": 6,
+   "empty_call": 5
+  },
+  "esc65": {
+   "loop_only": 6,
+   "empty_call": 5
+  }
+ },
+ "bounding_variants": {
+  "construction": "bounded.h is generated by gen_bounded.py from the text of src/step3.c: add_single, f_single, escape, same_class and point_is_dp are copied and feq/fcmp/&& are replaced by branch-free routines (or-reduced xor, borrow chain, mask select, & instead of &&); the remaining branches are the control variants that are forced. The routines carry nop padding (PAD_FEQ=5, PAD_LT=0, PAD_DP=1) so each bounded variant costs at least as much as the original on every forced path.",
+  "equality_tests": [
+   "EQ add_single cases=400000 mismatches=0",
+   "coverage add_single: addition=319966 zero-return=64185 doubling=15849",
+   "EQ f_single cases=300000 mismatches=0",
+   "EQ escape cases=300000 mismatches=0",
+   "coverage escape: zero-return=100268 point=199732 y_even_min=150122 y_odd_min=149878 min_at_0=70507 min_elsewhere=229493",
+   "EQ same_class/b_lt/feq/point_is_dp cases=2000000 mismatches=0",
+   "coverage: point_is_dp false=1524528 true=475472; b_lt a>=b=1084201 a<b=915799",
+   "eq exit=0"
+  ],
+  "bound_ge_original": {
+   "checked": 138,
+   "failed": []
+  }
+ },
+ "branches": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 11281
+ },
+ "checks": {
+  "N_doubling_linear": {
+   "variants": 287,
+   "all_linear": true
+  },
+  "seed_independence": {
+   "variants": 287,
+   "all_equal": true
+  },
+  "rare_codegen_fidelity": {
+   "rare_anchor": {
+    "instructions_kernel_alone": 198,
+    "instructions_harness_rare": 198,
+    "same_instruction_sequence": true,
+    "note": "mnemonics compared; operands differ only in link addresses, and sbfiz/ubfiz of the call index"
+   },
+   "rare_2cycle": {
+    "instructions_kernel_alone": 165,
+    "instructions_harness_rare": 165,
+    "same_instruction_sequence": true,
+    "note": "mnemonics compared; operands differ only in link addresses, and sbfiz/ubfiz of the call index"
+   }
+  },
+  "details_file": "out/primitives.json"
+ },
+ "rare_anchor": {
+  "own_ir_affine_in_len": {
+   "intercept": 67,
+   "per_member": 59,
+   "from": "len 2 and 65, maximum over worst=0..4"
+  },
+  "cycle_of_len": {
+   "2": {
+    "own_measured_worst1": 185,
+    "own_bound": 185,
+    "callee_calls": {
+     "add_single": 3,
+     "memcmp": 2
+    },
+    "total_measured_worst1": 122859,
+    "bound_ir": 123804,
+    "bound_covers_measured": true
+   },
+   "3": {
+    "own_measured_worst1": 244,
+    "own_bound": 244,
+    "callee_calls": {
+     "add_single": 4,
+     "memcmp": 3
+    },
+    "total_measured_worst1": 163806,
+    "bound_ir": 165080,
+    "bound_covers_measured": true
+   },
+   "4": {
+    "own_measured_worst1": 303,
+    "own_bound": 303,
+    "callee_calls": {
+     "add_single": 5,
+     "memcmp": 4
+    },
+    "total_measured_worst1": 204753,
+    "bound_ir": 206356,
+    "bound_covers_measured": true
+   },
+   "8": {
+    "own_measured_worst1": 539,
+    "own_bound": 539,
+    "callee_calls": {
+     "add_single": 9,
+     "memcmp": 8
+    },
+    "total_measured_worst1": 368541,
+    "bound_ir": 371460,
+    "bound_covers_measured": true
+   },
+   "16": {
+    "own_measured_worst1": 1011,
+    "own_bound": 1011,
+    "callee_calls": {
+     "add_single": 17,
+     "memcmp": 16
+    },
+    "total_measured_worst1": 696117,
+    "bound_ir": 701668,
+    "bound_covers_measured": true
+   },
+   "32": {
+    "own_measured_worst1": 1955,
+    "own_bound": 1955,
+    "callee_calls": {
+     "add_single": 33,
+     "memcmp": 32
+    },
+    "total_measured_worst1": 1351269,
+    "bound_ir": 1362084,
+    "bound_covers_measured": true
+   },
+   "64": {
+    "own_measured_worst1": 3843,
+    "own_bound": 3843,
+    "callee_calls": {
+     "add_single": 65,
+     "memcmp": 64
+    },
+    "total_measured_worst1": 2661573,
+    "bound_ir": 2682916,
+    "bound_covers_measured": true
+   },
+   "65": {
+    "own_measured_worst1": 3902,
+    "own_bound": 3902,
+    "callee_calls": {
+     "add_single": 66,
+     "memcmp": 65
+    },
+    "total_measured_worst1": 2702520,
+    "bound_ir": 2724192,
+    "bound_covers_measured": true
+   }
+  },
+  "nc": {
+   "total_measured": 2659910,
+   "own": 2169,
+   "calls": {
+    "add_single": 65,
+    "memcmp": 65
+   },
+   "bound_ir": 2681274
+  },
+  "dp64": {
+   "total_measured": 2619009,
+   "own": 2156,
+   "calls": {
+    "add_single": 64,
+    "memcmp": 64
+   },
+   "bound_ir": 2640044
+  },
+  "dp1": {
+   "total_measured": 40986,
+   "own": 77,
+   "calls": {
+    "add_single": 1,
+    "memcmp": 1
+   },
+   "bound_ir": 41294
+  },
+  "max_bound_ir": 2724192,
+  "formula": "own(len) + (len+1)*add_max + len*memcmp_max for a cycle of len classes (len <= 65): len f_single, one add in the escape, len library memcmp; own(len) is the instructions of rare_anchor itself (control plus inlined primitives: minimum search, negation, index, distinguished-point tests, record copies, call setup)",
+  "note_double_count": "own already contains the escape's search, negation and index and the point_is_dp tests: do not add esc65_max or pdp_max on top"
+ },
+ "rare_2cycle": {
+  "cyc": {
+   "own_max": 152,
+   "total_measured_worst1": 81920,
+   "bound_ir": 82522,
+   "calls": {
+    "add_single": 2,
+    "memcmp": 0
+   }
+  },
+  "false": {
+   "own": 38,
+   "total_measured": 40935,
+   "bound_ir": 41223,
+   "calls": {
+    "add_single": 1,
+    "memcmp": 0
+   }
+  },
+  "max_bound_ir": 82522,
+  "formula": "own + 2*add_max (the f_single and the escape's addition); the same_class chain is inlined in own"
+ },
+ "control_overhead": {
+  "rare_2cycle_own_ir_cyc": 152,
+  "rare_anchor_own_ir_len2": 185,
+  "rare_anchor_own_ir_len65": 3902,
+  "meaning": "instructions executed in the rare function itself, callees (add_single, finv, library memcmp) excluded. This is the control overhead together with whatever primitive code the compiler inlined; the primitives' inlined share cannot be separated by address. To avoid double counting use own instead of the separate esc/pdp/same terms, or, for the rare_anchor loop, the per-member increment below.",
+  "rare_anchor_own_ir_per_extra_member": 59
+ },
+ "rare_scenarios": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 12794
+ },
+ "unmeasured": [
+  "the call-site code in batch_step that prepares the arguments of rare_2cycle/rare_anchor and reads their results (about 15 instructions per call, visible in the disassembly of batch_step); it is charged with the common path or should be added per rare call",
+  "dp_restart/new_trail after a distinguished point and the abandonment path (not part of the primitives asked for)",
+  "the one-off lazy binding of memcmp at its first call in a process (about 690 Ir once; excluded by the slope method)",
+  "the PLT stub instructions of the memcmp call: Callgrind's default skip-plt does not count them in the summary, which is the figure the organizer's method reads",
+  "the abort paths (exceptional counter): unreachable with valid inputs",
+  "worst case data-dependence inside the library memcmp is covered by forcing all 33 outcomes, but only for the glibc in the organizer image"
+ ],
+ "problems": []
+}

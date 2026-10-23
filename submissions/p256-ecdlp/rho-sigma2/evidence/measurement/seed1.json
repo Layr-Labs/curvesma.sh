@@ -1,0 +1,29 @@
+{
+  "purpose": "Round-5 production measurement of the common batched path, one input set (seed 1)",
+  "kernel": "measurement/step.c with the rare paths out of line and branch-free common arithmetic",
+  "runs": {
+    "batch_steps_1": {
+      "callgrind_total_Ir": 54631616
+    },
+    "batch_steps_2": {
+      "callgrind_total_Ir": 109263212
+    },
+    "batch_steps_63": {
+      "callgrind_total_Ir": 3444338174
+    },
+    "batch_steps_64": {
+      "callgrind_total_Ir": 3499707300
+    }
+  },
+  "per_batch_totals": {
+    "plain": 54631596,
+    "anchor": 55369126
+  },
+  "walks_per_batch": 65536,
+  "per_walk_step_Ir": {
+    "plain": 833.612,
+    "anchor": 844.866
+  },
+  "unbatched_op_Ir": "40,871 on both sets",
+  "replica_check_production": "{'walks': 65536, 'batch_steps': 8, 'mismatches': 0, 'two_cycles': 2, 'long_cycles': 0, 'dps': 0, 'ahead_dps': 0, 'abandoned': 0}"
+}
