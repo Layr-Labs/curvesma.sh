@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: parallel rho on classes of six points, truncated at success 0.39",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and T=[x]P0 in BLS12-381 G1 with the protected generator P0 (T = infinity handled by outputting 0), van Oorschot-Wiener parallel collision search with an r=2048 adding walk on classes {+-R, +-phi(R), +-phi^2(R)} (negation and the GLV endomorphism phi(x,y)=(beta x,y)=[lambda]), canonical representative = minimum Montgomery-form x among {x, beta x, -x-beta x} with even Montgomery-form y, 2-cycle look-ahead, periodic fruitless-cycle detection, 2^32 batched walks and distinguished points at rate 2^-40, stopped after T_budget=ceil(1.04*sqrt(2 ln(1/0.61) r/6)) additions (~2^126.184), recovers x with probability at least 0.39 (random-mapping prediction 0.414) using at most 2^126.565107 total target-group-operation equivalents at C=2000, charging 1 batched affine addition plus 600 instructions per step (584 measured with Callgrind against pinned blst on the organizer toolchain, plus inversion share and allowance), the post-budget DP tail, all trail starts, fruitless-cycle restarts (rate bounded by 2^-20 per step), DP storage, cycle checks, the step table, trail recomputation, solving and verification. Peak memory about 2^93.6 bytes; preprocessing (step table plus clearing the DP hash table) about 2^79.6 (included); nonuniform advice 0 bytes. Heuristic: the standard Pollard-rho random-mapping heuristic for r-adding walks on automorphism classes, with the 4% step slack covering walk non-randomness and fruitless-cycle losses (supported by toy experiments and the cited literature). No pairing transfer is used. No quantum steps.",
+      "score": {
+        "numerator": "126565107",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "run.py",
+        "production.py",
+        "experiment.py",
+        "kernels/README.md",
+        "kernels/bls_step.c",
+        "kernels/measured.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "production-and-toy",
+      "source": "run.py",
+      "purpose": "Part 1: Verify r prime, r = 1 mod 3, phi(P0)=[lambda]P0 and phi^2(P0)=[lambda^2]P0 on the real BLS12-381 G1 generator, and recompute T, every ledger term and the rounded-up log2 W exactly. Part 2: Run the exact class walk (canonical rep, r-adding walk, 2-cycle look-ahead, restarts on fruitless cycles) on random small j=0 curves of prime order with the same budget formula T=ceil(1.04*sqrt(2 ln(1/0.61) n/6)) counting every addition; report the fraction of secrets recovered within budget. Toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 30
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "r": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 2048
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "seed",
+          "r",
+          "walks"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 24,
+          "trials": 400,
+          "seed": 1,
+          "r": 32,
+          "walks": 8
+        }
+      ]
+    }
+  ]
+}
