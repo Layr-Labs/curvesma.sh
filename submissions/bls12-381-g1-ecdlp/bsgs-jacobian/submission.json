@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: deterministic BSGS, Jacobian walks with blocked Montgomery normalisation and a 128-bit-counter radix sort",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r) with T=[s]P0 in the protected BLS12-381 G1 subgroup, using only the public A_1=T and the deterministic baby-step/giant-step construction in proof.md (m=h=ceil(sqrt(r))=228988810152649578064853576960394133504, Jacobian mixed-addition walks charged at 11M each, blocked Montgomery batch inversion of 2^16 Z-coordinates for the affine normalisation, 24-digit radix sort on the 381-bit x key with 128-bit multiword counters, and a single linear merge), the attack recovers s and succeeds with probability 1, hence at least 0.39 over uniform production challenges and fresh algorithm coins, using at most 2^130.533720 total target-group-operation equivalents, including preprocessing, normalisation, sorting, merge, verification and output. Peak memory is at most 2^135.013508 bytes; preprocessing is at most 2^129.533720 target-group-operation equivalents and is included in the total; nonuniform advice is 0 bytes. W(n) equals this bound for every n>=1 and the score is evaluated at n=2^20. This is a classical cold attack with no uncharged advice, quantum step or heuristic assumption; the exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or of a practical execution.",
+      "score": {
+        "numerator": "130533720",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs-jacobian",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the submitted construction (Jacobian walks, sort-by-x, merge scan, infinity and +- branches, verification) on small Weierstrass groups for every s in 1..r-1. This does not establish production curve behaviour, memory bounds or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 101,
+            "maximum": 4096
+          }
+        },
+        "required": [
+          "prime"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 1009
+        }
+      ]
+    }
+  ]
+}
