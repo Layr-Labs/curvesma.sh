@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: GT adding-walk bound",
+  "claims": [
+    {
+      "statement": "To a uniform non-identity P in G1 and uniform z in GT, return Q in G2 with e(P, Q) = z, reduce to a discrete logarithm in GT by one pairing against the public generator of the unknown side and return the scalar multiple of that generator, as specified in proof.md. The single-seed Floyd walk succeeds with probability at least 0.39 over the uniform challenge and fresh algorithm coins; z = 1 returns the point at infinity. Total classical work is at most W = 2395039763148592466895916532144209349628 target-group-operation equivalents (dense Fp12 multiplications plus other instructions divided by C = 20000). The declared score 130815246/1000000 = 130.815246 is a ceiling of log2(W). Peak memory is at most 2^20 bytes. Preprocessing independent of the challenge is at most 53688 reference units (log2 ceiling 15.712313) and is included in W. Nonuniform advice is 0 bytes. The success figure is the same disclosed lower bound as in proof.md, not a production inversion and not a number-field-sieve estimate.",
+      "score": {
+        "numerator": "130815246",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-toy",
+      "source": "experiment.py",
+      "purpose": "Recompute W from the public order and the instruction constants, check that the declared rational is a 10^(-6) ceiling of log2(W), and recover scalars on three prime-order additive groups. This does not establish production mixing, memory, or cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30
+          }
+        },
+        "required": [
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 30
+        }
+      ]
+    }
+  ]
+}
