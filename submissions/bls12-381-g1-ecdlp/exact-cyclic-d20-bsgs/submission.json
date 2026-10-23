@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Pohlig-Hellman on the smooth cofactor of A_{2^20}",
+  "claims": [
+    {
+      "statement": "For every integer n with 2^20 <= n < r, on a uniform BLS12-381 G1 secret s in 1..r-1 with auxiliary powers A_i=[s^i]P0, the deterministic Pohlig-Hellman procedure in proof.md recovers s with probability 1 and uses at most 2^27.834625 target-group-operation equivalents. The scoring value is n=2^20, where W(n)=239362939 and log2(W(2^20)) <= 27834625/1000000. Peak memory is at most 2^23 bytes. Preprocessing is at most 2^27 target-group-operation equivalents and is included in W(n). Nonuniform advice is 0 bytes. No heuristic is used. C=2000 is the fixed G1 reference price.",
+      "score": {
+        "numerator": "27834625",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
