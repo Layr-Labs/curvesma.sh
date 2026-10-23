@@ -1,0 +1,113 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: orbit-12 Frobenius-class rho in GT with a hard step cap and a measured success curve",
+ "claims": [
+  {
+   "statement": "For a uniform nonidentity P in G1 and a uniform target z in GT, with the pinned public pairing (pairing(Q0,P), final_exponentiate=True): compute g = e(P,Q0), which generates GT because the pairing is nondegenerate and both groups have prime order r; solve x = log_g z by a parallel distinguished-point Pollard rho on the orbits of the p-power Frobenius in GT; return Q = [x]Q0 and verify e(P,Q) = z and [r]Q = O. z = 1 is answered Q = O. CLASS QUOTIENT: p = 7 mod 12, r | Phi_12(p) and ord_r(p) = 12 exactly with p^6 = -1 mod r, so the p-power Frobenius acts on GT with order 12 and includes inversion as its sixth power; GT minus {1} splits into N = (r-1)/12 + 1 = 2^251.2721 classes of twelve conjugates, so the walk needs sqrt(N) steps instead of sqrt(r), a 2^1.79 saving. The inversion class is not an extra quotient: it is Frobenius^6. CANONICALISATION AT 4 Fp MULTIPLICATIONS, verified not asserted: in the blst tower Fp2 = Fp[u]/(u^2+1), Fp12 = Fp2[w]/(w^6-(1+u)), with gamma1 = w^(p-1) in Fp2 and zeta = N(gamma1) in Fp of order 6, the twelve keys of a class are a*zeta^j and B*zeta^j (j = 0..5) with a = Re c_1(y) and B = Re(conj(c_1(y))*gamma1); since zeta^2 = zeta-1, zeta^3 = -1, zeta^4 = -zeta, zeta^5 = 1-zeta they cost two Fp multiplications per side. experiment.py section A checks this against brute-force Frobenius y -> y^(p^k), k = 0..11, on random GT elements: formula, rotation invariance, argmin and key ties all pass. WALK WITHOUT ELEMENT-WISE FROBENIUS: the state is a lift y with the invariant y^(p^kappa) = canonical rep; with T[h][d] = M_h^(p^d), M_h = g^(A_h) z^(B_h), R = 1024 precomputed multipliers, the step y <- y*T[h][(12-kappa) mod 12] gives (y')^(p^kappa) = c*M_h because p^12 = 1 on GT, so the transition is a genuine map on classes while the lift stays non-canonical: one dense Fp12 multiplication plus 2,600 instructions per step, and the exponent pair is updated by two precomputed constants so g^alpha z^beta = y holds exactly (verified at every distinguished point in the toy: zero failures). DICTIONARY, EVERY PARAMETER PINNED AND HARD-CAPPED: the distinguished test is K = 0 mod 2^100 on the class key, so stored objects are classes. The 281 non-distinguished bits all enter the bucket map b = (sum over five disjoint 57-bit chunks of chunk*C_i) mod 2^30 with fixed odd C_i, so no input bit is discarded; the probe step is 1 + 2*((K>>103) mod 2^29) and double hashing on 2^30 slots with a four-probe cap and drop-on-fourth-miss gives a load of 2^-4.1 and a drop probability below 2^-16.4. Records store the FULL 381-bit class key plus the two exponents, 128 bytes each, so matching is exact and there is no truncation-collision term; at most 2^27 inserts are permitted, which is a hard integer cap, not an expectation. Multipliers are 512-bit draws accepted below floor(2^512/r)*r with a deterministic two-draw cutoff per value and a declared run-failure probability below 2^-503. HARD WORK CAP AND ITS SUCCESS PROBABILITY: every walk stops once the run has spent K_max = ceil((5/4)*sqrt(N)) = 2^125.957992 steps in total, so no branch of the attack is unbounded and no cost is an average over successful runs. The success probability at that cap is 0.40: it is below the measured 0.4510 (2000 toy instances, all solved and verified, Wilson 95% interval [0.4293, 0.4729]) and below the random-mapping model value 0.5422, so either support alone suffices. COST: each step is one reference dense Fp12 multiplication plus 2,600 scalar instructions, i.e. 22600/20000 = 1.13 units, giving a main term of 2^126.134314. Every additive item is charged in dense-Fp12-multiplication units and capped: dictionary at most 2^27*4*120 instructions, cold start 2^30 slot writes, preprocessing for the 1024-entry table, and verification (two pairings at 2^17 units each plus twelve GT exponentiations at 383 dense multiplications each). The overhead totals below 2^21.2 units, i.e. below 2^-105 of the main term. W <= 2^126.134317 and the claim is 12614/100 = 126.14, with peak memory at most 2^35 bytes and preprocessing included in W. This is an analytic instruction-equivalent bound, not a production run; the single random-mapping heuristic and its measured support are disclosed in proof.md.",
+   "score": {
+    "numerator": "6307",
+    "denominator": "50"
+   },
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "orbit12-rho-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production-scale field facts on BLS12-381 itself in the blst tower, implemented in the standard library: p and r prime, r | p^4-p^2+1, ord_r(p) = 12 exactly with p^6 = -1, the tower polynomial irreducible over Fp2, gamma1 = w^(p-1) and zeta = N(gamma1) of order 6 with zeta^2 = zeta-1, and the twelve-key canonicalisation formula compared against brute-force Frobenius y -> y^(p^k) on random GT elements, including rotation invariance and agreement of the argmin. Section B runs the complete declared algorithm at toy scale through the same code path: p = 8389603 = 7 mod 12, r = 1020337 prime with r | p^4-p^2+1 and ord_r(p) = 12, same tower, same key formula, same lift/kappa rule with the T[h][d] = M_h^(p^d) jump table, the same full-key dictionary with the declared bucket map and odd multiplicative probing under a four-probe cap, exponent bookkeeping checked by g^alpha z^beta = y at every distinguished point, the declared per-walk abandonment rule with no restart at distinguished points, and the twelve-candidate solve verified by g^x = z. It reports the cumulative success curve P(total steps <= f*sqrt(N)) with Wilson 95% intervals, which is the hard-cap success curve used by the claim, plus dictionary statistics and the realised bucket distribution. A smaller companion toy (r = 250813) checks the sqrt(N) scaling. Toy statistics are evidence at toy scope only and are not a production complexity proof; the production claim is analytic.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+     },
+     "btrials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+     },
+     "walks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4096
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     },
+     "bucket_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     },
+     "slot_bits": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 20
+     },
+     "h_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     }
+    },
+    "required": [
+     "production_checks",
+     "toy",
+     "trials",
+     "walks",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "toy": true,
+     "trials": 16,
+     "btrials": 100,
+     "walks": 4,
+     "R": 64,
+     "dp_bits": 3,
+     "bucket_bits": 6,
+     "slot_bits": 8,
+     "h_bits": 6,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
