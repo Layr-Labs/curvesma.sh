@@ -1,0 +1,142 @@
+{
+ "declared_run": {
+  "A": {
+   "A1_P0_not_infinity": true,
+   "A1_P0_on_curve": true,
+   "A1_p_prime": true,
+   "A1_r_prime": true,
+   "A2_2P0_ne_P0": true,
+   "A2_2P0_on_curve": true,
+   "A2_P0_plus_negP0_is_infinity": true,
+   "A2_negP0_on_curve": true,
+   "A2_r_minus_1_times_P0_is_neg_P0": true,
+   "A2_r_times_P0_is_infinity": true,
+   "A3_collision_identity_ok": [
+    2,
+    2
+   ],
+   "A4_table_in_G1_ok": [
+    2,
+    2
+   ],
+   "p_bits": 381,
+   "r_bits": 255,
+   "seconds": 0.595
+  },
+  "B": {
+   "R": 64,
+   "S0_evals": 1043.364,
+   "book_fail_total": 0,
+   "cap_evals": 1690,
+   "cap_factor": 1.65,
+   "capped_trials": 108,
+   "degenerate_relations": 0,
+   "evals_over_sqrtq_mean": 1.3718,
+   "evals_over_sqrtq_median": 1.6501,
+   "evals_over_sqrtq_p90": 1.6501,
+   "evals_solved_over_sqrtq_mean": 1.0451,
+   "seconds": 0.14,
+   "sqrt_q": 1024.153,
+   "success_rate": [
+    0.46,
+    0.3923,
+    0.5292
+   ],
+   "toy_p": 2097779,
+   "toy_q": 1048889,
+   "toy_q_bits": 21,
+   "trials_requested": 200,
+   "trials_run": 200,
+   "trials_solved": 92
+  },
+  "C": {
+   "S0_evals": "231454567344042754700414543826693198670",
+   "S0_log2": 127.443997,
+   "W_log2_float": 128.235075,
+   "W_pow100_le_2": 12824,
+   "additive_units": "785980",
+   "additive_units_log2": 19.5841,
+   "cap_evals": "377831536751871803807008401984650320281",
+   "cap_factor": "33/20",
+   "cap_log2": 128.151011,
+   "claim_log2": 128.24,
+   "claim_log2_exact_le": "12824/100",
+   "main_units_log2": 128.235075,
+   "measured_add_instr": 2298,
+   "memory_bytes": "164480",
+   "memory_log2": 17.328,
+   "precompute_units": "784384",
+   "r": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+   "r_log2": 254.857089,
+   "reference_price": 2000,
+   "sqrt_r_log2": 127.428545,
+   "step_instr": 120,
+   "step_units": "53/50",
+   "success_claim": "21/50",
+   "success_model": "2/5",
+   "table_size": 1024,
+   "verify_units": "1532"
+  },
+  "D": {
+   "cap_factor": "33/20",
+   "cap_scaled": 1.65,
+   "mass_at_worst_phase_check": 0.421535,
+   "mass_phase_1_0": 0.453428,
+   "mass_phase_1_875": 0.433709,
+   "mc_agrees_with_quadrature": true,
+   "mc_mass_at_worst_phase": 0.418,
+   "mc_wilson": [
+    0.4112,
+    0.4249
+   ],
+   "reviewer_rectangle_G_16_15_8_15": 0.404102,
+   "reviewer_said": 0.4041,
+   "success_at_least_039": true,
+   "worst_phase": 1.8183,
+   "worst_phase_first_checkpoints": [
+    0.55,
+    1.0999,
+    2.1998,
+    4.3996
+   ],
+   "worst_phase_mass": 0.421535
+  },
+  "version": 1
+ },
+ "declared_run_command": "echo '{\"production_checks\":2,\"table_checks\":2,\"trials\":200,\"toy_bits\":21,\"R\":64,\"cap_factor\":1.65,\"seconds\":10,\"seed\":1}' | python3 -I experiment.py",
+ "note": "declared_run is the single declared experiment run; offline_toy_aggregate is the same section B with larger trial counts, produced in this session by the same command with different trials/toy_bits.",
+ "offline_toy_aggregate": [
+  {
+   "R": 64,
+   "bookkeeping_fail": 0,
+   "cap_rule": "ceil(1.65*sqrt(q))",
+   "degenerate": 0,
+   "evals_over_sqrtq_mean": 1.3754,
+   "evals_solved_over_sqrtq_mean": 1.0328,
+   "solved": 267,
+   "success": 0.445,
+   "toy_q_bits": 21,
+   "trials": 600,
+   "wilson": [
+    0.406,
+    0.485
+   ]
+  },
+  {
+   "R": 64,
+   "bookkeeping_fail": 0,
+   "cap_rule": "ceil(1.65*sqrt(q))",
+   "degenerate": 0,
+   "evals_over_sqrtq_mean": 1.3933,
+   "evals_solved_over_sqrtq_mean": 1.0504,
+   "solved": 257,
+   "success": 0.428,
+   "toy_q_bits": 24,
+   "trials": 600,
+   "wilson": [
+    0.389,
+    0.468
+   ]
+  }
+ ]
+}
