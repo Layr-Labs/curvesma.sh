@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: capped birthday rho in GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and independently uniform z in GT, the attack in proof.md recovers P in G1 with e(P,Q)=z under the pinned py_ecc pairing convention. It forms h=e(P0,Q), which is a generator because Q=[b]Q0 with b uniform in 1..r-1, solves z=h^a in the prime-order GT by a single-trajectory distinguished-point Pollard rho capped at ceil(sqrt(r)) walk steps, and returns [a]P0 after a full pairing verification. It succeeds with probability at least 0.39 under the standard random-map birthday model (1-e^{-1/2}=0.3935) using at most 2^127.434 total target-group-operation equivalents, including preprocessing, every walk step, bookkeeping, distinguished-point storage and both pairings. Peak memory is at most 2^54.0 bytes; preprocessing is at most 2^13.0 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps or extra powers; the only heuristic is the standard Pollard-rho random-walk model disclosed in proof.md.",
+      "score": {
+        "numerator": "127434000",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
