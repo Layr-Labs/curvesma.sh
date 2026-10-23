@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon p-1 attack in H/mu_6 with a multiplication-free orbit key and fixed-base comb tables",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r) on BLS12-381 G1 with n = 2^20 supplied powers A_i = [s^i]P0 and target T = [s]P0, the deterministic Cheon p-1 attack in proof.md recovers s with probability at least 0.39 using at most 2^117.689500 total target-group-operation equivalents (batched incomplete affine additions, C = 2000 instructions per unit), including all preprocessing, table construction, probing, verification and output; this is a worst-case bound, the expected figure is 2^117.541496. Peak memory is at most 2^122.457 bytes; preprocessing is at most 2^89.001 target-group-operation equivalents and is included in total work; nonuniform advice is 2^0 bytes. The only heuristic is uniform hash-slot behaviour of canonical point keys, affecting cost not correctness.",
+      "score": {
+        "numerator": "1176895",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
