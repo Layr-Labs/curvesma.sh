@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "title": "Negation-class parallel Pollard rho on P-256 with a multiword global work meter, an exact report store and length-biased abandonment, priced by an executed AArch64 field listing (walk of 5fa78d62)",
+  "claims": [
+    {
+      "statement": "For the uniform full-production P-256 target Q=[x]P, the classical cold attack in proof.md (negation-class parallel Pollard rho: twisted R=2048 adding walk on classes {P,-P} keyed by x, doubling escapes from detected 2-cycles and checkpoint cycles of length <= 64, distinguished classes appended as 104-byte records to 2^16 append-only logs at the position the report's arrival index gives, duplicates recovered by an exact radix sort of each log on the full 256-bit key plus a k-way merge comparing full keys, re-walk solving), the walk of submission 5fa78d62-1c6b-46b8-b9cf-02481a49e645 (itself adapted from the class walk of submission 1c600df4), halts on every run after at most 2^127.72 units of C=1000 scalar AArch64 instructions. A global work meter charges every action before it runs: one shared 64-bit counter of super-blocks of 2^70 units with cap n_cap = floor(2^57.72) - 1, private 64-bit chunk and milli-unit counters inside a block (each chunk carry and each phase-1 sub-batch open charges its own 8 instructions inside the block), at most one over-cap fetch-and-add per processor, unspent remainders kept reserved (at most 2^90 units stranded, taken out of the Markov headroom), and W <= 2^127.72 checked as an exact integer inequality over four listed terms (the blocks, the fetch-and-adds on the block counter at 136 instructions, a halted processor's straddling charge, preprocessing); phase 1 ends on a shared 64-bit counter of super-batches of 2^70 operations; the store's arrival counter halts at D_cap = 2^64 - 2^21; every counter's largest value is below its word (proof.md section 3 counter table). All P-256 arithmetic is charged through the instruction counts of an executed AArch64 listing (field_listing.md, run by experiment.py Part C: Montgomery multiplication M=139, modular addition 20 and subtraction 19 charged A=20, inversion charged I=2^17 against 53,098 executed), giving 1,086 instructions and 1.086 units per step, with 104 of the step's 128 control instructions itemised. It succeeds with probability at least 0.39 under the disclosed heuristic H1 (random mapping on N=(r-1)/2 classes with Brent-Pollard correction and a 5% slowdown allowance; index and distinguished bits pseudo-random; non-fruitless returns at most L_max^2/(2N); a trail that reaches L_max makes at most L_max/4 repeated arrivals): H1 gives 0.395 at the S_ops budget, the phase-1 operation count includes doublings so the arrivals reached are at least S_ops - 2^115.585 and H1 at that count gives 0.394850, the Markov early-halt row is 0.002239, and the other failure rows sum to < 7.35e-5, including the length-biased abandonment of a matched trail (< 4.589e-6 per trail under H1's geometric model, < 7.342e-5 over the <= 8 processed matches), leaving 0.392537. Supported by toy runs that build, sort and merge the declared store. Peak memory < 2^72 bytes; preprocessing <= 2^60 units, enforced by its own meter and included; no nonuniform advice. Not a practical break.",
+      "score": {
+        "numerator": "3193",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "field_listing.md",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "p256-negation-class-rho-exact-store-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production P-256 checks of every identity the walk uses; Part B: the complete per-trail algorithm on prime-order toy curves y^2=x^3-3x+b (T_c census, pipeline success with the declared record store built and sorted, long-trail trap test); Part C: executes the AArch64 field listing on production P-256 elements and points (kernel correctness, flag rule, inversion chain, batched additions and doublings) and recomputes the work ledger and the store ledger from the executed counts, including the exact integer checks of the work bound and of every counter's word.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "listing_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20000
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 300,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 3,
+          "listing_checks": 3000,
+          "seconds": 15,
+          "pipeline": true
+        }
+      ]
+    }
+  ]
+}
