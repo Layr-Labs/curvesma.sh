@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: partial-coverage Cheon attack v5 (parity-keyed sorted array, fully-charged merge sort and binary search)",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r), inputs T=[s]P0=A_1 and the auxiliary powers A_i=[s^i mod r]P0, i=1..n, on BLS12-381 G1 with n=2^20, the single-shot classical two-phase Cheon algorithm v5 in proof.md recovers s with success probability at least 0.39 using total work W(2^20) at most 2^123.831402 target-group-operation equivalents (time_log2 = 123.831402 = 61915701/500000), including runtime factorization of r-1 (all prime factors < 2^28), generator and subgroup construction, three fixed-base comb tables, all baby and giant scalar multiplications (one 512-instruction mod-r multiplication each, sequential; comb point multiplications charged 64 units against a stated count of 32-40 window additions), the bottom-up merge sort of the baby array over an auxiliary buffer (117 passes, exactly m*ceil(log2 m) key compares and m*ceil(log2 m) record moves, charged 7605 instructions per baby), binary-search giant lookups (exactly ceil(log2(2m))=118 probes x 25 instructions, worst case), at most two window-start exponentiations, both BSGS phases, assembly, verification and output. The attack uses d=2^20 (largest divisor of r-1 not exceeding the scoring n) and reads only A_1 and A_d. Every table record is keyed by (x, y mod 2), which uniquely determines an affine point on this odd-prime curve (the at most two points sharing an x have opposite y-parities), so a key match is an exact point match and the recovery k1 = (i + m1*j) mod N is exact with no sign ambiguity; phase 1 solves s^d = eta^k1 by partial-coverage BSGS over a contiguous window of m blocks at a uniform offset with the coverage an exact per-offset integer statement including all wrap-around hits: block j covers exactly the m values {(m1*j + i) mod N : i < m}, consecutive arcs are disjoint, so every offset covers at least (m-1)m/N >= 0.4 - 2^-118 >= 0.39 k1 values; the closed form is crosschecked against an exhaustive every-offset brute force on five smaller parameter sets. Phase 2 recovers the order-2^20 component deterministically; s = zeta^(k1+tN) is verified by [s]P0 = T. Peak memory is the m-entry sorted array plus the m-entry merge buffer, strictly above 2^124.77 bytes (memory_log2_bytes = 124.8); preprocessing at most 2^21 units (preprocessing_log2 = 21.0) included; nonuniform advice 0 bytes. Sensitivity: 384-unit double-and-add everywhere still gives ~2^126.3. All preconditions, the parity-key uniqueness, the per-offset minimum coverage (>= 39/100 in exact integers) and the closed-form crosschecks are verified at production parameters by experiment.py Part A; Part B demonstrates the complete two-phase attack on a 20-bit toy group with d=6 using the parity-keyed sorted array built by the explicit merge sort and searched by the explicit binary search (probe budget enforced per lookup): full coverage 200/200 exact recoveries, 0 wrong extractions; the declared partial mode 88/200 = 0.44 vs the exact wrap-inclusive expectation 0.4022613461525126, 0 wrong extractions.",
+      "score": {
+        "numerator": "61915701",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "partial-cheon-v5-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production BLS12-381 parameters: 2^20 divides r-1; the complete prime factorization of r-1 (Miller-Rabin + product equality); zeta=7 generates Z_r*; eta has exact order N=(r-1)/2^20; zeta_e has exact order 2^20; d-th powers lie in the order-N subgroup; the per-offset minimum coverage of the contiguous-window phase 1 computed in exact integers (>= 39/100 for every offset); the closed-form coverage bound crosschecked against an exhaustive every-offset brute force on five smaller parameter sets; and the (x, y mod 2) key uniqueness property (negation pairs keyed distinctly, collisions all same-point). Part B runs the complete two-phase Cheon attack on a toy prime-order group (20-bit, d=6 | n-1) with production-shaped sequential window giants, the parity-keyed sorted baby array built by the explicit bottom-up merge sort (with auxiliary buffer) and searched by the explicit binary search (probe budget asserted per lookup), a brute-forced exact wrap-inclusive coverage expectation, and brute-force verification of every extraction, in partial mode (the claimed regime) or full-coverage control mode. Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "partial",
+              "full"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [
+          "trials",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "mode": "partial"
+        }
+      ]
+    }
+  ]
+}
