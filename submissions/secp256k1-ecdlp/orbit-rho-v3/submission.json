@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: class Pollard rho with distinguished points (v3, E=630)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. The class Pollard-rho attack with distinguished points in proof.md succeeds with probability at least 0.39 over the uniform challenge and fresh algorithm coins, using at most 2^127.446758 total target-group-operation equivalents, including preprocessing, the full walk budget K_walk=ceil(1.03*sqrt(0.98859*N'))+2^10*40/theta, all DP stores/lookups, walk starts, the two extraction re-runs, verification and output. Peak memory is at most 2^76.6 bytes; preprocessing is at most 2^32.01 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes. The main walk is coefficient-free and canonicalizes each class step; a DP match re-runs both walks tracking (a,b). The step cost is 1.630 reference operations: one batched incomplete affine addition plus E=630 instructions (621 itemized + 9 reserve). The per-step cycle test of the credited public rho-class6-dp note is omitted because the production 2-cycle rate is 1/(6r)=2^-258.6; the expected cycle waste over the run is below 2^-70 of the walk, and the expected cap-cut waste is below 2^-52. The bound uses the protected secp256k1 reference price C=1000 and the pinned 5x52 field-multiplication count 179. It relies on the disclosed random-walk quality rho>=0.943 at nu=1.03, supported by Teske, van Oorschot-Wiener and the credited note; the class structure is exact. This is a classical cold attack: no quantum steps, uncharged advice, or amortization over future targets. It is an analytic bound with bounded supporting experiments, not a production break. The coefficient-free DP design is credited to the public kaankolcu rho-class6-dp note; that predecessor is unpublished, so no dependency link is declared here.",
+      "score": {
+        "numerator": "63723379",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "class-dp-toy-and-profile",
+      "source": "experiment.py",
+      "purpose": "Run the complete class walk with distinguished points, merging, coefficient re-run extraction and scalar recovery on a small additive cyclic group; verify the production secp256k1 endomorphism constants; and recompute the analytic ledger integers and inequalities. This is supporting evidence at toy scope; it does not establish production walk quality, AArch64 costs, or an executed production attack.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 1000003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "increments": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 256
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 512
+          }
+        },
+        "required": [
+          "order",
+          "trials",
+          "seed",
+          "increments",
+          "dp_bits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 100003,
+          "trials": 10,
+          "seed": 20261022,
+          "increments": 16,
+          "dp_bits": 5,
+          "walkers": 128
+        }
+      ]
+    }
+  ]
+}
