@@ -1,0 +1,67 @@
+{
+ "purpose": "Lemma R stress: the same procedure with the filters cut to 8 bits, so false filter matches and look-ahead distinguished points are frequent, and every recorded trail replayed with a different anchor schedule. The success rates are not used: a look-ahead that reaches a distinguished point adds up to 65 points that the step budget does not count, which at 8-bit filters inflates success; at 64-bit filters false matches have probability about 2^-64 per step.",
+ "totals": {
+  "trials": 2000,
+  "replays_checked": 1326881,
+  "all_replay_mismatches": 0,
+  "ahead_dps": 94878,
+  "long_cycles": 63,
+  "abandoned_trails": 0
+ },
+ "runs": [
+  {
+   "file": "b4-b34-s1-double.json",
+   "config": {
+    "bits": 34,
+    "trials": 1000,
+    "seed": 3401,
+    "b": 4,
+    "adder_bits": 11,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "escape": "double",
+    "curve": "j0",
+    "escape_table": 0
+   },
+   "log2_N": 29.25,
+   "trials": 1000,
+   "replays_checked": 721816,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 51961,
+   "long_cycles": 34,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.422
+  },
+  {
+   "file": "b4-b36-s1-double.json",
+   "config": {
+    "bits": 36,
+    "trials": 1000,
+    "seed": 3601,
+    "b": 4,
+    "adder_bits": 11,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "escape": "double",
+    "curve": "j0",
+    "escape_table": 0
+   },
+   "log2_N": 28.77,
+   "trials": 1000,
+   "replays_checked": 605065,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 42917,
+   "long_cycles": 29,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.458
+  }
+ ]
+}

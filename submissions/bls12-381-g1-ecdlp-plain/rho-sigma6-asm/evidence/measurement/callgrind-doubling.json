@@ -1,0 +1,35 @@
+{
+ "purpose": "callgrind totals of measurement/step.c at 1, 2, 63 and 64 batch steps on two production inputs (the first 82944 lines of the seed-1 and of the seed-2 input: adders, walk starts, spares); plain = Ir(2)-Ir(1) and anchor = Ir(64)-Ir(63), per walk step over 16384 walks. The anchor batch of seed 1 contains one two-cycle escape (events at 63 and 64 steps: 2 and 3); that of seed 2 contains none (3 and 3).",
+ "seed1": {
+  "totals": {
+   "1": 36846673,
+   "2": 73693333,
+   "63": 2321461362,
+   "64": 2358530610
+  },
+  "events_last_line": {
+   "63": "walk_steps=1032192 two_cycles=2 long_cycles=0 dps=0 ahead_dps=0 abandoned=0 exceptional=0 unbatched=4 frac_fallbacks=0 dp_digest=0000000000000000 loops=0",
+   "64": "walk_steps=1048576 two_cycles=3 long_cycles=0 dps=0 ahead_dps=0 abandoned=0 exceptional=0 unbatched=6 frac_fallbacks=0 dp_digest=0000000000000000 loops=0"
+  },
+  "plain_batch": 36846660,
+  "anchor_batch": 37069248,
+  "plain_per_walk_step": 2248.9417,
+  "anchor_per_walk_step": 2262.5273
+ },
+ "seed2": {
+  "totals": {
+   "1": 36846721,
+   "2": 73693575,
+   "63": 2321520743,
+   "64": 2358531190
+  },
+  "events_last_line": {
+   "63": "walk_steps=1032192 two_cycles=3 long_cycles=0 dps=0 ahead_dps=0 abandoned=0 exceptional=0 unbatched=6 frac_fallbacks=0 dp_digest=0000000000000000 loops=0",
+   "64": "walk_steps=1048576 two_cycles=3 long_cycles=0 dps=0 ahead_dps=0 abandoned=0 exceptional=0 unbatched=6 frac_fallbacks=0 dp_digest=0000000000000000 loops=0"
+  },
+  "plain_batch": 36846854,
+  "anchor_batch": 37010447,
+  "plain_per_walk_step": 2248.9535,
+  "anchor_per_walk_step": 2258.9384
+ }
+}

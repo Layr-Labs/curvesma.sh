@@ -1,0 +1,116 @@
+{
+ "purpose": "Exercise the rare paths of measurement/step.c that a production-parameter sample does not reach: restarts at distinguished points, abandonment at the trail cap, false filter matches (8-bit filters) that launch exact cycle checks, distinguished points first reached during a look-ahead (ahead_dps), and repeated escape targets (loops, counted by the ring of recent escape targets; expected 0 with doubling escapes)",
+ "builds": "measurement/step.c compiled with the flags below (organizer image and flags), walk_ref.py run with the same values in its environment (ADDER_BITS, B, DP_BITS, CAP_PERIODS, FILTER_BITS)",
+ "inputs": "walk_ref.py gen with B=4096 and seed 7; ADDER_BITS 6 (builds 0-2) or 4 (build 3)",
+ "record_check": "each distinguished point, including a look-ahead one, is recorded as its own point; kernel and replica agree on dp_digest, a digest of every record's key",
+ "runs": [
+  {
+   "flags": "-DADDER_BITS=6 -DB=4096 -DDP_BITS=4",
+   "batch_steps": 200,
+   "walk_steps": 819200,
+   "kernel": {
+    "two_cycles": 1856,
+    "long_cycles": 0,
+    "dps": 49943,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "exceptional": 0,
+    "loops": 0
+   },
+   "kernel_dp_digest": "ad75a5ffc1cf94a3",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 200,
+    "mismatches": 0,
+    "two_cycles": 1856,
+    "long_cycles": 0,
+    "dps": 49943,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "loops": 0,
+    "dp_digest": "ad75a5ffc1cf94a3"
+   }
+  },
+  {
+   "flags": "-DADDER_BITS=6 -DB=4096 -DDP_BITS=12 -DCAP_PERIODS=1",
+   "batch_steps": 200,
+   "walk_steps": 819200,
+   "kernel": {
+    "two_cycles": 2100,
+    "long_cycles": 10,
+    "dps": 208,
+    "ahead_dps": 0,
+    "abandoned": 4092,
+    "exceptional": 0,
+    "loops": 0
+   },
+   "kernel_dp_digest": "fbf0e63e848e1a48",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 200,
+    "mismatches": 0,
+    "two_cycles": 2100,
+    "long_cycles": 10,
+    "dps": 208,
+    "ahead_dps": 0,
+    "abandoned": 4092,
+    "loops": 0,
+    "dp_digest": "fbf0e63e848e1a48"
+   }
+  },
+  {
+   "flags": "-DADDER_BITS=6 -DB=4096 -DDP_BITS=6 -DFILTER_MASK=0xffULL",
+   "batch_steps": 200,
+   "walk_steps": 819200,
+   "kernel": {
+    "two_cycles": 2047,
+    "long_cycles": 24,
+    "dps": 13743,
+    "ahead_dps": 1406,
+    "abandoned": 0,
+    "exceptional": 0,
+    "loops": 0
+   },
+   "kernel_dp_digest": "b975871adc694617",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 200,
+    "mismatches": 0,
+    "two_cycles": 2047,
+    "long_cycles": 24,
+    "dps": 13743,
+    "ahead_dps": 1406,
+    "abandoned": 0,
+    "loops": 0,
+    "dp_digest": "b975871adc694617"
+   }
+  },
+  {
+   "flags": "-DADDER_BITS=4 -DB=4096 -DDP_BITS=8",
+   "batch_steps": 800,
+   "walk_steps": 3276800,
+   "kernel": {
+    "two_cycles": 32829,
+    "long_cycles": 1024,
+    "dps": 12022,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "exceptional": 0,
+    "loops": 0
+   },
+   "kernel_dp_digest": "f824849df0053fc5",
+   "replica": {
+    "walks": 4096,
+    "batch_steps": 800,
+    "mismatches": 0,
+    "two_cycles": 32829,
+    "long_cycles": 1024,
+    "dps": 12022,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "loops": 0,
+    "dp_digest": "f824849df0053fc5"
+   }
+  }
+ ]
+}

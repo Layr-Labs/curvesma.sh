@@ -1,0 +1,69 @@
+{
+  "components_log2_units": {
+    "walk_steps": 126.390705,
+    "adder_table": 32.934829,
+    "initial_walk_starts": 46.934829,
+    "trail_restarts": 84.113333,
+    "distinguished_points": 76.212719,
+    "collision_replay": 85.358801,
+    "solve_verify_output": 17.028243,
+    "input_validation": 17.028243
+  },
+  "time_log2": "25278141/200000",
+  "time_log2_decimal": 126.390705,
+  "time_log2_float": 126.39070499484444,
+  "score_rational": {
+    "numerator": "25278141",
+    "denominator": "200000"
+  },
+  "preprocessing_log2": "23467459/500000",
+  "L": "89663270682989036334838442605",
+  "log2_L": 96.17850378295867,
+  "log2_T": 126.17850378295867,
+  "log2_S_max": 126.1785037841459,
+  "step_units": "62606575648695649187/54043195528445952000",
+  "success": {
+    "tau": 0.5303,
+    "eps": 0.00015285611152648926,
+    "delta": 9.5367431640625e-07,
+    "model": 0.4115238856252056,
+    "lower_bound": 0.3958979319508892,
+    "delta_abandon": 2.54877265669335e-17,
+    "p_abandon_per_trail": 1.63865024183163e-28,
+    "escape_rate_per_step": 2.543830002347845e-06,
+    "delta_loop": 2.0677830711169108e-24
+  },
+  "memory_bytes_log2": "9397313/125000",
+  "dp_max_log2": 67.17850378416446,
+  "meter": {
+    "c_common": 2263,
+    "e_rare_per_walk_step": 0.842323842770081,
+    "events": [
+      {
+        "name": "two_cycle_checks",
+        "rate": 2.543131510416775e-06,
+        "worst_case_instructions": 328232,
+        "expected_instructions_per_walk_step": 0.8347371419271189
+      },
+      {
+        "name": "anchor_checks",
+        "rate": 6.984919310700291e-10,
+        "worst_case_instructions": 10861544,
+        "expected_instructions_per_walk_step": 0.007586700842962088
+      }
+    ],
+    "forced_maxima": {
+      "f": 163118,
+      "add": 162442,
+      "same": 211,
+      "pdp": 99,
+      "esc2": 163780,
+      "esc65": 172474,
+      "overhead": 1024
+    },
+    "reserve_per_walk_step": 53.90872593728518,
+    "charge_per_walk_step": 2316.908725937285,
+    "abort_probability_bound": "1/64",
+    "walk_steps_total": "96275203888186536160436041770275438592"
+  }
+}

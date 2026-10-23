@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-order6-classes-sigma-walk-asm-trails-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.390705,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 75.178504,
+    "preprocessing_log2": 46.934918,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class-level r-adding walk with 2^16 adders behaves as a random mapping on the (r-1)/6 order-6 classes, up to an exponent penalty of at most 4/2^16.",
+    "H2: the fresh-class premise. A class reached for the first time is uniform among the points of its class and independent of other classes and of the adders, so its adder index, canonical unit and key bits are independent and uniform. Lemma C and Lemma M use its per-step consequences: 2-cycles at most 1/A (1/(6A) by Lemma C), 3..64-cycles at most 3/A^2, false 63-bit filter matches at most 2^-63, exact-k fallbacks at most 2^-55.",
+    "H3: Callgrind instruction counts on production inputs represent the common path: 2248.94 (plain) and 2258.94 (anchor) instructions per walk step, plus at most 2 for the canon_pick branch (C_COMMON = 2263), with the rare paths out of line and charged at worst case; the Markov reserve covers the expected rare work."
+  ],
+  "limitations": [
+    "The model success bound is 0.411523 at tau = 0.5303, 0.0215 above 0.39; pooled toy-curve success at that budget is in the evidence.",
+    "Analytic production cost; no production-size execution.",
+    "Needs about 2^67.1 stored distinguished points; not a practical attack.",
+    "The field multiplication is the package's own inline assembly, tested against Python big integers but not formally verified.",
+    "H1 is an unproved standard heuristic; the whole procedure, including resolution, is tested only on toy curves.",
+    "Distinguished points never occur in a production-parameter measurement sample; the restart and abandonment paths were checked on small builds.",
+    "The rare-path charges are forced-path maxima measured with a bounding build (proof.md section 3.1); the bounding build is checked for equality and for dominance on the forced paths, not proved for every input.",
+    "The work meter's abort probability, 1/64, is a Markov bound on the expected metered rare work under H2 (Lemma M), and is counted in delta."
+  ],
+  "lane": "exploratory"
+}
