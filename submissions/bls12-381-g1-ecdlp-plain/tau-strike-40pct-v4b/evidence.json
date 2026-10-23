@@ -1,0 +1,130 @@
+{
+  "scope": "SHA-256 of all package files except this non-self-referential manifest",
+  "files": [
+    {
+      "path": "argument.md",
+      "bytes": 16477,
+      "sha256": "4314f620caa25477b9a4b39ffb741022eee3882faeb581857fcf742b026292a0"
+    },
+    {
+      "path": "captured-output.txt",
+      "bytes": 1036,
+      "sha256": "6996f9f890a56a15db66c7ecd66b096045813813f74d8088b5bbcf84362a3f7b"
+    },
+    {
+      "path": "certificate.json",
+      "bytes": 13654,
+      "sha256": "179e1329ac31afdd209e1af5a5659e7b5619ff29c8be14bb9a2fbf13324c97b6"
+    },
+    {
+      "path": "decision.md",
+      "bytes": 2807,
+      "sha256": "dd1710639dba0569f5f1681872c72b2865fff6c52d044bf7067fa22641aa11df"
+    },
+    {
+      "path": "dependencies.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "public-note.md",
+      "bytes": 13962,
+      "sha256": "00ce0c5ee9634d1255f4e161bd6a8a93c29103e8fca893dccbe56c10fb01a661"
+    },
+    {
+      "path": "reference.py",
+      "bytes": 6750,
+      "sha256": "55fda313028733bd77fbd3b96255338bc178603e41e58b5ecd42238b95b9c582"
+    },
+    {
+      "path": "submission.json",
+      "bytes": 2741,
+      "sha256": "2889e02b30758e263902e1416426cf00f5d0fbf9d6f42aa83691237c4b1d3c84"
+    },
+    {
+      "path": "test_reference.py",
+      "bytes": 2316,
+      "sha256": "d772c53e14728e167df4a7a65b5bd2ab1899c60e5aee12e65d85edb76ab4fa49"
+    },
+    {
+      "path": "toy-30013-part0.json",
+      "bytes": 5617,
+      "sha256": "68671005ae0e80a677ac4894e26854253226f457548378fa4622390e69a63cee"
+    },
+    {
+      "path": "toy-30013-part1.json",
+      "bytes": 5707,
+      "sha256": "89dfff872caa1086c773a1439e9544c18d6d0e28880df1108708e18aa4310326"
+    },
+    {
+      "path": "toy-30013-part2.json",
+      "bytes": 5743,
+      "sha256": "d124b7311ea14492d5877ac98a7dd67d0f0a92ffd139568d5bdaab5cb088ee06"
+    },
+    {
+      "path": "toy-30013-part3.json",
+      "bytes": 5762,
+      "sha256": "e241bd6f2426e56464f06e5c48bac1e6458503643a79ae4c33bf29a622f473a9"
+    },
+    {
+      "path": "toy-30109-part0.json",
+      "bytes": 5602,
+      "sha256": "0342f6e43366936a849f39bfad96a9107363c7e06b6c99189ba2d7c5a0628afb"
+    },
+    {
+      "path": "toy-30109-part1.json",
+      "bytes": 5766,
+      "sha256": "d6d2c4714769399303cd3182dd483c966bb1b167993a2319c5ded57da357f3ce"
+    },
+    {
+      "path": "toy-30109-part2.json",
+      "bytes": 5723,
+      "sha256": "9000c9b23d81fb8fb1ed960f54695098ff213198717099df189cbff8e6cd1945"
+    },
+    {
+      "path": "toy-30109-part3.json",
+      "bytes": 5760,
+      "sha256": "b33ca72cb7e8381312d8620e651193cbb0f1ba5307ddd10352ac46607c04ad18"
+    },
+    {
+      "path": "toy-30139-part0.json",
+      "bytes": 5579,
+      "sha256": "b42a5bbb39716ce57ab428df7f015e46f2e43e85bb293b8df872384c8dcda556"
+    },
+    {
+      "path": "toy-30139-part1.json",
+      "bytes": 5739,
+      "sha256": "ce59946d392cc6160ff6b370af635e84bfb594b386ebbbe41e0f365d79a2f019"
+    },
+    {
+      "path": "toy-30139-part2.json",
+      "bytes": 5774,
+      "sha256": "d5f6c2da5fabb6de4528dda6dbac464b5a916ac10c59fb4dec41d7db544b5144"
+    },
+    {
+      "path": "toy-30139-part3.json",
+      "bytes": 5743,
+      "sha256": "33212135aee500b6eb2b579e2897ae6108ab9d002b1317e9b1fc001da839deec"
+    },
+    {
+      "path": "toy-output.txt",
+      "bytes": 1030,
+      "sha256": "20879c90ca2974100c9489caef1af310d753242d58970666eb0c1fe1f7505565"
+    },
+    {
+      "path": "toy-summary.json",
+      "bytes": 9872,
+      "sha256": "78330aa7baa858f0f6662ce06a716add8cfd6794fcba3be8c5782cf92ce1b741"
+    },
+    {
+      "path": "toy.py",
+      "bytes": 6312,
+      "sha256": "8c3fe810240094326e43290d22596e84d3ad7fe6fddf44f3e0de2bbe97dc9eee"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 10477,
+      "sha256": "a42a45f8870e6340d0f4b3e5b55b5e637f133dd665a844c010a42bb59c582d35"
+    }
+  ]
+}

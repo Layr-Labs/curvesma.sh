@@ -1,0 +1,17 @@
+Exact integer certificate; public constants and toy runs only.
+checks: 106/106
+C: 2000
+N: 8739312529187698413241290084697660972948425416754606303767276449989763530752
+B: 121529577364225250227431250500872470122
+evaluation cap: 729177464185351501364587503005234820732
+field kernels per evaluation: 5375
+rows: {"512_bit_hash_reduction": 65536, "Fermat_inverse_control": 8192, "class_keys_control_counter_and_transfers": 8192, "field_multiply_kernels": 2058625, "keyed_SHAKE256": 65536, "projective_nonkernel": 2093056, "two_scalar_normalizations": 131072}
+I: 4430209
+W: 807602141107780472377226959275329862357980191/500
+stress W: 4470337107344540525639193268558441290940527771/2500
+base log2 bracket: 701063/5000 < log2(W) < 1402127/10000
+stress log2 bracket: 701797/5000 < log2(Wstress) < 280719/2000
+claim: 3512/25; arithmetic comparison difference 4.99 bits
+success: 2/5 under H1; model floor 11/25; named reserve 3/100
+native bytes: 405504 < 1048576
+toy recoveries: 1503/2400; affine pipeline pairs: 72; exhaustive action pairs: 30063
