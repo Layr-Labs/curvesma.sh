@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: parallel distinguished-point Pollard rho in GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, recover P in G1 with e(P,Q)=z under the pinned pairing convention. The algorithm in proof.md computes g=e(P0,Q), solves z=g^a in GT by a parallel distinguished-point additive Pollard rho walk on GT itself (no orbit representatives), outputs [a]P0 and verifies by one pinned pairing. With the work budget capped at floor(1.2*sqrt(r)) total group operations plus the bounded detection tail, the attack uses at most 2^127.696190 total target-group-operation equivalents including preprocessing, detection, solving, verification and output, and succeeds with probability at least 0.42 over the uniform challenge and fresh coins (random-mapping model predicts 0.513; the disclosed heuristic H1 and toy measurements of 0.43-0.45 within budget support the submitted 0.42). Peak memory is at most 2^57.04 bytes; preprocessing is at most 2^43 equivalents and is included in total work; nonuniform advice is 0 bytes. All arithmetic is charged through the dense-Fp12 reference operation at C=20000 and justified instruction counts; no orbit structure, no free oracles, no quantum steps.",
+      "score": {
+        "numerator": "63848095",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-parallel-dp-rho",
+      "source": "experiment.py",
+      "purpose": "Check on a scaled-down analog (prime-order subgroup of GF(p)*) that the parallel DP additive rho walk collides within ~sqrt(pi*q/2) total steps, that a 1.2*sqrt(q) budget yields the predicted success fraction, that the linear solve recovers the discrete log, and that DP density matches 2^-w. Toy-scale evidence only; it does not establish production cost or success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 200000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 65521
+        },
+        {
+          "order": 131071
+        }
+      ]
+    }
+  ]
+}
