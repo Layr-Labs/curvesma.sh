@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-accelerated parallel GT rho (v3)",
+  "claims": [
+    {
+      "statement": "For fixed nonidentity P in G1 and z in GT with z=e(P,Q) for secret Q in G2, recover Q. Applies every lesson from this project's four prior rejections (sibling secp256k1 x3, p256-ecdlp x1), each independently re-verified for this track's own order-6 automorphism rather than assumed: (1) squaring escape (V<-V^2), empirically verified 0/150 trapped across 6 configurations vs additive escape's small residual trap rate at L=8 (vanishing at production's L=32); (2) a chaining hash table (T buckets, load factor 1), not a probe-capped one, avoiding a per-operation-vs-whole-attack overflow mismatch; (3) explicit 0.40 success-probability margin, with the exact birthday-budget success rate measured empirically at 47-55% across seeds, not merely an eventual-recovery timeout; (4) the toy experiment uses L=32, matching production exactly; (5) the dominant non-addition cost (Frobenius-power application) is derived, not estimated: for the Fp[w]/(w^12-2w^6+2) representation, Frobenius fixes coefficients already in Fp (Fermat's little theorem), needing at most 11 Fp multiplications by precomputed public constants, not an assumed larger generic cost. Total computation is at most 1.409946e+38 reference-group-operation equivalents (pinned C=20,000). Success probability verified to 60 digits of exact decimal precision and empirically measured at the exact claimed budget.",
+      "score": {
+        "numerator": "126728908",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-frobenius-exact-budget",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the production mechanism exactly at production's branch count L, running for exactly the birthday-scale step budget (not an unrestricted timeout) and reporting the measured success rate at that exact budget. Also reports escapes_triggered for the squaring-escape mechanism. Does not validate production field/pairing arithmetic, instruction costs or full-size timing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 20000
+          },
+          "w": {
+            "type": "integer",
+            "enum": [6]
+          },
+          "unit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "L": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "W": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "p_target": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 0.99
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": ["order", "w", "unit", "L", "W", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 9973,
+          "w": 6,
+          "unit": 1569,
+          "L": 32,
+          "W": 8,
+          "trials": 200,
+          "p_target": 0.40,
+          "seed": 42
+        }
+      ]
+    }
+  ]
+}

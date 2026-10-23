@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "bls12-381-fixed-g1-invert-g2",
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "candidate-attack",
+  "algorithm": "frobenius-parallel-rho-chaining-squaring-escape-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.728908,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 136.32144,
+    "preprocessing_log2": 11.874218,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Canonicalized parallel rho walk modeled as a uniform random function on an m=r/6-element set; empirically measured success rate (47-55%) at the exact claimed budget supports this beyond the toy-scale assumption alone.",
+    "Mod-r multiplication reuses the pinned mod-p instruction count as a same-bit-length analogy (the Frobenius-power cost itself, 11 Fp mults, is independently derived, not an analogy).",
+    "The chaining table's O(1)-expected traversal cost is a standard balls-into-bins linearity-of-expectation argument.",
+    "The 2% escape-rate bound is empirically supported (measured ~0.4% at L=32 matching production), not a proven worst case."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution. experiment.py exercises the exact production mechanism (including matching L=32 and the exact birthday-scale budget) on a toy exponent group, not production field/pairing arithmetic.",
+    "Does not attempt a SexTNFS-based score: literature estimates for BLS12-381 GT security under STNFS cluster 117-133 bits, but no source gives a reviewable instruction-level cost comparable in rigor to this ledger.",
+    "Does not use Satoh's Miller Inversion; a prior revision showed it cost-equivalent to the simpler scalar multiplication used here."
+  ],
+  "lane": "exploratory"
+}
