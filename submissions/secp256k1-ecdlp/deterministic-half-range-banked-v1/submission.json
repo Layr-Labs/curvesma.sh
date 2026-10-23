@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "title": "Deterministic half-range BSGS with charged bank routing",
+  "claims": [
+    {
+      "statement": "For the unchanged unrestricted-production secp256k1 target, the classical cold algorithm in proof.md receives only Q=[x]P and recovers x with probability at least 1/2 over uniform x in [0,r), with no random coins or heuristic premises. It deliberately searches the first 2^255 scalars, without changing the input distribution, and may fail elsewhere. On every valid input its total work, including preprocessing, failures, arithmetic, sorting, bank routing, verification and output, is at most 2^143 target-group-operation equivalents at the protected C=1000 scalar AArch64 instructions per unit. Peak storage is less than 2^136 bytes, preprocessing is at most 2^143 units and is included, and nonuniform advice is zero bytes. This is a conservative analytic accounting control with astronomical distributed memory, not a best-known attack, novelty claim, practical break or production execution. The explicit storage-message implementation and elementary arithmetic allowances in proof.md are part of the claim.",
+      "score": {"numerator": "143", "denominator": "1"},
+      "evidence": ["proof.md", "evidence.md", "audit.py"]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "finite-identities-and-exact-accounting",
+      "source": "audit.py",
+      "purpose": "Check exact production accounting inequalities, exhaustive partial-table coverage in small cyclic groups, and Jacobian/batch-normalization identities on secp256k1. No production attack, instruction measurement or full-size data movement is executed.",
+      "input_schema": {
+        "type": "object",
+        "properties": {"mode": {"type": "string", "enum": ["audit"], "maxLength": 5}},
+        "required": ["mode"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [{"mode": "audit"}]
+    }
+  ]
+}
