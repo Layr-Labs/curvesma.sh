@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp/partial-cheon (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v2 (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v3 (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v4 (rejected: sort/lookup ledgers omitted record moves, addressing and index arithmetic; buffered merge sort needs linear auxiliary storage; equal-x keys identify points only up to negation)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v5 (rejected: exact-count claims contradicted by the implementation; memory lower-bound arithmetic wrong; incomplete comb/batching/factorization constructions)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "partial-coverage-cheon-v6",
+  "work_function": "W(n) for n >= 2^20 equals W(2^20) = m*(64+0.256+3.8355) + m*(64+0.256+1.755) + <= 2^21.9 with m = isqrt(floor(2N/5)) + 1, N = (r-1)/2^20; the attack reads only A_1 and A_d. Score = log2(W(2^20)).",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 123.834773,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 124.8,
+    "preprocessing_log2": 21.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "None for the success probability: k1 is uniform over [0,N) (the d-th power map is exactly d-to-1 onto the order-N subgroup); block j covers exactly the m values {(m1*j + i) mod N : i < m} with consecutive arcs disjoint (start spacing m1 > m, no start collisions for window spans), so every offset covers at least (m-1)m values - an exact per-offset bound of 0.4 - 2^-118 >= 0.39 including all wrap-around hits; the closed form is additionally crosschecked against an exhaustive every-offset brute force on five smaller parameter sets.",
+    "The table machinery is deterministic with worst-case upper bounds asserted in the experiment: merge sort over an auxiliary buffer (<= m*117 key compares at 15 instructions, <= m*118 record moves at 50 instructions including the final copy-back, <= 16 instructions key preparation per record), binary search (exactly floor(log2 m)+1 = 117 probes worst case - the candidate range at most halves per probe - each <= 30 instructions including 2-word index arithmetic, addressing, 6-limb key load/compare and the parity bit), comb multiplications (32 window additions, each exactly one reference batched-incomplete-affine operation by construction of the cost model - the inversion amortization is part of the reference definition - plus <= 8 units control; charged 64), mod-r multiplication (explicit 5x52 schoolbook + Montgomery construction, 512 instructions), and the runtime factorization of r-1 as a bounded Brent-Pollard rho construction (all factors < 2^28, <= 1.18*sqrt(p) expected mulmods per factor, <= 2^15 units total) that Part A executes on the production r-1 and asserts equal to the supplied factor list in both directions. The sort key is (x, y mod 2), which uniquely determines an affine point on this odd-prime curve (same-x points have opposite y-parities), so every key match is an exact point match and k1 = (i + m1*j) mod N is exact with no sign ambiguity."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold; deterministic full coverage costs about +0.86 log2.",
+    "The bound applies only for n >= 2^20; smaller n would force a smaller divisor of r-1.",
+    "Peak memory is the main sorted array plus the merge buffer = 256*m = 2^124.767581 bytes, plus comb tables, code and scratch: strictly above 2^124.7675 bytes, reported rounded up as 124.8.",
+    "Cheon's auxiliary-input attack is standard cryptanalysis, not a novel algorithm; first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}
