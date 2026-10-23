@@ -1,0 +1,33 @@
+{
+  "configuration_count": 8,
+  "coverage_prediction_errors": 0,
+  "curve": {
+    "P": [
+      169338,
+      64967
+    ],
+    "b": 4,
+    "g": 11,
+    "p": 221201,
+    "r": 12289
+  },
+  "evidence_files": [
+    "toy-grid-a.json",
+    "toy-grid-b.json"
+  ],
+  "exhaustive_all_secrets": {
+    "coverage_prediction_errors": 0,
+    "d": 64,
+    "hits": 5376,
+    "misses": 6912,
+    "transcript_sha256": "dd958c7b5e09a18eebe039d71ac53bfba6a0e3a659e51f2d89f22a79137d3062",
+    "trials": 12288,
+    "wrong_outputs": 0
+  },
+  "exhaustive_k2_trials": 1716,
+  "random_hits": 8832,
+  "random_misses": 7168,
+  "random_trials": 16000,
+  "scope": "Actual real-EC chain actions, original live points, 128-byte records, 104-pass radix sort, supplied-power lifting; no production cost measurement.",
+  "wrong_outputs": 0
+}

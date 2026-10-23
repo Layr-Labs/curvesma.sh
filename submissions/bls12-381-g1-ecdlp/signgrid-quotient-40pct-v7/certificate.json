@@ -1,0 +1,316 @@
+{
+  "C": 2000,
+  "E": 79650816,
+  "H": 0,
+  "K": 9751315745496375220768269919487250650739343392947091460616792150962852,
+  "L": 332306998946228968225951765070086144,
+  "Q": 25003373706400962104534025434582693976254726648582285796453313207597056,
+  "R": 19918011671547009368992591426495508435762944,
+  "W": {
+    "denominator": "125",
+    "numerator": "1244875729471688085562036964155969277235184"
+  },
+  "baby": 98748750602204457565883422358598783,
+  "checks": {
+    "all_row_reprice_headroom": true,
+    "argument_size": true,
+    "baby_distinct_bound": true,
+    "base_claim": true,
+    "bounded_files": true,
+    "canonicalization_ceiling": true,
+    "capacity": true,
+    "claim_reduced": true,
+    "claim_window_max": true,
+    "claim_window_min": true,
+    "cold_bound": true,
+    "counters_and_addresses": true,
+    "d_is_supplied": true,
+    "dense_binary_identity": true,
+    "dense_exponents_supplied": true,
+    "dense_sign_nontrivial": true,
+    "dependencies_empty": true,
+    "evidence_files": true,
+    "evidence_matrix": true,
+    "evidence_summaries": true,
+    "exact_success_floor": true,
+    "exhaustive_all_secrets": true,
+    "factors_prime": true,
+    "factors_product": true,
+    "file_count": true,
+    "full_scalar_action_price": true,
+    "giant_distinct_bound": true,
+    "hundredth_133_23_fails": true,
+    "integer_coverage_identity": true,
+    "ledger_sum": true,
+    "log_interval_width": true,
+    "lucas_r_prime": true,
+    "manifest_claim": true,
+    "manifest_schema": true,
+    "metadata_bound": true,
+    "n_range_input_memory": true,
+    "no_bytecode": true,
+    "no_declared_experiments": true,
+    "no_quotient_wrap": true,
+    "note_lineage_attribution": true,
+    "note_public": true,
+    "note_size": true,
+    "orientation_reconstruction": true,
+    "peak_memory": true,
+    "primitive_zeta": true,
+    "q_even": true,
+    "q_not_assumed_prime": true,
+    "quotient_tiling": true,
+    "record_layout": true,
+    "rectangle_balanced": true,
+    "rectangle_meets_target": true,
+    "rectangle_minimal": true,
+    "routing_height": true,
+    "routing_row": true,
+    "sign_extra_exact": true,
+    "sign_scalar": true,
+    "source_truth_R": true,
+    "source_truth_operating_point": true,
+    "two_lifts_disjoint": true
+  },
+  "claim": {
+    "denominator": "25",
+    "numerator": "3331"
+  },
+  "claim_slack_interval": [
+    "0.005768162047",
+    "0.005768162048"
+  ],
+  "cold_subceilings": {
+    "counters_negations_code_output": 1099511627776,
+    "extra_actions": 1304998969344,
+    "factor_trial_discovery_and_verification": 562949953421312,
+    "known_modular_arithmetic": 1099511627776
+  },
+  "d": 1048576,
+  "dense_root_identities": [
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 524288,
+      "t": 0
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 262144,
+      "t": 1
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 131072,
+      "t": 2
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 65536,
+      "t": 3
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 32768,
+      "t": 4
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 16384,
+      "t": 5
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 8192,
+      "t": 6
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 4096,
+      "t": 7
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 2048,
+      "t": 8
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 1024,
+      "t": 9
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 512,
+      "t": 10
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 256,
+      "t": 11
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 128,
+      "t": 12
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 64,
+      "t": 13
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 32,
+      "t": 14
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 16,
+      "t": 15
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 8,
+      "t": 16
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 4,
+      "t": 17
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 2,
+      "t": 18
+    },
+    {
+      "coefficient": 26217937587563095239723870254092982918845276250263818911301829349969290592256,
+      "e": 1,
+      "t": 19
+    }
+  ],
+  "endpoints": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      98748750602204457565883422358598782,
+      0,
+      98748750602204457565883422358598782
+    ],
+    [
+      98748750602204457565883422358598783,
+      1,
+      0
+    ],
+    [
+      9751315745496375220768269919487250738038577097236416592627361527679871,
+      98748750602204457565883422358598783,
+      98748750602204457565883422358598782
+    ]
+  ],
+  "exact_coverage_identity": "[0,ab) disjoint-union [Q,Q+ab); cardinality=2ab",
+  "exact_covered": 19502631490992750441536539838974501476077154194472833185254723055359744,
+  "factors": [
+    [
+      2,
+      32
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      11,
+      1
+    ],
+    [
+      19,
+      1
+    ],
+    [
+      10177,
+      1
+    ],
+    [
+      125527,
+      1
+    ],
+    [
+      859267,
+      1
+    ],
+    [
+      906349,
+      2
+    ],
+    [
+      2508409,
+      1
+    ],
+    [
+      2529403,
+      1
+    ],
+    [
+      52437899,
+      1
+    ],
+    [
+      254760293,
+      2
+    ]
+  ],
+  "g": 7,
+  "giant": 98748750602204457565883422358598784,
+  "grid_records": 197497501204408915131766844717197567,
+  "input_n_range": [
+    1048576,
+    4294967296
+  ],
+  "key_bytes": 104,
+  "peak_bytes": 510423550381407695213508655221361868800,
+  "policy_floor_interval": [
+    "133.234231837952",
+    "133.234231837953"
+  ],
+  "q": 50006747412801924209068050869165387952509453297164571592906626415194112,
+  "r": 52435875175126190479447740508185965837690552500527637822603658699938581184513,
+  "random_trials": 16000,
+  "raw_log2_interval": [
+    "132.871197432118",
+    "132.871197432119"
+  ],
+  "record_bytes": 128,
+  "repriced_headroom_interval": [
+    "0.105768162047",
+    "0.105768162048"
+  ],
+  "route": 21135360,
+  "rows": {
+    "cold_setup": 1208925819614629174706176,
+    "dense_root_and_final_verification": 1672667136,
+    "grid_scalar_actions": 15730837128892152887919976703470075444764672,
+    "input_scan": 1099511627776,
+    "metadata_and_initialization": 12943196238932142662075471935386259750912,
+    "routed_sorting": 4174180787055616008519339699162068769669120,
+    "sign_record_maintenance": 50559360308328682273732312247602577152
+  },
+  "sign_extra_per_record": 256,
+  "stress_work": {
+    "denominator": "625",
+    "numerator": "7469254376830128513372221784935815663411104"
+  },
+  "stressed_log2_interval": [
+    "133.134231837952",
+    "133.134231837953"
+  ],
+  "success": {
+    "denominator": "3426997492653640639327580240485566608587544770913142241838447533936",
+    "numerator": "1336529022134919849337756293789370989314497957406307098770197577807"
+  },
+  "toy_configurations": 8,
+  "toy_summary_sha256": "20cfcc6f71e3dc51370435bfc58d39835e97b1e95a4c1dbd72285a9b88808b23"
+}

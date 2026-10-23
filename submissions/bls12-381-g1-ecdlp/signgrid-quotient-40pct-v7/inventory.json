@@ -1,0 +1,16 @@
+{
+  "argument.md": "762d33d2fae93bbbf463cbf2fc146d0de09ae1ad94da4f1f088cb64967d99a84",
+  "certificate.json": "cc51c46a384cfb1559500049be16d7cb0110812dbcdf25cfdc7e0337c3ab9174",
+  "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "floor-appendix.md": "ac1a20b1d414b7378b5619b2c347787f153677687b84629d0e8d6e53c6c4bcf2",
+  "ledger.md": "8ea99dd2996b6e4528c5b9b8f3d00378f28c0b36bab9fc4b79eb8178aeb5bb52",
+  "public-note.md": "171e46955db05610933bce5dbaa855a3ecdbf60c2373a122fdffb98ce053e528",
+  "submission.json": "16ec13956514e2e9a28bbc22b4019f070aa419a462d60079bc1696fce00319b5",
+  "test_certificate.py": "7b39a50a853bee859ef98cc465a24b2bcfdef3e4da7182ee2e4931c47a89d2b3",
+  "test_signgrid.py": "72e33ce021498086cf24846d5bbc6f0ea90ea16f9cac35d7f03ee3bfa5cb9fd1",
+  "toy-grid-a.json": "92bba3e36774a92c055421ae92ecfb176554855863cd4e7996acc8312041d49b",
+  "toy-grid-b.json": "acc6ef3986a7fecf98c33109cc71176e8471048667d1e4d4b34d809d0939534f",
+  "toy-summary.json": "20cfcc6f71e3dc51370435bfc58d39835e97b1e95a4c1dbd72285a9b88808b23",
+  "toy.py": "e6d3d24413cab8031c5c1cd3e8fbf129abb32e2c4ec909bbec9656566ff38a95",
+  "verify.py": "e42d7a6fffcbfab1dbf5bf45f277e8518b0e901f915885f822594141fe5615e8"
+}

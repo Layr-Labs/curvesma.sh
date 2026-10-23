@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "title": "Deterministic sign-quotient exponent grid with orientation and dense-power root lifting",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "ledger.md",
+        "floor-appendix.md",
+        "certificate.json",
+        "verify.py",
+        "toy.py",
+        "toy-summary.json",
+        "toy-grid-a.json",
+        "toy-grid-b.json",
+        "test_signgrid.py",
+        "test_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "3331",
+        "denominator": "25"
+      },
+      "statement": "For the protected BLS12-381 G1 input T=A_1=[s]P0 and A_e=[s^e mod r]P0, uniform nonzero s, and every integer 2^20<=n<=2^32, set d=2^20, q=(r-1)/d, a=98748750602204457565883422358598783, b=98748750602204457565883422358598784, and N=a+b. The deterministic sign-quotient scalar-action grid followed by literal supplied-power binary root recovery succeeds exactly on 2ab of the q equally likely exponents, hence with success 2ab/q>=39/100. It has H(n)=0 and R(n)=N*(79650816+21135360+65536+256)+21*79650816+2^80+2^20*n scalar AArch64 instruction equivalents, with W(n)=R(n)/2000. At n=2^20, W<2^(3331/25). Repricing every instruction row by 6/5 still gives work below 2^(3331/25-1/10). Hard peak memory is at most 1536L+2^64<2^129 bytes, where L is the least power of two at least N. Canonicalization is stored-record maintenance only: every geometric-chain and root-candidate point action is charged completely, and every chain retains its original point. No multiplicative PH, unknown encoded-scalar exponentiation, random mapping, hash lookup or probabilistic collision premise is used."
+    }
+  ],
+  "experiments": []
+}
