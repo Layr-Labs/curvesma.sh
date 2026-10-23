@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: parallel Pollard rho on negation classes with a sigma walk",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and input Q=[x]P on NIST P-256 the parallel distinguished-point Pollard rho algorithm in proof.md recovers x with probability at least 0.39. It walks on the negation classes {W, \u2212W} of P-256, using 2^32 walks and 2^16 adders, with batched affine additions. Walks run in trails from fresh coins: each trail ends at its first distinguished point, which it records once, and the first key match is resolved by replaying both trails, so a degenerate match has probability exactly 1/r (Lemmas R and D). Fruitless cycles are escaped only after exact checks, and the distinguished-point test comes first on every point. Total computation is at most 2^127.504730 target-group-operation equivalents, including preprocessing, distinguished-point storage and lookup, all failures and restarts, collision replay, verification and output. The total is charged by a work meter that aborts when its rare-work reserve is exceeded, with probability at most 1/64 (counted in delta). Each walk step is charged 845 common-path instructions plus a Markov reserve of 129.20 for rare events, that is 974.20 instructions at C=1000, against 833.6 (plain) and 844.9 (anchor) instructions per walk step measured on production inputs; the Python replica matches every final point. Peak memory is at most 2^76.542441 bytes. Preprocessing is at most 2^48.619436 units and is included in total work. Nonuniform advice is 0 bytes. This is a classical cold attack on one target with no uncharged advice or quantum steps. The success bound of 0.395898 is the model bound 0.411524 less 1/64 for the meter and 2^-20 for the other terms. It relies on the disclosed heuristics H1-H3 in proof.md: H1 is the standard random-mapping model for r-adding class walks with an exponent penalty of at most 4/2^16, used in its unconditional per-step form H1\u2032; Lemma C derives the fruitless-cycle rates from H1\u2032, and Lemma M bounds the metered rare work by Markov's inequality on those unconditional rates; H3 is the representativeness of the measured instruction counts. These are supported by toy-curve runs of the identical procedure and by production-curve measurements, not proved. This is a carefully accounted generic attack, not a claim of a practical break.",
+      "score": {
+        "numerator": "12750473",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "measurement/step.c",
+        "measurement/p256_field.h",
+        "measurement/p256_sub.h",
+        "measurement/walk_ref.py",
+        "measurement/run.sh",
+        "measurement/reproduce.sh",
+        "measurement/summarize.py",
+        "evidence/measurement/seed1.json",
+        "evidence/measurement/trail-paths.json",
+        "experiment.py",
+        "evidence/trails/summary.json",
+        "evidence/trails-stress.json",
+        "evidence/lemma-r-sensitivity.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-procedure",
+      "source": "experiment.py",
+      "purpose": "Run the complete procedure of proof.md section 1.3 on random prime-order toy curves y^2=x^3-3x+b (the P-256 shape), at budget tau = tau_e4/10^4: each slot runs trails from fresh coins without tracking coefficients, with the same class key, canonical rule, adder images and index, both cycle rules and escapes; a trail ends at its first distinguished point, recorded once with its coins, or is abandoned at the cap; each slot takes L steps and finishes its trail. The first key match is resolved by replaying both trails from their coins (with a different anchor schedule, checking Lemma R); a degenerate match fails. The filters compare keys masked to filter_bits, as the kernels keep only 64 key bits, and the distinguished-point test precedes every escape and every look-ahead step; with check_all_replays every recorded trail is also replayed and any replay that misses its recorded point is counted. The filters compare keys masked to filter_bits, as the kernels keep only 64 key bits, and the distinguished-point test precedes every escape and every look-ahead step; with check_all_replays every recorded trail is also replayed and any replay that misses its recorded point is counted. Reports the success rate against 1-exp(-tau), degenerate matches and replay mismatches. No oracle collision table. Toy scale only: it tests the procedure and its collision statistics, not production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 28
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 80
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 11
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "tau_e4": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 6000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "curve": {
+            "type": "string",
+            "enum": [
+              "a3"
+            ],
+            "maxLength": 2
+          },
+          "filter_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 64
+          },
+          "check_all_replays": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "adder_bits",
+          "dp_bits",
+          "walks",
+          "tau_e4",
+          "seed",
+          "curve",
+          "filter_bits",
+          "check_all_replays"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "a3",
+          "bits": 28,
+          "trials": 80,
+          "seed": 2801,
+          "adder_bits": 11,
+          "dp_bits": 5,
+          "walks": 16,
+          "tau_e4": 5303,
+          "filter_bits": 64,
+          "check_all_replays": 1
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2, preprocessing, memory and success lower bound from the stated parameters with exact integer arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}

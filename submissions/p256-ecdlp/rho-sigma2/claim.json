@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-negation-classes-sigma-walk-trails-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.50473,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 76.542441,
+    "preprocessing_log2": 48.619436,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class-level r-adding walk with 2^16 adders behaves as a random mapping on the (r-1)/2 negation classes, up to an exponent penalty of at most 4/2^16.",
+    "H1': per-step form of H1: along a trail, fresh classes give independent uniform adder indices and canonical units, Bernoulli(theta) distinguished-point indicators, and per-step costs as sampled. Lemma C derives from it the fruitless-cycle rates: 2-cycles at most 1/(2A), 3..64-cycles at most 3/A^2, longer ones at most 2^-300 per length.",
+    "H3: Callgrind instruction counts on production inputs represent the common path: 833.6 (plain) and 844.9 (anchor) instructions per walk step per walk step, with the rare paths out of line and charged at worst case; the Markov reserve covers the rare work in expectation."
+  ],
+  "limitations": [
+    "The model success bound is 0.411523 at tau = 0.5303, 0.0215 above 0.39; pooled toy-curve success at that budget is in the evidence.",
+    "Analytic production cost; no production-size execution.",
+    "Needs about 2^68.5 stored distinguished points; not a practical attack.",
+    "H1 is an unproved standard heuristic; the whole procedure, including resolution, is tested only on toy curves.",
+    "Distinguished points never occur in a production-parameter measurement sample; the restart and abandonment paths were checked on small builds.",
+    "The per-operation charge U bounds the measured unbatched cost on sampled inputs; a worst-case path was not measured separately.",
+    "The per-operation charge U bounds the measured unbatched cost on sampled inputs; a worst-case path was not measured separately.",
+    "The work meter's abort probability, 1/64, is a Markov bound on unconditional per-step rates (Lemma M), and is counted in delta.",
+    "The per-operation charge U bounds the measured unbatched cost on sampled inputs; a worst-case path was not measured separately."
+  ],
+  "lane": "exploratory"
+}

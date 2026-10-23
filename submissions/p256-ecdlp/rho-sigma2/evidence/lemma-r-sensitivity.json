@@ -1,0 +1,99 @@
+{
+ "purpose": "Lemma R sensitivity: with 6-bit filters and 16 adders (many false filter matches and short cycles), replay every recorded trail and count replays that miss the recorded point. legacy_order=true restores the earlier order (escape before the distinguished-point test, no look-ahead test, anchor check skipped after a false first-filter match); it is an offline-only switch, not part of the declared schema",
+ "runs": {
+  "j0-legacy-false": {
+   "config": {
+    "bits": 26,
+    "trials": 200,
+    "seed": 77,
+    "b": 7,
+    "adder_bits": 4,
+    "dp_bits": 3,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 6,
+    "check_all_replays": 1,
+    "legacy_order": false,
+    "curve": "j0"
+   },
+   "trials": 200,
+   "success": 83,
+   "replays_checked": 59977,
+   "all_replay_mismatches": 0,
+   "replay_mismatches": 0,
+   "ahead_dps": 781,
+   "long_cycles": 133,
+   "abandoned_trails": 0
+  },
+  "j0-legacy-true": {
+   "config": {
+    "bits": 26,
+    "trials": 200,
+    "seed": 77,
+    "b": 7,
+    "adder_bits": 4,
+    "dp_bits": 3,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 6,
+    "check_all_replays": 1,
+    "legacy_order": true,
+    "curve": "j0"
+   },
+   "trials": 200,
+   "success": 76,
+   "replays_checked": 59351,
+   "all_replay_mismatches": 8,
+   "replay_mismatches": 0,
+   "ahead_dps": 0,
+   "long_cycles": 117,
+   "abandoned_trails": 28
+  },
+  "a3-legacy-false": {
+   "config": {
+    "bits": 26,
+    "trials": 200,
+    "seed": 77,
+    "curve": "a3",
+    "adder_bits": 4,
+    "dp_bits": 3,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 6,
+    "check_all_replays": 1,
+    "legacy_order": false
+   },
+   "trials": 200,
+   "success": 71,
+   "replays_checked": 95625,
+   "all_replay_mismatches": 0,
+   "replay_mismatches": 0,
+   "ahead_dps": 706,
+   "long_cycles": 561,
+   "abandoned_trails": 0
+  },
+  "a3-legacy-true": {
+   "config": {
+    "bits": 26,
+    "trials": 200,
+    "seed": 77,
+    "curve": "a3",
+    "adder_bits": 4,
+    "dp_bits": 3,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 6,
+    "check_all_replays": 1,
+    "legacy_order": true
+   },
+   "trials": 200,
+   "success": 81,
+   "replays_checked": 92993,
+   "all_replay_mismatches": 47,
+   "replay_mismatches": 1,
+   "ahead_dps": 0,
+   "long_cycles": 472,
+   "abandoned_trails": 89
+  }
+ }
+}
