@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: STNFS discrete log in GT",
+  "claims": [
+    {
+      "statement": "For each production instance with nonidentity P in G1 and z in GT (including z=1), compute g=e(P,Q0)=pairing(Q0,P,final_exponentiate=True), solve a=log_g z with the published Special-Tower Number Field Sieve in F_{p^12} using the Guillevic-Singh BLS12-381 polynomial and Table 10 parameters, return Q=[a]Q0, and verify e(P,Q)=z. STNFS relation collection, linear algebra and descent are Las Vegas and retried inside the charged expectation, so success probability is 1. The published GS21 total 2^126 (recomputed 2^126.146602479037 from the published parameters) is converted conservatively to scalar instructions by 16 instructions/cycle and a further factor 4 for descent, ECM, failures, filtering, verification and output, giving R <= 2^132.146602 instruction equivalents. With H=0 for the dominant work (the final verification pairings use fewer than 2^16 reference operations and are covered by the overhead) and C=20,000 instructions per target operation, the total is 2^117.858891 target-group-operation equivalents. Peak memory is at most 2^72.389801 bytes; preprocessing is at most 2^115.858891 target-operation equivalents and is included in the total with no reuse credit; nonuniform advice is 0. No auxiliary powers are used. The score is log2(W)=117.858891. This is an analytic reproduction of a published cost model, not a production-size execution.",
+      "score": {
+        "numerator": "117858891",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-cost-ledger",
+      "source": "experiment.py",
+      "purpose": "Recompute the GS21 BLS-381 STNFS relation-collection, linear-algebra and total cost from the published Table 10 parameters, then recompute the instruction-equivalent conversion and normalized score in this submission's ledger. The script asserts that the recomputed sieving space matches the published 2^124.08, that the total is within 0.25 bits of the published 2^126, and that the normalized score matches the claim to 1e-6. It is arithmetic evidence for the cost claim, not an attack run.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "sieve_bound": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "eta": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "log2_smoothness_bound": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "log2_factor_base": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "log2_relations": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 5000
+          },
+          "matrix_weight": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "filtering_factor": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "la_words": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "ipc_bound": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 1024
+          },
+          "overhead_factor": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 1024
+          },
+          "reference_price": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 1000000000
+          },
+          "published_total_log2": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5000
+          },
+          "claimed_score_log2": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5000
+          },
+          "relation_entries_bound": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "sieve_bound",
+          "eta",
+          "log2_smoothness_bound",
+          "log2_factor_base",
+          "log2_relations",
+          "matrix_weight",
+          "filtering_factor",
+          "la_words",
+          "ipc_bound",
+          "overhead_factor",
+          "reference_price",
+          "published_total_log2",
+          "claimed_score_log2",
+          "relation_entries_bound"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "sieve_bound": 686,
+          "eta": 6,
+          "log2_smoothness_bound": 65.316,
+          "log2_factor_base": 60.848,
+          "log2_relations": 61.3898,
+          "matrix_weight": 200,
+          "filtering_factor": 20,
+          "la_words": 4,
+          "ipc_bound": 16,
+          "overhead_factor": 4,
+          "reference_price": 20000,
+          "published_total_log2": 126.0,
+          "claimed_score_log2": 117.858891,
+          "relation_entries_bound": 256
+        }
+      ]
+    }
+  ]
+}
