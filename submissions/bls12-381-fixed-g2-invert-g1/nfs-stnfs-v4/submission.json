@@ -1,0 +1,168 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g2-invert-g1: hard-capped STNFS discrete log in GT",
+ "claims": [
+  {
+   "statement": "For each production instance with nonidentity Q in G2 and target z in GT (including z=1), compute g=e(Q,P0)=pairing(Q,P0,final_exponentiate=True) with the public G1 generator P0; because the pinned pairing is nondegenerate and Q,P0 have prime order r, g generates GT. Compute a=log_g z modulo r with the published Special-Tower Number Field Sieve in F_{p^12} using the Guillevic-Singh BLS12-381 polynomial and Table 10 parameters, return P=[a]P0, and verify e(Q,P)=z and [r]P=O. The algorithm is HARD-TRUNCATED and its run is a sequence of complete attempts: each attempt is capped at B=2^136.268405376626 scalar instruction equivalents and the whole run at R_cap=4*B=2^138.268405376626, where FAILURE is returned when either bound is reached, so the submitted bound is an enforced cap and not an expected value. LEDGER: the GS21 model core recomputed from Table 10 is 2^126.146602479037 (sieving space (2*686+1)^12/2 = 2^124.077390921765 times ln ln(2^65.316), plus block-Wiedemann 4*200*(2^60.848/20)^2 = 2^122.696; published as 2^126). The individual-logarithm descent is NOT absorbed: with Theta=(ln p^12)^(1/3)(ln ln p^12)^(2/3)=59.033894749678 it is exp(1.44*Theta)=2^122.641786367599 by Barbulescu-Pierrot, and the ECM cofactorization is 2^87.6; both are added, giving the model total T=2^126.268405376626 model operations. Conversion: 1024 scalar instructions per model operation, which is 11.3x the largest factor that follows from the published calibration (BD19 Table 6 worst measured/model ratio 2^3.5=11.31 cycles per model operation times the widest current AArch64 retirement of 8 scalar instructions per cycle = 90.5 instructions), and 4.5x a bare 90.5-instruction reading. Trials: a capped attempt costs at most B and is charged a per-attempt success probability of only 1/2 (the published simulation overshoots the factor base by 2^0.54), so E[T]<=2B=2^137.268405376626, and Markov's inequality gives Pr[T>2E[T]]<=1/2, so at least half of the (instance, coins) pairs return a verified P within R_cap. Success probability is therefore at least 1/2, above the required 0.39, and no expected value is reported as a bound. With H=2^14 reference operations charged separately for the two pairings and the G1 scalar multiplication, and the organizer's fixed C=20000 instructions per dense Fp12 reference operation, W_cap=R_cap/C+H=2^123.980692997077 and the score is log2(W_cap)=123.980693 (exact rational 123980693/1000000, rounded upward from 123.980692997077). MEMORY: peak 2^72.389800 bytes for the relation file (2^61.3898 records at 2048 bytes), filtered matrix 2^69.17 bytes, external sort 8 passes = 2^69.3898 word-ops charged in the ledger (2^-56.8 of T); no dictionary, no lookup by value, no distinguished points. Preprocessing is the field-only relation collection and linear algebra, charged in full per instance with no reuse credit and no amortization over future targets; nonuniform advice is 0; no auxiliary powers and no n parameter exist on this track. This is an analytic reproduction of a published cost model at production parameters, not a production-size execution.",
+   "score": {
+    "numerator": "123980693",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md",
+    "claim.json",
+    "experiment.py",
+    "recomputed.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "stnfs-hard-capped-ledger-v4",
+   "source": "experiment.py",
+   "purpose": "Recompute the GS21 BLS-381 STNFS sieving space, sieve cost, block-Wiedemann cost and model core from the published Table 10 parameters; derive the individual-logarithm descent from p^12 with L[1/3,1.44] and add it together with the ECM cofactorization; apply the 1024 instructions-per-model-op conversion, the capped per-attempt budget, the charged retry factor 2 and the Markov truncation factor 2; add the explicit H=2^14 verification charge; divide by C=20000; and check the relation-file, matrix and sort sizes of the storage schedule. Asserts 15 conditions, including that the sieving space reproduces 2^124.08, the core reproduces 2^126 within 0.25 bits, the descent is the corrected 2^122.64 (an 85-bit figure fails the assertion), the conversion dominates 8*11.31, R_cap is exactly 4*B, the relation file is 2^72.39 bytes, and the normalized score rounds up to the claim. Arithmetic evidence for the ledger, not an attack run.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "sieve_bound": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000000
+     },
+     "eta": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "log2_smoothness_bound": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "log2_factor_base": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "log2_relations": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "matrix_weight": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "filtering_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "la_words": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "instructions_per_model_op": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000000
+     },
+     "retry_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000000
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000000
+     },
+     "reference_price": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000000000
+     },
+     "descent_coefficient": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 10
+     },
+     "cofactorization_log2": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "verification_reference_ops_log2": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 4096
+     },
+     "claimed_score_log2": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 4096
+     },
+     "relation_bytes_per_entry": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 1048576
+     },
+     "merge_passes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1024
+     },
+     "compare_word_ops_log2": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "published_total_log2": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "matrix_bytes_log2": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4096
+     },
+     "field_prime_hex": {
+      "type": "string",
+      "pattern": "^0x[0-9a-f]+$",
+      "maxLength": 200
+     }
+    },
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "sieve_bound": 686,
+     "eta": 6,
+     "log2_smoothness_bound": 65.316,
+     "log2_factor_base": 60.848,
+     "log2_relations": 61.3898,
+     "matrix_weight": 200,
+     "filtering_factor": 20,
+     "la_words": 4,
+     "instructions_per_model_op": 1024,
+     "retry_factor": 2,
+     "cap_factor": 2,
+     "reference_price": 20000,
+     "descent_coefficient": 1.44,
+     "cofactorization_log2": 87.6,
+     "verification_reference_ops_log2": 14,
+     "claimed_score_log2": 123.980693,
+     "relation_bytes_per_entry": 2048,
+     "merge_passes": 8,
+     "compare_word_ops_log2": 66.3898,
+     "published_total_log2": 126.0,
+     "matrix_bytes_log2": 69.17,
+     "field_prime_hex": "0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab"
+    }
+   ]
+  }
+ ]
+}

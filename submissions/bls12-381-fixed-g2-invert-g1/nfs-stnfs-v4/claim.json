@@ -1,0 +1,62 @@
+{
+ "schema_version": 2,
+ "target_profile": "production-v2",
+ "target_id": "bls12-381-fixed-g2-invert-g1",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "submission_state": "ready",
+ "review_status": "pending",
+ "baseline_kind": "index-calculus",
+ "algorithm": "stnfs-gt-dlp-hard-capped-v4",
+ "proof": "proof.md",
+ "claim": {
+  "time_log2": 123.980693,
+  "time_unit": "target-group-operation-equivalents",
+  "memory_log2_bytes": 72.3898,
+  "preprocessing_log2": 123.980693,
+  "success_probability": 0.5,
+  "nonuniform_advice_log2_bytes": 0,
+  "hard_work_cap_instructions_log2": 138.268405376626,
+  "expected_work_instructions_log2": 137.268405376626,
+  "single_attempt_cap_instructions_log2": 136.268405376626,
+  "model_total_log2": 126.268405376626,
+  "descent_log2": 122.641786367599,
+  "instructions_per_model_operation": 1024
+ },
+ "heuristics": [
+  "Smoothness probabilities, relation counts and the factor-base size use Dickman's rho with the GS21 alpha correction, as estimated by the GS21 simulator. This is the standard heuristic basis of NFS analyses and is not re-proved here; the published Table 10 parameters are used as published rather than re-optimised.",
+  "The individual-logarithm descent is priced explicitly, not absorbed: L[1/3,1.44] by Barbulescu-Pierrot, evaluated at N=p^12 as exp(1.44*59.033894749678)=2^122.641786367599 model operations, and added to the core. An earlier revision of this ledger priced it at 2^85 and claimed 28 bits of headroom; that was wrong and is corrected here, at a cost of 0.1218 bits.",
+  "The ECM cofactorization of the smoothness tests is charged at 2^87.6 model operations and added; it is 2^-38.7 of the core.",
+  "The model-to-instruction conversion charges 1024 scalar instructions per GS21 model operation. The largest conversion that follows from published data is 11.31 cycles per model operation (BD19 Table 6, worst measured/model ratio 2^3.5) times 8 scalar instructions per cycle (widest current AArch64 retirement) = 90.5; the charge is 11.3x that. A larger charge can only weaken the claim, so this factor cannot make the bound too small.",
+  "The retry multiplicity is charged as 2 (a single capped attempt assumed to succeed with probability only 1/2, while the published simulation overshoots the factor base by 2^0.54). E[T] <= 2*B is the left side of a Markov inequality; no expectation is reported as an upper bound on the work of a single run.",
+  "The run is hard-truncated at 2*E[T]=4*B instructions and returns FAILURE at the cap, so the submitted work bound is the enforced cap. Markov gives success probability at least 1/2 over uniform Q, uniform z and fresh coins.",
+  "The matrix weight (200), filtering factor (20), block-Wiedemann word cost (4 words), sieving volume (2*686+1)^12/2 and smoothness bound 2^65.316 are GS21's published model constants for BLS-381."
+ ],
+ "limitations": [
+  "This is an analytic reproduction of a published cost model at production parameters, not an executed 2^123 computation; the rules allow an analytic argument for exponentially large attacks.",
+  "The 2023 BD19-based survey figure 2^122.54 for BLS12-381 is not used because it is not reproducible from its own stated parameters (its sieving space alone is 2^122.85 and its factor-base count does not follow from its stated A=2); the self-consistent GS21 total is the conservative choice.",
+  "The 1024 instructions-per-model-operation charge is a deliberate over-charge, not a measurement. It is the largest single concession in the submission: a bare 90.5-instruction reading of the published calibration would give a score 4.5 bits lower.",
+  "Storage is reported per instance and is not the scored objective on this track; the relation file at 2^72.389800 bytes is far beyond any single machine and the schedule is a merging-stream design, not an executed one.",
+  "The descent constant 1.44 is asymptotic; it is used at full weight rather than discounted."
+ ],
+ "challenge_input": {
+  "fixed_argument": "Q in G2, nonidentity, uniform and fixed per instance (not necessarily the generator P0)",
+  "target": "z in GT, uniform, may be the identity",
+  "auxiliary_powers": "none on this track",
+  "n_parameter": "none on this track"
+ },
+ "verification": {
+  "method": "one pairing check e(Q,P)=z and one subgroup check [r]P=O",
+  "charged_reference_operations_log2": 14,
+  "script": "experiment.py"
+ },
+ "evidence_files": [
+  "proof.md",
+  "experiment.py",
+  "submission.json",
+  "recomputed.json",
+  "README.md"
+ ],
+ "credit": "Guillevic-Singh (Math. Cryptol. 1(1), 2021); Barbulescu-Duquesne (J. Cryptol. 32, 2019); Barbulescu-Pierrot (LMS J. Comput. Math. 2014); Gremy-Guillevic-Morain-Thome (SAC 2017); IETF draft-irtf-cfrg-pairing-friendly-curves-11; Curvesma.sh COST_MODEL.md and classical-group-work-v2.json."
+}
