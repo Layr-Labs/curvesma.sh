@@ -1,0 +1,189 @@
+{
+ "declared_run_input": {
+  "R": 1024,
+  "cap_factor": 1.06,
+  "production_checks": 2,
+  "seconds": 30,
+  "seed": 11,
+  "table_checks": 4,
+  "toy_bits": 24,
+  "trials": 300
+ },
+ "declared_run_output": {
+  "A": {
+   "A1_ord_r_p_eq_12": true,
+   "A1_p_prime": true,
+   "A1_pow6_is_minus1": true,
+   "A1_r_divides_phi12": true,
+   "A1_r_prime": true,
+   "A2_gamma1_in_Fp2": true,
+   "A2_tower_is_field": true,
+   "A3_gt_random_order_r": true,
+   "A4_collision_identity_ok": [
+    2,
+    2
+   ],
+   "A5_table_in_GT_ok": [
+    4,
+    4
+   ],
+   "A6_R": 1024,
+   "A6_cap_times_B_lt_r": true,
+   "A6_distinct_pairs": 1024,
+   "A6_fixed_two_exponent_entries_in_GT_ok": [
+    4,
+    4
+   ],
+   "A6_identity_entry_is_solvable": true,
+   "A6_max_B": 18408783339795869256,
+   "A6_positivity_is_all_that_is_needed": true,
+   "A6_width_ok": true,
+   "p_bits": 381,
+   "r_bits": 255,
+   "seconds": 2.61
+  },
+  "B": {
+   "R": 1024,
+   "W": 8,
+   "bookkeeping_failures": 0,
+   "cap_evals": 3071,
+   "cap_factor": 1.06,
+   "coeff_width_bits": 10,
+   "degenerate_relations": 0,
+   "evals_over_sqrtq_mean": 0.6536,
+   "evals_over_sqrtq_median": 0.667,
+   "evals_over_sqrtq_p90": 0.9795,
+   "k": 64,
+   "positivity_bound_holds": true,
+   "seconds": 1.07,
+   "sqrt_q": 2896.369,
+   "success_rate": [
+    0.3526,
+    0.4067,
+    0.4631
+   ],
+   "toy_p": 16777907,
+   "toy_q": 8388953,
+   "toy_q_bits": 24,
+   "trials_run": 300,
+   "trials_solved": 122
+  },
+  "C": {
+   "W": "6189567538426118095092992185239469828607/25",
+   "W_log2_float": 127.541178,
+   "W_pow100_le_2": 12755,
+   "active_checkpoints": 56,
+   "additive_log2": 19.323336,
+   "additive_units": 656000,
+   "cap_evals": 242728138761808552748744791578017781514,
+   "cap_factor": 1.06,
+   "cap_log2": 127.512609,
+   "claim_log2": 127.55,
+   "claim_log2_exact_le": "12755/100",
+   "main_log2": 127.541178,
+   "main_units": "6189567538426118095092992185239453428607/25",
+   "memory_bytes": 694096,
+   "memory_checkpoints": 36288,
+   "memory_log2": 19.4,
+   "memory_table": 655360,
+   "model_mean_k64_W8": 1.2693,
+   "model_q39_k64_W8": 1.007,
+   "model_q42_k64_W8": 1.0567,
+   "pairing_units": 262144,
+   "r": 52435875175126190479447740508185965837690552500527637822603658699938581184513,
+   "r_log2": 254.857089,
+   "reference_price": 20000,
+   "sqrt_r_log2": 127.428545,
+   "step_instr": 400,
+   "step_units": "51/50",
+   "success_claim": "2/5",
+   "table_units": 131200,
+   "verify_units": 262656
+  },
+  "version": 1
+ },
+ "note": "declared_run_output is the exact stdout of the declared initial input. same_cap_aggregate lists further runs of the same code path, all with the single declared cap factor 1.06 and the same fixed public jump table construction; no run uses any other cap.",
+ "same_cap_aggregate": [
+  {
+   "R": 1024,
+   "bookkeeping_failures": 0,
+   "cap_evals": 1536,
+   "cap_factor": 1.06,
+   "degenerate_relations": 0,
+   "evals_over_sqrtq_mean": 0.6423,
+   "evals_over_sqrtq_median": 0.6635,
+   "input": {
+    "R": 1024,
+    "cap_factor": 1.06,
+    "production_checks": 2,
+    "seconds": 60,
+    "seed": 3,
+    "table_checks": 4,
+    "toy_bits": 22,
+    "trials": 800
+   },
+   "success_rate": [
+    0.4084,
+    0.4425,
+    0.4771
+   ],
+   "toy_q_bits": 22,
+   "trials_run": 800,
+   "trials_solved": 354
+  },
+  {
+   "R": 1024,
+   "bookkeeping_failures": 0,
+   "cap_evals": 6141,
+   "cap_factor": 1.06,
+   "degenerate_relations": 0,
+   "evals_over_sqrtq_mean": 0.6189,
+   "evals_over_sqrtq_median": 0.6256,
+   "input": {
+    "R": 1024,
+    "cap_factor": 1.06,
+    "production_checks": 2,
+    "seconds": 60,
+    "seed": 7,
+    "table_checks": 4,
+    "toy_bits": 26,
+    "trials": 150
+   },
+   "success_rate": [
+    0.4668,
+    0.5467,
+    0.6242
+   ],
+   "toy_q_bits": 26,
+   "trials_run": 150,
+   "trials_solved": 82
+  },
+  {
+   "R": 1024,
+   "bookkeeping_failures": 0,
+   "cap_evals": 3071,
+   "cap_factor": 1.06,
+   "degenerate_relations": 0,
+   "evals_over_sqrtq_mean": 0.6558,
+   "evals_over_sqrtq_median": 0.676,
+   "input": {
+    "R": 1024,
+    "cap_factor": 1.06,
+    "production_checks": 2,
+    "seconds": 60,
+    "seed": 5,
+    "table_checks": 4,
+    "toy_bits": 24,
+    "trials": 400
+   },
+   "success_rate": [
+    0.3946,
+    0.4425,
+    0.4915
+   ],
+   "toy_q_bits": 24,
+   "trials_run": 400,
+   "trials_solved": 177
+  }
+ ]
+}

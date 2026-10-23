@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: multi-checkpoint Brent rho in GT with the exact detection law and a hard cap at 1.06*sqrt(r)",
+ "claims": [
+  {
+   "statement": "For a uniform nonidentity P in G1 and a uniform target z in GT, compute g = e(P,Q0) = pairing(Q0,P) once (nondegeneracy and prime order r give <g> = GT), find a = log_g z with an O(1)-working-set Pollard rho in GT and return Q = [a]Q0, which satisfies e(P,Q) = z for every z in GT including z = 1. WALK: fixed public table Th[h] = g^(A_h) z^(B_h), h = 0..1023, with A_h,B_h in [1,2^64) derived as SHA-256('curvesmash/bls12-381-fixed-g1-invert-g2/gt-multicp-brent-v2/jump/h'), first and second 8 bytes each reduced mod 2^64-1 and plus 1; state (X,a,b) with X = g^a z^b in GT; step h = H(X) from the first 64-bit limb of the element (one multiply, xor-shift, one multiply, 10-bit mask), X <- X*Th[h] (one dense Fp12 multiplication), a <- a+A_h mod r, b <- b+B_h mod r. The step depends on the group element alone, so the trajectory is a deterministic map on GT; no history, no dictionary, no distinguished points, no lookup by value. DETECTION: checkpoints are taken at the positions P_k = {ceil(2^j (k+i)/k)} with k = 64, and the state stored at p is compared with the hare at every position p+1..W*p with W = 8, so exactly k*(1-1/W) = 56 checkpoints are alive at any position; comparisons use a 64-bit fingerprint and a full 72-limb comparison decides on a match. k = 1, W = 2 is textbook Brent. EXACT DETECTION LAW (replaces the false 'm <= 2*rho+3' of the rejected gt-brent-rho-v1): with tail mu and cycle lam, m = p* + lam where p* = min{p in P_k : p >= max(mu, ceil(lam/(W-1)))}, verified against a direct simulation of the loop for all 180,300 (mu,lam) with mu+lam <= 600 at k=1,W=2 and for all 4,095 (mu,lam) with mu+lam <= 90 at each of the nine combinations k in {1,4,16}, W in {2,4,8}, with zero mismatches; it implies the theorem m <= 3*rho (verified, tight: max m/rho = 2.9942) and reproduces the reviewer's counterexample (pure cycle lam=9, detection at 24 > 2*9+3). SOLVE, NO FRUITLESS CYCLE: on a match at positions p < m the gap exponents are integer sums a-a_c = sum A_{h_i}, b-b_c = sum B_{h_i} over the gap, all coefficients positive and below 2^64 and m < 2^128, so 1 <= b-b_c < 2^192 < r; the b-difference is nonzero and invertible mod r unconditionally, no 1/r degeneracy, no restart, and no inverse-pair exclusion is needed (a sum of positive coefficients cannot vanish mod r). The identity-entry case g^(A_h) z^(B_h) = 1 is included and is solvable, verified on real BLS12-381 elements in section A6. Recovered a = (a_c-a)*(b-b_c)^(-1) mod r is checked by g^a == z and by the pairing. HARD CAP AND SUCCESS: the run stops after S = ceil(1.06*sqrt(r)) = 242728138761808552748744791578017781514 = 2^127.512609 evaluations and reports failure; under the standard random-map model (the single heuristic, disclosed) the exact law gives Pr[m <= S] = 0.423 for k=64, W=8 (model 0.39-quantile 1.0070*sqrt(r), 0.42-quantile 1.0567*sqrt(r), mean 1.2693*sqrt(r) from 200,000 samples), a 0.033 margin over the required 0.39; measured at toy scope with R=1024, one cap factor 1.06 and the same schedule: 0.4067 (122/300), 0.4425 (354/800), 0.4425 (177/400), 0.5467 (82/150), with zero degenerate relations and zero bookkeeping failures. COST: S evaluations at 1+400/20000 = 51/50 units each (one reference dense Fp12 multiplication at the organizer's fixed 20000 instructions plus index extraction 12, 56 fingerprint comparisons and expiry tests 280, two 4-limb exponent additions 40, checkpoint creation amortised below 1, loop and addressing 68), main term 2^127.541178 units; additive 656,000 units = 2^19.323 (table 131,200 from 1024 simultaneous 64-bit multi-exponentiations of 128 dense multiplications plus 128 squarings; two pairings 2^18 each for the reduction and the verification; one G2 scalar multiplication 2^9). W = 2^127.541178 units, claimed score ceil(100*log2 W)/100 = 2551/20 = 127.55. MEMORY: peak 694,096 bytes = 2^19.40, itemised as step table 1024*(576+32+32) = 655,360, 56 active checkpoints 56*(576+32+32+8) = 36,288, hare and tortoise states 2*648 = 1,296, two Fp12 temporaries 1,152; nothing grows with the walk length. The claim is 0.93 bits better than the rejected 128.48 of gt-brent-rho-v1 at the same per-step and additive cost, because the corrected law replaces the factor 2.02*sqrt(r) that the false 2*rho+3 bound had introduced by 1.06*sqrt(r), and 1.65 bits better than the current accepted leader 129.20 (mpjunior92, Floyd rho in GT, id e444842b); this candidate builds on the O(1)-memory detection structure of that submission and takes no dictionary, no Frobenius quotient and no NFS step.",
+   "score": {
+    "numerator": "2551",
+    "denominator": "20"
+   },
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "gt-multicp-brent-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production facts on BLS12-381 itself with standard-library integer arithmetic: p and r prime, r | Phi_12(p), ord_r(p)=12 with p^6=-1, the blst tower Fp2=Fp[u]/(u^2+1) and Fp12=Fp2[w]/(w^6-(1+u)) is a field, gamma1=w^(p-1) in Fp2, a random element of GT computed as t^((p^12-1)/r) is nonidentity of order r, the collision identity verified on real 381-bit GT elements. Section A6 checks the literal production jump table used by the walk: all 1024 (A_h,B_h) in [1,2^64) and distinct, four actual two-exponent entries g^(A_h)z^(B_h) nonidentity of order r, the positivity bound 2^192 < r, and the identity-entry case g^(A_1)z^(B_1)=1 built from the fixed constants and solved exactly. Section B runs the complete declared algorithm at toy scale: a prime-order subgroup of F_p^* with p=2q+1 a safe prime, the same fixed public table construction with the toy coefficient width chosen so the positivity bound cap*2^cw < q holds (reported as positivity_bound_holds), the same k=64, W=8 checkpoint schedule with W*p windowing, the same relation solve and verification, under the single declared cap 1.06*sqrt(q). It reports trials, successes with a Wilson 95% interval, degenerate relations, bookkeeping failures and evaluation counts divided by sqrt(q). Section C reports the exact ledger in integer and rational arithmetic: the cap as an exact integer, the per-step 51/50, the additive items, W, the claim m/100 with W^100 <= 2^m checked in integers, and the itemised 694,096-byte memory bound. Toy statistics are evidence at toy scope only; the production claim is analytic.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "table_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+     },
+     "toy_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 28
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4096
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 120
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     }
+    },
+    "required": [
+     "production_checks",
+     "trials",
+     "toy_bits",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "table_checks": 4,
+     "trials": 300,
+     "toy_bits": 24,
+     "R": 1024,
+     "cap_factor": 1.06,
+     "seconds": 30,
+     "seed": 11
+    }
+   ]
+  }
+ ]
+}
