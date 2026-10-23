@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: deterministic truncated BSGS with sorted-array intersection",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed BLS12-381 G1 generator P0, recover x. The deterministic truncated baby-step/giant-step algorithm in proof.md builds m = 143003466105892742053438571826631282054 baby points and h = 143003466105892742053438571826631282053 giant points, sorts each array by affine x-coordinate and merge-intersects the two sorted arrays; every hit is confirmed by a full scalar multiplication, so the recovered scalar is verified exactly. It succeeds with probability at least 0.39 on the uniform challenge, using at most 2^127.925641 total target-group-operation equivalents, including preprocessing, both sorts, the merge, candidate verification and output construction. Peak memory is at most 2^134.335 bytes; preprocessing is at most 2^126.913 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps, hashing model or heuristic assumption: the recoverable scalars are exactly the rectangle [0,m) x [0,h] inside Z/r, so the success probability m*h/r is an exact rational, and no record is dropped, evicted or left unindexed. The exponential memory is required and is stated, not scored.",
+      "score": {
+        "numerator": "127925641",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "reference.py",
+        "budget.py"
+      ]
+    }
+  ],
+  "experiments": []
+}
