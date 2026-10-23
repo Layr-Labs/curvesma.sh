@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-order6-classes-sigma-walk-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.367538,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 74.178504,
+    "preprocessing_log2": 45.619692,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class-level r-adding walk with 2^16 adders behaves as a random mapping on the (r-1)/6 order-6 classes, up to an exponent penalty of at most 4/2^16.",
+    "H2: fruitless 2-cycles occur at rate at most 2^-16 per step and 3..64-cycles at rate at most 2^-32 per step.",
+    "H3: Callgrind instruction counts on 2^18 sampled BLS12-381 G1 walk steps on each of two input sets represent per-step work; 280 instructions are charged against 267.3 measured."
+  ],
+  "limitations": [
+    "H1 is an unproved standard heuristic; it is tested only on toy curves with up to about 2^39 classes.",
+    "The model success bound is 0.411523 at tau = 0.5303, 0.0215 above 0.39; pooled toy-curve success at that budget is in the evidence.",
+    "Analytic production cost; no production-size execution.",
+    "Needs about 2^67.1 stored distinguished points; not a practical attack."
+  ],
+  "lane": "exploratory"
+}

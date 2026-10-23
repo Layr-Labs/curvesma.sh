@@ -1,0 +1,217 @@
+{
+  "runs": [
+    {
+      "file": "b36-s1.json",
+      "config": {
+        "bits": 36,
+        "trials": 1500,
+        "seed": 3601,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0",
+        "b": 4
+      },
+      "curve": {
+        "p": 57698774167,
+        "a": 0,
+        "b": 4,
+        "order": 2747537983,
+        "cofactor": 21,
+        "beta": 43531774169,
+        "lambda": 552254425
+      },
+      "classes_N": 457922998,
+      "log2_N": 28.77,
+      "trials": 1500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2289,
+      "success_at_tau_0.4943": 0.3953,
+      "success_at_tau_0.5303": 0.4193,
+      "two_cycles_per_step": 8.091803026349542e-05,
+      "long_cycles": 0,
+      "restarts": 0
+    },
+    {
+      "file": "b36-s2.json",
+      "config": {
+        "bits": 36,
+        "trials": 1500,
+        "seed": 3602,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0",
+        "b": 4
+      },
+      "curve": {
+        "p": 41296955143,
+        "a": 0,
+        "b": 4,
+        "order": 1147135357,
+        "cofactor": 36,
+        "beta": 4622396508,
+        "lambda": 1062490731
+      },
+      "classes_N": 191189227,
+      "log2_N": 27.51,
+      "trials": 1500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2496,
+      "success_at_tau_0.4943": 0.39,
+      "success_at_tau_0.5303": 0.41,
+      "two_cycles_per_step": 8.360988192409527e-05,
+      "long_cycles": 0,
+      "restarts": 1
+    },
+    {
+      "file": "b40-s1.json",
+      "config": {
+        "bits": 40,
+        "trials": 700,
+        "seed": 4001,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0",
+        "b": 4
+      },
+      "curve": {
+        "p": 893065378237,
+        "a": 0,
+        "b": 4,
+        "order": 297689057779,
+        "cofactor": 3,
+        "beta": 579282894318,
+        "lambda": 148895522892
+      },
+      "classes_N": 49614842964,
+      "log2_N": 35.53,
+      "trials": 700,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2489,
+      "success_at_tau_0.4943": 0.3929,
+      "success_at_tau_0.5303": 0.4114,
+      "two_cycles_per_step": 8.351219743865184e-05,
+      "long_cycles": 1,
+      "restarts": 4
+    },
+    {
+      "file": "b40-s2.json",
+      "config": {
+        "bits": 40,
+        "trials": 700,
+        "seed": 4002,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0",
+        "b": 4
+      },
+      "curve": {
+        "p": 856275299413,
+        "a": 0,
+        "b": 4,
+        "order": 285424543123,
+        "cofactor": 3,
+        "beta": 387890462331,
+        "lambda": 131405392510
+      },
+      "classes_N": 47570757188,
+      "log2_N": 35.47,
+      "trials": 700,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2567,
+      "success_at_tau_0.4943": 0.3614,
+      "success_at_tau_0.5303": 0.3843,
+      "two_cycles_per_step": 8.141297015254054e-05,
+      "long_cycles": 1,
+      "restarts": 1
+    },
+    {
+      "file": "b40-s3-a16.json",
+      "config": {
+        "bits": 40,
+        "trials": 500,
+        "seed": 4003,
+        "adder_bits": 16,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0",
+        "b": 4
+      },
+      "curve": {
+        "p": 885640568419,
+        "a": 0,
+        "b": 4,
+        "order": 295213512241,
+        "cofactor": 3,
+        "beta": 372171889231,
+        "lambda": 119985501382
+      },
+      "classes_N": 49202252041,
+      "log2_N": 35.52,
+      "trials": 500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2528,
+      "success_at_tau_0.4943": 0.414,
+      "success_at_tau_0.5303": 0.44,
+      "two_cycles_per_step": 2.5045969790386106e-06,
+      "long_cycles": 0,
+      "restarts": 0
+    },
+    {
+      "file": "b44-s1.json",
+      "config": {
+        "bits": 44,
+        "trials": 300,
+        "seed": 4401,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0",
+        "b": 4
+      },
+      "curve": {
+        "p": 15635473334959,
+        "a": 0,
+        "b": 4,
+        "order": 5211826136239,
+        "cofactor": 3,
+        "beta": 10658325760129,
+        "lambda": 2284885178246
+      },
+      "classes_N": 868637689374,
+      "log2_N": 39.66,
+      "trials": 300,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2977,
+      "success_at_tau_0.4943": 0.35,
+      "success_at_tau_0.5303": 0.36,
+      "two_cycles_per_step": 8.148252217951967e-05,
+      "long_cycles": 3,
+      "restarts": 4
+    }
+  ],
+  "pooled": {
+    "trials": 5200,
+    "all_correct": true,
+    "success_at_tau_0.5303": 0.4094,
+    "wilson95_at_tau_0.5303": [
+      0.3961,
+      0.4229
+    ],
+    "model_at_tau_0.5303": 0.4116,
+    "success_at_tau_0.4943": 0.3881,
+    "wilson95": [
+      0.3749,
+      0.4014
+    ],
+    "model_at_tau_0.4943": 0.39,
+    "claim_tau": 0.5303,
+    "model_at_claim_tau": 0.4116,
+    "mean_first_useful_over_sqrtN": 1.2476,
+    "model_mean": 1.2533
+  },
+  "scope": "toy curves only; collision statistics of the identical walk, not production cost"
+}
