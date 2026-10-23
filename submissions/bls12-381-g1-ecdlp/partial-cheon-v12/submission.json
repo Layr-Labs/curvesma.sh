@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: partial-coverage Cheon attack v12 (itemized block scratch, constructed gcd prices, universal equality assertions)",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r), inputs T=[s]P0=A_1 and the auxiliary powers A_i=[s^i mod r]P0, i=1..n, on BLS12-381 G1 with n=2^20, the single-shot classical two-phase Cheon algorithm v12 in proof.md recovers s with success probability at least 0.39 using total work W(2^20) at most 2^123.836032 target-group-operation equivalents (time_log2 = 123.836032 = 1934938/15625), including runtime factorization of r-1 as a deterministic, hard-capped, counted Brent-Pollard rho construction on the fixed public input (the cap is checked BEFORE each consumed batch, so a completed cycle provably uses at most 2^17 iterations; a hard 12-cycle guard bounds the total; the per-iteration charge is 1056 instructions = two 512-instruction modular multiplications plus 32 of loop work; joint charged worst case as three bounded terms each with an explicit construction: main loop 12 x 2^17 iterations x 1056 instructions = 2^30.629357; batched gcds 12 x 2^10 x 4096 instructions (binary gcd on 255-bit inputs: <= 255 shift/subtract/compare rounds x 16 instructions per gcd) = 2^25.584963; backtrack scan <= 128 steps per cycle x 4608 instructions = 2^22.754888: total 1,718,353,920 = 2^30.678380 instructions = 2^19.712596 units, plus <= 2^10.60 units of Miller-Rabin certification and <= 2^15.579 units of comb tables: preprocessing total <= 2^19.80 units inside the 2^21 budget (every figure computed programmatically); Part A executes it on the production r-1, measuring 111,717 modular multiplications, 310 gcds and 9 cycles, and asserts the result equals the supplied factor list in both directions; a cap abort fails the run and demonstrably does not fire; no probabilistic model is used anywhere), generator and subgroup construction, three fixed-base comb tables, all baby and giant scalar multiplications (one 512-instruction mod-r multiplication each, sequential; comb point multiplications charged 64 units against the stated construction of 32 window additions, each exactly one reference batched-incomplete-affine operation by the cost model's definition with every window layer's additions sharing ONE Montgomery batched inversion, plus <= 304 instructions of addressing and control - a construction the toy EXECUTES for its baby and giant point sets with equality to plain double-and-add asserted in full on the baby side and on trial 0's giants plus 8 random giants per trial), the bottom-up merge sort of the baby array over an auxiliary buffer (117 passes; <= m*117 key compares at 15 instructions; <= m*118 record moves at 50 instructions including the possible final copy-back; <= 16 instructions per record of (x, parity) key preparation: <= 7671 instructions per baby, an upper bound asserted in the experiment), binary-search giant lookups (exactly floor(log2 m)+1 = 117 probes worst case - the candidate range at most halves per probe, asserted per lookup - each <= 32 instructions: 2-word midpoint 6, pointer + record loads 4, six-limb key load/compare 12, parity bit 2, interval update + termination + branches 8), at most two window-start exponentiations, both BSGS phases, assembly, verification and output. The attack uses d=2^20 (largest divisor of r-1 not exceeding the scoring n) and reads only A_1 and A_d. Every table record is keyed by (x, y mod 2), which uniquely determines an affine point on this odd-prime curve (the at most two points sharing an x have opposite y-parities), so a key match is an exact point match and the recovery k1 = (i + m1*j) mod N is exact with no sign ambiguity; phase 1 solves s^d = eta^k1 by partial-coverage BSGS over a contiguous window of m blocks at a uniform offset with the coverage an exact per-offset integer statement including all wrap-around hits: block j covers exactly the m values {(m1*j + i) mod N : i < m}, consecutive arcs are disjoint, so every offset covers at least (m-1)m/N >= 0.4 - 2^-118 >= 0.39 k1 values - a fully deterministic statement with no probabilistic quantity anywhere in the claim; the closed form is crosschecked against an exhaustive every-offset brute force on five smaller parameter sets. Phase 2 recovers the order-2^20 component deterministically; s = zeta^(k1+tN) is verified by [s]P0 = T. Peak memory by phase: the global peak is the sort phase (m-entry main array plus m-entry merge buffer = 256*m = 2^124.767581 bytes); during blocked giant generation only the sorted baby table (128m) plus <= 2^32 bytes of block scratch is live: strictly above 2^124.7675 bytes including comb tables, code and scratch (memory_log2_bytes = 124.8); preprocessing at most 2^21 units (preprocessing_log2 = 21.0) included; nonuniform advice 0 bytes. Sensitivity: 384-unit double-and-add everywhere still gives ~2^126.3. All preconditions, the parity-key uniqueness, the per-offset minimum coverage (>= 39/100 in exact integers) and the closed-form crosschecks are verified at production parameters by experiment.py Part A - which also EXECUTES the Brent-rho factorization construction on the production r-1 and asserts it equals the supplied factor list in both directions; Part B demonstrates the complete two-phase attack on a 20-bit toy group with d=6, factoring n-1 with the same capped construction, computing the baby and giant points with the charged layer-batched comb construction itself (one batched inversion per window layer, equality with plain double-and-add asserted for every point, addition and inversion counts reported), using the parity-keyed sorted array built by the explicit merge sort (compare/move upper bounds asserted) and searched by the explicit binary search (floor(log2 m_toy)+1 = 9 probe budget asserted per lookup): full coverage 200/200 exact recoveries, 0 wrong extractions; the declared partial mode 88/200 = 0.44 vs the exact wrap-inclusive expectation 0.4022613461525126, 0 wrong extractions.",
+      "score": {
+        "numerator": "1934938",
+        "denominator": "15625"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "partial-cheon-v12-toy",
+      "source": "experiment.py",
+      "purpose": "Part A executes at full production BLS12-381 parameters the deterministic hard-capped, counted Brent-Pollard rho factorization construction charged in the proof (pre-batch-enforced 2^17-iteration cap, 12-cycle guard, measured 111,717 modular multiplications, 310 gcds, 9 cycles) and asserts the result equals the supplied factor list in both directions; it verifies 2^20 divides r-1; zeta=7 generates Z_r*; eta has exact order N=(r-1)/2^20; zeta_e has exact order 2^20; d-th powers lie in the order-N subgroup; the per-offset minimum coverage computed in exact integers (>= 39/100 for every offset); the closed-form coverage bound crosschecked against an exhaustive every-offset brute force on five smaller parameter sets; and the (x, y mod 2) key uniqueness property (negation pairs keyed distinctly, collisions all same-point). Part B runs the complete two-phase Cheon attack on a toy prime-order group (20-bit, d=6 | n-1, factored by the same capped construction) with production-shaped sequential window giants, baby and giant point sets computed by the charged layer-batched STREAMING comb construction (giant scalars generated and consumed in blocks of 64, never materialized as an m-sized list; each block's accumulator array allocated for exactly 64 records with the live lengths recorded and asserted; each block's points searched immediately and discarded; every window layer's affine additions within a block share ONE Montgomery batched inversion; equality with plain double-and-add asserted in full for EVERY point - all babies and every giant of every trial; addition and inversion counts reported), the parity-keyed sorted baby array built by the explicit bottom-up merge sort (compare/move upper bounds asserted, copy-back included) and searched by the explicit binary search (probe budget floor(log2 n)+1 asserted per lookup), a brute-forced exact wrap-inclusive coverage expectation, and brute-force verification of every extraction, in partial mode (the claimed regime) or full-coverage control mode. Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "partial",
+              "full"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [
+          "trials",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "mode": "partial"
+        }
+      ]
+    }
+  ]
+}
