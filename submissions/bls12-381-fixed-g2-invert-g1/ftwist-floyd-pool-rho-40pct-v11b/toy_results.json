@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "seed": 2026102310,
+  "trials_per_config": 2500,
+  "scope": "Literal tower coordinate partition, exact labels, shared/fresh controls. Floyd plus zero-delete pool; per-trail escapes are unbounded but each is charged, termination is bounded by the 3T trail cap, and the priced global first-moment allowance fails closed. The hard E=4 run is the historical ablation, not the claimed algorithm. Toy evidence is not production mixing, sparse-DP transport or instruction-price proof.",
+  "configurations": [
+    {
+      "index": 0,
+      "q": 14009539,
+      "r": 12289,
+      "branches": 64,
+      "parts": [
+        "evidence/config-0-0.txt",
+        "evidence/config-0-1.txt"
+      ],
+      "summary_sha256": "cf0b9b9947d7f6f70bab039e03ad6a012d1cc7b1f5d01bed452eaf02af8198be"
+    },
+    {
+      "index": 1,
+      "q": 2677963,
+      "r": 49177,
+      "branches": 256,
+      "parts": [
+        "evidence/config-1-0.txt",
+        "evidence/config-1-1.txt"
+      ],
+      "summary_sha256": "dabfb58d676802bbf65db5998a7c81076a3ebedef5fc7e84591584bba3aa7f50"
+    },
+    {
+      "index": 2,
+      "q": 159508651,
+      "r": 196657,
+      "branches": 1024,
+      "parts": [
+        "evidence/config-2-0.txt",
+        "evidence/config-2-1.txt"
+      ],
+      "summary_sha256": "cc10f9b62dd109060b78662181bb53202c2fa8f698adaa3ae5d7da9f67b0f661"
+    },
+    {
+      "index": 3,
+      "q": 19066387,
+      "r": 786433,
+      "branches": 1024,
+      "parts": [
+        "evidence/config-3-0.txt",
+        "evidence/config-3-1.txt"
+      ],
+      "summary_sha256": "6cde2b4cc0901b1c6b14a7411099ab6192bd04204f383a7f9339c665bbeb4c88"
+    },
+    {
+      "index": 4,
+      "q": 19066387,
+      "r": 786433,
+      "branches": 8,
+      "parts": [
+        "evidence/config-4-0.txt",
+        "evidence/config-4-1.txt"
+      ],
+      "summary_sha256": "d664c0b0e9d960202f26b86fd374f04463f680cc4cfa01e89bfe9c517c0afd88"
+    },
+    {
+      "index": 5,
+      "q": 19066387,
+      "r": 786433,
+      "branches": 32,
+      "parts": [
+        "evidence/config-5-0.txt",
+        "evidence/config-5-1.txt"
+      ],
+      "summary_sha256": "d5682ba302d46fda2f4357271c1db4809d0bc1cd6ca4df11fcde2018cf2d46c4"
+    },
+    {
+      "index": 6,
+      "q": 19066387,
+      "r": 786433,
+      "branches": 128,
+      "parts": [
+        "evidence/config-6-0.txt",
+        "evidence/config-6-1.txt"
+      ],
+      "summary_sha256": "d33ebf7a932ab444b5bbab2fe957c1beb7d617207e9651c2774d260f8ebb90b7"
+    }
+  ],
+  "elapsed_nanoseconds": 107023476833
+}

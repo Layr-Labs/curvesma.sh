@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "Fixed-G2 Floyd stall oracle with zero-delete collision pool and charged escapes",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "toy_results.json",
+        "evidence/certificate-details.json"
+      ],
+      "score": {
+        "numerator": "2567",
+        "denominator": "20"
+      },
+      "statement": "For a supplied nonidentity Q in BLS12-381 G2 and uniform z in its prime-order target group, the proposed classical Floyd-plus-distinguished-point-pool algorithm targets recovery of P=[x]P0 satisfying e(P,Q)=z with success at least 39/100 and total work at most 2^(2567/20) dense-Fp12-operation equivalents at C=20000, including setup, failures, routing, verification and output. The production trail has no per-trail escape cap: every in-place offset is charged one dense product plus 55000 instructions, the trail itself terminates at 3T evaluations, and the priced global first-moment allowance bounds the escape residual by 1/128 of the modelled recovery reference. With that single escape row the modelled success floor is 0.5461, clearing the 0.39 requirement; the bound stays conditional on the named first-moment premises for pool, report, transport and escape counts."
+    }
+  ],
+  "experiments": []
+}
