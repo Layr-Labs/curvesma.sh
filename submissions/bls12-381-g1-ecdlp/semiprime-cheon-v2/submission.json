@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon reduction with H-prime semiprime walks and sort-based matching",
+  "claims": [
+    {
+      "statement": "Setting: BLS12-381 G1, fixed generator P0 of prime order r, d=2^20 (6d divides r-1), input T=A_1=[s]P0 and powers A_i=[s^i]P0 for i<=n with n>=2^20 (only T and A_d are read, so the bound holds for every n>=2^20 including the scoring value n=2^20), s uniform in 1..r-1. Claim: the deterministic classical attack of proof.md recovers s with success probability at least 0.40 over the uniform challenge using at most 2^116.8661 total target-group-operation equivalents (one equivalent = one batched incomplete affine G1 addition = 2000 AArch64 instructions, C=2000), including all preprocessing, failed runs, record routing, sorting, matching, caps, verification and output; preprocessing is at most 2^115.87 units and included; peak memory is at most 2^123.3 bytes; there is no nonuniform advice and no quantum step. Attack: Cheon's reduction to z=s^d in the order-m subgroup H of d-th powers (m=(r-1)/2^20); baby and giant scalars are products a*w of two 'H-primes' (primes q with q^m=1 mod r) with w from a fixed list W of the first 2^50 H-primes above 2^39 and a from disjoint lists of H-primes in (2^77,2^97); each chain advances by one batched incomplete affine G1 addition per step from a table of even multiples [g]Q, g<=2^33; each of the N=2^115.6644 baby and N giant points (6N^2/m=0.52) yields a 224-bit key (bits 1..224 of the even one of y, p-y) invariant under the six GLV/negation automorphisms; the 2N records of 48 bytes are matched by 4 scatter hops, 3 local LSD sort passes and one scan on a shared-nothing cluster of at most 2^85 nodes with at most 2^40 bytes of local RAM each and no remote memory instruction, with every block transfer charged as posting/polling instructions and every copy charged per record; per-record overhead is itemised at 241 instructions (40 walk bookkeeping, 30 key, 4x23 routing, 3x23 sorting, 10 scan) and charged as 300; the run stops with failure after 2^90 run-pair comparisons or 2^20 candidate verifications (charged at the caps); the final d-th root uses 20 square roots and a 2^11-step search over the 2^20-th roots of unity. Hypotheses: (H1) the 6N^2 ratios x/(u x') are Poisson-like in H, so coverage is 1-exp(-0.52)=0.4055; (H2/H2') H-primes have density 1/(2^20 ln q) among primes, the 2^50-th H-prime above 2^39 is below 2^77 and all gaps between consecutive listed H-primes are at most 2^33 (checked by the preprocessing that builds W); (H3) key bits of points in distinct orbits are pairwise independent uniform, giving cap-exceedance probability below 2^-11.6 each by Markov, so success is at least 0.4055-2^-10.6 and 0.40 is claimed. All F_r multiplications in prime searches are priced at the measured 383 instructions of blst_fp_mul. The instruction counts are itemised, not measured on hardware; the bound is analytic, memory is exponential, toy experiments are evidence only at their stated scale, and this is not a practical break.",
+      "score": {
+        "numerator": "1168661",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "evidence.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "mode all (the single initial run) executes ledger, coverage and ec with fixed small trial counts. ledger recomputes the production cost ledger, cap probabilities, memory sum and algebraic facts with exact integers; coverage runs a scalar-level toy of the semiprime baby/giant sets against the Poisson model; ec runs Algorithm A end to end on genuine j=0 curves with truncated parity keys, sorting, a false-match cap and the d-th root. Each mode can be rerun separately with more trials. Toy results are evidence at toy scale only, not a production complexity proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "ledger",
+              "coverage",
+              "ec"
+            ]
+          },
+          "toy": {
+            "type": "string",
+            "maxLength": 8,
+            "enum": [
+              "t28",
+              "t30",
+              "t32"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "K_permille": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 2000
+          },
+          "key_bits": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 2026
+        }
+      ]
+    }
+  ]
+}
