@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "H-prime Cheon BSGS with sort matching and a limb-level per-record budget",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "verify_certificate.py",
+        "toy.py",
+        "toy-summary.json",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "292039",
+        "denominator": "2500"
+      },
+      "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, uniform nonzero s, and every integer n>=2^20, Cheon's reduction writes v=s^d mod r, which lies in H={x:x^m=1}, the subgroup of d-th powers of order m=(r-1)/d (235 bits, v2(r-1)=32, 6|m so mu6 is inside H), and s is determined by v up to the d roots s*zeta^j. The attack walks, on each side, N=65196422678611466571411401699906505=2^115.6503 elements: scalars x=a*w and y=a'*w' where a,a' are H-primes (q^m=1 mod r) in disjoint pools inside (2^77,2^97), w,w' are H-primes from the shared walk list of the first 2^50 H-primes above 2^39 (top below 2^77, even gaps <=2^33 read from a 2^32-entry table), and x=a*w<2^174<r, so each scalar lies in H with no character table and no fibre labels. Every chain starts above the table gap bound, so its steps never degenerate; each step is one batched incomplete affine addition, priced at the track's C=2000 reference unit, plus a charged overhead of 240 AArch64 instructions itemised as walk 24 + key 23 + routing 4x20 + sort 3x21 + scan 10 = 200, stressed by 6/5, giving c=2240/2000=112/100. Matching is by 4 radix scatter hops (20 instructions each: digit, bucket base, address, occupancy guard, 48-byte copy) to the owner node and 3 local LSD passes (21 each) followed by a single scan; the y-key is the even one of y,p-y truncated to 224 bits, so the six points [u]X with u in {+-1,+-omega,+-omega^2} share one key and one record pair tests six values of v. Ratio coincidences are counted as rationals: x=a*w determines (a,w) by unique factorisation, so rational duplicates are exactly the diagonal w=w', (|W|-1)/|W|^2=2^-50 of the pairs, with multiplicity (|W|-1) per base pair, verified exactly at toy scale; an accidental modular coincidence x*y'=u*x'*y (mod r) with no rational equality only adds an extra candidate value of v, which verification accepts if it is v and discards otherwise, so it cannot reduce coverage. Two data-dependent items are capped under the disclosed H3 model that 224-bit key prefixes behave like uniform strings: run-pair comparisons at 2^95 with expectation 2^84.31 and Markov failure <=2^-10.70, and candidate verifications at 2^98, which never binds; node occupancy has mean 2^31.650 against a capacity of 6.37x the mean, with 2^-20 budgeted for model error. Coverage is K=6N^2/m>=51/100, so success after every debit is at least 0.3989>=39/100 under the disclosed H1 model that the 6N^2 sampled values behave like uniform elements of H (the toy covered-set validation compares the deduplicated toy set with its exact D/m=0.128664, measured 0.12695; production uses 1-exp(-K) because the 6N^2 production values are sampled, not deduplicated). Work is 2*N*2240 instructions for the two walks plus 2*ceil(N/2^50)*2^32 table additions, 2^85*2^31 fixed per-node instructions, the H-prime supply, the walk list, the run-pair cap, the verification cap and the root extraction, totalling 2^116.815482 units of 2000 instructions, so log2 W(2^20)=116.815482<116.8156; peak memory is 2^125+2^71+2^60 bytes<=2^125.1 over 2^85 owner nodes of 2^40 bytes plus generating and storage nodes, there is no advice, and preprocessing is inside the total. The toy pipeline checks scalar recovery against the original challenge point: every accepted s satisfies [s]P0=T (42/42 at toy scale)."
+    }
+  ],
+  "experiments": []
+}
