@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: four-limb fixed-base Cheon rectangle with a deterministic merge",
+  "claims": [
+    {
+      "statement": "At the scoring length n=2^20 the complete classical work of the submitted attack on BLS12-381 G1 with auxiliary powers A_i=[s^i]P0 is W(2^20)=378962870133214382517139694889755716449/500 target-group-operation equivalents, so time_log2=148987/1250=119.1896, a ceiling (2^(148987/1250) >= W(2^20) and the same inequality fails at 148986/1250). The attack sets d=2^20 (which divides r-1), m=(r-1)/d, and recovers e=s^d from A_d=[e]P0 by a Cheon d-th power rectangle of G=57012617742321962895928165416718183 baby and G giant four-limb fixed-base evaluations, quotiented by the mu_6 endomorphism orbit; the covered exponent set has exactly 6G^2-3 members, so the success probability is at least 39/100 for uniform s, exactly and without algorithm coins. Each evaluation is three batched incomplete affine additions plus a worst-case degenerate-pair allowance, priced at six reference operations, with the four table fetches, scalar update, batch-inversion traffic, orbit key, record store and a deterministic twelve-pass radix sort with merge all charged at 1294 scalar AArch64 instructions per point. Matching uses full canonical orbit keys and a sorted merge, so no hash family, occupancy model or overflow heuristic is used. Phase 2 extracts the 2^20 d-th roots of e and verifies them against T. Preprocessing (eight limb tables over two distinct bases P0 and A_d, their affine conversion, the factorization of r-1, and the primitive-root and order tests) is charged at 2^69 reference operations inside W. The bound holds for every n with 2^20 | n and 2^20 | r-1 and reads only A_1 and A_n. memory_log2_bytes=122.3, preprocessing_log2=69, nonuniform_advice_log2_bytes=72.6, time_unit=target-group-operations; proof.md carries the complete argument and the exact integer checks.",
+      "score": {
+        "numerator": "148987",
+        "denominator": "1250"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
