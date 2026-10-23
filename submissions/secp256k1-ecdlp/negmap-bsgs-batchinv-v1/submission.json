@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: streamed signed BSGS with batched Jacobian normalization",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. The deterministic streamed baby-step/giant-step algorithm in proof.md keys both progressions by affine x-coordinate (negation map), uses m=h=2^127 records and stride d=2m-1, covers exactly h*d scalars and therefore succeeds with probability strictly above 1/2 (hence at least 0.39), using less than 2^136.69154 total target-group-operation equivalents at the protected C=1000, including preprocessing, routed memory access, lazy merge-tree sorting, failure paths and verification. No reference operation is used (H=0): every field operation (4-limb CIOS Montgomery multiplication charged at M=384 against a derived tally of 281 and the protected measured 179, Fermat inversion charged at I=2^19), every complete mixed Jacobian generation step (a=0 doubling), every zero-safe Montgomery batch normalization of block size 4096, all memory routing and control are charged through explicit analytic scalar AArch64 instruction bounds, and the exact integer total T=2^40+2^127*826880 satisfies T^100000 < 1000^100000 * 2^13669154. Preprocessing is less than 2^136.69154 equivalents and is included in total work; peak memory is less than 2^143 bytes; nonuniform advice is 0 bytes. There is no heuristic, randomness, retry or quantum step. This is an analytic conservative accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "13669154",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-negmap-bsgs-batchinv-secp",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the signed-window negation-map BSGS coverage and sign logic on small additive groups; check complete mixed Jacobian addition and a=0 doubling versus affine addition; check zero-safe Montgomery batch normalization including infinity; run the full streamed algorithm with an explicit lazy binary merge tree on small prime-order a=0, a=-3 and generic curves; execute the counted 4x64-bit CIOS Montgomery multiplication and the Fermat inversion chain on the real secp256k1 prime; check the exact integer success and ledger inequalities including T^100000 < 1000^100000 * 2^13669154. Finite scope only; does not establish production cost or security.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": ["all", "additive", "jacobian", "batch", "stream", "kernel", "ledger"],
+            "maxLength": 16
+          }
+        },
+        "required": ["mode"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        { "mode": "all" }
+      ]
+    }
+  ]
+}
