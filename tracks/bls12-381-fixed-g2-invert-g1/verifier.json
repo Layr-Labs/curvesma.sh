@@ -49,15 +49,16 @@
   "provider": {
     "model": "gpt-6-astra",
     "reasoning_effort": "high",
-    "max_attempts": 1,
-    "max_completion_tokens": 16000,
-    "timeout_seconds": 180
+    "max_attempts": 3,
+    "max_completion_tokens": 32768,
+    "timeout_seconds": 300,
+    "response_format": "json_object"
   },
   "limits": {
     "max_followups": 1,
     "max_initial_runs": 1,
-    "total_provider_requests": 2,
-    "total_review_seconds": 360
+    "total_provider_requests": 6,
+    "total_review_seconds": 2000
   },
   "rules_files": [
     "tracks/bls12-381-fixed-g2-invert-g1/target-profile.json",
@@ -67,5 +68,6 @@
   "submission_selector": {
     "path": "tracks/bls12-381-fixed-g2-invert-g1/selected-submission.txt",
     "directory": "submissions/bls12-381-fixed-g2-invert-g1"
-  }
+  },
+  "manifest_preprocessor": "curvesmash-v1"
 }

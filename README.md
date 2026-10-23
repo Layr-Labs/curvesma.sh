@@ -31,8 +31,38 @@ workflow using `OPEN_AI_EIGEN_KEY` and, for private checkout, `VERIFIER_CHECKOUT
 The manifest commands describe separate phases; local `yukon run` does not orchestrate
 the intervening review. Use the verifier's phase commands or the hosted workflow.
 
-Run a candidate's declared Python experiments with Docker and the local
-`llm-verifier` package installed (no API key needed):
+The judge allows up to three attempts of 300 seconds and 32,768 output tokens per
+review, matching HashSmash's direct OpenAI limits. Initial and final review share
+six provider requests and 2,000 seconds. Only transient provider failures are
+retried; a mathematical rejection is final.
+
+## Preparing a submission
+
+Use the [llm-verifier-solver skill](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/skills/llm-verifier-solver/SKILL.md)
+when preparing or revising a candidate.
+
+Track configuration lives at `tracks/<track>/verifier.json`. Use the commands
+below with the chosen track and candidate directory.
+
+Install the same immutable verifier revision used by the hosted workflows:
+
+```sh
+python3 -m pip install 'llm-verifier @ git+https://github.com/Layr-Labs/llm-verifier.git@8c1f098875fae0750c29ecfd641f7c9fc53a0f41'
+```
+
+Check a candidate's packaging, manifest and review-schema compatibility locally
+before running experiments (no Docker, API key or network needed):
+
+```sh
+bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp --preflight-only
+```
+
+Preflight applies the protected `curvesmash-v1` manifest adapter and prints its
+audit without changing the submission or writing results. It checks compatibility,
+not mathematical validity. See the [execution settings](tracks/docs/EXECUTION.md#review-settings)
+for the adapter's scope and remaining authoring requirements.
+
+Run a candidate's declared Python experiments with Docker (no API key needed):
 
 ```sh
 bash scripts/run_experiments.sh secp256k1-ecdlp submissions/secp256k1-ecdlp
