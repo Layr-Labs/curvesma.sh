@@ -1,0 +1,36 @@
+{
+ "schema_version": 2,
+ "target_profile": "production-v2",
+ "target_id": "bls12-381-g1-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+ "supersedes": [
+  "submissions/bls12-381-g1-ecdlp/partial-cheon-v15 (our own earlier package, in review at 123.836032; superseded by this construction)"
+ ],
+ "lineage": "The algorithm, sets, walks, symmetry key, recovery, K = 0.52 and all heuristics are the published additive-cheon-v1 construction (submission cbadde77, in review on this track, declared as a dependency). This package changes only three per-element instruction budgets: canonical y 40 -> 30 (v1 itemised ~25), walk bookkeeping 150 -> 100 (v1 itemised ~75), hash insert/lookup 300 -> 170 (the same 61 + 18-per-relay-stage model over the same <= 2^60 nodes with a radix-1024 switch fabric: ceil(60/10) = 6 stages instead of radix-32's 12).",
+ "submission_state": "ready",
+ "review_status": "pending",
+ "algorithm": "additive-cheon-v2",
+ "work_function": "W(n) for n >= 2^20 equals W(2^20) = N_B*c_B + N_G*c_G + gap-overflow + per-prime tables + per-prime scalars + chi + sieves + finishing, with c_B = c_G = 1 + (30+170+100)/2000 = 1.15, N_B = ceil(sqrt(K*m/6)), N_G = ceil(K*m/(6*N_B)), m = (r-1)/2^20, K = 0.52; the attack reads only A_1 and A_d. Score = log2(W(2^20)) = 116.86844 = 2921711/25000.",
+ "proof": "proof.md",
+ "claim": {
+  "time_log2": 116.86844,
+  "time_unit": "target-group-operations",
+  "memory_log2_bytes": 122.9,
+  "preprocessing_log2": 115.871,
+  "success_probability": 0.4055,
+  "nonuniform_advice_log2_bytes": 0
+ },
+ "heuristics": [
+  "H1 (coverage): the product set U*B*G^-1 has random-like coincidences apart from a bounded repeated-rational loss below 10^-4; success = |S|/m ~ 1 - exp(-K) = 0.4055 at K = 0.52 (the published package's accepted value, unchanged).",
+  "H2 (equidistribution): the characters of the primes a used are equidistributed over Z/d; this affects only how many primes are needed (>= 3x slack), not success.",
+  "Expected-cost hashing and sharding: linear probing at load <= 1/2 (<= 2.5 expected probes) over a table sharded across <= 2^60 nodes with a radix-1024 switch fabric (6 relay stages at the published 18 instructions per stage)."
+ ],
+ "limitations": [
+  "This is an analytic bound, not a full-size execution.",
+  "H1 and H2 are validated at toy scale only (toy prime r ~ 2^28 with d = 2^8 coverage; 24-bit j = 0 curve with d = 2^6 end-to-end attack, 1500 trials).",
+  "Instruction budgets are itemised analytic counts, not hardware measurements."
+ ]
+}

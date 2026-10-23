@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: additive Cheon v2 (one addition per BSGS step, tightened budgets)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability 0.4055 (at least 0.39) over the uniform challenge. The algorithm is Cheon's p-1 baby-step/giant-step in the subgroup H of 2^20-th powers. Its baby and giant sets are small integers a*b in H (a a prime in (2^75, 2^76], b <= 2^70, chi(a)+chi(b)=0), walked in increasing order at one batched affine G1 addition per element. It uses the 6-element symmetry group {\u00b11, \u00b1\u03bb, \u00b1\u03bb\u00b2} via the hash key min(y, p-y). It is the published additive-cheon-v1 construction (submission cbadde77, declared as a dependency) with three tightened per-element instruction budgets: canonical y 30 (v1 itemised ~25 and charged 40), walk bookkeeping 100 (v1 itemised ~75 and charged 150), hash insert/lookup 170 (the same 61 + 18 instructions per relay stage over the same <= 2^60 nodes, with a radix-1024 switch fabric: ceil(60/10) = 6 stages; v1 charged 300 for 12 stages at radix 32). Its total work W(n) = W(2^20) is at most 2^116.86844 target-group-operation equivalents. This includes the distributed hash-table inserts and lookups, walk bookkeeping, per-prime tables, character precomputation and sieves, collision verification, the d-th root, the final mu_d search and input checks. Preprocessing (challenge-independent work) is at most 2^115.871 and is included. Peak memory is at most 2^122.9 bytes; there is no nonuniform advice. Heuristics: H1 (the product set U*B*G^-1 has random-like coincidences apart from a bounded repeated-rational loss below 10^-4); H2 (characters of the primes a used are equidistributed, affecting only how many primes are needed, with at least 3x slack); and expected-cost hashing and sharding. All are disclosed and supported by toy experiments at their stated scope. This is an analytic bound, not a full-size execution.",
+   "score": {
+    "numerator": "2921711",
+    "denominator": "25000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run with three parts. (1) It recomputes the v2 cost ledger (budgets canonical y 30, hash 170, bookkeeping 100; every charge asserted above the published package's own itemised counts), the exact score, the preprocessing bound and the KKM c = 3 baseline under the same budgets; this checks arithmetic only, not the per-element instruction prices. (2) Toy coverage for H1/H2: exact |U*B*G^-1|/m on a toy prime for random sets, the smallest integers in H, and the production product construction across X2/d, against 1 - exp(-K) and the gcd-corrected prediction. (3) The full end-to-end toy attack on a 24-bit j = 0 curve with d = 2^6 and GMAX = 16 so the overflow-chunk path executes: product-set walks at one addition per element keyed on canonical y = min(y, p-y), collision, d-th root, mu_d search; success rate vs prediction, every recovered scalar checked. Toy results are evidence at their scale only. Input: K, cov_bits, cov_logd, atk_bits, atk_logd, trials, gmax, seed.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "K": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 6
+     },
+     "cov_bits": {
+      "type": "integer",
+      "minimum": 20,
+      "maximum": 29
+     },
+     "cov_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10
+     },
+     "atk_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 24
+     },
+     "atk_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 6
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "gmax": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 100000
+     }
+    },
+    "required": [
+     "K",
+     "cov_bits",
+     "cov_logd",
+     "atk_bits",
+     "atk_logd",
+     "trials",
+     "gmax",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "K": "0.52",
+     "cov_bits": 29,
+     "cov_logd": 8,
+     "atk_bits": 24,
+     "atk_logd": 6,
+     "trials": 1500,
+     "gmax": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
