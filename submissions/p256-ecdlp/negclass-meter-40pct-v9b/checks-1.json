@@ -1,0 +1,412 @@
+[
+ {
+  "detail": "",
+  "name": "A1 p is prime (P-256 field modulus)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A2 r is prime (P-256 subgroup order)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A3 a = -3 = p-3 and b matches SEC 2 2.4.2",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A4 generator on curve: y^2 = x^3 - 3x + b",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A5 [r]G = O (generator has order r)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A6 [r-1]G = -G = (x, p-y) (negation map is the curve inverse)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "factors=[2, 2, 2, 2, 3, 71, 131, 373, 3407, 17449, 38189, 187019741, 622491383, 1002328039319, 2624747550333869278416773953]",
+  "name": "A7 r-1 factorisation is complete and exact (product equals r-1)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "v_2(r-1)=4",
+  "name": "A8 r-1 = 2^4 * odd: the 2-primary part of r-1 is 2^4, NOT 2^255",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "ord=57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "name": "A9 ord_r(2) = (r-1)/2 = N, log2 = 254.99999999966",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A10 ord_r(2) is even, so 2^(N/2) = -1 mod r: the shortest gap for equality up to sign is N/2",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A11 the sign-ambiguity gap is N/2 = ord_r(2)/2 (exact integer)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A12 no 2^k = +-1 mod r for 1 <= k <= 10^6, so the shortest doubling cancellation gap is N/2 >= 2^253.9",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A13 N = (r-1)/2 non-identity negation classes; class key is x",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A14 class representative well defined: -P has the same x and y' = p-y",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A15 the identity target is handled before the walk: Q = O gives x = 0",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "9 named lines",
+  "name": "B1 itemised Montgomery multiplication M = 220 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B2 itemised squaring S = 176 instructions = 4/5 of M",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B3 itemised modular addition A = 21 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B4 batched Fermat inversion itemised as rows: 51856 instructions per inversion, one per 2^16 slots -> 1 instruction(s) per slot",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B5 control row is itemised, not asserted: 128 instructions from 6 named lines",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B6 doubled-add is priced as TWO batched affine additions (X+(X+T_j)): 4M+2S+12A = 1484 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B7 batch-inversion dependency schedule: each step needs 2 sequential inversions, batched across >= 2^15 concurrent trails; product work 6M = 1320 instructions per step",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B8 canonicalisation and coefficient update are charged separately (14 and 63 instructions)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B9 complete step = 3023 instructions = 3023/1000 units (row sum, no margin)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B10 step is strictly cheaper than the published 6M+6A 3.6-unit allowance even with both operations priced: saving 0.2520 bits",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B11 step decomposition 10M+2S+15A+160 extra = 10*220+2*176+15*21+170 = 3023",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C1 ln(1/0.60) bracketed by exact rationals within 1e-60",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C2 S_ops = ceil(1.10*sqrt(2N'ln(1/0.60))) = 2^127.652966",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C3 S_ops is the least such integer",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C4 N/2 >= 2^126 * S_ops exactly: 126.347034 bits, so the published '> 2^127' is corrected to 2^126.41",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G1 DP width is 64 bits, so expected reports = 2^63.652966",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "reports=14502806682972008423 cap/4=18446744073709551616",
+  "name": "G2 expected reports 2^63.6530 <= cap/4 = 2^64 (cap 2^66 records)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G3 cap is 2^16 nodes x 2^50 records = 2^66 records = 2^72 B < 2^73 B",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G4 binomial/Chernoff cap-loss bound: mean = 0.1965 of the cap, log2 P[reports >= cap] <= -87651569754911473664.0",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G5 per-node load: mean 2^47.6530 records, cap 2^50 = 5.088x the mean; the same Chernoff bound applies node-wise and the union bound over 2^16 nodes gives log2 P <= -1337456813887183.0",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G6 routing field is 16 bits -> 2^16 = 65536 nodes (the v9 'four routing bits' statement is corrected; 4 bits address only 16 nodes)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G7 eviction policy is specified: a report that would exceed a node cap is refused and counted, and the Chernoff bound makes the refusal probability < 2^-100",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C5 an escape is a doubling of <= 1620 instructions and consumes one step slot priced at 3023, so every escape is charged in full inside S_ops; no escape rate is assumed",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C6 report row 2^60.687 units and setup row 2^25.045 units are each below 2^-55 of phase 1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C7 phase 1 = s*(S_ops+2^60) = 2^129.248947 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C8 total nominal work = 2^129.248947 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C9 stress repricing of every row by 6/5 = 2^129.511981 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C10 claim 3234/25 = 129.3600 and total <= claim - 0.10",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C11 claim < stress + 0.06",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C12 claim strictly below the 129.46 frontier gate: 0.100 bits",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C13 claim is a reduced rational",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C14 meter halt is Markov-bounded: P_halt <= extras/headroom = 2^-64.9",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C15 cap-loss debit 2^-87651569754911473664.0 is below any precision, so success is 0.40-model minus named debits only",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C16 modelled success at S_ops is 1-0.60^1.21 = 0.4610; the toy-measured walk efficiency 0.81-0.88 gives 0.3939-0.4195, above the claimed 0.39",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C17 worst-case successful-trial cost 2^129.248947 (step x S_ops + extras) <= W_max 2^129.36, and the meter halt debit is 2^-64.9",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C18 preprocessing (2^16 table entries built by scalar multiplication) is inside the setup row; advice is zero bytes",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C19 peak memory 2^66 records x 64 B = 2^72 B < 2^73 B",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D0 toy results file present",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 G_on_curve",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 N_is_half_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 ord_r_2_divides_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 p_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 rG_infinity",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 r_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 toy_ord_r_2_equals_N_informational_only",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 G_on_curve",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 N_is_half_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 ord_r_2_divides_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 p_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 rG_infinity",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 r_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 toy_ord_r_2_equals_N_informational_only",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D2 pipeline runs the production protocol: endpoint match, exponent reconstruction, exact [x]G = Q verification",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D3 q26 production-budget recovery fraction 0.3925 (model 0.4309) with 157/400 exact verifications and 0 mismatches",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D4 q26 dp=4 production-budget recovery fraction 0.3900 (model 0.4309)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D5 q26 double-budget recovery fraction 0.8325 follows the birthday law (model 0.8647) with implied walk efficiency 0.893",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D6 q22 production-budget recovery fraction 0.3675 (model 0.4308) - the small-N curve is the disclosed adverse case",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D7 out-of-regime long-trail setting dp=9 is reported as adverse: 0.1825",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D8 16-node pool with per-node cap: 0 overflows on every pipeline run",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D9 full 16-bit routing field addresses 2^16 nodes; every route is a 16-bit value",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D10 production DP density 2^-64 vs toy 2^-4..2^-9 is disclosed as a scaling of 2^55..2^60",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D11 no attack stalls unreported: stall count is bounded by the attack count",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D12 production doubling transition: 2-cycle fraction 0.00000 at R=4, 0.00000 at R=8 against the 1/(2R) rows",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D13 additive control collapses into 2-cycles (0.82-0.92 of steps at R=4,8)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D14 trap test doubling escape: [5, 1, 0, 0]/150 trails vs additive [150, 150, 150, 150]/150; the nonzero doubling counts are reported, not rounded to zero",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D15 toy run is bounded (36.6 s, 6259360 metered steps <= declared budget 20000000)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D16 toy-scale cycles are birthday self-collisions: first-repeat fraction [1.0, 1.0, 1.0, 1.0] against L/(2N) [0.011761598, 0.011761598, 0.001159738, 0.001159738]",
+  "verdict": "PASS"
+ }
+]
