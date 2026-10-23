@@ -1,0 +1,3 @@
+initial-run: {"bits":14,"trials":100,"seed":1,"s":0.46,"adder_bits":5,"dp_bits":2,"walks":2}
+sweep-r1024-b18-add: {"bits":18,"trials":800,"seed":201,"s":0.0,"adder_bits":10,"dp_bits":6,"walks":2}
+sweep-r1024-b18-mixed: {"bits":18,"trials":800,"seed":202,"s":0.447265625,"adder_bits":10,"dp_bits":6,"walks":2}

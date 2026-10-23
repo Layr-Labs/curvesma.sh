@@ -1,0 +1,110 @@
+{
+  "kernel": "examples/blst-gt-rho/sortnet64.c (standalone; 64-bit indices; does not include step.c or sortnet.c)",
+  "c_cmp64_2^21": 108.0000054206683,
+  "c_cmp64_2^21_exact": "26159875361/242221056",
+  "c_cmp64_2^22": 108.00000269516654,
+  "c_cmp64_2^22_exact": "57302582678/530579456",
+  "scan64_per_slot_2^21": 13.000000476837158,
+  "scan64_per_slot_2^21_exact": "27262977/2097152",
+  "scan64_per_slot_2^22": 13.000000238418579,
+  "scan64_per_slot_2^22_exact": "54525953/4194304",
+  "scatter64": {
+    "scatter64_per_record_total_at_2^21": 24.01564884185791,
+    "scatter64_per_record_total_at_2^22": 24.007824420928955,
+    "scatter64_per_record_excluding_reset": 24.0,
+    "scatter64_per_cursor_reset": 0.500762939453125,
+    "pass_totals": {
+      "2^21": 50364466,
+      "2^22": 100696114
+    },
+    "note": "a = per-record scatter work (bucket index, cursor load/store, 80-byte copy, overflow count); b = per-cursor reset store, from the two sizes at the same 2^16 cursors. Production would have 2^37 cursors, so the reset term scales with the bucket count per table, not with the record count."
+  },
+  "sortedness_check_n4096_and_1024": {
+    "ok": true,
+    "lines": {
+      "v1": "verify n=4096 rounds=1 unsorted_pairs=0 permutation=ok",
+      "v2": "verify n=4096 rounds=1 unsorted_pairs=0 permutation=ok",
+      "v3": "verify n=4096 rounds=1 unsorted_pairs=0 permutation=ok",
+      "v4": "verify n=4096 rounds=1 unsorted_pairs=0 permutation=ok",
+      "v5": "verify n=4096 rounds=2 unsorted_pairs=0 permutation=ok",
+      "v6": "verify n=1024 rounds=1 unsorted_pairs=0 permutation=ok",
+      "v7": "scatter64 overflows=228 cap=1"
+    }
+  },
+  "seed_checks": {
+    "2^21_seed1_vs_seed2_c_cmp_and_scan_identical": true,
+    "2^21_seed1_totals": {
+      "sortnet_N0": 20,
+      "sortnet_N1": 26159875381,
+      "sortscan_N0": 19,
+      "sortscan_N1": 26187138357
+    },
+    "2^21_seed2_totals": {
+      "sortnet_N0": 20,
+      "sortnet_N1": 26159875381,
+      "sortscan_N0": 19,
+      "sortscan_N1": 26187138357
+    }
+  },
+  "harness_crosscheck_n4096": {
+    "totals": {
+      "sortnet64_r4": 69011368,
+      "sortnet64_r8": 138022716,
+      "sortscan64_r4": 69224354,
+      "sortscan64_r8": 138448686
+    },
+    "c_cmp64": 108.00303610777243,
+    "c_cmp64_exact": "69011348/638976",
+    "scan64_per_slot": 12.99951171875,
+    "note": "same MODES/MODE_N1/MODE_N2 as sortnet.c's harness run; sortnet64 totals equal sortnet.c's (69011368 / 138022716); scan differs by 11 instructions over 4 rounds."
+  },
+  "sorts_detail": {
+    "2^21_seed1": {
+      "n": 2097152,
+      "comparators": 242221056,
+      "totals": {
+        "sortnet_N0": 20,
+        "sortnet_N1": 26159875381,
+        "sortscan_N0": 19,
+        "sortscan_N1": 26187138357
+      },
+      "c_cmp64": 108.0000054206683,
+      "c_cmp64_exact": "26159875361/242221056",
+      "scan64_per_slot": 13.000000476837158,
+      "scan64_per_slot_exact": "27262977/2097152"
+    },
+    "2^21_seed2": {
+      "n": 2097152,
+      "comparators": 242221056,
+      "totals": {
+        "sortnet_N0": 20,
+        "sortnet_N1": 26159875381,
+        "sortscan_N0": 19,
+        "sortscan_N1": 26187138357
+      },
+      "c_cmp64": 108.0000054206683,
+      "c_cmp64_exact": "26159875361/242221056",
+      "scan64_per_slot": 13.000000476837158,
+      "scan64_per_slot_exact": "27262977/2097152"
+    },
+    "2^22_seed1": {
+      "n": 4194304,
+      "comparators": 530579456,
+      "totals": {
+        "sortnet_N0": 20,
+        "sortnet_N1": 57302582698,
+        "sortscan_N0": 19,
+        "sortscan_N1": 57357108650
+      },
+      "c_cmp64": 108.00000269516654,
+      "c_cmp64_exact": "57302582678/530579456",
+      "scan64_per_slot": 13.000000238418579,
+      "scan64_per_slot_exact": "54525953/4194304"
+    }
+  },
+  "commands": {
+    "harness_n4096": "LIB=blst N1=64 N2=128 MODES=\"sortnet64 sortscan64\" MODE_N1=4 MODE_N2=8 /Users/benjamin/experimental/yukon/curvesmash-core/measure/measure.sh /Users/benjamin/experimental/yukon/curvesmash-core/examples/blst-gt-rho/sortnet64.c blst /private/tmp/claude-501/-Users-benjamin-experimental-yukon/7025fe3c-0262-4a69-b9d2-774b871b98b2/scratchpad/sortnet64/../sortnet/inputs-s46-seed1/inputs.bin /private/tmp/claude-501/-Users-benjamin-experimental-yukon/7025fe3c-0262-4a69-b9d2-774b871b98b2/scratchpad/sortnet64/out-harness",
+    "callgrind_big": "docker run --rm --platform linux/arm64 --network none -v runner:/run:ro -v examples/blst-gt-rho:/harness:ro -v inputs-s46-seed1:/in:ro -v out-cg:/work curvesma-reference-count sh /run/run64.sh   (jobs in out-cg/jobs.txt: tag|mode|rounds|seed|n|verify|callgrind; the job runner compiles /harness/sortnet64.c with the organizer flags and runs valgrind --tool=callgrind --collect-atstart=no with the bench's own toggles)",
+    "verify_native": "docker run ... -v out-verify:/work curvesma-reference-count sh /run/run64.sh   (jobs: out-verify/jobs.txt; native runs with the verify argument)"
+  }
+}

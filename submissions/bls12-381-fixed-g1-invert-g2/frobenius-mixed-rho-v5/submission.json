@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class mixed add/square rho on GT (revision v10)",
+  "claims": [
+    {
+      "statement": "For uniform z in GT and uniform nonidentity input (the challenge of rules.md), the algorithm in proof.md returns Q with e(P, Q) = z with probability at least 0.41, using at most 2^126.840188 target-group-operation equivalents (score 31710047/250000) counting every operation of the procedure (a hard work cutoff), with preprocessing 2^29.575768. Peak memory is at most 2^74.321929 bytes (a distinguished-point table with padding and an overflow stop). Nonuniform advice is 0 bytes. Every main step is charged the adder cost (the reference operation plus the other instructions divided by C); distinguished points are charged at table capacity with measured store costs and an explicit transfer assumption. The bound rests on the stated heuristics H1, H5 and H7 and on the derived bounds in proof.md. This is a classical generic attack, not a practical break.",
+      "score": {
+        "numerator": "31710047",
+        "denominator": "250000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "evidence/number_theory_check.out",
+        "walk-spec.md",
+        "measurement/step.c",
+        "measurement/replica.py",
+        "measurement/gen_inputs.py",
+        "measurement/analyze.py",
+        "measurement/native_run.sh",
+        "measurement/reproduce.sh",
+        "measurement/RESULT.json",
+        "measurement/sortnet/sortnet.c",
+        "measurement/sortnet/RESULT-sortnet.json",
+        "measurement/sortnet/sortnet64.c",
+        "measurement/sortnet/RESULT-sortnet64.json",
+        "measurement/sortnet/check_bitonic.py",
+        "measurement/sortnet/check_bitonic.out",
+        "experiment.py",
+        "evidence/initial-run.json",
+        "evidence/sweep-r1024-b18-add.json",
+        "evidence/sweep-r1024-b18-mixed.json",
+        "evidence/replay-v10.json",
+        "evidence/sweep-inputs.txt",
+        "evidence/native-counts.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-rho",
+      "source": "experiment.py",
+      "purpose": "Run the Frobenius-class mixed walk (cscore.gt, revision v9: counter restarts, chained DP restarts, round-based anchors) on toy order-ell subgroups of F_{q^12}^* with ell dividing q^4 - q^2 + 1, solve each instance end to end and verify g^y = z, and compare the success curve of tau = T^2 V / (2N) with 1 - exp(-tau), reporting cycle rates. Toy scale only, with a restart share of 23-25%: it tests H1 and the solver, not production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 18
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "s": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.9
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 10
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "s",
+          "adder_bits",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 14,
+          "trials": 100,
+          "seed": 1,
+          "s": 0.46,
+          "adder_bits": 5,
+          "dp_bits": 2,
+          "walks": 2
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2 (hard work cutoff with its charge bounds), the failure terms, the success bound, preprocessing, and memory, from the stated parameters, the measured instruction counts, and the number-theory assertions (cscore.number_theory).",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}
