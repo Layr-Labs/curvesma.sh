@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: six-class (negation + GLV) parallel Pollard rho in G1, global work meter, truncated-product canonicalisation",
+  "claims": [
+    {
+      "statement": "For a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with success probability at least 0.39, and on every run its total work is at most 2^126.36 batched-affine-G1-addition equivalents (C=2,000 instructions), enforced by a global work meter that charges every action at an upper-bound price before execution and halts with failure at 2^126.36. The algorithm is parallel distinguished-point Pollard rho (2^20 walks, distinguished probability 2^-64, trail cap 20*2^64) on the (r-1)/6 classes of G1 under negation and phi(x,y)=(beta*x,y)=[lambda], lambda=0xac45a4010001a40200000000ffffffff; class key |y|; canonical twist index decided exactly from a truncated 12-multiply fixed-point product of x by floor(2^448*beta/p) with an exact one-multiplication fallback on near-ties (a separately metered action; proof.md section 1.1); R=2048 twisted table so each step is one batched affine addition plus at most 200 instructions; 2-cycles and cycles of length <=64 escaped by doubling the cycle's minimum class under one fixed total order (192-bit key fingerprints, used for all history comparisons) (a class map; no cancellation can close a cycle through doublings since the order of 2 mod r is 2^250.86), so trails meeting a common class reunite (merging lemma); fresh uniform trail coefficients stored in full; collisions solved by re-walking with coefficients reduced mod r and x=(e_2-e_1)/(f_1-f_2) mod r verified before output. Phase 1 stops when a hard operation counter reaches S_ops=1.05*S0 (S0=sqrt(2N'ln(1/0.605)), ordinary steps priced 1.10 units, cycle-traversal steps 1.12 and doublings 1.5, 1.10*S_ops=2^126.3479, N'=((r-1)/6)*2048/2047); phase 2 completes open trails; report capacity 2^63.25 and 8 processed matches are caps counted as failure. Peak memory below 2^72 bytes; preprocessing (all work before the first walk step: jump table, report-table initialisation, first 2^20 trail starts) at most 2^57.2 units, enforced by a meter sub-cap and included in the total; no advice. Heuristic H1: within S_ops class arrivals of all trails (all arrivals counted, including fruitless-cycle repeats and trail starts) the first inter-trail collision has occurred with probability at least 1-exp(-(S_ops/1.05)^2/(2N'))=0.395 (random-mapping law with a 5% slowdown allowance); the meter's early-halt probability (expected doubling surcharge against the headroom, Markov) is below 0.004, the |y| bits used for partition and distinguished tests are pseudo-random, and, apart from the detected and escaped fruitless cycles of F of length <=64 (whose repeated arrivals are counted in the collision budget), a trail returns to a class it visited earlier at most with the random-mapping self-collision probability L_max^2/(2N) per trail; the canonical twist index of a new class is uniform on the 6 units and independent of its partition index, and beta*x mod p is equidistributed along the walk (these affect the 2-cycle/doubling rate and the section-1.1 fallback rate, hence only the early-halt probability of the meter, below 0.004); supported by toy-curve experiments (including a no-automorphism control and a scaled full-pipeline mode); no production-size run.",
+      "score": {
+        "numerator": "6318",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "glv-class-rho-fastcanon-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on BLS12-381 G1, check the GLV pair, orbit size 6 and unit action, |y| class key, canonical member, the section-1.1 truncated-product canonical index against the exact rule (random and adversarial near-tie inputs), twisted-step identity, doubling class map, the multiplicative order of 2 mod r, table entries, coefficient tracking on production steps, and recovery of a planted x from two production trails forced to merge. Part B: run the per-trail algorithm of proof.md on a toy curve y^2=x^3+4 over F_q and report class visits to the first inter-trail collision against the random-mapping model and fruitless-cycle rates; pipeline=true also applies the scaled production rules (phase-1 budget, phase 2, report capacity, 8-match cap) and reports the success rate; classes=1 or 2 runs control walks. Toy scale only. Optional canon_random/canon_stress set the number of section-1.1 checks; toy=false skips Part B. long_trails>0 runs the many-escapes-per-trail trap test (walks without distinguished points, long_len operations each, small R allowed), counting non-fruitless returns (across escapes or after more than 64 arrivals) separately from repeats inside detected fruitless cycles, against the self-collision expectation; long_escape_add=true runs the rejected additive escape as a control.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 14,
+          "pipeline": true
+        }
+      ]
+    }
+  ]
+}
