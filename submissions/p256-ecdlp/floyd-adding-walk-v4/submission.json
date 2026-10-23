@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: Floyd adding walk, revision 4",
+  "claims": [
+    {
+      "statement": "For a uniform secret and a fresh 32-byte seed drawn per trial, the Floyd r-adding walk in proof.md returns the secret with probability at least 0.39. The recovery residue is (alpha_h - alpha_t) * (beta_t - beta_h)^(-1). Each coefficient is an independent 512-bit SHAKE256 squeeze reduced modulo the order. Total work is at most W = 602437263456164211567707259391229476354761 target-group-operation equivalents. The declared score 138789863/1000000 = 138.789863 is a ceiling of log2(W) at resolution 10^(-6). Peak memory is 10240 bytes. Preprocessing is 1 reference units and is included in W. Nonuniform advice is 0 bytes. The figure 0.39 is a lower bound; the recorded sample's lower confidence bound is higher.",
+      "score": {
+        "numerator": "138789863",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-fresh-sample",
+      "source": "experiment.py",
+      "purpose": "Remeasure the limb schedule, rebuild W, draw a fresh seed and secret per trial, and check that the success-probability lower bound stays at least 0.39.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
