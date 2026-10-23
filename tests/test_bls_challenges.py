@@ -120,6 +120,24 @@ class BLSChallenges(unittest.TestCase):
         self.assertTrue(is_inf(multiply(G1, curve_order)))
         self.assertTrue(is_inf(multiply(G2, curve_order)))
 
+    def test_all_tracks_budget_initial_and_final_review_retries(self):
+        manifest = json.loads((ROOT / 'benchmark.json').read_text())
+        for track in manifest['tracks']:
+            with self.subTest(track=track['name']):
+                config = json.loads((ROOT / 'tracks' / track['name'] / 'verifier.json').read_text())
+                provider, limits = config['provider'], config['limits']
+                self.assertEqual(config['manifest_preprocessor'], 'curvesmash-v1')
+                self.assertEqual(provider['response_format'], 'json_object')
+                self.assertEqual(provider['max_attempts'], 3)
+                self.assertEqual(provider['timeout_seconds'], 300)
+                self.assertEqual(provider['max_completion_tokens'], 32768)
+                self.assertEqual(limits['max_followups'], 1)
+                self.assertEqual(limits['max_initial_runs'], 1)
+                self.assertEqual(limits['total_provider_requests'], 2 * provider['max_attempts'])
+                self.assertEqual(limits['total_review_seconds'], 2000)
+                self.assertGreater(limits['total_review_seconds'],
+                                   limits['total_provider_requests'] * provider['timeout_seconds'])
+
     def test_yukon_tracks_keep_the_existing_interface(self):
         manifest = json.loads((ROOT / 'benchmark.json').read_text())
         self.assertEqual({t['name'] for t in manifest['tracks']},
@@ -148,7 +166,8 @@ class BLSChallenges(unittest.TestCase):
             self.assertTrue((ROOT / selected / 'submission.json').is_file())
             self.assertIn(name, (ROOT / 'scripts/run_experiments.sh').read_text())
             workflow = (ROOT / '.github/workflows' / track['runner']['workflow']).read_text()
-            self.assertIn('verify.yml@64b3a2b01f21f1281383c673503964d2fc4c5c47', workflow)
+            self.assertIn('verify.yml@f7b7a9972f5dda458bb34a02d5b04abad8f2121a', workflow)
+            self.assertIn('verifier_revision: f7b7a9972f5dda458bb34a02d5b04abad8f2121a', workflow)
             self.assertIn(f'config_path: tracks/{name}/verifier.json', workflow)
             self.assertIn(f'score_path: {track["scorePath"]}', workflow)
             self.assertIn('yukon_evaluation: ${{ inputs.yukon_evaluation }}', workflow)
