@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: negation-map parallel Pollard rho with doubling escape (v3)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on NIST P-256, recover x. Before submitting, we read this track's current best accepted submission (5fa78d6, Meganpark980320) and independently re-verified its key finding: additive escape on a fruitless rho collision traps a large fraction of long trails in a persistent cycle (we measured 35/150=23% on our own construction), while doubling escape (X<-[2]X, exploiting that small integers have enormous multiplicative order mod r) traps 0/150 in the same test. This revision switches to doubling escape, charged at an empirically-measured (4.07%) escape rate with a generous 10% bound; targets success probability 0.40 (explicit margin over the 0.39 floor); and uses a chaining hash table (not open addressing with a probe cap) to avoid a per-operation-vs-whole-attack overflow-probability mismatch a sibling submission's review flagged. Total computation is at most 5.423512e+38 reference-group-operation equivalents (borrowed C=1,000). A dependency on 5fa78d6 is declared for the doubling-escape and explicit-margin insights; the cost ledger, table structure, and escape-rate derivation are independently derived and verified.",
+      "score": {
+        "numerator": "128672496",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-negation-doubling-escape",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the production mechanism exactly: W parallel walks, mixed c_h/d_h branch points, sign canonicalization, a shared chaining table checked on every step, DOUBLING escape (not additive) on fruitless collisions, linear-solve. Reports escapes_triggered and escape_rate, with escapes counted in total_steps. Does not validate production curve arithmetic, instruction costs or full-size timing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 20000
+          },
+          "w": {
+            "type": "integer",
+            "enum": [2]
+          },
+          "unit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "W": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": ["order", "w", "unit", "W", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 1009,
+          "w": 2,
+          "unit": 1,
+          "W": 8,
+          "trials": 100,
+          "seed": 42
+        }
+      ]
+    }
+  ]
+}

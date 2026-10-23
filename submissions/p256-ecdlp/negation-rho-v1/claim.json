@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "p256-ecdlp",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "candidate-attack",
+  "algorithm": "negation-parallel-rho-doubling-escape-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.672496,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 134.685377,
+    "preprocessing_log2": 15.849406,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Canonicalized parallel rho walk modeled as a uniform random function on an m=r/2-element set.",
+    "The 10% escape-rate bound is empirically supported (measured 4.07% on the toy construction with matching branch count and automorphism structure), not a proven worst case.",
+    "The chaining table's O(1)-expected traversal cost is a standard balls-into-bins expectation argument, not a deterministic worst-case guarantee."
+  ],
+  "limitations": [
+    "M_p256=300 instructions/field-mult is an unpinned analytic upper-bound estimate.",
+    "Analytic construction; no full-size execution. experiment.py exercises the exact production mechanism (including the doubling escape) on a toy additive exponent group.",
+    "Success probability targets 0.40 with explicit margin over the 0.39 floor."
+  ],
+  "lane": "exploratory"
+}
