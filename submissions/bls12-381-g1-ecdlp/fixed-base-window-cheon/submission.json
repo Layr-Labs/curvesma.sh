@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: fixed-base 16-bit window Cheon on the d-th-power subgroup",
+  "claims": [
+    {
+      "statement": "For every secret s uniform in 1..r-1 on BLS12-381 G1, given n=2^20 and A_i=[s^i mod r]P0 for i=1..n, the deterministic algorithm in proof.md recovers s with success probability 1. At n=2^20 its total classical work W(n) is strictly less than 2^{125} target-group-operation equivalents under the fixed C=2000 normalization, counting preprocessing, Jacobian arithmetic, scalar-field arithmetic, sorting, lookup, verification and output. Peak memory is at most 2^{126} bytes. Preprocessing is at most 2^{125} target-group-operation equivalents and is included in that total, not added again. Nonuniform advice is at most 2^0 bytes. No heuristic and no uncharged oracle is used. The bound is full coverage of the order-m search, not a partial block.",
+      "score": {
+        "numerator": "125",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
