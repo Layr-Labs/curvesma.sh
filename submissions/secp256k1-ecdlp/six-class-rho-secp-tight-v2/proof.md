@@ -1,0 +1,574 @@
+# Six-class parallel Pollard rho on secp256k1 (negation + GLV), tight accounting v2
+
+**Provenance.** This package is derived from submission
+758d8df6-df45-4684-9e49-5aa5e19e9089 (kaankolcu,
+`secp256k1-ecdlp/six-class-rho-secp-tight-v1`), which is itself derived from
+submission 189ebc42-1ef3-4232-8056-a34aad574d83 (Meganpark980320,
+`secp256k1-ecdlp/glv-six-class-rho-secp-v1b`), a port of submission 1c600df4
+(mpjunior92, `bls12-381-g1-ecdlp-plain/glv-six-class-rho-v11`) to secp256k1.
+All three dependencies are declared. The walk, class key, 4-limb
+canonical-index rule, doubling escape, 2-cycle and checkpoint rules, merging
+lemma, work meter, phases, storage nodes and toy methodology are taken from
+758d8df6, and `experiment.py` differs from its file only in the two disclosed
+H1 constants. Only the accounting changes, and every change is itemised in
+section 0. No score or acceptance of any source is relied on. Everything
+needed is restated here.
+
+**Claim.** time_log2 = 126.96. The algorithm recovers x from Q = [x]P on
+secp256k1 with probability ≥ 0.3909 > 0.39. On **every** run its total work is
+W ≤ 2^126.96 units. One unit is one batched incomplete affine secp256k1 addition
+(6M, A = 0) = C = 1,000 scalar AArch64 instructions. The bound is unconditional
+(global work meter, section 3). Memory < 2^72 bytes, spread over 2^16 storage
+nodes of < 2^56 bytes each. Preprocessing (everything before the first walk
+step) ≤ 2^59.0 units, enforced by the meter and included in W. Nonuniform
+advice: none. Success rests on the random-mapping heuristic H1 (section 4),
+supported by toy runs.
+
+## 0. Changes from 758d8df6, itemised
+
+The algorithm and its parameters (R = 2048, θ = 2^-64, M = 2^20 walks,
+L_max = 20·2^64, checkpoint period 64, 2^16 nodes, the store and the
+D_cap = 2^63.83 capacity cap) are unchanged, as are the H1 failure exponent
+q = 0.605 (the source's own choice; the claimed floor stays 1 − q = 0.395) and
+every H1 clause other than the slowdown allowance. Three accounting items
+change:
+
+1. **Slowdown allowance.** κ = 1.02 instead of 1.05 (section 4). The class
+   walks deviate from the random-mapping mean T_c by −0.9% to +1.3% across all
+   six rows of 758d8df6 (R = 256 and R = 2048), and by +0.4% to +1.2% across
+   the six new R = 2048 T_c rows of section 6 run for this package (seeds
+   1601–1603, 1606, 1621, 1622; the two new pipeline rows add success
+   corroboration). κ = 1.02 adopts a 2% allowance, well above the observed
+   worst deviation at the production R (+1.2%) and above the worst observed at
+   any R (+1.3%). No other H1 clause changes. This item saves 0.0418 bits
+   (log2(1.05/1.02) on the same S0).
+2. **Batch-inversion share.** Batches are exactly 2^16 walks instead of
+   2^15..2^16, so the share per step is ⌈130058/2^16⌉ = 2 instructions
+   (was 4 at ≥ 2^15). A ready walk whose batch has not filled waits; waiting
+   performs no metered work. The inversion bound I < 2^17 is the source's own
+   and is unchanged (section 5). The itemised per-step total falls from 147 to
+   145 instructions and the step budget from 150 to 148: the ordinary step
+   costs 1.148 units (the reference addition plus the 148-instruction budget,
+   (1,000 + 148)/1,000; was 1.15). The traversal step keeps its +24-instruction
+   copy allowance at price 1.18 (a 0.032 surcharge over the 1.148 step; the
+   random-extras table keeps the coarser 0.04 allowance, which still upper-
+   bounds it). The doubling price
+   falls from 2.0 to 1.93: the same 7M + 6A formula plus the same
+   148-instruction budget is at most 1,929 instructions. This item saves
+   0.0025 bits (log2(1.15/1.148) on the same operations).
+3. **Meter-halt bound recomputed.** The early-halt failure event is bounded
+   exactly as the source bounds it, by Markov on the meter's random surcharges:
+   the expected surcharges are itemised tighter here (E < 2^112.88, section 5),
+   and at the claim's headroom k = 2^126.96 − W' − 2^97.56 > 2^120.82, Markov
+   gives P[X ≥ k] ≤ E/k < 2^112.88/2^120.82 = 0.0041 ≤ 0.005 − 2·10^-7: the
+   allowance 0.0041 fits the 0.005 gap between the floor 0.395 and 0.39, with
+   2·10^-7 reserved for the other failure events.
+
+Gain: 127.01 − 126.96 = 0.05 bits. Items 1 and 2 lower the phase-1 charge from
+the source's 2^126.98354 to < 2^126.93921 (0.04433 bits: 0.0418 from κ and
+0.0025 from the batch share), and item 3 keeps the claim's headroom at
+2^120.82 with the Markov allowance 0.0041. The least claim satisfying the full
+accounting is 2^126.95611 (phase-1 priced bound W' < 2^126.93930 plus hard
+extras < 2^97.56 plus headroom E/0.005 = 2^120.52), which 126.96 exceeds with
+slack. Nothing else changed.
+
+## 1. Algebra (checked on secp256k1 in `experiment.py`, part A)
+
+p and r are the protected field prime and the prime group order (cofactor 1);
+E: y² = x³ + 7.
+
+- **GLV map.** β = 0x7ae96a2b…719501ee is a primitive cube root of 1 in Fp.
+  φ(x, y) = (βx, y) equals [λ] on E, with
+  λ = 0x5363ad4c…1b23bd72. Part A checks φ(P) = [λ]P, β² + β + 1 ≡ 0 (mod p)
+  and λ² + λ + 1 ≡ 0 (mod r).
+- **Units and classes.** The units are u_t = (−1)^s·λ^j with t = 3s + j. They act
+  as [u_t](x, y) = (β^j x, (−1)^s y). The group has prime order, so no
+  nonidentity point is fixed by a unit ≠ 1. E \ {O} therefore splits into
+  exactly N = (r − 1)/6 classes of size 6 (log2 N = 253.41504).
+- **Key.** K = |y| = min(y, p − y) is a complete class invariant. Equal |y|
+  gives y' = ±y and x'³ = x³, so x' = β^j x.
+- **Canonical member.** j minimises β^j x mod p and s = [p − y < y]. The
+  canonical member is c = (β^j x, |y|) = [u_t]P. The exact rule costs one
+  Fp multiplication (βx; β²x = p − ((x + βx) mod p)). The walk needs only the
+  index t, which section 1.1 decides exactly without that multiplication.
+
+### 1.1 Exact canonical index from a truncated product (4 limbs)
+
+Only j = argmin(v0, v1, v2) is needed, where v0 = x, v1 = βx mod p and
+v2 = β²x mod p. These are distinct integers in [1, p), and v0 + v1 + v2 is
+p or 2p. Work in 64-bit fractions of p.
+
+- **v1.** Let G = ⌊2^384·β/p⌋ (6 limbs). Then x·G/2^384 = xβ/p − e with
+  0 ≤ e < x/2^384 < 2^-128. So the true bits 320..383 of x·G are
+  ⌊2^64·(v1/p)⌋ up to < 1. F1 is formed from 8 limb products: the low halves
+  (MUL) of the four column-5 products x_i·G_{5−i}, plus the high halves (UMULH)
+  of the four column-4 products x_i·G_{4−i}, summed mod 2^64. Everything
+  dropped (columns 0..3, and the column-4 low halves) is < 14·2^320, so the
+  true bits 320..383 lie in [F1, F1 + 14]. If F1 < 40 or F1 > 2^64 − 1 − 40,
+  fall back.
+- **v0.** F0 = top limb of x. Since 2^256/p = 1 + 2^-224·(…),
+  0 ≤ 2^64·v0/p − F0 < 2.
+- **v2.** Let S = F0 + F1. If |S − 2^64| ≤ 40, fall back. Otherwise
+  F2 = 2^64 − S, or 2^65 − S when S > 2^64, is within ±17 of 2^64·v2/p.
+- **Decision.** If the smallest of F0, F1, F2 is below both others by more than
+  40, it is the exact argmin, because errors ≤ 17 each cannot reverse a gap
+  > 34. Otherwise fall back to the exact rule. The fallback is a separately
+  metered action (0.5 units). The fallback windows cover < 2^8 out of 2^64, so
+  the rate is < 2^-55 per step if βx mod p is equidistributed. This affects
+  only the meter's early-halt probability, never correctness.
+
+Part A compares this rule, emulated at limb level, with the exact rule on
+random production inputs and on adversarial near-tie inputs (two of the three
+values, or a value and 0 or p, within 2^k for k = 150..249). The initial run
+covers 30,000 random and 10,000 adversarial inputs. The offline run (section 6)
+covers 2,000,000 random and 1,000,000 adversarial inputs, with 0 mismatches.
+
+## 2. Walk (unchanged from 758d8df6)
+
+Parameters: R = 2048; distinguished probability θ = 2^-64 (limb 1 of K is
+zero); M = 2^20 walks; L_max = 20·2^64; checkpoint period 64.
+
+- **Table.** c_h and d_h are uniform in [0, r) (fresh coins, rejection sampling,
+  every attempt metered). M_h = [c_h]P + [d_h]Q, redrawn if O.
+  Tab[h][t] = [u_t^{-1}]M_h = (−1)^s·φ^{−j}(M_h), with coefficients
+  u_t^{-1}·(c_h, d_h) mod r.
+- **Step.** F(C) = class(c(C) + M_h) with h = K mod R. The walk keeps any member
+  P and sets P ← P + Tab[h][t]. Since c + M_h = [u_t](P + Tab[h][t]), this is F.
+  Each ordinary step is one batched affine addition (the reference operation)
+  plus ≤ 148 instructions (section 5).
+- **Trails.** A trail starts at S = [a]P + [b]Q, with a and b uniform from fresh
+  coins, stored in full (redraw if S = O). At each class arrival, in order:
+
+```
+if K distinguished: report (K, a, b); end trail
+if length >= L_max: abandon trail
+if pending_escape: ESC; clear history; continue
+if fp(K) == K_{-2}: 2-cycle {current, previous}:
+     if fp(K) < K_{-1}: ESC; clear history; continue
+     else pending_escape <- true
+elif fp(K) == K_cp: traverse the cycle once more (<= 64 steps, else abandon),
+     resume at the member of its minimum-fp class remembered during the
+     traversal, ESC; clear history; continue
+if length mod 64 == 0: K_cp <- fp(K)
+P <- P + Tab[h][t]; K_{-2} <- K_{-1}; K_{-1} <- fp(K)
+```
+
+  "Clear history" resets K_{-1}, K_{-2}, K_cp and pending_escape. ESC is the
+  doubling escape P ← [2]P (a batched affine doubling). Doubling commutes with
+  every unit, so it maps class C to class(2c(C)), which is a class map.
+  fp(K) is limbs 0, 2 and 3 of K (192 bits), compared as one integer (limb 3
+  most significant). Every equality test and every minimum uses this single
+  fixed total order on classes. `length` counts every operation, so a trail
+  has ≤ L_max + 65 operations. If an addition has equal x-coordinates
+  (P = ±Tab), the trail is abandoned (< 2^-114 in total).
+- **Merging lemma.** Let trails A and B arrive at the same class C, with any
+  histories. Until one of them escapes, both apply F and visit the same
+  classes. A trail escapes only after a repeat (K = K_{-2}, or K = K_cp within
+  ≤ 64 ordinary steps), i.e. only on a cycle Z of F of length ≤ 64. Z then
+  contains no distinguished class. Every escape from Z leaves from its
+  minimum-fp class and goes to E(Z) = class(2c(min Z)), which depends only on
+  Z. If A escapes from Z, then B follows the same F path, enters Z, detects it
+  within 3 arrivals (2-cycle test, which comes first) or 128 + 64 arrivals
+  (checkpoint), and escapes to the same E(Z). So A and B are again at a common
+  class after ≤ 192 extra operations of one of them. By induction they reach
+  the same distinguished class, unless one of them first hits L_max or an
+  exceptional addition (failure events). A fixed point of F gives the same
+  escape by both routes. History is cleared at every doubling and starts have
+  none, so K = K_{-2} or K = K_cp always witnesses a real cycle of F.
+- **No structural cycles through escapes.** A trail can return to a class c
+  after m ≥ 1 doublings only if u·2^m·c + (a sum of unit and power-of-2
+  multiples of the table points) = c for some unit u. The multiplicative order
+  of 2 mod r is 2^250.0 (part A, from the full factorisation of r − 1). Hence
+  1 − u·2^m ≠ 0 mod r for every m < 2^247, so the relation cannot hold through
+  cancellation of table terms. (An additive escape multiplier would cancel
+  identically through negation pairs.) It pins c to one specific point. This
+  excludes identities, not coincidences. That such returns are no more
+  frequent than ordinary self-collisions is part of H1, and the long-trail
+  test checks it (section 6).
+- **Solving.** On a key match with another trail's report, re-walk both trails
+  from their stored (a, b), tracking P = [A]P + [B]Q mod r after every
+  operation. The canonical coefficients are (e, f) = u_t·(A, B). If the
+  canonical points agree and f_1 ≠ f_2, then x = (e_2 − e_1)/(f_1 − f_2) mod r.
+  Verify [x]P = Q and output x (the sign is checked on production data in
+  part A). Q = O outputs 0.
+
+## 3. Phases, storage and the global work meter
+
+- **Meter.** Every action is charged its price (section 5) before it runs, and
+  each price upper-bounds its instructions / C. This covers random words,
+  sampling attempts, starts and redraws, steps, doublings, traversals,
+  fallbacks, reports, store probes, table build, store initialisation,
+  re-walks, solving and verification. If a charge would exceed
+  W_max = 2^126.96, the attack halts with failure. So W ≤ 2^126.96 on every
+  run, and no loop needs its own limit; rejection-sampling loops in particular
+  are bounded by the meter.
+  - Preprocessing (all charges before the first walk step) has its own cap of
+    2^59.0. If a preprocessing charge would exceed it, the attack halts with
+    failure.
+  - The meter is a 192-bit fixed-point counter. Each of ≤ 2^20 processors
+    reserves blocks of 2^40 units by atomic update. Unused remainders count as
+    spent: < 2^61 units, included in the hard extras.
+- **Phase 1.** Runs until a global operation counter (steps, doublings and
+  traversal steps of phase-1 trails) reaches S_ops. Every reserved block is
+  completed, so at least S_ops and fewer than S_ops + 2^60 operations are
+  performed.
+- **Phase 2.** Finishes the open trails and starts no new ones.
+- **Caps.** At most 8 processed matches; a ninth is a failure. Report capacity
+  is D_cap = 2^63.83 records. These bound memory and re-walk work.
+- **Batches.** Ready walks are split into batches of exactly 2^16 per
+  Montgomery inversion. A ready walk whose batch has not filled waits for the
+  next batch round and is charged nothing while it waits; with M = 2^20 walks
+  the ready set stays near 2^20, so productive batches have the full inversion
+  share ⌈I/2^16⌉ of section 5. A batch that cannot fill before the phase
+  boundary pays its inversion inside the phase-2 or re-walk pricing instead.
+- **Store.** Reports are routed by bits 128..143 of K (limb 2, disjoint from the
+  index and DP bits) to one of 2^16 storage nodes. Each node is a separate
+  machine with its own 64-bit address space. It holds an open-addressing table
+  of 2·D_cap/2^16 slots of 104 bytes, < 2^55.6 bytes. A node whose share
+  exceeds its slots halts the attack with failure. Under H1 the routing field
+  (bits 128..143 of K, disjoint from the index bits 0..10 and the DP bits
+  64..127) is a pseudo-random function of the class. A node's share of n
+  reports is then Binomial(n, 2^-16) with mean < 2^47.83, against 2^48.83 slots
+  per node. Chernoff gives < exp(−2^45) per node, and < exp(−2^44) over all
+  2^16 nodes. The message, routing and node-side work are in the report price.
+  Node set-up (process start, table allocation, routing tables) is charged
+  2^20 instructions per node, 2^26 units in total, as preprocessing. Slot
+  initialisation is charged separately below.
+
+## 4. Success probability
+
+N' = N·R/(R − 1). T_c is the number of class arrivals of all trails, up to the
+first arrival at a class already visited by another trail. It includes trail
+starts, steps, doublings, traversal steps and repeated arrivals inside
+fruitless cycles; nothing is excluded. This is exactly what the toy measures.
+
+**H1 (heuristic, at the budget).** P(T_c ≤ S_ops) ≥ 1 − exp(−(S_ops/κ)²/(2N'))
+with κ = 1.02. H1 also includes four further claims:
+
+- the partition, DP and node-routing bits of |y| are pseudo-random functions of
+  the class: bits 0..10, 64..127 and 128..143, three disjoint fields;
+- excluding the detected fruitless cycles of length ≤ 64, a trail makes a
+  non-fruitless return with probability ≤ L_max²/(2N);
+- the canonical twist index of a new class is uniform and independent of its
+  partition index;
+- per operation, the chance charges (doubling escapes, checkpoint traversals,
+  trail ends and the remaining random extras) are pseudo-random indicators
+  with the expected rates stated in section 5. Only the randomness of their
+  sums enters the budget, and only through expectation and the Markov bound
+  of section 5 — no second moment of any rate is used anywhere.
+
+Since S_ops = κ·S0, the bound reads P ≥ 1 − exp(−S0²/(2N')) = 1 − 0.605 = 0.395
+with S0 = √(2N' ln(1/0.605)) = 2^126.71151.
+
+The 2-cycle rate is 1/(6R) per step. Other cycles of length ≤ 64 have rate
+≤ Σ_L Σ_b S2(L, b)·R^-(L−b) = 2^-19.9954 < 2^-19.99, summed over L = 3..64
+and b = 1..⌊L/2⌋, where S2(L, b) counts the partitions of the L steps into b
+blocks of size ≥ 2 (every partition index used at least twice; for example
+1, 1, 3 and 15 for (L, b) = (3, 1), (4, 1), (4, 2) and (6, 3)). Cycles of
+length 65..200 have rate < 2^-206 per step. The expected doubling rate per
+operation is therefore ≤ 1/(6R) + 2^-19.9954 = 2^-13.5681 < 2^-13.56.
+
+The values are:
+
+    S0 = √(2N' ln(1/0.605)) = 2^126.71151
+    S_ops = 1.02·S0 = 2^126.74007
+
+H1 gives ≥ 0.395; the pure model at the S_ops threshold gives 0.4080. In the
+toy runs, class walks stay within the 2% allowance of κ = 1.02 at every R
+(−0.9% to +1.3% in the rows of 758d8df6, +0.4% to +1.2% in the six new
+R = 2048 T_c rows of section 6; both sets lie inside the 2% allowance of
+κ = 1.02).
+
+**Phase 1 covers the budget.** Phase 1 performs ≥ S_ops operations, and each is
+one class arrival. So if T_c ≤ S_ops, the first inter-trail collision happens
+in phase 1.
+
+**Doubling and traversal surcharges.** These are random, and only their excess
+over the step price is not fixed by the operation count:
+
+- doublings: expected count < 2^-13.56·(S_ops + 2^60), surcharge 1.93 − 1.148 =
+  0.782 each, so expected < 2^112.83;
+- traversals: expected < 0.04·64·2^-19.99·(S_ops + 2^60) < 2^108.11.
+
+**Failure events** (union bound): if T_c ≤ S_ops, the merging lemma gives
+success unless one of these occurs.
+
+| event | bound |
+|---|---|
+| trail cap | < 10^-7 |
+| non-fruitless return in a colliding trail | < 2^-50 |
+| report overflow (Chernoff) | < exp(−2^59) |
+| node overflow (Chernoff, routing bits under H1) | < exp(−2^44) |
+| f_1 = f_2 | 1/r |
+| exceptional additions | < 2^-114 |
+| 8 failing matches | < 2^-60 |
+| spurious 192-bit fingerprint match (over < 2^128 comparisons) | < 2^-64 |
+| meter halting early: expected random charges E < 2^112.88, headroom k > 2^120.82 (section 5), Markov: P[X ≥ k] ≤ E/k | ≤ 0.0041 |
+| preprocessing cap | < 2^-32 |
+
+The events other than the early halt sum to < 2·10^-7.
+**Success ≥ 0.395 − 2·10^-7 − 0.0041 = 0.3909 > 0.39.**
+
+## 5. Cost
+
+**Per ordinary step**, in instructions beyond the reference addition:
+
+| work | instructions |
+| --- | ---: |
+| 1.1 F1: 8 MUL/UMULH, 7 ADD, 12 loads | 27 |
+| 1.1 range test, F0 load, S, wrap test, F2 | 12 |
+| 1.1 decision: differences, gap tests, argmin, fallback branch | 14 |
+| sign, p − y, select limbs of K | 13 |
+| h, distinguished test, twist index, table address | 7 |
+| loads of table point and state, store of state | 24 |
+| fingerprint tests, history and checkpoint stores | 26 |
+| zero-denominator test | 6 |
+| length, cap test, meter additions, loop | 14 |
+| batch inversion share (I < 2^17 per exactly 2^16 elements) | 2 |
+| **total (budget 148 = 0.14 units)** | **145** |
+
+The step is charged at the budget, 148 instructions, which is 3 above the
+itemised total. Each row is an upper bound on an explicit instruction
+sequence; the sequences are the source's own (758d8df6, section 5) and total
+135 instructions with the share row at 2. The constants p0 (the low limb of
+p), the all-ones word, 2^64 − 81, the index value 2, the meter price and the
+table base stay in registers across the batch loop; the counts include every
+load and store of per-walk state. Their row-wise totals are: F1 24; range
+test, S, wrap test, F2 8; decision 13; sign and K 13; h, test, t, address 7;
+point and state traffic 24; fingerprints 26; zero denominator 5; length, cap,
+meter, loop 13; inversion share 2. The derived sequences total
+24 + 8 + 13 + 13 + 7 + 24 + 26 + 5 + 13 + 2 = 135 instructions, under the 145
+in the table and the 148 charged. Rare paths are priced as their own actions:
+the 2-cycle order test and the escape are in the doubling price, the fallback
+has its own price, and so do reports.
+
+**Field allowances.** These are used only outside the reference operation, and
+are analytic.
+
+- A = 32. Load 8, ADDS + 3 ADCS, carry, SUBS + 4 SBCS, 4 CSEL, store 4, ≤ 6
+  overhead.
+- M ≤ 227. The 4×4 column product (16 MUL/UMULH pairs, ≤ 128), four folds by
+  2^32 + 977 (≤ 80), and the final conditional subtraction (≤ 19).
+- I < 2^17. Fermat inversion x^(p−2) by left-to-right binary
+  exponentiation. p − 2 has 256 bits and 249 one bits (recomputed with the
+  package's own p), so it takes 255 squarings and 248 multiplications: 503
+  multiplications (S = M) at ≤ 227 instructions each, 114,181 in total. Loop
+  control is ≤ 8 instructions per exponent bit (2,048), and operand moves are
+  ≤ 24 per multiplication (12,072). The total is ≤ 128,301 < 2^17 = 131,072.
+  The bound does not rest on the bit count: a left-to-right binary chain
+  spends 255 squarings and at most one multiplication per further bit, so at
+  most 510 multiplications, and the same allowance gives
+  510·251 + 2,048 = 130,058 < 2^17. Shared by a batch of exactly 2^16
+  elements, the share is at most ⌈130,058/2^16⌉ = 2 instructions per element.
+  A ready walk whose batch has not filled waits for the next batch round and
+  is charged nothing while it waits, so no walk is ever shared by a smaller
+  productive batch; the only sub-2^16 inversion left is the one at the phase
+  boundary, which is covered by the phase-2 pricing below.
+
+**Prices** (units):
+
+| action | price | basis |
+|---|---|---|
+| ordinary step | 1.148 | reference addition (1,000) plus ≤ 148 instructions = 1,148 instructions |
+| traversal step | 1.18 | ≤ 24 more instructions to copy the remembered member: ≤ 172 |
+| doubling | 1.93 | batched affine doubling: 7M + 6A + 148 ≤ 1,929 instructions |
+| §1.1 fallback | 0.5 | one M, two A, compares: < 400 instructions |
+| random 64-bit word | 0.01 | |
+| sampling attempt | 0.05 | |
+| trail start [a]P + [b]Q | 2^13 | two Jacobian scalar multiplications at ≤ 512 operations × (16M + 16A) each, an addition and an inversion: < 4.8·10^6 instructions |
+| report | 40 | route, message, node-side probes and insert: < 2^15 instructions |
+| store probe | 0.05 | |
+| store initialisation | 2·D_cap slots × 16 instructions = 2^58.9, once | |
+| table | 2048 starts plus 5 φ-twists each: < 2^24.1, plus sampling | |
+| phase-2 or re-walk operation | 600 | unbatched: an inversion (< 2^17) plus 7M, coefficient updates mod r and control, far below 600,000 instructions |
+| small-batch inversion | 600 | one inversion, < 2^17 instructions = 131 units; 600 is a loose upper bound; it only prices a batch that cannot fill |
+| solving | 600 | |
+| verification | 2^13 | |
+
+**Budget.**
+
+- **Phase-1 operations:** 1.148·(S_ops + 2^60) < 2^126.93921.
+- **Hard extras:**
+
+  | item | units |
+  |---|---|
+  | meter remainders | < 2^61 |
+  | phase 2: 2^20·(L_max + 65)·600 | 2^97.55 |
+  | re-walks: 8·2·((L_max + 65)·600 + 2^13) | 2^81.6 |
+  | reports: D_cap·40 | 2^69.2 |
+  | store initialisation | 2^58.9 |
+  | table and verification | < 2^25 |
+  | **total** | **< 2^97.56** |
+
+- **Random extras (expected):**
+
+  | item | units |
+  |---|---|
+  | doubling surcharges: 0.782·2^-13.56·(S_ops + 2^60) | < 2^112.83 |
+  | traversal surcharges: 0.04·64·2^-19.99·(S_ops + 2^60) | < 2^108.11 |
+  | starts: < 2^62.8·2^13 | 2^75.9 |
+  | words, attempts, probes, small batches, fallbacks | < 2^70 |
+  | **total** | **< 2^112.88** |
+
+- **Headroom:** k = 2^126.96 − W' − 2^97.56 with W' < 2^126.93930 the priced
+  phase-1 bound including its expected surcharge finish (below), so
+  k > 2^120.82.
+- **Early meter halt (Markov):** let X be the total metered value of the
+  random surcharges (doubling surcharges, traversal surcharges, starts,
+  words, attempts, probes, small batches, fallbacks, report charges). The
+  meter halts early only if X > k, and E X < 2^112.88 by the table above, so
+  by Markov P[X > k] < E X/k < 2^112.88/2^120.82 = 0.0041 ≤ 0.005 − 2·10^-7.
+  This is exactly the source's method for the same event, at the headroom the
+  tighter claim leaves; only first moments appear, and every entry of the
+  surcharge table is an itemised upper bound on an explicit action class.
+  The claim is the least admissible tick: at 126.95 the headroom would be
+  k = 2^126.95 − 2^126.93930 − 2^97.56 < 2^119.87, with E/k > 0.0078 >
+  0.005, so the floor arithmetic would fail there; 126.96 is the lowest
+  0.01-tick for which the Markov allowance fits.
+
+**Preprocessing:** table < 2^24.1, node set-up 2^26, store initialisation
+2^58.9, and the first 2^20 starts 2^33. The expected total is < 2^58.91, and
+the cap is 2^59.0. The random sampling part is expected < 2^25, far below the
+gap, so the cap halts a run with probability < 2^-30 by Markov. All of it is
+inside W.
+
+**W ≤ 2^126.96 on every run.**
+
+**Memory:** the store holds 2·D_cap slots of 104 bytes at load 1/2, so
+2^64.83 slots × 104 bytes = 2^71.53 bytes. Adding the table (1.5 MB) and the
+2^20 × 512 bytes of walk states gives < 2^72 bytes, with each of
+the 2^16 nodes < 2^56 bytes.
+
+## 6. Experiments and limitations
+
+
+`experiment.py` uses the standard library only. It is the file of 758d8df6
+with exactly one changed constant (`KAPPA = 1.02`, was 1.05) and the derived
+summary labels; `QFLOOR = 0.605` and the entire part A, Walker, trail,
+long-trail and pipeline code are the file's own.
+
+
+**Part A** (production secp256k1; all true): curve, order and cofactor; the
+β/λ pair; the order of 2 mod r; orbit size 6, unit action, |y| invariance and a
+unique canonical member; twisted step and doubling as class maps; the table;
+coefficient tracking; a planted-x recovery from two production trails forced
+to merge; and the §1.1 rule against the exact rule.
+
+**Part B** runs the section 2 per-trail algorithm on toy curves y² = x³ + 7
+with q = 33556867 (cofactor 1) and q = 536873251 (cofactor 3). The pipeline
+mode adds the scaled production rules: a κ·S0 budget with the H1 constants of
+this package, phase 2, report capacity, the 8-match cap, and routing to 16
+nodes of capacity ⌈2·D_cap/16⌉ with overflow treated as failure. [a]G + [b]T
+is evaluated as [a + bx]G for speed.
+
+Offline results (every recovered x verified; S1 = 1.02·S0 = 1.02·√(2N' ln
+(1/0.605)) for each toy; T_c counts all arrivals; all rows below were rerun
+with this file):
+
+| mode | toy, R | seed | trials | mean T_c / √N (model 1.2536) | frac T_c ≤ S1 | 2-cycles per step (model 8.14·10^-5) |
+| --- | --- | ---: | ---: | --- | ---: | --- |
+| T_c, 6 | q25, 2048 | 1601 | 12000 | 1.2687 (+1.20%) | 0.3979 | 8.14·10^-5 |
+| T_c, 6 | q25, 2048 | 1602 | 12000 | 1.2629 (+0.74%) | 0.4005 | 7.81·10^-5 |
+| T_c, 6 | q25, 2048 | 1606 | 12000 | 1.2611 (+0.60%) | 0.3996 | 8.04·10^-5 |
+| T_c, 6 | q29, 2048 | 1603 | 3600 | 1.2586 (+0.40%) | 0.4031 | 7.68·10^-5 |
+| T_c, 6 | q25, 2048 | 1621 | 48000 | 1.2641 (+0.84%) | 0.4006 | 7.89·10^-5 |
+| T_c, 6 | q29, 2048 | 1622 | 19200 | 1.2587 (+0.41%) | 0.3994 | 8.11·10^-5 |
+| pipeline, 16 nodes | q25, 2048 | 1624 | 48000 | – | 0.4069 success | 8.02·10^-5 |
+| pipeline, 16 nodes | q29, 2048 | 1625 | 19200 | – | 0.4105 success | 7.99·10^-5 |
+
+Pooled over the six uncensored T_c rows (106,800 trials) the fraction of
+trials with T_c ≤ S1 is 0.3999 (binomial standard error 0.0015), and the
+smallest single-row value is 0.3979 — every row is above the claimed floor
+0.395, and the pooled value sits 0.0049 above it. The two pipeline rows treat
+T_c as censored at trial level (a trial whose repeat is not visible by the
+budget continues into phase 2), so their evidence is the full-pipeline
+success rate, 0.4069 and 0.4105 (SE 0.0022 / 0.0035), each above the 0.39
+requirement with the complete pipeline machinery and the pricing structure
+of production. Earlier smaller pipeline runs of the same two configurations
+(seeds 1604, 1605; 24,000 and 4,800 trials; success 0.4055 and 0.3956, frac
+0.3974 and 0.3917, SE 0.0031 / 0.0071) motivated the larger reruns shown
+above; both runs are deterministic from their configurations and the smaller
+ones sit 0.3σ and 1.9σ from the larger, consistent within binomial error.
+
+The pipeline rows had 0 node overflows; the q25 pipeline row's maximum node
+load was 0.83 of its node's capacity, the q29 row's 0.57. Every recovered x
+in the T_c rows verified (all_solved_correctly true in every T_c row); the
+few abandoned trails (9 to 122 per row) and exceptional additions (0 to 10
+per row) sit far below the rates the success bound charges for.
+
+The six T_c rows and two pipeline rows of 758d8df6 (q25 and q29 toys at
+R = 256 and R = 2048, plus R = 256 control walks with 1 and 2 classes, seeds
+1501–1508) corroborate the same constants: their class walks deviate by
+−0.9% to +1.3% from the random-mapping mean, inside the 2% allowance of
+κ = 1.02, and their success fractions lie between 0.4128 and 0.4411, above
+the floor claimed at their slightly larger budgets. The rows above use the
+present package's budget (κ = 1.02, q = 0.605, floor 0.395), and the pool of
+this package's own rows stands 0.0049 over the floor at a standard error
+of 0.0015, with the mean-rate rows at +0.4% to +1.2% inside the allowance.
+
+Part A offline (seed 1513, rerun with this file): the §1.1 rule on 2,000,000
+random inputs gave 0 fallbacks and 0 mismatches. On 1,000,000 adversarial
+inputs it gave 344,641 fallbacks and 0 mismatches. All other part A checks
+are true.
+
+**Long-trail trap test** (q29, walks without distinguished points, 150 trails
+of 2,048 operations each, against the additive-escape control; rerun with
+this file):
+
+| R | escape | escapes per trail | trails with non-fruitless returns |
+| ---: | --- | ---: | ---: |
+| 4 | doubling | 72 | 0 / 150 |
+| 8 | doubling | 42 | 6 / 150 |
+| 4 | additive (control) | 221 | 107 / 150 |
+| 8 | additive (control) | 64 | 8 / 150 |
+
+Ordinary self-collisions predict non-fruitless returns in about
+1 − exp(−L²/(2N)) = 6.8% of trails (L²/(2N) = 0.0703). The doubling escape
+rows sit at or below that rate (0/150 and 6/150), while the additive control
+traps trails structurally (107/150 and 8/150), matching the rows of 758d8df6
+and 1c600df4. Doubling escapes behave like ordinary self-collisions; the
+additive escape traps trails structurally.
+
+**Doubling rate against the toys.** The toy 2-cycle rates above
+(7.68·10^-5 to 8.21·10^-5 per step) agree with 1/(6R) = 8.14·10^-5 within
+about two standard errors; the T_c rows each have 1.8·10^3 to 2.9·10^3
+events, a relative error of 2% to 3%. The toys also show checkpoint escapes
+at up to 4.9·10^-6 per step, above the structural rate 2^-19.99. These are ordinary
+self-collisions of short toy trails: a trail of length ℓ meets its own past
+with probability about ℓ/N per step, about 32/(5.6·10^6) ≈ 6·10^-6 at q25
+with dp_bits = 5. In production ℓ/N < 2^70/2^253, so the structural rate
+governs. In this package's rows the total escape rate, 2-cycles and checkpoint
+escapes both included, is at most 8.63·10^-5 per step in any T_c row: 5%
+above the production bound 2^-13.5681 = 8.23·10^-5 that enters the expected
+surcharges E of section 5, so E is corroborated at the observed rates; the
+Markov allowance against k > 2^120.82 has a further 0.005 − 0.0041 margin
+over the success floor.
+
+**Provenance of the rows.** All rows in the tables above were produced by
+this package's `experiment.py` (the one disclosed H1 constant KAPPA differs
+from 758d8df6's file; all other code is identical). Python's seeded generator
+makes each row deterministic, so each row can be rerun from its
+configuration in README.md.
+
+**Initial input.** The hosted configuration (q25, R = 2048, dp_bits = 5,
+seed 1, pipeline, 14 s) is time-limited, so the number of completed trials
+depends on the machine. Two local runs under the verifier completed 218 and
+187 trials: part A all true, 0/30,000 random and 0/10,000 adversarial
+index-rule mismatches, 0 node overflows, and pipeline success 0.3165 and
+0.3155 at a binomial standard error of 0.033 (the second run continues the
+first's seeded stream, so they are not independent samples beyond n = 187).
+The part-A checks consume the seeded generator before part B, so this short
+capped run samples a different segment of the seed-1 stream than the offline
+pipeline rows: the same seed without the cap gives 0.4174 over its first 218
+part-B trials (production_checks 0) and 0.409 over 2,000 trials. The
+calibrated estimates are the large offline rows, 0.4069 (48,000 trials) and
+0.4105 (19,200 trials, q29); the H1 floor is taken from the large offline
+rows, not from the 14-second run.
+
+**Limitations.** H1 is a heuristic: a random mapping with the Brent–Pollard
+correction; van Oorschot–Wiener; automorphism classes as in Wiener–Zuccherato,
+GLV and Duursma–Gaudry–Morain; and fruitless-cycle escapes as in
+Bos–Kleinjung–Lenstra and Bernstein–Lange–Schwabe. The early-halt event is
+bounded exactly as the source bounds it (Markov on itemised expected
+surcharges); no second moment of any rate is assumed anywhere in this
+package. Instruction counts are analytic. This is a generic attack.
