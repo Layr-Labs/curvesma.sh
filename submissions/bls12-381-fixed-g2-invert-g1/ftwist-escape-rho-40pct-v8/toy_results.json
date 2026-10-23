@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "seed": 2026102309,
+  "trials_per_config": 25000,
+  "reserve": {
+    "numerator": 109,
+    "denominator": 100
+  },
+  "scope": "Actual tower keys and retained tables. Baseline failures retained. Toy evidence, not a production theorem.",
+  "variants": [
+    "baseline",
+    "inverse_guard",
+    "orientation_guard"
+  ],
+  "configurations": [
+    {
+      "parts": [
+        "evidence/config-0-0.txt"
+      ],
+      "q": 14009539,
+      "r": 12289,
+      "branches": 64
+    },
+    {
+      "parts": [
+        "evidence/config-1-0.txt",
+        "evidence/config-1-1.txt"
+      ],
+      "q": 2677963,
+      "r": 49177,
+      "branches": 256
+    },
+    {
+      "parts": [
+        "evidence/config-2-0.txt",
+        "evidence/config-2-1.txt",
+        "evidence/config-2-2.txt"
+      ],
+      "q": 159508651,
+      "r": 196657,
+      "branches": 1024
+    },
+    {
+      "parts": [
+        "evidence/config-3-0.txt",
+        "evidence/config-3-1.txt",
+        "evidence/config-3-2.txt"
+      ],
+      "q": 19066387,
+      "r": 786433,
+      "branches": 1024
+    },
+    {
+      "parts": [
+        "evidence/config-4-0.txt"
+      ],
+      "q": 19066387,
+      "r": 786433,
+      "branches": 8
+    },
+    {
+      "parts": [
+        "evidence/config-5-0.txt"
+      ],
+      "q": 19066387,
+      "r": 786433,
+      "branches": 32
+    },
+    {
+      "parts": [
+        "evidence/config-6-0.txt",
+        "evidence/config-6-1.txt"
+      ],
+      "q": 19066387,
+      "r": 786433,
+      "branches": 128
+    }
+  ],
+  "elapsed_seconds": 570.904387958
+}

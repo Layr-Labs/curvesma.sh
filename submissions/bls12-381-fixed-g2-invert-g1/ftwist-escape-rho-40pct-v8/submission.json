@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "title": "Orientation-guarded Frobenius R-adding rho for fixed-G2 inversion",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence/certificate-details.json",
+        "toy_results.json",
+        "scripts/ledger.py",
+        "scripts/verify_v8.py",
+        "scripts/faithful_audit.py",
+        "scripts/base_audit.py",
+        "scripts/algebra_audit.py",
+        "scripts/tower.py",
+        "evidence/algebra.json",
+        "evidence/reproduction.md"
+      ],
+      "score": {
+        "numerator": "12881",
+        "denominator": "100"
+      },
+      "statement": "For a uniform nonidentity Q in BLS12-381 G2 and uniform z in GT, the specified classical orientation-guarded Frobenius-class R-adding algorithm computes P in G1 satisfying e(P,Q)=z for that exact Q, with success at least39/100 and total work at most2^(12881/100) dense-Fp12-multiplication equivalents under H+R/20000. It computes g=e(P0,Q), recovers z=g^x and returns[x]P0, with the identity handled exactly. The success analysis explicitly assumes that, at T=ceil(109*T0/100), the retained1024-entry corrected raw-coordinate class map has first-repeat CDF at least the uniform-map comparison on Np=ceil(((r-1)/12)*1024/1023) states at T0=ceil(sqrt(2*Np*ln(5/3))), and that identity/exceptional-key events admit the disclosed field-scale union bounds6T/N and6T*1024/p, with N=(r-1)/12. These production mixing and key-frequency hypotheses are supported at toy scope, not proved. The class-consistent guard, conjugacy-aligned recovery, denominator coefficient argument, complete worst-case instruction ledger and finite hard caps are specified in the evidence. The comparison success is at least2/5 with a named1/100 reserve to the39/100 floor. Peak memory is below2^78 bytes, target-dependent preprocessing is charged, and external advice is zero."
+    }
+  ],
+  "experiments": []
+}

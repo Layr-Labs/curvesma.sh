@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "scope": "Algebra and faults only; no production timing or success certification.",
+  "production": {
+    "samples": 2,
+    "results": [
+      {
+        "sample": 0,
+        "direct_Frobenius": 12,
+        "specialised_Frobenius": 12,
+        "key_comparisons": 12,
+        "canonical_conjugates": 12,
+        "twist_identities": 12,
+        "inverse_Frobenius": true,
+        "guard_conjugacy_checks": 12,
+        "canonical_key_Montgomery_pipeline_checks": 12
+      },
+      {
+        "sample": 1,
+        "direct_Frobenius": 12,
+        "specialised_Frobenius": 12,
+        "key_comparisons": 12,
+        "canonical_conjugates": 12,
+        "twist_identities": 12,
+        "inverse_Frobenius": true,
+        "guard_conjugacy_checks": 12,
+        "canonical_key_Montgomery_pipeline_checks": 12
+      }
+    ],
+    "frobenius_rows": [
+      {
+        "k": 0,
+        "Fp_products": 0,
+        "Fp_add_sub_neg": 0,
+        "traffic": 0,
+        "control": 0,
+        "instructions": 0,
+        "categories": [
+          "one",
+          "one",
+          "one",
+          "one",
+          "one",
+          "one"
+        ]
+      },
+      {
+        "k": 1,
+        "Fp_products": 10,
+        "Fp_add_sub_neg": 13,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 5302,
+        "categories": [
+          "one",
+          "diagonal",
+          "imaginary",
+          "diagonal",
+          "real",
+          "diagonal"
+        ]
+      },
+      {
+        "k": 2,
+        "Fp_products": 8,
+        "Fp_add_sub_neg": 2,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 3832,
+        "categories": [
+          "one",
+          "real",
+          "real",
+          "minus_one",
+          "real",
+          "real"
+        ]
+      },
+      {
+        "k": 3,
+        "Fp_products": 6,
+        "Fp_add_sub_neg": 15,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 3898,
+        "categories": [
+          "one",
+          "diagonal",
+          "imaginary_unit",
+          "diagonal",
+          "minus_one",
+          "diagonal"
+        ]
+      },
+      {
+        "k": 4,
+        "Fp_products": 8,
+        "Fp_add_sub_neg": 0,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 3704,
+        "categories": [
+          "one",
+          "real",
+          "real",
+          "one",
+          "real",
+          "real"
+        ]
+      },
+      {
+        "k": 5,
+        "Fp_products": 10,
+        "Fp_add_sub_neg": 13,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 5302,
+        "categories": [
+          "one",
+          "diagonal",
+          "imaginary",
+          "diagonal",
+          "real",
+          "diagonal"
+        ]
+      },
+      {
+        "k": 6,
+        "Fp_products": 0,
+        "Fp_add_sub_neg": 6,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 1024,
+        "categories": [
+          "one",
+          "minus_one",
+          "one",
+          "minus_one",
+          "one",
+          "minus_one"
+        ]
+      },
+      {
+        "k": 7,
+        "Fp_products": 10,
+        "Fp_add_sub_neg": 13,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 5302,
+        "categories": [
+          "one",
+          "diagonal",
+          "imaginary",
+          "diagonal",
+          "real",
+          "diagonal"
+        ]
+      },
+      {
+        "k": 8,
+        "Fp_products": 8,
+        "Fp_add_sub_neg": 0,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 3704,
+        "categories": [
+          "one",
+          "real",
+          "real",
+          "one",
+          "real",
+          "real"
+        ]
+      },
+      {
+        "k": 9,
+        "Fp_products": 6,
+        "Fp_add_sub_neg": 15,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 3898,
+        "categories": [
+          "one",
+          "diagonal",
+          "imaginary_unit",
+          "diagonal",
+          "minus_one",
+          "diagonal"
+        ]
+      },
+      {
+        "k": 10,
+        "Fp_products": 8,
+        "Fp_add_sub_neg": 2,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 3832,
+        "categories": [
+          "one",
+          "real",
+          "real",
+          "minus_one",
+          "real",
+          "real"
+        ]
+      },
+      {
+        "k": 11,
+        "Fp_products": 10,
+        "Fp_add_sub_neg": 13,
+        "traffic": 512,
+        "control": 128,
+        "instructions": 5302,
+        "categories": [
+          "one",
+          "diagonal",
+          "imaginary",
+          "diagonal",
+          "real",
+          "diagonal"
+        ]
+      }
+    ]
+  },
+  "alignment": {
+    "r": 13,
+    "lambda_order": 12,
+    "secrets": 13,
+    "pairs": 316368,
+    "zero_denominator": 24336,
+    "recovered": 292032
+  },
+  "fingerprint": {
+    "full_point_bits": 4608,
+    "output_bits": 128,
+    "matrix_bytes": 73728,
+    "full_point_encoding_checks": 100,
+    "miniature_universal_zero_counts": {
+      "1": 512,
+      "2": 512,
+      "3": 512,
+      "4": 512,
+      "5": 512,
+      "6": 512,
+      "7": 512,
+      "8": 512,
+      "9": 512,
+      "10": 512,
+      "11": 512,
+      "12": 512,
+      "13": 512,
+      "14": 512,
+      "15": 512
+    },
+    "deliberate_false_pairs": 5,
+    "false_pairs_rejected": 5,
+    "injected_fingerprint_faults_detected": 5,
+    "wrong_answers_accepted": 0
+  },
+  "forced_inverse_cycle": {
+    "exhaustive_label_cancellations": 10947,
+    "symbolic": "-(-(A+a)+a)=A; -(-(D+b)+b)=D",
+    "conclusion": "Floyd detects this cycle but its aligned numerator and denominator are identically zero."
+  }
+}
