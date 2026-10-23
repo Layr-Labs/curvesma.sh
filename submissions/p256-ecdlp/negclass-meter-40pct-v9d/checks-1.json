@@ -1,0 +1,562 @@
+[
+ {
+  "detail": "",
+  "name": "A1 p is prime (P-256 field modulus)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A2 r is prime (P-256 subgroup order)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A3 a = -3 = p-3 and b matches SEC 2 2.4.2",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A4 generator on curve: y^2 = x^3 - 3x + b",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A5 [r]G = O (generator has order r)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A6 [r-1]G = -G = (x, p-y) (negation map is the curve inverse)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "factors=[2, 2, 2, 2, 3, 71, 131, 373, 3407, 17449, 38189, 187019741, 622491383, 1002328039319, 2624747550333869278416773953]",
+  "name": "A7 r-1 factorisation is complete and exact (product equals r-1)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "v_2(r-1)=4",
+  "name": "A8 r-1 = 2^4 * odd: the 2-primary part of r-1 is 2^4, NOT 2^255",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "ord=57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "name": "A9 ord_r(2) = (r-1)/2 = N",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A10 ord_r(2) is even, so 2^(N/2) = -1 mod r: the shortest gap for equality up to sign is N/2",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A11 the sign-ambiguity gap is N/2 = ord_r(2)/2 (exact integer)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A12 no 2^k = +-1 mod r for 1 <= k <= 10^6, so the shortest doubling cancellation gap is N/2 >= 2^253.9",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A13 N = (r-1)/2 non-identity negation classes; class key is x",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A14 class representative well defined: -P has the same x and y' = p-y",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A15 the identity target is handled before the walk: Q = O gives x = 0",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A16 P1 routing spec: at production width the DP predicate reads key bits 0..63 (mask 0xffffffffffffffff) and the router reads key bits 128..191 (mask 0xffffffffffffffff00000000000000000000000000000000); the masks are DISJOINT, so the DP event cannot constrain the route",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A17 mix64 is a bijection on 64-bit words (inv_mix64(mix64(z)) = z on 2*10^4 random words; mix64(0) = 0 and no other zero image in 5*10^4 random probes), so at width 64 the predicate pins EXACTLY ONE value of the DP field (inv_mix64(0) ^ DPSALT) and leaves the route field free",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A18 P1 functional independence measured on 4000 production-width keys: perturbing the route field changes the DP word 0/4000 times and perturbing the DP field changes the route 0/4000 times",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "A19 a width-64 distinguished point has a WELL-DEFINED, VARYING route: for the unique DP-satisfying low field the router still takes 2^16 distinct values (census row G_route_reachability)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "9 named lines",
+  "name": "B1 itemised Montgomery multiplication M = 220 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B2 itemised squaring S = 176 instructions = 4/5 of M",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B3 itemised modular addition A = 21 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B4 batched Fermat inversion itemised as rows: 51856 instructions per inversion, one per 2^16 slots -> 1 instruction(s) per slot",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B5 control row is itemised, not asserted: 128 instructions from 6 named lines",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B6 doubled-add is priced as TWO batched affine additions (X+(X+T_j)): 4M+2S+12A = 1484 instructions",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B7 batch-inversion dependency schedule: each step needs 2 sequential inversions, batched across >= 2^15 concurrent trails; product work 6M = 1320 instructions per step",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B8 detector rows are itemised and sum to 16 instructions per step: 2 fingerprint compares, minimum-fingerprint select, prime-67 window boundary test and the running-minimum compare charged EVERY step (the v9c 1/64 amortisation is gone)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B9 P3 coefficient-negation rows are itemised and sum to 48 instructions per step: 2 x (negate 16 + select/store 8) for a and b after canonicalisation, which v9b did not charge",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B10 complete step = 3087 instructions = 3087/1000 units (row sum, no margin)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B11 step is strictly cheaper than the published 6M+6A 3.6-unit allowance even with both operations and detection priced: saving 0.2218 bits",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "B12 step decomposition check 10M+2S+15A + inversion share 2 + canon 14 + degeneracy 12 + detection 16 + negation 48 + control 128 = 3087",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C1 ln(1/0.60) bracketed by exact rationals within 1e-60",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C2 S_ops = ceil(KAPPA*sqrt(2N'ln(1/0.60))) with KAPPA = 11/10 = 2^127.652966, computed by protocol.S_ops (the toy calls the same function)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C3 S_ops is the least such integer",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C4 P4 single constant: KAPPA is 11/10 in exactly one place (experiments/protocol.py) and both the ledger and the toy import it; the toy budget ratio is 1.111844",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C5 N/2 >= 2^126 * S_ops exactly: 126.347034 bits",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G1 DP width is 64 bits, so expected reports = 2^63.652966",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "reports=14502806682972008423 cap/4=18446744073709551616",
+  "name": "G2 expected reports 2^63.6530 <= cap/4 = 2^64 (cap 2^66 records)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G3 cap is 2^16 nodes x 2^50 records = 2^66 records x 26 B = 2^70.70 B < 2^73 B",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G4 the GLOBAL 2^66-report Chernoff exponent (log2 P <= -8.765e+19) is a DIAGNOSTIC only: a bound on total reports does not bound one node reaching its cap, so it is not used as the refusal debit",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G5 NODE-WISE cap loss, the number used in the refusal debit: per-node mean 2^47.6530 records, cap 2^50 = 5.0878x the mean (ratio 73786976294838206464/14502806682972008423); per-node log2 P <= -2^50.2484, union over 2^16 nodes log2 P <= -(2^50.2484 - 16) = -1.33746e+15",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G6 routing field is 16 bits -> 2^16 = 65536 nodes, and the router reads bits 128..191 of the key, disjoint from the DP field bits 0..63",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G7 refusal policy is the SHIPPED one: at cap-full the report is refused and counted (never silently dropped, never overwriting), the trial is flagged cap-loss, and the toy executes exactly that path",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "G8 memory: endpoint records 2^66 x 26 B = 2^70.70 B (route16 + dp-fp64 + owner-trail-id64 + step64; coefficients are RECONSTRUCTED by replay, not stored) + detector state 2^16 trails x 4 x 136 B = 2^25.09 B -> peak 2^70.70 B < 2^73 B; the rejected v9c 64 B record would need 2^72 B before the 88-byte coefficient payload",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C6 an escape is a doubling of <= 1620 instructions and consumes one step slot priced at 3087, so every escape is charged in full inside S_ops; no escape rate is assumed",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C7 report row 2^60.687 units and setup row 2^25.045 units are each below 2^-55 of phase 1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C20 fingerprint-confirm row charged, not amortised away: 14502806682972008423 matches x 24 instructions (full x and y equality) = 2^58.27 units = 2^-71.0 of phase 1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C21 replay-reconstruction row charged: <= 1024 match events x 2^63 steps (trail mean 2^64, replay mean/2) x 3087 instructions = 2^74.63 units = 2^-54.7 of phase 1; expected matches are 0.4, so the bound is 2^11 loose",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C8 phase 1 = s*(S_ops+2^60) = 2^129.279171 units with s = 3087/1000",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C9 total nominal work = 2^129.279171 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C10 stress repricing of every row by 6/5 = 2^129.542206 units",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C11 claim 12939/100 = 129.39 and total <= claim - 0.10 (slack 0.110829 bits)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C12 claim < stress + 0.06",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C13 claim strictly below the live frontier 129.46 at dispatch (5fa78d62): 0.070 bits",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C14 claim is a reduced rational",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C15 meter halt is Markov-bounded: P_halt <= extras/headroom = 2^-64.9",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C16 cap-loss debit 2^-1337456813887183.0 is below any precision",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C17 modelled success at S_ops is 1-0.60^1.21 = 0.4610; the toy-measured walk efficiency 0.90-0.95 (q26 refusal-on cells) gives 0.4267-0.4441, above the claimed 0.39",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C18 preprocessing (2^16 table entries built by scalar multiplication) is inside the setup row; advice is zero bytes",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "C19 peak memory 2^66 records x 26 B = 2^70.70 B + bounded detector 2^25.09 B = 2^70.70 B < 2^73 B",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D0 toy results file present",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 P1_fields_disjoint_prod verdict",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 P1_fields_disjoint_toy verdict",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 G_on_curve",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 N_is_half_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 fields_disjoint_at_toy_width",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 ord_r_2_divides_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 p_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 rG_infinity",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 r_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q22 toy_ord_r_2_equals_N_informational_only",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 G_on_curve",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 N_is_half_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 fields_disjoint_at_toy_width",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 ord_r_2_divides_r_minus_1",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 p_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 rG_infinity",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 r_prime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D1 q26 toy_ord_r_2_equals_N_informational_only",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D2 P4 toy imports the production constant: protocol kappa 11/10 = 1.10, production S_ops 2^127.652966, budget ratio 1.111844 (v9b used 1.06128)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D3 the toy's step budget is protocol.S_ops(N') at toy N (same function, same constant), so every cell runs at the production budget ratio",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D4 P3 detector is bounded: toy source contains no visited-state set and no history scan (no 'visited' anywhere), and every cell reports escapes by the two O(1) mechanisms",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D5 both detector mechanisms fire in the production-protocol cells (2-cycle 0, checkpoint 15 over 508697 steps): the escape path is exercised, not merely described",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D6 P1 census AT PRODUCTION WIDTH: 150000 DP-conditional 256-bit keys through the real predicate and router, dp_bits=64, route=16 bits, 58884 distinct nodes of 2^16 (6652 empty), max load 11 vs expected 2.289 (4.81x)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D7 max-load bound over 2^16 nodes: observed max 11 <= declared tolerance 24, and the Poisson union bound gives log2 P[any node > 24] <= -30.74",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D8 the router attains ALL 65536 route values over 1500000 production-width keys (no collapse): 65536 distinct values",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D9 the REJECTED v9b spec collapses on the same keys: 1 distinct node(s), max load 150000, every report at node 6119 - the defect the reviewer named, reproduced here as the control",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D10 P2 every production-protocol cell runs WITH the fixed-cap refusal: 12 cells, cap declared before the run from the a priori expected report count, 0 cap violations in all of them",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D11 refusals actually occur and are counted (so the protocol is tested, not assumed): 2 refused reports in the production-ratio q26 dp6 cell, 2 of 400 trials flagged cap-loss",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D12 recovery with refusal vs the same seeds without it: q26 dp6 0.4350 vs 0.4350, dp4 0.4225 vs 0.4225, wide table 0.4125 vs 0.4175",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D13 the refusal debit vanishes with volume, as the Chernoff argument says: at 8x the attacks the declared mean per node grows, the fixed cap rises to 46 (= 5.98x the mean) and refusals fall to 0 of 63059 reports (0.0000), with recovery identical to the no-refusal replay (0.4216 vs 0.4216)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D14 declared stress cells expose the refusal path at a cap that binds: half-mean cap q26 0.0000 (refused 4324/9261), q22 0.2275 (refused 5042/10385), and the 16-node saturation control 0.2575 (refused 3679/8319) - all with 0 cap violations, reported as declared stress, not as the production regime",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D15 the no-refusal replays show how many node caps WOULD be violated without the refusal protocol (q26 dp6: 2 nodes over cap), which is why the shipped path refuses instead of overwriting",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D16 pipeline runs the production protocol: DP endpoint store and match, exponent reconstruction, exact [x]G = Q verification, 0 mismatches",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D17 q26 production-budget recovery 0.4350 (model 0.4626, implied walk efficiency 0.9193) on 400 attacks at dp=6",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D18 q26 dp=4 recovery 0.4225 and the wide-table R=1024 cell 0.4125 both clear the claimed 0.39",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D19 q26 double-budget recovery 0.8525 follows the birthday law (model 0.9166)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D20 q22 production-budget recovery 0.4425 - the smaller curve is the disclosed adverse case",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D21 out-of-regime dp=9 cell is REPORTED ADVERSE, not repaired: recovery 0.0000 with the fixed cap (cap floors at 1 at toy volume, 283 of 1114 reports refused) against 0.1875 without refusal; the production DP width is 64, not 9, and the floored cap is what kills this cell",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D22 production doubling transition: 2-cycle step fraction 0.00000-0.00000 against the 1/(2R) rows",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D23 additive control collapses into 2-cycles (0.82-0.92 of steps)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D24 trap test doubling escape: [5, 1, 0, 0]/150 trails trapped vs additive [150, 150, 150, 150]/150",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D25 toy run is bounded (271.1 s, 20294699 metered steps <= declared budget 21000000)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D26 toy-scale cycles are birthday self-collisions: first-repeat fraction [1.0, 1.0, 1.0, 1.0] against L/(2N) [0.011761598, 0.011761598, 0.001159738, 0.001159738]",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D27 every model-mapped constraint of the claim holds in the refusal-on production cells: no stalls exceed the attack count, escaping is charged as an arrival inside the budget",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D28 O1 exhaustive short-cycle escape test: EVERY L in 2..70 x all 67 phases escapes (4623 cases, 4623 escapes, 0 trapped) under the shipped prime-67 rule with full point equality",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D29 O1 the L|64 trap is reproduced and removed: for L in {2,4,8,16,32,64} the FIXED 64-window boundary-only rule traps [64, 64, 64, 64, 64, 64] of 64 phases, while the prime-67 rule traps [0, 0, 0, 0, 0, 0] of 67 phases",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D30 O1 false-match confirm probe: equal 64-bit fingerprint on different points is REJECTED (no escape), counted (1), and a genuine repeat is confirmed; toy key width 128 bits > 64, so the fingerprint is strictly shorter than the key as in production (256 bits)",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D31 O1 detector uses FULL POINT EQUALITY and MINIMUM-FINGERPRINT select: source has points_equal() on both escape branches, the min-fp tuple select, and the prime-67 randomised phase from the start-state hash",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D32 O2 endpoint records store NO coefficients: 26 B = route16 + dp-fp64 + owner-trail-id64 + step64; coefficient pairs are reconstructed by replay (174 replays, 17476 replay steps in the q26 dp6 cell, 3.4354% of steps), with 0 verification mismatches",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D33 O2 running-minimum compare is charged on EVERY step (no 1/64 amortisation): detector row is 16 instructions from 6 named lines and the source compares ck every iteration",
+  "verdict": "PASS"
+ },
+ {
+  "detail": "",
+  "name": "D34 O3 refusal debit uses the NODE-WISE union bound, not the global 2^66-report bound: cap-loss log2 = -1.33746e+15 (global diagnostic -8.765e+19); per-node exponent 2^50.2484, union exponent 2^50.2484 - 16",
+  "verdict": "PASS"
+ }
+]

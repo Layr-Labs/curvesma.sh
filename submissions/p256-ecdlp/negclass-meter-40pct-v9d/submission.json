@@ -1,0 +1,24 @@
+{
+ "version": 1,
+ "title": "P-256 negation-class rho v9d: full-point-confirmed prime-window detector, replay-reconstructed 26 B endpoint records, node-wise refusal debit",
+ "claims": [
+  {
+   "score": {
+    "numerator": "12939",
+    "denominator": "100"
+   },
+   "statement": "For the unrestricted-production P-256 challenge Q=[x]P, including the identity Q, the fully specified negation-class distinguished-point rho of argument.md recovers the canonical scalar with success at least 0.39, using total classical work at most 2^(12939/100) = 2^129.39 target-group-operation equivalents at the protected C=1000 scalar AArch64 instruction normalization, with peak memory below 2^73 bytes. Architecture: negation classes {P,-P}, class key x, canonical member (x,|y|), doubling escape from the minimum-fingerprint class of the detected cycle, N'=N*R/(R-1), a global work meter that halts at W_max, 64-bit distinguished points, and 2^16 storage nodes under a 16-bit routing field with a fixed per-node cap, charged set-up and routing inside H1. Disjoint-field routing spec: the key is the full 256-bit class key K=x; the DP predicate at width b tests mix64((K mod 2^64) XOR DPSALT) mod 2^b == 0 and therefore reads only key bits 0..63, while the router computes mix64(((K >> 128) mod 2^64) XOR RSALT) >> 48 and therefore reads only key bits 128..191, giving 16 bits and 2^16 nodes; the two fields are disjoint and independently mixed, mix64 is a bijection on 64-bit words, so at width 64 the predicate pins exactly one value of bits 0..63 and leaves the routing field free, and the routing collapse of the earlier same-field construction cannot occur. A 150000-key census at the production DP and route widths through this exact code reaches 58884 of 65536 nodes with max load 11 against an expected 2.2888 and a 2^-30.74 union bound at tolerance 24, 1.5 million keys attain all 65536 route values, and the same-field control collapses to 1 node with load 150000. Fixed-cap refusal: each node cap is fixed before the run from the declared expected report count, cap = max(1, ceil(5.087772 * declared_reports / nodes)); a report finding its node full is refused, counted, flags the trial cap-loss and is neither stored, matched nor overwritten, and every pipeline cell runs that path with zero cap violations. Node-wise debit (v9d): the losing event is ONE node reaching its 2^50 cap, not the total report count reaching 2^66; per-node mean is 2^63.652966/2^16 = 2^47.652966, the cap is 5.087772x that mean, per-node Chernoff gives log2 P <= -2^50.248414 (exactly -1.337456813887183e15), and the union over 2^16 nodes gives log2 P <= -(2^50.248414 - 16); that number is the cap-loss and refusal debit, and the global 2^66-report bound is retained only as a diagnostic. Detector v9d: (a) every fingerprint match is confirmed by FULL POINT EQUALITY (x and y compared, 24 instructions, charged as 2^63.652966 matches x 24 = 2^58.272 units); (b) the two-cycle branch selects the MINIMUM-FINGERPRINT class (tie broken by the full key), not the x-coordinate; (c) the checkpoint window is the PRIME 67 steps with its phase drawn per trail from the start-state hash, so gcd(67,L)=1 for every L<=66 and no L|64 alignment trap exists - an exhaustive test over all L in 2..70 x all 67 phases escapes in 4623 of 4623 cases, while the fixed-64 boundary-only control traps all 64 phases of every L in {2,4,8,16,32,64}; (d) toy class keys are 128 bits (low field mix64(x) read only by the DP predicate, high field mix64(y_canon) read only by the router), so the 64-bit fingerprint is strictly shorter than the key as in production (256-bit x), toy false-match expectation is 2^-64 x 2^26 = 2^-38 while production is 2^-64 x 2^127.653 = 2^63.653 confirms, all charged, and a deterministic probe proves an equal fingerprint on different points is rejected and counted. Ledger completeness v9d: the running-minimum comparison is charged on EVERY step (16-instruction detector row, six named lines, no 1/64 amortisation), per-step state-retention transfers are itemised, and the endpoint record is 26 bytes = route16 + dp-fp64 + owner-trail-id64 + step64; coefficients are RECONSTRUCTED by replay from the trail start on a match (a 40-bit trail id cannot address the 2^63.653 trails of a 2^127.653-step run, so the id is 64 bits and the record is 26 B, not 24 B), replay cost is charged as 2^10 events x 2^63 steps x 3087 instructions = 2^74.626 units, and peak memory is 2^66 records x 26 B = 2^70.70 B plus 2^25.09 B of detector state, below 2^73 B.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "checks-1.json",
+    "experiments/verify.py",
+    "experiments/protocol.py",
+    "experiments/toy.py",
+    "experiments/toy-results.json",
+    "experiments/partA-results.json"
+   ]
+  }
+ ],
+ "experiments": []
+}
