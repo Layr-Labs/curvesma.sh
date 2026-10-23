@@ -1,0 +1,21 @@
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+==26== I   refs:      143,688,313
+summary: 143688313
+0000000000004144 t core_mul
+0000000000004140 t core_sqr
+summary: 448364368
+==36== I   refs:      287,376,590
+summary: 287376590
+0000000000004144 t core_mul
+0000000000004140 t core_sqr
+summary: 556735480
+summary: 143835770
+summary: 287671504
+summary: 1845404282
+summary: 3690808528
+summary: 143835770
+summary: 287671504
+exit=0
+summary: 197756675
+exit=0

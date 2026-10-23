@@ -1,0 +1,18 @@
+{
+ "window": 20,
+ "windows": 13,
+ "tables": "2 bases x 13 windows x 2^19 entries (full); lite runs use 4096 entries",
+ "core_per_addition_Ir": 2204.81591796875,
+ "forced_adds_per_point": 12.0,
+ "forced_other_per_point_Ir": 8658.35498046875,
+ "natural_other_per_point_Ir": 8622.354736328125,
+ "forced_round_total_Ir": 143835734,
+ "forcedfull_round_total_Ir": 143835734,
+ "crosscheck_full_minus_lite_round_Ir": 0,
+ "restart_other_per_restart_Ir": 415422.0,
+ "forced_lemma": 0,
+ "build_adds_per_stage": 26.0,
+ "build_other_per_stage_Ir": 37732.7861328125,
+ "build_fixed_other_Ir": 3077891.0,
+ "forced_adds_per_round": 49152
+}

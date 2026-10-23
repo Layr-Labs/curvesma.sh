@@ -1,0 +1,135 @@
+{
+  "tau_model": "13/20",
+  "adds_per_point": 12,
+  "R_point_natural_mean": 8622.354736328125,
+  "R_point_charge_forced_max": 8658.35498046875,
+  "S_model_log2": 116.82531926778988,
+  "detect_span_log2": 112.0,
+  "B_min_log2": 116.87532959005883,
+  "restarts_max": 120221,
+  "trails": 124317,
+  "dp_expected_log2": 26.875329590058826,
+  "loss_cap": 0.001953125,
+  "loss_detect": 0.0,
+  "loss_no_dp_trail": 0.0,
+  "loss_cycle": 1.1984565714646124e-05,
+  "loss_overflow": 1.7568617280804587e-16,
+  "loss_lemma_log2": -100.0,
+  "loss_total": 0.001965109565714822,
+  "success_model": 0.47795422323898396,
+  "success_stat_lower": "4227/10000",
+  "success_claim": "2/5",
+  "H_total": "1828778914620037621574272034320002912",
+  "H_log2": 120.46029209077999,
+  "R_total_log2": 129.95520682496667,
+  "R_over_C_log2": 118.98942254030457,
+  "W_max_log2": 120.90470980832315,
+  "time_log2": "12090471/100000",
+  "time_log2_float": 120.90470980832315,
+  "score_rational": {
+    "numerator": "12090471",
+    "denominator": "100000"
+  },
+  "preprocessing_log2": "24566709/1000000",
+  "memory_log2_bytes": "17132991/500000",
+  "memory_bytes": 20657995776,
+  "advice_bytes": 0,
+  "items": [
+    {
+      "name": "comb tables: batched affine additions (reference, 26 chains per stage)",
+      "phase": "preprocessing",
+      "H_units": "13631436",
+      "R_instructions": "0"
+    },
+    {
+      "name": "comb tables: other work, measured per stage and fixed part (inversions, doublings, bookkeeping)",
+      "phase": "preprocessing",
+      "H_units": "0",
+      "R_instructions": "10130354893531/512"
+    },
+    {
+      "name": "initial records: batched comb evaluations (12 additions each, worst case)",
+      "phase": "preprocessing",
+      "H_units": "49152",
+      "R_instructions": "0"
+    },
+    {
+      "name": "initial records: other work, bound (one point's worst-case other work each)",
+      "phase": "preprocessing",
+      "H_units": "0",
+      "R_instructions": "35464622"
+    },
+    {
+      "name": "initial records: fresh start exponents, sampling and 20 squarings (bound)",
+      "phase": "preprocessing",
+      "H_units": "0",
+      "R_instructions": "98304000"
+    },
+    {
+      "name": "multipliers: sampling and 20 squarings (bound)",
+      "phase": "preprocessing",
+      "H_units": "0",
+      "R_instructions": "1536000"
+    },
+    {
+      "name": "DP table zeroing (one store per 8-byte word)",
+      "phase": "preprocessing",
+      "H_units": "0",
+      "R_instructions": "2416443392"
+    },
+    {
+      "name": "constants and input parse (bound)",
+      "phase": "preprocessing",
+      "H_units": "0",
+      "R_instructions": "65536"
+    },
+    {
+      "name": "walk points: 12 batched additions each, B_min points",
+      "phase": "walk",
+      "H_units": "1828778914620037621574272034306322324",
+      "R_instructions": "0"
+    },
+    {
+      "name": "walk points: other work, worst case per point",
+      "phase": "walk",
+      "H_units": "0",
+      "R_instructions": "2702373038690412828121275109243531392950897/2048"
+    },
+    {
+      "name": "restarts: fresh start exponent, sampling and 20 squarings (bound), at most floor(B/CAP)",
+      "phase": "walk",
+      "H_units": "0",
+      "R_instructions": "2885304000"
+    },
+    {
+      "name": "restarts: unbatched comb evaluation, forced worst case per restart (12 additions)",
+      "phase": "walk",
+      "H_units": "0",
+      "R_instructions": "49942448262"
+    },
+    {
+      "name": "distinguished points: worst case, DP_CAP x bound",
+      "phase": "walk",
+      "H_units": "0",
+      "R_instructions": "2147483648000"
+    },
+    {
+      "name": "chain: 41 unbatched comb evaluations (bound)",
+      "phase": "finish",
+      "H_units": "0",
+      "R_instructions": "17032302"
+    },
+    {
+      "name": "chain: 20 square roots in Fr (bound)",
+      "phase": "finish",
+      "H_units": "0",
+      "R_instructions": "40960000"
+    },
+    {
+      "name": "collision solve (bound)",
+      "phase": "finish",
+      "H_units": "0",
+      "R_instructions": "262144"
+    }
+  ]
+}
