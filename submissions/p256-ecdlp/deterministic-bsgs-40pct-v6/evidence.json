@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "scope": "Analytic integer certificate. No production execution, timing measurement, or official review. Deterministic package: the algorithm consumes zero random bits, so experiment sampling adds nothing; certificate.json is the verification artifact.",
+  "base_commit": "467130d867499e7bbca7479f0f72af0df115b282",
+  "protected_sha256": {
+    "tracks/p256-ecdlp/target-profile.json": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/p256-ecdlp/rules.md": "0cbd08d817e61a129cf16a9d2d962f343830e139fe64e9a33da85863b7db09a6",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  },
+  "parameters": {
+    "r": "115792089210356248762697446949407573529996955224135760342422259061068512044369",
+    "m": "340282366920938463463374607431768211456",
+    "h": "340282366841710300967557013911933812736",
+    "coverage_margin_mh_minus_r": "89188191075325690597107910205041859247",
+    "records": "680564733841876926926749214863536422912",
+    "success_probability": "1 (exact; unique i*m+j decomposition over all x in [0,r))"
+  },
+  "instruction_prices": {
+    "word_bits": 64,
+    "field_limbs": 4,
+    "A_add_sub": 24,
+    "M_montgomery_mul": 220,
+    "S_square_charged_as_mul": 220,
+    "I_fermat_inversion": 145664,
+    "batch_size": 1024,
+    "amortized_inversion_per_record": 143,
+    "amortization_note": "ceil(I/1024)=143 <= 3*M=660, charged inside the 3M batch-conversion margin; the integer inequality is a certificate check line",
+    "G_complete_projective_op": 4800,
+    "Gv_double_and_add_verify": 2457600,
+    "record_bytes": 96,
+    "F_stream_record_touch": 128,
+    "radix_passes": 4,
+    "sort_per_record_per_pass": 576,
+    "sort_bucket_work_per_pass": "1180591620717411303424",
+    "merge_per_record": 384,
+    "price_anchors": "pinned measurement record in tracks/docs/COST_MODEL.md: secp256k1 5x52 mul = 179 Ir, blst 384-bit base mul = 383 Ir; M=220 for a 256-bit 4x64 CIOS Montgomery multiply sits between them with margin"
+  },
+  "ledger_rows_instructions": {
+    "R_setup": "17179869184",
+    "R_gen": "1938248361981665487887381763931351732453376",
+    "R_sort": "1568021146771684439648674924011327208816640",
+    "R_merge": "261336857795280739939871698507597986398208",
+    "R_verify": "40408576",
+    "T": "3767606366548630667475928386450294147945984"
+  },
+  "claim": {
+    "score_rational": "2637/20",
+    "decimal": "131.85",
+    "proof_integer_line": "T^20 < 1000^20 * 2^2637",
+    "floor_witnesses": "1000*2^131 <= T < 1000*2^132",
+    "reduced": true,
+    "reprice_1p2x_every_row": "(6T)^20 < 5000^20 * 2^2635, i.e. the repriced bound stays >= 0.10 bits below the claim (float diagnostic margin 0.1181 bits)",
+    "rival_frontier_beaten": "1382191/10000 (kaankolcu 7c7cb24); 2637*10000 = 26370000 < 27643820 = 1382191*20"
+  },
+  "success": {
+    "exact": "1/1",
+    "coverage_lines": [
+      "h == ceil(r/m)",
+      "(h-1)*m < r",
+      "r <= h*m",
+      "h*m < 2*r (at most two candidate scalars c, c+r per key match)"
+    ],
+    "verification": "profile acceptance rule [c]P=Q with 0<=c<r applied to at most 16 candidates total, charged 16*Gv"
+  },
+  "memory_bytes": {
+    "stream_buffers_4xm_x_96": "130668428897640369969935849253798993199104",
+    "radix_buckets_2x2pow64_x_16": "590295810358705651712",
+    "code_state_batch_input": "1048576",
+    "peak_total": "130668428897640369970526145064157699899392",
+    "peak_bound": "peak_total < 2^137",
+    "nonuniform_advice": "0"
+  },
+  "preprocessing": {
+    "includes": "R_setup + baby chain (m*K_rec) + baby sort (4 passes)",
+    "instructions": "1753134754376674963768028343971356650504192",
+    "bound": "below 1000*2^131 units (certificate integer line)"
+  },
+  "edge_cases_handled": {
+    "Q_equals_infinity": "null decode; tagged baby record j=0; scalar 0 output, matching 'The scalar 0 is valid exactly when Q=infinity'",
+    "scalar_zero_and_one": "covered by the unique i*m+j decomposition; no interval truncation exists",
+    "rejected_encodings": "duplicate keys, noncanonical hex case/length, value >= p, off-curve point, [r]Q != infinity: profile rejects; attack parses the fixed JSON shape with charged limb checks inside R_setup",
+    "identity_and_opposite_in_chains": "complete projective laws cover Z=0, Y=0, U1=U2, doubling; fallbacks charged at G inside K_rec margin and R_verify"
+  },
+  "heuristic_disclosure": "None. No random walk, random mapping, random oracle, cycle-tail model, or independence assumption. All claims are exact integer arithmetic over the protected profile constants.",
+  "diagnostics_float_reading_only": {
+    "log2_T_over_C": 131.468844,
+    "log2_6T_over_5C": 131.731878,
+    "margin_base_bits": 0.3812,
+    "margin_repriced_bits": 0.1181
+  }
+}

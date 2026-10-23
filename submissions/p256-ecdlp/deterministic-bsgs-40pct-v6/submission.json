@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: deterministic full-coverage BSGS, exact success 1, complete instruction ledger",
+  "claims": [
+    {
+      "statement": "For the unchanged full-production p256-ecdlp profile (NIST P-256 / secp256r1, exact SEC 2 Section 2.4.2 constants including a=-3, cofactor 1, subgroup order r), input Q=[x]P with x uniform in 0..r-1, the deterministic algorithm in argument.md returns the canonical scalar x with probability EXACTLY 1 (integer-verified full coverage: m=h=2^128 decomposition steps, h=ceil(r/m), (h-1)*m < r <= h*m and h*m < 2*r, so every x has a unique i*m+j decomposition and the at-most-two candidate scalars per key match are resolved by the [c]P=Q verification required by the profile acceptance rule). Total classical work is below 2^(2637/20) = 2^131.85 target-group-operation equivalents at the protected normalization C = 1,000 scalar AArch64 instruction equivalents, proved by the exact integer comparison T^20 < 1000^20 * 2^2637 for the itemized row sum T = 3767606366548630667475928386450294147945984 instructions (rows: R_setup=2^34, R_gen=2*m*2848, R_sort=2*4*(m*576+2^70), R_merge=2*m*384, R_verify=16*2457600+8*4800+2^20). Actual P-256 arithmetic is charged through its own four-limb instruction prices (A=24 modular add/sub, M=220 CIOS Montgomery multiply, S=M, Fermat inversion I=512*(M+64)+256 amortized at ceil(I/1024)=143 inside the 3M batch-conversion share, complete-op G=16M+32A+512, 96-byte record stream touch F=128, stable radix-2^64 counting sort with two 2^64-slot two-limb bucket arrays, one linear merge, 16 double-and-add verifications); the borrowed secp256k1 unit of 1,000 is a normalization constant, never a P-256 addition price. Multiplying EVERY instruction row by 6/5 keeps the bound at least 0.10 bits below the claim, proved by (6T)^20 < 5000^20 * 2^2635. Preprocessing (setup + baby chain + baby sort) is below 2^131 units and is included in total work. Peak total storage is below 2^137 bytes (itemized: 4*2^128*96 stream bytes + 2^69 bucket bytes + 2^20 state), reported and unscored. Nonuniform advice is 0 bytes. The attack consumes no random bits and uses no heuristic, random walk, random oracle, cycle-detection, or amplification premise; the claim's support is exact rational coverage arithmetic and instruction-count bounds only. Success 1 exceeds the 0.39 rule floor. These are analytic upper bounds for one cold classical attack: no production execution, timing measurement, official score, novelty, or practical break is claimed. Honest floor witnesses 1000*2^131 <= T < 1000*2^132 are included.",
+      "score": {
+        "numerator": "2637",
+        "denominator": "20"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
