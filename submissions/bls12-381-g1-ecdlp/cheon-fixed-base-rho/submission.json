@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon's algorithm with a tame-wild class walk and fixed-base tables",
+  "claims": [
+    {
+      "statement": "For uniform s in 1..r-1 with T=[s]P0 and the supplied powers A_i=[s^i]P0, recover s with Cheon's algorithm. Here 2^32 divides r-1 (v2(r-1)=32), so d=2^20 divides r-1; s^d lies in the subgroup E of d-th powers of F_r^*, of order N=(r-1)/d with log2 N=234.857089 and 6 dividing N. Only A_d with d=2^20 and T=A_1 are read, so the bound holds for every n with 2^20<=n<r and is claimed at the scoring value n=2^20. Phase 1 finds v=s^d by a van Oorschot-Wiener parallel collision search with distinguished points (theta=2^-90) on the M=N/6 classes of E under the six units +-lambda^i, where the cube root of unity acts through the cheap j=0 G1 endomorphism (x,y)->(beta x,y): tame points [e]P0 and wild points [e]A_d with e in E, 2^116.765291 walk steps at 6.9865 units each. A step is six batched incomplete affine additions (6 units) plus 1973 instructions, itemised as two F_p multiplications for beta*x and beta^2*x (766), class canonicalisation (70), the jump-constant fetch (20), one F_r Montgomery multiplication (383), the distinguished-point test (10), trail state (40), signed-digit recoding of seven digits (56), seven table fetches at 64 each (448, each a padded 128-byte record whose 16 eight-byte loads are the whole transfer charge) and operand handling around the six additions at 30 each (180); the fixed-base multiplication uses seven signed 37-bit windows over 14*2^36 = 2^39.807355 table points, 2^46.392317 bytes (about 92 TB). Fetches are batched: the 2^20 trails in flight each issue one fetch per window, so a window stage is one remote read of 128 MiB and a round of seven stages moves 896 MiB, the per-record transfer being 16 instructions and 112 per step. At a merge the 2^20 trails in flight all run on to their next distinguished point, charged as 2^110 further steps at the full step price (2^112.804570 units). A tame-wild collision gives v exactly as a ratio of known scalars. Phase 2 takes 20 successive square roots of v in F_r and finds the matching d-th root of unity by a 2^10 x 2^10 baby-step giant-step with attack-side verification [s]P0=T. Success probability at least 0.39: the Poisson tame-wild model gives 0.4501 at 2^116.765291 steps (a 10 percent margin over the 2^116.627787 steps that give 0.39), and 0.4460 if the in-flight samples are written off instead of run on. Total work W(2^20) <= 2^119.5831 target-group-operation equivalents (1 unit = one batched incomplete affine addition = 2000 instructions), including preprocessing of 2^40 units (40.0: the 2^39.807355-point table build as 14 ladders with batch inversion, the build charged 2^40 with all stores and 2^15.5 units of jump constants inside it; a sequential build at 2^40.66, or even 2^42, is also inside the total), trail starts, distinguished-point storage and matching (2^26.8 DPs), the run-on, phase 2 and verification. The score submitted is 119.59 = 11959/100, rounded up from 119.5831. Peak memory at most 2^46.4 bytes (2^46.392317 bytes, 92,358,976,733,184 bytes, about 92 TB or 84 TiB, of tables, 2^33.4 bytes of distinguished points and 2^26 bytes of trail state); the model gives memory no scalar weight and prices a load at one instruction, and the batched remote table reads are charged at that load price, 16 instructions per record fetch and 112 per step, inside the 64 charged per fetch. Nonuniform advice 0 bytes. Classical. Heuristics: the class walk with 2048 random jumps behaves like a random mapping within a 10 percent step margin (Teske 2001; van Oorschot-Wiener 1999), the low 90 bits of the canonical x-coordinate are uniform, and tame and wild trails are independent apart from merges. Doubling both the record fetch and the operand handling adds 628 instructions per step and gives W < 2^119.6465. The instruction ledger is analytic and not a built implementation.",
+      "score": {
+        "numerator": "11959",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class-walk",
+      "source": "experiment.py",
+      "purpose": "Run the tame-wild class walk, exact scalar-ratio recovery of s^d and d-th root step end to end in a toy group of order about 2*10^4. This does not establish production costs, memory or success probability.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order_lo": {"type": "integer", "minimum": 1000, "maximum": 100000},
+          "d": {"type": "integer", "minimum": 2, "maximum": 64},
+          "secrets": {"type": "integer", "minimum": 1, "maximum": 200}
+        },
+        "required": ["order_lo", "d", "secrets"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"order_lo": 20000, "d": 8, "secrets": 60}
+      ]
+    }
+  ]
+}
