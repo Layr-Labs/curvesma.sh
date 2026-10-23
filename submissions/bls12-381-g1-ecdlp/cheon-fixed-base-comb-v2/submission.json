@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon fixed-base comb bound, revision 2",
+  "claims": [
+    {
+      "statement": "At the scoring width n = 2^20, given P0, T = [s]P0 and the public powers A_i = [s^i]P0 on BLS12-381 G1, the deterministic Cheon index search in proof.md recovers s with probability 1. Phase-1 scalars use a window-96 fixed-base comb whose tables stay in Jacobian coordinates at 144 bytes per point. The prime factorization of r - 1 is computed inside the attack from the profile parameter and is not embedded. Total classical work is W(n) = 9388543893536700382679492617175715396 target-group-operation equivalents at C = 2000, with H = 0. The declared score 122820313/1000000 = 122.820313 is a ceiling of log2(W(2^20)). Peak memory is 114494473529457201356814469302171205632 bytes (log2 ceiling 126.428546). Preprocessing is at most 2677278067682020495961244437561 reference units (log2 ceiling 101.078610) and is included in W. Nonuniform advice is 0 bytes because the factors and the primitive root are recomputed. An affine normalization of the comb tables was costed and is larger.",
+      "score": {
+        "numerator": "122820313",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-toy",
+      "source": "experiment.py",
+      "purpose": "Recompute W including the factorization and the Jacobian-table schedule, check that the affine-table schedule is more expensive, check the score ceiling, factor r-1, test the primitive root, run the index arithmetic on small prime orders, and compare a width-8 comb with binary multiplication on one 64-bit scalar. This is not a production discrete log.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "toy_prime": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 65537
+          }
+        },
+        "required": [
+          "toy_prime"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "toy_prime": 101
+        }
+      ]
+    }
+  ]
+}
