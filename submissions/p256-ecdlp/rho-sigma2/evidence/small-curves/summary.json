@@ -1,0 +1,109 @@
+{
+  "runs": [
+    {
+      "file": "a3-b32-s1.json",
+      "config": {
+        "curve": "a3",
+        "bits": 32,
+        "trials": 1500,
+        "seed": 3201,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16
+      },
+      "curve": {
+        "p": 2262832081,
+        "a": 2262832078,
+        "b": 777287606,
+        "order": 2262772013
+      },
+      "classes_N": 1131386007,
+      "log2_N": 30.08,
+      "trials": 1500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2126,
+      "success_at_tau_0.4943": 0.4153,
+      "success_at_tau_0.5303": 0.436,
+      "two_cycles_per_step": 0.0002484715534395102,
+      "long_cycles": 1,
+      "restarts": 1
+    },
+    {
+      "file": "a3-b34-s1.json",
+      "config": {
+        "curve": "a3",
+        "bits": 34,
+        "trials": 1000,
+        "seed": 3401,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16
+      },
+      "curve": {
+        "p": 15713805571,
+        "a": 15713805568,
+        "b": 12575327321,
+        "order": 15713685853
+      },
+      "classes_N": 7856842927,
+      "log2_N": 32.87,
+      "trials": 1000,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2351,
+      "success_at_tau_0.4943": 0.389,
+      "success_at_tau_0.5303": 0.41,
+      "two_cycles_per_step": 0.00024413168474218805,
+      "long_cycles": 3,
+      "restarts": 2
+    },
+    {
+      "file": "a3-b34-s2-a16.json",
+      "config": {
+        "curve": "a3",
+        "bits": 34,
+        "trials": 800,
+        "seed": 3402,
+        "adder_bits": 16,
+        "dp_bits": 3,
+        "walks": 16
+      },
+      "curve": {
+        "p": 11068274401,
+        "a": 11068274398,
+        "b": 5276250297,
+        "order": 11068372837
+      },
+      "classes_N": 5534186419,
+      "log2_N": 32.37,
+      "trials": 800,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2609,
+      "success_at_tau_0.4943": 0.4012,
+      "success_at_tau_0.5303": 0.425,
+      "two_cycles_per_step": 7.755706647618722e-06,
+      "long_cycles": 0,
+      "restarts": 0
+    }
+  ],
+  "pooled": {
+    "trials": 3300,
+    "all_correct": true,
+    "success_at_tau_0.5303": 0.4255,
+    "wilson95_at_tau_0.5303": [
+      0.4087,
+      0.4424
+    ],
+    "model_at_tau_0.5303": 0.4116,
+    "success_at_tau_0.4943": 0.4039,
+    "wilson95": [
+      0.3873,
+      0.4208
+    ],
+    "model_at_tau_0.4943": 0.39,
+    "claim_tau": 0.5303,
+    "model_at_claim_tau": 0.4116,
+    "mean_first_useful_over_sqrtN": 1.2311,
+    "model_mean": 1.2533
+  },
+  "scope": "toy curves only; collision statistics of the identical walk, not production cost"
+}
