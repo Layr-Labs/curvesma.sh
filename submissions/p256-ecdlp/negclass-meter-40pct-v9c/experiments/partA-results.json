@@ -1,0 +1,366 @@
+{
+ "A": {
+  "N": "57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "a": "115792089210356248762697446949407573530086143415290314195533631308867097853948",
+  "b": "41058363725152142129326129780047268409114441015993725554835256314039467401291",
+  "dp_field_bits": "0..63",
+  "dp_field_mask": "0xffffffffffffffff",
+  "fields_disjoint": true,
+  "log2_N": 254.999999999664,
+  "log2_ord_over_2": 254.0,
+  "mix64_bijection": true,
+  "ord_over_2": "28948022302589062190674361737351893382499238806033940085605564765267128011092",
+  "order_r_of_2": "57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "p": "115792089210356248762697446949407573530086143415290314195533631308867097853951",
+  "r": "115792089210356248762697446949407573529996955224135760342422259061068512044369",
+  "r_minus_1_factors": [
+   "2",
+   "2",
+   "2",
+   "2",
+   "3",
+   "71",
+   "131",
+   "373",
+   "3407",
+   "17449",
+   "38189",
+   "187019741",
+   "622491383",
+   "1002328039319",
+   "2624747550333869278416773953"
+  ],
+  "route_field_bits": "128..191",
+  "route_field_mask": "0xffffffffffffffff00000000000000000000000000000000",
+  "v2_r_minus_1": 4
+ },
+ "itemisation": {
+  "A_itemised": 21,
+  "A_lines": [
+   [
+    "4 x (adds, adc) on 64-bit limbs",
+    8
+   ],
+   [
+    "conditional subtract of p: cmp + 4 sub + 4 sbc + 4 csel",
+    13
+   ]
+  ],
+  "CT_lines": [
+   [
+    "index hash of the 4-limb class key (2 mix rounds)",
+    32
+   ],
+   [
+    "fingerprint extraction + 64-bit DP predicate test",
+    12
+   ],
+   [
+    "16-bit routing field extraction + node address",
+    16
+   ],
+   [
+    "per-node cap check and record write trigger",
+    12
+   ],
+   [
+    "table address computation + 4-limb point load",
+    20
+   ],
+   [
+    "loop control, trail pointer, branch",
+    36
+   ]
+  ],
+  "DT_lines": [
+   [
+    "fingerprint = low 64 bits of the class key, stored in the 2-slot ring",
+    4
+   ],
+   [
+    "2-cycle test: load fp(K-2), xor, test, branch",
+    5
+   ],
+   [
+    "checkpoint block counter and 64-step boundary test",
+    3
+   ],
+   [
+    "checkpoint running-minimum select: cmp fp vs min + csel (amortised 1/64)",
+    1
+   ],
+   [
+    "escape flag, ring/checkpoint reset, branch into the escape path",
+    3
+   ]
+  ],
+  "I_itemised": 51856,
+  "I_lines": [
+   [
+    "256 squarings for a^(p-2) x S",
+    45056
+   ],
+   [
+    "30 multiplications for a^(p-2) x M",
+    6600
+   ],
+   [
+    "square-and-multiply loop control and conditional moves",
+    200
+   ]
+  ],
+  "I_per_slot": 1,
+  "M_itemised": 220,
+  "M_lines": [
+   [
+    "accumulator init: zero 5 limbs (5 stores)",
+    5
+   ],
+   [
+    "outer rounds: load b[i] (4 loads)",
+    4
+   ],
+   [
+    "outer rounds: 16 x (mul, umulh, adds, adc, adc) = 16 limb products",
+    80
+   ],
+   [
+    "outer rounds: 4 x m = t[0]*n0' mod 2^64 (mul)",
+    4
+   ],
+   [
+    "outer rounds: 16 x (mul, umulh, adds, adc, adc) for m*p[j]",
+    80
+   ],
+   [
+    "outer rounds: 4 x final carry (adds, adc) + 4 x store t[4]",
+    12
+   ],
+   [
+    "final conditional subtraction of p: cmp + 4 sub + 4 sbc + 4 csel",
+    13
+   ],
+   [
+    "write result out: 4 loads + 4 stores",
+    8
+   ],
+   [
+    "call/return, stack frame, loop counters",
+    14
+   ]
+  ],
+  "NG_lines": [
+   [
+    "coefficient a after canonicalisation: 4-limb negate (4 sub + 4 sbc) + 4 csel + mask/flag + 4 loads + 4 stores",
+    24
+   ],
+   [
+    "coefficient b after canonicalisation: same 24-instruction row",
+    24
+   ]
+  ],
+  "S_itemised": 176,
+  "S_lines": [
+   [
+    "accumulator init: zero 5 limbs",
+    5
+   ],
+   [
+    "load a[i] operand limbs (4 loads)",
+    4
+   ],
+   [
+    "10 limb products (squaring is symmetric) x (mul, umulh, adds)",
+    30
+   ],
+   [
+    "high-half accumulation: 28 x (adds, adc)",
+    28
+   ],
+   [
+    "Montgomery reduction: 16 x (mul, umulh, adds, adc, adc)",
+    80
+   ],
+   [
+    "reduction carries: 8 x (adds, adc)",
+    16
+   ],
+   [
+    "final conditional subtraction of p",
+    13
+   ]
+  ],
+  "control": 128,
+  "detection": 16,
+  "negation": 48,
+  "price_rule": "every row is a complete instruction count with loads, stores, addressing and control included; no margin is layered on top, and the 6/5 stress row is a separate sensitivity disclosure",
+  "step_instructions": 3087,
+  "step_rows": {
+   "batched_fermat_inversion_share": 2,
+   "batched_inversion_products": 1320,
+   "bounded_detection": 16,
+   "canonicalisation_y": 14,
+   "coefficient_negation": 48,
+   "coefficient_update": 63,
+   "control": 128,
+   "degeneracy_tests": 12,
+   "two_affine_additions_core": 1484
+  },
+  "step_units": "3087/1000"
+ },
+ "ledger": {
+  "N": "57896044605178124381348723474703786764998477612067880171211129530534256022184",
+  "N_prime": "1264758393081651186485356647212729123143646742928160198300164194971031000889950208/21845",
+  "S_ops": "267529563231269176319562614452376898376",
+  "S_ops_log2": 127.65296593,
+  "budget_ratio": 1.111844,
+  "cap_loss_log2": -8.765156975491147e+19,
+  "claim": "12939/100",
+  "claim_log2": 129.39,
+  "escape_cost_instr": 1620,
+  "g2": {
+   "cap_bytes": "4722366482869645213696",
+   "cap_over_mean": "5.087772",
+   "cap_over_mean_fraction": "73786976294838206464/14502806682972008423",
+   "cap_records": "73786976294838206464",
+   "chernoff_log2": -8.765156975491147e+19,
+   "detector_bytes": "35651584",
+   "detector_entries_per_trail": 4,
+   "detector_log2_bytes": 25.09,
+   "history_log2_bytes_rejected": 85.0,
+   "history_records_rejected": "604462909807314587353088",
+   "nodes": 65536,
+   "peak_bytes": "4722366482869680865280",
+   "per_node_chernoff_log2": -1337456813887183.0,
+   "per_node_mean_log2": 47.652966,
+   "report_mean_log2": 63.652966,
+   "reports": "14502806682972008423",
+   "routing_bits": 16,
+   "steps_total": "267529563231269176320715535956983745352"
+  },
+  "gate_gap": 0.07,
+  "halt_log2": -64.95,
+  "kappa": "11/10",
+  "kappa_float": 1.1,
+  "ln_hi": "19897323596314616177184958890640950943230443016560855635846363847863926000639562763862380584403361971782159453916979862598917203361135989672234855730392334531635713826845226477193524967360529401992247664190860553248706185032410627459448507603535892953626830064120245785441700745771887021922273910308969517009774483270868687553322258149469051107771400829223584712464318741667094097981632173501005809582820339735611/38951302892020906052281069698164789463806317731083179165265807402973067155701470164054954825213523995256985907616210047434596632950604083301688764743319228665706712221825678878675947018357980053725996689746501803683922755217253691957917434868588195895059996140752222587975550630457978851142844411554950936991787805719568993443517745509014860338487315123937270394012962186837320737064678906027586035311641100288000",
+  "ln_lo": "99238521677379631806408772521900004704391236990328457036640218692588159604187345455672721119218762951531967351206882107725272834718882741507405764241358276965764158737382675696725810311025084299213205307685090041140679227094317343937399040416599120652392281882868919278501762642697804064713249148939347934658917047217947418638063811295577624831550788375584216582432128137657482289710472248638055982514298258347/194270837366687810734568926175385483610006572224853761422772106747995347409982394833191794639468947607266762631502294500920681461100269742153061170789622088108262903849504632811351356700039800766713200447613475330094377831507499710513303914556549605461645866038664451810351873468618348384752341204762847566043829454960443857573654591067405787224375636528365438374129487216146238090098149157244818131230130176000",
+  "model_success": 0.461,
+  "phase1_log2": 129.27917141,
+  "report_log2": 60.6872,
+  "report_row_instr": "1856359255420417078144",
+  "s_units": "3087/1000",
+  "saving_vs_3_6_units": 0.2218,
+  "setup_instr": "34629222400",
+  "setup_log2": 25.0455,
+  "slack": 0.110829,
+  "stress_log2": 129.54220582,
+  "success_with_measured_efficiency": [
+   0.4267,
+   0.4441
+  ],
+  "total_log2": 129.27917141
+ },
+ "toy": {
+  "cap_violations_with_refusal_max": 0,
+  "census_distinct_nodes": 58884,
+  "census_expected_load": 2.2888,
+  "census_max_load": 11,
+  "census_union_bound_log2": -30.74,
+  "mismatches": 0,
+  "pooled_model": 0.4626,
+  "pooled_success": 0.4275,
+  "refusal_path_in_source": true,
+  "refused_by_tag": {
+   "adverse_long_trail_dp9": [
+    519,
+    1587
+   ],
+   "cap_saturation_16nodes_dp6": [
+    4086,
+    8726
+   ],
+   "cap_stress_half_mean_dp4": [
+    5488,
+    8996
+   ],
+   "cap_stress_half_mean_dp6": [
+    5818,
+    9566
+   ],
+   "double_budget_dp4": [
+    0,
+    11375
+   ],
+   "double_budget_dp6": [
+    9,
+    11066
+   ],
+   "prod_budget_dp3": [
+    0,
+    17210
+   ],
+   "prod_budget_dp4": [
+    20,
+    28148
+   ],
+   "prod_budget_dp6": [
+    144,
+    8209
+   ],
+   "prod_budget_wide_table_dp6": [
+    164,
+    8401
+   ],
+   "volume8x_dp6": [
+    189,
+    65928
+   ]
+  },
+  "route_values_attained": 65536,
+  "seconds": 115.6,
+  "steps": 20239770,
+  "success_by_tag": {
+   "adverse_long_trail_dp9": 0.0,
+   "adverse_long_trail_dp9_no_refusal": 0.2325,
+   "cap_saturation_16nodes_dp6": 0.265,
+   "cap_saturation_16nodes_dp6_no_refusal": 0.435,
+   "cap_stress_half_mean_dp4": 0.1725,
+   "cap_stress_half_mean_dp4_no_refusal": 0.4275,
+   "cap_stress_half_mean_dp6": 0.0,
+   "cap_stress_half_mean_dp6_no_refusal": 0.435,
+   "double_budget_dp4": 0.9175,
+   "double_budget_dp4_no_refusal": 0.9175,
+   "double_budget_dp6": 0.89,
+   "double_budget_dp6_no_refusal": 0.89,
+   "prod_budget_dp3": 0.44,
+   "prod_budget_dp3_no_refusal": 0.44,
+   "prod_budget_dp4": 0.475,
+   "prod_budget_dp4_no_refusal": 0.47,
+   "prod_budget_dp6": 0.4275,
+   "prod_budget_dp6_no_refusal": 0.435,
+   "prod_budget_wide_table_dp6": 0.415,
+   "prod_budget_wide_table_dp6_no_refusal": 0.435,
+   "volume8x_dp6": 0.4153,
+   "volume8x_dp6_no_refusal": 0.4153
+  },
+  "total_refused": 16440,
+  "trap_additive": [
+   150,
+   150,
+   150,
+   150
+  ],
+  "trap_doubling": [
+   5,
+   1,
+   0,
+   0
+  ],
+  "v9b_collapse_nodes": 1,
+  "walk_efficiency": [
+   0.8981,
+   1.0376,
+   0.8886
+  ]
+ }
+}
