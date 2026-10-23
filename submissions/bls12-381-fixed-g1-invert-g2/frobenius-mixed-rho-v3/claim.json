@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 125.719085,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 73.166751,
+    "preprocessing_log2": 75.41847,
+    "success_probability": 0.41,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the mixed add/square class walk on N = (r-1)/12 classes with r_a = 1024 and S = 458 square slots behaves as a random map with collision rate V = 0.799413681 (sum of squared branch probabilities of the actual partition).",
+    "H2: every walk checks 2-cycles every step and cycles of length 3 to 64 against a per-walk anchor refreshed every 64 of its own steps; a detection escapes by squaring the least-key state. The 2-cycle branch is exercised by exact replica checks; the longer-cycle branch is mirrored in the replica and fired once in 2^27 production steps.",
+    "H3: c2 = 0.1445 and kappa = 0.4902 are Callgrind measurements at S = 458 from interval counts on two seeds (agreeing to 0.01%); the per-step operation counts come from uninstrumented runs of 2^26 steps per seed.",
+    "H4: a detected cycle wastes at most 127 main steps; the measured event rate upper bound 4.6044e-05 per step gives a wasted fraction 0.005848, charged in the budget."
+  ],
+  "limitations": [
+    "H1 is extrapolated from toy groups with N up to 2^17 and r_a = 32; production N is about 2^251 and r_a = 1024.",
+    "No production-size execution of the walk to a collision; the replica checks full dumps and distinguished-point records at 512 and 4096 rounds, and samples of production states.",
+    "Storage of about 2^73 bytes is not realisable; memory is reported, not scored.",
+    "The reference unit is priced by the organizer rule (1 unit); the measured reference count is 22,998 against C = 20,000."
+  ],
+  "lane": "exploratory"
+}

@@ -1,0 +1,27 @@
+{
+ "schema": "gt-walk-native-counts-v1",
+ "kernel": "measurement/step.c",
+ "inputs": "gen_inputs.py --s 0.447265625 --seed 1|2",
+ "S": 458,
+ "walks": 64,
+ "rounds": 1048576,
+ "runs": {
+  "s1": {
+   "steps": 67108864,
+   "adds": 37092453,
+   "sqrs": 30022369,
+   "dps": 4197588,
+   "cyc2": 2979,
+   "cycl": 0
+  },
+  "s2": {
+   "steps": 67108864,
+   "adds": 37096088,
+   "sqrs": 30018923,
+   "dps": 4196907,
+   "cyc2": 3071,
+   "cycl": 1
+  }
+ },
+ "meaning": "adds and sqrs count every group operation including cycle-check steps and escapes; steps counts main steps"
+}
