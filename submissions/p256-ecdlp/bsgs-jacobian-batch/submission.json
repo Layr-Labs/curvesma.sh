@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: deterministic BSGS with projective mixed additions and block batch inversion",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), given Q=[x]P for the fixed SEC 2 Section 2.4.2 NIST P-256 generator P and the protected parameters including a=-3, recover x. The deterministic baby-step giant-step construction in proof.md walks both sides in Jacobian coordinates with mixed additions (no inversion inside a loop), buffers 1024 points, batch-inverts the buffered Z values with one inversion, converts each point to affine, and uses an open-addressed table of 2^132 slots keyed by the full affine pair. It succeeds for every valid input, including the identity Q=infinity with x=0, so algorithmic success is at least 1-2^-128 >= 0.39 over uniform challenges and fresh coins; the 2^-128 term is the union bound for the single 64-bit hash multiplier at load factor 2^-4 with a 64-probe cap that is charged in full for every operation. Total work is at most 2^132.078610 target-group-operation equivalents, that is 5749410870839533267911841152074768241393664 scalar AArch64 instruction equivalents divided by the fixed C=1000, including preprocessing, table initialisation, all lookups, verification and output. Preprocessing is at most 2^131.105679 equivalents and is included in total work. Peak memory is at most 2^138.321929 bytes, dominated by the 2^132-slot table of 80-byte records; nonuniform advice is 0 bytes. No heuristic, no birthday premise, no interval or distinguished-point assumption, no uncharged conversion and no quantum step is used. The exponential memory is required by this construction, which is a conservative generic accounting control, not a practical attack or a claim of novelty.",
+      "score": {
+        "numerator": "132078610",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs-p256",
+      "source": "experiment.py",
+      "purpose": "Run the production update itself on the real P-256 curve at toy size: Jacobian mixed-addition walks, block batch inversion with prefix products and back substitution, and the 64-probe open-addressed lookup, with m=ceil(sqrt(n)) instead of 2^128. It recovers every scalar in [0,n) exhaustively, including zero, and checks each result against the true scalar. This is toy-scope evidence for the update and the coverage argument; it does not establish production instruction counts, memory bounds or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "scalars": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4096
+          }
+        },
+        "required": [
+          "scalars"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "scalars": 512
+        }
+      ]
+    }
+  ]
+}
