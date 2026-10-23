@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class parallel Pollard rho in GT, success target 0.39",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (design of public submission 3da91365-2d58-40e5-ac7d-415e3061f7d8: compute g=e(P0,Q); solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key, partition and distinguished bits taken from the raw class key, deterministic class-consistent fruitless-cycle escape, a 40/theta stuck-walk restart, and a distinguished-report log whose capacity C_rep = M * R_w = 2^20 * 2^47 = 2^67 records (direct addressing, 80 bytes each) is a deterministic bound: each walk slot keeps a cumulative report counter and is stopped at R_w = 2^47 reports, so no report-count probability statement enters the memory or processing bound; the log is matched offline by an in-place heapsort with at most 67 sift levels per record and a cap of 2^40 confirmations; output P=[x]P0 and verify e(P,Q)=z) succeeds with probability at least 0.39 using at most 2^125.826 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, walk starts, distinguished-point handling charged at its worst case (2^65.64 units at the cap), cycle handling, detection delay, output and verification. Peak memory is below 2^73.4 bytes (a hard bound: the 2^67-record log at 80 bytes per record plus the multiplier table and walk states, with no hash table); preprocessing is at most 2^31 units and is included; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for R-adding rho walks (with the Brent-Pollard R/(R-1) correction and 3% explicit step slack; model success 0.4081 at the step budget), the same heuristic also giving the fruitless-cycle rates derived in proof.md section 3.2 and the probability, far below 2^-300, that the per-walk report cap stops a healthy walk slot; it is supported by toy-field experiments that run the production partition and distinguished-point predicates and exercise the report log; no production-size run is claimed.",
+      "score": {
+        "numerator": "125826",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-k40-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements, check the Frobenius formula, the 4-multiplication conjugate-key formula, distinctness of the 12 keys, that the two-subtraction sign-set minimum equals the twelve-way argmin and class key, consistency of the canonical representative, p^6 = inversion, ord_r(p)=12. Part B: run the complete Frobenius-class rho walk (kappa trick, twisted table, partition h = K mod R and distinguished test on the raw class key as in production, 2-cycle and checkpoint escapes, stuck-walk rule, collision solving) in a field q near 2^20 with the same tower shape, appending every distinguished report to a report log including duplicates of a class, applying the per-walk report cap scaled from R_w = 2^47, stopping a slot that reaches it, and reporting the log length against its cap and the slots stopped (plus a stress pass with a tiny cap that exercises the rule); each trial runs to the fixed step budget 1.03 S0 rather than to its first recovered logarithm, and it reports collision times against the 0.39 budget S0 and 1.03 S0, cycle rates and the distinguished fraction. Part A2: measure the low 70 bits of the class key on real GT elements. Part C: recompute the fruitless-cycle bound, the deterministic report-log capacity M R_w, the probability that a healthy walk slot reaches the cap, the memory bound, the worst-case report-handling charge and the work ledger (per-step count 2,026, budget 2,250, step cost c = 1 + 2,250/20,000, log2 W, claim >= log2 W). Toy scale only; does not validate production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              1048963,
+              1049611,
+              1054003
+            ],
+            "minimum": 1048963,
+            "maximum": 1054003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 16,
+            "maximum": 1024
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 1048963,
+          "trials": 200,
+          "R": 64,
+          "dp_bits": 4,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 10
+        }
+      ]
+    }
+  ]
+}
