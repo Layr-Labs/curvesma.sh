@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon p-1 limb-window scalar update",
+  "claims": [
+    {
+      "statement": "For uniform s in 1..r-1 and the public powers A_i=[s^i]P0 for i=1..n at n=2^20, the limb-window Cheon attack in proof.md recovers s with probability at least 39/100. Total classical work is at most 2^118.184540 target-group-operation equivalents, including preprocessing, the four-limb scalar update, batched affine additions, dictionary probes, d-th root checks and verification. Peak memory is at most 2^131 bytes. Preprocessing is at most 2^67 target-group-operation equivalents and is included in total work. Nonuniform advice is at most 2^72 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps or uncharged oracles. The bound holds at n=2^20, which divides r-1; W is the function in proof.md. No expected-time early abort is used.",
+      "score": {
+        "numerator": "118184540",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
