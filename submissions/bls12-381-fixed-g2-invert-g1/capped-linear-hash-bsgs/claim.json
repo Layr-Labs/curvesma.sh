@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "target_profile": "tracks/bls12-381-fixed-g2-invert-g1/target-profile.json",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-generic-attack",
+  "algorithm": "capped-linear-hash-bsgs-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.137645,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 137.091015,
+    "preprocessing_log2": 127.134109,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "limitations": [
+    "Analytic instruction accounting; the production-size table is not executed.",
+    "Success is a proved lower bound of 0.39, not an estimate of a typical run.",
+    "Dense Fp12 multiplication is charged as one reference unit even when a squaring would be cheaper."
+  ],
+  "lane": "exploratory"
+}

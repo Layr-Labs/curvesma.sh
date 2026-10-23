@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: capped linear-hash baby-step giant-step",
+  "claims": [
+    {
+      "statement": "For every challenge drawn from the track distribution (nonidentity Q uniform in the r-torsion of G2, z uniform and independent in GT), the deterministic-budget algorithm in proof.md recovers P in G1 with e(P,Q)=z with probability at least 39/100 over the challenge and fresh uniform algorithm coins. The bound is worst-case over inputs given the coins: at most 7486945464191340615970310450630709904145664 scalar AArch64 instruction-equivalents, i.e. 7486945464191340615970310450630709904145664/20000 dense-Fp12-multiplication equivalents under C=20000. log2 of that quantity, rounded upward to six decimal places, is 128137645/1000000. Peak memory is 185569945715879859593945323988805046015808 bytes, log2 rounded upward 137091015/1000000. Preprocessing, included in the total, is 3734308784159063841211492322243855087587712 instruction-equivalents, log2 rounded upward 127134109/1000000. Nonuniform advice is 0 bytes. No heuristic, random oracle, quantum step, or uncharged table is used. A hard cap makes the instruction bound independent of how many fingerprint matches occur.",
+      "score": {
+        "numerator": "128137645",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs-and-ledger",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check additive BSGS on a small cyclic group, and recheck the integer success inequality and instruction total published in proof.md. This does not establish production curve behavior.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
