@@ -1,0 +1,40 @@
+{
+  "components_log2_units": {
+    "walk_steps": 125.700213,
+    "adder_table": 19.582053,
+    "walk_starts_and_restarts": 75.405356,
+    "distinguished_points": 72.543997,
+    "collision_replay": 67.190172,
+    "solve_verify_output": 14.712288
+  },
+  "time_log2": "125700213/1000000",
+  "time_log2_decimal": 125.700213,
+  "time_log2_float": 125.70021264402934,
+  "score_rational": {
+    "numerator": "125700213",
+    "denominator": "1000000"
+  },
+  "preprocessing_log2": "75405357/1000000",
+  "parameters": {
+    "N_log2": 251.272127,
+    "square_slots": 458,
+    "r_a": 1024,
+    "s": 0.447265625,
+    "V": 0.7996551059186459,
+    "walk_steps_T_log2": 125.789065,
+    "total_steps_log2": 125.831709,
+    "distinguished_points_log2": 66.831709,
+    "overhead": 0.03,
+    "dp_bits": 60,
+    "walks": 1048576
+  },
+  "memory_log2_bytes": "36576819/500000",
+  "success": {
+    "tau": 0.6181388482941857,
+    "eps": 0.20034489408135414,
+    "model": 0.3900009542773589,
+    "lower_bound": 0.3900000006030425
+  },
+  "c2": 0.1409,
+  "kappa": 0.4902
+}
