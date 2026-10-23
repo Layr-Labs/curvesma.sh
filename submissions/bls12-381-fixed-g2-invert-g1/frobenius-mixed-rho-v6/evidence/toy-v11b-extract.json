@@ -1,0 +1,350 @@
+{
+ "description": "Extract of the toy v11b run (scratch RESULT-toy-v11b.json): per_run_summary fields (budget curves omitted) and collision_law counts. Values are verbatim, except by_decision_pair, which is [fresh_pairs, degenerate] per pair.",
+ "revision": "toy v11b: verified-output gap, DP spacing, collision law (scratch; RESULT-toy-v11.json untouched)",
+ "code": "curvesmash-core/cscore/gt.py (unchanged in this step: branch_key parameter only); analysis in toy-v11/v11b_verified.py",
+ "commands": {
+  "r1024_mixed_dp2": "v11b_verified.py r1024_mixed_dp2 1024 458 2 1000 1003 diag/v11b/r1024_mixed_dp2.json",
+  "r1024_mixed_dp3": "v11b_verified.py r1024_mixed_dp3 1024 458 3 1000 1004 diag/v11b/r1024_mixed_dp3.json",
+  "r1024_mixed_dp6": "v11b_verified.py r1024_mixed_dp6 1024 458 6 3000 1001 diag/v11b/r1024_mixed_dp6.json",
+  "r1024_add_dp2": "v11b_verified.py r1024_add_dp2 1024 0 2 1000 1005 diag/v11b/r1024_add_dp2.json",
+  "r1024_add_dp3": "v11b_verified.py r1024_add_dp3 1024 0 3 1000 1006 diag/v11b/r1024_add_dp3.json",
+  "r1024_add_dp6": "v11b_verified.py r1024_add_dp6 1024 0 6 3000 1002 diag/v11b/r1024_add_dp6.json",
+  "r32_mixed_dp2": "v11b_verified.py r32_mixed_dp2 32 14 2 2000 1007 diag/v11b/r32_mixed_dp2.json"
+ },
+ "per_run_summary": {
+  "r1024_mixed_dp2": {
+   "r_a": 1024,
+   "S": 458,
+   "s": 0.447265625,
+   "dp_bits": 2,
+   "dp_spacing_over_sqrtN": 0.0144,
+   "trials": 1000,
+   "verified_eventually": 1000,
+   "first_useful_within_budget_0.5277": 0.438,
+   "verified_within_budget_0.5277": 0.425,
+   "verified_within_budget_wilson95": [
+    0.3947,
+    0.4559
+   ],
+   "first_useful_wilson95": [
+    0.4075,
+    0.4689
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 11.51,
+    "median": 4,
+    "p90": 18
+   },
+   "categories": {
+    "verified": 1000
+   },
+   "reconstruction_mismatches": 0
+  },
+  "r1024_mixed_dp3": {
+   "r_a": 1024,
+   "S": 458,
+   "s": 0.447265625,
+   "dp_bits": 3,
+   "dp_spacing_over_sqrtN": 0.0289,
+   "trials": 1000,
+   "verified_eventually": 1000,
+   "first_useful_within_budget_0.5277": 0.464,
+   "verified_within_budget_0.5277": 0.423,
+   "verified_within_budget_wilson95": [
+    0.3927,
+    0.4539
+   ],
+   "first_useful_wilson95": [
+    0.4333,
+    0.495
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 24.32,
+    "median": 10,
+    "p90": 36
+   },
+   "categories": {
+    "verified": 1000
+   },
+   "reconstruction_mismatches": 0
+  },
+  "r1024_mixed_dp6": {
+   "r_a": 1024,
+   "S": 458,
+   "s": 0.447265625,
+   "dp_bits": 6,
+   "dp_spacing_over_sqrtN": 0.2308,
+   "trials": 3000,
+   "verified_eventually": 2921,
+   "first_useful_within_budget_0.5277": 0.4077,
+   "verified_within_budget_0.5277": 0.1827,
+   "verified_within_budget_wilson95": [
+    0.1692,
+    0.1969
+   ],
+   "first_useful_wilson95": [
+    0.3902,
+    0.4254
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 153.31,
+    "median": 84,
+    "p90": 396
+   },
+   "categories": {
+    "ii": 31,
+    "iv": 48,
+    "verified": 2921
+   },
+   "reconstruction_mismatches": 0
+  },
+  "r1024_add_dp2": {
+   "r_a": 1024,
+   "S": 0,
+   "s": 0.0,
+   "dp_bits": 2,
+   "dp_spacing_over_sqrtN": 0.0144,
+   "trials": 1000,
+   "verified_eventually": 1000,
+   "first_useful_within_budget_0.5277": 0.405,
+   "verified_within_budget_0.5277": 0.381,
+   "verified_within_budget_wilson95": [
+    0.3514,
+    0.4115
+   ],
+   "first_useful_wilson95": [
+    0.375,
+    0.4357
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 11.56,
+    "median": 5,
+    "p90": 19
+   },
+   "categories": {
+    "verified": 1000
+   },
+   "reconstruction_mismatches": 0
+  },
+  "r1024_add_dp3": {
+   "r_a": 1024,
+   "S": 0,
+   "s": 0.0,
+   "dp_bits": 3,
+   "dp_spacing_over_sqrtN": 0.0289,
+   "trials": 1000,
+   "verified_eventually": 1000,
+   "first_useful_within_budget_0.5277": 0.421,
+   "verified_within_budget_0.5277": 0.389,
+   "verified_within_budget_wilson95": [
+    0.3593,
+    0.4196
+   ],
+   "first_useful_wilson95": [
+    0.3908,
+    0.4518
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 19.97,
+    "median": 10,
+    "p90": 35
+   },
+   "categories": {
+    "verified": 1000
+   },
+   "reconstruction_mismatches": 0
+  },
+  "r1024_add_dp6": {
+   "r_a": 1024,
+   "S": 0,
+   "s": 0.0,
+   "dp_bits": 6,
+   "dp_spacing_over_sqrtN": 0.2308,
+   "trials": 3000,
+   "verified_eventually": 2893,
+   "first_useful_within_budget_0.5277": 0.4207,
+   "verified_within_budget_0.5277": 0.185,
+   "verified_within_budget_wilson95": [
+    0.1715,
+    0.1993
+   ],
+   "first_useful_wilson95": [
+    0.4031,
+    0.4384
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 148.98,
+    "median": 85,
+    "p90": 382
+   },
+   "categories": {
+    "ii": 41,
+    "iv": 66,
+    "verified": 2893
+   },
+   "reconstruction_mismatches": 0
+  },
+  "r32_mixed_dp2": {
+   "r_a": 32,
+   "S": 14,
+   "s": 0.4375,
+   "dp_bits": 2,
+   "dp_spacing_over_sqrtN": 0.0144,
+   "trials": 2000,
+   "verified_eventually": 2000,
+   "first_useful_within_budget_0.5277": 0.4415,
+   "verified_within_budget_0.5277": 0.419,
+   "verified_within_budget_wilson95": [
+    0.3976,
+    0.4408
+   ],
+   "first_useful_wilson95": [
+    0.4199,
+    0.4634
+   ],
+   "overhead_verified_minus_first_useful": {
+    "mean": 10.65,
+    "median": 5,
+    "p90": 19
+   },
+   "categories": {
+    "verified": 2000
+   },
+   "reconstruction_mismatches": 0
+  }
+ },
+ "collision_law": {
+  "r1024_mixed_dp2": {
+   "fresh_pairs_total": 517,
+   "fresh_pairs_degenerate": 1,
+   "fresh_degenerate_rate": 0.001934,
+   "degenerate_structure": {
+    "same_walk_dist2": 1,
+    "same_walk_other": 0,
+    "different_walks": 0
+   },
+   "by_decision_pair": {
+    "add_diff": [
+     207,
+     1
+    ],
+    "add_sq": [
+     163,
+     0
+    ],
+    "sq_add": [
+     147,
+     0
+    ]
+   }
+  },
+  "r1024_mixed_dp3": {
+   "fresh_pairs_total": 763,
+   "fresh_pairs_degenerate": 9,
+   "fresh_degenerate_rate": 0.011796,
+   "degenerate_structure": {
+    "same_walk_dist2": 9,
+    "same_walk_other": 0,
+    "different_walks": 0
+   },
+   "by_decision_pair": {
+    "add_diff": [
+     296,
+     1
+    ],
+    "add_same": [
+     1,
+     0
+    ],
+    "add_sq": [
+     221,
+     0
+    ],
+    "sq_add": [
+     245,
+     8
+    ]
+   }
+  },
+  "r1024_mixed_dp6": {
+   "fresh_pairs_total": 3998,
+   "fresh_pairs_degenerate": 26,
+   "fresh_degenerate_rate": 0.006503,
+   "degenerate_structure": {
+    "same_walk_dist2": 26,
+    "same_walk_other": 0,
+    "different_walks": 0
+   },
+   "by_decision_pair": {
+    "add_diff": [
+     1523,
+     14
+    ],
+    "add_same": [
+     2,
+     0
+    ],
+    "add_sq": [
+     1211,
+     0
+    ],
+    "sq_add": [
+     1262,
+     12
+    ]
+   }
+  },
+  "r1024_add_dp2": {
+   "fresh_pairs_total": 607,
+   "fresh_pairs_degenerate": 12,
+   "fresh_degenerate_rate": 0.019769,
+   "degenerate_structure": {
+    "same_walk_dist2": 12,
+    "same_walk_other": 0,
+    "different_walks": 0
+   },
+   "by_decision_pair": {
+    "add_diff": [
+     607,
+     12
+    ]
+   }
+  },
+  "r1024_add_dp3": {
+   "fresh_pairs_total": 842,
+   "fresh_pairs_degenerate": 22,
+   "fresh_degenerate_rate": 0.026128,
+   "degenerate_structure": {
+    "same_walk_dist2": 22,
+    "same_walk_other": 0,
+    "different_walks": 0
+   },
+   "by_decision_pair": {
+    "add_diff": [
+     842,
+     22
+    ]
+   }
+  },
+  "r1024_add_dp6": {
+   "fresh_pairs_total": 4239,
+   "fresh_pairs_degenerate": 99,
+   "fresh_degenerate_rate": 0.023355,
+   "degenerate_structure": {
+    "same_walk_dist2": 99,
+    "same_walk_other": 0,
+    "different_walks": 0
+   },
+   "by_decision_pair": {
+    "add_diff": [
+     4236,
+     99
+    ],
+    "add_same": [
+     3,
+     0
+    ]
+   }
+  }
+ }
+}

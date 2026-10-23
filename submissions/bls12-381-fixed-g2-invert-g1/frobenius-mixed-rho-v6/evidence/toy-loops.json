@@ -1,0 +1,215 @@
+{
+ "description": "Extract of the toy trail-cap runs (scratch toy-v11 diag/d_f_dp*_cap*.json): 60 trials each, group 201. Selected fields copied verbatim per run. model_expected_hits_realised_window is the window-model expectation of first-visit hits; cap_bound_expected_hits is the spec bound where a cap is set.",
+ "runs": [
+  {
+   "experiment": "dp60_cap64",
+   "dp_bits": 60,
+   "cap": 64,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 574,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 0,
+    "model_expected_hits_realised_window": 0.0097,
+    "cap_bound_expected_hits": 0.0175
+   },
+   "f_escapes_loops": {
+    "detected_formal": 15,
+    "detected_nonformal": 31,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 0
+   },
+   "source_file": "diag/d_f_dp60_cap64.json"
+  },
+  {
+   "experiment": "dp60_cap256",
+   "dp_bits": 60,
+   "cap": 256,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 572,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 3,
+    "model_expected_hits_realised_window": 3.2478,
+    "cap_bound_expected_hits": 8.1182
+   },
+   "f_escapes_loops": {
+    "detected_formal": 8,
+    "detected_nonformal": 512,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 990
+   },
+   "source_file": "diag/d_f_dp60_cap256.json"
+  },
+  {
+   "experiment": "dp60_cap1024",
+   "dp_bits": 60,
+   "cap": 1024,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 564,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 9,
+    "model_expected_hits_realised_window": 9.6239,
+    "cap_bound_expected_hits": 18.3542
+   },
+   "f_escapes_loops": {
+    "detected_formal": 3,
+    "detected_nonformal": 542,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 1134
+   },
+   "source_file": "diag/d_f_dp60_cap1024.json"
+  },
+  {
+   "experiment": "dp60_cap4096",
+   "dp_bits": 60,
+   "cap": 4096,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 532,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 12,
+    "model_expected_hits_realised_window": 13.9344,
+    "cap_bound_expected_hits": 27.8728
+   },
+   "f_escapes_loops": {
+    "detected_formal": 5,
+    "detected_nonformal": 677,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 410
+   },
+   "source_file": "diag/d_f_dp60_cap4096.json"
+  },
+  {
+   "experiment": "dp60_capNone",
+   "dp_bits": 60,
+   "cap": null,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 402,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 12,
+    "model_expected_hits_realised_window": 5.3661,
+    "cap_bound_expected_hits": null
+   },
+   "f_escapes_loops": {
+    "detected_formal": 0,
+    "detected_nonformal": 477,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 170
+   },
+   "source_file": "diag/d_f_dp60_capNone.json"
+  },
+  {
+   "experiment": "dp6_cap64",
+   "dp_bits": 6,
+   "cap": 64,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 474,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 0,
+    "model_expected_hits_realised_window": 0.2115,
+    "cap_bound_expected_hits": 1.0855
+   },
+   "f_escapes_loops": {
+    "detected_formal": 44,
+    "detected_nonformal": 145,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 0
+   },
+   "source_file": "diag/d_f_dp6_cap64.json"
+  },
+  {
+   "experiment": "dp6_cap256",
+   "dp_bits": 6,
+   "cap": 256,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 472,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 1,
+    "model_expected_hits_realised_window": 1.0021,
+    "cap_bound_expected_hits": 5.1913
+   },
+   "f_escapes_loops": {
+    "detected_formal": 34,
+    "detected_nonformal": 393,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 167
+   },
+   "source_file": "diag/d_f_dp6_cap256.json"
+  },
+  {
+   "experiment": "dp6_cap1024",
+   "dp_bits": 6,
+   "cap": 1024,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 464,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 5,
+    "model_expected_hits_realised_window": 1.3317,
+    "cap_bound_expected_hits": 20.0191
+   },
+   "f_escapes_loops": {
+    "detected_formal": 43,
+    "detected_nonformal": 666,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 132
+   },
+   "source_file": "diag/d_f_dp6_cap1024.json"
+  },
+  {
+   "experiment": "dp6_cap4096",
+   "dp_bits": 6,
+   "cap": 4096,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 432,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 2,
+    "model_expected_hits_realised_window": 1.3945,
+    "cap_bound_expected_hits": 61.7496
+   },
+   "f_escapes_loops": {
+    "detected_formal": 16,
+    "detected_nonformal": 652,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 110
+   },
+   "source_file": "diag/d_f_dp6_cap4096.json"
+  },
+  {
+   "experiment": "dp6_capNone",
+   "dp_bits": 6,
+   "cap": null,
+   "trials": 60,
+   "max_steps_per_trial": 20000,
+   "trial_seed": 401,
+   "N": 76880,
+   "d_trap": {
+    "first_visit_hits": 0,
+    "model_expected_hits_realised_window": 0.8794,
+    "cap_bound_expected_hits": null
+   },
+   "f_escapes_loops": {
+    "detected_formal": 19,
+    "detected_nonformal": 349,
+    "undetected_loops_formal": 0,
+    "undetected_loops_nonformal": 65
+   },
+   "source_file": "diag/d_f_dp6_capNone.json"
+  }
+ ]
+}

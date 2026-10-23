@@ -1,0 +1,47 @@
+Trimmed measurement code (VERSION 6), 33-case test matrix, run on the code in this folder.
+Result: 30 of 33 cases pass. The trimmed run is identical to the pre-trim run in every case (pass flag, kernel counts, checks): True.
+Columns: case (group, rounds), result.
+
+cap1024_p1024_dp2_s1                       4096  FAIL
+cap1024_p1024_dp2_s2                       4096  FAIL
+cap1024_p1024_dp60_s1                      4096  PASS
+p1024_s1_dp2                               4096  PASS
+p1024_s1_dp2                                512  PASS
+p1024_s1_dp2_r16384                       16384  PASS
+p1024_s1_dp4                               4096  PASS
+p1024_s1_dp4                                512  PASS
+p1024_s1_dp60                              4096  PASS
+p1024_s1_dp60                               512  PASS
+p1024_s2_dp2                               4096  PASS
+p1024_s2_dp2                                512  PASS
+p1024_s2_dp4                               4096  PASS
+p1024_s2_dp4                                512  PASS
+p1024_s2_dp60                              4096  PASS
+p1024_s2_dp60                               512  PASS
+p1024_s3_dp2                               4096  PASS
+p1024_s3_dp2                                512  PASS
+p1024_s3_dp4                               4096  PASS
+p1024_s3_dp4                                512  PASS
+p1024_s3_dp60                              4096  PASS
+p1024_s3_dp60                               512  PASS
+ra16_cap1024_dp2_s1                        4096  FAIL
+ra16_dp2_s1                                4096  PASS
+ra16_dp2_s1                                 512  PASS
+ra16_dp2_s2                                4096  PASS
+ra16_dp2_s2                                 512  PASS
+ra16_dp60_s1                               4096  PASS
+ra16_dp60_s1                                512  PASS
+ra16_dp60_s2                               4096  PASS
+ra16_dp60_s2                                512  PASS
+ra16_e0trap_cap1024_dp2_s1                 4096  PASS
+ra16_e0trap_cap1024_dp2_s2                 4096  PASS
+
+The three FAIL cases fail only the check "cap restarts occur". That check cannot fire at DP_BITS 2: every walk
+restarts at a distinguished point within a few steps, and each DP restart resets the trail age, so a trail reaches
+the 1024-step cap with probability (3/4)^1024. Their dump, DP-record, count, key and invariant checks pass.
+Cap behaviour is exercised by the trapped-trail builds: 123 and 114 cap restarts at RA 16, DP_BITS 2 (seeds 1 and 2),
+and 256 cap restarts at DP_BITS 60.
+
+reproduce.sh was run end to end: exit status 0 (REPRO_RC=0), 8 min 36 s, log in the run directory.
+Its replica dump, DP-record and count checks at 512 rounds (DP_BITS 2 and 60, both seeds) match exactly; vectors: 0 mismatches.
+Per-step values reproduced by reproduce.sh (analysis.json): forced-add 26747.438 (seed 1) and 26797.421 (seed 2), against RESULT.json 26747.453 and 26797.438.

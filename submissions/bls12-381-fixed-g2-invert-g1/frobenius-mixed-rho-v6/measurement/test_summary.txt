@@ -1,0 +1,37 @@
+v11 test summary (step.c VERSION 6). Files: step.c, replica.py, gen_inputs.py, analyze.py, check_vectors.py,
+native_run.sh, reproduce.sh, RESULT.json (= RESULT-v11), native-counts-v11.json.
+
+1. Verification matrix, kernel dump vs replica.py: 30 of 33 cases pass.
+   - Dump, DP records and event counts match the replica in 33 of 33 cases.
+   - Identity checks (exponent and canonical invariants, key formula, generator, no restart repeat, no restart
+     output in the visited set, escapes = cycle events, restarts = DP records) pass in 33 of 33 cases.
+   - The 3 failing cases fail only the check "cap restarts occur": cap1024_p1024_dp2_s1, cap1024_p1024_dp2_s2,
+     ra16_cap1024_dp2_s1 (CAP_STEPS_OVERRIDE = 1024, DP_BITS 2, 4096 rounds). The check cannot fire at DP_BITS 2:
+     each walk restarts at a distinguished point every few steps, and each DP restart resets the trail age, so a
+     trail reaches 1024 steps with probability (3/4)^1024. Zero cap restarts is the expected result; the check was
+     mis-specified and is recorded as failed.
+   - Cases: production seeds 1, 2, 3 with DP_BITS 2, 4, 60 at 512 and 4096 rounds; cap builds; RA 16 builds.
+
+2. DP_BITS 2, 16384 rounds (seed 1, production RA and S): pass. 349000 restarts, 87198 chained; no repeated
+   restart output (within a walk or across walks); no restart output in the visited set; DP records match.
+
+3. Cap and trapped trails (CAP_STEPS_OVERRIDE = 1024):
+   - RA 16, DP_BITS 2, -DTEST_ESCAPE_E0 (escape exponent 0, test only): seed 1 has 123 cap restarts, all in trails
+     that contained an escape (62730 escapes in those trails); seed 2 has 114 cap restarts, all in trails with escapes.
+   - DP_BITS 60 with production escape exponents: 256 cap restarts (6 in trails with an escape).
+
+4. Lemma R replay (replica.py --replay; two walks at one class, different detector states and exponents):
+   768 pairs (512 at RA 16, 256 at RA 1024). Element identity until a DP, detection or cap: 0 mismatches.
+   Escape synchronisation: 1691 (RA 16) and 13 (RA 1024) matched detections, 0 mismatches.
+
+5. Vectors (check_vectors.py): KP, 4 SHA-256 standard vectors (abc, empty, 448-bit, one million 'a'), 9 restart PRFs,
+   4 escape PRFs, 64 reductions mod r (including all-zero and all-ones): 0 mismatches.
+
+6. Composite escape loop (round-10 g1 configuration; class-level toy in a cyclic group, 2000 configurations per size):
+   - (a) v10 table escape, one element Y for both escapes: 2000/2000 configurations loop (Wilson 95% [0.998, 1.0]),
+     period 4 steps, with no DP among the four classes. With DP on, 78% loop before a DP ends the trail.
+   - (b) v11 PRF escape, e = PRF(0x02 || K_s): 0/2000 loop at group size 2^40 (Wilson 95% [0, 0.0019]).
+     At size 2^20, 8/2000 loop (Wilson 95% [0.0020, 0.0079]), from fresh landings that happen to hit the same classes.
+   - Premise: the adder branch R is imposed at the four configuration classes; the toy script is not in this folder.
+
+7. Measurement: see RESULT.json. Native counts (2^20 rounds, production DP_BITS 60): native-counts-v11.json.

@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v11",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.915106,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 74.321929,
+    "preprocessing_log2": 29.575082,
+    "success_probability": 0.41,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: each landing of a walk is uniform on the classes not yet visited by it, given the history, except for the closure structure (detected cycles, formal closures); the toy checks this for N up to 284746 (degenerate-fraction scaling) and N = 76880 (success runs).",
+    "H5: a closed window with a nonzero exponent coefficient has probability 1/r over the coins (independence of the coins from the path).",
+    "H7: each fresh state's key is uniform given the past; its DP flag has probability 2^-60.",
+    "H8: restart and escape exponents are outputs of a SHA-256 PRF with a random key (the standard PRF premise), used for joins, duplicates and DP overflow bounds.",
+    "H9: the square decision of a class is a random-oracle bit with expectation s = 458/1024 exactly; the square share enters in expectation over per-attack branch keys; the key-level deviation is charged by Hoeffding at delta 2^-60.",
+    "V_low = 0.7996551059 is the output of the withdrawn §9.3 expression at s = 458/1024, kept as an assumed conservative lower bound on the non-degenerate collision rate, not derived (proof.md, Section 2 and Section 5.2)."
+  ],
+  "limitations": [
+    "V_low is an assumption; the production collision rate is not measured, and the success claim rests on it (proof.md, Sections 2 and 5).",
+    "H1 is extrapolated from toy groups with N up to 284746 and N = 76880 (success runs) to N about 2^251.",
+    "The natural trap rate is not measured at production scale; the trap terms are the accounting values.",
+    "The 33-case kernel verification matrix passes 30 cases (the 3 failures are the cap-restart check at DP 2, proof.md Section 1); it ran on the pre-trim source and its re-run is pending.",
+    "reproduce.sh was not executed end to end; its components were run separately.",
+    "The Lemma R replay covers 768 pairs; the restart costs about 31.9 comb multiplications against the bound 32.",
+    "The sort costs are carried from the v10 sortnet measurement; the PRF cost is measured (7,851 instructions).",
+    "Memory of 2^74.321929 bytes is the enforced capacity of the distinguished-point table with its padding; it is reported, not scored.",
+    "The reference unit is priced at the organizer count (22,990 against C = 20,000); blst_fp12_mul measured 22,997."
+  ],
+  "lane": "exploratory"
+}

@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class mixed add/square rho on GT (revision v11)",
+  "claims": [
+    {
+      "statement": "For uniform z in GT and a uniform nonidentity input (the challenge of rules.md), the algorithm in proof.md returns P with e(P, Q) = z with probability at least 0.41, using at most 2^126.915106 target-group-operation equivalents (score 63457553/500000), counting every operation of the procedure (a hard work cutoff), with preprocessing 2^29.575082. Peak memory is at most 2^74.321929 bytes (a distinguished-point table with padding and an overflow stop). Nonuniform advice is 0 bytes. The success bound uses the non-degenerate collision rate V_low = 0.7996551059, which is an assumption and not derived (proof.md, Sections 2 and 5); the model is 0.432781 and the bound is 0.41 after failure terms of 0.022781. The bound also rests on the premises H1, H5, H7, H8 and H9 stated in proof.md. This is a classical generic attack, not a practical break.",
+      "score": {
+        "numerator": "63457553",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "evidence/number_theory_check.out",
+        "walk-spec.md",
+        "experiment.py",
+        "evidence/toy-v11b-extract.json",
+        "evidence/toy-v11c.json",
+        "evidence/toy-v11d.json",
+        "evidence/toy-h9.json",
+        "evidence/toy-loops.json",
+        "measurement/step.c",
+        "measurement/replica.py",
+        "measurement/gen_inputs.py",
+        "measurement/analyze.py",
+        "measurement/check_vectors.py",
+        "measurement/native_run.sh",
+        "measurement/reproduce.sh",
+        "measurement/RESULT.json",
+        "measurement/matrix_summary.txt",
+        "measurement/native-counts-v11.json",
+        "measurement/test_summary.txt",
+        "measurement/sortnet/sortnet.c",
+        "measurement/sortnet/RESULT-sortnet.json",
+        "measurement/sortnet/sortnet64.c",
+        "measurement/sortnet/RESULT-sortnet64.json",
+        "measurement/sortnet/check_bitonic.py",
+        "measurement/sortnet/check_bitonic.out"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-rho",
+      "source": "experiment.py",
+      "purpose": "Run the Frobenius-class mixed walk (revision v11, PRF restarts, per-trial branch keys, no trail cap) on the toy subgroup of order 922561 (N = 76880, q = 31) with r_a = 1024 and S = 458, and report the verified-output rate within the budget T = sqrt(2 N tau / V) of experiment.py, with Wilson intervals. Toy scale only: it tests the walk and the budget arithmetic, not production cost, and the budget constant is the assumed V_low.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "tau": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 1.0
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3000
+          }
+        },
+        "required": [
+          "tau",
+          "seed",
+          "n"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "tau": 0.5277,
+          "seed": 1101,
+          "n": 5
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2 (hard work cutoff with its charge bounds), the failure terms, the success bound, preprocessing and memory from the stated parameters, the measured instruction counts and the number-theory assertions (cscore.number_theory).",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}
