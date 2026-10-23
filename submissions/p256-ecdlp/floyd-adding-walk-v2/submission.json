@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: Floyd adding walk, revision 2",
+  "claims": [
+    {
+      "statement": "For uniform x in [0, r) and Q = [x]P on the fixed generator, the single-seed Floyd adding walk in proof.md returns x with probability at least 0.39. The recovery residue is (alpha_h - alpha_t) * (beta_t - beta_h)^(-1). Each walk step is a canonical affine addition, with the inversion of p-2 charged at 382 field multiplications. Jump coefficients are 512-bit blocks reduced modulo r, and that derivation is charged twice. Total classical work is at most W = 1262845030934230844889248450873604138126740 target-group-operation equivalents. The declared score 139857658/1000000 = 139.857658 is a ceiling of log2(W) at resolution 10^(-6). Peak memory is 2^20 bytes. Preprocessing independent of the challenge is at most 1073742 reference units and is included in W. Nonuniform advice is 0 bytes. The figure 0.39 is a lower bound; the declared program's sample is higher, and no production discrete logarithm is computed.",
+      "score": {
+        "numerator": "139857658",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-and-recover",
+      "source": "experiment.py",
+      "purpose": "Recompute W, check the score ceiling, and recover scalars on fresh seeds. The opposite numerator must differ from every nonzero secret. Elliptic tracks also recover scalars on one canonical affine curve.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 40,
+            "maximum": 80
+          },
+          "master": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          }
+        },
+        "required": [
+          "samples",
+          "master"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 80,
+          "master": 12648430
+        }
+      ]
+    }
+  ]
+}
