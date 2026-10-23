@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: mu_(2^20) orbit collapse on the supplied d-th power",
+  "claims": [
+    "At the scoring value n = 2^20, with d = n = 2^20 dividing r-1, the attack recovers s with success probability at least 0.39 and total classical work W(2^20) = 2^123.7 target-group-operation equivalents, i.e. time_log2 = 1237/10 = 123.7.",
+    "success_probability >= 39/100: the candidate set is d*G^2 values of s with G = ceil(2^117.5), which covers a fraction 1-exp(-lambda) >= 0.39 of the uniform challenge for every sampling of s; the algorithm uses no random coins of its own.",
+    "memory_log2_bytes = 124.2: two join tables of G entries each, 48-byte compressed G1 encodings plus 4-byte indices, held simultaneously at the merge.",
+    "preprocessing_log2 = 123.7: the two join tables are the only preprocessing and are charged in full inside W(2^20); nothing is amortized over future targets.",
+    "nonuniform_advice_log2_bytes = 124.2: no stored answer is embedded; the advice is exactly the two constructed tables, included in peak storage."
+  ],
+  "experiments": []
+}
