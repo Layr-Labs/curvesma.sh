@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "title": "Signed BSGS with an itemised distributed 64-ary merge network (standalone exact bound)",
+  "claims": [
+    {
+      "statement": "For the unrestricted uniform full-production secp256k1 target Q=[x]P, the deterministic classical cold attack in proof.md succeeds with probability at least 1/2 using at most 2^(1305909/10000) target-group-operation equivalents under the protected C=1000 divisor. Coverage is exact and counted, not estimated: the covered scalar set is h*(2m-1) adjacent residues with 2*h*(2m-1)-r = 92138019644721193389046258963199934143 > 0. Reference group additions are charged at the measured six-multiplication calibration 1074 instructions each (above their protected price of 1000); every other instruction is charged separately and itemised: 8-word record storage with 7 words on the wire, 22-hop routing write 1100 per record, 22-hop merge read 3652 per record (6 key comparisons of 16 instructions plus 12 pointer instructions per hop), node initialisation 4864 per node over 10802614822886935348043638331167244810 nodes, root intersection 36 per head, generation outer work 8 per record, 2^18 charged complete Jacobian fallbacks, 2^17 charged chain start scalar multiplications and a 2^40 fixed reserve. The exact integer total is T = 2050001412324430834062893202469342222401024 instructions, so the submitted bound is the four-decimal rational 1305909/10000 = 130.5909, justified without floating point by T^10000 < 1000^10000 * 2^1305909 (and failing at 1305908/10000). Peak storage is 115804030901347946931027802910112881136640 bytes, below 2^137; preprocessing is a subset of the charged attack and bounded by the same 1305909/10000; nonuniform advice is zero bytes with the required logarithm 0. No heuristic, no random-walk or birthday model, and no expected value is used as a bound anywhere. This is an analytic accounting construction, not a practical break or an executed production attack.",
+      "score": {
+        "numerator": "1305909",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "distributed-signed-bsgs-evidence",
+      "source": "experiment.py",
+      "purpose": "Bounded toy-group evidence for the signed-BSGS coverage set, the F-ary merge network with duplicate keys and left-first ties, Montgomery batch inversion against direct inversion, the exact production coverage count and the exact integer ledger and score inequality; no production timing or complexity inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "toy",
+              "merge",
+              "accounting"
+            ]
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 24
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 24
+          },
+          "block_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "fanout": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 8
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 16,
+          "h": 16,
+          "block_size": 4,
+          "fanout": 4
+        }
+      ]
+    }
+  ]
+}

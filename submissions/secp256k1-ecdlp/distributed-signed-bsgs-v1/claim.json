@@ -1,0 +1,23 @@
+{
+  "claim_index": 0,
+  "title": "Signed BSGS with an itemised distributed 64-ary merge network",
+  "time_log2": {
+    "numerator": "1305909",
+    "denominator": "10000"
+  },
+  "success_probability": "1/2",
+  "memory_log2_bytes": 137,
+  "preprocessing_log2": {
+    "numerator": "1305909",
+    "denominator": "10000"
+  },
+  "nonuniform_advice_log2_bytes": 0,
+  "total_instructions": "2050001412324430834062893202469342222401024",
+  "exact_bound_check": "T**10000 < 1000**10000 * 2**1305909",
+  "exact_bound_check_next_lower_fails": "not (T**10000 < 1000**10000 * 2**1305908)",
+  "covered_scalars": "57896044618658097711785492504343953926464851149359812787997104700240680714240",
+  "twice_coverage_minus_order": "92138019644721193389046258963199934143",
+  "peak_bytes": "115804030901347946931027802910112881136640",
+  "heuristics": [],
+  "statement": "See submission.json claims[0].statement and proof.md; this file mirrors the claim and adds no new assertions."
+}

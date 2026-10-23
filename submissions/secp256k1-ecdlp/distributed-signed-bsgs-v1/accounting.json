@@ -1,0 +1,78 @@
+{
+  "kind": "analytic_ledger_not_official_score",
+  "parameters": {
+    "m": "170141183460469231731687303715884105728",
+    "h": "170141183460469231731687303715884105728",
+    "d": "340282366920938463463374607431768211455",
+    "fanout": 64,
+    "levels": 22,
+    "chains": 65536,
+    "C": 1000,
+    "reference_instructions_per_addition": 1074
+  },
+  "prices": {
+    "wire_words_per_transfer": 7,
+    "stored_words_per_record": 8,
+    "transfer_instructions_per_word": 6,
+    "hop_control": 8,
+    "hop_total": 50,
+    "key_comparison": 16,
+    "tournament_comparisons_per_hop": 6,
+    "sift_pointer_instructions_per_hop": 12,
+    "slot_state_per_hop": 4,
+    "ack_per_hop": 4,
+    "write_per_record": 1100,
+    "read_per_record": 3652,
+    "intersection_per_head": 36,
+    "outer_per_record": 8,
+    "node_init": 4864,
+    "jacobian_complete_operation": 14336,
+    "fixed_reserve": 1099511627776,
+    "node_state_words": 576,
+    "node_code_words": 512,
+    "node_bytes": 8704
+  },
+  "counts": {
+    "records_written": "340282366920938463463374607431768211456",
+    "records_read": "340282366920938463463374607431768211456",
+    "nodes": "10802614822886935348043638331167244810",
+    "exceptional_fallbacks": "262144",
+    "chain_start_points": "131072"
+  },
+  "instructions": {
+    "reference_additions": "365463262073087909759664328381719059103744",
+    "record_writes": "374310603613032309809712068174945032601600",
+    "record_reads": "1242711203995267268568244066340817508237312",
+    "node_initialisation": "52543918498522053532884256842797478755840",
+    "root_intersection": "12250165209153784684681485867543655612416",
+    "generation_outer": "2722258935367507707706996859454145691648",
+    "exceptional_fallbacks": "3758096384",
+    "chain_start_points": "962072674304",
+    "fixed_reserve": "1099511627776"
+  },
+  "total_instructions": "2050001412324430834062893202469342222401024",
+  "submitted_log2_bound": {
+    "numerator": "1305909",
+    "denominator": "10000"
+  },
+  "exact_bound_check": "T**10000 < 1000**10000 * 2**1305909",
+  "exact_bound_holds": true,
+  "next_lower_bound_fails": true,
+  "next_lower_check": "not (T**10000 < 1000**10000 * 2**1305908)",
+  "diagnostic_log2": "130.5908206043",
+  "coverage": "57896044618658097711785492504343953926464851149359812787997104700240680714240",
+  "twice_coverage_minus_order": "92138019644721193389046258963199934143",
+  "memory_bytes_bound": "115804030901347946931027802910112881136640",
+  "memory_below_2_to_137": true,
+  "preprocessing_bound": "Included in T; same conservative log2 bound 1305909/10000",
+  "nonuniform_advice": "0 bytes",
+  "heuristics": [],
+  "rule_hashes": {
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/secp256k1-ecdlp/rules.md": "2408941d15e056e94477a6a28001c4beae32cf02aa2da7085353d5eb703c6cfb",
+    "tracks/secp256k1-ecdlp/target-profile.json": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+    "tracks/secp256k1-ecdlp/verifier.json": "779e160360048348d6d5fd80766457323655c13651fa1ac6b20305ba5446bcd4",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294"
+  },
+  "memory_log2_bytes": 137
+}
