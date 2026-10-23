@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-accounting-control",
+  "algorithm": "forward-kangaroo-affine-ledger-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 132.1699,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 80.585,
+    "preprocessing_log2": 11.5,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Birthday/merge approximation for the lambda walk: expected total steps <= 2*sqrt(w) with mean jump sqrt(w)/2 and jumps bounded by 2m. This is the standard lambda-method heuristic; the hard budget is 4*sqrt(w), so the derived success bound is 0.5 by Markov and 0.40 is declared for margin.",
+    "The distinguished-point predicate is a fixed function of the point and is treated as independent of the walk; its only quantitative role is the 2^60-step detection slack, sixteen times the mean lag."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Instruction prices are derived from limb counts, divstep counts and Montgomery multiplication structure rather than measured on the reference host; the per-step ledger charges 4500 against a component sum of 4386.",
+    "The negation map is deliberately not used, so the bound carries the full sqrt(r) factor instead of sqrt(r/2).",
+    "Generic bound, not a best-known attack estimate or a security claim about P-256."
+  ],
+  "lane": "exploratory"
+}

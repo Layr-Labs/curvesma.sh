@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: forward kangaroo with an exact affine instruction ledger",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed SEC 2 secp256r1 generator P of NIST P-256, the forward two-walker kangaroo of proof.md recovers x with probability at least 0.40 using at most 2^132.1699 total target-group-operation equivalents, including preprocessing, table work, verification and output. Peak memory is at most 2^80.585 bytes; preprocessing is at most 2^11.5 target-group-operation equivalents and is included in the total; nonuniform advice is 0 bytes and is included in memory. The walkers carry explicit non-negative scalar offsets and every step adds the same positive jump to the point and to the offset, so no negation map, canonicalisation or signed-coefficient correction appears in the update or in the recovery formula, which is exact by induction. The single heuristic is the standard lambda-method birthday approximation for the expected number of steps; the hard budget is twice the expected work, so Markov's inequality gives a derived success bound of 0.4999, and 0.40 is declared for margin. The budget is a fixed constant with no restarts and no probabilistic loop bound. This is a classical cold analytic generic bound with no uncharged advice, quantum step or practical execution claimed.",
+      "score": {
+        "numerator": "1321699",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "forward-kangaroo-invariant",
+      "source": "experiment.py",
+      "purpose": "Replicate the production walk update exactly on the additive group Z_q for q=211 and check, for every target scalar, that each tame/wild point collision satisfies d_tame - d_wild = x (mod q) and that every distinguished-point match recovers x exactly. This is a correctness replica at toy scope; it does not establish production collision times, instruction counts or memory bounds.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 211
+        }
+      ]
+    }
+  ]
+}
