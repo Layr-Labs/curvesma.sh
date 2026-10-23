@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: staggered-checkpoint rho in GT with uniform-mod-r walk coefficients (the production regime), 12 compared / 13 stored, a hard evaluation cap, a charged zero-denominator event and a deterministic filter allowance",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in G1 and a uniform target z in GT, with the pinned public pairing, compute g=e(P,Q0)=pairing(Q0,P) once (nondegeneracy and prime order r give <g>=GT), find a=log_g z by a Pollard rho in GT and return Q=[a]Q0, which satisfies e(P,Q)=z for every z including z=1 (a=0,Q=O). The claim is success >= 39/100 over uniform P, uniform z and fresh algorithm coins, as rules.md requires, at total work log2 <= 127.69 in reference dense-Fp12-multiplication equivalents (C=20,000). WALK: public table Th[h]=g^(A_h) z^(B_h), h=0..2^20-1, built once per instance (2^20 entries, two 255-bit GT exponentiations each); state (X,a,b) with X=g^a z^b; step h=H(X) (one 64-bit limb of the canonical Fp12 encoding, fixed odd multiplier, xor-shift, top 20 bits), X<-X*Th[h] (one dense Fp12 multiplication = 1 reference unit), a<-a+A_h mod r, b<-b+B_h mod r. The next state is a function of the group element alone: no history, no value lookup, no distinguished-point set, no dictionary. Coefficients A_h,B_h are drawn from the run's uniform coins and reduced mod r (512 coin bits per draw, no rejection, bias < 2^-256), so the step offsets range over ALL of Z_r and the random-map model is applied at production coefficients; there is no [1,2^64) window and no positivity lemma. DETECTION: staggered checkpoints, not a cycle-length bound; no 2*rho+3 and no 2*S0 appears anywhere in this claim. The grid is P_4={ceil(2^j(4+i)/4): j>=0, 0<=i<4}, exactly 4 points in every dyadic level [2^j,2^(j+1)); a checkpoint created at position p stores (X, fp(X), a, b, p) and is compared with the hare only at positions in the time window [p+1,8p], then dropped. TWELVE CHECKPOINTS ARE COMPARED PER STEP AND THIRTEEN ARE STORED AT PEAK, both ENUMERATED, not asserted: section B1 scans every hare position in [1,2^20] and reports the maximum COMPARED 12 (first at h=29) and the maximum STORED 13 (h=32). A window of multiplicative span W=2^b straddles b dyadic levels, so the comparison window holds k*log2(W)=12 and storage is n_peak=k*log2(W)+1=13 (the record being inserted); the ledger allocates and prices 13 records. DETECTION INDEX: for a trajectory with tail mu and cycle lam, positions c<m carry the same element iff c>=mu and m=c mod lam, so a checkpoint at p is matched first at m=p+lam provided p>=mu and lam<=(W-1)p; hence m=p*+lam with p*=min{p in P_4: p>=max(mu,ceil(lam/7))}. Verified inside experiment.py section B2 against a direct simulation of the comparison decisions over every (mu,lam) with mu+lam<=60 (1830 pairs, 0 mismatches),. HARD CAP: the run stops after B=ceil((116/100)*sqrt(r))=ceil(1.16*sqrt(r))=265627019777073510555230149274057194865 evaluations and reports FAILURE, so a failed run costs the same bound as a successful one. SUCCESS: the cap's success probability is read off an implemented model, not asserted. section D1 is a deterministic quadrature (no sampling error) of the standard random-map model (rho=mu+lam with Pr[rho>=t]=exp(-t^2/(2r)), mu uniform on [0,rho)) pushed through the exact detection law: the quantiles of m/sqrt(r) are 1.0507 (q=0.39), 1.1046 (0.42), 1.1569 (0.45), 1.2432 (0.50), mean 1.3255. section D2 is an independent 20000-draw Monte-Carlo check: 1.0453 (0.39), 1.1524 (0.45), agreement 0.005. section D3 sweeps 16 dyadic alignments of sqrt(r) over a full period: the q0.39 quantile lies in [1.0463,1.0527] and q0.45 at most 1.1591, so the cap 1.16 is not an artefact of where the production scale sits between powers of two. At the cap the model success is 0.4518 nominal and 0.4501 worst alignment, both above 0.39, plus the charged filter abort probability (Markov: 2^67.3/2^80 = 2^-12.7), so 0.4501 - 2^-12.7 - 2^-123.6 > 0.39. TOY EVIDENCE, IN THE PRODUCTION COEFFICIENT REGIME: section B3 runs the complete algorithm (same grid, window, expiry, solve, same coefficient law, toy R=256) on a 26-bit prime-order subgroup, 600 trials, cap ceil(1.16*sqrt(q))=6720. Its coefficients ARE drawn from all of Z_q exactly as in production (512 coin bits reduced mod q, no rejection, no small-coefficient window). Result: 278/600=0.4633 solved (Wilson 95% [0.4238,0.5033]), every recovered log verified, 0 bookkeeping failures, 0 live-bound violations, maximum STORED 13 and COMPARED 12, 0 unusable collisions (the charged bound 12*B/q is 0.0024), Section B4_R_sensitivity repeats 120 trials at R=1024 (51/120=0.4250) so the fraction is not a table-size artefact; section B4_degenerate_branch constructs a zero-denominator pair and runs an injected walk through that branch. Toy statistics are evidence at toy scope only. SOLVE: on a match with exponent pairs (a,b),(ta,tb) the true gap exponent is den=(b-tb) mod r; if den=0 the collision is UNUSABLE (it yields no logarithm), it is counted, that checkpoint is dropped so the pair cannot fire again, and the walk continues; else a=(ta-a)*den^-1 mod r, exact because the two elements are equal. With coefficients uniform mod r the gap sum of B vanishes with probability 1/r per comparison, and a run makes at most 12*B=2^131.228 comparisons, so Pr[one or more unusable collisions] <= 12*B/r = 2^-123.629. That is CHARGED: it is subtracted from the success bound (0.4501 - 2^-12.7 - 2^-123.6 > 0.39) and printed in the ledger. The v3 positivity lemma and the [1,2^64) restriction that supported it are withdrawn; the earlier two-step-return argument (T_i^2=1) stays withdrawn. No Frobenius quotient and no canonicalisation is used. LEDGER (exact, experiment.py section C): per evaluation 1 reference dense Fp12 multiplication plus 600 charged instructions (itemised sum 150: index 8, table entry with two 4-limb coefficients 12, two 4-limb accumulator updates 24+24, fingerprint 2, twelve live fingerprint comparisons 48, ring insertion and expiry amortised 24, loop and cap test 8; safety factor 4.0), i.e. 20600/20000=2^0.042644 units per evaluation. FINGERPRINT DISCIPLINE: the stored fingerprint is the low 64 bits of the canonical encoding, an exact necessary condition for equality, so it can never miss a true match; a hit is settled by one full 576-byte element comparison of the STORED X at 216 instructions, never by a reconstruction. The run performs at most 12*B=2^131.3 fingerprint comparisons; treating a 64-bit fingerprint as uniform gives an expected 2^67.3 matches, each settled by one full 576-byte element comparison at 216 instructions. The NUMBER of matches is random, so an expected cost is not a work bound: the run carries a HARD allowance of 2^80 full element comparisons and ABORTS if exceeded, deterministic at 2^80*216/20000=2^73.47 units. The allowance is 6650x the expected 2^67.3 matches, so the abort is a bound and not an event, and 54 bits below the main term, so the claim moves by less than 2^-53 bits. Additive items: jump table 1073741824, one pairing for g 131072, verification pairing and [a]Q0 135168, hard full-comparison allowance 2^73.47; total additive 2^73.47, moving the claim by less than 2^-53 bits. Total W = B*20600/20000 + additive = 2^127.685314, claimed 12769/100 = 127.69 (an upper bound on the computed total, printed beside it). PEAK MEMORY 671164504 bytes, itemised: jump table 2^20 x (576-byte element + 32-byte A_h + 32-byte B_h) = 671088640; 13 stored checkpoints x (576-byte X + 8 fingerprint + 32 a + 32 b + 32 position) = 8840; hare state 656; g 576; control 256; code, stack and scratch 65536. a and b are 32 bytes (four 64-bit limbs, exact mod r), the grid position is 32 bytes because the schedule runs past 2^127, and X is STORED at 576 bytes per checkpoint so no comparison needs a reconstruction. Nothing grows with walk length, recorded points or trials. HEURISTICS DISCLOSED: the random-map model for X->X*Th[H(X)] (standard, supported by sections B3/B4 at R=256/1024 and by the exact detection law), the uniform tail mu, and the per-item instruction counts (the total moves to 127.6819 if the twelve-comparison line is dropped (claim unchanged) and 127.8533 if all twelve are compared in full (claim 127.86))..",
+      "score": {
+        "numerator": "12769",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "note.md",
+        "experiment.py",
+        "results.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "gt-stagger-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Section A checks the production facts on BLS12-381 itself with standard-library integer arithmetic: p and r prime, r | Phi_12(p), ord_r(p)=12 with p^6=-1, the blst tower is a field, a random GT element has order r, the collision identity x=(a1-a2)/(b2-b1) recovers a real 381-bit log, and Th[h]!=1 for sampled table entries. Section B is the schedule evidence: B1 ENUMERATES the COMPARED checkpoint count (k*log2(W)=12) and the STORED peak (k*log2(W)+1=13) at every hare position to 2^20 and at 1024/4096/2^20 (the predecessor's k*(1-1/W) is printed beside it); B2 verifies the closed-form detection index against a direct simulation of the comparison decisions for every (mu,lam) with mu+lam<=60; B3 runs the COMPLETE algorithm on a 26-bit prime-order group at the declared production R=256 with the declared cap ceil(1.16*sqrt(q)), drawing its coefficients uniformly mod q from 512-bit coin draws with no rejection sampling (the PRODUCTION regime, not a small-coefficient window), reporting the success fraction, the correctness of every recovered log, bookkeeping failures, live-bound violations, the observed maximum stored and compared counts, and the number of unusable (zero-denominator) collisions; B4_degenerate_branch constructs a zero-denominator pair and runs a complete injected walk through that branch; B4_R_sensitivity repeats the search at R=1024 so the success fraction is shown not to be an artefact of the table size. Section C recomputes the ledger in exact rational arithmetic: B=ceil(1.16*sqrt(r)) by integer square root, the itemised per-evaluation instruction ledger, the deterministic 2^80-comparison filter allowance (2^73.47 units), the additive items, the itemised peak-memory bound, and the exact power-of-ten bound on the total. Section D implements the model the success claim rests on: D1 deterministic quadrature of the random-map model through the exact detection law, D2 an independent 20000-draw Monte-Carlo cross-check, D3 a 16-point dyadic-alignment sweep, D4 the success probability at the declared cap and whether it clears the 0.39 threshold at every alignment. Everything is standard library only and runs in about 5 seconds.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "table_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "toy_bits": {
+            "type": "integer",
+            "minimum": 18,
+            "maximum": 28
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4096
+          },
+          "cap_factor": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 60
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "model_draws": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 200000
+          }
+        },
+        "required": [
+          "production_checks",
+          "trials",
+          "toy_bits",
+          "R",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "production_checks": 2,
+          "table_checks": 2,
+          "trials": 600,
+          "toy_bits": 26,
+          "R": 256,
+          "cap_factor": 1.16,
+          "seconds": 60,
+          "seed": 1,
+          "model_draws": 20000
+        }
+      ]
+    }
+  ]
+}
