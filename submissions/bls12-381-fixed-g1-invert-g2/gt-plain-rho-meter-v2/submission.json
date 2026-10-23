@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 pairing inversion by plain parallel Pollard rho in GT with distributed distinguished points and a deterministic round meter",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT, the classical cold attack in proof.md computes g=e(P,Q0), solves z=g^a in GT by plain R=2048-multiplying parallel Pollard rho (no Frobenius/inversion classes, no cycle detector; keys from the canonical exported first Fp coefficient of the blst tower representation; distinguished points (theta=2^-64) routed by disjoint key bits to 2^16 storage nodes, each natively addressable below 2^62 bytes, with per-node caps and charged node set-up; start-replay recovery) and returns Q=[a]Q0 after verifying e(P,Q)=z. A round counter, event caps and capped samplers make W_max < 2^128.0319 dense-Fp12-multiplication units (C=20000) hold on every execution; every walk step is one dense Fp12 multiplication plus 1256 charged instructions. Success is at least 0.39 under the disclosed random-mapping heuristic H1 with a factor-2 margin (kappa=2); H1 explicitly includes pseudo-randomness of the index, distinguished and routing bit fields. Peak memory < 2^76 bytes; preprocessing < 2^32.1 units, included; no nonuniform advice. The submitted rational bound is justified by the exact inequality W_max^100 <= 2^12804 checked in experiment.py. Not a practical break.",
+      "score": {
+        "numerator": "12804",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "gt-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "BLS12-381 parameter checks and exact rational ledger/score inequality; end-to-end toy runs of the specified multiplicative walk in prime-order subgroups of F_q^* measuring success, wrong outputs and the empirical birthday constant kappa. Toy runs also route reports to 16 capped nodes and report overflows and load balance.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "production",
+              "toy"
+            ]
+          },
+          "bits": {
+            "type": "integer",
+            "enum": [
+              20,
+              24,
+              28,
+              32
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 2048
+          },
+          "theta_log2_neg": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "kappa": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "bits": 20,
+          "trials": 40,
+          "theta_log2_neg": 4,
+          "walkers": 16,
+          "seed": 11
+        }
+      ]
+    }
+  ]
+}
