@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: truncated-coverage deterministic BSGS with a rebalanced table",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the deterministic truncated-coverage baby-step/giant-step algorithm in proof.md recovers x exactly whenever x < H*m, which is a fraction H*m/r >= 2/5 of the uniform challenge space, using at most 2^128.339838 total target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^135.338662 bytes; preprocessing is at most 2^127.339838 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. Inputs outside [0,H*m) exhaust the fixed giant loop and return no output; that failure path is charged at the same worst-case bound, and there is no randomness, retry, restart or amplification. This is a classical cold attack with no uncharged advice, quantum steps or heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "64169919",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-truncated-bsgs",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the truncated-coverage baby-step/giant-step rule on a small additive cyclic group: every covered scalar is recovered, every uncovered scalar exhausts the fixed loop, and the coverage fraction is at least 2/5. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
