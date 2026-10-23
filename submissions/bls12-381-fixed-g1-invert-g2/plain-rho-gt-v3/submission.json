@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: bounded distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the fixed-budget attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^127.80 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) and solves z=g^a by a van Oorschot-Wiener parallel distinguished-point Pollard rho on the cyclic group GT of prime order r, with a HARD global charged-work cutoff W_max=ceil(1.25*k0) total multiplications (k0=sqrt(2*r*ln(1/0.61))): the attack performs at most W_max multiplications and stops, so every walk, restart, truncated-segment and exceptional-path multiplication is inside W_max. There is no automorphism; the structural fruitless cycles of orbit walks are absent, and the only remaining exceptional events are random-mapping trajectories that enter a distinguished-point-free cycle, which occur with probability ~2^-92 per walk and are handled by per-walk truncation at 2^36 steps. Each step is one dense Fp12 multiplication plus ~300 scalar instructions; 1.015 units per step; theta=2^-30 distinguished-point density; cheap D*M_j restarts. The bounded success probability is at least 1-0.61^1.5625 minus ~2^-90 of exceptional loss, i.e. >= 0.39, under the random-mapping heuristic, supported by toy experiments measuring collision within the hard cutoff. Peak memory is bounded hard by a fixed 2^100-slot distinguished-point table (record count mean 2^97.74, exceeds 2^100 only with doubly-exponentially small probability by Chernoff, not binding before the collision): at most 2^108 bytes. Preprocessing is at most 2^32 units and is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps; generic square-root accounting, not a practical break.",
+      "score": {
+        "numerator": "639",
+        "denominator": "5"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bounded-plain-rho",
+      "source": "experiment.py",
+      "purpose": "Faithful bounded implementation: parallel R-adding distinguished-point rho on a prime-order-l subgroup of F_q^* (cyclic, standing in for GT) with a HARD global cutoff W_max=ceil(1.25*k0) and per-walk truncation. Counts every group multiplication; reports the fraction of trials finding a usable collision WITHIN W_max (a Monte-Carlo estimate of the bounded success probability) and the mean per-trial truncations. Toy-scale evidence for the random-mapping collision-time model and the bounded algorithm only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 30},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 200},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000},
+          "walks": {"type": "integer", "minimum": 1, "maximum": 32},
+          "theta_bits": {"type": "integer", "minimum": 1, "maximum": 6},
+          "partitions": {"type": "integer", "minimum": 4, "maximum": 4096},
+          "seg_cap": {"type": "integer", "minimum": 4, "maximum": 4096}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"bits": 26, "trials": 120, "seed": 1, "walks": 8, "theta_bits": 4, "partitions": 256, "seg_cap": 64}
+      ]
+    }
+  ]
+}
