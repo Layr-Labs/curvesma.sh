@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+submissions/bls12-381-g1-ecdlp/cheon-d20-fixedbase-v3
