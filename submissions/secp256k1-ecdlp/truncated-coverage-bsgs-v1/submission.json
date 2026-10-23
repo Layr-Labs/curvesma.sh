@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: deterministic generic control truncated at 2/5 coverage",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the deterministic baby-step/giant-step algorithm in proof.md recovers x with probability at least 2/5 = 0.40 using at most 2^128.486389 total target-group-operation equivalents, including preprocessing and verification. The giant search executes H=ceil(ceil(2r/5)/m) steps with m=2^128, so the covered scalar prefix is at least 2r/5 wide and the success probability is the algorithmic coverage itself; inputs outside that prefix are exhausted to an explicit failure and are not retried, restarted or amplified. Peak memory is at most 2^136.000001 bytes; preprocessing is at most 2^128.001176 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps or heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "128486389",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-truncated-bsgs",
+      "source": "experiment.py",
+      "purpose": "Run the same truncated BSGS decomposition on a small additive cyclic group and report the measured recovered fraction against the declared 2/5 coverage floor. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
