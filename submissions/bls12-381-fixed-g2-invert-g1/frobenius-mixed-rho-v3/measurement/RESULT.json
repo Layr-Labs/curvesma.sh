@@ -1,0 +1,101 @@
+{
+ "schema": "gt-blst-step-measurement-v3",
+ "kernel": "measurement/step.c (per-walk anchors, every group operation counted, canonical DP exponents, 16-byte fingerprints)",
+ "generator": "measurement/gen_inputs.py --s 0.447265625 (S = 458), seeds 1 and 2; header version 2",
+ "measurement_tool": "organizer image via measurement/measure.sh (blst commit f7a88067, Valgrind 3.24.0 Callgrind Ir), N1=256 N2=512, MODE_N1=4096 MODE_N2=8192",
+ "c2_extraction": "zero distinguished-point density (header DP_BITS set to 60) so that DP work is excluded; DP work is charged separately at 2^20 instructions per point",
+ "C": 20000,
+ "callgrind_interval": {
+  "walks": 64,
+  "rounds": [
+   256,
+   512
+  ],
+  "steps": 16384
+ },
+ "runs": {
+  "s1": {
+   "c2_other_over_C": 0.144301,
+   "kappa_sqr_over_C": 0.4902,
+   "ref_mul_over_C": 1.1499,
+   "per_main_step_instructions": {
+    "total": 19909.911,
+    "reference_blst_fp12_mul_per_call": 22998.0,
+    "cyclotomic_sqr_per_call": 9804.0,
+    "adds_times_mul": 12582.646,
+    "sqrs_times_sqr": 4441.241,
+    "other": 2886.024
+   },
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 8964,
+    "sqrs": 7422,
+    "dps": 0,
+    "cyc2": 1,
+    "cycl": 0
+   },
+   "per_step_fractions": {
+    "adds_a": 0.547119141,
+    "sqrs_q": 0.45300293,
+    "cycle_events_per_step": 6.1035e-05
+   },
+   "with_distinguished_point_work": {
+    "c2_other_over_C": 0.148934,
+    "dps_per_step": 0.06256103515625
+   }
+  },
+  "s2": {
+   "c2_other_over_C": 0.144287,
+   "kappa_sqr_over_C": 0.4902,
+   "ref_mul_over_C": 1.1499,
+   "per_main_step_instructions": {
+    "total": 19978.486,
+    "reference_blst_fp12_mul_per_call": 22998.0,
+    "cyclotomic_sqr_per_call": 9804.0,
+    "adds_times_mul": 12704.767,
+    "sqrs_times_sqr": 4387.984,
+    "other": 2885.735
+   },
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 9051,
+    "sqrs": 7333,
+    "dps": 0,
+    "cyc2": 0,
+    "cycl": 0
+   },
+   "per_step_fractions": {
+    "adds_a": 0.552429199,
+    "sqrs_q": 0.447570801,
+    "cycle_events_per_step": 0.0
+   },
+   "with_distinguished_point_work": {
+    "c2_other_over_C": 0.148779,
+    "dps_per_step": 0.0606689453125
+   }
+  }
+ },
+ "native_counts": "evidence/native-counts.json (2^20 rounds, 2^26 main steps per seed, uninstrumented)",
+ "replica": {
+  "seeds_512_rounds": "dump exact, distinguished-point records exact, counts exact, canonical invariant, key and exponent invariant",
+  "seed1_4096_rounds": "dump exact, 16585 distinguished-point records exact, counts exact (11 two-cycle escapes), canonical invariant"
+ },
+ "summary": {
+  "c2_charged": "0.1445 (max of 0.144301 and 0.144287 with 0.1% margin, rounded up)",
+  "kappa_charged": "0.4902",
+  "reference_mul_charged": "1 (measured 22,998 instructions = 1.1499 units)",
+  "c2_with_dp_work_at_density_1_16_for_reference": [
+   0.148934,
+   0.148779
+  ]
+ },
+ "deviations": [
+  "v2 kernel refreshed anchors on a global step counter, so only one residue class of walks received anchors; fixed by the per-walk round counter.",
+  "v2 kernel stored raw exponents in distinguished points; the solver needs canonical exponents lambda^kn a, lambda^kn b. Fixed; the replica checks each record bit for bit.",
+  "v2 analyze.py subtracted costs with fractions from the full run rather than the differenced interval; fixed by interval counts.",
+  "v2 measured at s = 0.46; v3 measures at the production S = 458.",
+  "Counts include every group operation (cycle-check steps and escapes), so the per-main-step cost includes them.",
+  "The longer-cycle branch (3..64) fired once in 2^27 production steps (seed 2); its code is mirrored in replica.py but no exact-equality test exercised it."
+ ],
+ "notes": "One blst build, one compiler, two input seeds; the replica checks full dumps at 512 and 4096 rounds and samples of the production states."
+}
