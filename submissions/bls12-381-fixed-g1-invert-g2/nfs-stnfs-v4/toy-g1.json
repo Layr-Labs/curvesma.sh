@@ -1,0 +1,114 @@
+{
+ "scope": "algebraic end-to-end check of the reduction at production field size with the pinned py_ecc library; a is supplied to the checker, no discrete logarithm is computed, and no complexity claim is supported by this file",
+ "library": "py_ecc.optimized_bls12_381 (py_ecc 8.0.0)",
+ "curve_order_bits": 255,
+ "field_prime_hex": "1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab",
+ "seed": 20261023,
+ "instances": [
+  {
+   "label": "random",
+   "b_hex": "495fb5943d9f675a5a4fdea4889e317b33bb93bbc76364e343afa66540c132df",
+   "a_hex": "1a256b65cac1dfbf66008a00dfd890b313b14c05683f894905dc5b455df38f55",
+   "z_sha256_12coeff": "a7cd4d2997fee007341656983e225a648627e1cbb4449ebcad87d55ae92f973c",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "random",
+   "b_hex": "3a659a6824e5d8420512b268673b8c8e913b82ee0b1136c45ae813c2dfd8a634",
+   "a_hex": "5e6ba9244aa699c225d961366056e3f7d01f3e8d98a5b714e3534e28dd779e7a",
+   "z_sha256_12coeff": "9f11a604ee37a8aba30bdbdf0de8ec39f18d9ced84622e27acccfa9e9f8db7d0",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "random",
+   "b_hex": "6bca6bec42b05f80686d5cd893175ce139a3cd3548eb28090dde9198f4c98f5d",
+   "a_hex": "5b8edd8607d5ad039178d74a0a3fb2fa542efa58b5cc31895fb359d4c757d13a",
+   "z_sha256_12coeff": "b8d6f327e09b0d68b44055ffab2d4731a0739ff094581a6c22951ce2bdeac45c",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "random",
+   "b_hex": "1ea50843abb2db42f509c35194781c3df27e638eb77a7e959bd006ec80cd24b7",
+   "a_hex": "2d24c27cb4bc392fc3960e6d4d2b20b3455a2a82be996473878fcf80525643d6",
+   "z_sha256_12coeff": "94a10c96e6fbc9f68458adc4b5a33e654a498cd06e04c6057dba8778c3300267",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "random",
+   "b_hex": "69c989ecf0061f6245080d08264c0306b3563827c5de40bb47b1274c057db6ab",
+   "a_hex": "286f1c4ae9ae1a23d0b112a40961a807ef2f128118b56bf731a97e153a1c7cd2",
+   "z_sha256_12coeff": "e2f8d0ec3ebaea096dc6a8539595ae1c36e03d9c30e73a39ceeeacd084d8c363",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "b=1",
+   "b_hex": "0000000000000000000000000000000000000000000000000000000000000001",
+   "a_hex": "1e26c339d656f2b30261c3402ea52c578cdb0e47b9ffe5200a5705849984c57a",
+   "z_sha256_12coeff": "7094a815adbb18f194607ffdeedac97690caa109c1baf4ebb9cd4d9c980dfce8",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "b=r-1",
+   "b_hex": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000",
+   "a_hex": "32722e467fd9faa067b5056c72ecd76e0ac6597e47f80444b76222cec875db94",
+   "z_sha256_12coeff": "961ce3444e9058762105c0b4115b363a00ffbd4fa65dee96eefd41ec2aa9f5c3",
+   "Q_is_infinity": false,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  },
+  {
+   "label": "z=1 (a=0)",
+   "b_hex": "52458cfd2d1d5e13f2d6458ad837b521966fa72c1436938b60932c1d82f32f58",
+   "a_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "z_sha256_12coeff": "3914fce22889dd4e9aedb69a01d925fcd27a236b92f143ec976ba73208bbe1c3",
+   "Q_is_infinity": true,
+   "pairing_matches_target_12coefficients": true,
+   "returned_Q_on_curve": true,
+   "returned_Q_in_subgroup_r": true,
+   "identity_case_consistent": true,
+   "gt_element_has_12_coefficients": true
+  }
+ ],
+ "pinned_argument_order_probe": "TypeError",
+ "checks": {
+  "all_pairings_match_target": true,
+  "all_returned_points_on_curve": true,
+  "all_returned_points_in_subgroup": true,
+  "all_identity_cases_consistent": true,
+  "all_gt_elements_12_coefficients": true,
+  "pinned_argument_order_is_pairing_G2_first": true
+ }
+}
