@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: parallel Pollard rho on 6-element classes (negation and GLV endomorphism)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and Q=[x]P on secp256k1 (group order n about 2^256, cofactor 1), recover x with the randomized parallel Pollard rho algorithm with distinguished points on classes of size 6 under negation and the order-3 endomorphism (x,y)->(beta*x,y), described in proof.md. Success probability is at least 0.39 (collision of random walk points among N'=(n-1)/6 classes, 1.03 times the 0.39 point count, with a disclosed walk-quality margin). Fruitless cycles of length at most 8 are detected by a fixed rule and left by an escape that depends only on the cycle (doubling its member with the smallest canonical x, canon([2]m)), so walks that merge stay merged; the escape returns to its own cycle with probability at most 2^-189.1 (random-mapping model), and its batched doubling is charged. Total work is at most 2^127.62 target-group-operation equivalents, including preprocessing (2^32.01), walk steps at one reference operation plus 830 charged instructions for canonicalisation, the batch-inversion share, cycle test, distinguished-point test and bookkeeping (C=1000), distinguished-point detection delay (theta=2^-56), cycle detection, cycle walk and the charged doubling escape, unrecognised-cycle waste, storage and lookup, walk starts, scalar recovery and verification. The 830 instructions are the itemised 771 plus a 59-instruction reserve; the claim holds for any true value up to 837. Peak memory is at most 2^76.6 bytes; nonuniform advice is 2^0 bytes. Classical, no quantum steps. Heuristics: random-walk behaviour of a 2^20-entry additive table walk on classes (Teske 2001, van Oorschot-Wiener 1999, Brent-Pollard 1981, Duursma-Gaudry-Morain 1999) within 5.7 percent in collision rate, the stated cycle rates (the 2-cycle rate is charged at the strict upper bound 2^-20), and per-step instruction counts that are stated bounds, not measurements. This is an analytic accounting claim, not a practical attack.",
+      "score": {
+        "numerator": "6381",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-class6",
+      "source": "experiment.py",
+      "purpose": "Run the class-6 distinguished-point rho end to end on a toy curve of prime order 523969 with an order-3 endomorphism, check scalar recovery, count how often the doubling escape re-enters its cycle (against a table-step escape control), and check that a second walker restarted from a random point of a first walker's trail (empty history, possibly inside a cycle) reaches the same distinguished point. Toy scope only; does not establish production cost or walk quality.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 400
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "attack-estimate",
+  "algorithm": "pollard-rho-dp-class6-negation-glv",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.62,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 76.6,
+    "preprocessing_log2": 32.01,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Table walk on 6-element classes collides at least 94.3% as fast as ideal random draws (Teske 2001; van Oorschot-Wiener 1999; Brent-Pollard 1981; Duursma-Gaudry-Morain 1999)",
+    "Cycle rates follow index-coincidence counting with table indices modelled as independent uniform draws; the 2-cycle rate is charged at the strict upper bound 2^-20 (Bos et al. 2010; Bernstein-Lange-Schwabe 2011)",
+    "Per-step instruction counts and the per-DP allowance are stated bounds, not measurements; the escape re-entry bound is a random-mapping model",
+    "Low 76 bits of the canonical x are uniform up to a 2^-175 relative error (orbit-count density 3(1-t)^2); successive steps' index bits are independent as part of the walk model"
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution.",
+    "Memory about 2^76.6 bytes is astronomically large and not realisable.",
+    "Per-step extra work E=830 instructions is a stated itemised upper bound (771 itemised plus a 59 reserve), not a measurement; the score holds for any true E up to 837.",
+    "The trap (escape re-enters its own cycle) bound 2^-189.1 and the cycle rates are random-mapping model bounds, not theorems.",
+    "The batched doubling escape and the cycle rules are proved for merging (section 3); only their cost is heuristic."
+  ],
+  "lane": "exploratory"
+}
