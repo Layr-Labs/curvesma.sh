@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class mixed add/square rho on GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and independently uniform z in GT (identity included), set g = e(P,Q0) and h = z. Because P is nonidentity and Q0 generates G2, g generates GT, so h = g^x for a unique x in [0,r); returning Q = [x]Q0 gives e(P,Q) = g^x = z. The attack is a full-table birthday walk in GT whose blocks emit Frobenius/squaring classes: one dense Fp12 multiplication advances the walk to X_i = g^{a_i} h^{b_i}, D cyclotomic squarings give Y_d = X_i^{2^d} for d = 0..D, and for each Y_d five Frobenius maps give Y_d^{p^k}, k = 1..5. Since p^6 = -1 mod r, conjugation of Y_d^{p^k} is the free element Y_d^{-p^k} = Y_d^{p^{k+6}}, so each block emits K = 12(D+1) distinct group elements at cost 1 + 0.53D + 1.80(D+1) reference dense-Fp12 multiplications plus table work, i.e. 0.2024 per element at D = 31. Every emitted element is inserted and compared, so the collision count equals the visited count: cross-block value equality gives m_u a_i + m_u b_i x = m_v a_j + m_v b_j x with the public multipliers m = +/-p^k 2^d, hence x = (m_v a_j - m_u a_i)/(m_u b_i - m_v b_j) mod r. With E = 12(D+1)N = 2^127.557 emitted elements the expected number of usable cross-block collisions is E^2/(2r) = 0.598, so success probability is at least 0.45 over the challenge distribution and fresh coins; the whole attempt is charged once and needs no amplification. Total work is at most 2^125.30 target-group-operation equivalents (C = 20,000 scalar AArch64 instruction equivalents per dense Fp12 multiplication), including the initial pairing e(P,Q0), the 32 precomputed walk steps, all table construction and lookup, the final scalar multiplication [x]Q0 and the verifying pairing. Peak storage is at most 2^135.1 bytes; preprocessing is at most 2^8.0 target-group-operation equivalents and is included in the total; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice, no amortization over future targets and no quantum steps. The birthday independence, the uniformity of the walk, the cheapness of the Frobenius maps and the free conjugation are the heuristics, each supported in proof.md and at toy scale by experiment.py.",
+      "score": {
+        "numerator": "1253",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-class-birthday",
+      "source": "experiment.py",
+      "purpose": "Replay the block-emission and collision algebra in the additive cyclic group Z_q of prime order q, where squaring is x -> 2x, Frobenius is x -> rho*x with rho of order 12, and conjugation is x -> -x. Measures the recovered-exponent rate and the observed cross-block collision count against the birthday prediction E^2/(2q), and checks the real BLS12-381 constants p^6 = -1 mod r and the distinctness of the 384 emitted multipliers. It is evidence about the combinatorial model only, not about field-arithmetic costs, production success or the production bound.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q_bits": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 34
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 40
+          },
+          "depth": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31
+          }
+        },
+        "required": [
+          "q_bits",
+          "trials",
+          "depth"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q_bits": 30,
+          "trials": 24,
+          "depth": 31
+        }
+      ]
+    }
+  ]
+}
