@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-accounting-control",
+  "algorithm": "odd-lift-bsgs-planted-msd-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 133,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 135,
+    "preprocessing_log2": 132,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "limitations": [
+    "Analytic instruction bound; the production table is not executed.",
+    "The toy experiment covers the odd-lift and the MSD permutation only.",
+    "Peak memory is the baby table and is required by this algorithm."
+  ],
+  "lane": "exploratory"
+}
