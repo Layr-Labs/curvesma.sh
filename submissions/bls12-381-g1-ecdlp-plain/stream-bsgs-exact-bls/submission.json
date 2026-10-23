@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "Streamed signed BSGS on BLS12-381 G1 with batch affine conversion (exact bound)",
+  "claims": [
+    {
+      "statement": "For the unrestricted uniform full-production BLS12-381 G1 target T=[x]P0 (identity included), the deterministic classical cold attack in proof.md recovers the scalar x with probability at least 2/5 (exactly COV/r with 5*COV >= 2r) using at most 2^(1365639/10000) target-group-operation equivalents under the protected price C=2000. Peak storage is below 2^145 bytes; preprocessing is included in total and bounded by 2^(1365639/10000); nonuniform advice is zero bytes (log convention 0). No heuristic assumptions. This is an analytic construction, not a practical break or executed production attack. The construction, coverage proof, exact total T and ledger are self-contained in proof.md; the design is a port of the streamed signed BSGS of submission f888bb9e-1cc3-4be1-bb0a-734722d78885, credited as provenance only, and no prior acceptance, score or cross-submission comparison is relied upon. The submitted rational bound is justified by the exact integer inequality T^10000 < 2000^10000 * 2^1365639.",
+      "score": {
+        "numerator": "1365639",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stream-bsgs-bls-evidence",
+      "source": "experiment.py",
+      "purpose": "Bounded stream sorting/intersection with middle-split trees, exact coverage, BLS12-381 G1 Jacobian formulas, G1 membership check and zero-safe batch normalization, negative controls and the exact analytic ledger; no production timing inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "toy",
+              "curve",
+              "accounting"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 17,
+            "maximum": 257
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "block_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 12,
+          "h": 12,
+          "block_size": 4
+        }
+      ]
+    }
+  ]
+}

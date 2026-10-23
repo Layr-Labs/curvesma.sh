@@ -1,0 +1,51 @@
+{
+  "kind": "analytic_ledger_not_official_score",
+  "design_provenance": "port of submission f888bb9e-1cc3-4be1-bb0a-734722d78885 (secp256k1 streamed signed BSGS) to BLS12-381 G1",
+  "parameters": {
+    "m": "102406909117623690224134270079834624000",
+    "h": "102406909117623690224134270079834624000",
+    "d": "204813818235247380448268540159669247999",
+    "block_size": 4096,
+    "tree_depth_L": 127,
+    "C": 2000,
+    "field_mul_M": 8192,
+    "field_add_A": 512,
+    "inversion_I": 8388608,
+    "jacobian_step_JAC": 151552,
+    "record_words": 24,
+    "packet_words": 28,
+    "INIT": 262144,
+    "E": 262144,
+    "U": 196608,
+    "S": 262144
+  },
+  "instructions": {
+    "fixed": "1099511627776",
+    "initialization": "107381427134921378600461816383232670695424000",
+    "babies": "47398833071273889772860098637911296049152000",
+    "giants": "47398833071273889772860098637911296049152000",
+    "streams": "53690713567460689300230908191616335347712000",
+    "intersection": "1677834798983146540632215880988010479616000"
+  },
+  "total_instructions": "257547641643912993987045137731660708132683776",
+  "submitted_log2_bound": {
+    "numerator": "1365639",
+    "denominator": "10000"
+  },
+  "exact_bound_check": "T**10000 < 2000**10000 * 2**1365639 and T**10000 >= 2000**10000 * 2**1365638",
+  "exact_bound_holds": true,
+  "coverage": "20974350070050476191779096203274388009425771397893117006380920108362917376000",
+  "five_coverage_minus_two_order": "8371747751988410309386697283141937424510974",
+  "success_probability_lower_bound": "2/5",
+  "memory_bytes_bound": "26845356783730344650115454095808167690633216",
+  "memory_below_2_to_145": true,
+  "preprocessing_bound": "Included in T; same conservative log2 bound 1365639/10000",
+  "heuristics": [],
+  "rule_hashes": {
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/bls12-381-g1-ecdlp-plain/rules.md": "14ce16128825a8b16930b30762806b1a115e2dac46ecc26cda06820b3d14e394",
+    "tracks/bls12-381-g1-ecdlp-plain/target-profile.json": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+    "tracks/bls12-381-g1-ecdlp-plain/verifier.json": "4d9cc7604fb1e2e660db5494c2b7c103719ecb2b5b9795de747fa4c6bf26bc38",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294"
+  }
+}
