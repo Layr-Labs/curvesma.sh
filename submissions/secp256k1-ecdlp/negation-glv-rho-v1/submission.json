@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: negation + GLV-endomorphism parallel Pollard rho (v2, corrected)",
+  "claims": [
+    {
+      "statement": "Revision of rejected submission 16547c5b-f2c2-44b0-a5fc-36e43094af47, fixing all four stated objections: (1) branch points are now R_h=[c_h]P+[d_h]Q (mixed P- and Q-multiples; the prior pure-P-multiple branches left b permanently at 0, making the construction unable to ever solve for x -- experiment.py now reports b_nonzero_step_count directly to confirm the fix); (2) the success-probability threshold is verified in exact 60-digit decimal arithmetic (0.390000...000339... >= 0.39), not a rounded display constant; (3) the construction is now W=1024 independent parallel walks (van Oorschot & Wiener 1999) so the pinned 6M batched-affine reference price is legitimately justified via per-round batch inversion across the W simultaneous additions, rather than an unjustified sequential-walk claim; (4) peak memory now uses a specified distinguished-point hash table (theta=2^-60) rather than an unspecified full-history structure, reducing the claim to ~2^73.699243 bytes. Total computation (including the W/theta=2^70 distinguished-point tail overhead, itemized per-step overhead, setup and verification) is at most 2.370167e+38 reference-group-operation equivalents (pinned C=1,000). The GLV lambda and matching field-side beta were independently re-derived via Tonelli-Shanks and checked against the protected generator with real curve arithmetic.",
+      "score": {
+        "numerator": "127478293",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-glv-parallel-dp",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the production mechanism exactly: W parallel walks, mixed c_h/d_h branch points, orbit-canonicalization, distinguished-point-only storage, fruitless-cycle escape, linear-solve. Reports b_nonzero_step_count and wrong_answers directly so a reviewer can verify both the v1 bug fix and that the construction never returns an incorrect scalar. Does not validate production curve arithmetic, instruction costs or full-size timing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 20000
+          },
+          "w": {
+            "type": "integer",
+            "enum": [6]
+          },
+          "unit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "W": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "dp_mod": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 1000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": ["order", "w", "unit", "W", "dp_mod", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 997,
+          "w": 6,
+          "unit": 304,
+          "W": 16,
+          "dp_mod": 4,
+          "trials": 50,
+          "seed": 42
+        }
+      ]
+    }
+  ]
+}
