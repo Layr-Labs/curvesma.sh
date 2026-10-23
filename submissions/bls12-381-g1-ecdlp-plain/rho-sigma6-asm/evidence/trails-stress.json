@@ -1,0 +1,138 @@
+{
+ "purpose": "Lemma R stress: the same procedure with the filters cut to 8 bits, so false filter matches and look-ahead distinguished points are frequent, and every recorded trail replayed with a different anchor schedule. The success rates are not used: a look-ahead that reaches a distinguished point adds up to 65 points that the step budget does not count, which at 8-bit filters inflates success; at 64-bit filters false matches have probability about 2^-64 per step.",
+ "totals": {
+  "trials": 5200,
+  "replays_checked": 19980600,
+  "all_replay_mismatches": 0,
+  "ahead_dps": 1465373,
+  "long_cycles": 752,
+  "abandoned_trails": 0
+ },
+ "runs": [
+  {
+   "file": "b4-b36-s1.json",
+   "config": {
+    "bits": 36,
+    "trials": 1500,
+    "seed": 3601,
+    "b": 4,
+    "adder_bits": 11,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "curve": "j0"
+   },
+   "log2_N": 28.77,
+   "trials": 1500,
+   "replays_checked": 910133,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 64777,
+   "long_cycles": 44,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.4547
+  },
+  {
+   "file": "b4-b38-s1.json",
+   "config": {
+    "bits": 38,
+    "trials": 1500,
+    "seed": 3801,
+    "b": 4,
+    "adder_bits": 11,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "curve": "j0"
+   },
+   "log2_N": 29.96,
+   "trials": 1500,
+   "replays_checked": 1347973,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 96902,
+   "long_cycles": 61,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.4547
+  },
+  {
+   "file": "b4-b40-s1.json",
+   "config": {
+    "bits": 40,
+    "trials": 1000,
+    "seed": 4001,
+    "b": 4,
+    "adder_bits": 11,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "curve": "j0"
+   },
+   "log2_N": 35.53,
+   "trials": 1000,
+   "replays_checked": 6151069,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 451520,
+   "long_cycles": 297,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.44
+  },
+  {
+   "file": "b4-b40-s2-a16.json",
+   "config": {
+    "bits": 40,
+    "trials": 600,
+    "seed": 4002,
+    "b": 4,
+    "adder_bits": 16,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "curve": "j0"
+   },
+   "log2_N": 35.47,
+   "trials": 600,
+   "replays_checked": 3642231,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 269016,
+   "long_cycles": 4,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.4483
+  },
+  {
+   "file": "b4-b42-s1.json",
+   "config": {
+    "bits": 42,
+    "trials": 600,
+    "seed": 4201,
+    "b": 4,
+    "adder_bits": 11,
+    "dp_bits": 5,
+    "walks": 16,
+    "tau_e4": 5303,
+    "filter_bits": 8,
+    "check_all_replays": 1,
+    "curve": "j0"
+   },
+   "log2_N": 37.72,
+   "trials": 600,
+   "replays_checked": 7929194,
+   "all_replay_mismatches": 0,
+   "ahead_dps": 583158,
+   "long_cycles": 346,
+   "abandoned_trails": 0,
+   "all_successes_verified": true,
+   "success_rate_not_used": 0.4467
+  }
+ ]
+}
