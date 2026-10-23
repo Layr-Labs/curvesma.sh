@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: distinguished-point Teske adding walk",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the distinguished-point Teske 16-adding walk in proof.md (full subgroup, no negation quotient and no GLV endomorphism, 4096 parallel walks, Montgomery batch of width 4096, distinguished modulus 2^16, open-addressed table of 2^116 slots with probe cap 80) recovers x with probability at least 0.39 using at most 2^128.931657 total target-group-operation equivalents under classical-group-work-v2 with C=1000, including preprocessing, the incomplete-addition reserve, verification and output. Peak memory is at most 2^123.584963 bytes. Preprocessing is at most 2^111.034216 target-group-operation equivalents and is included in total work. Nonuniform advice is 0 bytes. Heuristics and their slack are those listed in claim.json. This is a classical cold attack, not a practical break.",
+      "score": {
+        "numerator": "128931657",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-teske-rho",
+      "source": "experiment.py",
+      "purpose": "Exhaustive recovery on Z/n under the same 16 branch multipliers, the same 64-bit mix and the same 3/2 birthday budget as proof.md. Distinguished-point filtering is off below modulus 2^16 so the relation is checked on every iterate. Does not establish production instruction costs, probe-chain lengths or secp256k1 field arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 1009
+        }
+      ]
+    }
+  ]
+}

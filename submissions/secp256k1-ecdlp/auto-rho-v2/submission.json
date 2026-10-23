@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: automorphism-aware Pollard rho v2",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the automorphism-aware Pollard rho in proof.md (order-6 orbits under negation and the GLV endomorphism, Teske 16-adding walk, coefficients in the Z[lambda] basis, 4096 parallel walks, chained lookup capped at 64 slots) recovers x with probability at least 0.39 using at most 2^128.749460 total target-group-operation equivalents under classical-group-work-v2 with C=1000, including preprocessing, the incomplete-addition reserve, verification and output. Peak memory is at most 2^136.850027 bytes. Preprocessing is at most 2^16.328837 target-group-operation equivalents and is included in total work. Nonuniform advice is 0 bytes. Heuristics and their slack are those listed in claim.json. This is a classical cold attack, not a practical break.",
+      "score": {
+        "numerator": "128749460",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-orbit-rho",
+      "source": "experiment.py",
+      "purpose": "Exhaustive collision recovery on Z/n under the same order-6 multiplier action, Z[lambda] coefficient maps, 16-branch index and 5/4 birthday budget used in proof.md. Checks the basis identity on every step. Does not establish production instruction costs, hash-chain lengths or secp256k1 field arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 67,
+            "maximum": 2003
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 1009
+        }
+      ]
+    }
+  ]
+}
