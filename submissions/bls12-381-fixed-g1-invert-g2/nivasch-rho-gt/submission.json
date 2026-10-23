@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: single-trail Nivasch-stack rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^127.90 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000), with success probability at least 0.42 from the standard random-mapping model ALONE. It computes g=e(P,Q0) (a generator) and solves z=g^a by a SINGLE-TRAIL R-adding Pollard rho on GT with NIVASCH SINGLE-STACK cycle detection: one continuous trajectory F^i(X_0), F(X)=X*M_{H(X)} with R=2^20 adding entries, costs ONE dense Fp12 multiplication per step (no tortoise/hare 3x factor). Detection uses a FIXED TOTAL ORDER on the exact element encoding (the integer formed by the 12 reduced tower coefficients, injective on GT, so key-equality IFF element-equality -- NO distinguished-point predicate, NO fingerprint, NO coefficient-bit density or equidistribution assumption, NO pseudorandom function). The Nivasch stack holds the left-to-right minima of the key sequence; the walk detects its self-collision EXACTLY at the second occurrence of the cycle-minimum element, at step D=p+lambda with mu+lambda<=D<mu+2*lambda<=2*rho, yielding a=(A_j-A_D)/(B_D-B_j) mod r. H=bits 0..19 of the first tower coefficient only selects an adding entry (its balance is subsumed in the random-mapping model, irrelevant to detection/memory). Table exponents are the rules' fresh uniform algorithm coins (512 bits mod r, bias<2^-256). The stack is O(log) native memory in ONE machine (<2^64 bytes): a hard cap of 2^40 entries <=2^10 bytes each = <=2^50 bytes, Chernoff-negligible overflow-to-counted-failure; NO distributed storage, NO routing. Budget T=ceil(1.30*k0) (k0=sqrt(2*r*ln(1/0.61))): under the random-mapping model the detection step D=rho*(1+V*(1-U)) with U,V~Unif[0,1] (tail/cycle split index uniform; cycle-minimum position uniform by exchangeability; rho tail exp(-t^2/2r)), so P(D<=T)=1-E[exp(-1.30^2*ln(1/0.61)/(1+V(1-U))^2)]=0.431, giving success>=0.42>=0.39 after negligible deductions. A deterministic ceiling D<2*rho holds unconditionally (unconditional fallback: budget 2*k0 gives success>=0.39 at time_log2~128.45). Each step is <=1.025 units (1 mult + H mask + two 255-bit exponent adds + table load + amortized stack push/pop/compare); W=1.30*k0*1.025=2^127.834, rounded up to 2^127.90. Peak memory <=2^50 bytes native (reported only; per-step stack access charged in the 1.025 units). Preprocessing (2^20-entry table) <=2^31 units included; nonuniform advice 0 bytes. The experiment runs the REAL Nivasch stack on random mappings and a real-group R-adding walk: 100% correct self-collision detection, E[D/rho]=1.26 (predicted 1.25), P(D<=1.30*k0)=0.44 matching the integral, max stack 24 (=log2 state size), and 150/150 exact detections with the exponent collision relation holding on real group elements. Single-processor (serial; score processor-count independent). Classical cold attack, no uncharged advice or quantum steps; generic square-root accounting, not a practical break.",
+      "score": {
+        "numerator": "2558",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "nivasch-stack-cycle-detection",
+      "source": "experiment.py",
+      "purpose": "Validate the SUBMITTED algorithm's collision and detection behavior. (A) On random mappings (the accepted rho heuristic), run the real Nivasch single-stack detection and measure: exact-detection correctness (fraction of runs whose stack match is a genuine self-collision), the detection-stretch law D=rho*(1+V(1-U)) via E[D/rho] (predicted 1.25), the success fraction P(D<=beta*k0) at the submitted budget beta=1.30 (predicted 0.431), and the maximum stack size (~log2 of the state size, confirming native O(log) memory). (B) On a real prime-order-q subgroup of F_p*, run an R-adding walk keyed by the element's integer value and confirm exact self-collision detection and that the recovered exponents satisfy the collision relation. No distinguished-point density or coefficient-bit equidistribution is used anywhere.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "n_log2": { "type": "integer", "minimum": 14, "maximum": 22 },
+          "trials": { "type": "integer", "minimum": 100, "maximum": 5000 },
+          "seed": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+          "group_q": { "type": "integer", "minimum": 1000, "maximum": 100000000 },
+          "group_trials": { "type": "integer", "minimum": 10, "maximum": 1000 },
+          "R": { "type": "integer", "minimum": 8, "maximum": 1024 }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        { "n_log2": 18, "trials": 800, "seed": 1, "group_q": 1000151, "group_trials": 120, "R": 64 }
+      ]
+    }
+  ]
+}
