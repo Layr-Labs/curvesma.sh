@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "Partial BSGS with explicit distributed addressing and conservative classical accounting",
+  "claims": [
+    {
+      "statement": "For the unchanged full-production uniform secp256k1 challenge Q=[x]P, the deterministic classical partial BSGS algorithm in proof.md recovers the canonical scalar with probability strictly greater than 1/2, using at most 2^146 total target-group-operation equivalents under protected C=1000, including all preprocessing, distributed addressing/transfers, verification and failures. Peak aggregate memory is at most 2^143 bytes; preprocessing is at most 2^146 target-group-operation equivalents included in total work; nonuniform advice is zero bytes (log2(max(1,advice_bytes))=0). This is an analytic bound with an empty experiment plan, no heuristic assumptions, astronomical finite distributed storage, and no practical-execution or novelty claim.",
+      "score": {
+        "numerator": "146",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "research.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
