@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "Streamed signed BSGS on BLS12-381 G1 with batch affine conversion (exact bound, powers unused)",
+  "claims": [
+    {
+      "statement": "For the BLS12-381 G1 DLOG target T=[s]P0=A_1 with s uniform in 1..r-1, the deterministic classical cold attack in proof.md uses only T (a subset of the auxiliary powers; no other A_i is read) and succeeds with probability (COV-1)/(r-1) > 1/2 >= 0.39 using total work W(n) = (2^40 + 2^15*n + 3*2^126*1585152)/2000 target-group-operation equivalents for every 1 <= n < r, with no number-theoretic condition. At the scoring n = 2^20, W(2^20) <= 2^(1372154/10000) under the protected C=2000, justified by the exact integer inequality T^10000 < 2000^10000 * 2^1372154 for T = 404549455867094585426921389289762816815792128 scalar instructions. Peak storage is below 2^145 bytes; preprocessing is included in total and bounded by 2^(1372154/10000); nonuniform advice is zero bytes. No heuristic assumptions: success is an exact count and all costs are worst-case analytic instruction bounds. This is an analytic construction, not an executed production attack. The streamed signed BSGS design is credited to public submission f888bb9e-1cc3-4be1-bb0a-734722d78885 as provenance only; the BLS12-381 field pricing, coverage and ledger are re-derived self-contained in proof.md, and no prior acceptance or score is relied upon.",
+      "score": {
+        "numerator": "1372154",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stream-bsgs-bls-evidence",
+      "source": "experiment.py",
+      "purpose": "Bounded stream sorting/intersection, exact coverage, BLS12-381 G1 Jacobian and zero-safe batch normalization against an affine oracle, negative controls and the exact integer ledger; no production timing inference.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "toy",
+              "curve",
+              "accounting"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 17,
+            "maximum": 257
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          },
+          "h": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "block_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "m": 16,
+          "h": 16,
+          "block_size": 4
+        }
+      ]
+    }
+  ]
+}

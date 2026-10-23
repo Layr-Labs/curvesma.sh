@@ -1,0 +1,54 @@
+{
+  "kind": "analytic_ledger_not_official_score",
+  "parameters": {
+    "m": "85070591730234615865843651857942052864",
+    "h": "170141183460469231731687303715884105728",
+    "d": "170141183460469231731687303715884105727",
+    "n": "1048576",
+    "block_size": 4096,
+    "C": 2000,
+    "field_mul_M": 16384,
+    "field_add_A": 512,
+    "inversion_I": 16777216,
+    "JAC": 282624,
+    "per_point_generation": 438272,
+    "E": 524288,
+    "U": 262144,
+    "S": 262144,
+    "INIT": 262144,
+    "intersection_per_record": 8192,
+    "record_bytes": 192,
+    "per_record_total": 1585152
+  },
+  "work_function": "W(n) = (2^40 + 2^15*n + (m+h)*1585152)/2000 for 1 <= n < r; uses only T = A_1",
+  "instructions": {
+    "fixed": "1099511627776",
+    "input_access_overcharge": "34359738368",
+    "initialization": "133804471191183738849214309635890169035882496",
+    "generation_and_writes": "201752054217956731233580951247865645499416576",
+    "streams": "66902235595591869424607154817945084517941248",
+    "intersection": "2090694862362245919518973588060783891185664"
+  },
+  "total_instructions": "404549455867094585426921389289762816815792128",
+  "submitted_log2_bound": {
+    "numerator": "1372154",
+    "denominator": "10000"
+  },
+  "exact_bound_check": "T**10000 < 2000**10000 * 2**1372154 and not T**10000 < 2000**10000 * 2**1372153",
+  "exact_bound_holds": true,
+  "coverage": "28948022309329048855892746252171976963147354982949671778132708698262398304256",
+  "success_probability": "(COV-1)/(r-1) over s uniform in 1..r-1",
+  "twice_covered_nonzero_minus_sample_size": "5460169443531907232337751996157988088604157465371705733661758696586215423998",
+  "memory_bytes_bound": "33451117797795934712303577408972542812618752",
+  "memory_below_2_to_145": true,
+  "preprocessing_bound": "Included in T; same conservative log2 bound 1372154/10000",
+  "auxiliary_powers_used": "none beyond the target T = A_1",
+  "heuristics": [],
+  "rule_hashes": {
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/bls12-381-g1-ecdlp/rules.md": "a96fd77aa4cd28bcda78e4f2a9331d6fc9fbe51148bb24289a008d8d92375f70",
+    "tracks/bls12-381-g1-ecdlp/target-profile.json": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+    "tracks/bls12-381-g1-ecdlp/verifier.json": "2cb0396135e822478d9bc16a27cd7daa81df264e9ce6bff570be1be40e55fafd",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294"
+  }
+}
