@@ -1,0 +1,249 @@
+{
+  "runs": [
+    {
+      "file": "b7-b30-s1.json",
+      "config": {
+        "bits": 30,
+        "trials": 1500,
+        "seed": 3001,
+        "b": 7,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 722074543,
+        "a": 0,
+        "b": 7,
+        "order": 722060377,
+        "cofactor": 1,
+        "beta": 708058128,
+        "lambda": 384708056
+      },
+      "classes_N": 120343397,
+      "log2_N": 26.84,
+      "trials": 1500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2266,
+      "success_at_tau_0.4943": 0.4067,
+      "success_at_tau_0.5303": 0.428,
+      "two_cycles_per_step": 8.392965585026117e-05,
+      "long_cycles": 0,
+      "restarts": 0
+    },
+    {
+      "file": "b7-b32-s1.json",
+      "config": {
+        "bits": 32,
+        "trials": 1000,
+        "seed": 3201,
+        "b": 7,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 3409241233,
+        "a": 0,
+        "b": 7,
+        "order": 3409349491,
+        "cofactor": 1,
+        "beta": 497071446,
+        "lambda": 431006725
+      },
+      "classes_N": 568224916,
+      "log2_N": 29.08,
+      "trials": 1000,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2511,
+      "success_at_tau_0.4943": 0.378,
+      "success_at_tau_0.5303": 0.396,
+      "two_cycles_per_step": 8.074542784044677e-05,
+      "long_cycles": 0,
+      "restarts": 1
+    },
+    {
+      "file": "b7-b32-s2-a16.json",
+      "config": {
+        "bits": 32,
+        "trials": 600,
+        "seed": 3202,
+        "b": 7,
+        "adder_bits": 16,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 2430016021,
+        "a": 0,
+        "b": 7,
+        "order": 2430103681,
+        "cofactor": 1,
+        "beta": 362482910,
+        "lambda": 316414407
+      },
+      "classes_N": 405017281,
+      "log2_N": 28.59,
+      "trials": 600,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2723,
+      "success_at_tau_0.4943": 0.3933,
+      "success_at_tau_0.5303": 0.4117,
+      "two_cycles_per_step": 2.082976406646986e-06,
+      "long_cycles": 0,
+      "restarts": 0
+    },
+    {
+      "file": "b7-b36-s1.json",
+      "config": {
+        "bits": 36,
+        "trials": 1500,
+        "seed": 3601,
+        "b": 7,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 35377539607,
+        "a": 0,
+        "b": 7,
+        "order": 35377209919,
+        "cofactor": 1,
+        "beta": 22668456088,
+        "lambda": 4140595167
+      },
+      "classes_N": 5896201654,
+      "log2_N": 32.46,
+      "trials": 1500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2619,
+      "success_at_tau_0.4943": 0.3853,
+      "success_at_tau_0.5303": 0.408,
+      "two_cycles_per_step": 8.17791454207277e-05,
+      "long_cycles": 0,
+      "restarts": 0
+    },
+    {
+      "file": "b7-b36-s2.json",
+      "config": {
+        "bits": 36,
+        "trials": 1500,
+        "seed": 3602,
+        "b": 7,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 60364583899,
+        "a": 0,
+        "b": 7,
+        "order": 60364422463,
+        "cofactor": 1,
+        "beta": 53177460335,
+        "lambda": 1783991451
+      },
+      "classes_N": 10060737078,
+      "log2_N": 33.23,
+      "trials": 1500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2614,
+      "success_at_tau_0.4943": 0.394,
+      "success_at_tau_0.5303": 0.418,
+      "two_cycles_per_step": 8.170589215136266e-05,
+      "long_cycles": 0,
+      "restarts": 5
+    },
+    {
+      "file": "b7-b40-s1.json",
+      "config": {
+        "bits": 40,
+        "trials": 500,
+        "seed": 4001,
+        "b": 7,
+        "adder_bits": 11,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 966351140893,
+        "a": 0,
+        "b": 7,
+        "order": 966349218889,
+        "cofactor": 1,
+        "beta": 527856122090,
+        "lambda": 829713585450
+      },
+      "classes_N": 161058203149,
+      "log2_N": 37.23,
+      "trials": 500,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2448,
+      "success_at_tau_0.4943": 0.418,
+      "success_at_tau_0.5303": 0.436,
+      "two_cycles_per_step": 7.991739899060505e-05,
+      "long_cycles": 0,
+      "restarts": 1
+    },
+    {
+      "file": "b7-b40-s2-a16.json",
+      "config": {
+        "bits": 40,
+        "trials": 400,
+        "seed": 4002,
+        "b": 7,
+        "adder_bits": 16,
+        "dp_bits": 3,
+        "walks": 16,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 1095924346369,
+        "a": 0,
+        "b": 7,
+        "order": 1095922577437,
+        "cofactor": 1,
+        "beta": 78195212241,
+        "lambda": 835066102363
+      },
+      "classes_N": 182653762907,
+      "log2_N": 37.41,
+      "trials": 400,
+      "all_correct": true,
+      "mean_first_useful_over_sqrtN": 1.2834,
+      "success_at_tau_0.4943": 0.3525,
+      "success_at_tau_0.5303": 0.37,
+      "two_cycles_per_step": 2.5661325283838983e-06,
+      "long_cycles": 0,
+      "restarts": 0
+    }
+  ],
+  "pooled": {
+    "trials": 7000,
+    "all_correct": true,
+    "success_at_tau_0.5303": 0.4129,
+    "wilson95_at_tau_0.5303": [
+      0.4014,
+      0.4244
+    ],
+    "model_at_tau_0.5303": 0.4116,
+    "success_at_tau_0.4943": 0.3919,
+    "wilson95": [
+      0.3805,
+      0.4033
+    ],
+    "model_at_tau_0.4943": 0.39,
+    "claim_tau": 0.5303,
+    "model_at_claim_tau": 0.4116,
+    "mean_first_useful_over_sqrtN": 1.2536,
+    "model_mean": 1.2533
+  },
+  "scope": "toy curves only; collision statistics of the identical walk, not production cost"
+}

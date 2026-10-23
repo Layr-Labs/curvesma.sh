@@ -1,0 +1,11 @@
+{
+  "purpose": "Exercise the cycle-handling paths of measurement/step.c, which the production parameters rarely reach",
+  "build": "measurement/step.c with ADDER_BITS 6 and B 4096 (all else unchanged); walk_ref.py with the same two constants",
+  "inputs": "walk_ref.py gen, seed 7",
+  "batch_steps": 128,
+  "walk_steps": 524288,
+  "kernel_events": {"two_cycles": 1337, "long_cycles": 5, "exceptional": 0, "unbatched": 2695, "frac_fallbacks": 0},
+  "replica_check": {"walks": 4096, "batch_steps": 128, "mismatches": 0, "two_cycles": 1337, "long_cycles": 5, "dps": 0},
+  "expected_two_cycle_rate_1_over_6A": 0.0026041666666666665,
+  "observed_two_cycle_rate": 0.0025501251220703125
+}
