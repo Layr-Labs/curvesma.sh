@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: orbit-canonical GLV baby-step/giant-step",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed standard BLS12-381 G1 generator P0, recover x. The deterministic orbit-canonical GLV baby-step/giant-step algorithm in proof.md builds baby points a*P0 for a in [0,m) and giant points T-b*[lambda]P0 for b in [0,h), with lambda the 128-bit GLV eigenvalue satisfying lambda^2+lambda+1=r as integers and [lambda]P0=phi(P0) for the curve endomorphism phi(x,y)=(beta*x,y). Each affine point is stored once, under the canonical compressed encoding of its order-6 orbit (minimum 48-byte encoding). A cross-list hit is orbit equality. The recoverable set contains the explicit parameter set S of cardinality (m-1)*(3*m-1), and the success probability is at least |S|/r = 20449991318299214286984618798192526677058846637647322474230865784471728173280/52435875175126190479447740508185965837690552500527637822603658699938581184513, which is at least 39/100. Total work is at most 2^127.863728 target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^133.126762 bytes; preprocessing is at most 2^126.845142 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, no quantum steps and no heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "127863728",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-orbit-coverage-and-generator-endomorphism",
+      "source": "experiment.py",
+      "purpose": "On Z/rZ with r=lambda^2+lambda+1, check that orbit-canonical matching recovers every residue of the explicit four-multiplier set and that its cardinality equals (m-1)*(3*m-1) at the boundary h=m-1. Then, on the production generator only, check phi(P0)=[lambda]P0 for the stated beta. The toy check is not a production cost bound. The generator check is one finite identity; proof.md extends it to G1 by the endomorphism homomorphism property.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "lam": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 80
+          }
+        },
+        "required": [
+          "lam"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "lam": 18
+        },
+        {
+          "lam": 40
+        }
+      ]
+    }
+  ]
+}
