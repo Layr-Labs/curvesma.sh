@@ -1,0 +1,214 @@
+{
+  "runs": [
+    {
+      "file": "a3-b30-s1.json",
+      "config": {
+        "bits": 30,
+        "trials": 1500,
+        "seed": 3001,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "a3"
+      },
+      "curve": {
+        "p": 792753649,
+        "a": 792753646,
+        "b": 296932549,
+        "order": 792749057
+      },
+      "log2_N": 28.56,
+      "trials": 1500,
+      "success": 669,
+      "success_rate": 0.446,
+      "wilson95": [
+        0.421,
+        0.4713
+      ],
+      "model": 0.4118,
+      "tau_of_K_times_L": 0.5307,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.014,
+      "two_cycles_per_step": 0.00023129763857644763,
+      "long_cycles": 3,
+      "max_replay_ops": 780,
+      "mean_trails": 540.5
+    },
+    {
+      "file": "a3-b32-s1.json",
+      "config": {
+        "bits": 32,
+        "trials": 1500,
+        "seed": 3201,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "a3"
+      },
+      "curve": {
+        "p": 2262832081,
+        "a": 2262832078,
+        "b": 777287606,
+        "order": 2262772013
+      },
+      "log2_N": 30.08,
+      "trials": 1500,
+      "success": 647,
+      "success_rate": 0.4313,
+      "wilson95": [
+        0.4065,
+        0.4565
+      ],
+      "model": 0.4119,
+      "tau_of_K_times_L": 0.5308,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 1,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0084,
+      "two_cycles_per_step": 0.0002282398905714766,
+      "long_cycles": 4,
+      "max_replay_ops": 470,
+      "mean_trails": 907.8
+    },
+    {
+      "file": "a3-b34-s1.json",
+      "config": {
+        "bits": 34,
+        "trials": 1000,
+        "seed": 3401,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "a3"
+      },
+      "curve": {
+        "p": 15713805571,
+        "a": 15713805568,
+        "b": 12575327321,
+        "order": 15713685853
+      },
+      "log2_N": 32.87,
+      "trials": 1000,
+      "success": 398,
+      "success_rate": 0.398,
+      "wilson95": [
+        0.3681,
+        0.4287
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5304,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0033,
+      "two_cycles_per_step": 0.00022940009288396156,
+      "long_cycles": 6,
+      "max_replay_ops": 392,
+      "mean_trails": 2400.4
+    },
+    {
+      "file": "a3-b34-s2-a16.json",
+      "config": {
+        "bits": 34,
+        "trials": 600,
+        "seed": 3402,
+        "adder_bits": 16,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "a3"
+      },
+      "curve": {
+        "p": 11068274401,
+        "a": 11068274398,
+        "b": 5276250297,
+        "order": 11068372837
+      },
+      "log2_N": 32.37,
+      "trials": 600,
+      "success": 260,
+      "success_rate": 0.4333,
+      "wilson95": [
+        0.3942,
+        0.4733
+      ],
+      "model": 0.4117,
+      "tau_of_K_times_L": 0.5305,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0037,
+      "two_cycles_per_step": 6.914001660856713e-06,
+      "long_cycles": 0,
+      "max_replay_ops": 395,
+      "mean_trails": 1971.2
+    },
+    {
+      "file": "a3-b36-s1.json",
+      "config": {
+        "bits": 36,
+        "trials": 500,
+        "seed": 3601,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "a3"
+      },
+      "curve": {
+        "p": 55027413983,
+        "a": 55027413980,
+        "b": 29348542031,
+        "order": 55027683539
+      },
+      "log2_N": 34.68,
+      "trials": 500,
+      "success": 198,
+      "success_rate": 0.396,
+      "wilson95": [
+        0.3541,
+        0.4395
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5303,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0018,
+      "two_cycles_per_step": 0.00022725830221335461,
+      "long_cycles": 6,
+      "max_replay_ops": 346,
+      "mean_trails": 4442.8
+    }
+  ],
+  "pooled": {
+    "trials": 5100,
+    "success": 2172,
+    "success_rate": 0.4259,
+    "wilson95": [
+      0.4124,
+      0.4395
+    ],
+    "model_weighted": 0.4118,
+    "tau": 0.5303,
+    "degenerate_first_matches": 0,
+    "replay_mismatches": 0,
+    "all_successes_verified": true,
+    "abandoned_trails": 1,
+    "long_cycles": 19,
+    "max_finish_steps_over_K_L": 0.014,
+    "max_replay_ops": 780,
+    "trails_total": 7976970
+  },
+  "scope": "toy curves only; the production procedure including resolution, not production cost"
+}

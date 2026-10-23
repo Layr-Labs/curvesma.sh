@@ -1,0 +1,13 @@
+{
+  "purpose": "Exercise the restart and abandonment paths of measurement/step.c, which theta = 2^-60 never reaches in a measured sample",
+  "builds": "measurement/step.c compiled with -DADDER_BITS=6 -DB=4096 plus the flags below; walk_ref.py run with the same values in the environment (ADDER_BITS, B, DP_BITS, CAP_PERIODS)",
+  "inputs": "walk_ref.py gen with ADDER_BITS=6 B=4096, seed 7 (64 adders, 4096 starts, 1024 spare starts)",
+  "runs": [
+    {"flags": "-DDP_BITS=4", "batch_steps": 200, "walk_steps": 819200,
+     "kernel": {"two_cycles": 6955, "long_cycles": 45, "dps": 49929, "abandoned": 0, "exceptional": 0},
+     "replica": {"mismatches": 0, "two_cycles": 6955, "long_cycles": 45, "dps": 49929, "abandoned": 0}},
+    {"flags": "-DDP_BITS=12 -DCAP_PERIODS=1", "batch_steps": 200, "walk_steps": 819200,
+     "kernel": {"two_cycles": 6494, "long_cycles": 20, "dps": 214, "abandoned": 4093, "exceptional": 0},
+     "replica": {"mismatches": 0, "two_cycles": 6494, "long_cycles": 20, "dps": 214, "abandoned": 4093}}
+  ]
+}
