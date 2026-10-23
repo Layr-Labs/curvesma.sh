@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-order6-classes-sigma-walk-asm-trails-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.418986,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 75.74996,
+    "preprocessing_log2": 47.61967,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class-level r-adding walk with 2^16 adders behaves as a random mapping on the (r-1)/6 order-6 classes, up to an exponent penalty of at most 4/2^16.",
+    "H1': per-step form of H1: along a trail, fresh classes give independent uniform adder indices and canonical units, Bernoulli(theta) distinguished-point indicators, and per-step costs as sampled. Lemma C derives from it the fruitless-cycle rates: 2-cycles at most 1/(6A), 3..64-cycles at most 3/A^2, longer ones at most 2^-300 per length.",
+    "H3: Callgrind instruction counts on 2^18 sampled secp256k1 walk steps on each of two input sets represent per-step work; every instruction is charged (no reference operation), 795 per step on average against an average of at most 778.7 measured; the total is a hard cutoff."
+  ],
+  "limitations": [
+    "The model success bound is 0.411523 at tau = 0.5303, 0.0215 above 0.39; pooled toy-curve success at that budget is in the evidence.",
+    "Analytic production cost; no production-size execution.",
+    "Needs about 2^67.7 stored distinguished points; not a practical attack.",
+    "All field arithmetic is the package's own inline assembly, tested against Python big integers but not formally verified.",
+    "H1 is an unproved standard heuristic; the whole procedure, including resolution, is tested only on toy curves.",
+    "Distinguished points never occur in a production-parameter measurement sample; the restart and abandonment paths were checked on small builds.",
+    "The work cutoff is unconditional; its success loss rests on H1' (Azuma-Hoeffding over per-step costs)."
+  ],
+  "lane": "exploratory"
+}
