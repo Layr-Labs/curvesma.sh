@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "pollard-rho-dp-negation-map-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.82,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 41.0,
+    "preprocessing_log2": 32.9,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "r-adding walk with r=2^24 behaves as a random mapping on negation classes (Teske 2001); the claim needs a walk-quality factor of at least 0.9076, against a finite-r Brent-Pollard correction of 1+2^-25 at r=2^24 and measured deviations of a few percent at r=20",
+    "cycles of up to 64 classes are detected by a fixed 64-step checkpoint of the full 256-bit canonical u and escaped from the cycle's smallest-u member through a separate escape table, so merged walks stay merged; re-entry into a cycle just escaped is bounded by its basin at 2^-135.4 per cycle and the whole cycle loss, including cycles longer than 64 classes, at 2^-9.19 of all steps (budget 2^-9)",
+    "distinguished-point positions (bits 0..95 of u) are independent of the table index (bits 232..255) and of the escape index (bits 224..231); the three bit fields are disjoint"
+  ],
+  "limitations": [
+    "Analytic cost bound; no production-size execution.",
+    "Field multiplication and modular add/sub are counted from an explicit AArch64 instruction listing (p256_mul_count.md) checked by executing it under the AArch64 flag rules (check_mul_mont.py); the other per-step items are itemised upper bounds (proof.md section 4) and no P-256 kernel was measured; compiler spills are not priced.",
+    "The cycle bounds are model bounds (a counting argument for short cycles, a random-mapping basin expectation for re-entry, a zero-sum closure estimate for cycles longer than 64 classes); the score is insensitive to them up to a cycle budget of 2^-8.72.",
+    "The toy experiment in experiment.py supports the walk and cycle mechanism only at toy scale.",
+    "Not a novel attack; textbook generic rho with the negation map."
+  ],
+  "lane": "exploratory"
+}
