@@ -1,0 +1,139 @@
+{
+ "version": 1,
+ "title": "Six-class (negation + GLV) parallel Pollard rho on secp256k1 with a global work meter, tightened accounting (v2e)",
+ "claims": [
+  {
+   "statement": "For the uniform full-production secp256k1 target Q=[x]P, the classical cold attack in proof.md (six-class negation+GLV parallel Pollard rho: twisted R=2048 adding walk on classes keyed by |y|, exact 4-limb truncated canonical-index rule with metered fallback, doubling escapes from detected 2-cycles and checkpoint cycles of length <= 64, distinguished classes routed to 2^16 storage nodes each natively addressable below 2^56 bytes, re-walk solving), ported from submission 1c600df4 (mpjunior92, BLS12-381 G1) with secp256k1 constants and prices; this v2e (provenance: the declared dependency 189ebc42; all bounds restated and re-verified in this package) tightens three accounting constants only (step charge 1.18 over the published 159-instruction itemisation, 4% slowdown allowance, H1 quantile floor 0.396), halts on every run after at most 2^127.025 target-group-operation equivalents (one unit = one batched incomplete affine secp256k1 addition, C=1000) because a global work meter charges every action before it runs. It succeeds with probability at least 0.39 under the disclosed heuristic H1 (random mapping on N=(r-1)/6 classes with Brent-Pollard correction and a 4% slowdown allowance; partition, distinguished and routing bits pseudo-random), supported by toy runs. Peak memory < 2^72 bytes; preprocessing <= 2^59.0 units, enforced and included; no nonuniform advice. Not a practical break.",
+   "score": {
+    "numerator": "127025",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "proof.md",
+    "experiment.py",
+    "README.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-six-class-rho-evidence",
+   "source": "experiment.py",
+   "purpose": "Part A: production secp256k1 checks of every identity the walk uses and of the truncated canonical-index rule; Part B: the complete per-trail algorithm on prime-order toy curves y^2=x^3+7 (T_c census, pipeline success with node routing, long-trail trap test).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q25",
+       "q29"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "nodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q25",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 5,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 14,
+     "pipeline": true
+    }
+   ]
+  }
+ ]
+}
