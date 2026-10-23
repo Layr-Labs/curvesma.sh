@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "cheon-fixed-base-comb-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": "122.152158",
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": "126.428545",
+    "preprocessing_log2": "90.773206",
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "limitations": [
+    "Analytic construction. The production-size attack is not executed.",
+    "Instruction counts are the executed schedule, including loads that a register-blocked program could reuse.",
+    "The factorization cost is the full trial loop, not the faster checker used by the program.",
+    "Phase 2 is charged as binary scalar multiplication."
+  ],
+  "lane": "exploratory"
+}
