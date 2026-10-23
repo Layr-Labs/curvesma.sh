@@ -1,0 +1,97 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: O(1)-memory Brent rho in GT with a single saved point, full-element comparisons, uniform-mod-r coefficients and a hard evaluation cap set from the exact detection law (claim 128.15)",
+ "claims": [
+  {
+   "statement": "Claim (first declared claim; the score is this number): total work log2 <= 12815/100 = 128.15 in reference dense-Fp12-multiplication equivalents, C = 20,000 instructions per reference multiplication as fixed in tracks/docs/COST_MODEL.md, with algorithmic success >= 39/100 over uniform full-production challenges and fresh algorithm coins.\n\nSETTING. For a uniform nonidentity P in G1 and a uniform target z in GT, with the pinned public pairing, compute g = e(P,Q0) = pairing(Q0,P) once. Nondegeneracy and prime order r give <g> = GT. Find a = log_g z by a Pollard rho in GT and return Q = [a]Q0, which satisfies e(P,Q) = z for every z, including z = 1 (a = 0, Q = O). This is the reduction the reviewer has accepted on this track, unchanged.\n\nONE CHANGE from the accepted structure (e444842b, plain Floyd rho in GT, 129.20): detection is BRENT's, with a single saved point, instead of Floyd's tortoise-and-hare with three group evaluations per step. Nothing else is added: no fingerprint, no checkpoint grid, no comparison window, no distinguished-point set, no dictionary, no cycle-length bound, no positivity lemma.\n\nWALK. Public table Th[h] = g^(A_h) z^(B_h), h = 0..2^20-1, built once per instance (2^20 entries, two 255-bit GT exponentiations each). State (X,a,b) with X = g^a z^b. Step: h = H(X) (one 64-bit limb of the reduced tower representation, fixed odd-multiplier xor-shift, top 20 bits), X <- X*Th[h] (one dense Fp12 multiplication = one reference unit), a <- a+A_h mod r, b <- b+B_h mod r. The next state is a function of the group element alone: no history, no value lookup. Coefficients A_h,B_h are the run's uniform coins reduced mod r (512 coin bits per draw, no rejection, bias < 2^-256), so step offsets range over all of Z_r; there is no small-coefficient window and no lemma about one.\n\nDETECTION (Brent, one saved point). power = lam = 1; the saved point starts at position 0; each step advances the hare once and compares it with the saved point; when power == lam the saved point is replaced by the hare's position and power doubles. The saved positions are {2^j - 1}, so exactly ONE element plus its exponent pair is stored. Every comparison is a full element equality (576 bytes = 72 eight-byte words, 288 instructions); no comparison can be a false positive and no work is ever aborted.\n\nEXACT LAW (verified, section B1). For a trajectory with tail mu and cycle lam, positions c < m carry the same element iff m = c or (c >= mu and m = c mod lam). A point saved at p is compared with the hare on positions p+1..2p+1, so it is hit at p+lam provided lam <= p+1 and p >= mu. Hence the first hit is m = p_min + lam with p_min = min{2^j - 1 : 2^j - 1 >= max(mu, lam-1)}. This identity is checked against a direct simulation of the loop for every (mu, lam) with mu >= 0, lam >= 1, mu+lam <= 61: 1,891 pairs, 0 mismatches. No deterministic cycle-length bound is claimed; the cap is a quantile of the model below, and the textbook worst case is 3*rho.\n\nHARD CAP. B = ceil((160/100)*sqrt(r)) = 366382096244239324903765723136630613606 = 2^128.106617, the least B with (100 B)^2 >= 160^2 * r. A run takes at most B steps and then stops; not hitting within B steps is a failure of the declared bound, counted as such.\n\nLEDGER (units = one dense Fp12 multiplication; per-step numbers are 64-bit scalar instruction equivalents). Per step: index mix/load/multiply/xor-shift 8; table entry load with its two 4-limb coefficients 12; accumulator a add-reduce 24; accumulator b add-reduce 24; Brent bookkeeping (power == lam test, branch, lam increment) 8; one full element comparison 72 words x load/load/compare/branch = 288. The five small items sum to 76 and are charged at four times their itemised value (304); the comparison count is exact. Step = 1 + 592/20000 = 1287/1250 reference units = 2^0.042084. Main term B x 1287/1250 = 2^128.148701. Additive: table build 2^20 x 2 x 512 = 2^30.0004; one pairing for g = 2^17; final check [a]Q0 and e(P,[a]Q0) = z = 2^17 + 2^12. Total = 2^128.148701, so the claim is its ceiling at the next hundredth: 12815/100 = 2563/20 = 128.15. Nothing else is charged because nothing else runs: no fingerprint, no abort allowance, no dictionary, no sorting, no rejection sampling.\n\nSUCCESS. Only modelling assumption: the random-map heuristic for H (Flajolet-Odlyzko: Pr[rho >= t] = exp(-t^2/(2N)), and given rho the entry point mu is uniform on [0,rho)), which the review accepts on this track. Section D1 is a deterministic quadrature of that model through the exact law: at N = r the quantiles of m/sqrt(r) are c_q39 = 1.4366 and c_q40 = 1.4602, mean 1.9830. Section D2 cross-checks the same model by Monte-Carlo over the SIMULATED loop at N = 2^18: simulated c_q39 = 1.5410 against the quadrature's 1.5338 at that scale. Section D3 sweeps the dyadic alignment of sqrt(N) over a full period (16 alignments): the worst model success at the cap is 0.4097, at worst c_q40 = 1.5834 <= 1.60, while the nominal value at N = r is 0.4534. A hit with b_hare = b_saved (mod r) is unusable; there are at most B comparisons and each gap coefficient sum is uniform in Z_r, so that event is charged at B/r = 2^-126.75 against the success claim (the code counts it, never divides, and continues). Hence success >= 0.4097 - 2^-126.75 > 39/100 at every alignment.\n\nTOY (evidence at toy scope only). Prime-order subgroup of F_p^* with p = 2q+1, q ~ 2^24; table R = 1024 entries fixed for the whole walk; cap = ceil(1.60*sqrt(q)) = 6554; identical walk code (one brent_walk with injected group operations, so toy and production share the code path, including the full-element equality test). 600 trials: 253 solved = 0.4217 (Wilson 95% [0.3828, 0.4616]) against the model's 0.4266 at that scale. Empirical detection CDF at cap factors 0.8/1.0/1.2/1.4/1.6 is 0.135/0.212/0.305/0.350/0.422 against the model's 0.137/0.217/0.287/0.344/0.427. Zero bookkeeping failures, zero degenerate relations, solved + capped = trials. A second size, q ~ 2^22, gives 0.4150 over 200 trials against the model's 0.4269.\n\nMEMORY (stated, not scored). 2^20 table entries x (576-byte element + two 32-byte coefficients) = 671,088,640 B, plus one saved point 648 B, hare state 648 B, base g 576 B, control 256 B, code and scratch 65,536 B = 671,156,304 B = 2^29.32; one native address space, O(1) walk state, no distributed or segmented memory.\n\nDISCLOSED. The random-map model is the only heuristic. The toy's pseudo-random coins are evidence at toy scope and make no statistical-distance claim; toy success rates are not a production complexity proof. Section A6 runs the same walk function on real 381-bit GT elements to show the code path and the 576-byte equality test are the production ones. Credit: the accepted structure is e444842b (plain Floyd rho in GT, 129.20); this candidate changes only the detection rule, Floyd -> Brent, and states its own argument for the detection law, the cap and the ledger.",
+   "score": {
+    "numerator": "2563",
+    "denominator": "20"
+   },
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "gt-brent-min-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production facts on BLS12-381 itself with standard-library integer arithmetic: p and r prime, r | Phi_12(p), ord_r(p) = 12 with p^6 = -1, the blst tower is a field, a random GT element has order r, and the collision identity x = (a1-a2)/(b2-b1) recovers a real 381-bit logarithm. Section A6 runs the same brent_walk on real GT elements through the same interface, so the walk, the one-comparison-per-step rule and the 576-byte equality test are the production ones. Section B1 verifies the exact Brent detection law against a direct simulation of the loop on every (mu,lam) with mu+lam <= 61 (1,891 pairs, 0 mismatches). Section B3 runs the complete algorithm on a toy prime-order subgroup of F_p^* with a 1024-entry table fixed for the whole walk and the declared cap ceil(1.60*sqrt(q)), reporting success, the empirical detection CDF and bookkeeping failures; B3 also exercises the zero-denominator branch. Section B4 repeats at a second toy size. Section C is the exact ledger: cap by integer square root, the per-step instruction itemisation, the additive items, the memory layout and the claim as a reduced rational. Section D computes the model success probability: D1 quadrature of the random-map model through the exact law, D2 Monte-Carlo over the simulated loop as a cross-check, D3 the dyadic alignment sweep, D4 the success at the declared cap. runs in about 8 s.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "table_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "gt_walk_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+     },
+     "toy_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 30
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 8192
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 120
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "model_draws": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 200000
+     }
+    },
+    "required": [
+     "production_checks",
+     "trials",
+     "toy_bits",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "table_checks": 2,
+     "gt_walk_checks": 1,
+     "trials": 600,
+     "toy_bits": 25,
+     "R": 1024,
+     "seconds": 60,
+     "seed": 1,
+     "model_draws": 2000
+    }
+   ]
+  }
+ ]
+}
