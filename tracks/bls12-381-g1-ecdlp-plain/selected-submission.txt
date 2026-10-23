@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp-plain
+submissions/bls12-381-g1-ecdlp-plain/glv-six-class-rho-ckpt-r20-k103-b18
