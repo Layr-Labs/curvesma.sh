@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: parallel Pollard rho on order-6 classes with a sigma walk",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and input T=[x]P0 in BLS12-381 G1, the parallel distinguished-point Pollard rho algorithm in proof.md recovers x with probability at least 0.39. It walks on the order-6 classes given by negation and the GLV endomorphism, using 2^30 walks, 2^16 adders, batched affine additions and deterministic fruitless-cycle escapes. The walk stores actual points and adds the tabulated image sigma(R_i) of each adder, so the class sequence equals the standard canonical walk while no step multiplies by beta; the canonical rotation is decided from 64-bit fixed-point fractions with an exact fallback (Lemma 1). Total computation is at most 2^126.367538 target-group-operation equivalents, including preprocessing, distinguished-point storage and lookup, all failures and restarts, collision replay, verification and output. Each walk step is one batched incomplete affine G1 addition (the 6M reference operation, 1 unit) plus at most 280 other scalar AArch64 instructions at C=2000, against 267.3 measured with the organizer's Callgrind toolchain and the pinned blst. Peak memory is at most 2^74.178504 bytes. Preprocessing is at most 2^45.619692 units and is included in total work. Nonuniform advice is 0 bytes. This is a classical cold attack on one target with no uncharged advice or quantum steps; the pairing to GT is not used. The success bound of 0.411523 relies on the disclosed heuristics H1-H3 in proof.md. H1 is the standard random-mapping model for r-adding class walks with an exponent penalty of at most 4/2^16; H2 bounds fruitless-cycle rates; H3 is the representativeness of the measured instruction counts. These are supported by toy-curve experiments with the identical walk and by production-curve measurements, not proved. This is a carefully accounted generic attack, not a claim of a practical break.",
+      "score": {
+        "numerator": "63183769",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "measurement/step.c",
+        "measurement/walk_ref.py",
+        "measurement/frac_check.py",
+        "measurement/run.sh",
+        "measurement/reproduce.sh",
+        "measurement/summarize.py",
+        "evidence/measurement/seed1.json",
+        "evidence/measurement/seed2.json",
+        "experiment.py",
+        "evidence/small-curves/summary.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-curve-rho",
+      "source": "experiment.py",
+      "purpose": "Run the exact sigma walk from proof.md on random toy curves y^2=x^3+4 over p = 1 mod 3, in the prime-order subgroup of a small cofactor (the BLS12-381 G1 shape), or on prime-order y^2=x^3+7 with b=7. The walk uses Montgomery-representative class keys (M(+-y)), the same canonical rule, adder images and index, both cycle rules and escapes, distinguished points and walk abandonment. The run counts all steps to the first useful class collision, solves each instance end to end and checks [x]P=Q, and compares the empirical success curve with 1-exp(-T^2/(2N)). Toy scale only: it tests the H1/H2 collision statistics and says nothing about production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 28
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 150
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 11
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "b": {
+            "type": "integer",
+            "enum": [
+              4,
+              7
+            ]
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "bits",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 26,
+          "trials": 150,
+          "seed": 2601
+        }
+      ]
+    },
+    {
+      "id": "fraction-lemma",
+      "source": "measurement/frac_check.py",
+      "purpose": "Check Lemma 1 of proof.md on random and edge-case Montgomery values: the 64-bit fraction approximations g_j are within [0,12] of floor(2^64*M(beta^j x)/p), and the kernel's rule for the canonical rotation either agrees with the exact minimum or falls back to the exact computation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "samples": 200000
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2, preprocessing, memory and success lower bound from the stated parameters with exact integer arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
