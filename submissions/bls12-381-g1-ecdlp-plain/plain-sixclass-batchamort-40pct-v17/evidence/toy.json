@@ -1,0 +1,118 @@
+{
+ "A_measured": 1.0,
+ "checkpoint_period": 64,
+ "collision_report": {
+  "e_resolved": 360,
+  "failed": 0,
+  "failures": [],
+  "per_e": {
+   "1": {
+    "e_ok": 60,
+    "trials": 60,
+    "x_ok": 60
+   },
+   "23301": {
+    "e_ok": 60,
+    "trials": 60,
+    "x_ok": 60
+   },
+   "23302": {
+    "e_ok": 60,
+    "trials": 60,
+    "x_ok": 60
+   },
+   "26745": {
+    "e_ok": 60,
+    "trials": 60,
+    "x_ok": 60
+   },
+   "26746": {
+    "e_ok": 60,
+    "trials": 60,
+    "x_ok": 60
+   },
+   "50046": {
+    "e_ok": 60,
+    "trials": 60,
+    "x_ok": 60
+   }
+  },
+  "trials": 360,
+  "x_recovered": 360
+ },
+ "fixture": {
+  "beta": 43364,
+  "classes": 8341,
+  "lambda": 26745,
+  "order_total": 600564,
+  "p": 600217,
+  "q": 50047
+ },
+ "invariant_checks": 4000,
+ "invariant_pass_steps": 4000,
+ "pass_rule": "PASS iff (i) the report invariant recovers e and x on every trial for all six e (failed == 0, x_recovered == trials), (ii) invariant_checks == invariant_pass_steps > 1000, i.e. the invariant was asserted after every single transition, escape and restart of the invariant pass, and (iii) the sweep prints the slowdown law and the recovery rate at the charged budget kappa = A_H1 = 1.005",
+ "reachable_columns": {
+  "R": 2048,
+  "reachable": 1173
+ },
+ "selector": "scripts/selector.py",
+ "selector_checks": 4001,
+ "sweep": {
+  "N_classes": 8341,
+  "S_ref": 90.87403,
+  "rows": [
+   {
+    "R": 2048,
+    "dp_bits": 0,
+    "mean_tc_over_Sref": 1.24322,
+    "mean_trail_over_sqrtN": 0.010949,
+    "recovery_rate": {
+     "kappa_1.000": 0.39571,
+     "kappa_1.005": 0.40357,
+     "kappa_1.020": 0.41143,
+     "kappa_1.025": 0.41857,
+     "kappa_1.030": 0.41857
+    },
+    "se": 0.01721,
+    "selector_checks": 160957,
+    "slowdown_pct": 24.322,
+    "trials": 1400
+   },
+   {
+    "R": 2048,
+    "dp_bits": 1,
+    "mean_tc_over_Sref": 1.62426,
+    "mean_trail_over_sqrtN": 0.021899,
+    "recovery_rate": {
+     "kappa_1.000": 0.26214,
+     "kappa_1.005": 0.26286,
+     "kappa_1.020": 0.26643,
+     "kappa_1.025": 0.27071,
+     "kappa_1.030": 0.27071
+    },
+    "se": 0.02124,
+    "selector_checks": 209337,
+    "slowdown_pct": 62.426,
+    "trials": 1400
+   },
+   {
+    "R": 2048,
+    "dp_bits": 2,
+    "mean_tc_over_Sref": 1.96165,
+    "mean_trail_over_sqrtN": 0.043798,
+    "recovery_rate": {
+     "kappa_1.000": 0.15929,
+     "kappa_1.005": 0.16143,
+     "kappa_1.020": 0.16786,
+     "kappa_1.025": 0.17071,
+     "kappa_1.030": 0.17071
+    },
+    "se": 0.02273,
+    "selector_checks": 252125,
+    "slowdown_pct": 96.165,
+    "trials": 1400
+   }
+  ]
+ },
+ "verdict": "PASS"
+}

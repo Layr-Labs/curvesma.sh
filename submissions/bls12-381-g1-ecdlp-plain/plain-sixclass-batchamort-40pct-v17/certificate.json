@@ -1,0 +1,333 @@
+{
+ "package": "plain-sixclass-batchamort-40pct-v17",
+ "checks": [
+  {
+   "check": "selector_100_random_keys",
+   "pass": true,
+   "detail": {
+    "keys": 100,
+    "agree": 100,
+    "R": 4096,
+    "P": 600217,
+    "map": "scripts/selector.py::cell == (K*R) >> (bitlen P - 1), reference re-derived in the checker"
+   }
+  },
+  {
+   "check": "selector_is_the_declared_shift_not_floor_KR_over_P",
+   "pass": true,
+   "detail": {
+    "K": 2045,
+    "R": 4096,
+    "declared_shift": 15,
+    "floor_KR_over_P": 13,
+    "shared": 15,
+    "note": "the two maps differ by design; the package declares and ships the shift, and R_eff is the reachable-column count that makes its column law uniform",
+    "v15_value_the_old_toy_computed": 3572
+   }
+  },
+  {
+   "check": "selector_boundary_neighbourhoods",
+   "pass": true,
+   "detail": {
+    "keys": 130,
+    "R_swept": [
+     256,
+     512,
+     1024,
+     2048,
+     4096
+    ],
+    "mismatches": 0
+   }
+  },
+  {
+   "check": "selector_cell_within_R",
+   "pass": true,
+   "detail": {
+    "rule": "K <= P//2 => cell < R, no mask needed"
+   }
+  },
+  {
+   "check": "reachable_columns_matches_definition",
+   "pass": true,
+   "detail": {
+    "R_eff": 1665,
+    "R": 2048,
+    "P_bits": 381
+   }
+  },
+  {
+   "check": "last_column_is_the_only_partial_one",
+   "pass": true,
+   "detail": {
+    "remainder_bits": 379,
+    "note": "reachable K-range is a prefix, so every column but the last is equally weighted"
+   }
+  },
+  {
+   "check": "argument_block_matches_render",
+   "pass": true,
+   "detail": {
+    "renderer": "scripts/gen_tables.py",
+    "source": "ledger.py",
+    "bytes": 4607
+   }
+  },
+  {
+   "check": "printed_rows_readd_to_step_insn",
+   "pass": true,
+   "detail": {
+    "rows_printed": 10,
+    "sum": 133,
+    "ledger_step_insn": 133
+   }
+  },
+  {
+   "check": "every_printed_formula_evaluates",
+   "pass": true,
+   "detail": {
+    "formulas": 9,
+    "tags": [
+     "step_sum",
+     "step_price",
+     "inversion_multiplies",
+     "inversion_instructions",
+     "inversion_per_step",
+     "doubling_instructions",
+     "doubling_price",
+     "batch_inversion_instructions",
+     "memory_bytes"
+    ],
+    "failures": []
+   }
+  },
+  {
+   "check": "inversion_instructions",
+   "pass": true,
+   "detail": {
+    "INV_INSN": 101495,
+    "mults": 265,
+    "M": 383
+   }
+  },
+  {
+   "check": "inversion_share_per_step",
+   "pass": true,
+   "detail": {
+    "INV_PER_STEP": "0.387172698974609375",
+    "B": 262144
+   }
+  },
+  {
+   "check": "batch_count_is_a_ceiling",
+   "pass": true,
+   "detail": {
+    "n_batches": 356631678797609001007578833297417,
+    "ceil": 356631678797609001007578833297417,
+    "priced": 356631678797609001007578833297418,
+    "note": "one whole tail batch is charged"
+   }
+  },
+  {
+   "check": "batch_inversion_total_exact",
+   "pass": true,
+   "detail": {
+    "value": "18098166119781662778632106842760719.955",
+    "units": "reference"
+   }
+  },
+  {
+   "check": "phase1_exact",
+   "pass": true,
+   "detail": {
+    "step_price": "1.0665"
+   }
+  },
+  {
+   "check": "W_is_the_sum_of_its_three_terms",
+   "pass": true,
+   "detail": {
+    "W": "126.22927971",
+    "phase1": "126.22901786",
+    "extras": "81.08566031",
+    "batch_inversion": "113.80139874"
+   }
+  },
+  {
+   "check": "step_price_above_doubling_price",
+   "pass": true,
+   "detail": {
+    "step": "1.0665",
+    "doubling": "0.926"
+   }
+  },
+  {
+   "check": "S_ops_is_ceil_A_H1_S0",
+   "pass": true,
+   "detail": {
+    "S_ops": 93488854806720413958977824171311214658,
+    "A_H1*S0 <= S_ops": true
+   }
+  },
+  {
+   "check": "claim_is_the_ceil_of_log2_W_both_directions",
+   "pass": true,
+   "detail": {
+    "claim": "126.23",
+    "W^1000 <= 2^claim": true,
+    "2^(claim-0.001) < W^1000": true,
+    "log2 W": "126.22927971"
+   }
+  },
+  {
+   "check": "claim_is_tightest_in_its_granularity",
+   "pass": true,
+   "detail": {
+    "note": "two steps coarser would break the upper bound"
+   }
+  },
+  {
+   "check": "claim_window_row",
+   "pass": true,
+   "detail": {
+    "log2_W_8dp": "126.22927971",
+    "claim": "126.23",
+    "gate": "126.288",
+    "claim_minus_log2W": "0.00072029",
+    "gate_minus_claim": "0.058",
+    "window": "log2 W + 2e-5 <= claim <= gate - 0.008"
+   }
+  },
+  {
+   "check": "success_recomputed_from_terms",
+   "pass": true,
+   "detail": {
+    "rho": "0.3933167776",
+    "losses": 5,
+    "success": "0.3923402151"
+   }
+  },
+  {
+   "check": "success_above_floor",
+   "pass": true,
+   "detail": {
+    "success": "0.3923402151",
+    "floor": "0.39"
+   }
+  },
+  {
+   "check": "success_printed_exactly",
+   "pass": true,
+   "detail": {
+    "printed": "0.3923402151"
+   }
+  },
+  {
+   "check": "each_loss_smaller_than_margin",
+   "pass": true,
+   "detail": {
+    "margin": "0.0023402151"
+   }
+  },
+  {
+   "check": "toy_verdict_pass",
+   "pass": true,
+   "detail": {
+    "verdict": "PASS"
+   }
+  },
+  {
+   "check": "toy_e_resolution_zero_failures",
+   "pass": true,
+   "detail": {
+    "failed": 0,
+    "e_resolved": 360,
+    "trials": 360,
+    "x_recovered": 360,
+    "elements": [
+     "1",
+     "23301",
+     "23302",
+     "26745",
+     "26746",
+     "50046"
+    ],
+    "per_element_all_ok": true
+   }
+  },
+  {
+   "check": "toy_invariant_every_transition",
+   "pass": true,
+   "detail": {
+    "checks": 4000,
+    "steps": 4000
+   }
+  },
+  {
+   "check": "toy_selector_checks",
+   "pass": true,
+   "detail": {
+    "selector_checks": 622419,
+    "rows": 3
+   }
+  },
+  {
+   "check": "measured_recovery_at_charged_budget",
+   "pass": true,
+   "detail": {
+    "kappa_1.005": 0.40357,
+    "kappa_1.000": 0.39571,
+    "kappa_1.025": 0.41857,
+    "trials": 1400,
+    "charged_budget": "A_H1 = 1.005"
+   }
+  },
+  {
+   "check": "A_measured_consistent_with_ledger",
+   "pass": true,
+   "detail": {
+    "A_measured": 1.0,
+    "A_H1": "1.005"
+   }
+  },
+  {
+   "check": "dependencies_empty",
+   "pass": true,
+   "detail": {
+    "dependencies.json": []
+   }
+  },
+  {
+   "check": "experiments_empty",
+   "pass": true,
+   "detail": {
+    "experiments": []
+   }
+  },
+  {
+   "check": "claim_literal_matches_ledger",
+   "pass": true,
+   "detail": {
+    "submission": {
+     "numerator": "12623",
+     "denominator": "100"
+    },
+    "ledger": "126.23"
+   }
+  },
+  {
+   "check": "evidence_budget",
+   "pass": true,
+   "detail": {
+    "bytes": 83946,
+    "limit": 524288
+   }
+  }
+ ],
+ "passed": 34,
+ "total": 34,
+ "verdict": "PASS",
+ "claim": "126.23",
+ "log2_W": "126.22927971",
+ "success": "0.3923402151"
+}

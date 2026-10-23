@@ -1,0 +1,24 @@
+{
+ "version": 1,
+ "title": "Plain G1 v17: batch-amortised six-class quotient walk, machine-generated ledger and shared selector code, 126.23",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "ledger.py",
+    "certificate.json",
+    "scripts/verify_certificate.py",
+    "scripts/toy.py",
+    "scripts/selector.py",
+    "scripts/gen_tables.py",
+    "evidence/toy.json"
+   ],
+   "score": {
+    "numerator": "12623",
+    "denominator": "100"
+   },
+   "statement": "On the bls12-381-g1-ecdlp-plain input, which supplies only T=[x]P0 for x uniform in [0,r) with no auxiliary powers and no n, the algorithm specified in this package recovers and verifies x by [x]G=T with probability at least 0.39, using at most 2^126.230 native-equivalent work units at C=2000 and 2^74.585 bytes of storage. The state is (S,(a,c)) with S affine and S=[a]G+[c]T; the transition is the fixed function S->S+J_m with m=cell(|y(S)|)=(|y|*2048)>>(bitlen(P)-1) and (a,c)->(a+r_m,c+s_m), evaluated by scripts/selector.py (the only implementation, shared by the ledger and the toy) as an exact shift with no reciprocal and no correction step. There is no per-step canonicalisation and no per-step coefficient twist: the orbit element e is resolved once per record hit at report time. The step ledger charges ten itemised rows totalling 133 instructions on top of one reference addition, and the one field inversion an affine addition needs is charged as a total, 101495 instructions per batch of 2^18 steps plus one whole tail batch (0.387188 instructions per step), never as a per-step average. argument.md's tables are rendered from ledger.py by scripts/gen_tables.py and every printed formula is re-evaluated in exact rational arithmetic by scripts/verify_certificate.py. The package is self-contained: dependencies are empty and no experiments are declared."
+  }
+ ],
+ "experiments": []
+}

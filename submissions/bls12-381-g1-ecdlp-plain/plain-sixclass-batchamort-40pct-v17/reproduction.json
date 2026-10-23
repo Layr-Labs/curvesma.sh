@@ -1,0 +1,35 @@
+{
+ "package": "plain-sixclass-batchamort-40pct-v17",
+ "track": "bls12-381-g1-ecdlp-plain",
+ "self_contained": true,
+ "dependencies": [],
+ "reproduce": [
+  {
+   "command": "python3 ledger.py",
+   "writes": "stdout",
+   "expects": "log2 W = 126.22927971, claim 126.230, success 0.3923402151, step price 1.0665, inversion share 0.3872 instr/step"
+  },
+  {
+   "command": "python3 scripts/gen_tables.py --check",
+   "writes": "stdout",
+   "expects": "generated block matches ledger.py"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/toy.py",
+   "writes": "evidence/toy.json",
+   "expects": "verdict PASS, collision failures 0/360 across all six e, invariant_checks == invariant_pass_steps, recovery 0.40357 at kappa 1.005"
+  },
+  {
+   "command": "python3 scripts/verify_certificate.py",
+   "writes": "certificate.json",
+   "expects": "verdict PASS, every check true"
+  }
+ ],
+ "fixture": {
+  "p": 600217,
+  "q": 50047,
+  "classes": 8341,
+  "note": "hardcoded, no runtime search"
+ },
+ "scope": "mechanism, selector fidelity, e-resolution and the full-state merging lemma at 20 bits; not a production-size execution"
+}
