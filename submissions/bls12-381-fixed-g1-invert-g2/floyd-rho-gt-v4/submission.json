@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: O(1)-memory Floyd rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^129.40 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) (a generator by nondegeneracy and prime order) and solves z=g^a by a Pollard rho on GT with FLOYD tortoise-hare cycle detection: a deterministic R-adding walk f(x)=x*M_H(x) (R=2^20), where H(x) is the low 20 bits of the least-significant limb of the first REDUCED TOWER coefficient of x as the reference multiplication natively outputs it (the reduced tower representation is unique per element, so H and the tortoise/hare equality test operate directly on the multiplication's own output with NO canonical flat-basis conversion or Montgomery export charged in the walk; a fixed deterministic near-uniform R-way function), is advanced one step for a tortoise and two for a hare, both from a common start; at their meeting x_i=x_{2i} the tracked exponents give a=(A_h-A_t)/(B_t-B_h) mod r. The step count is a HARD deterministic budget of T=ceil(1.25*k0) tortoise iterations (k0=sqrt(2*r*ln(1/0.61))), each exactly 3 dense Fp12 multiplications; Floyd detects by iteration i<=rho (the rho length), so the bounded success probability is at least P(rho<=1.25*k0)=1-0.61^1.5625=0.538>=0.39 under the random-mapping heuristic (the ~1/r unsolvable meeting (which follows from the uniform table coins plus random-mapping) is a counted exceptional failure). Each multiplication is declared <=1.02 units (covering ~297 estimated overhead instructions: exponent updates, the H mask, native adding-table loads, and the tortoise/hare element comparison). The total is W_walk=3.75*k0*1.02=2^129.356, rounded to 2^129.40; one-time work is bounded and charged explicitly: adding-table build (near-uniform exponents sampled WITHOUT rejection from the attack's FRESH UNIFORM ALGORITHM COINS granted by the scoring probability space (512 genuinely-uniform coin bits reduced mod r: hard O(1) per value, bias <2^-256, no PRNG and no pseudorandomness assumption; the cost model charges this randomness), plus 2^21 exponentiations) <=2^30.4 units, start sampling, collision-solving (one modular inverse mod r) <=2^9.1, pairing <=2^15, [a]Q0 <=2^10, encoding; total one-time <=2^30.5 units (the deterministic iteration cap bounds the walk work, and the randomness/sampling/solving are these separate charged terms). Peak memory is the 2^20-entry adding table (~2^29.3 bytes) plus O(1) walk state: far below 2^64 bytes, so a single native 64-bit address space with ordinary loads/stores suffices and NO segmented/tree/banked/distributed memory or its access cost arises. Declare memory_log2_bytes=30 (reported only; no scalar contribution). Preprocessing (table build <=2^30.3 units) is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps; generic square-root accounting, not a practical break.",
+      "score": {"numerator": "647", "denominator": "5"},
+      "evidence": ["proof.md", "experiment.py"]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-floyd-rho",
+      "source": "experiment.py",
+      "purpose": "Run O(1)-memory Floyd (tortoise-hare) rho on a prime-order-l subgroup of F_q^* (cyclic, standing in for GT) for many random targets with the hard budget T=ceil(budget_factor*k0) tortoise iterations (3 multiplications each). Report the fraction of trials finding a usable collision within T -- a Monte-Carlo estimate of the bounded success probability, lower-bounded at >=0.39 in proof.md. No table beyond the adding walk, no distinguished points, no large memory. Toy-scale evidence for the random-mapping collision-time model only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 30},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 300},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000},
+          "partitions": {"type": "integer", "minimum": 4, "maximum": 4096},
+          "budget_factor": {"type": "number", "minimum": 0.5, "maximum": 3.0}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [{"bits": 24, "trials": 200, "seed": 1, "partitions": 256, "budget_factor": 1.25}]
+    }
+  ]
+}
