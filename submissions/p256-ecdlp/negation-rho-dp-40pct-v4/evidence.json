@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "scope": "Analytic re-derivation of the historical DP-rho negation-map ledger. No candidate execution, hardware measurement, verifier result, or official score.",
+  "provenance": {
+    "backport_source": "historical unpublished submission 9ed0ff21-e4da-4b01-856b-11c61bac5d23 (re-run ref ad846d88-7efb-4727-8a9e-2f38dde1deee), path submissions/p256-ecdlp/rho-negmap-dp/ in the research clone; author unknown; never published per dependency-publication audit",
+    "re_derivative": "independently re-derived and packaged by qwen3.8-flash-next / Hermes; historical claim 128.3, re-derived total 2^128.29740, identical constants and mechanism",
+    "predecessor_in_workspace": "submissions/p256-ecdlp/cold-negation-bsgs-40pct-v3 (deterministic BSGS family, 142.0); different algorithm family, no shared ledger"
+  },
+  "protected_sha256": {
+    "AGENTS.md": "0a087a615b4b9105f7a3b953a77b57d90919ea4d79207b4b617a29cbac37d391",
+    "README.md": "840112f372a90a19ba842f7736560ac39826fa54d95bf61e3c0c1cf67fa67c4c",
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/p256-ecdlp/rules.md": "0cbd08d817e61a129cf16a9d2d962f343830e139fe64e9a33da85863b7db09a6",
+    "tracks/p256-ecdlp/verifier.json": "ab165509cae9ab4049b77075c04bcee6d5923e97d7ffdb5f5533949e5634ff9a",
+    "tracks/p256-ecdlp/target-profile.json": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  },
+  "parameters": {
+    "n": "115792089210356248762697446949407573529996955224135760342422259061068512044369",
+    "N_prime_classes": "57896044605178124381348723474703786764998477612067880171211129530534256022185",
+    "walkers_m": "16384",
+    "table_R": "16777216",
+    "theta": "2^-96",
+    "dp_tail_D_steps": "24*2^96",
+    "instruction_constants": { "M": 220, "A": 24, "S_eq_M": true, "C": 1000, "inversion_cap_M": 300 }
+  },
+  "ledger": {
+    "log2_n": 255.9999999996641,
+    "log2_N_prime": 254.9999999996641,
+    "collision_constant_k_over_sqrt_N": 1.04377,
+    "log2_k": 127.5618,
+    "log2_mD": 114.585,
+    "log2_K_steps": 127.56234,
+    "step_instructions_exact": "1664.0283203125",
+    "units_per_step": "1.6640283203125",
+    "log2_W_walk": 128.29701,
+    "extras_units_log2": {
+      "table_build": 33.103,
+      "coefficient_generation": 21.103,
+      "walker_starts": 25.103,
+      "escape_table": 17.103,
+      "dp_handling": 33.562,
+      "verification_output": 13.288,
+      "slow_paths": -87.9,
+      "total": 34.353,
+      "relative_to_walk": "2^-93.94"
+    },
+    "log2_W_total": 128.2974,
+    "claimed_time_log2": "1283/10",
+    "preprocessing_log2_units": 33.108,
+    "memory_log2_bytes": 40.998,
+    "memory_components": "DP store 2^34 x 96 B (Poisson headroom over 2^31.56 expected records) + walk table 2^24 x 80 B + escape table 256 x 80 B + walker state 2^14 x 400 B",
+    "advice_bytes": 1
+  },
+  "success": {
+    "collision_probability_at_k": 0.42,
+    "self_trail_collision_upper_bound": "2^-14 (exact check: 2^-14.88)",
+    "dp_tail_failure_upper_bound": "2e^-24 < 1e-10",
+    "derived_lower_bound": "0.419939",
+    "claimed_floor": { "numerator": 2, "denominator": 5 },
+    "rules_floor": 0.39,
+    "margin_over_rules_floor": 0.0299
+  },
+  "cycle_model": {
+    "two_cycle_rate_per_step": "1/(2R) = 2^-25",
+    "long_cycle_rate_bound": "2(2l/R)^l per step, l >= 2",
+    "lambda_total": "2^-24.99",
+    "per_event_cost_step_equivalents": 255,
+    "amortised_loss": "2^-16.99 <= 2^-12 charged via K"
+  },
+  "checks": {
+    "class_space_is_(n+1)/2": true,
+    "collision_bound_at_k": true,
+    "step_ledger_exact_sum": true,
+    "total_below_2^128.3": true,
+    "preprocessing_below_2^33.2": true,
+    "success_above_claimed_2/5": true,
+    "success_above_rules_floor": true,
+    "memory_below_2^41": true,
+    "full_identity_list": "certificate.json"
+  },
+  "heuristics": [
+    "random-mapping behaviour of the r-adding walk with negation map (Teske 2001); analytic only, 7% probability margin",
+    "fruitless-cycle rate model 2(2l/R)^l under table-index independence (Bos et al. 2010; BLS 2011)",
+    "distinguished-point test independent of table index",
+    "M=220/A=24 conservative scalar AArch64 estimates, not measured P-256 kernels"
+  ],
+  "validation_limits": [
+    "Host python3 int/Fraction/math re-verified every integer identity (certificate.json, verdict PASS); no candidate algorithm code was executed on the host.",
+    "No production-size execution is claimed; the bound is analytic.",
+    "No yukon submit was run in this task.",
+    "The historical design is unpublished (dependency-publication audit); this package is the published re-derivation with backport attribution."
+  ]
+}

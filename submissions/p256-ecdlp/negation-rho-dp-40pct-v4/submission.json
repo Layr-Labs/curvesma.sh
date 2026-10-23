@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: parallel Pollard rho with distinguished points and the negation map (backport v4, independently re-derived)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) on NIST P-256 (secp256r1, a=-3, exact SEC 2 Section 2.4.2 constants) with input Q=[x]P, the algorithm in argument.md returns the canonical scalar x with probability at least 2/5 over the uniform challenge and fresh algorithm coins. Analytic bound: total classical work at most 2^128.30 target-group-operation equivalents at the protected normalization C=1000 scalar AArch64 instruction equivalents per unit. Each of K < 2^127.5623 walk steps is charged 1664.03 instructions (1.6640283 units): 6 P-256 Montgomery multiplications at M=220 (3 for the batched affine addition with S=M plus 3 for batch inversion amortisation), 6 modular add/sub at A=24, plus table lookup, negation canonicalisation, coefficient tracking, distinguished-point test, cycle checkpointing, state movement, and amortised Fermat inversion (300M/2^14); preprocessing, DP handling, cycle-event overhead, verification and output are added once each and contribute less than 2^-93 relative. Preprocessing below 2^33.2 units, included in total work. Peak memory below 2^41 bytes (reported, unscored): DP store 2^34 records x 96 B, walk table 2^24 entries x 80 B, escape table 256 entries, 2^14 walkers. Nonuniform advice 2^0 bytes. Mechanism: 2^14 lockstep walkers on an r-adding walk with r=2^24 over negation classes (class size 2, N'=(n+1)/2, giving the sqrt(2) gain), distinguished points at theta=2^-96, and fruitless-cycle escape defined as a function of the cycle (smallest-u member plus a fixed escape table), so merged walks stay merged. Success analysis: collision probability at least 0.42 at k=1.0438 sqrt(N') steps under the random-mapping model, minus at most 2^-14 for collisions inside one walker's own trail and less than 10^-10 for DP-tail failure, giving at least 0.4199, claimed as 2/5 with margin over the 0.39 floor. Disclosed heuristics: random-mapping behaviour of the r-adding walk with negation map (Teske 2001), the fruitless-cycle rate model (Bos et al. 2010; Bernstein-Lange-Schwabe 2011), and independence of the distinguished-point test from the table index. These are analytic upper bounds; no production execution, official score, novelty, or practical break is claimed.",
+      "score": {
+        "numerator": "1283",
+        "denominator": "10"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

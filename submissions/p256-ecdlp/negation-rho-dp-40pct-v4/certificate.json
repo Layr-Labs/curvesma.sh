@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "recordType": "Independent python3 re-derivation of the full DP-rho ledger for the v4 backport package. Trusted host python3 int/Fraction/math on formulas only; no candidate code executed on the host.",
+  "verifiedAt": "2026-10-22",
+  "tool": "host python3 (int / Fraction / math)",
+  "claim_under_review": "time_log2 1283/10 at C=1000; success at least 2/5; preprocessing below 2^33.2 units; memory below 2^41 bytes",
+  "parameters": {
+    "n": "115792089210356248762697446949407573529996955224135760342422259061068512044369",
+    "N_prime": "57896044605178124381348723474703786764998477612067880171211129530534256022185",
+    "walkers_m": "16384",
+    "table_R": "16777216",
+    "theta": "2^-96",
+    "D_steps": "24*2^96",
+    "M_instr": 220,
+    "A_instr": 24,
+    "S_eq_M": true,
+    "C_instr": 1000
+  },
+  "derivation": {
+    "objective": "time_log2 = log2(K*u + extras), u = step instructions / 1000",
+    "budget_k": "k = sqrt(2 N' ln(1/0.58)) = 1.04377 sqrt(N') = 2^127.5618 steps; collision prob 1-exp(-k^2/2N') >= 0.42",
+    "budget_K": "K = (k + m*D)/(1 - 2^-12), m*D = 2^14 * 24 * 2^96 = 2^114.5850 DP-tail slack; log2 K = 127.5623",
+    "step_charge": "1320 + 144 + 6 + 24 + 32 + 64 + 4 + 16 + 50 + 66000/2^14 = 1664.0283203125 instr = 1.66402832 units < 1.66403",
+    "success": "0.42 - 2^-14 - 2e^-24 = 0.419939; claimed floor 2/5 = 0.40; rules floor 0.39",
+    "re_derived_log2_W_walk": 128.297,
+    "re_derived_log2_W_total": 128.2974,
+    "historical_log2_W": 128.3,
+    "extra_components_log2": {
+      "table": 33.103,
+      "coefficient_generation": 19.356,
+      "walker_starts": 25.103,
+      "escape_table": 17.103,
+      "dp_handling": 33.562,
+      "verification": 13.288,
+      "slow_paths": -102.0
+    },
+    "expected_dp_records_log2": 31.5623,
+    "negation_gain": "classes of size 2 (identity singleton): sqrt(2) = 0.5-bit gain; P-256 has no j=0 curve so no order-3 endomorphism exists, unlike secp256k1/BLS12-381 G1"
+  },
+  "checks": {
+    "class_count_N_prime_is_(n+1)//2": true,
+    "collision_prob_at_k_ge_0.42": true,
+    "step_equals_1664.0283203125_instr": true,
+    "step_below_1664.03": true,
+    "units_per_step_below_1.66403": true,
+    "log2_K_matches_127.5623": true,
+    "log2_W_walk_matches_128.2970": true,
+    "preprocessing_below_2^33.2": true,
+    "W_total_below_2^128.3": true,
+    "extra_relative_share_below_2^-93": true,
+    "success_ge_0.40_claimed_2_5": true,
+    "success_ge_floor_0.39": true,
+    "self_trail_collision_below_2^-14": true,
+    "dp_tail_failure_below_1e-10": true,
+    "cycle_loss_fraction_below_2^-12": true,
+    "memory_below_2^41_bytes": true
+  },
+  "verdict": "PASS",
+  "heuristic_disclosure": "Random-mapping behaviour of the r-adding walk with negation map (Teske 2001) and the fruitless-cycle rate model (Bos et al. 2010; Bernstein-Lange-Schwabe 2011) are heuristics, not theorems; the 0.42 -> 0.40 margin absorbs known non-randomness. Model-independent integers (N', step ledger, extras, memory arithmetic) verified exactly."
+}
