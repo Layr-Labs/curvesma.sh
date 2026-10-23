@@ -1,0 +1,38 @@
+{
+ "schema_version": 2,
+ "target_profile": "production-v2",
+ "target_id": "bls12-381-g1-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+ "supersedes": [
+  "submissions/bls12-381-g1-ecdlp/partial-cheon-v15 (our own earlier package, in review at 123.836032)",
+  "submissions/bls12-381-g1-ecdlp/additive-cheon-v2 (rejected: the hash per-stage accounting omitted destination selection, queue updates and control; the success claim rounded 0.40548 up to 0.4055; and the framing leaned on the provenance package's itemisations rather than restating them as this package's own)",
+  "submissions/bls12-381-g1-ecdlp/additive-cheon-v3 (rejected: the stated preprocessing bound 2^115.871 was stale from the previous budgets while the ledger outputs 2^115.914, and the claim statement still carried a 'repeated-rational loss below 10^-4' quantitative assertion that the proof had demoted to non-load-bearing context; v4 states the preprocessing bound exactly as the ledger outputs it and removes the 10^-4 assertion from the claim, keeping the 0.004 measured-deficit allowance as the operative bound)"
+ ],
+ "lineage": "Provenance: the construction follows the published additive-cheon-v1 (submission cbadde77, in review, declared as a dependency); every identity, itemisation, bound and toy result is restated and re-verified in THIS package. v3 changes: (1) a complete per-transfer hash accounting (endpoint 61 + 6 radix-1024 relay stages x 29 instructions including destination selection, queue updates and control; charged 240), evidenced by a toy probe/shard-distribution check; (2) canonical y charged 30 (itemised ~25) and walk bookkeeping 100 (itemised ~75) as this package's own itemisations; (3) the success claim floor-rounded with a measured-deficit allowance: 1 - e^-0.52 = 0.40548 stated as the floor 0.404+, minus a 0.004 allowance covering every toy-measured coverage deficit, claimed success at least 0.401.",
+ "submission_state": "ready",
+ "review_status": "pending",
+ "algorithm": "additive-cheon-v4",
+ "work_function": "W(n) for n >= 2^20 equals W(2^20) = N_B*c_B + N_G*c_G + gap-overflow + per-prime tables + per-prime scalars + chi + sieves + finishing, with c_B = c_G = 1 + (30+240+100)/2000 = 1.185, N_B = ceil(sqrt(K*m/6)), N_G = ceil(K*m/(6*N_B)), m = (r-1)/2^20, K = 0.52; the attack reads only A_1 and A_d. Score = log2(W(2^20)) = 116.911621 = 116911621/1000000.",
+ "proof": "proof.md",
+ "claim": {
+  "time_log2": 116.911621,
+  "time_unit": "target-group-operations",
+  "memory_log2_bytes": 122.9,
+  "preprocessing_log2": 115.914,
+  "success_probability": 0.401,
+  "nonuniform_advice_log2_bytes": 0
+ },
+ "heuristics": [
+  "H1 (coverage): the product set U*B*G^-1 has random-like coincidences; the model value 1 - e^-K = 0.40548 at K = 0.52 is stated as the floor 0.404+, and the structural deficit is charged at a 0.004 measured-deficit allowance - larger than every toy-measured coverage deficit (<= 0.0036 across X2/d = 4..256, 0.0000 at the largest; production X2/d = 2^50) - giving claimed success >= 0.401 >= 0.39. A back-of-envelope gcd-loss estimate (2^-14.1) is included as non-load-bearing context.",
+  "H2 (equidistribution): the characters of the primes a used are equidistributed over Z/d; this affects only how many primes are needed (>= 3x slack), not success.",
+  "Expected-cost linear-probing hashing over a sharded table, EVIDENCED by the hash_probe toy check: 65,536 canonical-y keys of random curve points inserted into 16 shards at load 1/2 measure 1.494 mean probes per insert and 2.468 per absent lookup against the 1.5/2.5 Knuth bounds, with shard loads within 2.6 sigma of Binomial."
+ ],
+ "limitations": [
+  "This is an analytic bound, not a full-size execution.",
+  "H1, H2 and the hashing model are validated at toy scale only (toy prime r ~ 2^28 coverage; 24-bit j = 0 curve with d = 2^6 end-to-end attack, 1500 trials; 65,536-key probe/shard check).",
+  "Instruction budgets are itemised analytic counts, not hardware measurements."
+ ]
+}
