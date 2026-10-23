@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp-plain/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282 (current master at submission time).",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "automorphism-rho-dp-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.143439,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 70.3,
+    "preprocessing_log2": 25.4,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the canonical 32-adding walk on the (r-1)/6 automorphism classes has first-collision time approximating the birthday tail 1 - exp(-t^2/(2N)); supported by classical rho analysis, Teske's r-adding-walk experiments, and the toy-scale run in experiment.py (0.42 observed vs 0.4545 ideal at the claimed budget shape); the 1.1*sqrt(N) budget absorbs a >= 14% walk-efficiency loss against the claimed 0.39 lower bound.",
+    "Instruction sub-costs are analytical instruction-equivalent bounds (pinned 383-instruction blst base-field multiplication; 16-64 instruction bounds for compares, selects and negations; 383 charged for the cheaper 255-bit mod-r multiplications), charged at worst case on every step as the cost model permits."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack with success probability lower bound 0.39 exactly at the protected threshold; no amplification is used and all failures are charged.",
+    "The distinguished-point table needs about 2^70.3 bytes; memory is reported and has no score effect.",
+    "Automorphism-accelerated rho is standard cryptanalysis, not a novel attack; the GT/NFS route is discussed and not claimed. This is the first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}
