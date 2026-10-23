@@ -10,10 +10,10 @@ permissions:
   contents: read
 jobs:
   verify:
-    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@f7b7a9972f5dda458bb34a02d5b04abad8f2121a
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@8c1f098875fae0750c29ecfd641f7c9fc53a0f41
     with:
       verifier_repository: Layr-Labs/llm-verifier
-      verifier_revision: f7b7a9972f5dda458bb34a02d5b04abad8f2121a
+      verifier_revision: 8c1f098875fae0750c29ecfd641f7c9fc53a0f41
       root_dir: '.'
       config_path: tracks/bls12-381-fixed-g2-invert-g1/verifier.json
       submission_path: submission
