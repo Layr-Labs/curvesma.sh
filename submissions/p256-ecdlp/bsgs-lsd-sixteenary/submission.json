@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: odd-lift BSGS with global LSD distribution and implicit sixteen-ary lookup",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on NIST P-256 with the profile generator P, the deterministic odd-lift baby-step/giant-step procedure in proof.md recovers x with probability 1. Baby records are ordered by a global LSD byte distribution with one histogram per byte and no heap. Giants are located by an implicit sixteen-ary descent on that array. Total classical work is strictly less than 2^(1329/10) target-group-operation equivalents at C=1000, including preprocessing, sorting, lookup, verification and failed-path charging. Peak memory is strictly less than 2^135 bytes. Preprocessing is strictly less than 2^132 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. No heuristic premise, quantum step or uncharged table is used.",
+      "score": {
+        "numerator": "1329",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-odd-lift-lsd-sixteenary",
+      "source": "experiment.py",
+      "purpose": "Exhaustively recover every scalar on a prime-order toy curve with the odd-lift decomposition, check that global LSD sorting is a stable permutation with cross-page scatters, and check that implicit sixteen-ary lookup hits the sorted key. This does not measure production instruction counts or memory.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": ["all", "cover", "distribution"]
+          }
+        },
+        "required": ["mode"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all"
+        }
+      ]
+    }
+  ]
+}
