@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: 20-adding distinguished-point walk, revision 2",
+  "claims": [
+    {
+      "statement": "For a challenge P uniform among nonidentity G1 points and an independent uniform z in GT, the serial 20-adding distinguished-point walk in proof.md returns Q in G2 with e(P,Q)=z, including Q=infinity when z=1. Under the single random-mapping heuristic stated in proof.md, the success probability is at least 0.5. The same proof charges at most 2^128.191581 target-group-operation equivalents in total, including preprocessing, distinguished-point storage, verification and output. Peak memory is at most 2^118.928545 bytes. Preprocessing is at most 2^13.356590 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. One processor is used; work is not divided by orbit size or by a processor count. This is a classical cold attack and an analytic generic accounting control, not a claim of novelty or of a practical break.",
+      "score": {
+        "numerator": "128191581",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-adding-walk",
+      "source": "experiment.py",
+      "purpose": "On a toy cyclic group, check that a 20-adding walk with every branch incrementing the z-exponent recovers every discrete log from a distinguished-point collision. This does not establish production mixing, memory or Fp12 costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}

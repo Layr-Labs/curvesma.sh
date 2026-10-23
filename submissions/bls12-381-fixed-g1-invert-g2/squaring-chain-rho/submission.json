@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: cyclotomic squaring-chain distinguished-point walk",
+  "claims": [
+    {
+      "statement": "For a challenge P uniform among nonidentity G1 points and an independent uniform z in GT, the serial block walk in proof.md returns Q in G2 with e(P,Q)=z, including Q=infinity when z=1. Each block performs one dense Fp12 multiplication and three Granger-Scott squarings in the cyclotomic subgroup and emits four elements; the block-to-block map is A -> 8A + u_s on exponents. Only seven collision events per block pair are credited, so no work is divided by the chain length, by a Frobenius orbit, by a negation class or by a processor count. Under the single random-mapping heuristic stated in proof.md, the success probability is at least 0.5 (modeled 1-exp(-1) > 0.632). The same proof charges at most 2^127.553439 target-group-operation equivalents in total, including preprocessing, distinguished-point storage, candidate verification and output. Peak memory is at most 2^119.524868 bytes. Preprocessing is at most 2^13.356590 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. One processor is used.",
+      "score": {
+        "numerator": "127553439",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-squaring-chain-walk",
+      "source": "experiment.py",
+      "purpose": "On a toy cyclic group of prime order embedded in Z_p*, check that the block update used in proof.md (one multiplication by an adder, three squarings, collision solved from the linear congruence in the exponents) recovers discrete logarithms. This does not establish production mixing, memory, cyclotomic squaring cost or the 255-bit tail.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
