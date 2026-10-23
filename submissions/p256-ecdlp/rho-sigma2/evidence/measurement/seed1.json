@@ -1,0 +1,101 @@
+{
+ "purpose": "Production measurement of the common batched path of measurement/step.c (organizer image and flags) on two input sets (seed 1 and seed 2), at 1, 2, 63 and 64 batch steps; plain = Ir(2)-Ir(1), anchor = Ir(64)-Ir(63), per walk step over 65536 walks. The inputs are the first 132096 lines of the generator output (2^16 adders, 2^16 walks, 1024 spares).",
+ "kernel": "measurement/step.c: the rare paths out of line, the escape a doubling, the repeat counter a diagnostic",
+ "input_set_1": {
+  "callgrind_total_Ir": {
+   "batch_steps_1": 54631619,
+   "batch_steps_2": 109263218,
+   "batch_steps_63": 3444339107,
+   "batch_steps_64": 3499708260
+  },
+  "events": {
+   "batch_steps_63": {
+    "two_cycles": 31,
+    "long_cycles": 0,
+    "dps": 0,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "unbatched": 62,
+    "loops": 0
+   },
+   "batch_steps_64": {
+    "two_cycles": 32,
+    "long_cycles": 0,
+    "dps": 0,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "unbatched": 64,
+    "loops": 0
+   }
+  },
+  "per_batch": {
+   "plain": 54631599,
+   "anchor_as_measured": 55369153,
+   "rare_events_in_step_64": 1,
+   "average_rare_event_Ir": 82205,
+   "anchor_without_rare_events": 55286948
+  },
+  "per_walk_step_Ir": {
+   "plain": 833.612,
+   "anchor_without_rare_events": 843.612
+  }
+ },
+ "input_set_2": {
+  "callgrind_total_Ir": {
+   "batch_steps_1": 54631619,
+   "batch_steps_2": 109263218,
+   "batch_steps_63": 3444256913,
+   "batch_steps_64": 3499790504
+  },
+  "events": {
+   "batch_steps_63": {
+    "two_cycles": 30,
+    "long_cycles": 0,
+    "dps": 0,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "unbatched": 60,
+    "loops": 0
+   },
+   "batch_steps_64": {
+    "two_cycles": 33,
+    "long_cycles": 0,
+    "dps": 0,
+    "ahead_dps": 0,
+    "abandoned": 0,
+    "unbatched": 66,
+    "loops": 0
+   }
+  },
+  "per_batch": {
+   "plain": 54631599,
+   "anchor_as_measured": 55533591,
+   "rare_events_in_step_64": 3,
+   "average_rare_event_Ir": 82205,
+   "anchor_without_rare_events": 55286976
+  },
+  "per_walk_step_Ir": {
+   "plain": 833.612,
+   "anchor_without_rare_events": 843.612
+  }
+ },
+ "common_path_bound": {
+  "method": "per-instruction Callgrind counts of the production binary at 2, 63 and 64 batch steps with its disassembly: every conditional branch executed once per walk is listed with the instruction count of its other edge",
+  "branches_per_walk": [
+   "first test of the distinguished-point check (key >> 16 = 0): the other edge evaluates the second test, +3 instructions, and rejoins the common path",
+   "previous-key filter match: leads to a call of rare_2cycle after 12 instructions (a rare event, charged separately)",
+   "anchor filter match: leads to a call of rare_anchor after 10 instructions (a rare event)",
+   "trail cap, anchor copy only: leads to new_trail after 11 instructions (an abandonment, a rare event)",
+   "distinguished point: leads to dp_restart (a rare event)",
+   "loop control: a counter"
+  ],
+  "field_arithmetic": "no conditional branch (measurement/forced/summary.json)",
+  "largest_deviation_per_walk_step": 3,
+  "bound_per_walk_step": {
+   "plain": 836.612,
+   "anchor": 846.612
+  },
+  "C_COMMON": 847
+ },
+ "unbatched_op_Ir": "add_single: 40,878 to 40,890 on the addition paths and 41,183 on the doubling path (41,185 charged); see measurement/forced/summary.json"
+}
