@@ -1,0 +1,35 @@
+{
+  "Ir_total": {
+    "4": 204469624,
+    "8": 408944026
+  },
+  "events_n2": {
+    "walk_steps": 524288,
+    "two_cycles": 0,
+    "long_cycles": 0,
+    "dps": 0,
+    "abandoned": 0,
+    "exceptional": 0,
+    "unbatched": 0,
+    "frac_fallbacks": 0
+  },
+  "per_step_total_Ir": 780.008,
+  "C": 1000,
+  "per_step_units_all_instructions": 0.780008,
+  "mode_single": {
+    "Ir": {
+      "1024": 23463657,
+      "2048": 46927543
+    },
+    "per_unit_Ir": 22913.951
+  },
+  "replica_check": {
+    "walks": 65536,
+    "batch_steps": 8,
+    "mismatches": 0,
+    "two_cycles": 0,
+    "long_cycles": 0,
+    "dps": 0,
+    "abandoned": 0
+  }
+}
