@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "cheon-subgroup-dp-walk-mu6-comb-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 120.945788,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 34.014135,
+    "preprocessing_log2": 21.032477,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class walk on H/mu6 (H the 2^20-th powers in Z_r^*, multiplicative steps with 64 multipliers in H) behaves as a random mapping on M = (r-1)/(6*2^20) classes, so S = 2*sqrt(13/20 * M) points give a tame-wild collision with probability 1 - exp(-S^2/(4M)) = 0.477954.",
+    "H2: when two walks merge, the first distinguished point on the merged path is reached after a geometric delay with mean 2^90 steps per trail, and detection uses about 2G points; with a fixed budget of S + 2^100 points this loses at most e^-512. Trail caps lose at most e^-1024 per trail and in-trail cycles at most 2^-16.4 in total; all are bounded in proof.md section 3.",
+    "H3: the per-step instruction count is measured by Callgrind on blst for the full walk step as run (2786.5 per step, 256 walk records, both families); the reference additions are charged as units, and the remaining work is analytic only where stated in proof.md section 4."
+  ],
+  "limitations": [
+    "H1 is an unproved heuristic; the fresh toy runs (4000 trials on 32- and 36-bit prime-order toy groups with the mu6 action) support it at the claim budget, but nothing is tested at production size.",
+    "The claimed success 0.40 is the Wilson 95% lower bound (0.4227) of 4000 fresh toy trials at the claim budget, minus losses below 2^-16; it is not the model value 0.478.",
+    "Analytic bounds for distinguished-point storage, sampling, trail restarts and Tonelli-Shanks are not measured; together they are about 9e-29 of W.",
+    "Peak memory is about 17 GB, dominated by the distinguished-point table with exact 291-bit keys.",
+    "Analytic production cost; no production-size execution. Not a practical attack."
+  ],
+  "lane": "exploratory"
+}

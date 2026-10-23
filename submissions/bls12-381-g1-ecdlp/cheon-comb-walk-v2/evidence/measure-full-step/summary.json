@@ -1,0 +1,20 @@
+{
+  "Ir_total": {
+    "256": 714288,
+    "512": 1427632
+  },
+  "events_n2": {
+    "steps": 512,
+    "dps": 0,
+    "restarts": 0
+  },
+  "per_step_total_Ir": 2786.5,
+  "C": 2000,
+  "Ir_reference": {
+    "256": 236800,
+    "512": 473600
+  },
+  "per_step_reference_Ir": 925.0,
+  "per_step_other_Ir": 1861.5,
+  "per_step_units": 0.93075
+}

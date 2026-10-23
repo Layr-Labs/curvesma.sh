@@ -1,0 +1,125 @@
+{
+  "r_bits": 255,
+  "N_log2": 234.8570894130472,
+  "M_log2": 232.27212691232603,
+  "tau_model": "13/20",
+  "S_model_log2": 116.82531926778988,
+  "budget_log2": 116.82533169137336,
+  "detect_span_log2": 100.0,
+  "stop_loss_exp": 4.377491037053051e-223,
+  "success_model_after_stop": 0.47795422323898396,
+  "success_claim": "2/5",
+  "dp_entries_log2": 26.825331700879943,
+  "trails": 116127,
+  "H_total": "2355315418833096571712965385061768656",
+  "R_total_log2": 128.26957012945147,
+  "R_over_C_log2": 117.30378584478937,
+  "time_log2": "30236447/250000",
+  "time_log2_float": 120.94578731757106,
+  "score_rational": {
+    "numerator": "30236447",
+    "denominator": "250000"
+  },
+  "preprocessing_log2": "21032477/1000000",
+  "memory_log2_bytes": "6802827/200000",
+  "memory_bytes": 17349013840,
+  "advice_bytes": 0,
+  "items": [
+    {
+      "name": "comb tables: batched additions (2^19 per base)",
+      "phase": "preprocessing",
+      "H_units": 1048576,
+      "R_instructions": "0"
+    },
+    {
+      "name": "comb tables: base shifts, doublings",
+      "phase": "preprocessing",
+      "H_units": 480,
+      "R_instructions": "0"
+    },
+    {
+      "name": "comb tables: loads and stores of entries",
+      "phase": "preprocessing",
+      "H_units": 0,
+      "R_instructions": "50331648"
+    },
+    {
+      "name": "multipliers: sampling and x^d, 64 elements",
+      "phase": "preprocessing",
+      "H_units": 0,
+      "R_instructions": "847360"
+    },
+    {
+      "name": "DP table zeroing",
+      "phase": "preprocessing",
+      "H_units": 0,
+      "R_instructions": "2140434738"
+    },
+    {
+      "name": "input parse (T and powers used)",
+      "phase": "preprocessing",
+      "H_units": 0,
+      "R_instructions": "65536"
+    },
+    {
+      "name": "walk points: one comb evaluation each (16 additions)",
+      "phase": "walk",
+      "H_units": 2355315418833096571712965385058860912,
+      "R_instructions": "0"
+    },
+    {
+      "name": "walk points: measured step, instructions",
+      "phase": "walk",
+      "H_units": 0,
+      "R_instructions": "820385801822302949634772255683314491411/2"
+    },
+    {
+      "name": "distinguished points: insert and lookup, bound",
+      "phase": "walk",
+      "H_units": 0,
+      "R_instructions": "475652164000"
+    },
+    {
+      "name": "trail starts: comb evaluation (16 additions)",
+      "phase": "walk",
+      "H_units": 1858032,
+      "R_instructions": "0"
+    },
+    {
+      "name": "trail starts: sampling and 20 squarings",
+      "phase": "walk",
+      "H_units": 0,
+      "R_instructions": "1537521480"
+    },
+    {
+      "name": "trail starts: step-sized overhead, bound",
+      "phase": "walk",
+      "H_units": 0,
+      "R_instructions": "647175771/2"
+    },
+    {
+      "name": "chain: comb checks (41)",
+      "phase": "finish",
+      "H_units": 656,
+      "R_instructions": "0"
+    },
+    {
+      "name": "chain: step-sized overhead per check",
+      "phase": "finish",
+      "H_units": 0,
+      "R_instructions": "228493/2"
+    },
+    {
+      "name": "chain: 20 square roots in Fr (Tonelli-Shanks bound)",
+      "phase": "finish",
+      "H_units": 0,
+      "R_instructions": "18923520"
+    },
+    {
+      "name": "collision solve: inversion bound",
+      "phase": "finish",
+      "H_units": 0,
+      "R_instructions": "262144"
+    }
+  ]
+}
