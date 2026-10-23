@@ -1,0 +1,4 @@
+PASS 128/128 arithmetic, detector, index and capture checks; claim 1263047/10000
+PASS 30 rows, 147 instructions, step 1.147, doubling 2.35; prime 67 window, cycle cap 66, bound 4422; phase 148070/148070 escapes
+PASS mu pooled 1.069618 +/- 0.018344 over 6 configs/8800 trials; charge 1.107; S_ops 2^126.777348; raw 2^126.9752149
+PASS claim 126.9769 < gate 127.00; success 0.391002; mu tolerance 1.110677; pipeline 2000/2000 verified; merge 0 failures

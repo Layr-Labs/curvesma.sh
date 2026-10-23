@@ -1,0 +1,1 @@
+{"kind": "traps", "curve": "q29", "R": 4, "trails": 80, "length": 2048, "escapes": 3856, "escapes_per_trail": 48.2, "trails_with_cross_epoch_returns": 0, "predicted_self_collision": 0.04578}

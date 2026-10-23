@@ -1,0 +1,14 @@
+{
+ "low32_only": {
+  "in_file": 30,
+  "longest_iteration": 21
+ },
+ "mul_only": {
+  "in_file": 140,
+  "longest_iteration": 121
+ },
+ "sub_only": {
+  "in_file": 32,
+  "longest_iteration": 18
+ }
+}

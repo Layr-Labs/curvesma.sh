@@ -1,0 +1,246 @@
+{
+ "package": "sixclass-meter-40pct-v13e",
+ "parameters": {
+  "R": 1048576,
+  "dp_bits": 69,
+  "nodes": 65536,
+  "checkpoint_period": 67,
+  "checkpoint_cycle_cap": 66,
+  "mu_charge": 1.107,
+  "step_price": 1.147,
+  "doubling_price": 2.35
+ },
+ "mu_sweep": {
+  "configs": [
+   {
+    "curve": "q25",
+    "R": 256,
+    "trials": 1600,
+    "p": 0.43312,
+    "mu": 0.9596896502144213,
+    "se": 0.03694716676045802,
+    "moves": 4162,
+    "e2": 2324,
+    "ech": 1838
+   },
+   {
+    "curve": "q25",
+    "R": 1024,
+    "trials": 1600,
+    "p": 0.38938,
+    "mu": 1.104295095132623,
+    "se": 0.044692285150522065,
+    "moves": 2381,
+    "e2": 473,
+    "ech": 1908
+   },
+   {
+    "curve": "q25",
+    "R": 2048,
+    "trials": 1600,
+    "p": 0.37062,
+    "mu": 1.1764655775868722,
+    "se": 0.048744696728722246,
+    "moves": 2600,
+    "e2": 580,
+    "ech": 2020
+   },
+   {
+    "curve": "q25",
+    "R": 4096,
+    "trials": 1600,
+    "p": 0.39,
+    "mu": 1.1020255490506947,
+    "se": 0.04456682331976078,
+    "moves": 2206,
+    "e2": 211,
+    "ech": 1995
+   },
+   {
+    "curve": "q29",
+    "R": 1024,
+    "trials": 1200,
+    "p": 0.40167,
+    "mu": 1.060579361299639,
+    "se": 0.04884059959103531,
+    "moves": 4492,
+    "e2": 1188,
+    "ech": 3304
+   },
+   {
+    "curve": "q29",
+    "R": 4096,
+    "trials": 1200,
+    "p": 0.395,
+    "mu": 1.0839763227174422,
+    "se": 0.050314224996833835,
+    "moves": 3600,
+    "e2": 272,
+    "ech": 3328
+   }
+  ],
+  "mu_hat": 1.069618,
+  "se_pooled": 0.018344,
+  "mu_charge": 1.107,
+  "chi2": 14.904,
+  "dof": 5,
+  "model": 0.42,
+  "n_trials": 8800,
+  "n_escapes_two": 5048,
+  "n_escapes_check": 14393
+ },
+ "phase": {
+  "kind": "phase",
+  "window": 67,
+  "cycle_cap": 66,
+  "phases": 67,
+  "lengths": [
+   2,
+   66
+  ],
+  "enumerations": 148070,
+  "escapes": 148070,
+  "failures": 0,
+  "max_escape_steps": 4422,
+  "bound": 4422,
+  "divisor_lengths": [
+   2,
+   4,
+   8,
+   16,
+   32,
+   64
+  ],
+  "fixed64_failures": {
+   "2": 0,
+   "4": 3,
+   "8": 7,
+   "16": 15,
+   "32": 31,
+   "64": 63
+  },
+  "fixed64_escapes": {
+   "2": 2,
+   "4": 1,
+   "8": 1,
+   "16": 1,
+   "32": 1,
+   "64": 1
+  },
+  "fixed64_note": "fixed window 64: boundary advances 0 mod L for L|64, so a boundary that starts off the minimum never reaches it",
+  "prime_note": "prime window 67: 67 mod L is a unit for every L<=66, boundary offsets visit every residue"
+ },
+ "pipeline": {
+  "kind": "pipeline",
+  "curve": "q25",
+  "R": 2048,
+  "classes": 2795536,
+  "trials": 2000,
+  "seed": 2601,
+  "dp_bits": 3,
+  "s_ops": 1745.594,
+  "collisions_within_s_ops": 796,
+  "recoveries_verified": 2000,
+  "p_recovered_within_s_ops": 0.3375,
+  "p_recovered_overall": 1.0,
+  "mean_steps_over_sqrtn": 1.425945,
+  "mean_lag_total_steps": 237.823,
+  "mean_lag_per_trail": 14.864,
+  "max_lag_total_steps": 5479,
+  "lag_units": 8,
+  "escapes_2cycle": 163,
+  "escapes_checkpoint": 2541,
+  "trails_that_escaped": 2361,
+  "matches": 4081,
+  "degenerate": 2081,
+  "unit_histogram": {
+   "5515469": 336,
+   "11257748": 302,
+   "11257749": 321,
+   "1": 333,
+   "16773216": 332,
+   "5515468": 376
+  },
+  "unit_one_fraction": 0.1665
+ },
+ "index_rule": {
+  "kind": "index_rule",
+  "prime_bits": 256,
+  "gap": 40,
+  "guard": 8,
+  "random_inputs": 400000,
+  "random_mismatches_no_fallback": 0,
+  "random_mismatches_with_fallback": 0,
+  "random_fallbacks": 0,
+  "fallback_rate_measured": 0.0,
+  "max_abs_error_ulps": [
+   0,
+   6,
+   8
+  ],
+  "worst_error_ulps": 8,
+  "gross_wraps": 0,
+  "adversarial_inputs": 74777,
+  "adversarial_within_gap": 7817,
+  "adversarial_fallbacks": 7291,
+  "adversarial_mismatches_no_fallback": 0,
+  "adversarial_mismatches_with_fallback": 0,
+  "adversarial_cheap_rule_would_be_wrong": 257,
+  "random_cheap_rule_would_be_wrong": 0,
+  "orbit_checks": 180000,
+  "orbit_fallbacks": 0,
+  "orbit_mismatches": 0
+ },
+ "merge": {
+  "kind": "merge",
+  "curve": "q25",
+  "R": 8,
+  "trials": 80,
+  "steps_per_trail": 200,
+  "class_sequence_checks": 80000,
+  "merge_failures": 0,
+  "escapes": 1728
+ },
+ "checkpoint": {
+  "kind": "checkpoint",
+  "curve": "q25",
+  "R": 4,
+  "trails": 120,
+  "length": 700,
+  "steps": 84005,
+  "escapes_2cycle": 1775,
+  "escapes_checkpoint": 256,
+  "checkpoint_share": 0.126,
+  "escapes_per_trail": 16.93,
+  "min_escapes_per_trail": 4
+ },
+ "traps": {
+  "kind": "traps",
+  "curve": "q29",
+  "R": 4,
+  "trails": 80,
+  "length": 2048,
+  "escapes": 3856,
+  "escapes_per_trail": 48.2,
+  "trails_with_cross_epoch_returns": 0,
+  "predicted_self_collision": 0.04578
+ },
+ "order2": {
+  "kind": "order2",
+  "max_m": 1048576,
+  "unit_group_size": 6,
+  "exponents_in_U": [],
+  "v2_of_r_minus_1": 6,
+  "r_minus_1_small_factors": [
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   3,
+   149,
+   631
+  ]
+ }
+}

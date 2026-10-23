@@ -1,0 +1,1 @@
+{"kind": "checkpoint", "curve": "q25", "R": 4, "trails": 120, "length": 700, "steps": 84005, "escapes_2cycle": 1775, "escapes_checkpoint": 256, "checkpoint_share": 0.126, "escapes_per_trail": 16.93, "min_escapes_per_trail": 4}
