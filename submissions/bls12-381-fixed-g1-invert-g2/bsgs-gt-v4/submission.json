@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: deterministic exact-element sort BSGS in GT (accounted)",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the deterministic attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^129.50 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000), with success probability exactly 1. It computes g=e(P,Q0) (a generator by nondegeneracy and prime order) and solves z=g^a by baby-step giant-step: a baby list g^0..g^{m-1} (m=ceil(sqrt(r))) and a giant list z*g^{-im} (i=0..h-1, h=ceil(r/m)<=m+1) are combined and sorted on the EXACT canonical 576-byte encoding of the group element by deterministic LSD radix sort (288 digit passes), and an adjacent scan finds the baby-giant pair with identical encoding, giving a=i*m+j. Since the canonical encoding is injective, identical encodings are identical elements and are adjacent after the sort, so a single adjacent-comparison pass is exhaustive; completeness is unconditional, so the logarithm is recovered for every valid z with no injectivity assumption, no abort and no probabilistic estimate. The work is a hard deterministic bound with full instruction-level accounting (no hash family, clustering, or probability assumption): n=2*sqrt(r) multiplications each 1.03 units including the tower-to-canonical key construction (2^128.4712 units); radix sort at <=64 scalar instructions per record per pass over 288 passes with multiword (<=3-word) addressing, 2-word counters and a consistent key array + two 48-byte-record buffers (2^128.3108 units); adjacent scan of 72-word keys (2^121.9222 units); and one-time e(P,Q0)<=2^15, g^{-m}<=2^10, [a]Q0<=2^8 and output encoding. The accounted total is 2^129.401, rounded up to 2^129.50. Peak memory is 2^138 bytes (n*576-byte keys + 2 n*48-byte record buffers; reported only, no scalar contribution); the exponential memory is mandatory for BSGS. Preprocessing is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps, a conservative deterministic generic control, not a best-known attack or a practical break.",
+      "score": {"numerator": "259", "denominator": "2"},
+      "evidence": ["proof.md", "experiment.py"]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs-exact-sort",
+      "source": "experiment.py",
+      "purpose": "Run deterministic exact-element sort-based baby-step/giant-step on a prime-order-l subgroup of F_q^* (cyclic, standing in for GT) for many random targets: build baby and giant lists, sort the combined list on the EXACT element, scan adjacent entries for the baby-giant collision. Check recovery for EVERY instance (success probability exactly 1) within 2*ceil(sqrt(l)) group multiplications. No hash, no fingerprint. The counter measures list-generation multiplications; the radix sort, scan and key conversions are the analytic terms in proof.md. Toy-scale confirmation of deterministic recovery and the operation bound only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 30},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 500},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [{"bits": 24, "trials": 300, "seed": 1}]
+    }
+  ]
+}
