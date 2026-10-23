@@ -1,0 +1,234 @@
+{
+  "runs": [
+    {
+      "file": "b4-b36-s1.json",
+      "config": {
+        "bits": 36,
+        "trials": 1500,
+        "seed": 3601,
+        "b": 4,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 57698774167,
+        "a": 0,
+        "b": 4,
+        "order": 2747537983,
+        "cofactor": 21,
+        "beta": 43531774169,
+        "lambda": 552254425
+      },
+      "log2_N": 28.77,
+      "trials": 1500,
+      "success": 600,
+      "success_rate": 0.4,
+      "wilson95": [
+        0.3755,
+        0.425
+      ],
+      "model": 0.4119,
+      "tau_of_K_times_L": 0.5308,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 1,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0139,
+      "two_cycles_per_step": 7.653046762950184e-05,
+      "long_cycles": 4,
+      "max_replay_ops": 560,
+      "mean_trails": 592.8
+    },
+    {
+      "file": "b4-b36-s2.json",
+      "config": {
+        "bits": 36,
+        "trials": 1500,
+        "seed": 3602,
+        "b": 4,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 41296955143,
+        "a": 0,
+        "b": 4,
+        "order": 1147135357,
+        "cofactor": 36,
+        "beta": 4622396508,
+        "lambda": 1062490731
+      },
+      "log2_N": 27.51,
+      "trials": 1500,
+      "success": 623,
+      "success_rate": 0.4153,
+      "wilson95": [
+        0.3906,
+        0.4405
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5303,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0215,
+      "two_cycles_per_step": 8.023622573939531e-05,
+      "long_cycles": 2,
+      "max_replay_ops": 485,
+      "mean_trails": 391.8
+    },
+    {
+      "file": "b4-b38-s1.json",
+      "config": {
+        "bits": 38,
+        "trials": 800,
+        "seed": 3801,
+        "b": 4,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 243622717159,
+        "a": 0,
+        "b": 4,
+        "order": 6246756847,
+        "cofactor": 39,
+        "beta": 216547367145,
+        "lambda": 1306119834
+      },
+      "log2_N": 29.96,
+      "trials": 800,
+      "success": 336,
+      "success_rate": 0.42,
+      "wilson95": [
+        0.3863,
+        0.4545
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5304,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0091,
+      "two_cycles_per_step": 7.586133179629774e-05,
+      "long_cycles": 1,
+      "max_replay_ops": 520,
+      "mean_trails": 878.6
+    },
+    {
+      "file": "b4-b40-s1.json",
+      "config": {
+        "bits": 40,
+        "trials": 600,
+        "seed": 4001,
+        "b": 4,
+        "adder_bits": 11,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 893065378237,
+        "a": 0,
+        "b": 4,
+        "order": 297689057779,
+        "cofactor": 3,
+        "beta": 579282894318,
+        "lambda": 148895522892
+      },
+      "log2_N": 35.53,
+      "trials": 600,
+      "success": 233,
+      "success_rate": 0.3883,
+      "wilson95": [
+        0.3502,
+        0.4279
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5304,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0013,
+      "two_cycles_per_step": 7.65008422640391e-05,
+      "long_cycles": 2,
+      "max_replay_ops": 428,
+      "mean_trails": 5933.0
+    },
+    {
+      "file": "b4-b40-s2-a16.json",
+      "config": {
+        "bits": 40,
+        "trials": 400,
+        "seed": 4002,
+        "b": 4,
+        "adder_bits": 16,
+        "dp_bits": 5,
+        "walks": 16,
+        "tau_e4": 5303,
+        "curve": "j0"
+      },
+      "curve": {
+        "p": 856275299413,
+        "a": 0,
+        "b": 4,
+        "order": 285424543123,
+        "cofactor": 3,
+        "beta": 387890462331,
+        "lambda": 131405392510
+      },
+      "log2_N": 35.47,
+      "trials": 400,
+      "success": 177,
+      "success_rate": 0.4425,
+      "wilson95": [
+        0.3946,
+        0.4915
+      ],
+      "model": 0.4116,
+      "tau_of_K_times_L": 0.5303,
+      "degenerate_first_matches": 0,
+      "replay_mismatches": 0,
+      "abandoned_trails": 0,
+      "all_successes_verified": true,
+      "finish_steps_over_K_L": 0.0013,
+      "two_cycles_per_step": 2.3644865406641643e-06,
+      "long_cycles": 0,
+      "max_replay_ops": 437,
+      "mean_trails": 5650.3
+    }
+  ],
+  "pooled": {
+    "trials": 4800,
+    "success": 1969,
+    "success_rate": 0.4102,
+    "wilson95": [
+      0.3964,
+      0.4242
+    ],
+    "model_weighted": 0.4117,
+    "tau": 0.5303,
+    "degenerate_first_matches": 0,
+    "replay_mismatches": 0,
+    "all_successes_verified": true,
+    "abandoned_trails": 1,
+    "long_cycles": 9,
+    "max_finish_steps_over_K_L": 0.0215,
+    "max_replay_ops": 560,
+    "trails_total": 7999700
+  },
+  "scope": "toy curves only; the production procedure including resolution, not production cost"
+}
