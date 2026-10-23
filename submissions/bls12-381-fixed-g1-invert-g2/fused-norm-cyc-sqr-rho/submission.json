@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: single-frame fused-norm cyclotomic square in a Frobenius-class rho",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and a uniform z in GT, the Frobenius-class distinguished-point walk in proof.md returns Q in G2 with e(P,Q)=z with probability at least 0.39. The walk squares with the single-frame fused-norm cyclotomic schedule (leaf bodies of blst sqr_382x / redc_mont_384 / add_mod_384x384, one frame) and otherwise multiplies by a twisted table entry. Total classical work is at most 2^(25157/200) target-group-operation equivalents, including preprocessing, cycle escapes, distinguished-point handling, verification and output. Peak memory is at most 2^74 bytes. Preprocessing is at most 2^77 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. Heuristics H1, H5 and H7 are stated in proof.md. This is a classical cold attack.",
+      "score": {
+        "numerator": "25157",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "kept-coefficients",
+      "source": "experiment.py",
+      "purpose": "Check that the four coefficients retained by the six-square block match the nine-square cyclotomic formula on random tower elements, and that the submitted score is strictly below 31447421/250000.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "trials",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 64,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
