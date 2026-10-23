@@ -1,0 +1,1 @@
+{"curve": {"P": 524347, "B": 13, "Q": 523969, "DK": 87328}, "dp_bits": 4, "tables": 8, "trials": 2000, "total_trials": 16000, "rho_tables": [1.2824, 1.3832, 0.9766, 1.4208, 0.9232, 0.9442, 1.2377, 0.7003], "rho_pooled": 1.0514, "rho_mean": 1.1085, "rho_worst": 0.7003, "scope": "supports mechanism and collision model, not exact production partition/costs"}

@@ -1,0 +1,404 @@
+{
+  "version": 2,
+  "scope": "Candidate-authored exact arithmetic checks, NOT validation of heuristic premises or instruction estimates.",
+  "integers": {
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "r": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "beta": "55594575648329892869085402983802832744385952214688224221778511981742606582254",
+    "lambda_scalar": "37718080363155996902926221483475020450927657555482586988616620542887997980018",
+    "N": "19298681539552699237261830834781317975472927379845817397100860523586360249056",
+    "T": "149174874732404653653643502645236769884",
+    "K_max": "149174874732404665459559709819349804124",
+    "M_node_cap": "9444732965739290427392",
+    "S_insertion_start_cap": "18889465931478580854784",
+    "A_match_cap": "16777216",
+    "deepest_trail_tick_cap": "11529215046068469760",
+    "workers": "1024",
+    "node_bytes": "192",
+    "node_pool_bytes": "1813388729421943762059264",
+    "auxiliary_byte_cap": "1073741824",
+    "peak_memory_byte_bound": "2417851639229258349412352"
+  },
+  "parameters": {
+    "nu": {
+      "numerator": "27",
+      "denominator": "25"
+    },
+    "C": 1000,
+    "E_baseline": 950,
+    "E_charged": 1140,
+    "step_rows": {
+      "beta_multiplications": 358,
+      "field_normalizations": 160,
+      "canonical_argmin": 36,
+      "y_parity_negation": 20,
+      "adding_table_index_loads": 16,
+      "distinguished_test": 3,
+      "full_ring_comparisons": 96,
+      "state_and_loop": 28,
+      "brent_expanded_state_compare_control": 132,
+      "checkpoint_full_copy": 76
+    },
+    "success_claim": {
+      "numerator": "2",
+      "denominator": "5"
+    },
+    "heuristic_rho_floor": {
+      "numerator": "9",
+      "denominator": "10"
+    },
+    "dp_depths": [
+      56,
+      57,
+      58
+    ],
+    "claim": {
+      "numerator": "6403",
+      "denominator": "50"
+    },
+    "nonuniform_advice_bytes": 0
+  },
+  "ledger": {
+    "main": {
+      "numerator": "7980855798183649602086444475335214520634",
+      "denominator": "25"
+    },
+    "dp_lookup_transfers": {
+      "numerator": "3713820117856140824697372672",
+      "denominator": "625"
+    },
+    "fresh_starts": {
+      "numerator": "464227514732017603087171584",
+      "denominator": "5"
+    },
+    "deepen_rebuilds": {
+      "numerator": "475368975085586025561263702016",
+      "denominator": "5"
+    },
+    "all_key_match_replays": {
+      "numerator": "7788445287802241442795744493830144",
+      "denominator": "5"
+    },
+    "exceptional_arithmetic": {
+      "numerator": "6597069766656",
+      "denominator": "5"
+    },
+    "table_preprocessing": {
+      "numerator": "25769803776",
+      "denominator": "5"
+    },
+    "constant_checks_sampling_output": {
+      "numerator": "6291456",
+      "denominator": "5"
+    }
+  },
+  "ledger_raw": {
+    "numerator": "199522368569735079477499073715666381092522",
+    "denominator": "625"
+  },
+  "reserve_8pct": {
+    "numerator": "399044737139470158954998147431332762185044",
+    "denominator": "15625"
+  },
+  "total": {
+    "numerator": "5387103951382847145892474990322992289498094",
+    "denominator": "15625"
+  },
+  "poisson_tail_rational": {
+    "numerator": "1488748265220196375027770520833685163349238828023542018958736636211219399531097513935616662784188107658417704425241535489461630176090852180502035469613587010858005147095232360537045172494123977369746920591297314552830733054262890852498684697642683418059646701160580812974679008079720650846490062468718810340210016078711115796143008620238596705437710642488687701026285028255587",
+    "denominator": "84411265580253658217164835663146674141670064244763464888096891829685685344417332536513074083273656436454244192266521106603460027905573929569450750452418734089142278451512364716961645432809506484253718821346700519085754439773071600559102004679646616907102798147069077366775002259607609494595215247385711769922992642581078986787148312144674127714713600000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "universal_key_union_rational": {
+    "numerator": "18889465931478580854783",
+    "denominator": "664613997892457936451903530140172288"
+  },
+  "displays_only": {
+    "log2_raw": "127.9078900077",
+    "log2_total": "128.0189213201",
+    "headroom_over_120_reprice": "0.1521099923",
+    "score_rounding_slack": "0.0410786799",
+    "corrected_old_product": "2^(-687/25), approximately 5.342e-9"
+  },
+  "success_lower_floors": {
+    "rho090": "0.4048",
+    "rho0943": "0.4193",
+    "rho1": "0.4381",
+    "break_even_039_bracket": [
+      "0.857",
+      "0.858"
+    ],
+    "reserved_margin_over_040": ">0.0048"
+  },
+  "toy_summary": {
+    "trials": 16000,
+    "successes": 6711,
+    "effective_exponent_rho": 0.9421122297450997,
+    "min_table_rho": 0.89809750455789,
+    "max_table_rho": 0.9845961256242134,
+    "legacy_inverse_mean_time_rho": 1.0514
+  },
+  "captured_toy_sha256": "ace58807c3b238208683cb3c3a677c8b22d7970e983bd0f8bf517b565c189919",
+  "checks": {
+    "N_full_precision": {
+      "result": "PASS",
+      "meaning": "exact complete integer (r-1)/6"
+    },
+    "N_partition": {
+      "result": "PASS",
+      "meaning": "free nonzero class count"
+    },
+    "beta_order3": {
+      "result": "PASS",
+      "meaning": "cube-root identities modulo p"
+    },
+    "lambda_order3": {
+      "result": "PASS",
+      "meaning": "cube-root identities modulo r"
+    },
+    "six_units": {
+      "result": "PASS",
+      "meaning": "six distinct scalar actions"
+    },
+    "seven_nonresidue": {
+      "result": "PASS",
+      "meaning": "no x=0 curve points"
+    },
+    "gcd_lambda_minus_one": {
+      "result": "PASS",
+      "meaning": "nontrivial GLV action has no nonzero fixed point"
+    },
+    "scalar_rejection_rate": {
+      "result": "PASS",
+      "meaning": "a fresh 256-bit draw rejects with probability below 2^-127"
+    },
+    "scalar_rejection_cap": {
+      "result": "PASS",
+      "meaning": "four-draw per scalar cap, union over every charged start and table scalar"
+    },
+    "exception_cap_charged": {
+      "result": "PASS",
+      "meaning": "all 65536 exceptional repairs fit their separate hard work ceiling"
+    },
+    "integer_nu": {
+      "result": "PASS",
+      "meaning": "nu exactly 1.08, not a floating literal"
+    },
+    "ceil_sqrt_upper": {
+      "result": "PASS",
+      "meaning": "T attains the budget square"
+    },
+    "ceil_sqrt_minimal": {
+      "result": "PASS",
+      "meaning": "T is the least sufficient integer"
+    },
+    "integer_flush": {
+      "result": "PASS",
+      "meaning": "all in-flight work is charged at deepest d=58"
+    },
+    "length_u64": {
+      "result": "PASS",
+      "meaning": "8-byte per-trail length suffices"
+    },
+    "global_u128": {
+      "result": "PASS",
+      "meaning": "16-byte global work counter suffices"
+    },
+    "row_sum": {
+      "result": "PASS",
+      "meaning": "sum every ordinary-step row"
+    },
+    "baseline_row_allowance": {
+      "result": "PASS",
+      "meaning": "25 instruction base cushion"
+    },
+    "E_120_inside_ledger": {
+      "result": "PASS",
+      "meaning": "all non-reference step work repriced by 1.2 inside main"
+    },
+    "other_120_inside_ledger": {
+      "result": "PASS",
+      "meaning": "every non-main row also repriced by 1.2"
+    },
+    "doubling_two_ticks": {
+      "result": "PASS",
+      "meaning": "a doubling debits TWO main ticks, not one"
+    },
+    "reserve_8pct": {
+      "result": "PASS",
+      "meaning": "8% explicit whole-ledger reserve, not claimed as execution"
+    },
+    "claim_reduced": {
+      "result": "PASS",
+      "meaning": "6403/50 is reduced"
+    },
+    "total_below_claim": {
+      "result": "PASS",
+      "meaning": "exact W^50 < 2^6403"
+    },
+    "rounding_slack_at_least_005": {
+      "result": "PASS",
+      "meaning": "log2 W < 128.055, giving >0.005 bits"
+    },
+    "rounding_slack_at_most_060": {
+      "result": "PASS",
+      "meaning": "log2 W >128.000, giving <0.060 bits"
+    },
+    "headroom_over_120_reprice": {
+      "result": "PASS",
+      "meaning": "raw <2^127.96; claim has >0.10 bit over 1.2x repricing"
+    },
+    "raw_log_bracket_low": {
+      "result": "PASS",
+      "meaning": "raw log2 >127.9078"
+    },
+    "raw_log_bracket_high": {
+      "result": "PASS",
+      "meaning": "raw log2 <127.9079"
+    },
+    "W_log_bracket_low": {
+      "result": "PASS",
+      "meaning": "reserved log2 >128.0189"
+    },
+    "W_log_bracket_high": {
+      "result": "PASS",
+      "meaning": "reserved log2 <128.0190"
+    },
+    "memory_record_layout": {
+      "result": "PASS",
+      "meaning": "192-bit key, TWO full initial scalars, length64, 3 pointer96, color, DP flags, padding"
+    },
+    "memory_node_pool": {
+      "result": "PASS",
+      "meaning": "fixed pool, pointer and balancing overhead included"
+    },
+    "memory_all": {
+      "result": "PASS",
+      "meaning": "all supplementary memory is inside a separate 2^30-byte cap"
+    },
+    "pointer_width": {
+      "result": "PASS",
+      "meaning": "96-bit byte addresses cover the full node pool"
+    },
+    "adding_table_memory": {
+      "result": "PASS",
+      "meaning": "adding table, complete states and code fit auxiliary cap"
+    },
+    "dp_depths": {
+      "result": "PASS",
+      "meaning": "two deepen operations, then failure rather than unbounded allocation"
+    },
+    "partition_disjoint_dp": {
+      "result": "PASS",
+      "meaning": "partition bits 64..83 never overlap DP bits 0..57"
+    },
+    "deepen_charged": {
+      "result": "PASS",
+      "meaning": "two rebuilds plus abort scan fit 2^96 before 1.2 repricing"
+    },
+    "lookup_charge": {
+      "result": "PASS",
+      "meaning": "Toeplitz hash + 148 routed tree levels + remaining work fit per DP ceiling"
+    },
+    "replay_charge": {
+      "result": "PASS",
+      "meaning": "ALL capped key matches replayed, with coefficient modular arithmetic"
+    },
+    "poisson_submean": {
+      "result": "PASS",
+      "meaning": "each Poisson split has mean below 57"
+    },
+    "poisson_cap_split": {
+      "result": "PASS",
+      "meaning": "total overflow implies one virtual subcount >=256"
+    },
+    "poisson_ratio": {
+      "result": "PASS",
+      "meaning": "successive factorial-series terms have a convergent ratio"
+    },
+    "poisson_rational_tail": {
+      "result": "PASS",
+      "meaning": "exact rational upper bound, e^-57 dropped conservatively"
+    },
+    "poisson_tail_tiny": {
+      "result": "PASS",
+      "meaning": "first overflow is below 2^-120 UNDER the disclosed Poisson-tail model"
+    },
+    "fingerprint_pair_union": {
+      "result": "PASS",
+      "meaning": "independent universal fingerprint key, even for S capped DP insertions"
+    },
+    "success_090": {
+      "result": "PASS",
+      "meaning": "alternating-series rational lower bound exceeds 253/625"
+    },
+    "success_0943": {
+      "result": "PASS",
+      "meaning": "alternating-series rational lower bound exceeds 4193/10000"
+    },
+    "success_100": {
+      "result": "PASS",
+      "meaning": "alternating-series rational lower bound exceeds 4381/10000"
+    },
+    "success_0858": {
+      "result": "PASS",
+      "meaning": "alternating-series rational lower bound exceeds 39/100"
+    },
+    "success_claim_margin": {
+      "result": "PASS",
+      "meaning": "named margin over 0.40 exceeds 0.0048"
+    },
+    "break_even_above_0857": {
+      "result": "PASS",
+      "meaning": "break-even lower endpoint fails 0.39"
+    },
+    "break_even_below_086": {
+      "result": "PASS",
+      "meaning": "break-even upper endpoint <=0.86"
+    },
+    "old_product_exponent": {
+      "result": "PASS",
+      "meaning": "2^-88.8 times 2^61.32 equals 2^-27.48, NOT 1.7e-27"
+    },
+    "old_product_bracket": {
+      "result": "PASS",
+      "meaning": "the corrected product lies between 2^-28 and 2^-27"
+    },
+    "old_reprice_delta_exceeds_008": {
+      "result": "PASS",
+      "meaning": "650->750 costs MORE than 0.08 bit"
+    },
+    "no_advice": {
+      "result": "PASS",
+      "meaning": "no nonuniform advice; public constants are excluded by protected convention"
+    },
+    "preprocessing_bound": {
+      "result": "PASS",
+      "meaning": "charged setup <2^33 reference equivalents"
+    },
+    "toy_actual_scale": {
+      "result": "PASS",
+      "meaning": "toy group and orbit count explicitly captured"
+    },
+    "toy_trial_count": {
+      "result": "PASS",
+      "meaning": "all table trial counts reconciled"
+    },
+    "toy_success_count": {
+      "result": "PASS",
+      "meaning": "successes recomputed from the eight captured rows"
+    },
+    "toy_aborts_present": {
+      "result": "PASS",
+      "meaning": "measured cycle failures are disclosed rather than assumed away"
+    },
+    "toy_spurious_present": {
+      "result": "PASS",
+      "meaning": "toy reconstruction path actually exercised"
+    },
+    "legacy_definition_separate": {
+      "result": "PASS",
+      "meaning": "legacy inverse-mean-time statistic is NOT the exponent coefficient"
+    }
+  },
+  "pass_count": 65
+}

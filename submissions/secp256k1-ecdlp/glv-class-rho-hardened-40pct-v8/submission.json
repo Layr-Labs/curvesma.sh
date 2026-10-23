@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "title": "secp256k1 GLV class-rho hardened v8: measured effective collision quality, explicit repricing and hard DP storage",
+  "claims": [
+    {
+      "statement": "For uniform full-production secp256k1 Q=[x]P and fresh algorithm coins, the specified capped GLV order-six class-rho algorithm recovers x with probability at least 0.40 under the explicitly disclosed, toy-supported complete-process collision heuristic rho>=0.90 and the disclosed Poisson upper-tail model. The integer budget uses nu=1.08 and T=149174874732404653653643502645236769884. Exact conditional success arithmetic gives >0.4048, and the 0.39 break-even is between rho=0.857 and 0.858. Total classical computation is bounded by 2^128.06 target-operation equivalents, C=1000, including failures, randomness, table construction, routed lookups, full-scalar replay, verification and an explicit 8% reserve. The reduced score is 6403/50. Baseline extra step work E0=950 is charged at E=1140=1.2E0 inside the ledger; all separate rows are repriced by 1.2 too. Raw repriced log2 work is 127.9078900077; the reserved bound computes 128.0189213201, leaving 0.1521 bit over raw repricing and 0.0410 bit of final round-up. Memory has a hard 2^73-node cap, with complete 192-byte records and charged deepen/filter/rebuild rules; total memory <2^81 bytes regardless of the heuristics. Preprocessing <2^33 equivalents is included. Nonuniform advice is zero. The complete expanded-state Brent detector never chooses an escape. Short-cycle endpoint escapes are deterministic, while their trapping costs are included in effective rho; no doubled-minimum/basin independence or unsupported long-cycle-tail theorem is claimed. Captured toy runs measure only their actual toy scope and do not certify production rates, instruction prices or Poisson tails. This is an exploratory analytic claim, not an executed production attack or an unconditional proof.",
+      "score": {"numerator": "6403", "denominator": "50"},
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "verify_certificate.py",
+        "toy_pipeline.py",
+        "toy_pipeline_results.json",
+        "toy_experiment.py",
+        "toy_results.json",
+        "public-note.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
