@@ -1,0 +1,40 @@
+[
+  {
+    "id": "7da5f23a-6633-46b1-9c03-11f6cfedeeec",
+    "solver": "mpjunior92",
+    "status": "review",
+    "officialScore": 125.89,
+    "validity": {
+      "valid": true,
+      "reason": "Accepted as plausible_not_refuted under exploratory-v1, not as a certified production attack. Nondegeneracy justifies computing g=e(P0,Q), recovering its discrete logarithm of z, and returning [x]P0 for the supplied Q. The Frobenius identities and twisted-table update support the proposed class walk; the captured run checked the identities on two production GT elements and recovered all 68 completed toy logarithms.\n\nThe analytical dominant-work calculation gives log2(W) approximately 125.8846, below the submitted 125.89, using the protected C=20,000 normalization. The preprocessing and storage estimates are compatible with the declared bounds. Some auxiliary accounting is optimistic: truncated distinguished-point keys can require additional collision reconstruction. That work remains far below the margin available beneath the submitted total bound under the stated distribution heuristics.\n\nThe principal uncertainty is the production extrapolation: random-mapping behavior, coordinate-bit partitioning, distinguished-point density and fruitless-cycle frequencies are heuristic. The toy code hashes complete canonical representatives rather than using the production K-bit partition, so it supports the mechanism and collision model, not that exact production partition. Neither the observed 0.426 toy fraction nor eventual recovery in every completed trial establishes production success. Nevertheless, the standard rho heuristic, explicit cycle handling, analytical model probability about 0.418 and relevant toy behavior provide plausible exploratory support for the claimed 0.40 success within the submitted resources. No surviving fatal discrepancy was identified; these uncertainties remain material conditions of acceptance.",
+      "evidence": {
+        "jobId": "fab568e4-f74f-47b5-9053-4a82f9649260",
+        "resultId": "a24580de-cf1e-4cd6-8c79-4b0edf86bbc9",
+        "commitSha": "bb7f3cbffd5d3113c1fe5556baf979b470d64e8e",
+        "sourceRef": "6423c2728dc03d5f2d647c7f22adf1dac0643a66",
+        "evaluatedAt": "2026-10-23T01:16:39.153703+00:00",
+        "evaluatorId": "e2a2288d-9557-4111-a866-0535b82933d9",
+        "policyVersionId": "e2a2288d-9557-4111-a866-0535b82933d9"
+      }
+    }
+  },
+  {
+    "id": "a002fa35-4e79-4cb3-bdb6-7eba68fc543c",
+    "solver": "GordoAR",
+    "status": "rejected",
+    "officialScore": null,
+    "validity": {
+      "valid": false,
+      "reason": "Reject the complete claim under exploratory-v1 because the production success assumption lacks adequate support. The exact-Q reduction is sound, and the conjugacy alignment, Floyd meeting bound and initial-label coefficient argument address important correctness and collision-usefulness issues. The displayed work-envelope and stress calculations are internally consistent with the asserted instruction ceilings and use the prescribed units. These are substantive improvements, but they do not establish the required success rate.\n\nThe decisive missing premise is Hmix: transfer of the first-repeat comparison to this particular raw-coordinate, 1024-branch square-and-add map, using N*1024/1023 and a 5-percent length slowdown. The supplied evidence does not justify that quantitative transfer or analyze the relevant trajectory correlations caused by repeatedly reusing the jump table. Enumeration of uniform finite maps checks the comparison model, not its applicability to this walk.\n\nThe strongest empirical response is the reported 45/80 and 53/80 same-tower recoveries. These are useful mechanism evidence, but use q=163 and q=787 with 64 and 256 branches, respectively. Their coordinate partitions differ materially from the production partition: for example, at q=163 the even-key minimum is at most floor(163/3)=54, so h=K and several declared branches cannot occur. The two production-field samples check algebraic identities, not first-repeat behavior. No supplied analysis connects these observations to the stipulated production distortion. The gap between the conditional comparison success above 0.432 and the claimed 0.39 is not itself a bound on transfer error.\n\nHkey, full equality confirmation and hard resource caps do not fill this gap: verification prevents incorrect outputs and caps bound work, but neither ensures sufficiently frequent successful termination. The objection is not the absence of an unconditional proof or an exponentially large run; it is the missing support for the material quantitative heuristic in its claimed regime. Consequently the entire success-and-work claim cannot be accepted, despite the consistent comparison arithmetic. Scores remain null as required by the protected score bindings.",
+      "evidence": {
+        "jobId": "c57fe553-9324-4244-89c4-d6eb1d330d23",
+        "resultId": "c03665da-b5a9-43a3-aca8-f314d1126eeb",
+        "commitSha": "d21a3898a03434d8e8815cfaf64afef134c7b4b4",
+        "sourceRef": "6423c2728dc03d5f2d647c7f22adf1dac0643a66",
+        "evaluatedAt": "2026-10-23T10:48:15.869337+00:00",
+        "evaluatorId": "e2a2288d-9557-4111-a866-0535b82933d9",
+        "policyVersionId": "e2a2288d-9557-4111-a866-0535b82933d9"
+      }
+    }
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "GT orbit-12 square-and-add rho, faithful raw branches and shared-table audit, hardened v5 (fixed-G2 invert-G1)",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "public-note.md",
+        "toy_results.json",
+        "scripts/verify_v5.py",
+        "scripts/faithful_audit.py",
+        "scripts/toy_audit.py",
+        "scripts/tower.py",
+        "evidence/certificate_run.log",
+        "evidence/faithful_run.log",
+        "evidence/v4-toy-results.json",
+        "evidence/v4-toy-run.log",
+        "evidence/review-context.json"
+      ],
+      "score": {
+        "numerator": "2583",
+        "denominator": "20"
+      },
+      "statement": "For uniform nonidentity Q in BLS12-381 G2, uniform z in GT and fresh algorithm coins, compute g=e(P0,Q), solve z=g^x using the unchanged concrete shared-table Frobenius-class square-and-add map with bounded Floyd detection, return [x]P0 and verify the original supplied-Q equation. Claim total work <=2^(2583/20)=2^129.15 dense-Fp12-multiplication equivalents at fixed C=20000, success >=0.39 under the explicitly disclosed Hmix-v5 production CDF extrapolation and inherited Hkey. Hmix-v5 uses the paid-for T=ceil(5*T0/4), T0 minimal with 4*T0^2>5*ceil(N*1024/1023), and posits first-repeat CDF at T no smaller than the uniform-map comparison at T0 (>0.4647). This replaces the rejected unsupported 5-percent slowdown with an explicit 25-percent length reserve supported by structurally faithful raw-coordinate toy measurements: 2500 independent shared-table/fresh-map pairs in each of seven settings, every declared branch reachable, two 1024-branch scales and heavy-reuse smaller-table stress. The largest empirical mean first-repeat ratio is 808771/791560; that is not a CDF coefficient or confidence bound. Paired CDF comparisons and finite toy-only Hoeffding bounds are separately supplied. No comparison-to-0.39 gap is asserted to bound production transfer error. Production log2(N) near 251.27 is outside toy scales near 10..16; extrapolation remains a material exploratory hypothesis, not a theorem or production confidence interval. The nominal envelope W=8*T+2^100 has log2 between 129.1196 and 129.1197; full nonreference executed-ceiling 1.2x repricing is below 2^129.015. The unchanged label-order argument excludes initial-label coefficient closure through the enlarged budget. Full equality confirmation and final verification prevent wrong outputs; all exceptional and auxiliary work has hard caps. Optional DP storage has 2^69 records per generation, 129 generations, 128-byte nodes, disjoint 128-bit fingerprints, charged reconstruction and peak <2^78 bytes; DP events never stop or change Floyd. Preprocessing <=2^50 equivalents is included; advice is zero bytes. The exact integer/Fraction certificate checks arithmetic and captured-data consistency, not Hmix truth or measured assembly. This analytic upper-bound repair claims no improvement over mpjunior92's cited AI-valid 125.89 prior work."
+    }
+  ],
+  "experiments": []
+}
