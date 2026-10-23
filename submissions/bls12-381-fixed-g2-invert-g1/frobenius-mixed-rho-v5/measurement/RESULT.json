@@ -1,0 +1,139 @@
+{
+ "schema": "gt-blst-step-measurement-v10",
+ "kernel": "measurement/step.c (constant-instruction primitives; per-walk anchors; canonical DP exponents; 128-bit fingerprint from key bits 70..197; trail age; v10: each trail ends at its first distinguished point and at the trail cap; the walk restarts with the restart element Y_j = g^(f_j) of the restart table, j = mix((w + 1) GAMMA + t) mod 1024, t the walk's restart counter; a restarted state that is itself a DP is stored and restarted again, chained)",
+ "measurement_tool": "organizer image via measurement/measure.sh (blst commit f7a88067, GCC 14.2.0, Valgrind 3.24.0 Callgrind Ir), walk runs N1=256/N2=512, MODE sizes 4096/8192 (mul, sqr, restartbench, storebench)",
+ "production_dp_bits": 60,
+ "method": "Per-step instruction counts of forced-type runs at the production header DP_BITS = 60 (no distinguished points): all-adder inputs (S=0), all-square inputs (S=1024). The per-step count is the difference of Callgrind totals between 256 and 512 rounds divided by 256 * 64 (analyze.py). One distinguished-point record is measured alone (mode storebench) and one restart alone (mode restartbench, which includes the table index and the Y_j multiplication). An all-distinguished-point run (DP_BITS 0) is not measurable under the chained rule.",
+ "reference_unit": {
+  "blst_fp12_mul_instructions_measured": 22998.0,
+  "organizer_measurement": 22993.106,
+  "organizer_measurement_method": "REF_FUNCS=ref_mul toggle pass, (ref-512 - ref-256) / (adds-512 - adds-256) at seed 1",
+  "charged": "1 unit (the organizer's reference operation; the adder calls it)"
+ },
+ "cyclotomic_square_instructions": 9804.0,
+ "per_step_instructions": {
+  "all_add_seed1": {
+   "value": 26740.129,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 16388,
+    "sqrs": 0,
+    "dps": 0,
+    "cyc2": 4,
+    "cycl": 0,
+    "restarts": 0,
+    "cap_restarts": 0
+   },
+   "note": "forced all-adder, DP_BITS 60"
+  },
+  "all_add_seed2": {
+   "value": 26728.376,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 16385,
+    "sqrs": 0,
+    "dps": 0,
+    "cyc2": 1,
+    "cycl": 0,
+    "restarts": 0,
+    "cap_restarts": 0
+   },
+   "note": "forced all-adder, DP_BITS 60"
+  },
+  "all_square_seed1": {
+   "value": 13512.422,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 0,
+    "sqrs": 16384,
+    "dps": 0,
+    "cyc2": 0,
+    "cycl": 0,
+    "restarts": 0,
+    "cap_restarts": 0
+   },
+   "note": "forced all-square, DP_BITS 60"
+  },
+  "all_square_seed2": {
+   "value": 13512.422,
+   "interval_counts": {
+    "steps": 16384,
+    "adds": 0,
+    "sqrs": 16384,
+    "dps": 0,
+    "cyc2": 0,
+    "cycl": 0,
+    "restarts": 0,
+    "cap_restarts": 0
+   },
+   "note": "forced all-square, DP_BITS 60"
+  }
+ },
+ "restart_instructions": {
+  "value": 26432.0,
+  "measurement": "mode restartbench: (Ir(8192) - Ir(4096)) / 4096 for restart_walk on walk 0 (counter, mix, table index, Y_j multiplication, a + f_j, key_of, state clear)",
+  "charged": "one adder step (A_UNITS) per restart, per spec section 8"
+ },
+ "distinguished_point_record_instructions": {
+  "value": 1496.0,
+  "measurement": "mode storebench: (Ir(8192) - Ir(4096)) / 4096 for one record (fingerprint and two canonical exponents)"
+ },
+ "sort_compare_exchange_instructions": {
+  "value": 48.0,
+  "measurement": "mode sortbench of step.c at 4096 (196632) and 8192 (393240) iterations: one 128-bit comparison and one 80-byte exchange per iteration"
+ },
+ "restart_table": {
+  "TR": 1024,
+  "block_layout": "u64 TR, then TR Fp12 elements Y_j = g^(f_j) (fp12 struct order, as the adder table), then TR u256 f_j mod r; appended after the walks",
+  "block_sha256_per_seed": {
+   "seed1": "0c9a932fd301e2c31b784806eba64d8fb90222c526e53b8b5b898d564a72ec8a",
+   "seed2": "e138980b23afaa836df61584548d8c01b935e3618a8dfe1220b0a9b9a73928f4"
+  },
+  "exponent_block_sha256_seed_independent": {
+   "seed1": "2a45d117976e680c50e9fae3177513d9b86d1a7c9bd3b68b58e7205024f19895",
+   "seed2": "2a45d117976e680c50e9fae3177513d9b86d1a7c9bd3b68b58e7205024f19895"
+  },
+  "coincidences_Y_in_T_or_Yinv_in_T": {
+   "Y_in_T": [
+    0,
+    0
+   ],
+   "Yinv_in_T": [
+    0,
+    0
+   ]
+  }
+ },
+ "production_walk_dp60": {
+  "seed1": {
+   "total": 20747.211
+  },
+  "seed2": {
+   "total": 20825.583
+  },
+  "note": "mixed walk at S=458, DP_BITS 60; the charges use the forced per-type counts"
+ },
+ "charged": {
+  "REF_INST": 22990.0,
+  "A_INST": 26740.129,
+  "A_UNITS": "1 + (A_INST - REF_INST + 20) / 20000 = 1.18851 (A_INST = max over seeds, seed 1)",
+  "Q_UNITS": "(Q_INST + 20) / 20000 = 0.67662 (Q_INST = max over seeds)",
+  "DP_RECORD_INST": 1496.0,
+  "restart_rule": "v10: at a DP and at the trail cap the walk takes the restart element Y_j = g^(f_j), j = mix((w + 1) GAMMA + t) mod 1024, t the walk's restart counter (incremented before use), w its global index: x <- x Y_j, a <- a + f_j, b unchanged, then the key derivation and detector clear. A restart is not an adder step; it costs one multiplication and the key derivation, charged as one A_UNITS (spec section 9.1). Chained restarts are charged each.",
+  "events": "66 * A_units per detected cycle (walk-through of at most 64 steps, the check step and the escape), unchanged",
+  "REF_INST_note": "organizer count charged 22990 (the lower of the two organizer counts: 22990 in the v9 run, 22993.106 in this run; the lower value gives the larger adder charge, which is conservative)",
+  "Q_INST": 13512.422,
+  "table": "accounting.py build(): per record (DP_RECORD_INST + RESTART_INST + SCATTER_INST 24 + TRANSFER_INST 100000 + OVERFLOW_INST 10); per slot of the 2^37 x 2^31 bucket table (bitonic compare-exchange 108.0030 and scan 13); one cursor reset per bucket. The 48.0 sortbench value is a kernel ring micro-benchmark and is not charged."
+ },
+ "replica": {
+  "verification": "v10 matrix (RESULT-v10.json): all pass: True",
+  "full_visit_checks": "every restart output key is compared with all visited keys (main-step states of every walk and the start states) and with all earlier restart outputs; both counts 0 in every case"
+ },
+ "native_counts": "evidence/native-counts.json (uninstrumented, production DP_BITS = 60, v10 kernel, 2^20 rounds per seed)",
+ "deviations": [
+  "v10 replaces the v9 restart by an adder chosen by the counter with a restart element Y_j = g^(f_j) from a separate table: a restart cannot undo the previous adder step (round-9 review).",
+  "The restart table is appended after the walks in the input file; all earlier blocks keep their content and offsets (the header version is 5).",
+  "At the production DP_BITS = 60 no restart occurs, so the native walk counts equal the v9 DP_BITS 60 counts.",
+  "The all-distinguished-point run (DP_BITS 0) is not measurable under the chained rule; the record cost is measured by storebench and the restart by restartbench."
+ ]
+}

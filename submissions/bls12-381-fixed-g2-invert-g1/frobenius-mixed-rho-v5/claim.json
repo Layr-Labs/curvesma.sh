@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v10",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.840188,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 74.321929,
+    "preprocessing_log2": 29.575768,
+    "success_probability": 0.41,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the mixed add/square class walk on N = (r-1)/12 classes with r_a = 1024 and S = 458 behaves as a random map with collision rate V_low = 0.781142587.",
+    "H5: a closure whose exponent coefficient is nonzero is an event of probability 1/r over the coins (independence of the coins from the path).",
+    "H7: each fresh state's key is uniform given the past: its adder index is uniform, its square decision is Bernoulli(s), and its DP flag has probability 2^-60. The closure rate is argued per fresh entry (a Markov reserve on the expected count).",
+    "H8: a restart element Y_j = g^(f_j) from a table independent of the adders; a restart output lands on a visited class with probability at most (visited)/N over the table.",
+    "H9: the fresh-step square decisions have conditional mean s; the success bound evaluates V at s + 0.02 as a margin (the toy shows deviations of up to 0.018 at small r_a).",
+    "H10: a trail started at an escape target re-enters a cycle it has escaped from with probability at most CAP * 64 / N (H1); the expected number of trapped trails is bounded by 2.7e-19 (a term of delta)."
+  ],
+  "limitations": [
+    "H1 is extrapolated from toy groups with N up to 76880 (bits 18, r_a = 1024); production N is about 2^251.",
+    "The toy shows escape loops (trapped trails) and a fresh square share below s; both are premises here (H9, H10), not measured at production size (proof.md, Section 5).",
+    "The closure reserve (K = 50, failure 0.02) and the join reserve (J_MAX = 1000, failure 0.0028) are Markov bounds and are paid in delta.",
+    "Restarts are verified by the replica at small densities (DP_BITS 2, 3, 4 and trail caps 50 and 24), not by a production-density run in which a restart occurs.",
+    "The bucketed table is measured with 64-bit indices at 2^21 and 2^22 slots; the production bucket size (2^31) is not run. The transfer cost is an explicit assumption.",
+    "Memory of about 2^74.321929 bytes is the enforced capacity of the distinguished-point table with its padding; it is reported, not scored.",
+    "The reference unit is priced by the organizer rule (1 unit); the organizer's measured reference count is 22,990 against C = 20,000 (blst_fp12_mul measured 22,998)."
+  ],
+  "lane": "exploratory"
+}

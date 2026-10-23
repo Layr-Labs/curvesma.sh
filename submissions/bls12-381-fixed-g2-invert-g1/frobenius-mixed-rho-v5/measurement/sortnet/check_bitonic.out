@@ -1,0 +1,11 @@
+n =     2: 20 inputs sorted; compare-exchanges 1
+n =     4: 20 inputs sorted; compare-exchanges 6
+n =     8: 20 inputs sorted; compare-exchanges 24
+n =    16: 20 inputs sorted; compare-exchanges 80
+n =    32: 20 inputs sorted; compare-exchanges 240
+n =    64: 20 inputs sorted; compare-exchanges 672
+n =   128: 20 inputs sorted; compare-exchanges 1792
+n =   256: 20 inputs sorted; compare-exchanges 4608
+n =   512: 20 inputs sorted; compare-exchanges 11520
+n =  1024: 20 inputs sorted; compare-exchanges 28160
+completed
