@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: parallel Pollard rho on order-6 classes with a sigma walk, all arithmetic in instructions",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and input Q=[x]P for the fixed standard secp256k1 generator P the parallel distinguished-point Pollard rho algorithm in proof.md recovers x with probability at least 0.39. It walks on the order-6 classes {±1, ±λ, ±λ²} of secp256k1, using 2^32 walks and 2^16 adders, with batched affine additions. Walks run in trails from fresh coins: each trail ends at its first distinguished point, which it records once, including a distinguished point first reached during a look-ahead, and the first key match is resolved by replaying both trails, so a degenerate match has probability exactly 1/r (Lemmas R and D). A fruitless cycle is escaped to twice the canonical point of its least-key member, a doubling with no table. Escape depth: a trail has fewer than 2^50 escapes except with probability DELTA_DEPTH (section 2.3, a first-moment bound), and below that depth no escape point repeats an earlier point of its trail (D1, from the exact certificate of section 2.4 that no k below 2^50 has 2^k in Gamma); a trail is not trapped (Lemma T', section 5), and re-entry into an escaped cycle is a within-trail coincidence bounded in section 3. Fruitless cycles are escaped only after exact checks, and the distinguished-point test comes first on every point. Total computation is at most 2^126.479214 target-group-operation equivalents, including preprocessing, distinguished-point storage and lookup, all failures and restarts, collision replay, verification and output. Each walk step pays its common-path count, 821 instructions, and a Markov reserve of 7.89 for rare work, that is 828.89 instructions per walk step at C=1000. Rare work is charged at forced-path maxima, measured with a bounding build of each unbatched operation, and the meter aborts when the metered rare work exceeds 64 times its expectation, with probability at most 1/64 (counted in delta). Peak memory is at most 2^75.749960 bytes. Preprocessing is at most 2^47.131242 units and is included in total work. Nonuniform advice is 0 bytes. This is a classical cold attack on one target with no uncharged advice or quantum steps. The success bound of 0.395898 is the model bound 0.411524 less 1/64 for the meter, DELTA_CUT (within-trail coincidences and replay cut-offs, at most 1.1e-16), DELTA_ABANDON (at most 1.6e-17) and 2^-20 for the other terms. The probability is over the uniform target x and the algorithm's coins. It relies on the disclosed heuristics in proof.md: H1, the standard random-mapping model for r-adding class walks, used for the collision statistics; M1, under which the class data of distinct classes (the key, the canonical rotation and sign, and the canonical coordinate fractions) are independent and uniform; the table coefficients and every trail's coins are drawn from the operating system's randomness, fresh in every run and independently of the target by construction (not a heuristic); the exact certificate of section 2.4, that no k below 2^50 has 2^k in Gamma for the secp256k1 order; and H3, the representativeness of the measured instruction counts of the common path, with rare work charged at forced-path maxima. These are supported by toy-curve runs of the identical procedure, a small-build formal-structure test and production-curve measurements, not proved. This is a carefully accounted generic attack, not a claim of a practical break.",
+      "score": {
+        "numerator": "63239607",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "measurement/step.c",
+        "measurement/secp_field.h",
+        "measurement/secp_sub.h",
+        "measurement/walk_ref.py",
+        "measurement/frac_check.py",
+        "measurement/run.sh",
+        "measurement/reproduce.sh",
+        "measurement/summarize.py",
+        "evidence/measurement/callgrind-doubling.json",
+        "evidence/measurement/replay16-production.json",
+        "evidence/measurement/record-mutation-double.json",
+        "evidence/measurement/trail-paths.json",
+        "experiment.py",
+        "evidence/trails/summary-double.json",
+        "evidence/trails-stress-double.json",
+        "evidence/lemma-r-sensitivity-double.json",
+        "evidence/declared-run-double.json",
+        "evidence/formal-structure.json",
+        "evidence/c-ord.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-procedure",
+      "source": "experiment.py",
+      "purpose": "Run the complete procedure of proof.md section 1.3 on random prime-order toy curves y^2=x^3+7 (b=7, the secp256k1 shape) or y^2=x^3+4 subgroups (b=4), at budget tau = tau_e4/10^4: each slot runs trails from fresh coins without tracking coefficients, with the same class key, canonical rule, adder images and index, both cycle rules and the escape to twice the canonical least-key point; a trail ends at its first distinguished point, recorded once with its coins, or is abandoned at the cap; each slot takes L steps and finishes its trail. The first key match is resolved by replaying both trails from their coins (with a different anchor schedule, checking Lemma R); a degenerate match fails. The filters compare keys masked to filter_bits, as the kernels keep only 64 key bits, and the distinguished-point test precedes every escape and every look-ahead step; with check_all_replays every recorded trail is also replayed and any replay that misses its recorded point is counted. Reports the success rate against 1-exp(-tau), degenerate matches and replay mismatches. No oracle collision table. Toy scale only: it tests the procedure and its collision statistics, not production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 28
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 80
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 11
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "tau_e4": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 6000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "b": {
+            "type": "integer",
+            "enum": [
+              4,
+              7
+            ],
+            "minimum": 4,
+            "maximum": 7
+          },
+          "filter_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 64
+          },
+          "check_all_replays": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "escape": {
+            "type": "string",
+            "enum": [
+              "double"
+            ],
+            "maxLength": 6
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "adder_bits",
+          "dp_bits",
+          "walks",
+          "tau_e4",
+          "seed",
+          "b",
+          "filter_bits",
+          "check_all_replays",
+          "escape"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 28,
+          "trials": 80,
+          "seed": 2801,
+          "b": 7,
+          "adder_bits": 11,
+          "dp_bits": 5,
+          "walks": 16,
+          "tau_e4": 5303,
+          "filter_bits": 64,
+          "check_all_replays": 1,
+          "escape": "double"
+        }
+      ]
+    },
+    {
+      "id": "fraction-lemma",
+      "source": "measurement/frac_check.py",
+      "purpose": "Check Lemma 1 of proof.md on random and edge-case reduced values: the 64-bit fraction approximations g_0 = a_3 and g_1 (4x64-bit limbs) are within [0,1] and [0,8] of floor(2^64*(beta^j x mod p)/p), and the kernel's rule for the canonical rotation either agrees with the exact minimum or falls back to the exact computation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400000
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2, preprocessing, memory and success lower bound from the stated parameters with exact integer arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}
