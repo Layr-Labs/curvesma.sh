@@ -1,0 +1,26 @@
+{
+ "version": 1,
+ "title": "Squaring-branch Frobenius-class rho in GT: trace-invariant branch bits and six +-pair keys, W=2^125.725, claim 125.73",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/ledger.json",
+    "evidence/ledger.log",
+    "evidence/prod_run.json",
+    "evidence/toy_census.json",
+    "public-note.md",
+    "scripts/gt_prod.py",
+    "scripts/ledger.py",
+    "scripts/toy.py"
+   ],
+   "score": {
+    "numerator": "12573",
+    "denominator": "100"
+   },
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z. Steps are one dense Fp12 multiplication, or a cyclotomic squaring taken with probability 3/8; branch, multiplier index and distinguished-point bits are read from the free class invariant T=Re(c0), and the twelve keys are computed as six +-pairs with four Fp multiplications. Total work is at most 2^(12573/100)=2^125.73 dense-Fp12 equivalents (computed 2^125.725) at C=20000, with success probability at least 0.39 under the disclosed random-mapping heuristic H1 and the pseudorandomness of the trace bits H2. The gate seen at submission time is 125.74 (747ad6c9), so this claim is 0.01 below it."
+  }
+ ],
+ "experiments": []
+}

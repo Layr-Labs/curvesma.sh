@@ -1,0 +1,67 @@
+{
+ "ord_r_two_bits": 251,
+ "ord_r_two": 3277242198445386904965483781761622864855659531282977363912728668746161324032,
+ "sqr_rows": {
+  "fp_mul": 24,
+  "fp_add": 130,
+  "instr": 15042
+ },
+ "key_rows": {
+  "fp_mul": 4,
+  "fp_add": 6,
+  "instr": 1802
+ },
+ "dense_mul_instr": 38466,
+ "prod_field": {
+  "steps": 2000,
+  "squaring_steps": 767,
+  "squaring_fraction": 0.3835,
+  "ci95_halfwidth": 0.02122,
+  "invariant_checks": 63,
+  "invariant_failures": 0,
+  "class_tests": 33,
+  "class_agreeing": 33,
+  "lowbits_T_mod8": [
+   243,
+   273,
+   252,
+   258,
+   246,
+   235,
+   260,
+   233
+  ],
+  "R": 1024,
+  "dp_bits": 20,
+  "table_entries_used": 729
+ },
+ "chi2_lowbits7dof": 5.1,
+ "part_a": {
+  "zeta_sixth_root": "PASS",
+  "gt_y_pow_r_is_one": "PASS",
+  "frobenius_formula_equals_power": "PASS",
+  "p_pow6_is_inverse_conjugate": "PASS",
+  "trace_invariant_across_twelve": "PASS",
+  "four_fp_key_rule_matches_conjugates": "PASS",
+  "twelve_keys_distinct": "PASS",
+  "plus_minus_pair_lemma": "PASS",
+  "six_key_min_equals_twelve_key_min": "PASS",
+  "kappa_canonicalises_all_conjugates": "PASS",
+  "cyclotomic_squaring_identity": "PASS",
+  "squaring_stays_in_gt": "PASS",
+  "squaring_y_pow_p6_is_inverse": "PASS",
+  "squaring_injective_on_classes": "PASS",
+  "r_minus_1_factorisation": "PASS",
+  "ord_r_two_at_least_2pow250": "PASS",
+  "no_useless_squaring_cycle_below_2pow125": "PASS",
+  "prod_field_start_invariant": "PASS",
+  "prod_field_end_invariant": "PASS",
+  "prod_field_kappa6_equals_kappa12": "PASS",
+  "prod_field_no_invariant_failures": "PASS",
+  "prod_field_squaring_fraction_3over8": "PASS",
+  "prod_field_class_well_defined": "PASS"
+ },
+ "part_a_pass": 23,
+ "part_a_total": 23,
+ "fails": []
+}
