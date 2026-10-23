@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "cheon-subgroup-dp-walk-mu6-comb-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 120.890005,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 33.383252,
+    "preprocessing_log2": 20.000001,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class walk on H/mu6 (H the 2^20-th powers in Z_r^*, 64 multiplicative steps in H) behaves as a random mapping on the M = (r-1)/(6*2^20) classes, so S tame and wild points give a tame-wild collision with probability 1 - exp(-S^2/(4M)).",
+    "H2: distinguished-point detection adds at most 2^90 steps per trail, and failures to reach a distinguished point within the 2^100-step cap and in-trail cycles are negligible; all such steps are charged.",
+    "H3: Callgrind instruction counts of the step's non-addition work on blst (2703.56 per step over 256 differenced steps) represent per-step work; 2800 instructions are charged."
+  ],
+  "limitations": [
+    "H1 is an unproved standard heuristic; it is tested only on a toy generic group with up to 38-bit order.",
+    "The model success is 0.451188 at S = 2*sqrt(0.6*M); the claimed lower bound is 0.40, and pooled toy success at that budget is 0.416 over 1210 trials.",
+    "Analytic production cost; no production-size execution.",
+    "Peak memory is about 10 GB (distinguished-point table and window-16 comb tables); larger windows lower the score at much larger memory.",
+    "The 16 comb additions per step are charged as reference units; the measured kernel covers the remaining step work, plus an allowance of about 100 instructions for loop and trail bookkeeping."
+  ],
+  "lane": "exploratory"
+}

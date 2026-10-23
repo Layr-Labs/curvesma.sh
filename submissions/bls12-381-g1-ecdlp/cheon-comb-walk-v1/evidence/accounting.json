@@ -1,0 +1,28 @@
+{
+  "r_bits": 255,
+  "N_log2": 234.8570894130472,
+  "M_log2": 232.27212691232603,
+  "window": 16,
+  "windows": 16,
+  "multipliers": 64,
+  "tau_model": "3/5",
+  "success_model": 0.4511883639059736,
+  "success_claim_lower_bound": "2/5",
+  "S_coll_log2_over_sqrtM": 0.6315172029168963,
+  "S_coll_log2": 116.76758065907991,
+  "S_total_log2": 116.76898886222313,
+  "trails_per_family_log2": 15.767589628220506,
+  "H_log2": 120.76898886222313,
+  "R_over_C_log2": 117.25441568939337,
+  "time_log2": "24178001/200000",
+  "time_log2_float": 120.8900042631845,
+  "score_rational": {
+    "numerator": "24178001",
+    "denominator": "200000"
+  },
+  "preprocessing_log2": "20000001/1000000",
+  "memory_log2_bytes": "8345813/250000",
+  "dp_entries_log2": 26.768988865605824,
+  "table_bytes": 201326592,
+  "advice_bytes": 0
+}

@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon subgroup walk with fixed-base comb tables",
+  "claims": [
+    {
+      "statement": "For uniform s in Z_r^* (r the BLS12-381 scalar field order), given T=[s]P0 and A_i=[s^i]P0 for i=1..n with n=2^20, the algorithm in proof.md recovers s with probability at least 0.40 using at most 2^120.890005 target-group-operation equivalents at n=2^20, including table construction, trail starts, distinguished-point storage and detection delay, the square-root chain, verification and output. Work is W(n) = H + R/C with C=2000, where H counts batched incomplete affine G1 additions (16 per walk step and per fixed-base comb evaluation) and R counts other scalar instructions (2800 per walk step: 2703.56 measured on blst by Callgrind, plus a margin for bookkeeping). The reduction takes h = s^(2^20) in the subgroup H of order (r-1)/2^20, solves [h]P0 = A_d by a distinguished-point walk on H modulo mu6 = {+-1, +-lambda, +-lambda^2} with 64 multipliers in H, and recovers s from h by 20 square roots fixed by the public powers A_(2^j). Peak memory is at most 2^33.383252 bytes. Preprocessing is 2^20 units. Nonuniform advice is 0 bytes. The success bound rests on the random-mapping heuristic H1 for tame-wild collisions of this walk (proof.md section 3), supported by toy experiments and not proved. The walk is exact in the generic group model for the point arithmetic used. This is a classical cold attack on one target, not a practical break.",
+      "score": {
+        "numerator": "24178001",
+        "denominator": "200000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "exact.py",
+        "experiment.py",
+        "evidence/toy-initial-b32-k6-60.json",
+        "evidence/toy-k6-400.json",
+        "evidence/toy-k8-400.json",
+        "evidence/toy-b38-k10-200.json",
+        "evidence/toy-b36-k10-150.json",
+        "evidence/toy-mult16-b32-k6-400.json",
+        "evidence/measure-blst-step/summary.json",
+        "evidence/measure-blst-step/run.log",
+        "evidence/measure-blst-step/cheon_step.c",
+        "evidence/measure-blst-step/replica.py",
+        "evidence/measure-blst-step/gen_inputs.py",
+        "evidence/measure-blst-step/dump-512.txt",
+        "claim.json",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-cheon-walk",
+      "source": "experiment.py",
+      "purpose": "Run the walk of proof.md on a generic prime-order group whose exponent is hidden behind keyed labels, with mu6 acting as an endomorphism, and recover s from T and the powers A_(2^j) through the full reduction and square-root chain. It checks correctness, counts walk steps to the first tame-wild collision and compares the empirical CDF with the random-mapping model. Toy scale only: it tests correctness and collision statistics, not the cost of a BLS12-381 step.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 24,
+            "maximum": 32
+          },
+          "k": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 8
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 60
+          },
+          "mult": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "trails": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "use_mu": {
+            "type": "boolean"
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "bits",
+          "k",
+          "trials",
+          "mult",
+          "dp_bits",
+          "trails",
+          "use_mu",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 32,
+          "k": 6,
+          "trials": 60,
+          "seed": 2601,
+          "mult": 64,
+          "dp_bits": 3,
+          "trails": 16,
+          "use_mu": true
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute W(2^20) = H + R/C, time_log2, the success model, the trail and table sizes and the peak memory from the stated parameters, using exact integer arithmetic and the vendored exact.py.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}
