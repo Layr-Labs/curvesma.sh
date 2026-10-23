@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: negation + GLV-endomorphism parallel Pollard rho (v3)",
+  "claims": [
+    {
+      "statement": "Second revision after two rejections (16547c5b: b stuck at 0 from pure-P branches; a7747b0c: distinguished-point design left fruitless cycles undetected, mod-r canonicalization cost omitted, setup cost not charged, memory/arithmetic issues). v3 fixes all of these: (1) distinguished points removed entirely -- a single shared hash table is checked on EVERY step of every walk, so any cycle (fruitless or useful) is caught the instant it recurs, with no waiting-time assumption; (2) canonicalization now explicitly prices 2 modular multiplications (mod r) for transforming (a,b) by lambda^j, in addition to the 2 field multiplications (mod p) for the point; (3) the 32 Q-dependent branch points' setup cost (2 scalar multiplications + 1 addition each) is explicitly derived and added into the total, not reported separately; (4) peak memory is a specified fixed-capacity table (4T slots, load factor <=25%, deterministic 32-probe cap), not an expected-value estimate; (5) every number is computed via a single exact-precision decimal script with no manual arithmetic. Total computation is at most 3.461414e+38 reference-group-operation equivalents (pinned C=1,000). Success probability verified to 60 digits of exact decimal precision: 0.390000...000339... >= 0.39.",
+      "score": {
+        "numerator": "128024630",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-glv-fulltable",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the production mechanism exactly: W parallel walks, mixed c_h/d_h branch points, orbit-canonicalization of both point and coefficients, a shared table checked on every step (not sampled), fruitless-cycle escape, linear-solve. Reports b_nonzero_step_count and escapes_triggered directly so a reviewer can confirm both the b-stuck-at-0 fix and that fruitless cycles are caught, not silently trapping a walk. Does not validate production curve arithmetic, instruction costs or full-size timing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 20000
+          },
+          "w": {
+            "type": "integer",
+            "enum": [6]
+          },
+          "unit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "W": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": ["order", "w", "unit", "W", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 997,
+          "w": 6,
+          "unit": 304,
+          "W": 8,
+          "trials": 100,
+          "seed": 42
+        }
+      ]
+    }
+  ]
+}
