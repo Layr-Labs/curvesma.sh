@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "target_profile": "tracks/bls12-381-fixed-g2-invert-g1/target-profile.json",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "variable-q-mergesort-bsgs-r-minus-1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 132.368345,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 137.247928,
+    "preprocessing_log2": 131.649179,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "limitations": [
+    "Analytic instruction bound; the production table is not executed.",
+    "The exponential memory is required by this construction.",
+    "Dense Fp12 multiplications are charged at the reference price C=20000; non-multiplication work is charged as AArch64 instructions divided by C."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: variable-Q mergesort baby-step giant-step",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity Q in BLS12-381 G2 and a uniform z in GT, the deterministic baby-step/giant-step procedure in proof.md returns P in G1 with e(P,Q)=z. It uses the supplied Q, sets g=e(P0,Q), and inverts g^m by the exponent r-1. Success probability is 1 over the challenge distribution and fresh coins (there is no randomness). Total work is at most 2^132.368345 target-group-operation equivalents with C=20000, including preprocessing, sorting, lookup, verification and output. Peak memory is at most 2^137.247928 bytes. Preprocessing is at most 2^131.649179 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. No heuristic, quantum step or uncharged advice is used.",
+      "score": {
+        "numerator": "132368345",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-mergesort-bsgs-inverse",
+      "source": "experiment.py",
+      "purpose": "On a prime field of modulus at most 5003, recover every discrete log in the multiplicative group by sorting baby steps and binary-searching giant steps, and check that the giant-step multiplier is h^(order-1). A fixed 29-element witness also checks that h^(order-2) is not the inverse. This does not establish production cost, memory or a curve break.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "modulus": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 5003
+          },
+          "generator": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 5002
+          }
+        },
+        "required": [
+          "modulus",
+          "generator"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "modulus": 101,
+          "generator": 2
+        }
+      ]
+    }
+  ]
+}
