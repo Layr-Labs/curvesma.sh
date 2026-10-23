@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "Plain G1 v4: unchanged six-class SHAKE rho with charged Jacobian scalar actions",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md", "reference.py", "verify.py", "test_reference.py",
+        "certificate.json", "captured-output.txt", "toy.py", "toy-summary.json", "toy-output.txt",
+        "toy-30013-part0.json", "toy-30013-part1.json", "toy-30013-part2.json", "toy-30013-part3.json",
+        "toy-30109-part0.json", "toy-30109-part1.json", "toy-30109-part2.json", "toy-30109-part3.json",
+        "toy-30139-part0.json", "toy-30139-part1.json", "toy-30139-part2.json", "toy-30139-part3.json"
+      ],
+      "score": {"numerator": "3512", "denominator": "25"},
+      "statement": "For the exact plain input T=[x]P0, with no auxiliary powers or n, recover and verify the canonical scalar x with success at least 2/5 under the explicit inherited keyed-SHAKE random-function extrapolation H1 and its 21/20 slowdown. Keep the six-class canonical map, full-scalar hash translation, sign identities, reduced scalar labels, B with 100B^2>=169(r-1)/6, bounded Floyd, entry replay and exactly one cycle lap. At most 6B transitions execute, including failures and replays. The ideal-model one-lap useful factor is 5/6; the modeled floor 11/25 less a named 3/100 reserve and exact reduction/identity exceptions exceeds 2/5 and the protected 39/100. Implement each actual scalar action projectively with at most 255 seven-kernel doublings, 256 eleven-kernel complete mixed calls, 766 normalization kernels and eight canonicalization/decoding kernels. H=0, C=2000, I=4430209 scalar instruction equivalents per transition and W=(6B*I+2^40)/2000. Exact 140.2126<log2 W<140.2127; every non-field-kernel row and fixed work repriced by 6/5 gives log2 Wstress<140.3595, more than 0.10 bits below submitted 3512/25=140.48. The openly wider base slack reflects the mathematical incompatibility of maximum 0.06-bit base slack with minimum 0.10-bit upward-stress headroom. This improves our own prior accepted 4dd31b95 score 145.47 by exactly 4.99 bits, not the whole board. Hard native memory is 2^20 bytes, included cold preprocessing below 2^30 reference units, advice zero. Hashing, randomness, arithmetic, scalar actions, transfers, all failed attempts, preprocessing, validation, verification and output are charged without amortization. The faithful 2400-trial toy, complete printed histograms, 30063 action comparisons, 72 same-coin pipeline comparisons and integer certificate support only their actual scopes; no production attack or proof of H1 is claimed."
+    }
+  ],
+  "experiments": []
+}

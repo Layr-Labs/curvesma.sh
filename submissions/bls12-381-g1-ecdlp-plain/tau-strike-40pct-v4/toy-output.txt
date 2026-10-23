@@ -1,0 +1,13 @@
+Faithful toy run: 1503/2400 verified recoveries.
+p=30013 r=10039 classes=1673 B=54: 514/800; max eval 298 <= 324
+  hash scalar mod16: [8075, 8116, 7618, 7801, 7911, 7279, 7762, 7657, 7419, 7730, 7791, 7768, 7477, 7419, 7806, 7856]
+  six orientations: [20273, 20776, 20719, 20857, 20485, 20375]
+  failures: {"Floyd iteration cap": 189, "one-lap orbit product is identity": 97}
+p=30109 r=10093 classes=1682 B=54: 485/800; max eval 324 <= 324
+  hash scalar mod16: [7848, 7802, 7708, 7622, 7489, 7619, 7749, 7421, 7663, 7567, 7969, 7596, 7877, 7803, 7610, 7780]
+  six orientations: [20797, 20397, 20354, 20277, 20555, 20743]
+  failures: {"Floyd iteration cap": 214, "one-lap orbit product is identity": 101}
+p=30139 r=9931 classes=1655 B=53: 504/800; max eval 288 <= 318
+  hash scalar mod16: [7918, 7527, 7481, 7446, 7590, 7625, 7794, 7641, 7467, 7558, 7457, 7622, 7629, 7356, 7479, 7854]
+  six orientations: [20322, 20425, 19888, 20608, 20010, 20191]
+  failures: {"Floyd iteration cap": 203, "one-lap orbit product is identity": 93}
