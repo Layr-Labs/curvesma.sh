@@ -1,0 +1,90 @@
+{
+ "C": 2000,
+ "N": 65834509541915422902038980414796450,
+ "P": 58472790646671255834,
+ "W": {
+  "denominator": 125,
+  "numerator": 18647627801454788913986960461620577884
+ },
+ "c": {
+  "denominator": 1000,
+  "numerator": 1133
+ },
+ "checks": {
+  "c_budget_itemised": "PASS",
+  "c_equals_1133_over_1000": "PASS",
+  "chunk_cap_covers_expected": "PASS",
+  "claim_above_raw_by_5_millipoints": "PASS",
+  "claim_below_gate": "PASS",
+  "claim_below_gate_plus_006": "PASS",
+  "claim_holds_at_13_hops": "PASS",
+  "coverage_meets_K": "PASS",
+  "d_divides_r_minus_1": "PASS",
+  "m_bits_235": "PASS",
+  "no_field_advice": "PASS",
+  "peak_below_2_129": "PASS",
+  "preprocessing_below_2_77_units": "PASS",
+  "preprocessing_included": "PASS",
+  "primes_available": "PASS",
+  "r_minus_1_factorisation": "PASS",
+  "r_prime": "PASS",
+  "raw_at_most_claim_minus_tenth": "PASS",
+  "success_floor_39pct": "PASS",
+  "two_not_in_H": "PASS",
+  "two_pow_m_has_order_2_16": "PASS",
+  "v2_r_minus_1_is_32": "PASS",
+  "walk_row_is_two_N_times_c": "PASS",
+  "zeta_is_primitive_dth_root": "PASS"
+ },
+ "claim": {
+  "denominator": "20",
+  "numerator": "2339"
+ },
+ "claim_window": {
+  "gate_margin": "0.032765",
+  "headroom": "0.105453"
+ },
+ "d": 1048576,
+ "elements_per_prime": 1125899906842624,
+ "gate": {
+  "denominator": "200000",
+  "numerator": "23396553"
+ },
+ "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+ "peak_bytes": 6320112916023927822260570824862530752,
+ "peak_cap": 680564733841876926926749214863536422912,
+ "per_element": {
+  "addition": 2000,
+  "bookkeeping": 75,
+  "canonical_y": 40,
+  "instructions_per_hop": 18,
+  "key_hash": 61,
+  "routing": 90,
+  "routing_hops": 5,
+  "total": 2266
+ },
+ "preprocessing_units_ceiling": "191417583608258916503257088",
+ "raw_log2": "116.844547",
+ "raw_log2_at_13_hops": "116.933433",
+ "rows": {
+  "b_sieve_and_class_lists": 191266467880807087856418816,
+  "characters_per_prime": 18946236679753126972821012,
+  "final_verification": 766000,
+  "gap_overflow_chunks": 490505319400991670059139072000,
+  "input_read_and_output": 16777216,
+  "per_prime_scalar_mults": 89580315270700363937688000,
+  "per_prime_tables": 47088510662495200325677350912000,
+  "prime_sieve_2_76": 151115727451828646838272,
+  "recovery_root_and_mu_d": 2150441428,
+  "walk_baby": 149180998621980348296020329619928755700,
+  "walk_giant": 149180998621980348296020329619928755700
+ },
+ "success": {
+  "K": "13/25",
+  "duplicate_loss": "2^-14",
+  "floor": "39/100"
+ },
+ "table_bound": 67108864,
+ "table_levels": 3,
+ "total_instructions": 298362044823276622623791367385929246144
+}

@@ -1,0 +1,130 @@
+{
+ "attack": [
+  {
+   "K": 0.5183,
+   "N": 301,
+   "X2_over_d": 64,
+   "candidate_tests": 3558,
+   "chunk_additions": 961462,
+   "deviation_sigma": -0.7218,
+   "deviation_vs_exact_sigma": -0.3455,
+   "exact_coverage": 0.3997,
+   "exact_pairs_over_m": 0.5183,
+   "false_positives": 0,
+   "model": 0.4045,
+   "overflow_gaps": 708101,
+   "sigma": 0.0127,
+   "success_rate": 0.3953,
+   "successes": 593,
+   "table_bound": 8,
+   "trials": 1500,
+   "walk_additions": 1770704,
+   "walk_elements": 301,
+   "wrong_outputs": 0
+  },
+  {
+   "K": 0.5183,
+   "N": 301,
+   "X2_over_d": 256,
+   "candidate_tests": 3492,
+   "chunk_additions": 969541,
+   "deviation_sigma": -1.3005,
+   "deviation_vs_exact_sigma": -1.3378,
+   "exact_coverage": 0.405,
+   "exact_pairs_over_m": 0.5183,
+   "false_positives": 0,
+   "model": 0.4045,
+   "overflow_gaps": 712002,
+   "sigma": 0.0127,
+   "success_rate": 0.388,
+   "successes": 582,
+   "table_bound": 8,
+   "trials": 1500,
+   "walk_additions": 1778444,
+   "walk_elements": 301,
+   "wrong_outputs": 0
+  }
+ ],
+ "coverage": [
+  {
+   "N": 301,
+   "S": 419802,
+   "X2": 256,
+   "X2_over_d": 4,
+   "coverage": 0.4003,
+   "duplicate_ppm": 227745,
+   "model": 0.4045,
+   "pairs": 543606
+  },
+  {
+   "N": 301,
+   "S": 418380,
+   "X2": 1024,
+   "X2_over_d": 16,
+   "coverage": 0.3989,
+   "duplicate_ppm": 230361,
+   "model": 0.4045,
+   "pairs": 543606
+  },
+  {
+   "N": 301,
+   "S": 419202,
+   "X2": 4096,
+   "X2_over_d": 64,
+   "coverage": 0.3997,
+   "duplicate_ppm": 228849,
+   "model": 0.4045,
+   "pairs": 543606
+  },
+  {
+   "N": 301,
+   "S": 424710,
+   "X2": 16384,
+   "X2_over_d": 256,
+   "coverage": 0.405,
+   "duplicate_ppm": 218717,
+   "model": 0.4045,
+   "pairs": 543606
+  }
+ ],
+ "part_a": {
+  "P0_on_curve": true,
+  "P0_order_r": true,
+  "beta_cube_root_of_unity": true,
+  "chi_additive": true,
+  "chi_kernel_is_H": true,
+  "chi_not_identically_zero": true,
+  "chi_vanishes_on_dth_powers": true,
+  "d_divides_r_minus_1": true,
+  "dth_powers_are_mth_roots": true,
+  "glv_map_matches_lambda": true,
+  "lambda_cube_root_of_unity": true,
+  "m_log2_floor": 234,
+  "orbit_one_canonical_y_value": true,
+  "orbit_six_distinct": true,
+  "orbit_three_distinct_x_values": true,
+  "orbit_two_raw_y_values": true,
+  "order_of_2_does_not_divide_m": true,
+  "order_of_2_mod_r": 3277242198445386904965483781761622864855659531282977363912728668746161324032,
+  "order_of_2_pow_m": 65536,
+  "r_minus_1_factorisation": true,
+  "r_prime": true,
+  "two_not_in_H": true,
+  "v2_m": 12,
+  "v2_r_minus_1": 32,
+  "zeta_has_order_d": true
+ },
+ "tool": "python3 stdlib, run by verify_certificate.sh",
+ "toy": {
+  "P0": [
+   237681704,
+   148559079
+  ],
+  "b": 8,
+  "d": 64,
+  "lam": 5011271,
+  "m": 1048782,
+  "p": 268520611,
+  "r": 67122049
+ }
+}

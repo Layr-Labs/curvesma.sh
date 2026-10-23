@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "Additive Cheon integer-walk BSGS with an itemised per-element budget",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "verify_certificate.py",
+        "toy.py",
+        "toy-summary.json",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "2339",
+        "denominator": "20"
+      },
+      "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, uniform nonzero s, and every integer 2^20<=n<=2^32, Cheon's reduction writes v=s^d mod r, which lies in the subgroup H of d-th powers, of order m=(r-1)/d (235 bits, v2(r-1)=32), and s is determined by v up to the d roots s*zeta^j; the attack recovers v by a baby-step/giant-step search inside H whose sets are integers a*b with a a prime in (2^75,2^76], b<=2^70 and chi(a)+chi(b)=0 mod d, chi(x)=log_zeta(x^m) being a character with kernel H. Per prime a the admissible b form one class of size 2^70/d=2^50, the walk visits them in increasing b with one batched incomplete affine addition per element from a three-level table of multiples of [a]P0, gaps above 2^26 are split into base-2^26 digits, and 2^16 primes run in lockstep so each round shares one Montgomery inversion. N=65834509541915422902038980414796450 elements per side (2^65.664 primes per side, disjoint sets) give 6N^2(1-2^-14) candidate ratios +-lambda^i x/y in H, so the hit count is modelled as Poisson with mean K>=13/25=0.52 and success is at least 1-e^-13/25>=39/100. The hash key is min(y,p-y), identical on the six points [u]Q with u in {+-1,+-lambda,+-lambda^2}, so one record covers six scalars and no beta*x multiplication is charged. A match yields v, then a d-th root is 20 Tonelli-Shanks square roots and s is found by a 2^20-candidate search over mu_d. With the reference unit C=2000 instructions per batched incomplete affine G1 addition, the per-element budget is 2000+40 canonical y+61 key hash+5*18 routing+75 bookkeeping=2266, i.e. c=1133/1000=1.133, and R(n)=2*N*2266+2*P*3*2^26*2000+2*P*383*2000+2*P*423*383+2^70*423*383+2^77+2*P*2^21*2000+(2^31+20*383*383+24000)+383*2000+2^24 with P=58472790646671255834, so W(n)=R(n)/2000 is constant on the stated n range, W(2^20)=298362044823276622623791367385929246144/2000 and log2 W(2^20)=116.844547<2339/20. The claim 2339/20 is 0.105 above that computed work and 0.032765 below the published frontier 116.982765. Success uses the disclosed heuristic H1 that the 6N^2 ratios are equidistributed in H with a 2^-14 bound on repeated rationals at X2/d=2^50, H2 that the characters of the used primes are equidistributed (with >=3x slack in the prime supply), and expected-cost sharded hashing; a toy with d=2^6 gives 0.3953 over 1500 trials against an exact |S|/m=0.3997, with the chunk path exercised 7.4e5 times. Hard peak memory is at most N*96+2^33+2^70*8+2^60*4096*8<2^129 bytes; there is no advice, preprocessing is inside the total, and all accesses to A_1 and A_d, the collision search, root extraction, search over mu_d, verification and output are charged."
+    }
+  ],
+  "experiments": []
+}
