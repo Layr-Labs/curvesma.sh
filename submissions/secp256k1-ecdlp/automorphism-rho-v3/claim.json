@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/secp256k1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/secp256k1-ecdlp/automorphism-rho (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v2 (rejected: period-3 fruitless cycles from the order-3 identity, ledger sum 644 vs stated 641, memory strictly > 2^70, lag-as-mean)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "automorphism-rho-dp-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.633635,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 70.1,
+    "preprocessing_log2": 25.6,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the canonical 32-adding walk on the (r-1)/6 automorphism classes has first-collision time approximating the birthday tail 1 - exp(-t^2/(2N)); supported classically, by Teske's r-adding-walk experiments, and by the toy run (0.545 vs 0.4845 ideal in the lag-free regime).",
+    "Fruitless-cycle handling: the period-2 negation family (rate ~1/192, census-measured 1/115, charged bound 1/64) and the period-3 order-identity family (rate ~2^-16.7, proven algebraically via 1+lam+lam^2=0) are detected by dual look-backs at distances 2 and 3 with full-state fruitless/useful discrimination and one-addition escapes, all charged. Longer zero-sum families of the multiplier ring are bounded by pattern counting (< 2^-40 per step) and fenced by a per-walker epoch limit of 2^36 steps, under which any family entering below 2^-31.4 per step wastes at most the charged 5% residual slack."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack with success probability lower bound 0.39 exactly at the protected threshold; no amplification is used and all failures are charged.",
+    "The distinguished-point table is a hard 2^63-slot allocation; the peak is strictly above 2^70 bytes and reported as 70.1; overflow aborts with probability <= exp(-2^58.2) (Chernoff, correct ratio 0.065).",
+    "Automorphism-accelerated rho is standard cryptanalysis, not a novel attack; this is the first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}

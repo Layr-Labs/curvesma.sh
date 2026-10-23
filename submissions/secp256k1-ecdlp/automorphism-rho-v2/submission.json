@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: automorphism-aware Pollard rho v2 (canonical-state lazy walk, cycle detector)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the single-shot classical automorphism-aware Pollard rho algorithm v2 in proof.md recovers x with success probability at least 0.39 using at most 2^127.623728 total target-group-operation equivalents (time_log2 = 127.623728 = 7976483/62500), including setup, seeding, all walk steps, canonicalization, lazy-representation updates, fruitless-cycle detection and escapes, degenerate reseeds, distinguished-point processing, extraction, verification and output. The walk runs on the (r-1)/6 classes of the order-6 automorphism group (negation plus the j=0 cube-root map with verified [lam]P = zeta(P)); its state is the canonical point plus a lazy representation whose canonical-frame multiplier is one of six table-managed values, so the per-step cost is one reference batched incomplete affine addition plus 641 other instruction equivalents (worst case, including the amortized cycle-escape charge) and involves no per-step mod-r multiplication. The fruitless 2-cycle of the negation map has a constant-order trigger rate (~1/192 per step, bounded by 1/64); it is detected by a 2-step look-back comparison of the full walk state, distinguished from useful self-collisions, and escaped with one charged addition; 3-to-8-term constant-constellation cycles are excluded by a charged setup check plus union bounds below 2^-172, and a 5% residual efficiency slack is charged. Budget: t = 1.15*sqrt((r-1)/6) total walker steps over 2^16 distinguished-point walkers; modeled collision probability 0.450 at the charged useful-visit fraction 0.95, detection lag < 2^-46 of budget, table-overflow < 2^-62. Peak memory is a hard 2^63-slot distinguished-point table plus state, at most 2^70.0 bytes (memory_log2_bytes = 70.0); preprocessing is at most 2^25.6 target-group-operation equivalents (preprocessing_log2 = 25.6, the v1 arithmetic slip corrected) and is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice, no quantum steps and no amortization over targets. The algebraic structure and the lazy-representation invariant are verified exactly at production parameters by experiment.py Part A (including 96 walk steps); Part B runs the complete v2 attack on a 20-bit j=0 toy curve with the production low-bits distinguished-point predicate: 85/200 = 0.425 successes vs 0.4845 ideal (the gap is toy-scale detection lag, analyzed), 335 escapes at rate 1/287 per step (inside the predicted 1/64-1/192 band), 0 extraction-verification failures.",
+      "score": {
+        "numerator": "7976483",
+        "denominator": "62500"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "automorphism-rho-v2-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production parameters (exact stdlib arithmetic): the order-6 automorphism structure with [lam]P = zeta(P), closure of the six-element multiplier group G6, the class count (r-1)/6, the pairwise class-disjoint walk-constant setup check, and the lazy-representation invariant rep(canon) = g6[L]*(a,b) verified along 96 production walk steps. Part B runs the complete v2 attack on a 20-bit j=0 toy curve with the production-shaped machinery: canonical-state walk with lazy representations, 2-step look-back cycle detector with fruitless/useful discrimination and one-addition escape, distinguished points by the low-bits-zero predicate, capped hash table, canonical-frame extraction. It reports measured success against the ideal birthday prediction, escape counts and rates, and extraction-verification failures. Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dbits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dbits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dbits": 2,
+          "walkers": 8
+        }
+      ]
+    }
+  ]
+}
