@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-orbit parallel rho in GT (v3)",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^126.32 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) and solves z=g^a by parallel distinguished-point Pollard rho on orbits of the order-12 Frobenius automorphism of GT. A twisted-state 2^20-adding walk uses pre-twisted table entries, so each step is one dense Fp12 multiplication plus 8 Fp multiplications for the 12 one-coordinate class keys; 1.25 units per step are charged. Walks restart at every distinguished point via a cheap rule (new start = previous distinguished point times a random table entry, one multiplication), so the ~2^106.3 restarts cost ~2^106.6 units, below 2^-19 of the main term and fully charged. Fruitless cycles are handled by look-ahead plus Brent cycle detection on the class key, so a stuck walk is abandoned after O(cycle length) steps; the wasted-step fraction is rho*O(cycle length) where the fruitless-cycle entry rate rho<=1/R is a counting bound on partition-hash coincidences (measured uncensored at rho*R~0.06-0.11 with look-ahead off, smaller with look-ahead on), making the 1.03 waste factor hold for any rho<=1/R without an assumed 1/R^2 constant. Under the stated random-mapping heuristic, supported by toy experiments, the success probability is at least 0.39; the budget is 1.25*sqrt(2*N*ln(1/0.61)) useful steps on N=(r-1)/12+1 classes times 1.03. Additive setup, restart, distinguished-point storage, detection-lag and output costs total ~2^-19.4 of the main term. Peak memory is at most 2^113 bytes; preprocessing is at most 2^32 units and is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps; generic accounting of known techniques, not a practical break.",
+      "score": {
+        "numerator": "3158",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-orbit-rho-v3",
+      "source": "experiment.py",
+      "purpose": "Twisted-state parallel distinguished-point rho on orbits of an order-12 automorphism x->x^lam in a prime-order-l subgroup of F_q^*, with look-ahead, cheap D*M_j restarts, and Brent cycle detection. Measures walk length (mean group multiplications of walk steps, look-ahead retries and restarts) relative to sqrt(pi*N/2), success within the 1.25*k0 budget, the UNCENSORED fruitless-cycle entry rate per step (Brent, independent of the timeout), and the wasted-step fraction. A lookahead toggle shows look-ahead reducing the entry rate; with look-ahead off the entry rate satisfies rho*R~const, supporting rho<=1/R. The counter measures walk-step work only; canonicalisation, setup and verification are accounted in proof.md section 4. Toy-scale evidence only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 26},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 200},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000},
+          "walks": {"type": "integer", "minimum": 1, "maximum": 32},
+          "theta_bits": {"type": "integer", "minimum": 1, "maximum": 6},
+          "partitions": {"type": "integer", "minimum": 4, "maximum": 4096}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"bits": 24, "trials": 120, "seed": 41, "walks": 8, "theta_bits": 4, "partitions": 256}
+      ]
+    }
+  ]
+}
