@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: parallel Pollard rho on group points",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed NIST P-256 generator P, the parallel Pollard rho algorithm of proof.md (R=2048 adding walks on the affine x high-bit partition, look-ahead, distinguished points of 32 trailing zero x-bits, w=2^40 walks, k=46*2^123 point budget, batched affine steps) recovers x with success probability at least 0.64 under the disclosed random-mapping idealization M1 stated there, using at most 2^129.687061 total target-group-operation equivalents including preprocessing, all trials and failures, randomness, DP table work, verification and output. Peak memory is at most 2^103.108525 bytes; preprocessing is at most 2^27.288456 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged precomputation, oracle or amortization over future targets.",
+      "score": {
+        "numerator": "129687061",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-plain",
+      "source": "experiment.py",
+      "purpose": "Run the identical plain R-adding walk with look-ahead and distinguished points end-to-end on a small prime-order Weierstrass curve (p=1999, r=2089), measuring steps-to-solve against the sqrt(pi r/2) idealization and counting unsolvable relations. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}

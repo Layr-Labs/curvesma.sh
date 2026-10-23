@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: deterministic baby-step giant-step",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed NIST P-256 generator P, the deterministic baby-step/giant-step algorithm in proof.md recovers x with success probability 1 and with no heuristic assumption, using at most 2^131.690641 total target-group-operation equivalents, including preprocessing, validation, verification and output. Peak memory is at most 2^135.584963 bytes; preprocessing is at most 2^130.441484 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, oracle or quantum step. Actual P-256 arithmetic is charged through justified scalar AArch64 instruction counts divided by C=1000; a P-256 addition is not one unit and the secp256k1 6M price is not used as a P-256 addition price. The exponential memory is required. This is an analytic generic accounting, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "131690641",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs",
+      "source": "experiment.py",
+      "purpose": "Exhaustively recover every scalar on a prime-order Weierstrass curve of order 61 by the same baby-step/giant-step recurrence as proof.md, including the identity. This does not establish production instruction counts or memory.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 16
+        }
+      ]
+    }
+  ]
+}
