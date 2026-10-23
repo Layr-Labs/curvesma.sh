@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: hash-indexed negation BSGS truncated at success 2/5",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x, the deterministic negation-map baby-step/giant-step algorithm in proof.md succeeds with probability at least 0.40 over the uniform challenge, by exact disjoint-window coverage, using at most 2^128.046930 total target-group-operation equivalents (batched incomplete-affine 6M additions at the fixed price C=1000 plus all other work in scalar AArch64 instruction equivalents divided by C), including preprocessing and verification. Peak memory is at most 2^132.675538 bytes; preprocessing is at most 2^127.053161 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps or undeclared heuristics; the single declared heuristic H1 (uniform hashing for linear-probing probe counts) bounds work only and cannot change correctness or the covered set. The exponential memory is required. This is an analytic generic accounting control under the current classical-group-work-v2 convention, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "64023465",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-negation-bsgs-p40",
+      "source": "experiment.py",
+      "purpose": "On a small additive cyclic group, exhaustively check the truncated signed-window BSGS indexing: the covered set is exactly the h disjoint windows, every covered secret is recovered, and simulated linear-probing hash probes stay inside the charged budget. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}

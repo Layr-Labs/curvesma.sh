@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-accounting-control",
+  "algorithm": "negation-bsgs-hashindex-p40-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.04693,
+    "memory_log2_bytes": 132.675538,
+    "preprocessing_log2": 127.053161,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: x-coordinates of baby points hash like uniform slot indices under the multiply-shift fold at load 0.7, so linear-probing probe counts match textbook means; the charge pads the mean and affects work only, never correctness."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Conservative generic control using x-coordinate negation classes with a truncated deterministic walk; not a best-known attack estimate or security bound.",
+    "The declared exponential memory is required; beating this control alone does not establish novel cryptanalysis.",
+    "Success is exactly 0.40 by disjoint window coverage; only the work bound uses the declared hash heuristic."
+  ],
+  "lane": "exploratory"
+}
