@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: deterministic negation-map BSGS with a complete cold-work ledger",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the protected BLS12-381 G1 generator P0 (subgroup of prime order r of y^2=x^3+4), recover x. The deterministic baby-step/giant-step algorithm in proof.md keys its table by affine x-coordinate (negation map), uses m=2^126 records, stride 2m-1 and h=2^127 giant iterations, covers exactly 2^254-2^127 scalars and therefore succeeds with probability above 0.55 (hence at least 0.39), using less than 2^(287/2) total target-group-operation equivalents, including preprocessing, routed memory access, sorting, failure paths, subgroup check and verification. No reference operation is counted (H=0): every field operation (6-limb CIOS Montgomery multiplication, Fermat inversion), every complete affine point step with its own inversion, all memory routing and control are charged through explicit analytic scalar AArch64 instruction bounds, and the total instruction count is divided by the protected C=2000. Preprocessing is less than 2^(287/2) equivalents and is included in total work; peak memory is less than 2^150 bytes; nonuniform advice is 0 bytes. There is no heuristic, randomness, retry, pairing transfer or quantum step. This is an analytic conservative accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "287",
+        "denominator": "2"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-negmap-bsgs-bls-g1",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the signed-window negation-map BSGS coverage and sign logic on small additive groups and on small j=0 curves y^2=x^3+b restricted to prime-order subgroups with nontrivial cofactor (and generic-a curves) with real x-coordinate keys and complete affine addition; execute the counted 6x64-bit CIOS Montgomery multiplication and the Fermat inversion chain on the real BLS12-381 prime and check P0 has order r; check the exact integer success and ledger inequalities with the real r. Finite scope only; does not establish production cost or security.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": { "type": "string", "enum": ["all", "additive", "curve", "kernel", "ledger"] }
+        },
+        "required": ["mode"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        { "mode": "all" }
+      ]
+    }
+  ]
+}
