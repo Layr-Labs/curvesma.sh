@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "Dense supplied-power root lifting with fully charged partial scalar-action grids",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 auxiliary-powers challenge and every integer 2^20<=n<=2^32, the deterministic algorithm in argument.md has W(n)=[2m*(79650816+21135360+65536)+21*79650816+2^80+2^20*n]/2000, with m=ceil(sqrt(81*((r-1)/2^20)/200)), success exactly m^2/((r-1)/2^20)>=81/200, and hard peak at most 1536L+2^64<2^129 bytes (L the least power of two >=2m). At n=2^20, W<2^(669/5). Every known-scalar point action pays the unchanged complete v4 ceiling. Repricing all instruction rows by 6/5 still gives work below 2^133.7. No multiplicative PH, unknown encoded-scalar exponentiation, hash lookup, or probabilistic collision premise is used.",
+      "score": {"numerator": "669", "denominator": "5"},
+      "evidence": [
+        "argument.md",
+        "ledger.md",
+        "certificate.json",
+        "verify.py",
+        "toy.py",
+        "toy.json",
+        "test_tracer.py",
+        "test_certificate.py",
+        "public-note.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
