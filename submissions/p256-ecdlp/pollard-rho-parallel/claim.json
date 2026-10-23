@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "target_profile": "p256-ecdlp",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-pollard-rho",
+  "algorithm": "parallel-pollard-rho-plain-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 129.687061,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 103.108525,
+    "preprocessing_log2": 27.288456,
+    "success_probability": 0.64,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    {
+      "id": "M1",
+      "name": "random-mapping idealization",
+      "statement": "For collision purposes the R-adding iteration on the affine x high-bit partition behaves like a uniform random mapping on the r group points: walk iterates are modeled as independent uniform draws until the first repeat.",
+      "support": "Standard r-adding-walk analysis (Teske ANTS 1998; Brent-Pollard) finds only small-constant deviations from the idealization for R >= 20 partitions; the packaged toy experiment runs the identical construction end-to-end and measures 1.40x the idealized steps-to-solve. The claim does not rely on any exact external constant.",
+      "limitations": "Declared heuristic, not a theorem. A toy run at r = 2089 does not bind the constant at r ~ 2^256; the claim therefore does not assert the idealization but bounds against its failure.",
+      "extrapolation": "The bound survives a degradation of the collision exponent by a factor of 2.09: the submitted budget k = 46*2^123 gives exponent 1.0332 vs the 0.4943 required for success 0.39."
+    }
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success rests on the single disclosed heuristic M1 with a quantified 2.09x margin; if real r-adding walks deviate worse than that, the success bound fails and so does the claim.",
+    "Instruction bounds are analytical upper bounds, not Callgrind measurements of a P-256 kernel.",
+    "The negation map was deliberately not used: its fruitless-cycle analysis could not be reproduced compactly enough to satisfy the evidence policy, so the claim pays ~0.64 bits of score to remove it.",
+    "This is a generic best-known-style accounting, not a novelty or practical-break claim."
+  ],
+  "lane": "exploratory"
+}
