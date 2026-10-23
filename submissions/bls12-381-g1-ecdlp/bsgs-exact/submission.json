@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon's reduction with an exact baby-step giant-step over the six-unit quotient",
+  "claims": [
+    {
+      "statement": "For s uniform in 1..r-1 with T=[s]P0 and the supplied powers A_i=[s^i]P0, the attack reads only B=A_d with d=2^20 and T, so the bound holds for every n with 2^20<=n<r and is claimed at n=2^20. Since 2^20 divides r-1, v=s^d lies in the order-N subgroup E of F_r^* (N=(r-1)/2^20, log2 N=234.857089, 6 | N); g=7^(2^20) generates E (7 generates F_r^*, checked from the factorisation of r-1). Points [e]P0, e in E, are grouped in M=N/6 classes under the six units +-lambda^i (the j=0 endomorphism (x,y)->(beta x,y) acts as [lambda]); the key of a point is the minimum Montgomery representative of x, beta x, beta^2 x; two points have equal keys exactly when they are in the same class (no hash, no truncation). Baby steps: key of [g^j]P0 for j in 0..m-1; giant steps: key of [g^(-im)]B for i in 0..G-1, with m=ceil(sqrt(2M/5)) (log2 m=115.475099) and G=ceil(2M/(5m))=m-1. Each step is one F_r multiplication of the scalar and a fixed-base product from three 85-bit windows of precomputed tables [c 2^(85k)]Q, Q in {P0,B}: at most two batched incomplete affine additions, proved free of exceptional cases for every scalar. All m+G=2^116.475099 records (64 bytes) are sorted by a 24-pass LSD radix sort on the full 384-bit key and scanned once; a pair of equal keys exists exactly when (log_g s^d mod M) < mG and gives s^d by testing six units, then s by testing all 2^20 d-th roots against T. Success probability is exactly mG/M = 0.400000000 (at least 2/5; no random coins, no walk or collision heuristic). Work is a worst-case count with no early exit: per step 2 additions plus 1134 itemised instructions, per record 1571 instructions of sort and scan, 3.3525 units per record, plus separately charged batch inversions (2^108.338753), table preprocessing (2^87.650917 units, 6*(2^85-1) entries) and phases D and E (2^21.367257). 1 unit = one batched incomplete affine G1 addition = 2000 instructions; F_p and F_r multiplications are charged 383 instructions each. Total W(2^20) = 2^118.221865 units; the submitted bound log2 W(2^20) <= 118.23 = 11823/100 is rounded up. Peak memory below 2^123.48 bytes (tables 2^94.169925 bytes of packed 96-byte points, records and sort buffer 2^123.475099 bytes), word accesses to these stores charged 2 instructions each with two-word addressing; nonuniform advice 0 bytes. Classical. The instruction ledger is analytic, not a built implementation; the memory is far beyond any physical machine and has no scalar weight in this track.",
+      "score": {
+        "numerator": "11823",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "exact-bsgs-toy-and-ledger",
+      "source": "experiment.py",
+      "purpose": "Part 1 recomputes every production number in the claim (factorisation of r-1, generator, endomorphism pairing on P0, m, G, exact success fraction, itemised ledger, W, score, memory). Part 2 runs the same algorithm (three-window fixed-base tables, incomplete additions that raise on any exceptional case, canonical key, LSD radix sort, scan, six-unit test, d-candidate test) on a small j=0 curve for every secret and checks that the number recovered equals d*6*m*G exactly. The toy is evidence at its own scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {"type": "integer", "minimum": 0, "maximum": 2},
+          "target_permille": {"type": "integer", "minimum": 100, "maximum": 800}
+        },
+        "required": ["curve", "target_permille"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"curve": 0, "target_permille": 400}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "cheon-exact-bsgs-six-unit-classes-fixed-base-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 118.23,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 123.48,
+    "preprocessing_log2": 87.650917,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "assumptions": [
+    "Instruction counts are analytic itemisations priced with the measured 383-instruction F_p multiplication; the 4-limb F_r multiplication is charged the same 383 (itemised at 174)",
+    "Stores above 2^64 bytes are addressed with two 64-bit words; each word access is charged 2 instructions and pointer or counter updates as two-word arithmetic"
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution",
+    "Peak memory about 2^123.48 bytes, far beyond any physical machine; the track gives memory no scalar weight",
+    "The bound is claimed for 2^20 <= n < r only; only A_(2^20) and T are read"
+  ],
+  "lane": "exploratory"
+}
