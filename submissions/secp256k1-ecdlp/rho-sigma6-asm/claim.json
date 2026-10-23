@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-order6-classes-sigma-walk-asm-trails-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.479214,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 75.74996,
+    "preprocessing_log2": 49.151678,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "R: the random-function premise on the adder walk on classes: each class key, canonical fractions and orientation are i.i.d. uniform, independent of x and the coins, and the class map is algebraic on top of them. Conditional statements used are theorems of R by deferred decisions (proof.md section 2.2). L-ori is a theorem of R (T2). R does not give the successor distribution or the birthday count.",
+    "H-coll: the birthday premise of section 2.1, P(C_T = 0) <= exp(-(1 - eps) tau) with eps = 0.00406911 = 0.00015286 + 2^-8. The modeled result is the random-mapping count, the product of (1 - i/N) over i < T, at most exp(-T(T-1)/(2N)) (Flajolet and Odlyzko 1990; Teske 2001; Bernstein and Lange 2012). Declared, not derived from R.",
+    "H-merge: the successor premise of section 2.2. For each new point, P(its class in S and B | history) <= (1 + 2^-8) |S|/N P(B | history), for visited sets S and events B of unvisited labels. Declared for the algebraic walk, not derived from R; it gives E[merges] <= (1 + 2^-8) tau and the non-recording bound of section 2.8.",
+    "H3: Callgrind instruction counts on production inputs represent the common path: 808.67 (plain) and 818.66 (anchor) instructions per walk step, plus at most 2 for the canon_pick branch (C_COMMON = 821), with the rare paths out of line and charged at worst case; the Markov reserve covers the expected rare work."
+  ],
+  "limitations": [
+    "R is measured only marginally (non-equal share 1/6 on fresh windows, A = 8 to 1024); conditional laws are theorems of R, not measurements (proof.md section 4).",
+    "Analytic production cost; no production-size execution. Needs about 2^67.7 stored distinguished points; not a practical attack.",
+    "Field arithmetic is the package's own inline assembly, tested against Python big integers, not formally verified.",
+    "R is an unproved heuristic, not established at production size: the toy runs use theta = 2^-5, the formal test 6 adder bits and theta = 2^-6.",
+    "Rare-path charges are forced-path maxima from a bounding build (proof.md section 8.1), not proved for every input.",
+    "The exact-k fallback rate (2^-55 per canon call, section 6) follows from R and is not measured; no fallback occurred in the measured steps.",
+    "Escape depths are at most TRAIL_MAX (section 2.3); the order-of-2 check (section 2.4) needs only the assertions in accounting.py.",
+    "A replay cut-off (65n steps) fails the run and is counted in DELTA_CUT (proof.md sections 1.3 and 3).",
+    "The measurement harness reuses restart starts from a 1024-point pool (measurement/step.c); the algorithm draws fresh coins and is charged its cost (section 2.5).",
+    "Model success bound 0.410304 at tau = 0.5303 with eps = 0.00406911, 0.0203 above 0.39; the pooled toy-curve success is in the evidence.",
+    "Distinguished points never occur in a production-size sample; restart and abandonment paths were checked on small builds.",
+    "The probe cost (2^11 per probe) and the draw cost (2^16 per draw) are allowances, not measurements (sections 8.2 and 10).",
+    "H-coll and H-merge are declared premises with tolerance 2^-8, not measured at production size; H-merge is not derived from R. The success bound stays at least 0.39 for tolerance up to 0.018.",
+    "The useful-merge bound (section 2.8) is DELTA_NR, about 1.1e-16, in expectation under H-merge.",
+    "Sampling caps (D = 4) and the probe cap (L = 2^10) abort the run; their probabilities are in delta (sections 1.3, 8.2). The toy experiment retries identity starts without a cap.",
+    "The meter's expectation, and so the 1/64, is taken in R and H-merge. A model-free rare-work bound costs about 10.9 bits (time_log2 about 137.4 instead of 126.5) and is not taken."
+  ],
+  "lane": "exploratory"
+}

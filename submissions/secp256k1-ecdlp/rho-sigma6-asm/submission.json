@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: parallel Pollard rho on order-6 classes with a sigma walk, all arithmetic in instructions",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and input Q=[x]P on secp256k1 (fixed standard generator P), the parallel distinguished-point Pollard rho of proof.md recovers x with probability at least 0.39. It walks on the order-6 classes {±1, ±λ, ±λ²} with 2^32 walks and 2^16 adders, in trails from fresh coins, each ending at its first distinguished point and recorded once with its coins. The first key match is resolved by replaying both trails, so a degenerate match has probability exactly 1/r (Lemmas R and D). A fruitless cycle escapes to twice the canonical point of its least-key member. Escape depth is at most TRAIL_MAX by the order-of-2 argument of section 2.4 (no k with 1 ≤ k ≤ TRAIL_MAX has 2^k in Gamma), with no depth tail. Closures of length 65 or more are bounded by Lemma F (DELTA_LONG below 2^-234). A merge is useful when both trails record a distinguished point, and a useful merge yields the key match; the probability of no useful merge is at most exp(-(1 - eps) tau) plus DELTA_NR, about 1.1e-16 in expectation (section 2.8). Total computation is at most 2^126.479214 target-group-operation equivalents, including preprocessing, distinguished-point storage and lookup, failures, restarts, collision replay, verification and output: 821 instructions per walk step on the common path plus a Markov reserve, that is 828.89 instructions per walk step at C = 1000. Rare work is charged at forced-path maxima, and the meter aborts with probability at most 1/64. Every sampling loop and every table probe sequence is capped, with the aborts in delta (sections 1.3 and 8.2), so the work and preprocessing bounds hold on every run that does not abort. Preprocessing is 2^49.151678 units and peak memory 2^75.749960 bytes, and nonuniform advice is 0 bytes. The success bound 0.394678 is the model bound 0.410304, less 1/64 for the meter, less the resource aborts (below 2^-140), less DELTA_CUT (about 1.1e-16), DELTA_ABANDON (2.8e-14), DELTA_NR (about 1.1e-16, in expectation under H-merge) and 2^-20. The probability is over x and the algorithm's coins. It relies on the heuristic premises R (section 2.2), H-coll (section 2.1) and H-merge (section 2.2), the last two with tolerance 2^-8, and on H3 (the measured common-path counts). This is a carefully accounted generic attack, not a practical break.",
+      "score": {
+        "numerator": "63239607",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py",
+        "evidence/accounting.json",
+        "measurement/step.c",
+        "measurement/secp_field.h",
+        "measurement/secp_sub.h",
+        "measurement/walk_ref.py",
+        "measurement/frac_check.py",
+        "measurement/run.sh",
+        "measurement/reproduce.sh",
+        "measurement/summarize.py",
+        "measurement/forced/summary.json",
+        "evidence/measurement/production-totals.json",
+        "evidence/measurement/record-mutation-double.json",
+        "evidence/measurement/trail-paths.json",
+        "experiment.py",
+        "evidence/trails/summary-double.json",
+        "evidence/stress-and-sensitivity-double.json",
+        "evidence/declared-run-double.json",
+        "evidence/formal-structure.json",
+        "evidence/sign-law.json",
+        "evidence/sign_law.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-procedure",
+      "source": "experiment.py",
+      "purpose": "Run the procedure of proof.md section 1.3 on random prime-order toy curves y^2=x^3+7 (b=7) or y^2=x^3+4 (b=4) at budget tau = tau_e4/10^4, with fresh-coin trails and escapes to twice the canonical least-key point. The first key match is resolved by replaying both trails (Lemma R); a degenerate match fails. With check_all_replays every recorded trail is replayed and any replay that misses its record is counted. Reports the success rate against 1-exp(-tau), degenerate matches and replay mismatches. No oracle collision table. Toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 28
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 80
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 11
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "tau_e4": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 6000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "b": {
+            "type": "integer",
+            "enum": [
+              4,
+              7
+            ],
+            "minimum": 4,
+            "maximum": 7
+          },
+          "filter_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 64
+          },
+          "check_all_replays": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "escape": {
+            "type": "string",
+            "enum": [
+              "double"
+            ],
+            "maxLength": 6
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "adder_bits",
+          "dp_bits",
+          "walks",
+          "tau_e4",
+          "seed",
+          "b",
+          "filter_bits",
+          "check_all_replays",
+          "escape"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 28,
+          "trials": 80,
+          "seed": 2801,
+          "b": 7,
+          "adder_bits": 11,
+          "dp_bits": 5,
+          "walks": 16,
+          "tau_e4": 5303,
+          "filter_bits": 64,
+          "check_all_replays": 1,
+          "escape": "double"
+        }
+      ]
+    },
+    {
+      "id": "fraction-lemma",
+      "source": "measurement/frac_check.py",
+      "purpose": "Check Lemma 1 of proof.md on random and edge-case reduced values, and the canonical-rotation rule against the exact minimum, with the exact fallback.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400000
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "accounting",
+      "source": "accounting.py",
+      "purpose": "Recompute the claimed time_log2, preprocessing, memory and success lower bound from the stated parameters with exact integer arithmetic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": []
+    }
+  ]
+}
