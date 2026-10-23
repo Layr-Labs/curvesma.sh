@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: 22-bit comb delta on the Cheon class walk",
+  "claims": [
+    {
+      "statement": "At n=2^20, the Cheon six-class walk described in proof.md, using our twelve-digit 22-bit comb, recovers the protected secret with claimed probability at least 0.40 under the explicitly inherited random-mapping and final-window heuristics. Its hard-meter ceiling is less than 2^120.83 BLS G1 reference-operation equivalents, including cold preprocessing, failed paths, enlarged tables, recovery, verification and output. Peak storage is less than 2^35 bytes and nonuniform advice is zero. This is an analytic submitted bound, not a production execution or official result.",
+      "score": {
+        "numerator": "12083",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "accounting.py"
+      ]
+    }
+  ],
+  "experiments": []
+}
