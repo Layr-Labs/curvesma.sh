@@ -1,0 +1,61 @@
+{
+  "schema": "evidence-v1",
+  "cost_model": "classical-group-work-v2 (C=2000 fixed, tracks/docs/COST_MODEL.md)",
+  "computation_method": "Host python3 exact integer arithmetic plus 60-digit Decimal logarithms. No candidate package Python was executed on the host. All identities in certificate.json re-run from the protected target-profile.json constants. Factorization found cold by trial division to 2^26 plus Pollard rho; primality by trial division and deterministic Miller-Rabin; xi=7 primitive-root test over the full factorization of r-1.",
+  "key_finding": "q = (r-1)/2^20 is fully smooth: q = 2^12 * 3 * 11 * 19 * 10177 * 125527 * 859267 * 906349^2 * 2508409 * 2529403 * 52437899 * 254760293^2, product reconstructs q exactly (cert P1), largest prime 254760293 < 2^28 (cert P2). The staged v3 package's 2*m1 ~ 2^118.43 generic phase-1 grid is therefore replaceable by Pohlig-Hellman digit grids of at most 2*ceil(sqrt(254760293)) = 31924 additions each.",
+  "exact_parameters": {
+    "r_hex": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
+    "d": 1048576,
+    "q_equals_r_minus_1_over_d": "50006747412801924209068050869165387952509453297164571592906626415194112",
+    "q_factorization": {"2": 12, "3": 1, "11": 1, "19": 1, "10177": 1, "125527": 1, "859267": 1, "906349": 2, "2508409": 1, "2529403": 1, "52437899": 1, "254760293": 2},
+    "primitive_root_xi": 7,
+    "digit_windows_ceil_sqrt_l": {"2": 2, "3": 2, "11": 4, "19": 5, "10177": 101, "125527": 355, "859267": 927, "906349": 953, "2508409": 1584, "2529403": 1591, "52437899": 7242, "254760293": 15962},
+    "phase2_m2": 1024
+  },
+  "ledger": {
+    "C": 2000,
+    "H_reference_additions": 133312,
+    "H_terms": {
+      "phase1_ph_digit_bsgs_walks": 91330,
+      "phase2_baby_giant_walks": 2046,
+      "scalar_multiplications_at_512_each_78_total": 39936
+    },
+    "scalar_mult_itemization": "B1=[zeta]P0 (1); Y=[q/l^e]A_d per prime (12); B_l=[q/l^e]B1 per prime (12); per-digit [l]-map plus fold-add scalar point (2*25=50); T'=[xi^-k2]T, B2=[delta]P0, verify [s]P0=T (3); total 78 at the 512-addition 255-bit double-and-add upper bound",
+    "R_instruction_equivalents": 331967208,
+    "R_terms": {
+      "hash_ops_count": 93378,
+      "instructions_per_hash_op_charged": 500,
+      "hash_instructions": 46689000,
+      "factorization_search_margin": 268435456,
+      "cold_mod_r_field_arithmetic_margin": 16777216,
+      "input_access_parse_output_margin": 65536
+    },
+    "N_equals_H*C_plus_R": 598591208,
+    "W_equals_N_over_C": "299295.604",
+    "log2_W_30dp": "18.19121156338316561419288132967",
+    "time_log2_claim": "18.191212",
+    "claim_rational": [4547803, 250000]
+  },
+  "memory_reported_not_charged": {
+    "peak_bytes_bound": 1853280,
+    "model": "largest digit table: 2*15962 slots (load factor 1/2) x 56-byte packed records = 1787744 bytes, plus 2^16 challenge/code margin; digit tables sequential, peak = max single table",
+    "memory_log2_bytes": 21,
+    "nonuniform_advice_bytes": 0
+  },
+  "success_probability": {
+    "value": 1,
+    "basis": "Every digit grid satisfies m_l^2 >= l (cert P8) and the phase-2 grid m2^2 = d (cert P10); the s = xi^(q*k1+k2) decomposition bijects (cert P9); CRT over coprime prime powers of q is exact; final verification [s]P0=T gates output. Exhaustive grids, no random walks, no Poisson heuristic.",
+    "floor_required": 0.39
+  },
+  "staged_comparison": {
+    "starting_point": "submissions/bls12-381-g1-ecdlp/cheon-d20-deterministic-40pct-v3 (currently selected; claim 118750473/1000000, success 1)",
+    "finding_vs_staged": "Staged v3 treats q as generic and pays 2*ceil(sqrt(q)) ~ 2^118.43 for phase 1; q is in fact fully 28-bit-smooth (cert P1-P4), so digit-by-digit Pohlig-Hellman replaces the grid at 91330 additions. Same C=2000, same 500-instruction hash budget, same 512-addition scalar-mul bound as staged v3; nothing inherited.",
+    "claim_delta": "18.191212 < 118.750473 strictly (cert P12), factor above 2^100.5"
+  },
+  "selector_switch": {
+    "proposed_replacement_of": "submissions/bls12-381-g1-ecdlp/cheon-d20-deterministic-40pct-v3",
+    "certificate_verdict_all": "PASS",
+    "strictly_better_claim": true
+  },
+  "protected_files_modified": false
+}
