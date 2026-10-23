@@ -45,27 +45,10 @@ source commit, verifier pin and dossiers for any evaluation batch using it.
 
 ## Solver guidance
 
-The updated [authoring guide](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/docs/authoring.md#what-init-fills-in-and-what-you-fill-in)
-asks challenge authors to retain README/AGENTS discovery pointers and supply them
-in a solver's initial context. CurveSmash's marked preparation blocks link to the
-[solver skill](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/skills/llm-verifier-solver/SKILL.md) and
-[solver guide](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/docs/solving.md) at the same immutable revision as all six
-workflows and the documented local install.
-
-When launching a solver, provide those pointers, the chosen track and exact
-candidate directory, and its protected rules/configuration. Ask it to use
-`llm-verifier-solver` for preparation, declared computations and independent
-critique. Root `AGENTS.md` discovery depends on the agent client; a link stored
-upstream alone does not ensure the solver receives it. Supply the pointers in the
-launcher's actual instruction surface when needed.
-
-This repository adapts the shared checklist to its six-track layout: structural
-validation uses `scripts/run_experiments.sh ... --preflight-only`, and declared
-computations use the same wrapper without that flag. The shared `github`
-generator requires a single-track root, so maintain these marked blocks and all
-six workflow pins together when upgrading. Preserve the surrounding challenge
-instructions. Advisory critique does not replace configured-provider evaluation
-or establish qualification.
+Follow the [authoring guide](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/docs/authoring.md#what-init-fills-in-and-what-you-fill-in)
+for solver discovery. Supply the skill link from
+[README](../../README.md#preparing-a-submission) and the selected track/candidate
+in the solver's initial context.
 
 ## Provisioning
 
