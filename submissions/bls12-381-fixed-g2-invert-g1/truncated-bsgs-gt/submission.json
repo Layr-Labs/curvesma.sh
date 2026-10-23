@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: truncated baby-step giant-step in GT",
+  "claims": [
+    {
+      "statement": "For the bls12-381-fixed-g2-invert-g1 instance distribution of target-profile.json - Q uniform over the nonidentity points of G2 and z = e(P0,Q)^a with a uniform over {0,...,r-1}, r = 0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001 - the deterministic truncated baby-step giant-step procedure specified in proof.md returns a point P of G1, for that same supplied Q, with e(P,Q) = z, with probability at least 2/5 over the uniform a and for every possible value of the (unused) algorithm coins. Its total classical computation is at most 2^127.895611 target-group-operation equivalents: H = 289650479509704773364654834253499365306 dense Fp12 multiplications (2m-2 with m = 144825239754852386682327417126749682654), R = 537591289970012059364799372374494822011648 other scalar AArch64 instructions (record construction, two stable radix sorts, and the merge scan), and 2^15 further reference equivalents for the two pairings and the G1 scalar multiplication, scored as H + R/20000 + 2^15. Peak storage is at most 2^137.02 bytes, preprocessing is zero and nonuniform advice is zero. No heuristic is used in the success or the cost bound: the coverage of the search grid is exact, the work is a constant independent of the challenge and the coins, and the only imported quantity is the track's protected reference price C = 20000 for one dense Fp12 multiplication.",
+      "score": {
+        "numerator": "127895611",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

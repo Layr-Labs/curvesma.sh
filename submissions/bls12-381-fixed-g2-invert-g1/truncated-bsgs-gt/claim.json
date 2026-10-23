@@ -1,0 +1,48 @@
+{
+  "track": "bls12-381-fixed-g2-invert-g1",
+  "parent_sha": "6423c2728dc03d5f2d647c7f22adf1dac0643a66",
+  "mechanism": "truncated baby-step giant-step in GT",
+  "scored_claim_index": 0,
+  "time_log2": {
+    "numerator": "127895611",
+    "denominator": "1000000"
+  },
+  "time_unit": "target-group-operations",
+  "success_probability": {
+    "numerator": "2",
+    "denominator": "5"
+  },
+  "memory_log2_bytes": {
+    "numerator": "13702",
+    "denominator": "100"
+  },
+  "preprocessing_log2": {
+    "numerator": "0",
+    "denominator": "1"
+  },
+  "nonuniform_advice_log2_bytes": {
+    "numerator": "0",
+    "denominator": "1"
+  },
+  "grid": {
+    "r": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
+    "m": "144825239754852386682327417126749682654",
+    "coverage_numerator": "20974350070050476191779096203274386335338637527090881045812531488889708483716",
+    "coverage_denominator": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+    "coverage_at_least_two_fifths": true
+  },
+  "ledger": {
+    "reference_price_C": 20000,
+    "reference_operations_H": "289650479509704773364654834253499365306",
+    "other_instructions_R": "537591289970012059364799372374494822011648",
+    "pairing_and_scalar_block": "32768",
+    "W_over_625": "197831277505128360208059251795140086984114",
+    "log2_W": "127.89561004782055"
+  },
+  "protected_digests": {
+    "tracks/bls12-381-fixed-g2-invert-g1/rules.md": "f8070250c8846df063984fef6ed8fafaead76a03d17c767d2927926e90a5dcbf",
+    "tracks/bls12-381-fixed-g2-invert-g1/target-profile.json": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  }
+}
