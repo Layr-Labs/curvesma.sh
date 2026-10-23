@@ -1,0 +1,44 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of the track target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/secp256k1-ecdlp/automorphism-rho (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v2 (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v3 (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v4 (rejected: the order-3 automorphism identities generate mixed-index fruitless families whose rates were not bounded)",
+    "submissions/secp256k1-ecdlp/negation-rho-v5 (rejected: the fruitless-cycle census assumed per-symbol even multiplicity, missing the carry families 2^j + 2^j = 2^(j+1); all derived rates were invalid)",
+    "submissions/secp256k1-ecdlp/plain-rho-v6 (rejected: the constants c_j = jQ + 2^j admit the confining rescaling z = 32k mod r, whose steps 2^(j+5) - j <= 2^36 refute the mixing assumption at production scale; the generated claim statement additionally permuted the score figures)",
+    "submissions/secp256k1-ecdlp/plain-rho-v8 (rejected: the cycle-entry rate was stated as t/r instead of the self-pair birthday scale t^2/(2Kr), and the 4-bit windowed seeding multiplication was priced at 64 doublings + 16 additions instead of 256 + 64; both are corrected here)",
+    "submissions/secp256k1-ecdlp/plain-rho-v9 (rejected: the fixed-base comb evaluation omitted its doublings and the final seed addition, the 0.75 efficiency floor was converted arithmetically wrongly, and the cycle-waste expectation was substituted as a deterministic budget cut; corrected as the collision-time-factor tolerance with a Markov bound)",
+    "submissions/secp256k1-ecdlp/plain-rho-v10 (rejected: the distinguished-point insert lacked a concrete hash-table construction and was underpriced, auxiliary work had no global cutoff, the Teske factor was load-bearing without reproduced support, and a literal format expression leaked into the claim statement; all corrected here)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "plain-rho-v11",
+  "work_function": "W = 1.107 * 1.5 * sqrt(r-1) + < 2^25 (score = log2(W))",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.731618,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 105.1,
+    "preprocessing_log2": 25.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 (random-function model): with published pseudorandom constants c_j = sha512(...) mod r, walker states collide at the parallel-rho birthday rate t^2/(2(r-1)), distinguished-point counts are Binomial(t, 2^-32), and cycle entries occur at the self-pair birthday scale t^2/(2Kr) = 1.717e-05 with expected waste 8.731e-11 of the budget, converted by Markov's inequality to P(waste exceeds 2^-23 of the budget) <= 7.32e-04, with reseed work charged inside the same bound. No rescaling of the scalar confines the step set: Part A measures every M <= 2^12 (narrowest window 0.6329 of r, and the same check detects the rejected v6 constants at 5.93e-67) and the counting heuristic 32*W^31/r^30 puts expected confiners of width <= 2^240 below 2^-235.",
+    "Efficiency (collision-time factor): within the fixed budget the success probability is 1 - exp(-(1.5/c)^2/2) under Rayleigh collision times, so the 0.39 claim holds for every factor c <= 1.5086. Teske's measured r-adding factors for r >= 16 are at most ~1.1x the ideal, giving modeled success 0.6053484543 >= 0.39; the toy implies c = 1.014. The claim is made against the factor tolerance, not against the toy measurement."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold (modeled success 0.6053484543 at Teske's measured collision-time factor 1.1; the claim tolerates every factor up to 1.5086).",
+    "The distinguished-point table is a hard 2^98-slot allocation (2^105 bytes); overflow aborts with probability <= exp(-2^95.6) under H1, subtracted.",
+    "Standard cryptanalysis (parallel Pollard rho with distinguished points and pseudorandom published constants); the confinement analysis (executed rescaling certificate plus counting bound) and the itemized full-coverage ledger are the contribution under this cost model."
+  ],
+  "lane": "exploratory"
+}
