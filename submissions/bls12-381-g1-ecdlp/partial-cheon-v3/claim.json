@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp/partial-cheon (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v2 (rejected: ledger 129.384m exceeded the submitted score, 'exactly 2/5' prose false, float-rounded m, table load 0.851 with 8-byte indices)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "partial-coverage-cheon-v3",
+  "work_function": "W(n) for n >= 2^20 equals W(2^20) = 2*m*(64+0.192) + 2*m*0.5 + 2^17 + 2^21 + 450 with m = isqrt(floor(2N/5)) + 1, N = (r-1)/2^20; the attack reads only A_1 and A_d. Score = log2(W(2^20)).",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 123.783097,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 125.1,
+    "preprocessing_log2": 21.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "None for the success probability: k1 is uniform over [0,N) because the d-th power map is exactly d-to-1 onto the order-N subgroup; the contiguous-window coverage is exact integer arithmetic with worst-single-offset bound (m-1)m/N >= 0.4 - 2^-118, and the expectation is an exact rational (printed by the experiment, verified >= 39/100 in integers; it is not exactly 2/5 and is not claimed to be).",
+    "Instruction sub-costs are analytical worst-case bounds: 64 units per comb scalar multiplication (2x analytic), 384 instructions per mod-r multiplication (explicit schoolbook+Montgomery construction), 1000-instruction hash operations at load factor 0.4256 (expected probes 1.74), at most two window-start exponentiations. The sensitivity analysis shows the bound survives 384-unit multiplications everywhere (2^126.3)."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold; deterministic full coverage would cost about 2^124.64 (+0.86 log2).",
+    "The bound applies only for n >= 2^20; smaller n would force a smaller divisor of r-1.",
+    "The baby table is a fixed 2^118-slot allocation of exactly 2^125 bytes (16-byte indices); the total peak is strictly above and reported as 125.1.",
+    "Cheon's auxiliary-input attack is standard cryptanalysis, not a novel algorithm; this is the first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}
