@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "scope": "SHA-256 of every package file except this manifest; no external dependency",
+  "files": {
+    "argument.md": "2c96c743995b5aeeaed467e4c2e693d729ab6002d68864502401b2fc3153db83",
+    "certificate.json": "65c0df52dcd3731c6d434dce5eda30d41ce267e76fe5717a52899eb1c9b6a03c",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "public-note.md": "dbc92947ee1864cd5732d717c84bd845d1252437e0edb6fb7564234199e766ef",
+    "submission.json": "5fb4afbb014f28e7d5c6160f7a3d27245518e2f2115c7f62db8810831f5169af",
+    "toy_experiment.py": "cb971bed89a5351d49acfa0be6d73b62e5bf5be5adedddcdb95cb15c56294e9e",
+    "toy_pipeline.py": "d57d04f05cc23d44bb649d22e4312e116e235a32713aef361c74a436b30594d1",
+    "toy_pipeline_results.json": "ace58807c3b238208683cb3c3a677c8b22d7970e983bd0f8bf517b565c189919",
+    "toy_results.json": "ca6b4f30421f70a4a3c1b15837525553092ef4bffc7b4cb6f51a06d722333a95",
+    "verify_certificate.py": "3d67466182e05f081c1a38e08f5272dd8b1b720ae4d6475a8bba1ae88ffb44d2"
+  }
+}
