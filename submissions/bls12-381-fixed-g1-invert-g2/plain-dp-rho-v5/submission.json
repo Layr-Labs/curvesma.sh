@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: parallel distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For each production instance with nonidentity P in G1 and z in GT, compute g=e(P,Q0)=pairing(Q0,P,final_exponentiate=True) once (the pinned pairing is nondegenerate and both points have prime order r, so g generates GT), solve x=log_g z with a parallel distinguished-point Pollard rho in the full group GT, return Q=[x]Q0 and verify e(P,Q)=z and [r]Q=O; z=1 is answered directly with Q=O. Three disjoint hash slices are used: H_1 = low 64 bits of the first Fp2 coordinate drives the walk index, H_2 = low 64 bits of the second drives the distinguished test, and H_3 = low 128 bits of the third drives the dictionary bucket, so the distinguished condition H_2 = 0 mod 2^60 leaves the bucket bits untouched. The walk is y<-y*M_{h(y)} with h(y)=H_1(y) mod 2^20, M_j=g^{alpha_j} z^{beta_j} for random exponents, 2^20 walks in lockstep from independent random starts g^{alpha} z^{beta}, theta=2^-60 distinguished points (H_2(y) = 0 mod 2^60), and records that store the EXACT 576-byte Fp12 element plus its two 256-bit exponents: there are no fingerprints, so a stored-key match is a true group-element match and no false-match resolution is required, and bucket collisions are resolved by the exact 640-byte comparison and never reported as matches. A collision gives x=(alpha1-alpha2)/(beta2-beta1) mod r, and beta1=beta2 is impossible for distinct records because it forces alpha1=alpha2. The dictionary is open-addressed with 2^71 slots of 16-byte record handles (2^75 bytes; a 70-bit record index cannot be held in 8 bytes), bucket b = (H_3(y) * C) mod 2^71 with C a fixed odd 128-bit constant and the full 128-bit product formed before reduction (a bijection on Z/2^71, so the low 71 bits of H_3 survive; no truncated concatenation), double hashing with an odd step from H_3's high bits, at most 4 probes with drop-on-fourth-miss, and its work is hard-capped at L_max = 2^70 lookups/inserts: after L_max the run stops matching and keeps walking, so dictionary work is at most 2^70*2000 instructions = 2^66.678072 units deterministically, independent of how often the distinguished test fires. No categorical claim is made about cycles and no analytic bound is claimed for the cycle-without-distinguished-point event: a trajectory entering one fails at the cap, and that event is covered by the margin between the claimed 0.39 and the model's 0.675 (short cycles would invalidate a naive exp(-theta*cycle_length) estimate, so none is asserted). The search is HARD-CAPPED at W_max = 1.5*sqrt(r) = 2^128.013507 steps at 1.01 target-group-operation equivalents per step (one dense Fp12 multiplication plus 200 charged scalar instructions: hash 4, table index and pointer chase 24, two 255-bit modular additions 40, distinguished test 8, loop and branch allowance 40, streamed table cache-miss allowance 40), plus an overhead charged by exact summation rather than by rounding to its dominant term: setup pairing 2^15, the 2^20-multiplier table 2^30, the 2^20 walk starts 2^30, verification 2^17, and dictionary work capped at 2^70 lookups/inserts * 2000 instructions = 2^66.678072 units, the total being 2^31+2^15+2^17+2^66.678072 < 2^67.001 which is 2^-61 of the search. Hence W = 1.01*2^128.013507 + (< 2^67.001) = 2^128.027862 target-group-operation equivalents and the score is log2(W)=128.027863. Success probability is at least 0.39 over uniform nonidentity P, uniform z and fresh coins: the random-mapping model gives 1-exp(-1.5^2/2)=0.675 at this cap (the detection delay M*theta^-1=2^80 is 2^-48 of the cap and is inside it), the claim is only the rule threshold 0.39, and the bounded toy run, which implements the declared four-probe double-hashed dictionary rather than a Python dict, measures 0.750 at the same relative budget (and 1.000 at 2.5 sqrt(r)) with only 0.23 dropped records per run with an uncensored first-collision mean of 1.166 sqrt(r) (model 1.2533). Storage is hard-capped by an enforced capacity of 2^70 records (3.9x the design count 2^68.013507) with a stop-inserting policy; adding every component, 2^70 * 640 B = 2^79.321928 B for the record array plus 2^71 * 16 B = 2^75 B for the handle index plus 2^29.2 B for the multiplier table plus <2^40 B for walk state, code and scratch, the peak is at most 2^80 bytes; memory is stated as required but does not enter this track's score. Preprocessing (multiplier table and walk starts) is charged in full per instance with no reuse credit and reported as the same bound 128.027863; nonuniform advice is 0; no auxiliary powers are used. No group quotient is used: an earlier two-class inversion-quotient draft was withdrawn after review showed that its transition is not a function on inversion classes, so the sqrt(2) quotient saving is not claimed here. This is an analytic complexity claim for a 2^128-step computation, not a production-size execution.",
+      "score": {
+        "numerator": "128027863",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "plain-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A checks on BLS12-381 itself with an explicitly implemented standard-library Fp2/Fp6/Fp12 tower: r is prime and 255 bits, and random GT elements y = h^((p^12-1)/r) are nonidentity with y^r = 1 (the group-order fact the claim rests on). Part B runs the complete algorithm (plain R-adding walk, theta-distinguished points with exact element keys, exponent recovery and verification, hard step cap) in a toy prime field with a 2^29-element prime-order subgroup and reports the success rate at 1.5 and 2.5 sqrt(r) plus the uncensored first-collision statistic in units of sqrt(r). Toy-scale statistics are evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "q": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 48
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "mults": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 65536
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "first_collision_trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 120
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "production_checks",
+          "q",
+          "trials",
+          "walks",
+          "mults",
+          "dp_bits",
+          "first_collision_trials",
+          "seed",
+          "seconds"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "production_checks": 4,
+          "q": 31,
+          "trials": 40,
+          "walks": 16,
+          "mults": 1024,
+          "dp_bits": 6,
+          "first_collision_trials": 24,
+          "seed": 7,
+          "seconds": 40
+        }
+      ]
+    }
+  ]
+}
