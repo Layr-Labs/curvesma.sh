@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: squaring-class mixed add/square rho",
+  "claims": [
+    {
+      "statement": "For the supplied nonidentity P in G1 and uniform z in GT with z=e(P,Q0)^a under the pinned pairing convention, recover Q=[a]Q0 in G2 with e(P,Q)=z. The squaring-class mixed add/square rho of proof.md succeeds with probability at least 0.45 using at most 2^126.4911 total target-group-operation equivalents, including preprocessing, collision detection, output and attack-side verification. Peak memory is at most 2^134.402 bytes; preprocessing is at most 2^20 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice and no quantum steps; the only heuristic is the standard rho randomness of the block map, and the declared exponential memory is required.",
+      "score": {
+        "numerator": "1264911",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "squaring-class-collisions",
+      "source": "experiment.py",
+      "purpose": "Check, in a small prime-order subgroup of F_p^*, that the fourteen disjoint ratio classes per block pair are all detected by storing every emitted element, and that the birthday success model matches observation. Small-scope evidence only: it does not establish BLS12-381 costs, Fp12 arithmetic or production complexity.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "minimum": 1009,
+            "maximum": 1000003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 400
+          }
+        },
+        "required": [
+          "q",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 100003,
+          "trials": 120
+        }
+      ]
+    }
+  ]
+}
