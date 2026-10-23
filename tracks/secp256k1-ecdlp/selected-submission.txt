@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/plain-rho-v25
