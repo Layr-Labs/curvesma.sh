@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "frobenius-mixed-rho-gt-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 125.700213,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 73.153638,
+    "preprocessing_log2": 75.405357,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the mixed add/square class walk on N = (r-1)/12 classes with r_a = 1024 adders and S = 458 square slots behaves as a random map with collision rate V = 0.799655 (research section 3.4).",
+    "H2: cycles of length at most 64 are found and escaped; their overhead is covered by H4. Toy 2-cycle rates for mixed walks exceed the research formula by 2.6x (unexplained).",
+    "H3: the measured c2 = 0.1409 and kappa = 0.4902 (Callgrind, organizer's pinned blst) represent per-step costs; two mixed input sets and one add-only set agree within 2%.",
+    "H4: overhead factor 1.03 covers cycle steps, distinguished-point latency and abandoned trails; the toy cycle-step fraction at N = 76880 is 0.41-0.57%."
+  ],
+  "limitations": [
+    "H1 is extrapolated from toy groups with N up to 2^17 and r_a = 32; production N is about 2^251.",
+    "No production-size execution; the replica checks the kernel's walk on sampled states only.",
+    "Storage of about 2^73 bytes is not realisable; memory is reported, not scored.",
+    "The reference unit is priced by the organizer rule (1 unit); the measured reference instruction count is 22,997 against C = 20,000."
+  ],
+  "lane": "exploratory"
+}
