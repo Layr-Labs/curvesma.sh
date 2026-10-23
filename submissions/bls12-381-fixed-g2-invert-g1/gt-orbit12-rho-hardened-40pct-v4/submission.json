@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "title": "GT Frobenius-orbit square-and-add rho with bounded Floyd detection, hardened v4 (fixed-G2 invert-G1)",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "public-note.md",
+        "toy_results.json",
+        "scripts/verify_v4.py",
+        "scripts/toy_audit.py",
+        "scripts/tower.py",
+        "evidence/certificate_run.log",
+        "evidence/toy_run.log"
+      ],
+      "score": {
+        "numerator": "6441",
+        "denominator": "50"
+      },
+      "statement": "For uniform nonidentity Q in BLS12-381 G2, uniform z in GT and fresh algorithm coins, compute g=e(P0,Q), solve z=g^x by the concrete Frobenius-class square-and-add walk in argument.md, and return P=[x]P0 for that exact supplied Q. The analytic claim is total classical work at most 2^(6441/50)=2^128.82 dense-Fp12-multiplication equivalents at fixed C=20000, with success at least 0.39 under the explicitly disclosed production random-mapping transfer assumption Hmix and exceptional-key assumption Hkey. The comparison model has success greater than 0.4647, or greater than 0.432 after a 5-percent walk-length slowdown, not a measured production success rate. One bounded Floyd tortoise/hare run detects its own class cycles without restart counters or escape ladders; each iteration costs three square-and-add evaluations, six dense products. The nominal scored envelope is 8*T+2^100, whose log2 is between 128.7977 and 128.7978; the claim is 0.0222 to 0.0223 bits above that envelope. The 1.2-times repricing of every nonreference executed-work ceiling is below 2^128.694 and leaves over 0.126 bits below the claim. Auxiliary distinguished-point storage is optional for success and has a hard 2^69-record limit per generation, 129 generations, 128-byte records and peak memory below 2^78 bytes; its 128-bit fingerprint is disjoint from all fixed DP bits. Candidate verification, overflow, setup, randomness, pairings and output are charged; preprocessing is at most 2^50 equivalents within the total, and nonuniform advice is zero bytes. This is an exploratory analytic upper-bound construction, not a production attack or an improvement over the public 125.89 prior-work claim. The certificate checks exact integer/rational arithmetic only; captured toy experiments support mechanisms at their stated scale, not production mixing or instruction measurements."
+    }
+  ],
+  "experiments": []
+}
