@@ -1,0 +1,120 @@
+{
+ "package": "mp-port-v14b",
+ "track": "bls12-381-g1-ecdlp-plain",
+ "claim": 126.321,
+ "claim_fraction": "126321/1000",
+ "source_submission": "03b9917a (jungjipdo), independent reimplementation",
+ "relation_to_source": "equal claim, no stronger statement",
+ "arithmetic": "exact Fractions; log2 via atanh series with geometric tail",
+ "reproduction_delta_bits_max": 4.96105330759332e-06,
+ "checks": [
+  {
+   "check": "repro_log2_N",
+   "pass": true,
+   "detail": {
+    "ours_lo": 252.27212691232603,
+    "ours_hi": 252.27212691232603,
+    "published": 252.27213,
+    "delta_bits": 3.0876739670760545e-06
+   }
+  },
+  {
+   "check": "repro_log2_S0",
+   "pass": true,
+   "detail": {
+    "ours_lo": 126.1285057110553,
+    "ours_hi": 126.1285057110553,
+    "published": 126.12851,
+    "delta_bits": 4.288944705534346e-06
+   }
+  },
+  {
+   "check": "repro_log2_S_ops",
+   "pass": true,
+   "detail": {
+    "ours_lo": 126.19889503894669,
+    "ours_hi": 126.19889503894669,
+    "published": 126.1989,
+    "delta_bits": 4.96105330759332e-06
+   }
+  },
+  {
+   "check": "repro_log2_phase1",
+   "pass": true,
+   "detail": {
+    "ours_lo": 126.31991043990806,
+    "ours_hi": 126.31991043990806,
+    "published": 126.319911,
+    "delta_bits": 5.600919416390175e-07
+   }
+  },
+  {
+   "check": "claim_covers_phase1",
+   "pass": true,
+   "detail": {
+    "phase1_hi": 126.31991043990806,
+    "claim": 126.321,
+    "headroom_bits": 0.001089560091941638
+   }
+  },
+  {
+   "check": "headroom_is_published",
+   "pass": true,
+   "detail": {
+    "headroom_bits": 0.001089560091941638,
+    "published_headroom": 0.00109
+   }
+  },
+  {
+   "check": "claim_equals_gate_polled",
+   "pass": true,
+   "detail": {
+    "claim": 126.321,
+    "gate_lowest_live": 126.321,
+    "port_relation": "equal, independent reimplementation"
+   }
+  },
+  {
+   "check": "success_under_H1_5pct",
+   "pass": true,
+   "detail": {
+    "h1_floor": 0.3903,
+    "early_halt": 8.9e-05,
+    "tail": 1.1e-07,
+    "success_floor": 0.39021089,
+    "published_success": 0.39021
+   }
+  },
+  {
+   "check": "memory_table_bytes",
+   "pass": true,
+   "detail": {
+    "table_bytes": 1006632960,
+    "cap_bytes": 4722366482869645213696,
+    "entries": 6291456,
+    "bytes_per_entry": 160
+   }
+  },
+  {
+   "check": "order_constant_is_bls12_381_g1",
+   "pass": true,
+   "detail": {
+    "r_hex": "0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001"
+   }
+  },
+  {
+   "check": "toy_ran",
+   "pass": true,
+   "detail": {
+    "exit_code": 0,
+    "trials": 200,
+    "recovered": 200,
+    "mean_Tc_over_S_ops": 1.1839,
+    "P_Tc_le_S_ops": 0.45,
+    "fixture_fixed_constants": true
+   }
+  }
+ ],
+ "all_pass": true,
+ "note": "Independent port of the construction published in 03b9917a. Nothing here is stronger than that submission: same 126.321 claim, same 0.39021 success floor under H1 with its 5% allowance, same memory row. The contribution is the independent ledger reproduction (<1e-6 bits) and a regenerated certificate."
+}

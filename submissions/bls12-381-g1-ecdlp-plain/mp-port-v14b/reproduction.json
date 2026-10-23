@@ -1,0 +1,37 @@
+{
+ "source_submission": "03b9917 (jungjipdo), track bls12-381-g1-ecdlp-plain",
+ "gate_at_poll": {
+  "value": 126.321,
+  "id": "03b9917a",
+  "solver": "jungjipdo",
+  "status": "review"
+ },
+ "arithmetic": "exact Fractions; log2 via atanh series ln with geometric tail (ledger.py)",
+ "rows": {
+  "log2_N": {
+   "lo": 252.27212691232603,
+   "hi": 252.27212691232603,
+   "published": 252.27213
+  },
+  "log2_S0": {
+   "lo": 126.1285057110553,
+   "hi": 126.1285057110553,
+   "published": 126.12851
+  },
+  "log2_S_ops": {
+   "lo": 126.19889503894669,
+   "hi": 126.19889503894669,
+   "published": 126.1989
+  },
+  "log2_phase1": {
+   "lo": 126.31991043990806,
+   "hi": 126.31991043990806,
+   "published": 126.319911
+  }
+ },
+ "reproduction_delta_bits": 5.60091947932051e-07,
+ "claim": 126.321,
+ "headroom_bits": 0.001089560091941638,
+ "toy": "NOT RUN: curve_with_order search did not terminate inside the window",
+ "status": "HOLD - arithmetic reproduced to <0.0001 bits; toy evidence incomplete; nothing submitted"
+}

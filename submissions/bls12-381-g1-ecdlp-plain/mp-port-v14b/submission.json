@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "Plain G1 port v14b: independent reimplementation of six-class rho at 126.321 (claim equal to submission 03b9917a)",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "ledger.py",
+        "reproduction.json",
+        "certificate.json",
+        "scripts/verify_certificate.py",
+        "scripts/toy.py",
+        "evidence/toy.json"
+      ],
+      "score": {"numerator": "126321", "denominator": "1000"},
+      "statement": "Port of the construction published in submission 03b9917a (jungjipdo). For every admissible protected plain G1 input consisting only of T=[x]P0, with no auxiliary powers and no n, the deterministic-then-heuristic six-class rho algorithm recovers and verifies the canonical 32-byte scalar x with success probability at least 0.39021 under the explicitly disclosed random-mapping heuristic H1 with its 5% slowdown allowance, within at most 2^126.321 native-equivalent work units, where one unit is one batched affine G1 addition priced at C=2000 instructions. The construction is the source's, restated and not strengthened: the six-class quotient under negation and GLV with the |y| canonical key, the 12-multiply truncated-product canonical index with its metered exact fallback, the twisted jump table, checkpoint-only cycle detection (period-64 checkpoint, no 2-cycle test) with doubling escapes and the merging lemma, table size R=2^20, per-step ledger itemised at 174 instructions against a budget of 175 and step price 1.0875, doubling price 1.5, phase-1 cost 1.0875*(S_ops + 2^60) with S_ops = 1.05*S0 and S0 = sqrt(2 N' ln(1/0.6097)), N=(r-1)/6 and N'=N R/(R-1). Expert arithmetic here: log2 N = 252.27212691, log2 S0 = 126.12850571, log2 S_ops = 126.19889504, log2 phase1 = 126.31991044, so the claim 126.321 leaves headroom 0.00108956 bits; the published values are reproduced to below 5e-6 bits with exact rational arithmetic. Hard native memory is 6*2^20 table entries of 160 bytes (1.0 GB), below 2^72 bytes. Success = 0.3903 (H1 floor) - 0.000089 (early-halt bound, < 2^-13.46) - 1.1e-7 >= 0.39021. Nothing stronger than the source is claimed: no improvement in the ledger, the table size, the cycle detector, the success floor or the memory row. The toy evidence supports only its own fixed-fixture scope (a 20-bit j=0 curve with 8341 classes): it exercises the six-class quotient, the truncated index against exact comparison, checkpoint escapes and the T_c statistic at that scale, and it does not exercise the production table size R=2^20, and it is not a proof of H1. Instruction counts are the source's analytical row-by-row itemisation, not a measured binary."
+    }
+  ],
+  "experiments": []
+}

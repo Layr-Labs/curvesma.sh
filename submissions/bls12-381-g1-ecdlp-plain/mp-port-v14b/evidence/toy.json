@@ -1,0 +1,72 @@
+{
+ "fixture": {
+  "p": 600217,
+  "b": 1,
+  "order": 600564,
+  "q": 50047,
+  "cofactor": 12,
+  "q_bits": 16,
+  "p_bits": 20,
+  "beta": 43364,
+  "lambda": 26745,
+  "G": [
+   218652,
+   2045
+  ],
+  "search_performed_at_run_time": false
+ },
+ "checks": {
+  "fixture": {
+   "curve_nonsingular": true,
+   "G_on_curve": true,
+   "G_order_is_Q": true,
+   "N_TOTAL_equals_cofactor_times_Q": true,
+   "beta_is_cube_root_of_unity": true,
+   "lambda_relation": true,
+   "lambda_matches_glv": true
+  },
+  "six_class": {
+   "orbit_size_6": 400,
+   "key_invariant": 400,
+   "canonical_unique": 400,
+   "trials": 400,
+   "all_pass": true
+  },
+  "truncated_index": {
+   "trials": 2000,
+   "mismatches": 0,
+   "bucket_ties": 0,
+   "all_pass": true
+  }
+ },
+ "stat_Tc": {
+  "trials": 200,
+  "recovered": 200,
+  "recovery_fraction": 1.0,
+  "mean_Tc": 113.83,
+  "S0_model": 91.57,
+  "S_ops_model": 96.15,
+  "mean_Tc_over_S0": 1.2431,
+  "mean_Tc_over_S_ops": 1.1839,
+  "P_Tc_le_S_ops": 0.45,
+  "escapes": 3,
+  "cycle_hits_same_point": 0,
+  "fp_collisions_without_point_match": 14
+ },
+ "dp_only_table": {
+  "trials": 50,
+  "recovered": 15,
+  "mean_Tc": 250.87,
+  "note": "their DP memory rule costs a factor ~1/2^DP_BITS at 8341 classes"
+ },
+ "long_trail": {
+  "trails": 120,
+  "len": 2048,
+  "escapes": 0,
+  "stuck": 0,
+  "fp_collisions_without_point_match": 0
+ },
+ "scope_note": "fixed 20-bit j=0 fixture with 8341 classes; their toy rows are q26/q30 (1e7+ classes) and their production R=2^20 is not exercised; statistics here are indicative only",
+ "model_claims": "none; this toy supports no production claim",
+ "verdict": "PASS"
+}
