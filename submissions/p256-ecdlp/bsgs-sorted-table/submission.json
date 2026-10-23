@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: deterministic baby-step/giant-step with a merge-sorted affine table",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed SEC 2 section 2.4.2 generator P on NIST P-256, recover x. The deterministic baby-step/giant-step algorithm in proof.md uses m=2^128 baby steps and h=ceil(r/2^128)=2^128 giant steps, a Jacobian walk with a fixed affine addend and one Montgomery batch inversion per 1024 additions, and a table of m 48-byte records sorted by the key (infinity tag, affine x, parity of affine y). Lookup is a binary search of exactly 129 comparisons over a power-of-two array. There is no hash function, no load factor, no probe sequence and no occupancy bound: placement is a bottom-up merge sort of exactly L=128 passes over m records, so construction has a fixed data-independent cost and no failure mode. Every key is unique because m<r and 2m<r, so the binary search is unambiguous and the returned index is the true baby index; the point at infinity is separated by its tag and scalar 0 is returned directly for Q=infinity. The algorithm succeeds for every valid input: success probability 1, at least 0.39, with no randomness, retries or amplification. Total work is at most 12489723995466125362959701591175620472619008 scalar AArch64 instruction equivalents, including preprocessing, sorting, all lookups, verification and output. With the fixed normalization C=1000 this is time_log2 133.197866. Preprocessing is 8994343522454245466263917623636497365729280 instruction equivalents (log2 132.724214) and is included in total work with no reuse credit. Peak memory is 32667107224410092492483962313449749348352 bytes (log2 134.584963); nonuniform advice is 0 bytes. This is a classical analytic generic accounting bound with no heuristic premise, no uncharged advice and no quantum step. The exponential memory is mandatory. It is not a practical break, a best-known-attack estimate or a claim of novelty.",
+      "score": {
+        "numerator": "66598933",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-sorted-table-bsgs",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check sorted-table BSGS scalar recovery, key uniqueness and identity handling on a small additive cyclic group. This does not establish production curve behaviour, memory bounds or instruction costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
