@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp-plain: O(1)-memory Brent-cycle rho with a hard evaluation cap",
+ "claims": [
+  {
+   "statement": "For uniform x in [0,r) and the given T=[x]P0 in BLS12-381 G1, recover x with probability at least 0.40 using at most 2^128.528061 target-group-operation equivalents, normalized by the fixed BLS G1 addition price C=2000. METHOD: table Th[h]=[c_h]P0+[d_h]T for h=0..R-1, R=1024, built once (2048 scalar multiplications = 784384 units), every d_h nonzero mod r; a state is (X,a,b) with X=[a]P0+[b]T; the step is h=H(x(X)) (one 64-bit limb of the canonical x-coordinate, fixed odd multiplier, xor-shift, top 10 bits), X<-X+Th[h] (one group addition, the reference operation), a<-a+c_h mod r, b<-b+d_h mod r (two 4-limb modular additions). The step is a function of the group element alone, so the trajectory is a deterministic map; no history, no dictionary, no distinguished points. CYCLE DETECTION AND SOLVE: Brent's algorithm with a checkpoint pair and a hare pair, each carrying its exact exponent pair, O(1) memory; when the two points agree, [ta]P0+[tb]T=[ha]P0+[hb]T gives x=(ta-ha)*(hb-tb)^-1 mod r, which is exact because the points are equal, and is invertible with probability 1-1/r (a degenerate draw restarts inside the same cap). SO NO USELESS CYCLE EXISTS: a pair of equal points always yields x unless the exponent pairs are identical, i.e. the walk returned to the same state, and a two-step return needs 2*Th[h]=0, impossible in a group of odd prime order r; longer same-state returns are codimension-one coincidences with probability about 1/r, not a family. This is why the submission has no canonicalisation and no quotient: a +/-1 or Frobenius quotient makes the inverse of a multiplier equal its negative/conjugate and creates structured fruitless two-cycles of density 1/(2R) or 1/(12R). HARD CAP AND SUCCESS: the run stops after B=2*S0 evaluations and reports FAILURE, S0=ceil(sqrt(2*r*ln(5/3)))=2^127.443997, so no branch is unbounded; Brent evaluates the map at most 2*rho+3 times, so the cap succeeds whenever rho+2<=S0, and the random-mapping heuristic gives Pr[rho<=S0]>=0.40, above the required 0.39. COST: B=2^128.443997 evaluations at 1+120/2000=1.06 units each (one reference addition plus hash 20, two 4-limb exponent additions 40, loop and branch 20, amortized checkpoint 10, Brent comparisons 30 instructions) = 2^128.528061 units; the reference addition is charged at the organizer's fixed 2000, not its measured 2298. Additive items 784384 (table) + 1532 (start and verification, four scalar multiplications) + 64 = 785980 units = 2^19.584, i.e. 2^-108.9 of the main term. W=2^128.528061 and the claim is 12853/100=128.53, the smallest multiple of 1/100 above log2 W, checked with W^100<=2^12853 in exact integer arithmetic. Peak memory 164480 bytes (1024 point table + constant state + 64 KiB code); preprocessing is the table only, no advice, no amortization over targets, and the identity target T=O returns x=0. The single heuristic (random-mapping collision time) is disclosed and measured at toy scope: 2,100 toy trials on prime-order groups at 21-25 bits solved 0.51-0.64 of the time at the declared cap (Wilson lower bounds 0.468-0.586, all above 0.39), with zero degenerate relations and zero bookkeeping failures.",
+   "score": {
+    "numerator": "12853",
+    "denominator": "100"
+   },
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "brent-rho-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production facts on BLS12-381 G1 itself with standard-library integer arithmetic: p and r prime, P0 on y^2=x^3+4, P0 not infinity, [r]P0=O, [r-1]P0=-P0, closure of affine addition and doubling on the curve, the collision identity [a1]P0+[b1]T=[a2]P0+[b2]T => x=(a1-a2)/(b2-b1) verified on real points by constructing two equal states from chosen exponents, and that sampled step-table entries [c]P0 are on the curve and of order r. Section B runs the complete declared algorithm at toy scale on a cyclic group of prime order q (safe-prime subgroup of F_p^*, p=2q+1): the same hash-derived adding walk, the same precomputed jump table, the same O(1)-memory Brent detection with checkpoint and hare exponent pairs, the same relation solve and the same verification g^x=T, under the declared hard cap 2*S0. It reports the fraction of trials solved inside the cap with a Wilson 95% interval, the evaluation counts divided by sqrt(q), degenerate relations and bookkeeping failures. Section C reports the exact ledger: S0 and the cap as exact integers, the per-step instruction ledger in units of C=2000, the additive items, the peak-memory bound and the claim m/100 with W^100<=2^m checked in integer arithmetic. Toy statistics are evidence at toy scope only; the production claim is analytic.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "table_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+     },
+     "toy_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 28
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4096
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 60
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     }
+    },
+    "required": [
+     "production_checks",
+     "trials",
+     "toy_bits",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "table_checks": 2,
+     "trials": 200,
+     "toy_bits": 21,
+     "R": 64,
+     "cap_factor": 2.0,
+     "seconds": 10,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
