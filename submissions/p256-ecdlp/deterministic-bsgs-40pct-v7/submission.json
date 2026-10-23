@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "title": "P-256 deterministic full-coverage BSGS v7: charged local-memory trees and complete Jacobian ledger",
+  "claims": [
+    {
+      "statement": "On the unchanged full-production P-256 ECDLP profile, the deterministic cold algorithm in argument.md recovers the canonical scalar from Q=[x]P with success exactly 1. It uses m=2^128 babies and h=ceil(r/m)<m giants; 2m is a work-capacity bound only. Full-point sign resolution gives candidates im+j and im-j modulo r, verified by at most two complete scalar actions. Under the fixed C=1000 instruction normalization, the complete itemized work is strictly below 2^(13647/100) target-group-operation equivalents. Every four-limb CIOS product is charged at analytically derived M=765 and every canonical field addition/subtraction at A=48, both including 20-percent internal safety; all carry propagation, reduction, memory, addressing and control are included. Jacobian chains, the 3M batch-product walk PLUS the inversion share, five coordinate-scaling multiplications and two decoding multiplications are separate generation rows. Two bounded-local-memory bit-routed trees replace unaddressable global arrays; initialization, code distribution, placement, every stream edge, END markers, central intersection, input validation, verification and output are charged. Repricing recurring non-M work and all one-time charges by 6/5 still leaves at least 0.10 bits below the submitted bound. The mutually incompatible requested maximum 0.06-bit nominal slack is explicitly not claimed. Peak total memory is below 2^145 bytes, preprocessing is below 2^136 target units and included in total work, and nonuniform advice is zero bytes. These are analytic bounds, not a production execution or measured instruction count. kernel-ledger.md gives the analytical primitive, point and communication schedules; ledger.md and certificate.json give exact-integer bounds; evidence.json captures bounded mechanism tests. No random-walk or other heuristic premise is used.",
+      "score": {"numerator": "13647", "denominator": "100"},
+      "evidence": ["argument.md", "kernel-ledger.md", "ledger.md", "certificate.json", "evidence.json"]
+    }
+  ],
+  "experiments": []
+}

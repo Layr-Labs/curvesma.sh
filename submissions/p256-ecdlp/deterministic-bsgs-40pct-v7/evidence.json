@@ -1,0 +1,117 @@
+{
+  "T": "95268854266855141615840988842672163357746134",
+  "T_stress": "558076693045015917618472891172397240694757124/5",
+  "captured": {
+    "CIOS_operand_pairs": 676,
+    "CIOS_pairs_per_call": 32,
+    "P256_fixtures": [
+      {
+        "recovered": "0",
+        "secret": "0",
+        "verifications": 1
+      },
+      {
+        "recovered": "1",
+        "secret": "1",
+        "verifications": 1
+      },
+      {
+        "recovered": "2",
+        "secret": "2",
+        "verifications": 1
+      },
+      {
+        "recovered": "15",
+        "secret": "15",
+        "verifications": 1
+      },
+      {
+        "recovered": "16",
+        "secret": "16",
+        "verifications": 1
+      },
+      {
+        "recovered": "17",
+        "secret": "17",
+        "verifications": 1
+      },
+      {
+        "recovered": "63",
+        "secret": "63",
+        "verifications": 1
+      },
+      {
+        "recovered": "127",
+        "secret": "127",
+        "verifications": 1
+      },
+      {
+        "recovered": "255",
+        "secret": "255",
+        "verifications": 1
+      },
+      {
+        "recovered": "115792089210356248762697446949407573529996955224135760342422259061068512044368",
+        "secret": "115792089210356248762697446949407573529996955224135760342422259061068512044368",
+        "verifications": 1
+      },
+      {
+        "recovered": "115792089210356248762697446949407573529996955224135760342422259061068512044367",
+        "secret": "115792089210356248762697446949407573529996955224135760342422259061068512044367",
+        "verifications": 1
+      }
+    ],
+    "P256_successes": 11,
+    "P256_trials": 11,
+    "mixed_branch_cases": 60,
+    "negative_controls": [
+      "old sign candidates fail Q=-P",
+      "reversed comparison is not sorted"
+    ],
+    "toy_curve": {
+      "P": [
+        0,
+        43
+      ],
+      "a": 94,
+      "b": 6,
+      "p": 97,
+      "r": 107
+    },
+    "toy_exhaustive_trials": 107,
+    "toy_h": 7,
+    "toy_m": 16,
+    "toy_max_verifications": 1,
+    "toy_successes": 107
+  },
+  "margin_policy": "Maximum 0.06-bit nominal slack conflicts with minimum 0.10-bit stress slack; choose and disclose wider nominal reserve.",
+  "peak_bytes": "22300745198530623141535718272648361507028992",
+  "preprocessing": "58610575160829361885395105758655205689262080",
+  "protected_sha256": {
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6",
+    "tracks/p256-ecdlp/rules.md": "0cbd08d817e61a129cf16a9d2d962f343830e139fe64e9a33da85863b7db09a6",
+    "tracks/p256-ecdlp/target-profile.json": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605"
+  },
+  "rows_instructions": {
+    "R_gen": "15735337211158036427473368596859825634148352",
+    "R_init": "22300745198530623141535718272648361505980416",
+    "R_merge": "348449143727040986586495598010130648530944",
+    "R_place": "11237484885197071817414483035826713415122944",
+    "R_setup": "17179869184",
+    "R_sort": "45646837828242369242830923339327114957553664",
+    "R_verify": "16540630"
+  },
+  "scope": "Actually executed bounded mechanism checks; not a production run or instruction measurement.",
+  "source_sha256": {
+    "argument.md": "e11e9a7079850e273b7453b8e6f618735bf13b83b880778fb126b9b03861349e",
+    "build_certificate.py": "9e7753d010f40ee056f5b9ffc364ca942da31c3a2b0c6e41be4051ecef2960c6",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "kernel-ledger.md": "72dbf9138d962a0fa9d5b58c42073964e8f828dbdf4bc3ba810c407704eec13c",
+    "ledger.md": "0a27e922815a2dfef0cf67c19357ad23495a2335d885b9e4d31c00d264f2a1cd",
+    "mechanism.py": "beb26950f51f0fccd174cf63290690ad3db1770438203c0315cb35ffb5f79c4d",
+    "public-note.md": "17e7f7e7f8e9bdd348c50bc2f57c7859619f318b90a8c3e67943eed5dd745637",
+    "submission.json": "cc95fe139b59dda4e79caaf1f2833c4d089dcf0921ecfb0ab2e027b5ebfaad3d"
+  },
+  "version": 1
+}
