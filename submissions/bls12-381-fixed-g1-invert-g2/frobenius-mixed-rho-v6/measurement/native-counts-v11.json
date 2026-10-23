@@ -1,0 +1,38 @@
+{
+ "schema": "gt-walk-native-counts-v11",
+ "kernel": "step.c (VERSION 6), uninstrumented native_run.sh build (-DREF_ONLY)",
+ "inputs": "gen_inputs.py --seed 1|2 --s 0.447265625 --dp-bits 60 (production header DP_BITS = 60, RA = 1024, S = 458)",
+ "walks": 64,
+ "rounds": 1048576,
+ "runs": {
+  "s1": {
+   "steps": 67108864,
+   "adds": 37094788,
+   "sqrs": 30015739,
+   "dps": 0,
+   "cyc2": 1660,
+   "cycl": 1,
+   "restarts": 0,
+   "cap_restarts": 0,
+   "chained": 0,
+   "escapes": 1661,
+   "escape_dps": 0,
+   "comb_mults": 52947
+  },
+  "s2": {
+   "steps": 67108864,
+   "adds": 37092872,
+   "sqrs": 30017676,
+   "dps": 0,
+   "cyc2": 1680,
+   "cycl": 1,
+   "restarts": 0,
+   "cap_restarts": 0,
+   "chained": 0,
+   "escapes": 1681,
+   "escape_dps": 0,
+   "comb_mults": 53595
+  }
+ },
+ "meaning": "adds and sqrs count every group operation including cycle-check steps; steps counts main steps; escapes one per detected cycle; escape_dps escape targets that are DPs; restarts and dps count DP records and DP restarts (chained included); cap_restarts restarts at the trail cap; comb_mults the comb products of restarts and escapes. At DP_BITS 60 no distinguished point occurs in 2^20 rounds."
+}

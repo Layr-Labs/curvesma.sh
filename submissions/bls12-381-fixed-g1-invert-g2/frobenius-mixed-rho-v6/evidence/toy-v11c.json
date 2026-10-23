@@ -1,0 +1,105 @@
+{
+ "revision": "toy v11c: DP 2 budget sweep, r_a 1024 mixed, group 201 (scratch; RESULT-toy-v11.json and v11b untouched)",
+ "code": "toy-v11/v11c_sweep.py (uses v11b_verified.analyse; gt.py unchanged in this step)",
+ "config": {
+  "r_a": 1024,
+  "S": 458,
+  "s": 0.447265625,
+  "dp_bits": 2,
+  "dp_spacing": 4,
+  "N": 76880,
+  "max_steps": 13000,
+  "branch_key": "per trial",
+  "group_seed": 201,
+  "n_per_budget": 2000,
+  "budget_formula": "T = sqrt(2 N tau / V), V = 1 - s^2 - (1-s)^2/r_a = 0.799655"
+ },
+ "note": "The v11b control (n=1000, seed 1003) did not match n=2000, so the 0.5277 control is a fresh run (seed 1101).",
+ "budgets": [
+  {
+   "tau": 0.5277,
+   "T_steps": 318.54,
+   "n": 2000,
+   "trial_seed": 1101,
+   "model_1_minus_exp_minus_tau": 0.41,
+   "verified_within_T": 872,
+   "verified_rate": 0.436,
+   "verified_wilson95": [
+    0.4144,
+    0.4578
+   ],
+   "first_useful_within_T": 909,
+   "first_useful_rate": 0.4545,
+   "first_useful_wilson95": [
+    0.4328,
+    0.4764
+   ],
+   "verified_eventually": 2000,
+   "reconstruction_mismatches": 0
+  },
+  {
+   "tau": 0.55,
+   "T_steps": 325.201,
+   "n": 2000,
+   "trial_seed": 1102,
+   "model_1_minus_exp_minus_tau": 0.4231,
+   "verified_within_T": 863,
+   "verified_rate": 0.4315,
+   "verified_wilson95": [
+    0.4099,
+    0.4533
+   ],
+   "first_useful_within_T": 905,
+   "first_useful_rate": 0.4525,
+   "first_useful_wilson95": [
+    0.4308,
+    0.4744
+   ],
+   "verified_eventually": 2000,
+   "reconstruction_mismatches": 0
+  },
+  {
+   "tau": 0.6,
+   "T_steps": 339.661,
+   "n": 2000,
+   "trial_seed": 1103,
+   "model_1_minus_exp_minus_tau": 0.4512,
+   "verified_within_T": 936,
+   "verified_rate": 0.468,
+   "verified_wilson95": [
+    0.4462,
+    0.4899
+   ],
+   "first_useful_within_T": 971,
+   "first_useful_rate": 0.4855,
+   "first_useful_wilson95": [
+    0.4636,
+    0.5074
+   ],
+   "verified_eventually": 2000,
+   "reconstruction_mismatches": 0
+  },
+  {
+   "tau": 0.65,
+   "T_steps": 353.531,
+   "n": 2000,
+   "trial_seed": 1104,
+   "model_1_minus_exp_minus_tau": 0.478,
+   "verified_within_T": 965,
+   "verified_rate": 0.4825,
+   "verified_wilson95": [
+    0.4607,
+    0.5044
+   ],
+   "first_useful_within_T": 1008,
+   "first_useful_rate": 0.504,
+   "first_useful_wilson95": [
+    0.4821,
+    0.5259
+   ],
+   "verified_eventually": 2000,
+   "reconstruction_mismatches": 0
+  }
+ ],
+ "first_budget_with_verified_wilson_lower_bound_at_least_0.41": 0.5277
+}

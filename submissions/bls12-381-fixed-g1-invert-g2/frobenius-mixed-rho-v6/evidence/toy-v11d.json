@@ -1,0 +1,100 @@
+{
+ "revision": "toy v11d item 1: N-scaling of the degenerate fraction of fresh-step collision pairs (r_a 1024 mixed, DP 2)",
+ "code": "toy-v11/v11d_nscale.py (uses v11b_verified.analyse; gt.py unchanged in this step)",
+ "protocol": {
+  "r_a": 1024,
+  "S": 458,
+  "dp_bits": 2,
+  "dp_spacing": 4,
+  "trials_per_N": 1000,
+  "branch_key": "per trial, Random(seed*100003+i).getrandbits(64)",
+  "group_seed": 201,
+  "max_steps": "run default 40 sqrt(N) + 2000",
+  "seeds": {
+   "6936": 1201,
+   "76880": 1202,
+   "284746": 1203
+  }
+ },
+ "sizes": [
+  {
+   "file": "diag/v11d_nscale_bits16_N6936.json",
+   "N": 6936,
+   "q": 17,
+   "ell": 83233,
+   "sqrt_N": 83.28,
+   "fresh_pairs": 583,
+   "fresh_pairs_degenerate": 1,
+   "fresh_degenerate_rate": 0.001715,
+   "fresh_degenerate_wilson95": [
+    0.0003,
+    0.0097
+   ],
+   "fresh_degenerate_same_walk_dist2": 1,
+   "fresh_nondegenerate_rate": 0.998285,
+   "all_collisions": 4784,
+   "all_collisions_degenerate": 13,
+   "all_degenerate_rate": 0.002717,
+   "verified_eventually": 1000,
+   "first_useful": 1000
+  },
+  {
+   "file": "diag/v11d_nscale_bits18_N76880.json",
+   "N": 76880,
+   "q": 31,
+   "ell": 922561,
+   "sqrt_N": 277.27,
+   "fresh_pairs": 515,
+   "fresh_pairs_degenerate": 2,
+   "fresh_degenerate_rate": 0.003883,
+   "fresh_degenerate_wilson95": [
+    0.0011,
+    0.014
+   ],
+   "fresh_degenerate_same_walk_dist2": 2,
+   "fresh_nondegenerate_rate": 0.996117,
+   "all_collisions": 4097,
+   "all_collisions_degenerate": 4,
+   "all_degenerate_rate": 0.000976,
+   "verified_eventually": 1000,
+   "first_useful": 1000
+  },
+  {
+   "file": "diag/v11d_nscale_bits20_N284746.json",
+   "N": 284746,
+   "q": 43,
+   "ell": 3416953,
+   "sqrt_N": 533.62,
+   "fresh_pairs": 502,
+   "fresh_pairs_degenerate": 4,
+   "fresh_degenerate_rate": 0.007968,
+   "fresh_degenerate_wilson95": [
+    0.0031,
+    0.0203
+   ],
+   "fresh_degenerate_same_walk_dist2": 4,
+   "fresh_nondegenerate_rate": 0.992032,
+   "all_collisions": 4088,
+   "all_collisions_degenerate": 5,
+   "all_degenerate_rate": 0.001223,
+   "verified_eventually": 1000,
+   "first_useful": 1000
+  }
+ ],
+ "trend": {
+  "fresh_pairs_degenerate_counts": [
+   1,
+   2,
+   4
+  ],
+  "fresh_pairs": [
+   583,
+   515,
+   502
+  ],
+  "homogeneity_chi2_2dof": 2.463,
+  "p_value_approx": 0.292,
+  "reading": "not significant at these counts"
+ },
+ "verdict": "The fresh-pair degenerate fraction rises with N across the three sizes (point estimates 0.0017, 0.0039, 0.0080), but the counts (1, 2, 4 pairs) do not establish a trend. The all-collision fraction does not rise (0.0027, 0.0010, 0.0012). Within the toy range the degenerate fraction is at most about 0.8 percent, far below the 0.2 that the spec law predicts at N = 76880. The toy cannot show whether the rise continues toward production size."
+}

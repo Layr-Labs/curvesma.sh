@@ -1,0 +1,187 @@
+{
+ "description": "Extract of the toy H9 runs (scratch toy-v11). first_visit and class_level_fixed_key are verbatim copies of diag/h9_first_visit.json and diag/f_N.json. fixed_key_trials holds the summary fields of diag/h9_trials_r32.json and diag/h9_trials_r1024.json (per-trial lists omitted). Those trial runs set no branch key, so they use the toy default BRANCH_KEY 0x5851F42D4C957F2D (gt.py).",
+ "first_visit": {
+  "description": "H9 unfiltered first-visit test: every class counted once at its first visit (all produced points, no exclusions), per-trial fresh branch key; line2 = fresh-step counting (SRC proof definition, LAND)",
+  "runs": {
+   "r_a_32": {
+    "r_a": 32,
+    "S": 14,
+    "s": 0.4375,
+    "dp_bits": 2,
+    "trials": 1000,
+    "trial_seed": 801,
+    "group_seed": 201,
+    "branch_key": "per trial, Random(seed*100003+i).getrandbits(64)",
+    "line1_first_visit_unfiltered": {
+     "trials_used": 1000,
+     "mean_of_trial_means": 0.4393692363222247,
+     "between_trial_sd": 0.031686744927309364,
+     "between_trial_se": 0.0010020228560708414,
+     "mean_minus_s": 0.0018692363222246877,
+     "z_vs_s": 1.8654627595565902,
+     "within_3se": true,
+     "pooled_mean_bit": 0.43920873209157896,
+     "pooled_classes": 385154,
+     "pooled_se_binomial": 0.0007993428337504492,
+     "pooled_z_vs_s": 2.1376711211154924
+    },
+    "line2_fresh_step_SRC": {
+     "trials_used": 1000,
+     "per_trial_mean": 0.439030208081146,
+     "per_trial_sd": 0.03622608501068616,
+     "between_trial_se": 0.0011455693934465342,
+     "mean_minus_s": 0.0015302080811460117,
+     "z_vs_s": 1.3357620148546936,
+     "within_3se": true,
+     "pooled_share": 0.43951306376198856,
+     "steps": 288087
+    },
+    "line2_fresh_step_LAND": {
+     "trials_used": 1000,
+     "per_trial_mean": 0.43966141608849235,
+     "per_trial_sd": 0.03618909851987904,
+     "between_trial_se": 0.0011443997779104606,
+     "mean_minus_s": 0.0021614160884923517,
+     "z_vs_s": 1.8886897133437437,
+     "within_3se": true,
+     "pooled_share": 0.44001183885232775,
+     "steps": 287190
+    },
+    "consistency_src_vs_walk_counters_mismatches": 0,
+    "class_level_fN_over_keys": {
+     "mean": 0.4375583376690947,
+     "sd": 0.0017069621706018903,
+     "mean_minus_s": 5.833766909468796e-05,
+     "se_of_mean": 5.397888338846883e-05
+    },
+    "command": "h9_first_visit.py fv_r32 32 14 2 1000 801 diag/h9_first_visit_r32.json"
+   },
+   "r_a_1024": {
+    "r_a": 1024,
+    "S": 458,
+    "s": 0.447265625,
+    "dp_bits": 6,
+    "trials": 1000,
+    "trial_seed": 802,
+    "group_seed": 201,
+    "branch_key": "per trial, Random(seed*100003+i).getrandbits(64)",
+    "line1_first_visit_unfiltered": {
+     "trials_used": 1000,
+     "mean_of_trial_means": 0.44660441898520514,
+     "between_trial_sd": 0.028758136186364608,
+     "between_trial_se": 0.0009094121161022067,
+     "mean_minus_s": -0.0006612060147948573,
+     "z_vs_s": -0.7270697223925549,
+     "within_3se": true,
+     "pooled_mean_bit": 0.4464722487477174,
+     "pooled_classes": 477528,
+     "pooled_se_binomial": 0.0007195178576593792,
+     "pooled_z_vs_s": -1.102649842303402
+    },
+    "line2_fresh_step_SRC": {
+     "trials_used": 1000,
+     "per_trial_mean": 0.4465951095643362,
+     "per_trial_sd": 0.028276104260371887,
+     "between_trial_se": 0.0008941689281916596,
+     "mean_minus_s": -0.000670515435663821,
+     "z_vs_s": -0.7498755710734115,
+     "within_3se": true,
+     "pooled_share": 0.44644574216093247,
+     "steps": 469029
+    },
+    "line2_fresh_step_LAND": {
+     "trials_used": 1000,
+     "per_trial_mean": 0.4470385622965325,
+     "per_trial_sd": 0.02819775756687385,
+     "between_trial_se": 0.0008916913882056905,
+     "mean_minus_s": -0.00022706270346750657,
+     "z_vs_s": -0.25464270090621194,
+     "within_3se": true,
+     "pooled_share": 0.44682666461376597,
+     "steps": 467631
+    },
+    "consistency_src_vs_walk_counters_mismatches": 0,
+    "class_level_fN_over_keys": {
+     "mean": 0.44722088969823104,
+     "sd": 0.0018202242909077493,
+     "mean_minus_s": -4.473530176896112e-05,
+     "se_of_mean": 5.756054611633405e-05
+    },
+    "command": "h9_first_visit.py fv_r1024 1024 458 6 1000 802 diag/h9_first_visit_r1024.json"
+   }
+  }
+ },
+ "class_level_fixed_key": {
+  "group": {
+   "q": 31,
+   "ell": 922561,
+   "N": 76880,
+   "lambda": 31,
+   "seed": 201
+  },
+  "f_N": {
+   "r_a_32": {
+    "adder_bits": 5,
+    "S": 14,
+    "s": 0.4375,
+    "square_classes": 33515,
+    "f_N": 0.4359391259105099,
+    "f_N_minus_s": -0.0015608740894901274,
+    "binomial_sd_if_uniform_classes": 0.0017891370311793194,
+    "z_f_N_vs_s": -0.8724172952036372
+   },
+   "r_a_1024": {
+    "adder_bits": 10,
+    "S": 458,
+    "s": 0.447265625,
+    "square_classes": 34248,
+    "f_N": 0.44547346514047864,
+    "f_N_minus_s": -0.0017921598595213584,
+    "binomial_sd_if_uniform_classes": 0.0017932230417282194,
+    "z_f_N_vs_s": -0.9994071110050893
+   }
+  }
+ },
+ "fixed_key_trials": {
+  "r_a_32": {
+   "name": "h9_r32",
+   "r_a": 32,
+   "S": 14,
+   "s": 0.4375,
+   "dp_bits": 2,
+   "trials": 1000,
+   "trials_used": 1000,
+   "trial_seed": 601,
+   "group_seed": 201,
+   "per_trial_share_mean": 0.4330554545065134,
+   "per_trial_share_sd": 0.037453560714762704,
+   "between_trial_se": 0.0011843855834205413,
+   "pooled_share": 0.43427041785628995,
+   "fresh_decisions": 280551,
+   "fresh_square": 121835,
+   "elapsed_seconds": 120.0,
+   "command": "h9_trials.py h9_r32 32 14 2 1000 601 diag/h9_trials_r32.json",
+   "source_file": "diag/h9_trials_r32.json"
+  },
+  "r_a_1024": {
+   "name": "h9_r1024",
+   "r_a": 1024,
+   "S": 458,
+   "s": 0.447265625,
+   "dp_bits": 6,
+   "trials": 1000,
+   "trials_used": 1000,
+   "trial_seed": 602,
+   "group_seed": 201,
+   "per_trial_share_mean": 0.4437475058411711,
+   "per_trial_share_sd": 0.027946424371958333,
+   "between_trial_se": 0.0008837435347302897,
+   "pooled_share": 0.4446424360531596,
+   "fresh_decisions": 449514,
+   "fresh_square": 199873,
+   "elapsed_seconds": 1011.0,
+   "command": "h9_trials.py h9_r1024 1024 458 6 1000 602 diag/h9_trials_r1024.json",
+   "source_file": "diag/h9_trials_r1024.json"
+  }
+ }
+}

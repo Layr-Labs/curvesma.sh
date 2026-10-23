@@ -1,0 +1,92 @@
+{
+  "kernel": "examples/blst-gt-rho/sortnet.c (standalone; does not include step.c)",
+  "n_records": 4096,
+  "comparators_per_sort": 159744,
+  "c_cmp_instructions": 108.00303610777243,
+  "c_cmp_instructions_exact_fraction": "69011348/638976",
+  "scan_instructions_per_record": 13.0,
+  "seeds_checked": [
+    1,
+    2
+  ],
+  "seeds_identical_totals": true,
+  "harness_seed1_equals_seedcheck_seed1": true,
+  "per_seed": {
+    "1": {
+      "sortnet": {
+        "4": 69011368,
+        "8": 138022716
+      },
+      "sortscan": {
+        "4": 69224365,
+        "8": 138448705
+      },
+      "c_cmp": 108.00303610777243,
+      "scan_per_record": 13.0
+    },
+    "2": {
+      "sortnet": {
+        "4": 69011368,
+        "8": 138022716
+      },
+      "sortscan": {
+        "4": 69224365,
+        "8": 138448705
+      },
+      "c_cmp": 108.00303610777243,
+      "scan_per_record": 13.0
+    }
+  },
+  "n8192_c_cmp": 108.00149435525412,
+  "n8192_scan_instructions_per_record": 13.0,
+  "n8192_totals": {
+    "sortnet": {
+      "4": 161024200,
+      "8": 322048380
+    },
+    "sortscan": {
+      "4": 161450189,
+      "8": 322900353
+    }
+  },
+  "harness_command": "LIB=blst N1=64 N2=128 MODES=\"sortnet sortscan\" MODE_N1=4 MODE_N2=8 /Users/benjamin/experimental/yukon/curvesmash-core/measure/measure.sh /Users/benjamin/experimental/yukon/curvesmash-core/examples/blst-gt-rho/sortnet.c blst <scratchpad>/sortnet/inputs-s46-seed1/inputs.bin <scratchpad>/sortnet/out-sortnet",
+  "sqr_harness_command": "LIB=blst N1=64 N2=128 MODES=\"sqr\" MODE_N1=4 MODE_N2=8 /Users/benjamin/experimental/yukon/curvesmash-core/measure/measure.sh /Users/benjamin/experimental/yukon/curvesmash-core/examples/blst-gt-rho/step.c blst <scratchpad>/sortnet/inputs-s46-seed1/inputs.bin <scratchpad>/sortnet/out-restored",
+  "seedcheck_command": "docker run --rm --platform linux/arm64 --network none, mounts: runner/seedrun.sh at /run, examples/blst-gt-rho at /harness (compiles /harness/sortnet.c), blst cache at /blst, inputs at /in, out-seedcheck2 at /work; image curvesma-reference-count, sh /run/seedrun.sh",
+  "callgrind_totals": {
+    "sortnet": {
+      "4": 69011368,
+      "8": 138022716
+    },
+    "sortscan": {
+      "4": 69224365,
+      "8": 138448705
+    }
+  },
+  "round_counts": {
+    "N1": 4,
+    "N2": 8
+  },
+  "existing_modes_before_after": {
+    "step_c_restored_matches_before_sqr_counts": true,
+    "sqr_totals_before": {
+      "4": 39232,
+      "8": 78444
+    },
+    "sqr_totals_restored": {
+      "4": 39232,
+      "8": 78444
+    },
+    "walk_totals_before": {
+      "64": 85598999,
+      "128": 170804336
+    },
+    "walk_totals_restored": {
+      "64": 85598999,
+      "128": 170804336
+    },
+    "walk_totals_match": true,
+    "dump_128_identical": true,
+    "walk_event_line_before": "==29== I   refs:      170,804,336",
+    "walk_event_line_restored": "==29== I   refs:      170,804,336"
+  }
+}
