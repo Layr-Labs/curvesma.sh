@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: truncated-prefix deterministic BSGS at exact 39/100 coverage",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the deterministic truncated-prefix baby-step/giant-step algorithm in proof.md recovers x with probability at least 0.39 using at most 2^128.321575 total target-group-operation equivalents, including preprocessing, failures and verification. The covered scalar set is exactly the prefix [0,m^2) with m=212506270031153001307260662621714878127 and 100*m^2 >= 39*r, so the single deterministic attempt succeeds on at least 39/100 of the uniform challenge distribution and the full giant walk is charged even on failure. Peak memory is at most 2^135.320774 bytes; preprocessing is at most 2^127.321949 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps, retries or heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "5132863",
+        "denominator": "40000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "production-arithmetic-bsgs",
+      "source": "experiment.py",
+      "purpose": "Run the identical affine secp256k1 code path (same field modulus, generator, addition formulas, sort key and binary-search lookup) at reduced table size: count field operations per point addition against the C coefficients, check that the sorted baby keys are strictly increasing, recover scalars inside the covered prefix and fail on a scalar just outside it, and re-check the exact full-size coverage and work ledger in integer arithmetic. This does not establish production curve behaviour at full table size, memory bounds, or operation costs by measurement.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "m": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 512
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          }
+        },
+        "required": [
+          "m",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "m": 128,
+          "samples": 8
+        }
+      ]
+    }
+  ]
+}
