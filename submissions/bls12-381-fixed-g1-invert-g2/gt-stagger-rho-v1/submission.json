@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: O(1)-memory staggered-checkpoint rho in GT with a hard evaluation cap",
+ "claims": [
+  {
+   "statement": "For a uniform nonidentity P in G1 and a uniform target z in GT, with the pinned public pairing, compute g=e(P,Q0)=pairing(Q0,P) once (nondegeneracy and prime order r give <g>=GT), find a=log_g z by an O(1)-memory Pollard rho in GT and return Q=[a]Q0, which satisfies e(P,Q)=z for every z including z=1 (a=0,Q=O). WALK: public table Th[h]=g^(A_h) z^(B_h), h=0..R-1, R=1024, built once (2048 scalar multiplications = 784384 units); state (X,a,b) with X=g^a z^b; step h=H(X) (one 64-bit limb of the canonical Fp12 encoding, fixed odd multiplier, xor-shift, top 10 bits), X<-X*Th[h] (one dense Fp12 multiplication, the reference operation), a<-a+A_h mod r, b<-b+B_h mod r. The step depends on the group element alone, so the trajectory is a deterministic map; no history, no value lookup, no distinguished points, no dictionary. DETECTION: staggered checkpoints, not a cycle-length bound. The grid is P_4={ceil(2^j(4+i)/4): j>=0, 0<=i<4}, exactly 4 points in every dyadic level [2^j,2^(j+1)); a checkpoint created at position p stores (word(X),a,b) and is compared with the hare only at positions in [p+1,8p], then dropped. AT MOST 12 CHECKPOINTS ARE SIMULTANEOUSLY LIVE, and this is ENUMERATED, not asserted: experiment.py scans every hare position in [1,2^20] and reports the maximum 12, including the reviewer's probe positions 1024, 4096 and 2^20 (12 each). A comparison window of multiplicative span W=2^b straddles b dyadic levels, so the live count is k*log2(W), not k*(1-1/W); the 56-state figure in the rejected predecessor (k=64,W=8) was wrong in exactly this way, and 192 is the correct count there. DETECTION INDEX (no 2*rho+3 anywhere): for a trajectory with tail mu and cycle lam, positions c<m carry the same element iff c>=mu and m=c mod lam, so a checkpoint at p is matched first at m=p+lam provided p>=mu and lam<=(W-1)p; hence m=p*+lam with p*=min{p in P_4 : p>=max(mu,ceil(lam/7))}. Verified exhaustively inside experiment.py against a direct simulation of the comparison decisions over every (mu,lam) with mu+lam<=60 (1830 pairs, 0 mismatches), and offline over 180300 pairs for k=1,W=2 and 9 schedules x 4095 pairs, 0 mismatches. HARD CAP AND SUCCESS: the run stops after B=ceil((116/100)*sqrt(r))=ceil(1.16*sqrt(r))=265627019777073510555230149274057194865 evaluations and reports FAILURE. The cap is not derived from a work bound: its success probability is a computed quantile of the random-map model, P[success]>=0.45, and 0.45>0.39 as required. The 0.45 quantile of m/sqrt(r) is <=1.159 for EVERY alignment of the dyadic grid (phase sweep over 20 phases, 1.151..1.159), so the cap is not phase-lucky; c=1.16 is used. Toy evidence at the declared inputs: the complete algorithm on a 26-bit prime-order group with production R=1024 and 300 trials solved 137/300=0.4567 inside the cap (Wilson 95% [0.401,0.513]), every solved instance returned the correct log (137/137), zero bookkeeping failures, zero live-bound violations, observed maximum live 12, and solved+capped=300. SOLVE: on a match with exponent pairs (a,b),(ta,tb), den=(b-tb) mod r; if den=0 the draw is restarted inside the same cap; else a=(ta-a)*den^-1 mod r, exact because the two elements are equal. NO FRUITLESS CYCLE: a detected collision is useless only when the two exponent pairs coincide, which means the product of the jumps over the gap is the identity of GT, i.e. sum A=0 AND sum B=0 mod r; that is a codimension-one coincidence in a prime-order group, probability about 1/r per instance, absorbed by the 0.06 margin between 0.45 and 0.39. The earlier two-step-return argument is withdrawn: returning needs T_i*T_j=1, not T_i^2=1, and the correct statement is the codimension-one one above. No quotient or canonicalisation is used, so the structured two-cycle family of density 1/(12R) raised against order-12 Frobenius-quotient walks on this track does not arise; in this session that quotient spent 22.9% of steps in traps and cost 2.99 sqrt(N) instead of 1.36 sqrt(N) per solved instance. COST: B evaluations at 1+328/20000=2541/2500 units each (one reference dense Fp12 multiplication, plus hash 20, two 4-limb exponent additions 40, 12 live-word comparisons 48, eviction test and loop/address 160, amortised checkpoint creation 60), the reference charged at the organizer's fixed 20000; main 2^127.666138. Additive 784384 (table) + 131072 (pairing for g) + 135168 (verification pairing and [a]Q0) + 2^60 (expected prefix false positives: 2^127.7 evaluations x 12 x 2^-64 = 2^67.3 hits, each resolved by a 120-instruction full compare) = 2^60.0 units, which moves the total by less than 2^-67 bits. Total 2^127.666138, claimed 12767/100 = 127.67. Peak memory 656704 B = 1024-entry jump table (589824 B) + 12 checkpoints of 112 B (word 8, a 48, b 48, position 8) + 64 KiB walk state; nothing grows with the walk length. The final pairing e([a]Q0,P)=z is charged. Against the board's best valid entry (mpjunior92 at 129.20, Floyd rho in GT, AI-valid and in human review) this claims 1.53 bits less work at the same asymptotic memory; it is also 0.81 bits better than this account's own rejected 128.47 claim at a HIGHER success probability.",
+   "score": {
+    "numerator": "12767",
+    "denominator": "100"
+   },
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "gt-stagger-rho-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production facts on BLS12-381 itself with standard-library integer arithmetic: p and r prime, r | Phi_12(p), ord_r(p)=12 with p^6=-1, the blst tower is a field, gamma1 lies in Fp2, a random GT element has order r, and the collision identity x=(a1-a2)/(b2-b1) recovers a real 381-bit log. Section B is the schedule evidence this candidate turns on: B1 ENUMERATES the live-checkpoint count at every hare position to 2^20 and at 1024/4096/2^20, asserting the bound k*log2(W)=12 (the predecessor's k*(1-1/W)=3.5 is printed beside it); B2 verifies the closed-form detection index against a direct simulation of the comparison decisions for every (mu,lam) with mu+lam<=60; B3 runs the complete algorithm on a toy prime-order group with production R=1024, reporting the success fraction inside the declared cap, correctness of every recovered log, and that solved+capped equals the trial count. Section C recomputes the ledger in exact rational arithmetic, including B=ceil(1.16*sqrt(r)) by integer square root and the exact power-of-ten bound on the total.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "table_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+     },
+     "toy_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 28
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4096
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 60
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     }
+    },
+    "required": [
+     "production_checks",
+     "trials",
+     "toy_bits",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "table_checks": 2,
+     "trials": 300,
+     "toy_bits": 26,
+     "R": 1024,
+     "cap_factor": 1.16,
+     "seconds": 12,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}

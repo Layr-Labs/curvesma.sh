@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: staggered-checkpoint rho in GT, honest record widths, hard evaluation cap, and success read off an implemented model",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in G1 and a uniform target z in GT, with the pinned public pairing, compute g=e(P,Q0)=pairing(Q0,P) once (nondegeneracy and prime order r give <g>=GT), find a=log_g z by a Pollard rho in GT and return Q=[a]Q0, which satisfies e(P,Q)=z for every z including z=1 (a=0,Q=O). The claim is success >= 39/100 over uniform P, uniform z and fresh algorithm coins, as rules.md requires, at total work log2 <= 127.68 in reference dense-Fp12-multiplication equivalents (C=20,000). WALK: public table Th[h]=g^(A_h) z^(B_h), h=0..R-1, R=256, built once per instance (2*R = 512 GT scalar multiplications); state (X,a,b) with X=g^a z^b; step h=H(X) (one 64-bit limb of the canonical Fp12 encoding, fixed odd multiplier, xor-shift, top 8 bits), X<-X*Th[h] (one dense Fp12 multiplication = 1 reference unit), a<-a+A_h mod r, b<-b+B_h mod r. The next state is a function of the group element alone: no history, no value lookup, no distinguished-point set, no dictionary. Coefficients satisfy A_h,B_h in [1,2^64), which makes every gap exponent a positive integer below 2^192 < r. DETECTION: staggered checkpoints, not a cycle-length bound; no 2*rho+3 and no 2*S0 appears anywhere in this claim. The grid is P_4={ceil(2^j(4+i)/4): j>=0, 0<=i<4}, exactly 4 points in every dyadic level [2^j,2^(j+1)); a checkpoint created at position p stores (X, fp(X), a, b, p) and is compared with the hare only at positions in the time window [p+1,8p], then dropped. AT MOST 12 CHECKPOINTS ARE SIMULTANEOUSLY LIVE, and this is ENUMERATED, not asserted: experiment.py section B1 scans every hare position in [1,2^20] and reports the maximum 12, including the reviewer's probe positions 1024, 4096 and 2^20 (12 each). A window of multiplicative span W=2^b straddles b dyadic levels, so the live count is k*log2(W)=12, not k*(1-1/W). DETECTION INDEX: for a trajectory with tail mu and cycle lam, positions c<m carry the same element iff c>=mu and m=c mod lam, so a checkpoint at p is matched first at m=p+lam provided p>=mu and lam<=(W-1)p; hence m=p*+lam with p*=min{p in P_4: p>=max(mu,ceil(lam/7))}. Verified inside experiment.py section B2 against a direct simulation of the comparison decisions over every (mu,lam) with mu+lam<=60 (1830 pairs, 0 mismatches), and offline over 180300 pairs for k=1,W=2 and 9 schedules x 4095 pairs (0 mismatches). HARD CAP: the run stops after B=ceil((116/100)*sqrt(r))=ceil(1.16*sqrt(r))=265627019777073510555230149274057194865 evaluations and reports FAILURE, so a failed run costs the same bound as a successful one. SUCCESS: the cap's success probability is read off an implemented model, not asserted. section D1 is a deterministic quadrature (no sampling error) of the standard random-map model (rho=mu+lam with Pr[rho>=t]=exp(-t^2/(2r)), mu uniform on [0,rho)) pushed through the exact detection law: the quantiles of m/sqrt(r) are 1.0507 (q=0.39), 1.1046 (0.42), 1.1569 (0.45), 1.2432 (0.50), mean 1.3255. section D2 is an independent Monte-Carlo cross-check of the same model over 20000 draws: 1.0453 (0.39), 1.1524 (0.45), agreement 0.005. section D3 sweeps 16 dyadic alignments of sqrt(r) over a full period: the q0.39 quantile lies in [1.0463,1.0527] (spread 0.61%) and the q0.45 quantile is at most 1.1591, so the declared cap 1.16 is not an artefact of where the production scale happens to sit between powers of two. No per-alignment statement is claimed; the sweep is supporting evidence. At the cap the model success is 0.4518 at the nominal alignment and 0.4501 in the worst alignment, both above the 0.39 floor, with 0.06 of absolute margin. TOY EVIDENCE AT THE DECLARED R: experiment.py section B3 runs the complete algorithm (same grid, window, expiry, solve, production R=256) on a 26-bit prime-order subgroup, 300 trials, cap ceil(1.16*sqrt(q))=6720: 149/300=0.4967 solved (Wilson 95% [0.4405,0.5529]), 149/149 recovered logs verified correct, 0 bookkeeping failures, 0 live-bound violations, observed maximum live 12, 0 degenerate relations, solved+capped=300. Section B4 repeats 120 trials at R=1024 (61/120=0.5083, Wilson [0.42,0.596]), so the success fraction is not an artefact of the declared table size. Toy statistics are evidence at toy scope only. SOLVE: on a match with exponent pairs (a,b),(ta,tb), den=(b-tb) mod r; if den=0 the draw is restarted inside the same cap; else a=(ta-a)*den^-1 mod r, exact because the two elements are equal. den=0 would require sum A=0 AND sum B=0 mod r over the gap, but every coefficient is in [1,2^64) and every gap is shorter than B<2^128, so both sums lie in (0,2^192) with 2^192<r and NEITHER CAN VANISH: den!=0 unconditionally, with no 1/r argument and no inverse-pair exclusion. The earlier two-step-return argument of this account (T_i^2=1) is withdrawn. No Frobenius quotient and no canonicalisation is used. LEDGER (exact, experiment.py section C): per evaluation 1 reference dense Fp12 multiplication plus 512 charged instructions (itemised sum 116: index 8, table addressing 4, two 4-limb accumulator updates 11+11, fingerprint 2, twelve live fingerprint comparisons 48, ring insertion and expiry amortised 24, loop and cap test 8; safety factor 4.41), i.e. 641/625=2^0.036468 units per evaluation. FINGERPRINT DISCIPLINE: the stored fingerprint is the low 64 bits of the canonical encoding, an exact necessary condition for equality, so it can never miss a true match; a fingerprint hit is settled by one full 576-byte element comparison of the STORED X at 216 instructions, never by a reconstruction from exponents. There is no 16-bit mask anywhere: the width is 64 in the walk, in the ledger and in the experiment. The run performs at most 12*B=2^131.3 fingerprint comparisons; treating a 64-bit fingerprint as uniform gives an expected 2^67.3 false positives, costing 2^74.98 instructions = 2^60.69 units, charged as 2^62. This term is an expectation rather than a deterministic bound, which does not matter: it is 65 bits below the main term, so even a 64-fold excess (2^66.7 units) moves the claim by less than 0.001 bits. Additive items: jump table 196096 units, one pairing for g 131072, verification pairing and [a]Q0 135168, false positives 2^62; total additive 2^62.0, which moves the claim by less than 2^-65 bits. Total W = B*641/625 + additive = 2^127.679138, claimed 12768/100 = 127.68 (an upper bound on the computed total, printed beside it). PEAK MEMORY 226736 bytes, itemised: jump table 256 x (576-byte element + 8-byte A_h + 8-byte B_h) = 151552; 12 live checkpoints x (576-byte X + 8 fingerprint + 32 a + 32 b + 32 position) = 8160; hare state 656; g 576; control 256; code, stack and scratch 65536. a and b are 32 bytes (four 64-bit limbs, exact mod r), the grid position is 32 bytes because the schedule runs past 2^127, and X is STORED at 576 bytes per checkpoint so no comparison needs a reconstruction. Nothing grows with walk length, recorded points or trials. HEURISTICS DISCLOSED: the random-map model for X->X*Th[H(X)] (standard, supported by sections B3/B4 at production R and by the exact detection law), the uniform tail mu, and the per-item instruction counts (the claim moves to 127.6758 if the twelve-comparison line is dropped entirely and to 127.8478 if all twelve states are compared in full every step (0.169 bits), and would be 127.6427 with the non-reference per-step overhead priced at zero).",
+      "score": {
+        "numerator": "3192",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "note.md",
+        "experiment.py",
+        "results.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "gt-stagger-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Section A checks the production facts on BLS12-381 itself with standard-library integer arithmetic: p and r prime, r | Phi_12(p), ord_r(p)=12 with p^6=-1, the blst tower is a field, a random GT element has order r, the collision identity x=(a1-a2)/(b2-b1) recovers a real 381-bit log, and Th[h]!=1 for sampled table entries. Section B is the schedule evidence: B1 ENUMERATES the live-checkpoint count at every hare position to 2^20 and at 1024/4096/2^20, asserting the bound k*log2(W)=12 (the predecessor's k*(1-1/W) is printed beside it); B2 verifies the closed-form detection index against a direct simulation of the comparison decisions for every (mu,lam) with mu+lam<=60; B3 runs the COMPLETE algorithm on a 26-bit prime-order group at the declared production R=256 with the declared cap ceil(1.16*sqrt(q)), reporting the success fraction, the correctness of every recovered log, bookkeeping failures, live-bound violations and the observed maximum live count; B4 repeats the search at R=1024 so the success fraction is shown not to be an artefact of the table size. Section C recomputes the ledger in exact rational arithmetic: B=ceil(1.16*sqrt(r)) by integer square root, the itemised per-evaluation instruction ledger, the fingerprint false-positive charge, the additive items, the itemised peak-memory bound, and the exact power-of-ten bound on the total. Section D implements the model the success claim rests on: D1 deterministic quadrature of the random-map model through the exact detection law, D2 an independent 20000-draw Monte-Carlo cross-check, D3 a 16-point dyadic-alignment sweep, D4 the success probability at the declared cap and whether it clears the 0.39 threshold at every alignment. Everything is standard library only and runs in about 5 seconds.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "table_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "toy_bits": {
+            "type": "integer",
+            "minimum": 18,
+            "maximum": 28
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4096
+          },
+          "cap_factor": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 60
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "model_draws": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 200000
+          }
+        },
+        "required": [
+          "production_checks",
+          "trials",
+          "toy_bits",
+          "R",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "production_checks": 2,
+          "table_checks": 2,
+          "trials": 300,
+          "toy_bits": 26,
+          "R": 256,
+          "cap_factor": 1.16,
+          "seconds": 12,
+          "seed": 1,
+          "model_draws": 20000
+        }
+      ]
+    }
+  ]
+}
