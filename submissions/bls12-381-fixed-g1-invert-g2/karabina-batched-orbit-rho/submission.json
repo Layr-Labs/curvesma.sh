@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Karabina compressed-square rho with batched decompression",
+  "claims": [
+    {
+      "statement": "For every nonidentity P in G1 and every z in GT, return Q in G2 with e(P,Q)=z. If z=1, Q is infinity. Otherwise set g=e(P,Q0) for the profile generator Q0, recover y from the Karabina compressed-square walk in proof.md, and return Q=[y]Q0. Under the two heuristics stated there (random-mapping collision time on Frobenius orbits, and non-vanishing of the compressed coefficients used as denominators and branch bits), the walk succeeds with probability at least 1/2 and uses at most 2^(12572/100) dense-Fp12-multiplication equivalents, including preprocessing, the pairing, batched inverses, failed orbit checks, and output. Peak memory is at most 2^127 bytes. Preprocessing is at most 2^20 reference equivalents and is included in the total. Nonuniform advice is at most 2^0 bytes. This is one classical cold attack. The exponential table is required.",
+      "score": {
+        "numerator": "12572",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "karabina-identity-and-bound-certificate",
+      "source": "experiment.py",
+      "purpose": "Check c1^6=1 and p^6=-1 mod r, the integer certificate log2((50400/60000)*S+2^20)<12572/100, the scaled collision equation on a toy cyclic group, and that the compressed square matches a full square on a toy tower. This does not establish the BLS12-381 running-time heuristic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 20
+        }
+      ]
+    }
+  ]
+}
