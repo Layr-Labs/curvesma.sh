@@ -1,0 +1,51 @@
+{
+  "kind": "analytic_ledger_not_official_score",
+  "parameters": {
+    "m": "170141183460469231731687303715884105728",
+    "h": "170141183460469231731687303715884105728",
+    "d": "340282366920938463463374607431768211455",
+    "block_size": 4096,
+    "C": 1000
+  },
+  "allowances": {
+    "A_field_add": 64,
+    "M_field_mul": 512,
+    "I_field_inv": 524288,
+    "JAC_point_step": 14336,
+    "E_per_point_generation_and_normalization": 22144,
+    "U_record_write": 131072,
+    "INIT_per_node": 57344,
+    "node_capacity_bytes": 8192,
+    "S_per_record_stream": 136192,
+    "intersection_per_record": 16384,
+    "outer_per_record": 4096
+  },
+  "instructions": {
+    "fixed": "1099511627776",
+    "initialization": "39026304097428590497687506977134632635465728",
+    "babies": "26765249852533335782175193122153160440283136",
+    "giants": "26765249852533335782175193122153160440283136",
+    "streams": "46343736115696451216003914535347376254615552",
+    "intersection": "2787593149816327892691964784081045188247552"
+  },
+  "total_instructions": "141688133068008041170733772540870474470522880",
+  "submitted_log2_bound": {
+    "numerator": "1367018",
+    "denominator": "10000"
+  },
+  "exact_bound_check": "T**10000 < 1000**10000 * 2**1367018",
+  "exact_bound_holds": true,
+  "coverage": "57896044618658097711785492504343953926464851149359812787997104700240680714240",
+  "twice_coverage_minus_order": "92138019644721193389046258963199934143",
+  "memory_bytes_bound": "5575186299632655785383929568162090393272320",
+  "memory_below_2_to_143": true,
+  "preprocessing_bound": "Included in T; same conservative log2 bound 1367018/10000",
+  "heuristics": [],
+  "rule_hashes": {
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/secp256k1-ecdlp/rules.md": "2408941d15e056e94477a6a28001c4beae32cf02aa2da7085353d5eb703c6cfb",
+    "tracks/secp256k1-ecdlp/target-profile.json": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+    "tracks/secp256k1-ecdlp/verifier.json": "779e160360048348d6d5fd80766457323655c13651fa1ac6b20305ba5446bcd4",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294"
+  }
+}
