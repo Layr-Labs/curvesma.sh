@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "scope": "Exact arithmetic and conditional-model implications only; not proof of production random mapping.",
+  "score": {
+    "numerator": "2573",
+    "denominator": "20"
+  },
+  "N": "4369656264593849206620645042348830486474212708377303151883638224994881765377",
+  "S": "72412619877426193341163708563374841327",
+  "floyd_evaluation_cap": "217237859632278580023491125690124523981",
+  "dense_multiplication_cap": "434475719264557160046982251380249047962",
+  "W_envelope": {
+    "numerator": "2606854315593532660478320409655989908892",
+    "denominator": "5"
+  },
+  "W_itemized": {
+    "numerator": "2389616455961254080454829283965865384911",
+    "denominator": "5"
+  },
+  "W_120pct_nonmul": {
+    "numerator": "12165320139444738682494064446893947069656",
+    "denominator": "25"
+  },
+  "hard_reports": "73786976294838206464",
+  "slot_capacity": "110680464442257309696",
+  "peak_bytes": "8854438289526828826624",
+  "false_pair_expectation_upper": {
+    "numerator": "73786976294838206463",
+    "denominator": "140737488355328"
+  },
+  "checks": {
+    "protected_C_is_20000": true,
+    "score_reduced": true,
+    "r_has_255_bits": true,
+    "p_has_381_bits": true,
+    "order12": true,
+    "half_frobenius_inverse": true,
+    "nonidentity_orbits_exact": true,
+    "S_is_exact_ceiling_sqrt_6N_over5": true,
+    "work_within_claim_12865_over100": true,
+    "claim_slack_at_least_0005_bits": true,
+    "claim_slack_at_most_006_bits": true,
+    "all_nonmul_repriced_120pct_margin_at_least_010_bits": true,
+    "itemized_below_envelope": true,
+    "ordinary_rows_sum_4000": true,
+    "actual_instr_below_allowance_8000": true,
+    "reports_mean_below_7over8_capacity": true,
+    "report_cap_chernoff_base_below_255over256": true,
+    "report_cap_tail_below_2minus100": true,
+    "ideal_collision_probability_exceeds_045": true,
+    "finite_fp_false_pair_mean_below_2pow19": true,
+    "finite_fp_markov_loss_below_1over32": true,
+    "poisson_geometric_tail_ratio_below_1over32": true,
+    "poisson_chernoff_bound_below_2minus3B": true,
+    "false_pair_verification_total_below_2pow40": true,
+    "all_local_cycles_union_below_2minus47": true,
+    "unfinished_tail_fraction_below_2minus38": true,
+    "empty_segment_tail_union_below_2minus100": true,
+    "sampling_bias_below_2minus188": true,
+    "bad_relation_union_below_2minus230": true,
+    "reserved_other_loss_more_than_all_small_terms": true,
+    "success_floor_after_markov_and_reserved_losses": true,
+    "80byte_record_layout": true,
+    "hard_capacity_at_2over3_load": true,
+    "peak_including_replicas_below_2pow73_bytes": true,
+    "shard_local_address_space_under_64bits": true,
+    "global_slot_index_67bits_accounted": true,
+    "all_explicit_additive_rows_below_2pow90": true,
+    "d1_norm_equals_zeta": true,
+    "zeta_in_Fp_order6": true,
+    "zeta_square_is_zeta_minus_one": true,
+    "gamma_even_odd_chain": true,
+    "joint_mu_lambda_law_all_4pow4_maps": true,
+    "point_on_Lcycle_law_all_4pow4_maps": true,
+    "floyd_bound_all_1024_start_graph_pairs": true,
+    "geometric_cycle_tail_ratio": true
+  },
+  "check_count": 45
+}

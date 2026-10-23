@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 hardened v7: stationary square-and-add Frobenius-class rho with fully charged Floyd detection",
+  "claims": [
+    {
+      "statement": "For independently uniform nonidentity P in BLS12-381 G1 and uniform z in GT, including identity, the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.40 under the explicitly stated exploratory joint random-mapping/key/mark/label heuristic H. Compute g=pairing(Q0,P), solve g^x=z on order-12 Frobenius classes with one public R=1024 exponent table and the stationary square-and-add twisted map, per-segment Floyd detection, fully charged restarts and distinguished reports; normalize Frobenius labels before recovery and verify every candidate. The complete hard-metered work is at most 2^(2573/20) reference dense-Fp12-operation equivalents at C=20000, summed across all 2^20 workers, including all six dense multiplications per tortoise iteration, external arithmetic, randomness, preprocessing and identical table replication, starts after every report/detection/timeout, finite-fingerprint false pairs, segmented storage/routing/sorting, scalar recovery, G2 output construction and final original-P pairing verification. The scored envelope computes log2 W=128.6155775656 and is below the 128.65 claim; 1.2x repricing every actual nonmultiplication row remains at least 0.10 bits below the claim. Peak bytes below 2^73 with a hard 2^66-report cap and an explicit 80-byte record; preprocessing below 2^42 units is included; external nonuniform advice zero. H is a disclosed unproved production extrapolation, not established by the toy or exact certificate. No production run, unconditional probability proof, accepted score, novelty, or practical break is claimed.",
+      "score": {
+        "numerator": "2573",
+        "denominator": "20"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "verify_exact.py",
+        "toy.py",
+        "test_pipeline.py",
+        "toy-output.json",
+        "alignment-output.json",
+        "public-note.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

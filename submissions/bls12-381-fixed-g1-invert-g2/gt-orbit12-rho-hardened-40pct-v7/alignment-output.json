@@ -1,0 +1,123 @@
+{
+  "prime": 13,
+  "lambda": 2,
+  "x_values": 13,
+  "orbit_elements": 12,
+  "rows": [
+    {
+      "k": 0,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 24336,
+      "unaligned_wrong": 0,
+      "unaligned_undefined": 0
+    },
+    {
+      "k": 1,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 2,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 3,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 4,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 5,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 6,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 7,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 8,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 9,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 10,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    },
+    {
+      "k": 11,
+      "usable": 24336,
+      "aligned_correct": 24336,
+      "normalized_correct": 24336,
+      "unaligned_correct": 0,
+      "unaligned_wrong": 22464,
+      "unaligned_undefined": 1872
+    }
+  ],
+  "usable_pairs": 292032,
+  "aligned_correct": 292032,
+  "normalized_correct": 292032,
+  "unaligned_wrong": 247104,
+  "unaligned_undefined": 20592,
+  "zero_aligned_denominator_excluded": 24336,
+  "scope": "Exhaustive representative-alignment identity on the specified toy prime only."
+}
