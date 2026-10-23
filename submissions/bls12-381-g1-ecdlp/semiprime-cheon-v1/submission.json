@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon reduction with H-prime semiprime walks, worst-case bound",
+  "claims": [
+    {
+      "statement": "Setting: BLS12-381 G1, fixed generator P0 of prime order r, d=2^20 (6d divides r-1), input T=A_1=[s]P0 and powers A_i=[s^i]P0 for i<=n with n>=2^20 (only T and A_d are read, so the bound holds for every n>=2^20 including the scoring value n=2^20), s uniform in 1..r-1. Claim: the deterministic classical attack of proof.md recovers s with success probability at least 0.40 over the uniform challenge, using at most 2^116.8665 total target-group-operation equivalents as a maximum over challenges (under H2 and expected O(1)-probe hashing) (one equivalent = one batched incomplete affine G1 addition = 2000 AArch64 instructions, C=2000). The attack is Cheon's reduction to z=s^d in the order-m subgroup H of d-th powers (m=(r-1)/2^20), solved by a baby-step/giant-step whose baby and giant scalars are products a*w of two 'H-primes' (primes q with q^m=1 mod r), every chain advanced by one batched incomplete affine G1 addition per step from a precomputed table, with a 224-bit parity key of the y-coordinate invariant under the six GLV/negation automorphisms, a sharded hash table, and a final d-th root plus mu_d search. N=2^115.6644 elements per side (6N^2/m=0.52). The total includes all preprocessing (H-prime and walk-list searches, tables, chain starts, the challenge-independent baby phase), hash routing, probe/insert, key canonicalisation and walk bookkeeping at an itemised 239 instructions per element (40+30+61+108) charged as 300, false-match processing, verification and output; preprocessing is at most 2^115.87 units and included in the total; peak memory is at most 2^121.4 bytes; there is no nonuniform advice and no quantum step. Disclosed hypotheses: (H1) the 6N^2 ratios x/(u x') are Poisson-like in H, so coverage is 1-exp(-0.52)=0.4055 (0.40 is claimed); (H2) H-primes have density 1/(2^20 ln q) among primes, which affects only preprocessing cost and is charged with a 4x margin; expected O(1)-probe hashing in an idealised sharded cluster whose routing is charged as instructions; the instruction counts are itemised, not measured. The bound is analytic, memory is exponential, toy experiments are evidence only at their stated scale, and this is not a practical break.",
+      "score": {
+        "numerator": "233733",
+        "denominator": "2000"
+      },
+      "evidence": [
+        "proof.md",
+        "evidence.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "mode all (the single initial run) executes ledger, coverage and ec with fixed small trial counts. ledger recomputes the production cost ledger and algebraic facts exactly; coverage runs a scalar-level toy of the semiprime baby/giant sets against the Poisson model; ec runs an end-to-end toy on genuine j=0 curves (batched affine walks, parity key, d-th root). Each mode can be rerun separately with more trials. Toy results are evidence at toy scale only, not a production complexity proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "ledger",
+              "coverage",
+              "ec"
+            ]
+          },
+          "toy": {
+            "type": "string",
+            "maxLength": 8,
+            "enum": [
+              "t28",
+              "t30",
+              "t32"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "K_permille": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 2000
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 2026
+        }
+      ]
+    }
+  ]
+}
