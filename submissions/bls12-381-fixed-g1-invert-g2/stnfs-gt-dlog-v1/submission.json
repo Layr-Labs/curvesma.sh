@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: SexTNFS discrete logarithm in GT",
+  "claims": [
+    {
+      "statement": "For P uniform over nonidentity G1 and z independently uniform over GT, set z0=e(P,Q0), solve z=z0^a in the order-r subgroup of F_{p^12}^* with the special extended tower number field sieve described in proof.md, and return Q=[a]Q0 (null when a=0). Under the stated standard NFS heuristics and the published SexTNFS estimate of about 2^126 elementary operations for BLS12-381, charged at 2^8 scalar instructions each and divided by C=20,000, the attack succeeds with probability at least 0.9 using at most 2^120 total target-group-operation equivalents, including the fully charged field precomputation (at most 2^119.712288), both individual-logarithm descents with restarts, the pairings, the scalar multiplication and the final verification. Peak memory is at most 2^71 bytes; nonuniform advice is 2^0 bytes. This is a classical cold heuristic estimate, not a practical break or a proved upper bound.",
+      "score": {
+        "numerator": "120",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
