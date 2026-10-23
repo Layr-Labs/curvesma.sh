@@ -1,0 +1,251 @@
+{
+ "source": "measured by the rare-path forced-path harness (organizer image, -O3 -fno-tree-vectorize -mgeneral-regs-only)",
+ "full_results": "kept with the work, not in this package (the full file exceeds the package file limit)",
+ "step_c_sha256": "3d1761f2fee2f9944c33103125870f284530975a90dec3db72d6a4dd2a8a46ba",
+ "units": "Callgrind Ir per call. A call is one loop iteration that calls a noinline wrapper around the primitive (bl, ret, argument set-up and wrapper prologue included); the 16 Ir of the empty loop (counter, dump request, sink update) are subtracted. Inlined use in the kernel is cheaper by those few Ir.",
+ "keys": {
+  "f_max": 163117,
+  "f_max_ct": 29749,
+  "f_max_real_observed": 29533,
+  "add_max": 162441,
+  "add_max_ct": 29073,
+  "add_max_real_observed": 29006,
+  "same_max": 210,
+  "same_max_ct": 210,
+  "same_max_real_observed": 119,
+  "pdp_max": 98,
+  "pdp_max_ct": 98,
+  "pdp_max_real_observed": 55,
+  "esc2_max": 163783,
+  "esc2_max_ct": 30415,
+  "esc2_max_real_observed": 30031,
+  "esc65_max": 172477,
+  "esc65_max_ct": 39109,
+  "esc65_max_real_observed": 32992,
+  "sel_max": 681,
+  "sel_max_ct": 681,
+  "sel_max_real_observed": 545
+ },
+ "key_notes": {
+  "x_max": "branch-bounded maximum: every data-dependent branch inside the primitive replaced by a branch-free routine that costs at least as much, remaining control variants forced; includes the Fermat-chain fallback of blst_fp_inverse (133,370 Ir) executed unconditionally",
+  "x_max_ct": "as x_max but blst_fp_inverse costed as its constant-time half only, which is the path every tested input takes (3.4 million inputs, no fallback); not a proven bound if the fallback were reachable",
+  "x_max_real_observed": "largest value seen in the kernel's own code over the forced variants (all take the ct inversion)"
+ },
+ "primitives": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 67710
+ },
+ "components": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 26215
+ },
+ "inversion": {
+  "invct|rand": {
+   "calls": 1000,
+   "min": 27303,
+   "max": 27303,
+   "mean": 27303.0
+  },
+  "invct|edge": {
+   "calls": 1000,
+   "min": 27303,
+   "max": 27303,
+   "mean": 27303.0
+  },
+  "invflt|rand": {
+   "calls": 1000,
+   "min": 133370,
+   "max": 133370,
+   "mean": 133370.0
+  },
+  "invflt|edge": {
+   "calls": 1000,
+   "min": 133370,
+   "max": 133370,
+   "mean": 133370.0
+  },
+  "invblst|rand": {
+   "calls": 1000,
+   "min": 27310,
+   "max": 27310,
+   "mean": 27310.0
+  },
+  "invblst|edge": {
+   "calls": 1000,
+   "min": 27310,
+   "max": 27310,
+   "mean": 27310.0
+  }
+ },
+ "checks": {
+  "bound_ge_real": {
+   "variants_compared": 205,
+   "violations": []
+  },
+  "bound_constant_and_N_independent": {
+   "nonconstant": [],
+   "note": "bound variants: min == max within each run and equal for N=1000 and N=2000"
+  },
+  "real_max_changes_when_N_doubles": [
+   [
+    "esc65",
+    "even.asc.k1.add",
+    30525,
+    30534
+   ],
+   [
+    "esc65",
+    "odd.asc.k1.add",
+    31980,
+    31989
+   ]
+  ],
+  "equality_with_kernel": [
+   "harness check add cases=250000 mismatches=0",
+   "harness check canon_k cases=250033 mismatches=0",
+   "harness check canon_k_exact cases=250033 mismatches=0",
+   "harness check canon_point cases=250000 mismatches=0",
+   "harness check escape cases=250000 mismatches=0",
+   "harness check f cases=250000 mismatches=0",
+   "harness check fcmp cases=251089 mismatches=0",
+   "harness check feq cases=251089 mismatches=0",
+   "harness check fsub cases=251089 mismatches=0",
+   "harness check inverse cases=250033 mismatches=0",
+   "harness check key_full cases=250000 mismatches=0",
+   "harness check pdp cases=250000 mismatches=0",
+   "harness check same cases=250000 mismatches=0",
+   "harness_ct check add cases=250000 mismatches=0",
+   "harness_ct check canon_k cases=250033 mismatches=0",
+   "harness_ct check canon_k_exact cases=250033 mismatches=0",
+   "harness_ct check canon_point cases=250000 mismatches=0",
+   "harness_ct check escape cases=250000 mismatches=0",
+   "harness_ct check f cases=250000 mismatches=0",
+   "harness_ct check fcmp cases=251089 mismatches=0",
+   "harness_ct check feq cases=251089 mismatches=0",
+   "harness_ct check fsub cases=251089 mismatches=0",
+   "harness_ct check inverse cases=250033 mismatches=0",
+   "harness_ct check key_full cases=250000 mismatches=0",
+   "harness_ct check pdp cases=250000 mismatches=0",
+   "harness_ct check same cases=250000 mismatches=0"
+  ],
+  "fermat_fallback_reachability": "random: valid=3000000 of 3000000; structured: invalid=0 of 400762",
+  "errors": []
+ },
+ "image": {
+  "name": "curvesma-reference-count (linux/arm64)",
+  "image_id_at_assembly": "e2c127839055 (the image was rebuilt from the same Dockerfile by another job during the session; compiler and Valgrind are the same)",
+  "cc": "Debian 14.2.0-19",
+  "valgrind": "3.24.0",
+  "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only; blst server.c as run.sh (-O3 -fno-builtin -fPIC -fno-tree-vectorize -mgeneral-regs-only), pinned commit f7a88067"
+ },
+ "harness_sources": {
+  "harness.c": "9f8d4ae99960ee529a02b66c70e2e12e33044acd6a6288a749bb0bf5ee2d5e2d",
+  "rare.c": "a58342e70aea0738ccdc51c1f3d45708e28eb6c606c28bc8d26566b7f5d38ae9",
+  "ship_driver.c": "8407f7f1eb40dcd87c1a3ebbdf09dbfcf552a98a31d77c64bac17701f882ca29",
+  "inv_probe.c": "72a93610c128e75c3f7af282cc919dcebb9d8fb0ad6ccce9ee717340cdd0bbee",
+  "drive.py": "642dd9e17bde6c721b006f60737abd6979e64883e80a6855fc11be0285e214af",
+  "rare_drive.py": "cae66f4ffc11e8e927758855f82f42ff92f3cd0c87692fe1ce4bf8f5f26c4aa8",
+  "build.sh": "fd432499f34b0e73f8f9f061065e5aba02570463d26cc5dd07ba36039642fdd3"
+ },
+ "method": [
+  "step.c is included unmodified into harness.c (main renamed); the primitives measured are its own static functions.",
+  "A real wrapper (wr_*) and a bounded wrapper (wb_*) exist for every primitive; the bounded one has the control structure of the kernel's but every data-dependent branch inside the primitives replaced by a branch-free routine of at least equal cost.",
+  "Each variant's N inputs are built before the loop; the loop holds only the wrapper call, a counter and a Callgrind dump request; the Ir of each call is one dump (collection on throughout), less the 16 Ir of an empty loop.",
+  "N = 1000 and 2000 calls per variant; bound variants are constant (min = max) and equal for both N.",
+  "Equality of every bounded routine with the kernel's: at least 250,000 random/edge cases each (run on two builds); the check is shown to detect four injected faults.",
+  "The Fermat-chain fallback of blst_fp_inverse cannot be forced by any input found; x_max includes it, x_max_ct does not."
+ ],
+ "control_overhead": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 6474
+ },
+ "event_bounds": {
+  "conservative_(x_max)": {
+   "rare_2cycle": {
+    "formula": "f + same + esc2 + sel + pdp + control(2c)",
+    "Ir": 327947
+   },
+   "rare_anchor_cycle65": {
+    "formula": "65 f + 66 same + 64 pdp + esc65 + sel + pdp + control(anchor:65)",
+    "Ir": 10797652
+   }
+  },
+  "constant_time_inversion_only_(x_max_ct)": {
+   "rare_2cycle": {
+    "formula": "f + same + esc2 + sel + pdp + control(2c)",
+    "Ir": 61211
+   },
+   "rare_anchor_cycle65": {
+    "formula": "65 f + 66 same + 64 pdp + esc65 + sel + pdp + control(anchor:65)",
+    "Ir": 1995364
+   }
+  }
+ },
+ "branches": {
+  "omitted": true,
+  "reason": "too large for the package; see the full results",
+  "bytes": 13186
+ },
+ "code_identity": {
+  "ship_unit_vs_step_alone": [
+   "rare_2cycle: step_alone rare_2cycle.constprop.0 541 lines, harness rare_2cycle 541 lines, identical=True",
+   "rare_anchor: step_alone rare_anchor.isra.0 808 lines, harness rare_anchor.isra.0 808 lines, identical=True",
+   "new_trail: step_alone new_trail 152 lines, harness new_trail 152 lines, identical=True",
+   "dp_restart: step_alone dp_restart 63 lines, harness dp_restart 63 lines, identical=True",
+   "batch_step: step_alone batch_step 3016 lines, harness batch_step 3016 lines, identical=True",
+   "add_single: step_alone add_single 284 lines, harness add_single 284 lines, identical=True",
+   "key_full: step_alone key_full 42 lines, harness key_full 42 lines, identical=True",
+   "canon_k_exact: step_alone canon_k_exact 119 lines, harness canon_k_exact 119 lines, identical=True"
+  ],
+  "harness_unit_vs_step_alone": [
+   "rare_2cycle: step_alone rare_2cycle.constprop.0 541 lines, harness rare_2cycle.constprop.0 477 lines, identical=False",
+   "   first difference at line 0 | sub sp, sp, #0x290 | sub sp, sp, #0x250",
+   "rare_anchor: step_alone rare_anchor.isra.0 808 lines, harness rare_anchor.isra.0 600 lines, identical=False",
+   "   first difference at line 0 | mov x12, #0x1a60  | mov x12, #0x19d0 ",
+   "batch_step: step_alone batch_step 3016 lines, harness batch_step 3019 lines, identical=False",
+   "   first difference at line 16 | add x26, x2, #0x0 | add x0, x0, #0x0",
+   "add_single: step_alone add_single 284 lines, harness add_single 279 lines, identical=False",
+   "   first difference at line 8 | mov x21, x2 | mov x21, x1",
+   "key_full: step_alone key_full 42 lines, harness key_full 42 lines, identical=False",
+   "   first difference at line 13 | add x3, x2, #0x60 | add x1, x1, #0x30",
+   "canon_k_exact: step_alone canon_k_exact 119 lines, harness canon_k_exact 115 lines, identical=False",
+   "   first difference at line 0 | stp x29, x30, [sp, #-208]! | stp x29, x30, [sp, #-192]!"
+  ],
+  "meaning": "In ship_driver.c's unit all eight compared functions (rare_2cycle, rare_anchor, new_trail, dp_restart, batch_step, add_single, key_full, canon_k_exact) are instruction-for-instruction identical to step.c compiled alone, so the end-to-end figures for rare_2cycle/rare_anchor are for the shipped code. In harness.c's unit rare_2cycle, rare_anchor, batch_step, add_single (5 fewer instructions), key_full (register choice) and canon_k_exact (4 fewer) are compiled differently, so the per-primitive figures are for that unit's code"
+ },
+ "reproduce": [
+  "docker run ... curvesma-reference-count sh /forced/build.sh   (blst checkout at /blst, bls-ir at /bls, this directory at /forced, build dir at /out)",
+  "sh /forced/run_all.sh        (per-call Ir, real and bound, N = 1000 and 2000)",
+  "sh /forced/run_checks.sh     (equality of the bounded routines with the kernel's, 250,000 cases each, two builds)",
+  "sh /forced/run_mutants.sh    (the checks must fail on injected faults)",
+  "python3 /forced/rare_drive.py raw/rare_20.json 20 2c:2 anchor:2 anchor:3 anchor:10 anchor:33 anchor:65   (and N = 40)",
+  "python3 branches.py /out/harness <roots>   (conditional-branch listing); python3 cmpcode.py (code identity); python3 assemble.py (this file)"
+ ],
+ "mutation_self_test_of_equality_checks": [
+  "MUT_FEQ check feq cases=51089 mismatches=1008",
+  "MUT_FEQ check same cases=50000 mismatches=6164",
+  "MUT_KEY check key_full cases=50000 mismatches=22511",
+  "MUT_KEY check escape cases=50000 mismatches=29347",
+  "MUT_CKX check canon_k_exact cases=50033 mismatches=15020",
+  "MUT_CKX check f cases=50000 mismatches=9981",
+  "MUT_FCMP check fcmp cases=51089 mismatches=44538",
+  "MUT_FCMP check escape cases=50000 mismatches=50000"
+ ],
+ "unmeasured_or_approximate": [
+  "Per-primitive figures are for the harness unit's compile of step.c's functions, not the shipped object: add_single, canon_k_exact and rare_* are compiled differently there (inlining, 5 and 4 fewer instructions in add_single and canon_k_exact). The bounded figures exceed the harness code's by 6 to 7,000+ Ir (components >= 6), which covers differences of this size; it is not a proof.",
+  "Each primitive figure includes the call into and return from a noinline wrapper and the argument set-up (about 8-10 Ir); inlined use in the kernel costs that much less (the shipped rare_anchor with L = 65 is 3,172 Ir below the wrapped copy).",
+  "Control overhead of rare_2cycle/rare_anchor is measured on the wrapped copy (code between primitive calls: struct copies of cyc[], loop control, flag tests, counters) and on cycle lengths 2..65; paths not taken in the scenario (look-ahead DP break, cycle longer than 65 without escape, false-alarm exits) are cheaper than the escape path and were not run.",
+  "Dumps are cut at the dump request; the 16 Ir of the empty loop are an upper estimate of the harness's own cost per call (subtracted once); one Ir in 1000 of the empty loop reads 19, not 16 (not seen in primitive runs).",
+  "The Fermat-chain fallback of blst_fp_inverse was never taken (3.4 million inputs); its cost is measured (133,370 Ir) but it is not shown unreachable.",
+  "libc bcmp is the ifunc variant chosen under this Valgrind; a CPU feature set that selects another variant could change feq's real cost (the padded bound exceeds the dearest measured path, over all positions and alignments, by 10 Ir)."
+ ],
+ "f_max": 163117,
+ "add_max": 162441,
+ "same_max": 210,
+ "pdp_max": 98,
+ "esc2_max": 163783,
+ "esc65_max": 172477
+}
