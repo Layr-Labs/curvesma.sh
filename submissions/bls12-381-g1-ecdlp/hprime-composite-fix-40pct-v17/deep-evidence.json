@@ -1,0 +1,584 @@
+{
+ "census": {
+  "cells": [
+   {
+    "r": 8391553,
+    "d": 8,
+    "m": 1048944,
+    "distinct_covered": 422778,
+    "predicted_distinct": 422076,
+    "predicted_distinct_eff": 417816,
+    "diagonal_repetitions": 7104,
+    "candidate_occurrences": 540000,
+    "K_float": 0.514803,
+    "rowA_num": -1301,
+    "rowA_den": 174824,
+    "rowB_num": -827,
+    "rowB_den": 174824,
+    "rowA_frac": "-1301/174824",
+    "rowB_frac": "-827/174824",
+    "rowA_dec": "-0.0074417700",
+    "rowB_dec": "-0.0047304718",
+    "absB_times_sqrt_m": 4.8449
+   },
+   {
+    "r": 8391553,
+    "d": 16,
+    "m": 524472,
+    "distinct_covered": 204996,
+    "predicted_distinct": 210837,
+    "predicted_distinct_eff": 207838,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514163,
+    "rowA_num": 283,
+    "rowA_den": 174824,
+    "rowB_num": 1421,
+    "rowB_den": 262236,
+    "rowA_frac": "283/174824",
+    "rowB_frac": "1421/262236",
+    "rowA_dec": "0.0016187709",
+    "rowB_dec": "0.0054187831",
+    "absB_times_sqrt_m": 3.9243
+   },
+   {
+    "r": 8391553,
+    "d": 64,
+    "m": 131118,
+    "distinct_covered": 49272,
+    "predicted_distinct": 51188,
+    "predicted_distinct_eff": 49711,
+    "diagonal_repetitions": 2400,
+    "candidate_occurrences": 64896,
+    "K_float": 0.494943,
+    "rowA_num": -242,
+    "rowA_den": 65559,
+    "rowB_num": 439,
+    "rowB_den": 131118,
+    "rowA_frac": "-242/65559",
+    "rowB_frac": "439/131118",
+    "rowA_dec": "-0.0036913315",
+    "rowB_dec": "0.0033481292",
+    "absB_times_sqrt_m": 1.2124
+   },
+   {
+    "r": 33555073,
+    "d": 8,
+    "m": 4194384,
+    "distinct_covered": 1665594,
+    "predicted_distinct": 1670963,
+    "predicted_distinct_eff": 1662400,
+    "diagonal_repetitions": 14208,
+    "candidate_occurrences": 2131296,
+    "K_float": 0.508131,
+    "rowA_num": -8839,
+    "rowA_den": 4194384,
+    "rowB_num": -1597,
+    "rowB_den": 2097192,
+    "rowA_frac": "-8839/4194384",
+    "rowB_frac": "-1597/2097192",
+    "rowA_dec": "-0.0021073416",
+    "rowB_dec": "-0.0007614944",
+    "absB_times_sqrt_m": 1.5596
+   },
+   {
+    "r": 33555073,
+    "d": 16,
+    "m": 2097192,
+    "distinct_covered": 838698,
+    "predicted_distinct": 843283,
+    "predicted_distinct_eff": 837242,
+    "diagonal_repetitions": 10080,
+    "candidate_occurrences": 1078656,
+    "K_float": 0.514333,
+    "rowA_num": -5495,
+    "rowA_den": 2097192,
+    "rowB_num": -182,
+    "rowB_den": 262149,
+    "rowA_frac": "-5495/2097192",
+    "rowB_frac": "-182/262149",
+    "rowA_dec": "-0.0026201702",
+    "rowB_dec": "-0.0006942617",
+    "absB_times_sqrt_m": 1.0054
+   },
+   {
+    "r": 33555073,
+    "d": 64,
+    "m": 524298,
+    "distinct_covered": 206220,
+    "predicted_distinct": 210821,
+    "predicted_distinct_eff": 207822,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514333,
+    "rowA_num": -391,
+    "rowA_den": 524298,
+    "rowB_num": 267,
+    "rowB_den": 87383,
+    "rowA_frac": "-391/524298",
+    "rowB_frac": "267/87383",
+    "rowA_dec": "-0.0007457591",
+    "rowB_dec": "0.0030555142",
+    "absB_times_sqrt_m": 2.2124
+   }
+  ]
+ },
+ "scale_row": {
+  "max_absB_times_sqrt_m": 4.8449,
+  "m_production_log2": 234,
+  "extrapolated_excess_log2": -115.152,
+  "status": "declared scaling premise H3occ-scale (deviation is O(1/sqrt(m))); the charge is the toy maximum, >100 bits above this extrapolation"
+ },
+ "gap": {
+  "n": 1199,
+  "mean": 545.8616,
+  "max": 3950,
+  "mu_prod_float": 70573979.056,
+  "mu_prod_log2": 26.0726,
+  "G_charged": 8589934592,
+  "G_charged_log2": 33,
+  "tail_bound_log2": -125.598,
+  "premise": "H3gap: the FIXED production list's consecutive gaps follow the geometric law with mean mu = d*ln q; the 2^-40 charge is a modelling allowance against this premise, not a probability over algorithm coins. The list is public (r and the start), so a verifier can check the actual maximum gap at the sieving cost already charged.",
+  "fit": [
+   {
+    "d": 8,
+    "n": 1200,
+    "mean_over_law": 1.0292,
+    "chi2": 3.6028,
+    "dof": 10,
+    "chi2_over_dof": 0.3603,
+    "ks": 0.030308,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 16,
+    "n": 1200,
+    "mean_over_law": 0.9645,
+    "chi2": 10.0834,
+    "dof": 10,
+    "chi2_over_dof": 1.0083,
+    "ks": 0.022552,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 64,
+    "n": 1200,
+    "mean_over_law": 0.9846,
+    "chi2": 4.206,
+    "dof": 10,
+    "chi2_over_dof": 0.4206,
+    "ks": 0.020047,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 15,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   }
+  ],
+  "toy_mean_over_predicted": 0.9651
+ },
+ "rate": {
+  "experiment": "partK: independent cross-side pairs, disjoint pools and walk lists, declared even representative",
+  "pairs_measured": 4406549,
+  "records_per_side": 16800,
+  "key_bits": 126,
+  "key_image_log2": 126.0,
+  "zero_events": true,
+  "ucl_method": "3/n is a valid one-sided 95% UCL after zero events because (1-3/n)^n <= exp(-3) < 1/20",
+  "R_num": 3,
+  "R_den": 4406549,
+  "R_log2": -20.4863,
+  "pairs_log2": 83.3007,
+  "mu_log2": 62.8144,
+  "cap_log2": 88,
+  "markov_log2": -25.186,
+  "residual": [
+   {
+    "bits": 8,
+    "observed": 16991,
+    "predicted": 17213.082,
+    "ratio": 0.987098,
+    "z": -1.693
+   },
+   {
+    "bits": 12,
+    "observed": 1089,
+    "predicted": 1075.818,
+    "ratio": 1.012253,
+    "z": 0.402
+   },
+   {
+    "bits": 16,
+    "observed": 63,
+    "predicted": 67.239,
+    "ratio": 0.936962,
+    "z": -0.517
+   },
+   {
+    "bits": 24,
+    "observed": 2,
+    "predicted": 0.263,
+    "ratio": 7.614674,
+    "z": 3.39
+   },
+   {
+    "bits": 32,
+    "observed": 0,
+    "predicted": 0.001,
+    "ratio": 0.0,
+    "z": -0.032
+   },
+   {
+    "bits": 48,
+    "observed": 0,
+    "predicted": 0.0,
+    "ratio": 0.0,
+    "z": -0.0
+   },
+   {
+    "bits": 64,
+    "observed": 0,
+    "predicted": 0.0,
+    "ratio": 0.0,
+    "z": -0.0
+   }
+  ],
+  "sensitivity": [
+   {
+    "rate": "ucl_measured",
+    "rate_log2": -20.486255316305538,
+    "mu_log2": 62.814440748217265,
+    "markov_log2": -25.185559251782735,
+    "closes": true
+   },
+   {
+    "rate": "ten_x",
+    "rate_log2": -23.8081834111929,
+    "mu_log2": 59.492512653329904,
+    "markov_log2": -28.507487346670096,
+    "closes": true
+   },
+   {
+    "rate": "2^-30",
+    "rate_log2": -30.0,
+    "mu_log2": 53.3006960645228,
+    "markov_log2": -34.6993039354772,
+    "closes": true
+   },
+   {
+    "rate": "2^-40",
+    "rate_log2": -40.0,
+    "mu_log2": 43.3006960645228,
+    "markov_log2": -44.6993039354772,
+    "closes": true
+   },
+   {
+    "rate": "2^-50",
+    "rate_log2": -50.0,
+    "mu_log2": 33.3006960645228,
+    "markov_log2": -54.6993039354772,
+    "closes": true
+   },
+   {
+    "rate": "2^-60",
+    "rate_log2": -60.0,
+    "mu_log2": 23.300696064522803,
+    "markov_log2": -64.69930393547719,
+    "closes": true
+   }
+  ],
+  "claim_note": "no uniform-rate claim at 126 or 224 bits; the deviation ratios are the only empirical input to H3dev"
+ },
+ "order_audit": {
+  "p": 10009,
+  "field_order": 10192,
+  "prime_order": 7,
+  "n_divides_NE": true,
+  "nP_is_O": true,
+  "scope": "small j=0 fixture; partG/partK point orders are NOT claimed to equal their scalar moduli"
+ },
+ "order_structure": {
+  "r_minus_1_factor_2": 32,
+  "m_is_composite": true,
+  "v2_m": 12,
+  "six_divides_m": true,
+  "d_times_m_is_r_minus_1": true,
+  "gcd_d_m": 4096,
+  "d_invertible_mod_m": false,
+  "two_sylow": 32,
+  "u_odd": true,
+  "statement": "H = {x : x^m = 1} = the d-th powers is cyclic of COMPOSITE order m; no primality of m and no inverse of d modulo m is used anywhere"
+ },
+ "tail": [
+  {
+   "empirical": 0.40700584,
+   "geometric_model": 0.39142288,
+   "n": 1199,
+   "observed": 488,
+   "threshold": "2^9"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.00055102,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^12"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^15"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^18"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^21"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^24"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^27"
+  }
+ ],
+ "histogram": [
+  {
+   "bucket": "2^1",
+   "count": 2
+  },
+  {
+   "bucket": "2^2",
+   "count": 6
+  },
+  {
+   "bucket": "2^3",
+   "count": 8
+  },
+  {
+   "bucket": "2^4",
+   "count": 36
+  },
+  {
+   "bucket": "2^5",
+   "count": 68
+  },
+  {
+   "bucket": "2^6",
+   "count": 109
+  },
+  {
+   "bucket": "2^7",
+   "count": 207
+  },
+  {
+   "bucket": "2^8",
+   "count": 274
+  },
+  {
+   "bucket": "2^9",
+   "count": 310
+  },
+  {
+   "bucket": "2^10",
+   "count": 151
+  },
+  {
+   "bucket": "2^11",
+   "count": 28
+  }
+ ],
+ "gapFit": [
+  {
+   "chi2": 3.6028,
+   "chi2_over_dof": 0.3603,
+   "d": 8,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.030308,
+   "ks_95_cut": 0.03926,
+   "m_bits": 125,
+   "max_gap": 2324,
+   "max_gap_bits": 12,
+   "mean": 291.075,
+   "mean_law": 282.804,
+   "mean_over_law": 1.0292,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.17416667,
+     "geometric_model": 0.16358201,
+     "n": 1200,
+     "observed": 209,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 5.1e-07,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  },
+  {
+   "chi2": 10.0834,
+   "chi2_over_dof": 1.0083,
+   "d": 16,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.022552,
+   "ks_95_cut": 0.03926,
+   "m_bits": 124,
+   "max_gap": 3950,
+   "max_gap_bits": 12,
+   "mean": 545.5117,
+   "mean_law": 565.6081,
+   "mean_over_law": 0.9645,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.40666667,
+     "geometric_model": 0.40445273,
+     "n": 1200,
+     "observed": 488,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.00071605,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  },
+  {
+   "chi2": 4.206,
+   "chi2_over_dof": 0.4206,
+   "d": 64,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.020047,
+   "ks_95_cut": 0.03926,
+   "m_bits": 122,
+   "max_gap": 21290,
+   "max_gap_bits": 15,
+   "mean": 2227.5967,
+   "mean_law": 2262.4324,
+   "mean_over_law": 0.9846,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.79916667,
+     "geometric_model": 0.79747475,
+     "n": 1200,
+     "observed": 959,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.15583333,
+     "geometric_model": 0.16358201,
+     "n": 1200,
+     "observed": 187,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 5.1e-07,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  }
+ ],
+ "n_gap": 1199,
+ "mean_gap": 545.8616,
+ "max_gap": 3950
+}
