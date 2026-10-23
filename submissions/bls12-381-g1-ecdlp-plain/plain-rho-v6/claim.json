@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of the track target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v2 (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v3 (rejected)",
+    "submissions/bls12-381-g1-ecdlp-plain/automorphism-rho-v4 (rejected: the order-3 automorphism identities generate mixed-index fruitless families whose rates were not bounded)",
+    "submissions/bls12-381-g1-ecdlp-plain/negation-rho-v5 (rejected: the fruitless-cycle census assumed per-symbol even multiplicity, missing the carry families 2^j + 2^j = 2^(j+1); all derived rates were invalid)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "plain-rho-v6",
+  "work_function": "W = 1.0535 * 1.25 * sqrt(r-1) + < 2^22.1 (score = log2(W))",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.825664,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 104.1,
+    "preprocessing_log2": 22.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 (mixing): the constants c_j = jQ + 2^j mod r have pairwise differences spanning 0.9688 of the modulus (verified in Part A), so the scalar difference walk between two walkers wraps mod r and walker states collide at the standard parallel-rho birthday rate t^2/(2(r-1)) (van Oorschot-Wiener); the toy measures 0.867 of the all-pair ideal and 0.99 of the cross-pair ideal. Pure power-of-two constants fail this at production scale (the difference walk does not wrap) and are not used.",
+    "Efficiency floor 0.75: below the toy-measured ratio by 25%, consistent with Teske's r-adding-walk analysis for r = 32; the claimed success is computed at this floor (0.4066249787 >= 0.39) and does not depend on the measurement beyond the floor's support."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold (modeled success 0.4066 at the 0.75 efficiency floor).",
+    "The distinguished-point table is a hard 2^97-slot allocation (2^104 bytes); overflow aborts with probability <= exp(-2^94.4), subtracted.",
+    "Standard cryptanalysis (parallel Pollard rho with distinguished points); the provable cycle-freedom of the mixed-radix constants c_j = jQ + 2^j and the full-coverage ledger are the contribution under this cost model."
+  ],
+  "lane": "exploratory"
+}
