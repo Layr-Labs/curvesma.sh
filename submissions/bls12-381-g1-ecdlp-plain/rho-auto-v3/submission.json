@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: automorphism-aware Pollard rho v3",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 on BLS12-381 G1 with no auxiliary powers, the automorphism-aware Pollard rho v3 in proof.md walks on the six-element orbits of <-1, phi>, charges each step as one batched incomplete affine G1 addition plus 935 scalar AArch64 instructions of canonicalization and finite-batch excess, and runs a ceiling of sqrt(pi*(r-1)/12) steps inflated only by the explicit factors (1+1/R) and (1+1/(2R)) at R=2048. It recovers x with success probability at least 0.39 using at most time_log2 = 127016229/1000000 target-group-operation equivalents at C=2000, including preprocessing, distinguished-point storage, the two collision re-walks, resolve and verification (those side items are inside an additive reserve of 2^100 units). Peak memory is at most 2^94 bytes; preprocessing is at most 2^22 units and is included in total work; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps. Success uses the random-mapping heuristic on canonical r-adding walks stated in proof.md, with the iteration distribution measured at toy scope by experiment.py. This is not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "127016229",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "rho-auto-v3",
+      "source": "experiment.py",
+      "purpose": "Recompute the production step count and assert that 127016229/1000000 is a 1e-6 ceiling of log2(steps*(2000+935)/2000+2^100). Check the profile GLV identities and phi(G)=[lambda]G on a prime-order-4093 subgroup of y^2=x^3+4 over F_12253. Run the canonical orbit walk and the same recovery formula on additive groups of prime order 10009, 100003, 1000003 and 5000011, and recover planted logarithms on that curve. Reports collision-time ratios at that scope; it does not establish the production constant.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "trials",
+          "seed"
+        ],
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 40
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          }
+        }
+      },
+      "initial_inputs": [
+        {
+          "trials": 40,
+          "seed": 12648430
+        }
+      ]
+    }
+  ]
+}

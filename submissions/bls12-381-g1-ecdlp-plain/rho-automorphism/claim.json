@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "unrestricted-production",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-rho-automorphism",
+  "algorithm": "parallel-rho-glv-negation-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 94,
+    "preprocessing_log2": 30,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "r-adding walks on the six-element GLV-negation classes behave as random mappings on N'=(r-1)/6 orbits, so a collision among K class evaluations has probability 1-exp(-K^2/(2N')) (Teske; van Oorschot-Wiener; Bernstein-Lange-Schwabe).",
+    "With R=2048 partitions, look-ahead and periodic 2/4-cycle escape, fruitless-cycle and r-adding overhead is covered by running 1.25 K steps; this 25% allowance is extrapolated from published moderate-scale measurements, not a production-size experiment."
+  ],
+  "limitations": [
+    "Analytic construction with a stated random-walk heuristic; no full-size execution or independent qualification.",
+    "Generic automorphism-class rho, not a number-field-sieve estimate, practical break, or security bound.",
+    "Success probability 0.4 is a supported heuristic lower bound, not a worst-case guarantee."
+  ],
+  "lane": "exploratory"
+}
