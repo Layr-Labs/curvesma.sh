@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 hardened v8: faithful Frobenius-coordinate cycle/DP evidence for stationary square-and-add Floyd rho",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "verify_exact.py",
+        "mechanism_toy.py",
+        "mechanism-output.json",
+        "mechanism-pipeline.json",
+        "analyze_evidence.py",
+        "mechanism-summary.json",
+        "mechanism-evidence.md",
+        "test_mechanism.py",
+        "test_pipeline.py",
+        "toy.py",
+        "alignment-output.json",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "6443",
+        "denominator": "50"
+      },
+      "statement": "For independently uniform nonidentity P in BLS12-381 G1 and uniform z in GT including identity, the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.40 under the quantitative production-transfer heuristic H. H permits a global absolute probability deficit of at most 1/10 in the useful-collision-and-delivery event relative to the stated ideal joint random-map/mark/label model; it is an explicit unproved extrapolation supported, not established, by the captured actual-field experiments. The v7 stationary order-12 Frobenius-class square-and-add map, one public R=1024 table, low-ten-bit minimum-coordinate partition, adjacent-bit distinguished predicate, three-evaluation Floyd detector, aligned recovery, universal fingerprints and hard caps are unchanged. The aggregate tortoise budget is conservatively raised to S=ceil(sqrt(8N/5)); 11/20-1/10-1/32-2^-30 exceeds 2/5. Complete hard-metered work is at most 2^(6443/50) dense-Fp12-operation equivalents at C=20000 summed over all 2^20 workers, including all six dense multiplications per tortoise iteration, external arithmetic, randomness, preprocessing and replication, all restarts, report hashing/storage/routing/sort, false-pair checks, G2 construction and original-P verification. The unchanged row ledger gives log2 W=128.82309631527724 below 128.86; repricing every actual nonmultiplication row at 1.2x remains over 0.10 bits below the claim. Peak bytes below 2^73, hard 2^66 reports with explicit 80-byte records, preprocessing below 2^42 included, advice zero. Captured faithful evidence uses the same Fp12 tower, actual order-12 Frobenius, four-product minimum-coordinate rule, R=1024 and bit-vanishing marks at densities 2^-8,2^-10,2^-12 across five quotient sizes through log2 N=38.552248: 240 independent tables, 488 cycles, eight 32-cycle basin trials, 2395392 pipeline iterations and exact-rational empirical CDF comparisons. Finite toy deviations, bounded-window failures and the transfer to log2 N=251.272127 are disclosed; no production run, unconditional mixing/success theorem, accepted score, novelty or practical break is claimed."
+    }
+  ],
+  "experiments": []
+}
