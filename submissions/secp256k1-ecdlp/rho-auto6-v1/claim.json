@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "standard-pollard-rho-automorphism",
+  "algorithm": "truncated-pollard-rho-auto6-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.868282,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 85.868282,
+    "preprocessing_log2": 22.0,
+    "success_probability": 0.42,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "r-adding walks on the size-(r/6) automorphism-class set collide like independent uniform samples, up to a burn-in absorbed by a 5% budget inflation (Teske; Gallant-Lambert-Vanstone; Bos-Kleinjung-Lenstra).",
+    "After the stated 2-cycle bump and doubling escape, fruitless cycles contribute at most a 2% iteration overhead.",
+    "Distinguished-point sampling at rate 2^{-48} is independent of the class walk and affects only memory and lower-order lookup cost."
+  ],
+  "limitations": [
+    "Analytic construction at production size; no full-size execution.",
+    "Success probability rests on the disclosed Pollard-rho heuristics; toy j=0 experiments support them only at 24-30 bit order.",
+    "Uses the classical secp256k1 order-6 automorphism reduction; not a new cryptanalytic technique.",
+    "Beating the organiser BSGS control with this standard algorithm is expected; the contribution is a cost-model-faithful accounting."
+  ],
+  "lane": "exploratory"
+}
