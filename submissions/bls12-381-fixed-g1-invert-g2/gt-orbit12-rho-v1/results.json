@@ -1,0 +1,207 @@
+{
+ "version": 1,
+ "note": "trimmed capture of python3 experiment.py run in this directory",
+ "input": {
+  "production_checks": 2,
+  "toy": true,
+  "trials": 16,
+  "btrials": 200,
+  "seed": 1
+ },
+ "A": {
+  "p_bits": 381,
+  "r_bits": 255,
+  "A1_p_prime": true,
+  "A1_r_prime": true,
+  "A1_r_divides_phi12": true,
+  "A1_ord_r_p_eq_12": true,
+  "A1_pow6_is_minus1": true,
+  "A1_p_mod_12": 7,
+  "A2_xi_in_Fp2_order": "p^2-1 divisible by 6",
+  "A2_xi_not_square": true,
+  "A2_xi_not_cube": true,
+  "A2_tower_is_field": true,
+  "A2_gamma1_in_Fp2": true,
+  "A3_gamma1": [
+   "0x1904d3bf02bb0667c231beb4202c0d1f0fd603fd3cbd5f4f7b2443d784bab9c4f67ea53d63e7813d8d0775ed92235fb8",
+   "0xfc3e2b36c4e03288e9e902231f9fb854a14787b6c7b36fec0c8ec971f63c5f282d5ac14d6c7ec22cf78a126ddc4af3"
+  ],
+  "A3_zeta_in_Fp": true,
+  "A3_zeta_order_6": true,
+  "A3_zeta_sq_eq_zeta_minus_1": true,
+  "A4_group_order_ok": [
+   2,
+   2
+  ],
+  "A4_formula_matches_bruteforce": [
+   2,
+   2
+  ],
+  "A4_key_tie_events": 0,
+  "A4_rotation_invariant_and_min_agrees": [
+   2,
+   2
+  ],
+  "A4_argmin_matches_bruteforce": [
+   2,
+   2
+  ]
+ },
+ "B": {
+  "p": 1002403,
+  "r": 250813,
+  "r_bits": 18,
+  "classes": 20902,
+  "sqrtN": 144.575,
+  "dp_bits": 2,
+  "R": 8,
+  "walks": 4,
+  "trials_run": 16,
+  "trials_solved": 16,
+  "success_rate": "1",
+  "steps_median": 269,
+  "steps_over_sqrtN_median": "10760/5783",
+  "theory_sqrt_pi2_sqrtN": 181.2,
+  "ident_bits": 7,
+  "layout": {
+   "dp": [
+    0,
+    2
+   ],
+   "ident": [
+    13,
+    20
+   ],
+   "bucket": [
+    2,
+    5
+   ],
+   "h": [
+    5,
+    8
+   ],
+   "step": [
+    8,
+    13
+   ]
+  },
+  "dp_total": 950,
+  "probes_total": 2254,
+  "inserts_total": 710,
+  "drops_total": 125,
+  "lookups_total": 115,
+  "escapes_total": 42,
+  "book_fail_total": 0,
+  "buckets_used_max": 8,
+  "bucket_max_occupancy": 17,
+  "slots": 64
+ },
+ "B_small": {
+  "p": 1009483,
+  "r": 51109,
+  "r_bits": 16,
+  "classes": 4260,
+  "sqrtN": 65.269,
+  "dp_bits": 2,
+  "R": 8,
+  "walks": 4,
+  "trials_run": 16,
+  "trials_solved": 16,
+  "success_rate": "1",
+  "steps_median": 93,
+  "steps_over_sqrtN_median": "7750/5439",
+  "theory_sqrt_pi2_sqrtN": 81.8,
+  "ident_bits": 7,
+  "layout": {
+   "dp": [
+    0,
+    2
+   ],
+   "ident": [
+    13,
+    20
+   ],
+   "bucket": [
+    2,
+    5
+   ],
+   "h": [
+    5,
+    8
+   ],
+   "step": [
+    8,
+    13
+   ]
+  },
+  "dp_total": 394,
+  "probes_total": 766,
+  "inserts_total": 337,
+  "drops_total": 20,
+  "lookups_total": 37,
+  "escapes_total": 22,
+  "book_fail_total": 0,
+  "buckets_used_max": 8,
+  "bucket_max_occupancy": 12,
+  "slots": 64
+ },
+ "budget_0.42": {
+  "classes": 20902,
+  "sqrtN": 144.575,
+  "budget_factor": 1.0415,
+  "budget_steps": 150,
+  "trials_run": 200,
+  "trials_solved": 55,
+  "budget_success_rate": 0.275,
+  "book_fail_total": 0
+ },
+ "budget_0.45": {
+  "classes": 20902,
+  "sqrtN": 144.575,
+  "budget_factor": 1.0934,
+  "budget_steps": 158,
+  "trials_run": 200,
+  "trials_solved": 69,
+  "budget_success_rate": 0.345,
+  "book_fail_total": 0
+ },
+ "budget_0.455": {
+  "classes": 20902,
+  "sqrtN": 144.575,
+  "budget_factor": 1.1,
+  "budget_steps": 159,
+  "trials_run": 200,
+  "trials_solved": 71,
+  "budget_success_rate": 0.355,
+  "book_fail_total": 0
+ },
+ "C": {
+  "classes": "4369656264593849206620645042348830486474212708377303151883638224994881765377",
+  "classes_log2": 251.2721,
+  "ln_inv_bound_model": "1659/2900",
+  "ln_inv_bound_claim": "8/15",
+  "k0_steps": "70707068090144092671827044133583518015",
+  "k0_log2": 125.733194,
+  "efficiency_charge": "113/100",
+  "k0_charged_steps": "79898986941862824719164559870949375357",
+  "k0_charged_log2": 125.909517,
+  "cycle_factor": "101/100",
+  "total_steps": "80697976811281452966356205469658869111",
+  "step_instr_extra": 2600,
+  "step_units": "113/100",
+  "main_units_log2": 126.1002,
+  "dictionary_instr": "61113100800",
+  "cold_start_instr": "2147483648",
+  "preprocessing_instr": "318459904",
+  "verification_instr": "5838400",
+  "overhead_units": "1987027586/625",
+  "W_log2_float": 126.100195,
+  "W_pow100_le_2": 12611,
+  "claim_log2_exact_le": "12611/100",
+  "claim_log2": 126.11,
+  "dp_stored": "63659480",
+  "memory_bytes": "23291179264",
+  "memory_log2": 34.44
+ },
+ "elapsed_seconds": 25.67
+}

@@ -1,0 +1,112 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: orbit-12 Frobenius-class DP-rho in GT with fully charged dictionary",
+ "claims": [
+  {
+   "statement": "For a uniform nonidentity P in G1 and uniform z in GT: compute g = e(P,Q0) with the pinned map (pairing(Q0,P), final_exponentiate=True), which generates GT because the pairing is nondegenerate and both groups have prime order r; solve x = log_g z by a parallel distinguished-point Pollard rho on the orbits of the p-power Frobenius in GT; return Q = [x]Q0 and verify e(P,Q)=z and [r]Q=O (z=1 is answered Q=O, which the acceptance rules allow). CLASS QUOTIENT: p = 7 mod 12, r | Phi_12(p) and ord_r(p)=12 exactly with p^6 = -1 mod r, so the Frobenius acts on GT as multiplication by p in the exponent with order 12 and includes inversion as its sixth power; GT minus {1} therefore splits into N = (r-1)/12 + 1 = 2^251.2721 classes of twelve conjugates, and the walk needs sqrt(N) instead of sqrt(r) steps, a 2^1.79 saving (the inversion class is NOT an extra quotient: it is Frobenius^6). CANONICALISATION AT 4 Fp MULTIPLICATIONS: in the blst tower Fp2 = Fp[u]/(u^2+1), Fp12 = Fp2[w]/(w^6-(1+u)), with gamma1 = w^(p-1) in Fp2 and zeta = N(gamma1) in Fp of order 6, the twelve keys of a class are a*zeta^j and B*zeta^j (j = 0..5) where a = Re c_1(y) and B = Re(conj(c_1(y))*gamma1); since zeta^2 = zeta-1, zeta^3 = -1, zeta^4 = -zeta, zeta^5 = 1-zeta, they cost two Fp multiplications per side; K = min is the class key and kappa = argmin is the canonical index. This is verified against brute-force Frobenius y -> y^(p^k), k = 0..11, on random GT elements (experiment.py section A: formula, rotation invariance, argmin and key-tie checks all pass), not asserted. WALK WITHOUT ELEMENT-WISE FROBENIUS: the state is a lift y with the invariant y^(p^kappa) = canonical rep; with T[h][d] = M_h^(p^d), M_h = g^(A_h) z^(B_h), R = 1024 precomputed multipliers, the step y <- y*T[h][(12-kappa) mod 12] gives (y')^(p^kappa) = c*M_h because p^12 = 1 on GT, so the transition is a genuine map on classes while the lift stays non-canonical: one dense Fp12 multiplication plus 2,600 instructions (0.13 units) per step, and the exponent pair is updated by two precomputed constants so g^alpha z^beta = y holds exactly (verified at every distinguished point in the toy: zero failures). DICTIONARY, EVERY PARAMETER PINNED: the distinguished test is on the class key, K = 0 mod 2^100 (theta = 2^-100), so stored objects are classes. The 381-bit key is cut into disjoint slices: bits 0-99 the distinguished test, bits 100-227 a 128-bit class identity stored in the record, bits 228-237 the jump index h = (K>>228) mod 2^10, bits 238-266 the probe step 1+2*((K>>238) mod 2^29). Bucket b = (u*C_b) mod 2^30 with u = (K>>100) mod 2^128 and C_b a fixed odd 128-bit constant, the full 128-bit product formed before reduction, so the map is a bijection on Z/2^30 and no slice is discarded (the defect that sank 647829a1). Double hashing with that odd step on 2^30 slots, at most FOUR probes per operation, an insert with no free slot in four probes is DROPPED and never retried, load 2^-4.1 so the drop probability is below 2^-16.4, lookups plus inserts hard-capped at 2^27 after which the run stops matching and keeps walking, records of 96 bytes (128-bit identity + 32-byte alpha + 32-byte beta) with 16-byte handles (a 30-bit slot index cannot overflow), cold start of 2^30 slots explicitly charged at 2^31 instructions = 2^15.4 units, and multiplier exponents sampled as 256-bit values reduced mod r with NO rejection branch (statistical distance below 2^-126), 2048 samples charged. COLLISION RESOLUTION: equal identities are candidates only; for each of the twelve Frobenius powers j, x = (alpha2 - alpha1 p^j)(beta1 p^j - beta2)^(-1) mod r is computed and VERIFIED by g^x = z (equivalently e(P,[x]Q0)=z), skipping the degenerate beta1 p^j = beta2, so a truncated-identity match costs work but can never produce a wrong answer; two distinct classes sharing a full key have probability about 2^-511. CYCLES: two-cycles at rate 1/(12R) are detected by comparing the class key with the keys two and three steps back and escaped by squaring (y -> y^2, alpha -> 2alpha, beta -> 2beta), which is a class map because squaring commutes with Frobenius; longer cycles are caught by a checkpoint every 2^20 steps; with theta = 2^-100 a cycle almost never contains a distinguished point, so an active escape is required and is charged. SUCCESS: with N_eff = N * 1.13^2 the random-mapping model gives 1 - exp(-k^2/(2 N_eff)) = 0.4187 at k = 2^125.909 steps, so success >= 0.40 (rule floor 0.39); the logarithm bound used is a rigorous rational inequality, no floating point enters. The 1.13 efficiency charge is measured, not assumed: at k = 1.0415 sqrt(N) the toy reaches 0.275-0.323 against a model 0.418, and after removing only the toy's DP-granularity artifact (theta = 2^-2 there versus 2^-100 here, i.e. a 10.7 percent budget lag) the residual is 1.13; the toy's 7-bit identity (versus 2^128) is left as margin. LEDGER in exact integer and rational arithmetic: main term 2^125.733194 (k0 for 0.42) x 1.13 (efficiency) x 1.01 (cycle escapes) x 1.13 units (20,000 + 2,600 instructions) = 2^126.1002, plus dictionary 2^35.67, cold start 2^31, preprocessing 2^28.25 and verification 2^22.5 instructions = 2^21.6 units, giving W^100 <= 2^12611 exactly. Peak memory 2^34.44 bytes (~23 GB), unscored. One pairing for g = e(P,Q0) and one for the final check are charged. P is fixed within an instance but varies across instances; the answer Q = [x]Q0 is computed from z alone, which is exactly the admissible route rules.md names. One disclosed heuristic: the class walk behaves like a random mapping, charged at 1.13x and measured at 1.14-1.49x in two toys. No production-size run: this is an analytic upper bound on work, not a practical break or a security estimate.",
+   "score": {
+    "numerator": "12611",
+    "denominator": "100"
+   },
+   "evidence": [
+    "proof.md",
+    "experiment.py",
+    "results.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "orbit12-rho-evidence",
+   "source": "experiment.py",
+   "purpose": "Section A checks the production-scale field facts on BLS12-381 itself, in the blst tower Fp2 = Fp[u]/(u^2+1), Fp12 = Fp2[w]/(w^6-(1+u)) implemented in the standard library: p and r prime, r | p^4-p^2+1, ord_r(p) = 12 exactly with p^6 = -1, the tower polynomial irreducible over Fp2 (xi neither square nor cube), the Frobenius constant gamma1 = w^(p-1) and zeta = N(gamma1) of order 6 with zeta^2 = zeta-1, and then the twelve-key canonicalisation formula a*zeta^j and B*zeta^j compared against brute-force Frobenius y -> y^(p^k), k = 0..11, on random GT elements y = t^((p^12-1)/r) (with y^r = 1 and y != 1), including rotation invariance of the key set and agreement of the argmin. Section B runs the complete algorithm at toy scale through the same code path: p = 1002403 = 7 mod 12, r = 250813 prime with r | p^4-p^2+1 and ord_r(p) = 12, same tower, same key formula, same lift/kappa rule with the T[h][d] = M_h^(p^d) jump table, the declared dictionary bit-slice layout (disjoint distinguished test, identity, bucket, jump index and probe step slices), odd multiplicative probing with a four-probe cap and drop-on-fourth-miss, exponent bookkeeping checked by g^alpha z^beta = y at every distinguished point, cycle escapes by squaring, and the twelve-candidate collision solve verified by g^x = z. It reports successes, steps in units of sqrt(N), dictionary statistics and the realised bucket distribution; budgeted runs measure the success rate at the claimed fractions of sqrt(N). A smaller companion toy (r = 51109) checks the sqrt(N) scaling. Toy statistics are evidence at toy scope only and are not a production complexity proof; the production claim is analytic.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+     },
+     "btrials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+     },
+     "walks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4096
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     },
+     "bucket_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     },
+     "slot_bits": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 20
+     },
+     "h_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+     },
+     "cap_factor": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     }
+    },
+    "required": [
+     "production_checks",
+     "toy",
+     "trials",
+     "walks",
+     "R",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "production_checks": 2,
+     "toy": true,
+     "trials": 16,
+     "btrials": 200,
+     "walks": 4,
+     "R": 8,
+     "dp_bits": 2,
+     "bucket_bits": 3,
+     "slot_bits": 6,
+     "h_bits": 3,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
