@@ -1,0 +1,41 @@
+{
+  "components_log2_units": {
+    "walk_steps": 126.568973,
+    "adder_table": 31.619648,
+    "initial_walk_starts": 47.619648,
+    "trail_restarts": 83.369607,
+    "distinguished_points": 77.784175,
+    "collision_replay": 84.07861,
+    "solve_verify_output": 16.034216,
+    "input_validation": 14.034216
+  },
+  "time_log2": "126568973/1000000",
+  "time_log2_decimal": 126.568973,
+  "time_log2_float": 126.56897263811287,
+  "score_rational": {
+    "numerator": "126568973",
+    "denominator": "1000000"
+  },
+  "preprocessing_log2": "4761967/100000",
+  "L": "33310394024866356565296666183",
+  "log2_L": 94.74995907643508,
+  "log2_T": 126.74995907643508,
+  "log2_S_max": 126.74995907963083,
+  "step_units": "96987882769613/109951162777600",
+  "success": {
+    "tau": 0.5303,
+    "eps": 0.00015285611152648926,
+    "delta": 9.5367431640625e-07,
+    "model": 0.4115238856252056,
+    "lower_bound": 0.3958979319508892
+  },
+  "memory_bytes_log2": "1893749/25000",
+  "dp_max_log2": 67.74995907968076,
+  "meter": {
+    "c_common": 817,
+    "reserve_per_walk_step": 65.099655151369,
+    "charge_per_walk_step": 882.099655151369,
+    "abort_probability_bound": "1/64",
+    "walk_steps_total": "143067053270587462275681420442867859456"
+  }
+}
