@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "title": "Consistency-audited metered squaring rho in GT: one full-charge meter with exact integer equality, a charged replay row inside the cap, a maximum-record store cap with a Chernoff debit, birthday-tail success floor at S. W=2^125.726..125.727, cap floor(2^125.728), claim 125.73",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/ledger16.json",
+    "evidence/numbers16.json",
+    "evidence/predicate_match.json",
+    "evidence/prod_run16.json",
+    "evidence/toy_census16.json",
+    "public-note.md",
+    "scripts/gt_prod.py",
+    "scripts/ledger16.py",
+    "scripts/machine_tables.py",
+    "scripts/predicate_check.py",
+    "scripts/toy.py",
+    "scripts/toy16.py"
+   ],
+   "score": {
+    "numerator": "12573",
+    "denominator": "100"
+   },
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z. Steps are one dense Fp12 multiplication plus counted overhead (a multiply step charges 22493 instructions) or a cyclotomic squaring taken with probability 3/8 (charge 15383); branch, multiplier index and 100-bit distinguished-point bits are read as disjoint ranges of the class invariant T=Re(c0), and the twelve keys are computed as six +-pairs for four Fp multiplications. The algorithm METERS its charged work: the charge of the next step is computed from the current state and tested against the cap BEFORE the step runs, so no step is ever executed uncharged and total work is at most the exact integer cap floor(2^125.728)=70452968213349532528151468128892157118 work units = 1409059364266990650563029362577843142360000 instructions on EVERY run, with the nominal 703885738001700411294591312999765878919677/10000 = 2^125.726..125.727 strictly inside it. The success floor is NOT asserted: it is computed from the birthday no-collision upper tail P(no collision by S) <= exp(-S(S-1)/(2N')) at the submitted S = 70925065820265078464927600992738729880 steps, with N'=N/rho, rho=112585/131072 (the conservative side of the reviewer's expression), giving 1-exp(-S(S-1)/(2N')) >= 0.39007321 = 0.39 + 0.00007321; the three debits are an abort bound of 2^-400 by Hoeffding on the branch bits, a DP-window detection loss of 0.000073 bounded by 2^-13.74, and a storage-overflow debit of 2^-9450 by Chernoff on Binomial(S,2^-100). Subtracting them leaves exactly 0.39. The store is bounded by a MAXIMUM M = ceil(S/2^100) + 1048576 = 56998588 records of 52 bytes (2963926576 bytes), with an explicit refuse-and-debit overflow policy, and peak memory 3030511152 bytes is below 2^32. Trail replays are charged, not omitted: a match needs two replays of at most 34631379795051307844202930172235708 steps each (69262759590102615688405860344471416 steps, 1557927251460178134679313016728195560088 instructions at the multiply price, false-match replays a zero row), and the replay reserve is carved out of the cap so the every-run bound includes it. The production test reconstructs state ONLY from 52-byte slots by re-executing the trail from its recorded id, verifies 3/3 forced replays, one end-to-end recovery whose log satisfies g^x=z, and a cap-boundary run that stops at exactly 7 admitted steps. ONE meter convention is used everywhere: the executed run's per-event charge log sums to 20989376906 instructions, equal as exact integers to the reported meter 20989376906 and to the row formula 20989376906. The toy census is re-tabulated: 1370 matches = 1228 same-index + 134 shifted-image + 8 unclassified, with 1217 same-index failures and 1225 total degeneracies, so the earlier 1225-as-same-index reading is corrected. H1'' (pair-collision rate at least rho/N), H2 (trace-bit pseudorandomness) and the random-mapping idealisation remain disclosed heuristics. C=20000 instructions per dense Fp12 multiplication. The gate seen at submission time is 125.74 (747ad6c9), so this claim is 0.01 below it."
+  }
+ ],
+ "experiments": []
+}

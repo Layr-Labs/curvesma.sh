@@ -1,0 +1,18 @@
+{
+ "package": "gt-metered-squaring-40pct-v15",
+ "prod_checked": 100,
+ "prod_agree": 100,
+ "prod_branch_true_on_sample": 40,
+ "prod_shared_module": "gt_prod.prod_bits",
+ "prod_spec_copy": "spec_prod_bits",
+ "prod_dp_bits": 100,
+ "prod_R": 1024,
+ "toy_checked": 100,
+ "toy_agree": 100,
+ "toy_branch_true_on_sample": 33,
+ "toy_branch_rule": "(t & 7) < 3",
+ "toy_label_rule": "L(t)=((t*0x9E3779B1)^(t>>13))&0xFFFFFFFF",
+ "toy_dp_bits": 4,
+ "toy_R": 128,
+ "verdict": "PASS"
+}

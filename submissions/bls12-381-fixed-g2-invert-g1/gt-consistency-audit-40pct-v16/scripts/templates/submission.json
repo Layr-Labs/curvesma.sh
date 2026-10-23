@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "title": "Consistency-audited metered squaring rho in GT: one full-charge meter with exact integer equality, a charged replay row inside the cap, a maximum-record store cap with a Chernoff debit, birthday-tail success floor at S. W=2^{w_lo}..{w_hi}, cap floor(2^{cap_log2}), claim {claim}",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/ledger16.json",
+    "evidence/numbers16.json",
+    "evidence/predicate_match.json",
+    "evidence/prod_run16.json",
+    "evidence/toy_census16.json",
+    "public-note.md",
+    "scripts/gt_prod.py",
+    "scripts/ledger16.py",
+    "scripts/machine_tables.py",
+    "scripts/predicate_check.py",
+    "scripts/toy.py",
+    "scripts/toy16.py"
+   ],
+   "score": {
+    "numerator": "{claim_num}",
+    "denominator": "{claim_den}"
+   },
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z. Steps are one dense Fp12 multiplication plus counted overhead (a multiply step charges {mul_charge} instructions) or a cyclotomic squaring taken with probability 3/8 (charge {sqr_charge}); branch, multiplier index and 100-bit distinguished-point bits are read as disjoint ranges of the class invariant T=Re(c0), and the twelve keys are computed as six +-pairs for four Fp multiplications. The algorithm METERS its charged work: the charge of the next step is computed from the current state and tested against the cap BEFORE the step runs, so no step is ever executed uncharged and total work is at most the exact integer cap floor(2^{cap_log2})={cap_units} work units = {cap_instr} instructions on EVERY run, with the nominal {w_units_num}/{w_units_den} = 2^{w_lo}..{w_hi} strictly inside it. The success floor is NOT asserted: it is computed from the birthday no-collision upper tail P(no collision by S) <= exp(-S(S-1)/(2N')) at the submitted S = {s_steps} steps, with N'=N/rho, rho={rho} (the conservative side of the reviewer's expression), giving 1-exp(-S(S-1)/(2N')) >= {target} = 0.39 + {debits}; the three debits are an abort bound of {abort_bound} by Hoeffding on the branch bits, a DP-window detection loss of {dp_loss} bounded by {dp_loss_log2}, and a storage-overflow debit of {store_debit} by Chernoff on Binomial(S,2^-100). Subtracting them leaves exactly 0.39. The store is bounded by a MAXIMUM M = ceil(S/2^100) + {store_slack} = {rec_cap} records of 52 bytes ({store_bytes} bytes), with an explicit refuse-and-debit overflow policy, and peak memory {peak_bytes} bytes is below 2^32. Trail replays are charged, not omitted: a match needs two replays of at most {trail_len} steps each ({replay_steps} steps, {replay_instr} instructions at the multiply price, false-match replays a zero row), and the replay reserve is carved out of the cap so the every-run bound includes it. The production test reconstructs state ONLY from 52-byte slots by re-executing the trail from its recorded id, verifies {replay_forced}/{replay_forced} forced replays, one end-to-end recovery whose log satisfies g^x=z, and a cap-boundary run that stops at exactly {cap_bound_steps} admitted steps. ONE meter convention is used everywhere: the executed run's per-event charge log sums to {prod_log_sum} instructions, equal as exact integers to the reported meter {prod_meter} and to the row formula {prod_formula}. The toy census is re-tabulated: {toy_matches} matches = {toy_ch_same} same-index + {toy_ch_shift} shifted-image + {toy_other_failed} unclassified, with {toy_same_failed} same-index failures and {toy_deg} total degeneracies, so the earlier 1225-as-same-index reading is corrected. H1'' (pair-collision rate at least rho/N), H2 (trace-bit pseudorandomness) and the random-mapping idealisation remain disclosed heuristics. C=20000 instructions per dense Fp12 multiplication. The gate seen at submission time is {gate} ({gate_sub}), so this claim is {claim_gap} below it."
+  }
+ ],
+ "experiments": []
+}
