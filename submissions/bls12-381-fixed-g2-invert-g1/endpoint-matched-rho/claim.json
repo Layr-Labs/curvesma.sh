@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "birthday-search-generic",
+  "algorithm": "endpoint-matched-multiwalk-rho-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.602539,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 31,
+    "preprocessing_log2": 29.581231,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Random-mapping model for the r-adding walk on GT (standard Pollard-rho analysis; van Oorschot-Wiener 1999, Teske's r-adding walk analyses).",
+    "Poisson approximation for the number of merging walk pairs; it affects the constant in the success expression, not the exponent.",
+    "Uniform independent starts g^{u_i} z^{v_i} with u_i, v_i uniform in [0,r)."
+  ],
+  "limitations": [
+    "Analytic bound; no full-size execution, no production-size experiment and no independent qualification.",
+    "Generic birthday bound for GT; it makes no claim about index-calculus methods over Fp12 and is not a BLS12-381 security estimate.",
+    "The bound is deliberately conservative: success is modelled at 0.45393 while only 0.39 is declared, and the submitted log2 is rounded upward.",
+    "The 2^31-byte endpoint table and 2^20 walks are required by this decomposition; memory is supplementary and carries no score weight."
+  ],
+  "lane": "exploratory"
+}

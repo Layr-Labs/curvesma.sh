@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: endpoint-matched multi-walk rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniformly sampled nonidentity Q in G2 and independently uniform z in GT, let g=e(P0,Q) in GT, which generates GT because the pairing is non-degenerate and both P0 and Q are nonidentity, so z=g^a for the unique a in [0,r). The attack runs k=2^20 fixed-length walks of L=240218821685709510680521902710375 steps on GT, walk i started at g^{u_i}z^{v_i} for uniform u_i,v_i in [0,r), with the iteration x->x*g^{e(x)} and e(x)=1+(c11 mod 32) read from the canonical Fp12 encoding. Endpoints are sorted; two equal endpoints mean the two walks merged, and the merge yields a=(u_i+c_i-u_j-c_j)*(v_j-v_i)^{-1} mod r, after which P=[a]P0 is returned and checked by e(P,Q)=z. The total number of GT multiplications is exactly k*L = 2^127.566048, independent of the coins, so the work bound is deterministic and not an expectation. Under the standard random-mapping model for r-adding walks the probability that at least one of the C(k,2) walk pairs merges is 1-exp(-(kL)^2/(2r))=0.4539, which supports a lower bound of at least 0.39 over uniform challenges and fresh coins. Total work is at most 2^127.602539 target-group-operation equivalents, including the pairing for g, the 2^20 random starts, all k*L walk steps, endpoint storage and sorting, collision resolution, randomness, modular inversion, output and attack-side verification. Peak memory is at most 2^31 bytes; preprocessing is at most 2^29.581231 target-group-operation equivalents and is included in the total; nonuniform advice is 0 bytes. No quantum steps, no auxiliary powers, no amortisation over other targets and no uncharged advice are used.",
+      "score": {
+        "numerator": "127602539",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
