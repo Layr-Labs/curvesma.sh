@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/bls12-381-g1-ecdlp/partial-cheon (rejected)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v2 through v12 (rejected; v7/v8 failed server-side during a platform incident before review)",
+    "submissions/bls12-381-g1-ecdlp/partial-cheon-v12 (rejected: the declaration still carried a stale 2^32-byte scratch bound in several files while the README itemized 304 B/record; the gcd instruction price lacked an executed implementation)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "partial-coverage-cheon-v13",
+  "work_function": "W(n) for n >= 2^20 equals W(2^20) = m*(64+0.256+3.8355) + m*(64+0.256+1.872) + <= 2^21.9 with m = isqrt(floor(2N/5)) + 1, N = (r-1)/2^20; the attack reads only A_1 and A_d. Score = log2(W(2^20)) = 123.836032 = 1934938/15625.",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 123.836032,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 124.8,
+    "preprocessing_log2": 21.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "None for the success probability: k1 is uniform over [0,N) (the d-th power map is exactly d-to-1 onto the order-N subgroup); block j covers exactly the m values {(m1*j + i) mod N : i < m} with consecutive arcs disjoint (start spacing m1 > m, no start collisions for window spans), so every offset covers at least (m-1)m/N >= 0.4 - 2^-118 >= 0.39 k1 values including all wrap-around hits - an exact per-offset bound; the closed form is crosschecked against an exhaustive every-offset brute force on five smaller parameter sets; the factorization is deterministic on the fixed public input and no probabilistic quantity appears anywhere in the claim.",
+    "All table machinery is deterministic with worst-case upper bounds enforced by assertion in the experiment, and every instruction allowance is either an executed construction or carries full limb-level line items: merge sort over an auxiliary buffer (<= m*117 key compares at 15 instructions; <= m*118 record moves at 50 instructions including the copy-back; <= 16 instructions key preparation per record: <= 7671 instructions per baby); binary search (exactly floor(log2 m)+1 = 117 probes worst case, each <= 32 instructions: 2-word midpoint 6, loads 4, six-limb key load/compare 12, parity bit 2, interval update/termination/branches 8); the STREAMING fixed-base comb (giant scalars generated and consumed in blocks of 2^24, never materialized as an m-sized list; each block's accumulator array allocated for exactly the block size; each block's points searched immediately and discarded; 32 window additions per 255-bit scalar, each exactly one reference batched-incomplete-affine operation by the cost model's definition, one Montgomery batched inversion per window layer per block; live working storage itemized at 304 B/record - scalars 32, accumulators 96, prefix products 48, inverse-output 48, pending entries 72, indices 8 - charged at <= 512 B/record x 2^24 = <= 2^33 bytes, stated consistently in every file; the toy executes the construction with live_accs = live_scalars = 64 asserted and equality to plain double-and-add asserted for every point); the 512-instruction mod-r multiplication (explicit 5x52 schoolbook + Montgomery construction); and the deterministic hard-capped counted Brent-Pollard rho factorization of the fixed public r-1 (pre-batch-enforced 2^17-iteration cap, hard 12-cycle guard, measured 111,717 modular multiplications / 310 gcds / 9 cycles) whose every gcd is an EXECUTED round-counted binary gcd (Stein's algorithm, in place of math.gcd, verified against it on 201 sampled pairs including (r-1, 254760293^2); each round: 4-limb compare <= 10, conditional subtract <= 10, multiword trailing-zero elimination <= 12, multiword shift <= 10, control <= 6 = <= 48 instructions; <= 512 rounds per call since each round strips >= 1 bit of a < 2^256 total, asserted per call, measured maximum 153), with the joint worst case three bounded terms: main loop 12 x 2^17 x 1056 = 2^30.629357 instructions, batched gcds 12 x 2^10 x 24,576 = 2^28.169925, backtrack <= 128 steps/cycle x 25,088 = 2^25.199672, total 2,001,469,440 = 2^30.898412 instructions = 2^19.932628 units, plus certification 2^10.60 and comb tables 2^15.579: preprocessing total <= 2^20.01 units inside the 2^21 budget (every figure computed programmatically)."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold; deterministic full coverage costs about +0.86 log2.",
+    "The bound applies only for n >= 2^20; smaller n would force a smaller divisor of r-1.",
+    "Peak memory by phase: the global peak is the sort phase (main sorted array plus merge buffer = 256*m = 2^124.767581 bytes); during streaming giant generation only the sorted baby table (128m) plus <= 2^33 bytes of itemized block scratch (304 B/record, charged at <= 512 B/record) is live. Strictly above 2^124.7675 bytes, reported rounded up as 124.8.",
+    "Cheon's auxiliary-input attack is standard cryptanalysis, not a novel algorithm; first qualified bound for this track under the protected cost model."
+  ],
+  "lane": "exploratory"
+}
