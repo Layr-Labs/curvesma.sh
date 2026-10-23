@@ -1,0 +1,41 @@
+{
+ "kind": "phase",
+ "window": 67,
+ "cycle_cap": 66,
+ "phases": 67,
+ "lengths": [
+  2,
+  66
+ ],
+ "enumerations": 148070,
+ "escapes": 148070,
+ "failures": 0,
+ "max_escape_steps": 4422,
+ "bound": 4422,
+ "divisor_lengths": [
+  2,
+  4,
+  8,
+  16,
+  32,
+  64
+ ],
+ "fixed64_failures": {
+  "2": 0,
+  "4": 3,
+  "8": 7,
+  "16": 15,
+  "32": 31,
+  "64": 63
+ },
+ "fixed64_escapes": {
+  "2": 2,
+  "4": 1,
+  "8": 1,
+  "16": 1,
+  "32": 1,
+  "64": 1
+ },
+ "fixed64_note": "fixed window 64: boundary advances 0 mod L for L|64, so a boundary that starts off the minimum never reaches it",
+ "prime_note": "prime window 67: 67 mod L is a unit for every L<=66, boundary offsets visit every residue"
+}

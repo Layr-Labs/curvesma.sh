@@ -1,0 +1,1 @@
+{"kind": "merge", "curve": "q25", "R": 8, "trials": 80, "steps_per_trail": 200, "class_sequence_checks": 80000, "merge_failures": 0, "escapes": 1728}
