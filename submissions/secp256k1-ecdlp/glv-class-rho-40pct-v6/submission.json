@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "secp256k1: parallel Pollard rho on GLV order-6 classes {+-1,+-lambda,+-lambda^2}, backport re-verification of historical branch 376ab2a5 (claimed 127.47)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and Q=[x]P on secp256k1 (group order r about 2^256, cofactor 1), the randomized parallel Pollard rho algorithm with distinguished points on the 6-element classes of the symmetry group H={+-1,+-lambda,+-lambda^2}, where lambda(x,y)=(beta*x,y) is the GLV endomorphism (verified: lambda^3=1 mod r, beta^3=1 mod p, beta nontrivial, and [lambda]G=(beta*Gx,Gy) and [lambda](2G)=(beta*2Gx,2Gy) at production constants), recovers x with probability at least 0.39 using at most 2^127.47 target-group-operation equivalents at C=1000 instructions per equivalent. The independent python3 integer re-derivation in certificate.json confirms every constant of the historical ledger: N'=(r-1)/6 classes with log2 N'=253.41504; k0=sqrt(0.98859*N') at log2 126.69924; budget nu=1.03; per-step charge 1 reference operation plus E=650 instructions (row sum 641 plus slack) for canonicalisation (2 Fp muls at 179, normalisation, argmin, parity), cycle test, DP test and bookkeeping; cycle event rates S_L matching exactly (S_2=2^-20 charged, S_3=2^-40, S_4=2^-38.42, S_5=2^-56.68, S_6=2^-56.09, S_7=S_8=2^-73.29, sum L>=9 = 2^-88.89) with detected-cycle waste w_c=5.7221e-6; fixed-rule doubling escape canon([2]m) whose self-re-entry probability is at most 2^-189.09 per escape in the random-mapping model, expected trapped waste below 2^-147 of the total; walk term nu*k0*(1+m*40/(theta*nu*k0))*(1.650) at log2 127.46435 with theta=2^-56 and batch m=2^10; DP store 2^77.78, walk starts 2^82.74, re-run 2^65.32, table 2^32, misc 2^14, all rows other than walk steps adding below 1e-13 to log2 W. Total W satisfies the exact integer assertion W^100 < 2^12747, i.e. W < 2^127.47. Success at rho=0.943 walk quality is 0.3901 >= 0.39 with epsilon=2^-20 loss budget. Peak memory 2^76.549 bytes <= 2^76.6 (exact integer check mem^10 < 2^766); preprocessing 2^32+2^14+2^12 < 2^32.01 reference operations, included in the total; nonuniform advice 2^0 bytes. Classical. Heuristics disclosed: random-walk behaviour of the 2^20-entry adding-table walk on classes collides at least 94.3 percent as fast as ideal random draws (Teske 2001, van Oorschot-Wiener 1999); cycle rates from index-coincidence counting; per-step instruction counts are stated bounds, not measurements. Analytic accounting claim, not a practical attack.",
+      "score": {
+        "numerator": "12747",
+        "denominator": "100"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
