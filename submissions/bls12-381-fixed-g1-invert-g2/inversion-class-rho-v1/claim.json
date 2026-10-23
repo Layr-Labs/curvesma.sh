@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "square-root-collision",
+  "algorithm": "inversion-class-distinguished-point-rho-in-GT",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.527863,
+    "time_unit": "target-group-operation-equivalents",
+    "memory_log2_bytes": 78,
+    "preprocessing_log2": 127.527863,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0,
+    "hard_cap_steps_log2": 127.513507,
+    "per_step_price": 1.01,
+    "classes_log2": 253.857089,
+    "dp_density_log2": -60,
+    "walks_log2": 20
+  },
+  "heuristics": [
+    "The walk on the (r-1)/2 inversion classes of GT is modelled as a random mapping; this is the standard rho heuristic (Brent-Pollard correction for R-adding walks), supported by the toy runs in experiment.py Part B (measured first-collision times 1.20-1.33 sqrt(N) against the model's 1.253) and used only as a heuristic.",
+    "The 1.01 per-step price is an analytic instruction ledger: one dense Fp12 multiplication (the reference operation) plus 200 charged scalar instructions for the class key, the bucket index, two 255-bit modular exponent updates, the distinguished-point test, loop and cache-miss allowances.",
+    "The 2^16 reference-operation overhead (setup pairing, one or two verification pairings, two G2 scalar multiplications, output) is charged explicitly and is 111 bits below the total.",
+    "Yielding to the class quotient can return the negation of the logarithm; both candidates are verified with a pairing, so a wrong answer is never returned as success.",
+    "The success probability claimed is the rule threshold 0.39, below the random-mapping model value 0.675 at the cap; it is not a confidence score."
+  ],
+  "limitations": [
+    "Analytic complexity claim for a 2^127-step computation, not an executed attack; the rules allow an analytic argument.",
+    "Toy-scale experiment supports the mechanism and the collision-time heuristic at toy scope only, never a production complexity proof.",
+    "Only the two-class inversion quotient is claimed; the stronger 12-class Frobenius quotient used by public submissions on the sibling track is not claimed here.",
+    "Peak storage 2^78 bytes (2^67.51 distinguished-point records of 640 bytes plus a 2^29.2-byte multiplier table); memory does not enter this track's score."
+  ]
+}

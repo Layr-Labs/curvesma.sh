@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: parallel distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For each production instance with nonidentity P in G1 and z in GT, compute g=e(P,Q0)=pairing(Q0,P,final_exponentiate=True) once (the pinned pairing is nondegenerate and both points have prime order r, so g generates GT), solve x=log_g z with a parallel distinguished-point Pollard rho in the full group GT, return Q=[x]Q0 and verify e(P,Q)=z and [r]Q=O; z=1 is answered directly with Q=O. The walk is y<-y*M_{h(y)} with h(y)=H(y) mod 2^20 (H = the low 64 bits of the first Fp2 coordinate), M_j=g^{alpha_j} z^{beta_j} for random exponents, 2^20 walks in lockstep from independent random starts g^{alpha} z^{beta}, theta=2^-60 distinguished points (H(y) = 0 mod 2^60), and records that store the EXACT 576-byte Fp12 element plus its two 256-bit exponents: there are no fingerprints, so a stored-key match is a true group-element match and no false-match resolution is required. A collision gives x=(alpha1-alpha2)/(beta2-beta1) mod r, and beta1=beta2 is impossible for distinct records because it forces alpha1=alpha2. No categorical claim is made about cycles: a trajectory entering a cycle with no distinguished point fails at the cap, and with theta=2^-60 and cycle lengths around 2^127 the probability of that is at most exp(-theta*2^127). The search is HARD-CAPPED at W_max = 1.5*sqrt(r) = 2^128.013507 steps at 1.01 target-group-operation equivalents per step (one dense Fp12 multiplication plus 200 charged scalar instructions: hash 4, table index and pointer chase 24, two 255-bit modular additions 40, distinguished test 8, loop and branch allowance 40, streamed table cache-miss allowance 40, amortised record insert 0.001), plus a flat 2^31-unit overhead charged explicitly for the setup pairing (2^15), the 2^20-multiplier table (2^30), the 2^20 walk starts (2^30) and verification (2^17). Hence W = 1.01*2^128.013507 + 2^31 = 2^128.027862 target-group-operation equivalents and the score is log2(W)=128.027863. Success probability is at least 0.39 over uniform nonidentity P, uniform z and fresh coins: the random-mapping model gives 1-exp(-1.5^2/2)=0.675 at this cap (the detection delay M*theta^-1=2^80 is 2^-48 of the cap and is inside it), the claim is only the rule threshold 0.39, and the bounded toy run measures 0.775 at the same relative budget with an uncensored first-collision mean of 1.166 sqrt(r) (model 1.2533). Storage is hard-capped by an enforced capacity of 2^70 records (3.9x the design count 2^68.013507) with a stop-inserting policy, i.e. at most 2^79 bytes; memory is stated as required but does not enter this track's score. Preprocessing (multiplier table and walk starts) is charged in full per instance with no reuse credit and reported as the same bound 128.027863; nonuniform advice is 0; no auxiliary powers are used. No group quotient is used: an earlier two-class inversion-quotient draft was withdrawn after review showed that its transition is not a function on inversion classes, so the sqrt(2) quotient saving is not claimed here. This is an analytic complexity claim for a 2^128-step computation, not a production-size execution.",
+      "score": {
+        "numerator": "128027863",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "plain-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A checks on BLS12-381 itself with an explicitly implemented standard-library Fp2/Fp6/Fp12 tower: r is prime and 255 bits, and random GT elements y = h^((p^12-1)/r) are nonidentity with y^r = 1 (the group-order fact the claim rests on). Part B runs the complete algorithm (plain R-adding walk, theta-distinguished points with exact element keys, exponent recovery and verification, hard step cap) in a toy prime field with a 2^29-element prime-order subgroup and reports the success rate at 1.5 and 2.5 sqrt(r) plus the uncensored first-collision statistic in units of sqrt(r). Toy-scale statistics are evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "q": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 48
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "mults": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 65536
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "first_collision_trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 120
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "production_checks",
+          "q",
+          "trials",
+          "walks",
+          "mults",
+          "dp_bits",
+          "first_collision_trials",
+          "seed",
+          "seconds"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "production_checks": 4,
+          "q": 31,
+          "trials": 40,
+          "walks": 16,
+          "mults": 1024,
+          "dp_bits": 6,
+          "first_collision_trials": 24,
+          "seed": 7,
+          "seconds": 40
+        }
+      ]
+    }
+  ]
+}
