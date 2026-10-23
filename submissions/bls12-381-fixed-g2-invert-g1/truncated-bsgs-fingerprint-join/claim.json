@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "bls12-381-fixed-g2-invert-g1",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "rules_sha256": "f8070250c8846df063984fef6ed8fafaead76a03d17c767d2927926e90a5dcbf",
+  "cost_model_doc_sha256": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "exact-generic-accounting",
+  "algorithm": "truncated-bsgs-fingerprint-join-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.878612,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 137.089509,
+    "preprocessing_log2": 126.878612,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "The 256-bit fingerprint is a randomized linear map over Z/2^64 lanes; its collision bound is proved for every fixed pair of elements from the uniform masks, and collisions are resolved by exact comparison of the full 576-byte elements, so they cannot produce a wrong output.",
+    "The probability that more than 2^40 exact comparisons are needed is at most 2^-38 by Markov and is charged unconditionally; that term is the only subtraction from the exact covered-exponent count m^2/r."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution or independent qualification.",
+    "The declared 2^137-byte storage is mandatory for this construction and is reported as a supplementary bound with no scalar contribution.",
+    "Generic square-root attack with an exact join; it does not exploit pairing structure beyond the admissible fixed-Q reduction and makes no security-level claim."
+  ],
+  "lane": "exploratory"
+}

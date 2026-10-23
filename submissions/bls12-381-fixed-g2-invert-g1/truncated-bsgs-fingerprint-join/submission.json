@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: truncated BSGS with a randomized 256-bit fingerprint join",
+  "claims": [
+    {
+      "statement": "For the pinned BLS12-381 parameters, every nonidentity Q in G2 and every z in GT with z^r=1, the attack computes g=e(P0,Q) with the pinned pairing, writes the target exponent as a=im+j with m=144825239754852386682327417126749682654 (m^2 >= 2r/5, m^2 < r), builds the m baby steps g^j and the m giant steps z*g^(-im), joins the two lists by a randomized 256-bit fingerprint radix sort whose record references, counters and prefix sums are explicit 128-bit two-limb values, confirms every fingerprint match by comparing all 72 words of the two stored GT elements, verifies g^a=z, and returns P=[a]P0. Over the uniform production challenge and fresh algorithm coins it succeeds with probability at least 0.4 - 2^-38, using at most 2^127.878612 total target-group-operation equivalents (dense Fp12 multiplications at the fixed C=20000), peak storage at most 2^137.089509 bytes, preprocessing 2^126.878612 equivalents included in the total, and nonuniform advice 2^0 bytes. No random-mapping heuristic, distinguished points, cycle detection, uncharged advice or quantum step is used; all sorting, lookup, memory transfers and verification are charged.",
+      "score": {
+        "numerator": "127878612",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
