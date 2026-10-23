@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: deterministic truncated BSGS with a hashed baby table",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), given T=[x]P0 in BLS12-381 G1 with no auxiliary powers and no n parameter, the deterministic truncated baby-step/giant-step algorithm fully specified in proof.md returns x with probability at least 0.41 (exactly (m*h+m-1)/r over the uniform challenge, with m=h=0x6e4ed412a3c552fd2d010d8328cef768) using at most 2^127.875678 total BLS12-381 G1 target-group-operation equivalents, including preprocessing, baby-table construction, hashed lookup, verification and output. Peak memory is at most 2^133.152873 bytes; preprocessing is at most 2^126.876464 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, no quantum steps and no heuristic assumptions; the exponential memory is required by the construction. This is an analytic generic accounting claim, not a claim of novelty or of practical execution.",
+      "score": {
+        "numerator": "127875678",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "reference.py"
+      ]
+    }
+  ],
+  "experiments": []
+}
