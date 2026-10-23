@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: parallel Pollard rho in GT on Frobenius classes",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT (identity included), find Q in G2 with e(P,Q)=z. Compute g=e(P,Q0) for the profile's fixed G2 generator (one reduced pairing); g generates GT because P is nonidentity and the pairing is nondegenerate. Solve x=log_g z by parallel Pollard rho with distinguished points (van Oorschot-Wiener) on the 12-element classes {s^(p^i)} of the Frobenius action, canonicalised by the minimum of the 12 values of one Fp coefficient of each conjugate, with an r-adding walk over a 2^16-entry table (Teske; table index and distinguished-point test from disjoint low bit fields of the canonical coordinate, jointly uniform up to statistical distance 2^-175 under the standard coordinate-uniformity heuristic) and a class-defined cycle rule (revisit of a label within 24 steps, escape from the smallest cycle member by squaring it, the analogue of point doubling; Bos et al., Bernstein-Lange-Schwabe); return Q=[x]Q0 and verify. Success probability at least 0.39: k^2/(2 N_eff) with N_eff=(1+1/R)N', N'=(r-1)/12+1, run for K=1.20 sqrt(1+1/R) sqrt(2 ln(1/0.61) N') steps (model success 0.51; holds up to a 1.44 times larger effective space). Total work at most 2^126.48 target-group-operation equivalents (dense Fp12 multiplications at 1, a step charged 1.4, all other work in instructions/20000, a 1.07 reserve), including preprocessing, restarts, cycle waste of every length, distinguished-point handling, recovery and two pairings. Peak memory at most 2^74 bytes (stored distinguished points, theta = 2^-60, plus tables); preprocessing is only per-processor tables (at most 2^45.1, charged and declared at that value, full exponentiations for the random-exponent entries), included in the total; nonuniform advice 2^0 bytes. Classical. Heuristics: random-mapping behavior of the class-level walk with the charged penalty and margin, uniform coordinates, and the counted rates of fruitless cycles.",
+      "score": {
+        "numerator": "12648",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "ledger.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class-rho",
+      "source": "experiment.py",
+      "purpose": "Run the production walk's rules (canonical coordinate as the minimum of 12 values, disjoint low bit fields for the distinguished-point test and the table index, class-defined cycle rule with squaring escape) on a small cyclic group with an order-12 automorphism standing in for the Frobenius map, and report the mean steps to the first collision over the random-draw value with a 95% interval, the success within the production step budget, exponent recovery and the escape controls. This does not establish production behavior or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 90000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 20000
+          }
+        },
+        "required": [
+          "order",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 60000,
+          "trials": 2000
+        }
+      ]
+    }
+  ]
+}

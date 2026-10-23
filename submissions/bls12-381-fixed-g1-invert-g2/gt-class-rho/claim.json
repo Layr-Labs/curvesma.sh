@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g1-invert-g2",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "gt-frobenius-class-parallel-rho-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 126.48,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 74,
+    "preprocessing_log2": 45.1,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: coordinates of a random GT element behave as independent uniform values (low-bit index and distinguished-point fields are then independent, statistical distance 2^-175 over all steps), and the class-level r-adding walk with a 2^16-entry table behaves like a random mapping on the N' Frobenius classes up to the additive-walk penalty sqrt(1+1/R) (van Oorschot-Wiener 1999, Teske 2001, Bernstein-Lange-Schwabe 2011, Bos et al. 2010, Duursma-Gaudry-Morain 1999); an explicit extra margin factor 1.20 on steps is charged, and success 0.39 holds up to a 1.44 times larger effective collision space.",
+    "H2: fruitless cycles of the class map have rate exactly 1/(12R) for length 2 and at most B_L = sum_b C(R,b)(b/R)^L 12^-b for every L >= 3 (a table index in a cycle must occur at least twice); cycles of length <= 24 are detected by a class-defined rule (revisit of a label within 24 steps, escape by squaring the member with the smallest label) and charged (2^-17.263 of the steps); longer cycles are bounded for every length (at most 2^-190.2 per class, waste 2^-61.6 of the steps) and by the closure term (trapped trails 2^-65.4, under one step)."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution.",
+    "Peak memory 2^74 bytes (stored distinguished points, theta = 2^-60, 80-byte records at hash load 1/2, plus 2^20 per-processor tables) is not physically realisable; it is declared, and has no scalar cost.",
+    "Not a practical attack and not a claim of novelty; the per-step overhead is a charged bound (8000 instructions against 4466 itemised), not a measured count, and the 1.20 step margin and 1.07 reserve are explicit and not derived.",
+    "The toy experiment (60013-element group, pseudorandom stand-in for the coordinate) measures the walk's steps-to-collision at 1.04 times the random-draw value (95% interval up to 1.07) and is evidence only at that scope."
+  ],
+  "lane": "exploratory"
+}
