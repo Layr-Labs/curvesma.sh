@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class-folded distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and independent uniform z in GT (identity included), the sequential classical algorithm of proof.md returns Q in G2 with e(P,Q)=z with probability at least 0.39 over (P,z) and the algorithm's coins, using at most 2^125.99 total target-group-operation equivalents (dense Fp12 multiplication = 1, C = 20,000), including every table construction, pairing, start, step, probe, report, store operation, replay, verification and output step. The algorithm sets g = e(P,Q0), solves z = g^a by a distinguished-point rho walk on the 12-element Frobenius classes of GT (x ~ x^p, which acts as x -> x^lambda with lambda = p mod r of order 12) and outputs Q = [a]Q0. The class walk uses a 4-multiplication Frobenius-covariant selector, an R = 2^14 table of twisted multipliers, a 24-class look-back window with deterministic probing, distinguished-point density 2^-80, trail cap 2^87, and exponent recovery by replaying the two colliding trails. Each multiplication slot is charged 1 + 3000/20000 units; the accepted-step budget is S_max = ceil(sqrt(2*mu*N*ln(5/3))) with N = (r-1)/12 classes and mu = 6/5, giving total work at most 2^125.9849 (the claim rounds up to 2^125.99). Preprocessing is at most 2^24.2 units and is included in the total; nonuniform advice is none (0 bytes); peak memory is at most 2^54 bytes (at most 2^47 store records of 96 bytes, an 113 MB twist table and under 2^20 bytes of state), all within one 2^64-byte address space. Success is a heuristic claim and rests on disclosed hypotheses: H1 (random-mapping birthday behaviour of the class walk with walk-quality loss at most mu = 6/5 and negligible coalescence loss), H2 (pseudorandomness of the hash fields h and the distinguished-point predicate derived from the class key, and iid uniform twist offsets for distinct classes), H3 (ideal algorithm coins). Under H1-H3 the main-event probability is at least 2/5 at S_max and all other losses (stated in proof.md section 6) are below 0.001, so the success probability is at least 0.399 > 0.39. This is a classical cold attack with no uncharged advice and no quantum steps; it is an analytic claim, not a production-scale execution.",
+      "score": {
+        "numerator": "12599",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "classfold-rho-checks",
+      "source": "experiment.py",
+      "purpose": "One bounded run of four parts, none of which is a production-scale run. (1) ledger: recompute the exact work ledger of proof.md section 5 (S_max, M_max, additive items, log2 W_max <= claim), the memory ledger and the trap-lemma bound of section 7 (arithmetic on the stated prices only, no instruction counts measured). (2) algebra: on real BLS12-381 GT elements check lambda = p mod r has order 12 with lambda^6 = -1, Frobenius equals x -> x^lambda, the 12 selector candidates equal the true first coordinates of c1(sigma^k(y)), the class key is Frobenius invariant, k* is covariant, and the twisted walk step is class-equivariant. (3) toy: run the complete algorithm (selector, twisted table, look-back window with probing, distinguished points, store, replay with exponent tracking, Frobenius alignment, g^a == z) over a toy tower of the production shape with real Fp12 arithmetic and a 22-23 bit subgroup, checking recovered logarithms and that tracked replays reproduce the untracked paths. (4) sim: exponent-domain emulation of the identical walk with the production table size, measuring the walk-quality constant mu_hat at the first inter-trail class repeat against an ideal value 1 and a plain-birthday control, the escape rate against 1/(12R), and whether meeting trails reach the same distinguished point. Toy sizes only; extrapolation to production is a disclosed heuristic (proof.md sections 6 and 9).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all"
+            ]
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "algebra_elements": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "toy_bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 23
+          },
+          "toy_trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "sim_bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 26
+          },
+          "sim_R": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 16384
+          },
+          "sim_trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "mode",
+          "seed",
+          "algebra_elements",
+          "toy_bits",
+          "toy_trials",
+          "sim_bits",
+          "sim_R",
+          "sim_trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 3,
+          "algebra_elements": 2,
+          "toy_bits": 22,
+          "toy_trials": 8,
+          "sim_bits": 26,
+          "sim_R": 16384,
+          "sim_trials": 100
+        }
+      ]
+    }
+  ]
+}
