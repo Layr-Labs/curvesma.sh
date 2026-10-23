@@ -1,0 +1,4 @@
+sweep-b14-add: {"bits":14,"trials":3000,"seed":101,"s":0.0,"adder_bits":5,"dp_bits":2,"walks":2}
+sweep-b14-mixed: {"bits":14,"trials":3000,"seed":102,"s":0.46,"adder_bits":5,"dp_bits":2,"walks":2}
+sweep-b18-add: {"bits":18,"trials":800,"seed":103,"s":0.0,"adder_bits":5,"dp_bits":2,"walks":2}
+sweep-b18-mixed: {"bits":18,"trials":800,"seed":104,"s":0.46,"adder_bits":5,"dp_bits":2,"walks":2}
