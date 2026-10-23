@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "pollard-rho-dp-negation-map-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.3,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 41.0,
+    "preprocessing_log2": 33.2,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "r-adding walk with r=2^24 behaves as a random mapping on negation classes (Teske 2001)",
+    "cycles of up to 64 classes are detected by a fixed 64-step checkpoint schedule and escaped from the cycle's smallest-u member, so merged walks stay merged; longer cycles have negligible rate (Bos et al. 2010; Bernstein-Lange-Schwabe 2011)",
+    "distinguished-point positions are independent of the table index"
+  ],
+  "limitations": [
+    "Analytic cost bound; no production-size execution.",
+    "Instruction counts are conservative scalar AArch64 estimates, not measured P-256 kernels.",
+    "Not a novel attack; textbook generic rho with the negation map."
+  ],
+  "lane": "exploratory"
+}
