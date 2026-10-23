@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: plain additive parallel Pollard rho v23 (pseudorandom published constants, worst-case append-only arena)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q = [x]P for the fixed standard generator of BLS12-381 G1: y^2 = x^3 + 4 over the 381-bit prime field, r the 255-bit prime order, standard generator, the single-shot classical plain-walk parallel Pollard rho algorithm v23 in proof.md recovers x with success probability at least 0.39 using at most 2^128.092800 total target-group-operation equivalents (time_log2 = 80058/625), where EVERY work term is charged at a flat allowance stated above any implementation count of the fully-specified construction (the total is the sum of those allowances): preprocessing (32 published pseudorandom constants; seeding of 2^16 walkers by fixed-base comb and 4-bit windowed double-and-add including additions charged 2 reference operations each and doublings charged 1600/3000 instructions flat (secp/BLS; an affine doubling is 7 field multiplications = 1253/2681 instructions, so the flat allowance covers adds, carry chains, conditional reductions, corrections and transfers at any reasonable count), plus two 512-bit ChaCha20 outputs charged 4096 instructions each flat (initialization, feed-forward, state transfers, counters and the mod-r reduction included); the exact component sum is 97*2 + 288*1600/C + 2*4096/C = 662.992 (secp) / 630.096 (BLS), and per_walker_seed = 800 operations per walker is DERIVED in code (component ceilings rounded up to hundreds) and ASSERTED to cover that sum, charged 2^25.643871), exactly t = 1.5*sqrt(r-1) walk steps at the charged per-step price of 1.0565 units (113 other AArch64 instructions per step, including the 4-instruction zero-denominator branch that detects the exceptional states, against the 2000-instruction reference operation), at most 2^56 arena appends of 128-byte distinguished-point records at 20 instructions each (64-bit linear addressing) with the next append aborting (probability <= 0.007885988 by Markov on the upper-bounded mean record count (E[records] <= t*(2^-79 + 2^-160): the predicate tests the x-coordinate, at most two curve points share an admissible x, and the 2^-79 figure is the rigorous secp pairing bound and a factor-2 round-up of the BLS equidistribution heuristic), subtracted), one in-place heapsort of at most 2^56 records at 48 instructions per record move plus a linear scan at 64 instructions per record flat (charged 2^57.443607 units, no workspace; the peak is the 2^63-byte arena alone), at most 2^20 special-state reseeds (the exceptional walk states S = +A_j and S = -A_j, both detected by the zero-denominator branch of the incomplete addition - a DOUBLING NEVER EXECUTES in the main loop), each a COMPLETE UNBATCHED construction with no batching assumption: both scalar multiplications in Jacobian coordinates (mixed additions ~11 multiplications, the Jacobian-Jacobian combine ~19 - ALL 97 additions charged at the combine price ~3401/7277 instructions, doublings ~8 ~1432/3064), ONE Fermat normalization inversion making the affine state explicit (~271 multiplications: x = X*Z^-2, y = Y*Z^-3) because the walk needs x for j = x mod 32 and the predicate, and TWO fresh ChaCha20 outputs; 1100 operations per reseed (secp and BLS alike; DERIVED in code from the component ceilings 1022/1021 and ASSERTED to cover them) with abort beyond (Markov on the upper-bounded expected reseed count, <= 2^-140.843582, subtracted), and one verified extraction (modular inverse plus a verification scalar multiple, charged 2^9); no rescaling of the scalar confines the step set (executed certificate over all rescalings up to 2^12 with narrowest window 0.6897 of the modulus, and the same check detects the rejected v6 constants at 1.31e-66; counting heuristic 32*W^31/r^30 < 2^-200 below width 2^240), no cycle word of length <= 4 exists (executed enumeration), longer cycle entries occur at the self-pair birthday scale t^2/(2Kr) with waste beyond a 2^-23 budget fraction of probability <= 2^-10.415 by Markov (subtracted in the abort total 0.008618), and the success probability is at least 1 - exp(-(1.5/c)^2/2) minus the abort total by the union bound, under Rayleigh collision times, so the 0.39 claim holds for every collision-time factor c <= 1.4873 (the toy, running the same machinery, measures 1.093); peak memory is strictly above 2^63 bytes and reported as memory_log2_bytes = 63.1; no nonuniform advice.",
+      "score": {
+        "numerator": "80058",
+        "denominator": "625"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "plain-rho-v23-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at production parameters: p and r prime (Miller-Rabin); the generator on the curve with order exactly r; the 32 published pseudorandom constants c_j = sha512(...) mod r pairwise distinct (sha256 of their concatenation recorded); no multiset of at most 4 constants sums to 0 mod r (executed enumeration, excluding every fruitless cycle of length <= 4); the confinement certificate - for every rescaling M <= 2^12 the narrowest window containing all 32 rescaled steps is 0.6897 of the modulus, while the same check applied to the rejected v6 constants detects their confinement at M = 32 (1.31e-66); the hard-bound ledger (per-step 113 other instructions; seeding 2^25.643871; arena appends at 20 instructions worst case with a 2^56-record cap; one final sort 2^57.443607 units; identity-reseed cap; extraction with verification 2^9); the arena capacity with its Markov overflow bound on the exact mean record count; and the success model with the abort total 0.008618 (reporting loss, Markov cycle bound 2^-10.415, identity abort, overflow) and the post-deduction collision-factor tolerance 1.4873, asserted >= 0.39 at the toy's measured factor (0.6013815900). Part B executes the complete v23 attack on a 20-bit prime-order toy curve with the same published constants construction and the same arena machinery: 122/200 successes (0.6100 vs ideal 0.675289, ratio 0.903, implied factor 1.093) with 0 wrong extractions and 11 sort-time cycle duplicates, and a supplementary dbits=6 sparse census (100 trials, 39 successes, 0 wrong extractions, recording the true-merge statistic 63/39 detected) exercising the production-density machinery.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dbits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dbits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dbits": 0,
+          "walkers": 8
+        }
+      ]
+    }
+  ]
+}
