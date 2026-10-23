@@ -1,0 +1,58 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "proof.md",
+    "note.md",
+    "experiment.py"
+   ],
+   "score": {
+    "denominator": "1000000",
+    "numerator": "120364249"
+   },
+   "statement": "On bls12-381-g1-ecdlp at n=2^20, with public P0 and A_i=[s^i]P0 for i=1..2^20, T=A_1=[s]P0 and s uniform in [1,r-1], the Cheon d=2^20 attack described in proof.md recovers s with success probability at least 0.749 (above the 0.39 floor) using at most 2^120.364249 total target-group-operation equivalents, W(2^20)=H+R/2000, including ALL preprocessing, table construction, the m+ g1 = 2*sqrt((r-1)/2^20) fixed-base windowed scalar multiplications, hashing, matching, phase 2, attack-side verification and -- new in this revision -- every memory translation and transfer instruction. Peak memory is at most 2^125 bytes and is placed on a declared machine of 2^77 nodes with 2^48 bytes of local DRAM each (total capacity 2^125 bytes, so the 2^124.884305-byte arena fits); preprocessing is at most 2^114.964954 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes; every runtime table is included in peak memory. The attack is classical and cold, uses no uncharged advice or quantum steps, and does not amortize work over targets. \n\nMEMORY ACCESSES ARE IMPLEMENTED, NOT ASSERTED. No AArch64 load or store ever takes a register pair as a 128-bit effective address: the 128-bit logical address is decomposed once, at the source, into a 77-bit node field (A>>51) and a 51-bit byte offset (A and (2^51-1)); the request is routed over an 11-level flattened butterfly whose levels switch 7 node-id bits each (11*7 >= 77); the owning node performs the 64-bit local LDR or STR; the payload is routed back. Itemised cost per access: 8 address decomposition, 6 request header build, 44 routing, 4+w destination load, 22w response transfer, 14 completion, i.e. 76+23w instructions for a w-word payload, giving c16 = 122 for a 16-byte record and c96 = 352 for a 96-byte affine comb entry. Every table access is remote: 3 comb lookups per scalar multiplication at c96 plus 1 bucket head and up to 6 chain links at c16, charged at the full 6*N link budget rather than in expectation, so r_arena = N*(3*352 + 7*122) = 1910*N = 2^129.327902 instructions. Destination-side loads that also appear in the P1/P2 itemisations are kept, an over-charge of 60*N instructions. Table filling and bucket-head zeroing are charged at the same remote prices. The scored claim is sensitive to this model and the sensitivity is disclosed: at 1.5x the itemised arena prices the claim is 2^120.549053 and at 2x it is 2^120.712850, still leading the track's 120.90418. \n\nPer-operation instruction charges are DERIVED from itemised scalar sequences under a 64-bit machine model: comb lookup itemised 64, charged 200 (3 lookups per multiplication); chained hash operation itemised base 206 plus 13 per extra link, whose global-budget worst case is 206+6*13 = 284, charged 560; each node is 128 bytes = 96-byte affine point + 128-bit tag + 128-bit next reference and each bucket head is a 16-byte reference, because the node arena is 2^124.43 bytes; 4-limb Montgomery chain itemised 88, charged 300; digit/loop itemised 49, charged 100. There is no 203/359 derivation anywhere in this revision: the manifest, proof.md and experiment.py all carry 206 and 284, and experiment.py asserts it. \n\nThe matching table is SEPARATE CHAINING with M=2^119 buckets and the 2-universal multiply-shift hash with a odd and a,b uniform per attempt; with p=(a*c+b) mod 2^384 over the compressed encoding c = x + 2^381*sign, the bucket index is h(c)=p>>265 and the stored 128-bit tag is t(c)=(p>>137) AND (2^128-1), so (h,t) is the top 247 bits and a pair collides in both with probability at most 2/2^247. The tag is deliberately not taken from the low 128 bits. No geometric probing law, no load-factor heuristic and no independence between operations is used anywhere. \n\nWork is bounded by construction, not in expectation. ONE GLOBAL COUNTER accumulates every chain link walked by the whole attempt and the attempt returns FAILURE when the counter would exceed 6*N; there is no per-operation cap and no chain is truncated, so the matching work of one attempt is at most N*206 + 6*N*13 + 2^20*24 = 284*N + 25165824 <= 560*N instructions. A SECOND GLOBAL COUNTER caps ALL full 96-byte point comparisons, true and false, at 2^20 (charged 2^20*24 = 25165824 instructions); at most two comparisons per attempt can be true (the true match, and the second rectangle pair which exists only for k0 < 218380746987008646073201729736704 and returns the same k0), so #comparisons <= #false + 2. The failure probability is bounded by a first moment over POTENTIAL pairs, which are fixed before any coin is drawn, and both pair classes are counted: the m*g1 stored-baby/walked-giant pairs AND the C(m,2) stored-baby/inserted-baby pairs that the insertion walk compares, so E[false full comparisons] <= (m*g1 + C(m,2))*2/2^247 <= 2^-10.56 and Pr[comparison abort] <= 2^-10.56/(2^20-2) = 2^-30.56. For the link budget, E[total links] <= 1.504704*N, so Markov gives Pr[total links > 6*N] <= 1.504704/6 = 0.250784, and that event is EXACTLY the abort event of the declared algorithm; hence success >= 1 - 0.250784 - 2^-30.56 = 0.749216 > 0.749 > 0.39. No claim stronger than 0.749 is made, and the scored claim is not weakened in exchange: it rises from 2^119.906712 to 2^120.364249 only because the arena accesses are now charged. The exponential memory is required. The bound applies at n=2^20 because only the supplied A_d with d=2^20 is used. This is an analytic bound, not a full-size execution, novelty claim or practical break."
+  }
+ ],
+ "experiments": [
+  {
+   "id": "cheo-toy-two-phase",
+   "initial_inputs": [
+    {
+     "d_bits": 10,
+     "seed": 20261022,
+     "trials": 4
+    }
+   ],
+   "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+     "d_bits": {
+      "maximum": 12,
+      "minimum": 8,
+      "type": "integer"
+     },
+     "seed": {
+      "maximum": 2147483647,
+      "minimum": 0,
+      "type": "integer"
+     },
+     "trials": {
+      "maximum": 8,
+      "minimum": 1,
+      "type": "integer"
+     }
+    },
+    "required": [
+     "trials",
+     "seed",
+     "d_bits"
+    ],
+    "type": "object"
+   },
+   "purpose": "Exercise the exact two-phase Cheon algebra, fixed-window scalar multiplication, full-point matching and d=2^k recovery on a toy prime-order group; spot-check the production digit structure on boundary and seeded scalars (the no-exception proof is analytic, not experimental); verify the factorization of r-1 and the smallest primitive root; and re-check the production parameters, the integer cost ledger, the distributed-arena layout and the matching cost model. Evidence only at toy scope, never a production-cost proof. The ledger recomputation checks every row of proof.md, the itemised per-access arena price and its access count, that the arena fits the 2^77 x 2^48-byte machine, that the 77+51-bit address split is total and the 11 network levels cover the node field, the itemised P2 base 206 against the charge, the global 6*N link budget, both classes of false full comparisons, and the peak-memory bound.",
+   "source": "experiment.py"
+  }
+ ],
+ "title": "bls12-381-g1-ecdlp: Cheon d=2^20 fixed-base windowed BSGS with an implemented distributed arena (2^77 nodes, itemised 76+23w per remote access), 128-byte nodes, 16-byte heads, 247-bit (bucket,tag) window, hard global 6*N link and 2^20 comparison budgets, claim 2^120.364249",
+ "version": 1
+}
