@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 into G2 at 2^125.81: Frobenius-class rho with a three-multiply selector, a 24-key look-back window and a measured loss rate (1,600 groups per density, both arms)",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "constants.py",
+        "classwalk.py",
+        "escape.py",
+        "ledger.py",
+        "tower.py",
+        "pairing.py",
+        "part_a.py",
+        "part_a-out.json",
+        "routing.py",
+        "routing-out.json",
+        "sweep4x.py",
+        "sweep4x-out.json",
+        "trials4x-raw.b64",
+        "verify_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "12581",
+        "denominator": "100"
+      },
+      "statement": "For independently uniform nonidentity P in BLS12-381 G1 and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.39, and its complete classical work is at most 2^(12581/100) dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The algorithm solves a = log_g z in GT with g = e(P,Q0) on the twelve-element Frobenius classes of GT, N = (r-1)/12 = 2^251.272 classes, using a deterministic walk whose step is one dense Fp12 multiply by a tabulated multiplier (2^14 multipliers with all twelve Frobenius twists) on five of every eight classes or, on three of every eight classes, one Granger-Scott cyclotomic squaring charged at its itemised 11632 instructions, each followed by a class fold charged at 1943 itemised instructions in ten rows; the fold uses the three-multiplication selector d = gamma0*a + gamma1*b = g0*(a-b), so the twelve class keys cost three base-field multiplies. A step whose target class tag is one of the last 24 keys of that trail is rejected and up to 8 table indices are tried in deterministic order, the first landing outside the window being taken; the rule is total and per-trail replayable. The walk runs at a 2^-80 distinguished-point density into a shared store of full class keys with a fixed report cap, replays each trail from its own start with (a,b) exponent bookkeeping, aligns Frobenius offsets, solves the exponent and verifies against z. The step budget S is the least integer with S^2(1-f^2) >= 2 mu N ln(1/(1-0.392)) at f = 3/8 and mu = 11/10, so the model success is 0.3920; the work bound is the itemised S-step total with the judgement-bounded fold rows repriced at 13/10 and the step count inflated by 1/(1-L_hi) for the measured loss L_hi = 0.02125, giving 2^125.79678, and the claim 125.81 carries a 0.01322 pad above that. Included in the work bound: table construction, all trail starts, all reports, both replays per recovery, all failures and restarts, the output and the verification, each below 2^-60 of the total. Peak memory is below 2^52 bytes with 48-byte class-key records. Success is supported by 12,800 simulated groups at 1,600 per density on four densities (2^-5 to 2^-11), where the shipped window arm recovers 2571/6400 = 0.4017 with an exact one-sided 95 per cent floor of 0.3915, against 2375/6400 = 0.3711 for the otherwise identical no-window control; the cells are homogeneous (chi-square 1.858 on 3 df, p = 0.602) and the arm difference is +0.0306 +- 0.0086. Success is conditional on three disclosed hypotheses: the class walk behaves as a random map to within the 10 per cent inefficiency allowance already carried in the step budget, the hash fields derived from the class key are pseudorandom, and the algorithm's coins are ideal. No production run, no unconditional success theorem, no novelty claim and no practical break is claimed."
+    }
+  ],
+  "experiments": []
+}
