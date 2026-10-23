@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa006fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of the track target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/secp256k1-ecdlp/automorphism-rho (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v2 (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v3 (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v4 (rejected: the order-3 automorphism identities generate mixed-index fruitless families whose rates were not bounded)",
+    "submissions/secp256k1-ecdlp/negation-rho-v5 (rejected: the fruitless-cycle census assumed per-symbol even multiplicity, missing the carry families 2^j + 2^j = 2^(j+1))",
+    "submissions/secp256k1-ecdlp/plain-rho-v6 (rejected: the constants c_j = jQ + 2^j admit the confining rescaling z = 32k mod r; the generated claim statement additionally permuted the score figures)",
+    "submissions/secp256k1-ecdlp/plain-rho-v8 (rejected: the cycle-entry rate was stated as t/r instead of the self-pair birthday scale t^2/(2Kr), and the 4-bit windowed seeding multiplication was priced at 64 doublings + 16 additions instead of 256 + 64)",
+    "submissions/secp256k1-ecdlp/plain-rho-v9 (rejected: the fixed-base comb evaluation omitted its doublings and the final seed addition; the 0.75 efficiency floor was converted arithmetically wrongly; the cycle-waste expectation was substituted as a deterministic budget cut)",
+    "submissions/secp256k1-ecdlp/plain-rho-v10 (rejected: the distinguished-point insert lacked a concrete hash-table construction and was underpriced; auxiliary work had no global cutoff; a literal format expression leaked into the claim statement)",
+    "submissions/secp256k1-ecdlp/plain-rho-v11 (rejected: the chained-table price used an expected chain length rather than a bounded operation count, the 98-bit record indices did not fit the 8-byte links, the Markov bound was stated as a stale 2^-10.9 instead of the computed value, the abort total omitted it, and an external collision-time factor was used without reproduced support; replaced here by the worst-case append-only arena with one final sort)",
+    "submissions/secp256k1-ecdlp/plain-rho-v12 (rejected: the sort charge rounded the recorded figure down and lacked instruction itemization and workspace accounting, the overflow bound claimed a Binomial premise the correlated walk does not justify, and the success formula multiplied rather than subtracted the abort bound; corrected here)",
+    "submissions/secp256k1-ecdlp/plain-rho-v13 (rejected: the sort key-compare was underpriced for a 256/381-bit key, the linear scan was uncharged, the sort figure rounded down, the tolerance rounded up past its computed value, the experiment's modeled success still multiplied, and the arena addressing and seed randomness lacked bounded constructions; all corrected here)",
+    "submissions/secp256k1-ecdlp/plain-rho-v14 (rejected: the 2^113-byte arena was not realizable on the protected 64-bit machine under any charged banking, the seeding doublings were priced as the 6-multiplication reference operation, and the DRBG and two-scalar seeding were unspecified; v15 lowers the density so the arena fits the 64-bit address space, prices doublings at 7/6, and specifies the DRBG)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "plain-rho-v15",
+  "work_function": "W = 1.109 * 1.5 * sqrt(r-1) + < 2^58 (all one-offs worst case) (score = log2(W))",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.734222,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 64.1,
+    "preprocessing_log2": 25.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 (random-function model): with published pseudorandom constants c_j = sha512(...) mod r, walker states collide at the parallel-rho birthday rate t^2/(2(r-1)) under Rayleigh collision times, distinguished-point counts are Binomial(t, 2^-80), and cycle entries occur at the self-pair birthday scale t^2/(2Kr) = 1.717e-05 with waste beyond a 2^-23 budget fraction of probability <= 7.32e-04 (Markov on the bounded expectation). No rescaling of the scalar confines the step set: Part A measures every M <= 2^12 (narrowest window 0.6329 of r; the same check detects the rejected v6 constants at 5.93e-67) and the counting heuristic 32*W^31/r^30 puts expected confiners of width <= 2^240 below 2^-235.",
+    "Efficiency (collision-time factor): within the fixed budget the success probability is (1 - 0.006592) * 1 - exp(-(1.5/c)^2/2), so the 0.39 claim holds for every factor c <= 1.4923, computed after all deductions. The only measurement is the toy, which runs the same arena machinery with the same constants construction and measures c = 1.093; the tolerance covers a 37% slower production walk. No external factor enters the model."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold (modeled success 0.6034082030 at the toy's measured collision-time factor 1.093; the claim tolerates every factor up to 1.4923).",
+    "The arena is a hard 2^56-record allocation (2^64 bytes plus an arena-sized sort workspace); the next append aborts with probability <= 0.005859 by Markov on the exact mean record count, subtracted.",
+    "Standard cryptanalysis (parallel Pollard rho with distinguished points, pseudorandom published constants, an append-only arena and one final sort); the worst-case ledger, the confinement certificate and the post-deduction collision-factor tolerance are the contribution under this cost model."
+  ],
+  "lane": "exploratory"
+}
