@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: partial-coverage Cheon attack v4 (sorted-array table, wrap-exact coverage)",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r), inputs T=[s]P0=A_1 and the auxiliary powers A_i=[s^i mod r]P0, i=1..n, on BLS12-381 G1 with n=2^20, the single-shot classical two-phase Cheon algorithm v4 in proof.md recovers s with success probability at least 0.39 using total work W(2^20) at most 2^123.792992 target-group-operation equivalents (time_log2 = 123.792992 = 3868531/31250), including runtime factorization of r-1 (all prime factors < 2^28), generator and subgroup construction, three fixed-base comb tables, all baby and giant scalar multiplications (one 512-instruction mod-r multiplication each, sequential), the merge-sorted baby array (exactly m*117 key compares), binary-search giant lookups (exactly 118 probes, no hash function, no randomness), at most two window-start exponentiations, both BSGS phases, assembly, verification and output. The attack uses d=2^20 (largest divisor of r-1 not exceeding the scoring n) and reads only A_1 and A_d. Phase 1 solves s^d = eta^k1 by partial-coverage BSGS over a contiguous window of m blocks at a uniform offset; the coverage is an exact per-offset integer statement including all wrap-around hits: block j covers exactly the m values {(m1*j + i) mod N : i < m}, consecutive arcs are disjoint, so every offset covers at least (m-1)m/N >= 0.4 - 2^-118 >= 0.39 k1 values. Phase 2 recovers the order-2^20 component deterministically; s = zeta^(k1+tN) is verified by [s]P0 = T. Peak memory is the m-entry sorted array, 2^123.8 bytes (memory_log2_bytes = 123.8); preprocessing at most 2^21 units (preprocessing_log2 = 21.0) included; nonuniform advice 0 bytes. Sensitivity: 384-unit double-and-add everywhere still gives ~2^126.3. All preconditions are verified exactly at production parameters by experiment.py Part A (including the per-offset minimum coverage asserted >= 39/100 in integers); Part B demonstrates the complete two-phase attack with sequential window giants on a 20-bit toy group with d=6: full coverage 200/200 exact recoveries with 0 wrong extractions, and the declared partial mode 88/200 = 0.44 vs the exact wrap-inclusive expectation 0.4022613461525126 (matching the review's corrected value) with 0 wrong extractions.",
+      "score": {
+        "numerator": "3868531",
+        "denominator": "31250"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "partial-cheon-v4-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production BLS12-381 parameters: 2^20 divides r-1; the complete prime factorization of r-1 (Miller-Rabin + product equality); zeta=7 generates Z_r*; eta has exact order N=(r-1)/2^20; zeta_e has exact order 2^20; d-th powers lie in the order-N subgroup; and the per-offset minimum coverage of the contiguous-window phase 1 is computed in exact integers (>= 39/100 for every offset). Part B runs the complete two-phase Cheon attack on a toy prime-order group (20-bit, d=6 | n-1) with production-shaped sequential window giants and a brute-forced exact wrap-inclusive coverage expectation, in partial mode (the claimed regime) or full-coverage control mode. Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "partial",
+              "full"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [
+          "trials",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "mode": "partial"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: partial-coverage Cheon attack v3 (contiguous window, honest ledger, integer coverage)",
+  "claims": [
+    {
+      "statement": "For uniform s in [1,r), inputs T=[s]P0=A_1 and the auxiliary powers A_i=[s^i mod r]P0, i=1..n, on BLS12-381 G1 with n=2^20, the single-shot classical two-phase Cheon algorithm v3 in proof.md recovers s with success probability at least 0.39 using total work W(2^20) at most 2^123.783097 target-group-operation equivalents (time_log2 = 123.783097 = 123783097/1000000, computed from the ledger exactly as 2m*(64+0.192) + 2m*0.5 + one-offs with m = isqrt(floor(2N/5))+1), including runtime factorization of r-1 (all prime factors < 2^28), generator and subgroup construction, three fixed-base comb tables, all baby and giant scalar multiplications, one mod-r multiplication per scalar update, hash inserts and lookups (open addressing, fixed 2^118-slot capacity, load 0.4256, expected probes 1.74, 1000 instructions per operation, 16-byte indices), at most two window-start exponentiations, both BSGS phases, assembly, verification and output. The attack uses d=2^20 (largest divisor of r-1 not exceeding the scoring n) and reads only A_1 and A_d. Phase 1 solves s^d = eta^k1 (eta of order N=(r-1)/2^20) by partial-coverage BSGS over a contiguous window of m blocks at a uniform random offset with sequential giant scalars; the success probability is exact integer arithmetic with worst-single-offset bound (m-1)m/N >= 0.4 - 2^-118 >= 0.39 and exact rational expectation printed by the experiment and verified >= 39/100 by integer comparison (no 'exactly 2/5' assertion; no walk heuristic anywhere). Phase 2 recovers the order-2^20 component deterministically, and s = zeta^(k1+tN) is verified by [s]P0 = T. Peak memory is strictly above 2^125 and far below 2^126 bytes, reported as memory_log2_bytes = 125.1; preprocessing is at most 2^21 target-group-operation equivalents (preprocessing_log2 = 21.0) and is included; nonuniform advice is 0 bytes. Each comb scalar multiplication is charged 64 units (2x analytic); the sensitivity analysis shows the claim survives 384-unit multiplications everywhere (2^126.3). All preconditions are verified exactly at production parameters by experiment.py Part A; Part B demonstrates the complete two-phase attack with sequential window giants on a 20-bit toy group with d=6: full coverage 200/200 exact recoveries with 0 wrong extractions, and the declared partial mode 88/200 = 0.44 vs the exact predicted coverage 0.40226 with 0 wrong extractions.",
+      "score": {
+        "numerator": "123783097",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "partial-cheon-v3-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production BLS12-381 parameters (exact stdlib arithmetic): 2^20 divides r-1; the complete prime factorization of r-1 is verified (Miller-Rabin primality of every factor, product equality); zeta=7 generates Z_r*; eta=zeta^(2^20) has exact order N=(r-1)/2^20; zeta_e=zeta^N has exact order 2^20; d-th powers of random scalars land in the order-N subgroup; and the exact integer coverage probability of the contiguous-window phase 1 is printed as a rational and asserted >= 39/100, with m computed by pure integer arithmetic (isqrt of floor(2N/5), no floating-point rounding). Part B runs the complete two-phase Cheon attack on a toy prime-order group (20-bit, d=6 | n-1) with the production-shaped giant structure: a contiguous window of m blocks at a uniform offset whose scalars are computed by ONE modular multiplication per giant (sequential update, at most two window-start exponentiations), in full-coverage mode (deterministic success 1) or the partial mode used in the claim (exact predicted coverage printed). Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "partial",
+              "full"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [
+          "trials",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "mode": "partial"
+        }
+      ]
+    }
+  ]
+}
