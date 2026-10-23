@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: additive Cheon (one addition per BSGS step)",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability 0.4055 (at least 0.39) over the uniform challenge. The algorithm is Cheon's p-1 baby-step/giant-step in the subgroup H of 2^20-th powers. Its baby and giant sets are small integers a*b in H (a a prime in (2^75, 2^76], b <= 2^70, chi(a)+chi(b)=0), walked in increasing order at one batched affine G1 addition per element. It uses the 6-element symmetry group {±1, ±λ, ±λ²} via the hash key min(y, p-y). Its total work W(n) = W(2^20) is at most 2^116.982765 target-group-operation equivalents. This includes the distributed hash-table inserts and lookups, walk bookkeeping, per-prime tables, character precomputation and sieves, collision verification, the d-th root, the final mu_d search and input checks. Preprocessing (challenge-independent work) is at most 2^115.986 and is included. Peak memory is at most 2^122.9 bytes; there is no nonuniform advice. Heuristics: H1 (the product set U*B*G^-1 has random-like coincidences apart from a bounded repeated-rational loss below 10^-4); H2 (characters of the primes a used are equidistributed, affecting only how many primes are needed, with at least 3x slack); and expected-cost hashing and sharding. All are disclosed and supported by toy experiments at their stated scope. This is an analytic bound, not a full-size execution.",
+      "score": {
+        "numerator": "23396553",
+        "denominator": "200000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One run with three parts. (1) It recomputes the proof.md cost ledger, the exact score, the preprocessing bound and the KKM c=3 baseline under the same budgets; this checks arithmetic only, not the per-element budgets. (2) Toy evidence for H1/H2: the exact coverage |U*B*G^-1|/m for random sets, the smallest integers in H and the production product construction at X2/d = 4, 16, 64 and 256, against 1-exp(-K) and a conservative gcd bound, plus class-list spread. (3) The full algorithm on a toy j=0 curve with a small table bound gmax, so the overflow-chunk path runs. It reports success rate against prediction, with every recovered scalar checked. The toy parts are evidence at toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "K": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 6
+          },
+          "cov_bits": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 29
+          },
+          "cov_logd": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10
+          },
+          "atk_bits": {
+            "type": "integer",
+            "minimum": 18,
+            "maximum": 24
+          },
+          "atk_logd": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 6
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1500
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "gmax": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "K",
+          "cov_bits",
+          "cov_logd",
+          "atk_bits",
+          "atk_logd",
+          "trials",
+          "gmax",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "K": "0.52",
+          "cov_bits": 29,
+          "cov_logd": 8,
+          "atk_bits": 24,
+          "atk_logd": 6,
+          "trials": 1500,
+          "gmax": 16,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
