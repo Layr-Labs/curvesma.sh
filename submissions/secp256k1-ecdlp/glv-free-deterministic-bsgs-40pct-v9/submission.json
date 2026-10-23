@@ -1,0 +1,20 @@
+{
+ "version": 1,
+ "title": "secp256k1: deterministic full-coverage BSGS with radix-merge ledger, exact success 1 (claim 3245623/25000; no rho heuristics)",
+ "claims": [
+  {
+   "statement": "For the unchanged full-production secp256k1 profile (Q=[x]P, x uniform in [0,r)), the deterministic algorithm in argument.md returns the canonical scalar x with probability exactly 1: no coins, no failure branch, because m*h >= r with m = 2^128 and h = ceil(r/m) = 2^128 - 1 (exact cover of [0,r) by i*m+j). Worst-case total classical work is at most 3245623/25000 = 129.82 target-group-operation equivalents at the fixed price C = 1000 scalar 64-bit AArch64 instruction equivalents per equivalent. With H = m + (h-1) charged reference additions and the itemized non-group instruction total R, T = 1000*H + R = 1050791949051857975174900794595683352049168 satisfies the exact proof line T^100000 <= 1000^100000 * 2^12982492. Machine floor: 12962667/100000 <= log2 W < 12962668/100000. Repricing EVERY R row by 1.2x gives (10000*H+12*R)^100000 <= 10000^100000 * 2^12972492, i.e. log2 W < 129.72492, a margin of at least 0.10 bits under the claim; the claim sits 6.87686 bits below the 136.70178 streamed signed-BSGS frontier and ties are rejected by rule. The total charges all preprocessing (baby table generation and its radix sort, radix-head initialization, fixed setup) in full with no amortization, plus giant steps, merge scan, candidate verification, exceptional-point fallbacks and output. Peak total storage below 2^137 bytes: four arrays of 64-byte records (two unsorted + two sorted, about 2^128 records each), 6 sweeps of 2^48-entry 8-byte radix heads, and under 2^24 bytes of fixed code/state; memory is unscored by the cost model but stated and bounded honestly. Nonuniform advice 0 bytes. No Pollard rho, walk-quality heuristic, random oracle, free precomputation, or quantum computation is used. These are analytic upper bounds, not a production execution, timing measurement, novelty claim, or official score.",
+   "score": {
+    "numerator": "3245623",
+    "denominator": "25000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "certificate.py",
+    "evidence.json"
+   ]
+  }
+ ],
+ "experiments": []
+}

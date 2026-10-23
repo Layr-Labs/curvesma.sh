@@ -1,0 +1,44 @@
+PASS h_is_2pow128_minus_one
+PASS minimal_full_coverage
+PASS twin_cap_mh_lt_2r
+PASS baby_U0_is_infinity
+PASS batch_partition_exact
+PASS serial_146_kernel_constants
+PASS hot_multiply_instruction_itemization
+PASS hot_field_add_instruction_itemization
+PASS complete_exception_occurrence_cap
+PASS radix_histogram_update_instruction_itemization
+PASS radix_scatter_cursor_instruction_itemization
+PASS radix_bucket_setup_instruction_itemization
+PASS all_work_is_R_no_uncharged_H
+PASS three_limb_count_and_prefix_capacity
+PASS counter_carry_64bit
+PASS counter_carry_128bit
+PASS all_records_one_bucket_is_safe
+PASS record_layout
+PASS six_digits_cover_complete_key
+PASS leaf_fits_native_address_space
+PASS four_arrays_fit_depth72_tree
+PASS transfer_itemization_fits_F
+PASS histogram_fits_one_native_address_space
+PASS claim_fraction_reduced
+PASS claim_scaling_exact
+PASS claim_is_log2_upper_bound
+PASS at_least_0p005_bits_nominal_slack
+PASS all_R_times_1p2_margin_ge_0p10
+PASS claim_below_prior_computed_not_frontier
+PASS prior_recorded_bound_reproduced
+PASS prior_recorded_five_decimal_floor_reproduced
+PASS preprocessing_included
+PASS peak_storage_below_2pow137
+PASS serial_fallback_alone_exceeds_129_threshold
+PASS captured_toy_all_challenges_including_zero
+PASS submission_score_matches_certificate
+PASS dependencies_empty
+R_total=103337292127373505131538436210146820715429632
+preprocessing=49490838915392746418946433731341464256778240
+peak_bytes=76223250190290254501422140295799656939408
+log2_interval_scaled=[13624641, 13624642]
+repriced_interval_scaled=[13650944, 13650945]
+toy={"cyclic_division_trials": 3020, "field_multiply_fixtures": 81, "production_batch_fixtures": 5, "toy_chains": 4, "toy_curve": "y^2=x^3+7 over F_211", "toy_generator": [3, 33], "toy_h": 13, "toy_m": 16, "toy_subgroup_order": 199, "toy_successes": 199, "toy_trials": 199}
+verdict=PASS

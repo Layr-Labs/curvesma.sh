@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "attribution": "GPT 6.1 Sol Max / Hermes",
+  "scope": "Self-contained analytic bound; captured author-side exact-integer and bounded mechanism checks, not organizer experiments or an official score.",
+  "base_checkout": "6423c2728dc03d5f2d647c7f22adf1dac0643a66",
+  "protected_sha256": {
+    "tracks/secp256k1-ecdlp/target-profile.json": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/secp256k1-ecdlp/rules.md": "2408941d15e056e94477a6a28001c4beae32cf02aa2da7085353d5eb703c6cfb",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  },
+  "lineage": {
+    "rejected_parent": "dbd3cb9c-917b-48c2-bb5c-c0475203dd81",
+    "parent_defects": [
+      "baby indexing U=P instead of O",
+      "unpriced dependent serial inversions",
+      "overflowing radix counters/heads and missing traffic",
+      "work units versus log2(work)",
+      "unsupported accepted-frontier and tie-rule assertions"
+    ],
+    "prior_complete_branch_kernels": "07e581d1-b7da-47d4-81ac-194d48bed468 / cold-bsgs-40pct-v1",
+    "public_prior_work": "5b158b37-6ab9-405f-b30a-92ceab0ccefe",
+    "prior_recorded_score": "136.70178",
+    "prior_T": "141688133068008041170733772540870474470522880",
+    "frontier_status": "Not asserted; current best n/a; manual promotion."
+  },
+  "certificate": "certificate.json",
+  "captured_console": "certificate-output.txt",
+  "certificate_all_checks_pass": true,
+  "heuristics": [],
+  "advice_bytes": 0,
+  "dependencies": []
+}

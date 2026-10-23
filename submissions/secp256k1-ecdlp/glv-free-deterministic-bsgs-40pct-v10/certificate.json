@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "H_reference_operations": "0",
+  "C": 1000,
+  "parameters": {
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "r": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "m": "340282366920938463463374607431768211456",
+    "h": "340282366920938463463374607431768211455",
+    "N": "680564733841876926926749214863536422911",
+    "B": "65536",
+    "L": "5192296858534827628530496329220096",
+    "K": "8796093022208",
+    "passes": 6,
+    "coverage_slack": "92138019644721193389046258963199934143"
+  },
+  "kernels": {
+    "A": 256,
+    "M_hot": 4096,
+    "I_hot": 2130176,
+    "M_old": 147712,
+    "I_old": 75661568,
+    "G_complete_old": 78037248,
+    "F_record_transfer": 6144,
+    "hot_slot": 27648
+  },
+  "R_rows": {
+    "batched_affine_slots": "18816253761260213275670762292547055020643328",
+    "all_batch_inversions_including_residual": "22121012305852569956865157097185494433792",
+    "complete_chain_seeds_and_D": "5242145267122176",
+    "initial_record_writes": "4355614296588012332331194975126633106630400",
+    "six_radix_passes_both_streams": "75787688760631414582562792567203416055368960",
+    "histogram_clear_prefix_setup": "10133099161583616",
+    "merge_read_compare": "4355614296588012332331194975126633106630400",
+    "complete_exception_fallbacks": "1248595968",
+    "candidate_scalar_verification": "319640567808",
+    "routing_initialization": "38685626227668133590597632",
+    "input_and_fixed_setup": "1099511627776",
+    "scalar_output": "1099511627776"
+  },
+  "total_R_instructions": "103337292127373505131538436210146820715429632",
+  "preprocessing_instructions": "49490838915392746418946433731341464256778240",
+  "peak_storage_rows_bytes": {
+    "four_record_arrays": "76223250190290215815795912064716079366032",
+    "routing_code_and_state": "38685626227668133590597632",
+    "histogram_and_scatter_cursors": "562949953421312",
+    "batch_scratch": "16777216",
+    "engine_code_input_output": "16777216"
+  },
+  "peak_storage_bytes": "76223250190290254501422140295799656939408",
+  "memory_log2_bytes_bound": 137,
+  "advice_bytes": 0,
+  "success_numerator": 1,
+  "success_denominator": 1,
+  "claim": {
+    "numerator": "6831",
+    "denominator": "50",
+    "decimal": "136.62"
+  },
+  "q": 100000,
+  "claim_scaled": 13662000,
+  "computed_log2_interval_scaled": [
+    13624641,
+    13624642
+  ],
+  "repriced_1p2_log2_interval_scaled": [
+    13650944,
+    13650945
+  ],
+  "prior_public_work": {
+    "submission": "5b158b37-6ab9-405f-b30a-92ceab0ccefe",
+    "T": "141688133068008041170733772540870474470522880",
+    "recorded_score": "136.70178",
+    "computed_interval_scaled": [
+      13670177,
+      13670178
+    ]
+  },
+  "captured_mechanism_run": {
+    "toy_curve": "y^2=x^3+7 over F_211",
+    "toy_generator": [
+      3,
+      33
+    ],
+    "toy_subgroup_order": 199,
+    "toy_m": 16,
+    "toy_h": 13,
+    "toy_chains": 4,
+    "toy_trials": 199,
+    "toy_successes": 199,
+    "cyclic_division_trials": 3020,
+    "field_multiply_fixtures": 81,
+    "production_batch_fixtures": 5
+  },
+  "checks": {
+    "h_is_2pow128_minus_one": true,
+    "minimal_full_coverage": true,
+    "twin_cap_mh_lt_2r": true,
+    "baby_U0_is_infinity": true,
+    "batch_partition_exact": true,
+    "serial_146_kernel_constants": true,
+    "hot_multiply_instruction_itemization": true,
+    "hot_field_add_instruction_itemization": true,
+    "complete_exception_occurrence_cap": true,
+    "radix_histogram_update_instruction_itemization": true,
+    "radix_scatter_cursor_instruction_itemization": true,
+    "radix_bucket_setup_instruction_itemization": true,
+    "all_work_is_R_no_uncharged_H": true,
+    "three_limb_count_and_prefix_capacity": true,
+    "counter_carry_64bit": true,
+    "counter_carry_128bit": true,
+    "all_records_one_bucket_is_safe": true,
+    "record_layout": true,
+    "six_digits_cover_complete_key": true,
+    "leaf_fits_native_address_space": true,
+    "four_arrays_fit_depth72_tree": true,
+    "transfer_itemization_fits_F": true,
+    "histogram_fits_one_native_address_space": true,
+    "claim_fraction_reduced": true,
+    "claim_scaling_exact": true,
+    "claim_is_log2_upper_bound": true,
+    "at_least_0p005_bits_nominal_slack": true,
+    "all_R_times_1p2_margin_ge_0p10": true,
+    "claim_below_prior_computed_not_frontier": true,
+    "prior_recorded_bound_reproduced": true,
+    "prior_recorded_five_decimal_floor_reproduced": true,
+    "preprocessing_included": true,
+    "peak_storage_below_2pow137": true,
+    "serial_fallback_alone_exceeds_129_threshold": true,
+    "captured_toy_all_challenges_including_zero": true,
+    "submission_score_matches_certificate": true,
+    "dependencies_empty": true
+  },
+  "verdict": "PASS"
+}

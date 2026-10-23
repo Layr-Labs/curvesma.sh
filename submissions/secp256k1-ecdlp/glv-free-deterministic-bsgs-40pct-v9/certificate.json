@@ -1,0 +1,65 @@
+{
+ "version": 1,
+ "scope": "Exact-integer re-derivation of the v9 deterministic full-coverage BSGS ledger, reproduced by certificate.py. Host integer arithmetic only; no candidate python executed; no group operations beyond quoted COST_MODEL constants.",
+ "date": "2026-10-23",
+ "integers": {
+  "r": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+  "C": 1000,
+  "m": "340282366920938463463374607431768211456",
+  "h": "340282366920938463463374607431768211455",
+  "h_equals_2pow128_minus_1": true,
+  "m*h": "115792089237316195423570985008687907852929702298719625575994209400481361428480",
+  "m*h_minus_r": "92138019644721193389046258963199934143",
+  "two_r_minus_m*h": "115792089237316195423570985008687907852745426259430183189216116882554961560194",
+  "G_complete_affine_instructions": 78037248,
+  "H_reference_ops": "680564733841876926926749214863536422910",
+  "R_rows_instructions": {
+   "baby_write": "21778071482940061661655974875633165533184",
+   "baby_reduce": "10889035741470030830827987437816582766592",
+   "baby_scatter": "130668428897640369969935849253798993199104",
+   "giant_write": "21778071482940061661655974875633165533120",
+   "giant_reduce": "10889035741470030830827987437816582766560",
+   "giant_scatter": "130668428897640369969935849253798993198720",
+   "merge_scan": "43556142965880123323311949751266331066304",
+   "heads": "6761996510822400",
+   "constants": "39955070976",
+   "exceptions": "81827985358848",
+   "cand_verify": "319640567808",
+   "fixed_setup": "1099511627776",
+   "output": "1099511627776"
+  },
+  "R_total": "370227215209981048248151579732146929139168",
+  "T_instructions_eq": "1050791949051857975174900794595683352049168",
+  "log2_W_scaled_interval": "12962667/100000 <= log2 W < 12962668/100000",
+  "claim": {
+   "numerator": "3245623",
+   "denominator": "25000",
+   "proof_line": "T^100000 <= 1000^100000 * 2^12982492"
+  }
+ },
+ "checks": {
+  "h_eq_ceil_r_over_m_eq_2pow128_minus_1": "PASS",
+  "full_coverage_mh_ge_r": "PASS",
+  "giants_minimal_m_hm1_lt_r": "PASS",
+  "at_most_two_matches_mh_lt_2r": "PASS",
+  "success_exactly_one_no_coins": "PASS",
+  "claim_proof_T_pow_q_le_C_pow_q_2_pow_12982492": "PASS",
+  "repriced_1p2x_all_R_rows_margin_ge_0p10": "PASS",
+  "claim_below_frontier_by_6.87686": "PASS",
+  "peak_bytes_lt_2pow137": "PASS",
+  "preprocessing_included_in_total": "PASS",
+  "R_rows_sum_to_R_total": "PASS"
+ },
+ "values": {
+  "a0_floor_scaled": 12962667,
+  "ar_floor_scaled_repriced": 12972491,
+  "repriced_proof_line": "(10000*H + 12*R)^100000 <= 10000^100000 * 2^12972492",
+  "peak_bytes_bound": "87112285931760246646623913013331561021312",
+  "peak_log2_bound": "137",
+  "preprocessing_instructions_eq": "503617903042988925925794425762112975405056",
+  "frontier_ref": {
+   "score": "13670178/100000",
+   "margin_bits": "6.87686"
+  }
+ }
+}

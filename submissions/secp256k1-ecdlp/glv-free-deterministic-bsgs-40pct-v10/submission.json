@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "title": "secp256k1 deterministic full-coverage BSGS v10: infinity-first records, interleaved inversion batches, overflow-safe radix; log2(time) <= 6831/50",
+  "claims": [
+    {
+      "statement": "For every valid full-production secp256k1 input Q=[x]P, the deterministic algorithm in argument.md recovers the canonical x in [0,r), with success probability exactly 1. Its logical baby chain starts U=O and stores ([j]P,j) for 0<=j<2^128, including (O,0); h=ceil(r/2^128)=2^128-1 and m*h<2r. The first objective is a bound on log2(total classical computation in target-group-operation equivalents): log2(W) <= 6831/50 = 136.62, or equivalently W <= 2^(6831/50). It is NOT a bound of 136.62 operations. All work is charged as scalar 64-bit AArch64 instruction equivalents R, with H=0 and W=R/1000 at the fixed protected C=1000. Dependency-respecting interleaved batches pay all inversions, setup, complete exceptional additions, multiword histogram/prefix/scatter traffic, distributed record routing, sorting, merging, verification and output. Every R row repriced by 6/5 remains at least 0.10 bits below the submitted claim. All cold preprocessing is included without amortization and is separately itemized in certificate.json. Peak storage is below 2^137 bytes, including four 56-byte record arrays, three-limb counts and positions, routing code/state and batch scratch. Nonuniform advice is zero bytes. The bound is strictly below the independently reproduced computed value of public prior work 5b158b3; no accepted-frontier, promotion, novelty, tie-rejection, practical attack or production-execution assertion is made. No statistical success or random-oracle heuristic is used. These are analytical implementation bounds; bounded tests do not measure production instruction costs.",
+      "score": {
+        "numerator": "6831",
+        "denominator": "50"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "certificate.py",
+        "certificate-output.txt",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
