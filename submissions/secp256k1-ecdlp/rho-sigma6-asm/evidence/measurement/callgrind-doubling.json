@@ -1,0 +1,17 @@
+{
+ "purpose": "callgrind totals of measurement/step.c at 1, 2, 63 and 64 batch steps on the production input (first 132096 lines of the seed-1 input: adders, walk starts, spares); plain = Ir(2)-Ir(1) and anchor = Ir(64)-Ir(63), per walk step over 65536 walks",
+ "totals": {
+  "1": 52997564,
+  "2": 105994486,
+  "63": 3339099488,
+  "64": 3392751470
+ },
+ "stderr_last_line": {
+  "1": "==11== I   refs:      52,997,564",
+  "2": "==12== I   refs:      105,994,486",
+  "63": "==13== I   refs:      3,339,099,488",
+  "64": "==14== I   refs:      3,392,751,470"
+ },
+ "plain_per_walk_step": 808.67,
+ "anchor_per_walk_step": 818.66
+}
