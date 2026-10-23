@@ -1,0 +1,1 @@
+{"kind": "routing16", "curve": "q25", "nodes": 65536, "samples": 4194304, "mean_per_node": 64.0, "max_load": 115, "max_over_mean": 1.7969, "cap": 128, "cap_over_mean": 2.0, "overflows": 0, "nodes_used": 65536, "chi_square": 113235.0, "chi_square_dof": 65535, "chernoff_delta": 1.0}

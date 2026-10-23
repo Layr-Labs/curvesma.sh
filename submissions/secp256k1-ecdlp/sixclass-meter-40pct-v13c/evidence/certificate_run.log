@@ -1,0 +1,4 @@
+PASS 162/162 arithmetic, itemisation, index-error and capture checks; claim 127
+PASS 21-row itemisation 110 of 1000; step 1.11, doubling 2.35; index 8 products, E=8, gap 40, rate 294/2^64 < 2^-55
+PASS success budget 0.392 at mu 1.058 (toy 1.05772): S_ops 2^126.74469, raw 2^126.89525 <= claim-0.10; claim 127.00 < gate 127.01
+PASS floor 0.39: success 0.39101, mu tolerance 1.061530 > 1.058; toy mechanism 4000/4000 verified; census pooled 2811/6800; 0 node overflows
