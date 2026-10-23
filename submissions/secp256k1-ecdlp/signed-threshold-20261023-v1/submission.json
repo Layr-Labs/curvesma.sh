@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "Signed threshold BSGS with exact coverage and charged 52-bit memory routing",
+  "claims": [
+    {
+      "statement": "For uniform full-production secp256k1 Q=[x]P in the protected target profile, the deterministic signed-window BSGS construction in proof.md returns the correct canonical scalar with exact success probability m(2m-1)/r >= 39/100. It uses at most 2^(543/4) total classical target-group-operation equivalents under classical-group-work-v2, C=1000 scalar 64-bit AArch64 instruction equivalents per reference unit. Peak total storage is below 2^135 bytes. Cold preprocessing is below 2^(543/4) equivalents and included in total work. External nonuniform advice is zero bytes, reported with log2(max(1,advice_bytes))=0. All failed targets, padded slots, arithmetic, initialization, sorting, lookup, distributed addressing/transfers, verification and output are charged. No probabilistic heuristic, free oracle/advice, quantum step or future-target amortization is used. The cost is an analytic upper bound on the specified theoretical distributed machine with 52-bit physical addresses, not measured instruction counts, physical realization, a production execution, or a practical break.",
+      "score": {
+        "numerator": "543",
+        "denominator": "4"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "signed-threshold-checks",
+      "source": "experiment.py",
+      "purpose": "Check exact production ledger inequalities and bounded signed-BSGS mechanisms: exhaustive toy curves, duplicate giant orbit keys, parity/sign negative controls, masked independent affine batching, stable radix sorting, canonical folds, and planted small secp256k1 grids. No production execution or instruction measurement.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
