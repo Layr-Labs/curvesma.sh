@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: single-trail distinguished-point rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^127.85 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) (a generator) and solves z=g^a by a SINGLE-TRAIL distinguished-point Pollard rho on GT: one continuous trajectory F^i(X_0), F(X)=X*M_{H(X)} with R=2^20 adding entries, costs ONE dense Fp12 multiplication per step (no tortoise/hare factor). It stores each distinguished point keyed by the EXACT full reduced tower representation of the element (no fingerprint, hence no false matches) with its (A,B); the trajectory detects its own self-collision when a stored exact key repeats (it has re-entered its cycle), giving a=(A_j-A_i)/(B_i-B_j) mod r. The partition index H=bits 0..19 and the DP predicate (bits 20..83 zero) read w = the two least-significant 64-bit limbs of the first tower coefficient in the kernel's NATIVE MONTGOMERY representation mont(c)=c*2^384 mod p (blst keeps field elements in Montgomery form across six 64-bit limbs; the walk reads those limbs with no conversion). The distinguished density is ~2^-64 and the routing bits are balanced, established by a REPRESENTATION-INDEPENDENT subgroup exponential-sum (Bourgain-Glibichuk-Konyagin / Bourgain-Chang) equidistribution bound: GT has order r>=q^0.0557 in F_q (q=p^12) and, by embedding degree 12 (r | p^4-p^2+1), lies in no proper subfield, so |sum_{x in GT} psi(x)| <= |GT|*q^-eps for every nontrivial additive character psi; by completion this gives JOINT near-uniformity of any <=100-bit window of mont(c) (hence the 2^-64 all-zero DP density, NOT a product of marginals) and uniformity of the 16 routing bits CONDITIONAL on the DP event, in Montgomery or ordinary representation alike. The experiment confirms this at a feasible 12-bit scale on real GT elements (random Fp12 ^ cofactor, verified g^r=1): the MONTGOMERY-form DP slice (bits 20..31) and routing slice (bits 84..95) are statistically uniform (chi^2/dof ~0.995 and ~1.012; ordinary-residue slices likewise ~0.98/~1.02, confirming representation-independence). Table exponents are drawn from the rules' fresh uniform algorithm coins (512 bits reduced mod r, bias<2^-256). DP reports are routed to 2^16 separate storage nodes, each an independent machine addressing <2^64 bytes with a hard per-node cap of 2^49 records <=2^10 bytes each = <=2^59 bytes/node, and a hard global cap N_cap=2^65 reports (~2.3x the ~2^63.8 mean; Chernoff-negligible overflow-to-failure); routing and report work (2^17 instr/report) and node set-up (2^20 instr/node) are charged and negligible, and no >2^64-byte address space is assumed. The hard budget is T_total=ceil(1.3*k0)+L_cap (k0=sqrt(2*r*ln(1/0.61)), L_cap=20/theta); a single trajectory has rho<=T with probability 1-0.61^1.69=0.566 and is then detected within T_total unless its cycle is DP-free (short-cycle bound <=2^-28.8), the re-entry-to-DP gap exceeds L_cap (e^-20=2^-28.854<=2^-28.8) or the repeat is unusable (<=1/r), giving a supported success lower bound >=0.566-2^-27.8>=0.39 (both e^-20 terms rounded UP to 2^-28.8>=e^-20, correcting the earlier 2^-28.9 which rounded the wrong way; same clean P(rho<=T) bound as my accepted Floyd submission whose walk is identical). The analysis is single-processor (serial; score is processor-count independent). Each multiplication is <=1.014 units; W=(1.3*k0+L_cap)*1.014=2^127.819 plus negligible report/one-time work, rounded to 2^127.85. Peak memory <=2^76 bytes total (DP records <=2^75 plus the adding table), <=2^59 bytes/node (reported only; access charged). Preprocessing <=2^31 units included; nonuniform advice 0 bytes. Classical cold attack, no uncharged advice or quantum steps; generic square-root accounting, not a practical break.",
+      "score": {
+        "numerator": "2557",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "gt-coefficient-bit-uniformity",
+      "source": "experiment.py",
+      "purpose": "On REAL BLS12-381 GT elements (formed as a random Fp12 element raised to the cofactor (p^12-1)/r in a self-contained blst Fp2/Fp6/Fp12 tower, each verified by g^r=1), histogram the coefficient-bit slices the single-trail DP rho actually reads: the NATIVE Montgomery-form integer mont(c)=c*2^384 mod p (the limbs the pinned blst kernel holds, no conversion), reporting the distinguished-point slice (bits dp_shift..) and routing slice (bits route_shift..) for BOTH the Montgomery form (primary) and the ordinary residue (reference), plus a joint-window probe. Report chi^2/dof against the uniform null for each slice. chi^2/dof ~1 for the Montgomery slices confirms, at a feasible 12-bit scale, the subgroup exponential-sum (BGK/Bourgain-Chang) equidistribution theorem of proof.md section 2a, which establishes the ~2^-64 JOINT DP density and routing balance conditional on being distinguished in a representation-independent way. This run is CONFIRMATORY of that theorem; it is not the sole support.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "n_log2": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 15
+          },
+          "dp_shift": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "route_shift": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200
+          },
+          "route_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "n_log2": 13,
+          "dp_shift": 20,
+          "dp_bits": 12,
+          "route_shift": 84,
+          "route_bits": 12,
+          "seed": 7
+        }
+      ]
+    }
+  ]
+}
