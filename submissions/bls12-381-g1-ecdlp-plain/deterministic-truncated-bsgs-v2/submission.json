@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: truncated BSGS with a seeded bounded-probe baby table",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), given T=[x]P0 in BLS12-381 G1 with no auxiliary powers and no n parameter, the truncated baby-step/giant-step algorithm fully specified in proof.md returns x with probability at least 0.40795 over the uniform challenge and fresh setup coins, using at most 2^127.929648 total BLS12-381 G1 target-group-operation equivalents, including preprocessing, baby-table construction, bounded eight-probe lookup, verification and output. Conditional on the indexed record set the success count is at least A*h + A - 1 over r, with m=h=0x6e4ed412a3c552fd2d010d8328cef768 and A >= 0.995*m, a 4.21x margin over the modelled indexing loss. Peak memory is at most 2^133.445494 bytes; preprocessing is at most 2^126.931162 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice and no quantum steps; the exponential memory is required by the construction. This is an analytic generic accounting claim, not a claim of novelty or of practical execution.",
+      "score": {
+        "numerator": "127929648",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "reference.py"
+      ]
+    }
+  ],
+  "experiments": []
+}
