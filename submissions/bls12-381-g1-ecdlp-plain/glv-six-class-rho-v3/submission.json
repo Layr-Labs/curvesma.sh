@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: six-class (negation + GLV) parallel Pollard rho in G1 with a global work meter",
+  "claims": [
+    {
+      "statement": "For a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with success probability at least 0.40, and on every run its total work is at most 2^126.64 batched-affine-G1-addition equivalents (C=2,000 instructions), enforced by a global work meter that charges every action at an upper-bound price before execution and halts with failure at 2^126.64. The algorithm is parallel distinguished-point Pollard rho (2^20 walks, distinguished probability 2^-64, trail cap 20*2^64) on the (r-1)/6 classes of G1 under negation and phi(x,y)=(beta*x,y)=[lambda], lambda=0xac45a4010001a40200000000ffffffff; class key |y|; canonical member via one Fp multiplication; R=2048 twisted table so each step is one batched affine addition plus at most 622 instructions; 2-cycles and cycles of length <=64 escaped by doubling the minimum-key class; fresh uniform trail coefficients stored in full; collisions solved by re-walking with coefficients reduced mod r and x=(e_2-e_1)/(f_1-f_2) mod r verified before output. Phase 1 stops when step charges reach 1.311*S_ops=2^126.6295 (S_ops=1.06*S0/0.998, S0=sqrt(2N'ln(1/0.6)), N'=((r-1)/6)*2048/2047); phase 2 completes open trails; report capacity 2^63.25 and 8 processed matches are caps counted as failure. Peak memory below 2^72 bytes, preprocessing below 2^24 units (included), no advice. Heuristic H1: at S_fresh=1.06*S0 fresh class visits the first inter-trail collision has occurred with probability at least 1-exp(-(S_fresh/1.05)^2/(2N'))=0.4058 (random-mapping law with a 5% slowdown allowance), and the |y| bits used for partition and distinguished tests are pseudo-random; supported by toy-curve experiments (including a no-automorphism control and a scaled full-pipeline mode); no production-size run.",
+      "score": {
+        "numerator": "3166",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "glv-class-rho-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on BLS12-381 G1, check the GLV pair, orbit size 6 and unit action, |y| class key, canonical member, twisted-step identity, doubling class map, table entries, coefficient tracking on production steps, and recovery of a planted x from two production trails forced to merge. Part B: run the per-trail algorithm of proof.md on a toy curve y^2=x^3+4 over F_q and report class visits to the first inter-trail collision against the random-mapping model and fruitless-cycle rates; pipeline=true also applies the scaled production rules (phase-1 budget, phase 2, report capacity, 8-match cap) and reports the success rate; classes=1 or 2 runs control walks. Toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              16,
+              64,
+              256,
+              1024,
+              2048,
+              4096
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 14,
+          "pipeline": true
+        }
+      ]
+    }
+  ]
+}
