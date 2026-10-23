@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "charged-generic-interval-attack",
+  "algorithm": "negation-quotient-kangaroo-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 131.847997,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 134.000001,
+    "preprocessing_log2": 129.867106,
+    "success_probability": 0.5,
+    "nonuniform_advice_log2_bytes": 133.0
+  },
+  "heuristics": [
+    "Expected total kangaroo steps at most 2*sqrt(r/2) for a fully stored trail with mean jump sqrt(r/2)/2, per the published analyses; converted to a success bound by Markov's inequality.",
+    "Standard random-walk mixing for the r-adding jump function."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Peak memory of 2^134 bytes is mandatory and not physically realisable.",
+    "The submitted bound is the total work of this concrete construction, not a best-known-attack estimate.",
+    "Beating this fully charged generic-interval control alone does not establish novel cryptanalysis."
+  ],
+  "lane": "exploratory"
+}

@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: negation-quotient kangaroo with a charged instruction ledger",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), given only Q=[x]P on NIST P-256 with the SEC 2 Section 2.4.2 parameters (a=-3, r prime, cofactor 1), the two-animal kangaroo walk of proof.md on the quotient of the group by the negation map recovers x with probability at least 0.5. The walk keeps a canonical representative, so a class collision at scalar positions k1,k2 implies k1 = +-k2 (mod r); each collision yields exactly two candidates and both are verified by [x]P=Q. The tame trail stores T=2^128 canonical abscissas and the wild budget is 3*2^128 steps, charged in full whether or not it is used. All work is charged in AArch64 instruction equivalents divided by the fixed track constant C=1000, with P-256 field and point operations priced from their own instruction bounds rather than the borrowed secp256k1 addition price: total 4900066083661513873872594347017462252306432 instructions, so time_log2 = 131.847997, rounded upward at six decimals. Preprocessing is 1241350074527583514714390567911090437488640 instructions (preprocessing_log2 129.867106) and is included in the total with no amortisation. Peak memory is 2^134+2^20 bytes (memory_log2_bytes 134.000001); the stored trail is 2^133 bytes of nonuniform advice (133.000000) built by that charged preprocessing and included in peak storage. The single heuristic premise is the published expected-step bound E <= 2*sqrt(r/2) for a fully stored kangaroo trail, which Markov's inequality turns into the stated success probability. No quantum steps, uncharged oracles, external advice or amortisation over future targets are used.",
+      "score": {
+        "numerator": "131847997",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-negation-kangaroo",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the quotient walk, the two-candidate collision resolution and the verification on the additive group Z_n for every scalar. This does not establish production curve behaviour, memory bounds, success probability or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 5000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
