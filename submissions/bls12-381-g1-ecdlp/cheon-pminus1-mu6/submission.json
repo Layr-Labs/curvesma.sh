@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon p-1 attack in H/mu6 with fixed-base tables",
+  "claims": [
+    {
+      "statement": "For the protected bls12-381-g1-ecdlp target with uniform s in 1..r-1 and auxiliary powers A_i=[s^i]P0, i=1..n, for every n with 2^20 <= n < r: Cheon's p-1 attack with d=2^20 (6d | r-1), run as a baby-step/giant-step search in H/mu6 where H=(F_r^*)^d and mu6=<-1,lambda> acts on G1 by negation and the GLV endomorphism (class key min{x, beta*x, -x-beta*x}), with 3-window fixed-base tables of 2^85 entries giving two batched affine additions per element, followed by resolution of s among 6d candidates against A_1, recovers s with probability exactly m*g/N' >= 0.39 (m=g=57012617742321962895928165416718183, N'=(r-1)/(6*2^20)), using at most W(n) <= 2^117.724244 total target-group-operation equivalents at C=2000, including all table construction, clearing the 2^117-slot hash table, the baby phase (preprocessing ~2^116.73, charged per instance with no amortisation), hashing, exceptional-case handling, resolution, decoding and output. W(n) is constant for n >= 2^20 because only A_1 and A_{2^20} are read. Peak memory is about 2^123.33 bytes; nonuniform advice is 0 bytes. Heuristics: pseudo-random linear-probing behaviour of canonical x-coordinate keys, and random-model frequency of exceptional additions (charged as 2^38 units). No quantum steps.",
+      "score": {
+        "numerator": "29431061",
+        "denominator": "250000"
+      },
+      "evidence": [
+        "proof.md",
+        "run.py",
+        "production.py",
+        "experiment.py",
+        "kernels/README.md",
+        "kernels/bls_step.c",
+        "kernels/measured.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "production-and-toy",
+      "source": "run.py",
+      "purpose": "Part 1: Verify on the protected BLS12-381 constants: factorisation of r-1, 6*2^20 | r-1, -1 and cube roots of unity in H, phi(P0)=[lambda]P0 on the real generator, m*g >= 0.39 N', and recompute every ledger term and the rounded-up log2 W exactly. Part 2: Run the exact algorithm (H/mu6 BSGS on d-th powers with x-class keys, 3-window fixed-base tables, 6d-candidate resolution) on random small j=0 curves of prime order r with 6d | r-1. Check every recovered secret, count additions per element, and compare each trial's success with the exact coverage rule (log_zeta(s) mod N' < m*g, from Pohlig-Hellman ground truth). Toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 36
+          },
+          "d_log2": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "bits",
+          "d_log2",
+          "trials",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 26,
+          "d_log2": 4,
+          "trials": 400,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
