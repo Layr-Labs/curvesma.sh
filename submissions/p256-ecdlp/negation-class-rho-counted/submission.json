@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: negation-class parallel Pollard rho priced from a compiled and tested step kernel (class walk of 5fa78d62 with measured instruction counts)",
+  "claims": [
+    {
+      "statement": "For the uniform full-production P-256 target Q=[x]P, the classical cold attack in proof.md (negation-class parallel Pollard rho: twisted R=2048 adding walk on classes {P,-P} keyed by x, doubling escapes from detected 2-cycles and checkpoint cycles of length <= 64, distinguished classes routed to 2^16 storage nodes each natively addressable below 2^57 bytes, re-walk solving), whose algorithm, merging lemma, work meter and success analysis are those of submission 5fa78d62 (Meganpark980320) unchanged, halts on every run after at most 2^128.06 units of C=1000 scalar AArch64 instructions because a global work meter charges every action before it runs. The ordinary step (batched affine addition with Montgomery batch inversion shared by additions and doublings in one round, sign test, table lookup, arrival checks) is priced at 1,350 instructions = 1.35 units, from a C implementation tested against Python big integers whose AArch64 assembly (kernels/p256_field.s, kernels/p256_loops.s, clang) has a longest loop iteration of 236 + 967 instructions plus 5 per-round share = 1,208 per step, 207 + 1,221 + 5 = 1,433 per doubling and 79,132 per Fermat inversion (priced 2^17); a traversal step is priced at 1.60 units and a doubling at 1.70; the remaining rare-action prices are carried over unchanged from 5fa78d62 and remain upper bounds. It succeeds with probability at least 0.39 under the disclosed heuristic H1 (random mapping on N=(r-1)/2 classes with Brent-Pollard correction and a 5% slowdown allowance; index, distinguished and routing bits pseudo-random), supported by toy runs; the meter's early-halt probability is < 0.0021 by Markov, giving success >= 0.3929. Peak memory < 2^73 bytes; preprocessing <= 2^60 units, enforced and included; no nonuniform advice. Not a practical break.",
+      "score": {
+        "numerator": "12806",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "README.md",
+        "kernels/p256_walk.c",
+        "kernels/p256_field.s",
+        "kernels/p256_loops.s",
+        "kernels/strip_asm.py",
+        "kernels/test_native.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "p256-negation-class-rho-counted-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production P-256 checks of every identity the walk uses; Part B: the complete per-trail algorithm on prime-order toy curves y^2=x^3-3x+b (T_c census, pipeline success with node routing, long-trail trap test); kernels: pure-Python port of the 4x64-bit Montgomery kernels of kernels/p256_walk.c checked against big integers, instruction counts and longest loop iterations parsed from the shipped AArch64 assembly kernels/p256_field.s and kernels/p256_loops.s, and the exact work/success ledger of proof.md section 5.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 3,
+          "seconds": 9,
+          "pipeline": true,
+          "kernels": true
+        }
+      ]
+    }
+  ]
+}
