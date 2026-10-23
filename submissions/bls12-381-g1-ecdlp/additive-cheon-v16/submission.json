@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: additive Cheon v6 (one addition per BSGS step, complete hash accounting, floor-rounded success)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.391 (at least 0.39; the model value 1 - e^-0.52 = 0.40548 floor-rounded at 0.405, minus a 0.014 heuristic allowance for the production coverage deficit, a heuristic extrapolation in d supported by controlled measurements (every no-wrap run uses deterministic ascending prime sets with every product ab < r asserted): the deficit falls with d - 0.0140 at d = 2^4, then 0.0012/0.0018/-0.0007/+0.0004 at d = 2^8/2^10/2^12/2^14, flat at |deficit| <= 0.0018 across a 64x range of d whose top is 64x below production's 2^20 - while at matched d, X2, X1, n and r, truncating the per-prime walked lists to 4 elements changes the deficit by at most 0.0009 in absolute terms at both d = 2^4 (0.0140 to 0.0105) and d = 2^8 (0.0017 to 0.0026): the class population is measured irrelevant by direct control; d carries the trend. The allowance does NOT bound the d = 2^4 measurements (0.0105-0.0140), which are stated as measured; every measurement at d >= 2^8 sits inside the allowance - worst 0.0023 at the shuffled wrapped block (6.1x inside), and every no-wrap ascending run at d >= 2^8 is <= 0.0018 (7.8x inside). Production's scale is (ln 2^70)/2^20 = 4.63e-5) over the uniform challenge. The algorithm is Cheon's p-1 baby-step/giant-step in the subgroup H of 2^20-th powers. Its baby and giant sets are small integers a*b in H (a a prime in (2^75, 2^76], b <= 2^70, chi(a)+chi(b)=0), walked in increasing order at one batched affine G1 addition per element. It uses the 6-element symmetry group {\u00b11, \u00b1\u03bb, \u00b1\u03bb\u00b2} via the hash key min(y, p-y). Provenance: the declared dependency cbadde77; every identity, itemisation and bound below is this package's own, restated in proof.md and re-verified by this package's runs. The per-element budgets: canonical y 30 (itemised ~25), walk bookkeeping 100 (itemised ~75), hash insert/lookup 240 (a complete per-transfer accounting: endpoint 61 plus six radix-1024 relay stages of 29 instructions each - 18 word moves, 4 destination selection, 4 queue updates, 3 control - over the sharded table; the linear-probing and sharding model is evidenced by a 16,384-key toy check measuring 1.524/2.542 mean probes against the 1.5/2.5 bounds and shard loads within 2.6 sigma). Its total work W(n) = W(2^20) is at most 2^116.911621 target-group-operation equivalents. This includes the distributed hash-table inserts and lookups, walk bookkeeping, per-prime tables, character precomputation and sieves, collision verification, the d-th root, the final mu_d search and input checks. Preprocessing (challenge-independent work) is at most 2^115.914 and is included. Peak memory is at most 2^122.9 bytes; there is no nonuniform advice. Heuristics: H1 (the product set U*B*G^-1 has random-like coincidences; the production coverage deficit is charged at a 0.014 heuristic allowance, an extrapolation in d that does NOT bound the stated d = 2^4 measurements (0.0105-0.0140) and is inside every measurement at d >= 2^8 by 6.1x or more (worst 0.0023 at the shuffled wrapped block; the no-wrap ascending ladder measures |deficit| <= 0.0018 flat across d = 2^8..2^14, every product ab < r asserted; production's d = 2^20 is 64x the largest measured d), with no further quantitative loss asserted); H2 (characters of the primes a used are equidistributed, affecting only how many primes are needed, with at least 3x slack); and expected-cost hashing and sharding, evidenced by a 16,384-key probe/shard toy check. All are disclosed and supported by toy experiments at their stated scope. This is an analytic bound, not a full-size execution.",
+   "score": {
+    "numerator": "116911621",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run with six parts. (1) Recomputes the cost ledger (canonical y 30, hash 240, bookkeeping 100; every charge asserted above its itemised count) and the exact score. (2) Toy coverage for H1/H2 across X2/d (bits 27, d = 2^8): random sets, smallest integers in H, and the product construction. (3) No-wrap coverage on the deterministic ascending rule with every product ab < r asserted: the d-ladder d = 2^8, 2^10, 2^12 and 2^14 at X2/d = 4 (exact set counts over U*B*G^-1 with inverted giants), and the controlled population pairs at matched d, X2, X1, n and r (walked lists truncated to 4 vs full). (4) A 16,384-key hash_probe check on keys from the structured production-style walk. (5) The full end-to-end toy attack (shuffled, 400 trials) on a 24-bit j = 0 curve with d = 2^6. (6) A fixed-order attack run (120 trials) under the deterministic set rule. Toy results are evidence at their scale only. Input: K, cov_bits, cov_logd, atk_bits, atk_logd, trials, gmax, seed.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "K": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 6
+     },
+     "cov_bits": {
+      "type": "integer",
+      "minimum": 20,
+      "maximum": 29
+     },
+     "cov_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10
+     },
+     "atk_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 24
+     },
+     "atk_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 6
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "gmax": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 100000
+     }
+    },
+    "required": [
+     "K",
+     "cov_bits",
+     "cov_logd",
+     "atk_bits",
+     "atk_logd",
+     "trials",
+     "gmax",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "K": "0.52",
+     "cov_bits": 27,
+     "cov_logd": 8,
+     "atk_bits": 24,
+     "atk_logd": 6,
+     "trials": 400,
+     "gmax": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
