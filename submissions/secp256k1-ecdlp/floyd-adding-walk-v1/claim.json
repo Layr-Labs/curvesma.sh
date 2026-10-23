@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "floyd-adding-walk-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 134.02857,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 20.0,
+    "preprocessing_log2": 20.034216,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "One 64-bit seed and a budget of 3*ceil(sqrt(order)) Floyd iterations are assumed to collide, with unequal coefficients, at least as often as a uniform random mapping that is about 2.4 times slower than the classical rho. The random-mapping tail at this budget fails with probability about exp(-4.5). The claimed probability is only 0.39. Toy walks on canonical prime-order groups support the mixing constant for a high-half partition; they do not measure Jacobian or Fp12 representatives."
+  ],
+  "limitations": [
+    "Analytic construction. The production walk is not executed.",
+    "Success probability 0.39 is a disclosed lower bound, not a proved mixing theorem.",
+    "Instruction prices are ceilings. A lower real instruction count would only decrease W.",
+    "No GLV, negation map, distinguished points, or number-field sieve is included."
+  ],
+  "lane": "exploratory"
+}
