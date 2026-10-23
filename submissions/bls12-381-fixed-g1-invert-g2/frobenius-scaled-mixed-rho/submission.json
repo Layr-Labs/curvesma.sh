@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-scaled mixed add/square rho on GT",
+  "claims": [
+    {
+      "statement": "For every nonidentity P in G1 and every z in GT, return Q in G2 with e(P,Q)=z. If z=1, Q is infinity. Otherwise set g=e(P,Q0) for the profile generator Q0, recover y from the Frobenius-scaled three-branch walk in proof.md, and return Q=[y]Q0. Under the two heuristics stated there (random-mapping collision time on Frobenius orbits, and non-collapse of the limb key), the walk succeeds with probability at least 1/2 and uses at most 2^(12575/100) dense-Fp12-multiplication equivalents, including preprocessing, the pairing, failed orbit checks, and output. Peak memory is at most 2^127 bytes. Preprocessing is at most 2^20 reference equivalents and is included in the total. Nonuniform advice is at most 2^0 bytes. This is one classical cold attack. The exponential table is required.",
+      "score": {
+        "numerator": "12575",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "scaled-collision-and-frobenius-constants",
+      "source": "experiment.py",
+      "purpose": "Check that the pinned Fp Frobenius multipliers satisfy c1^6=1, c2=c1^2, c3=c1^3, and that the scaled collision equation recovers y on a toy cyclic group with an automorphism of order 12. This does not establish the BLS12-381 running-time heuristic.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 20
+        }
+      ]
+    }
+  ]
+}
