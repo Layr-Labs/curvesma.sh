@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "algorithm": "parallel-rho-negation-classes-sigma-walk-trails-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.370918,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 76.542441,
+    "preprocessing_log2": 47.949581,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the class-level r-adding walk with 2^16 adders behaves as a random mapping on the (r-1)/2 negation classes, up to an exponent penalty of at most 4/2^16. Used only for the collision statistics (proof.md 2.6).",
+    "M1: equivariant random orientation. For each class C, a uniform key K_C (it fixes the adder index, the 64-bit filter bits and the DP test), the canonical representative canon(C) (the point of C with M(y) even, a function of C), and a uniform orientation g_C in {+1, -1} that says where the walk's representative of C sits relative to canon(C). A point's sign is determined by its relation to canon(C) and g_C. All are independent across classes and of x and the coins. Orientation law L-ori: at a fresh class the arriving point's sign is uniform given the history, and at a revisited class it is determined by the history. Every use cites L-ori: the 2-cycle entry rate 1/(2A) (proof.md 2.3, Lemma E1(b)) and the closure windows. P-256 has no rotation and no fallback (measurement/step.c).",
+    "W: window premise (part of the entry analysis, proof.md 2.3, Lemma E1(c)). For a fresh source, the expected number of longer-entry targets over the history, counting all windows of length 3..64, is at most 3/(2A) + 4/A^2. This is derived for windows whose steps are all fresh-source steps (their indices and units are i.i.d. uniform by M1 and L-ori). It is a premise for windows that contain persistent steps, whose indices and units are determined by the history. It enters the success bound only through the metered reserve."
+  ],
+  "limitations": [
+    "The model success term is 0.411524 at tau = 0.5303, 0.0215 above 0.39. After the 1/64 meter loss, 2^-20, DELTA_CUT (about 6.1e-17) and DELTA_ABANDON (about 7.5e-8), the bound is 0.395898 (proof.md 2.6).",
+    "M1, L-ori and the window premise W carry the success bound. They are not proved for this walk; the whole procedure, including resolution, is tested only on toy curves at theta = 2^-5, which cannot test the production regime. W is derived for windows of fresh steps only; for windows that contain persistent steps it is a premise, and the success bound stays at least 0.39 for a longer-entry expectation up to about 124 times its premise value (proof.md 2.6).",
+    "Randomness: the adder coefficients and every trail's coins are drawn from the operating system's randomness, fresh in every run and at every trail start including restarts, independently of the target (proof.md 2.0). Every probability is over the uniform target and these coins. The measured instances use a fixed seed (random.Random(1) for the reproducible instance; seeds 1 and 2 for the two input sets).",
+    "Lemma D holds exactly over the coins. The degenerate-pair bound fixes the transcript before the Schwartz-Zippel step, and passing from the transcript to the coin values is part of M1.",
+    "Entries and persistent steps: each entry is followed by at most 128 persistent steps (Lemma E2), so processed steps are at most fresh-source steps plus 128 times the entries. The abandonment tail uses the conditional entry bound 64/(2A), which holds for every history on G (proof.md 2.4).",
+    "Restart pool: the harness reuses 1024 pooled starts for restarts, while the specified algorithm draws fresh coins for every restart. The restart path is not part of the common-path measurement, and the kernel was not changed (proof.md 2.5).",
+    "Cut-off replays: a replay of a trail with n live steps is cut off after 65n steps and fails the run. DELTA_CUT (about 6.1e-17) bounds this event, which includes within-trail coincidences and structural repeats of length 65 or more (proof.md 2.2).",
+    "The escape depth is bounded per step (K_ESC = TRAIL_MAX), so D1 needs ord_r(2) > 2 TRAIL_MAX. This is verified for the P-256 order from the smooth part S = (r-1)/C2 of r-1 (proof.md 2.1, accounting.py); the 188-bit cofactor is not factored and is not needed.",
+    "DELTA_LOOP, DELTA_CUT and DELTA_ABANDON are union bounds from the stated counts. They are upper bounds, not rates measured in any run.",
+    "H3 is a measurement assumption, not a probabilistic heuristic: the Callgrind instruction counts on production inputs represent the common path, 833.61 (plain) and 843.61 (anchor, rare events removed) instructions per walk step, plus at most 3 for the first distinguished-point test (C_COMMON = 847). The rare paths are out of line and charged at worst case, and the Markov reserve covers the expected rare work.",
+    "Analytic production cost; no production-size execution.",
+    "Needs about 2^68.5 stored distinguished points; not a practical attack.",
+    "Distinguished points never occur in a production-parameter measurement sample; the restart and abandonment paths were checked on small builds.",
+    "The rare-path charges are forced-path maxima measured with a bounding build (proof.md section 3.1); the bounding build is checked for equality and for dominance on the forced paths, not proved for every input.",
+    "The work meter's abort probability, 1/64, is a Markov bound on the expected metered rare work (Lemma M'', proof.md 2.5), and is counted in delta."
+  ],
+  "lane": "exploratory"
+}
