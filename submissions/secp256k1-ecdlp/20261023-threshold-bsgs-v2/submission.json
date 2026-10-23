@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "Threshold-sized deterministic BSGS with padded affine batches and paid routing",
+  "claims": [
+    {
+      "statement": "For the unchanged uniform full-production secp256k1 ECDLP input Q=[x]P, the classical deterministic algorithm in proof.md recovers the canonical x with probability exactly m^2/r >= 39/100, for m=ceil(sqrt(ceil(39r/100))). Its complete cold work, including preprocessing, padded batches, all failures, native-limb arithmetic, routing at both endpoints, sorting, lookup, verification and output, is at most 2^(545/4) target-group-operation equivalents using only the protected C=1000 normalization. Preprocessing is included and bounded by the same ceiling. Peak aggregate storage is below 2^136 bytes; external nonuniform advice is zero bytes (reported log2(max(1,bytes))=0). No statistical or random-walk heuristic is used. This is an analytic construction with explicit instruction and distributed-memory assumptions, not a production execution, native instruction measurement, practical attack, novelty claim or human qualification.",
+      "score": {
+        "numerator": "545",
+        "denominator": "4"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "threshold-bsgs-mechanisms",
+      "source": "experiment.py",
+      "purpose": "Check exact production ledger/coverage inequalities, exhaust a 199-point toy curve, exercise interleaved batches and partial lanes, test small grids over actual secp256k1 and field/counter boundaries. Does not measure production instructions or execute the production search.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
