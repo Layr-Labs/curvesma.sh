@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "GT order-12 Frobenius-class parallel Pollard rho in GT (fixed-G2 backport v2)",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in argument.md (compute g=e(P0,Q) via the pinned pairing(Q,P0,True); solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate class key and deterministic fruitless-cycle escape; output P=[x]P0 and verify pairing(Q,P,True)=z) succeeds with probability at least 0.40 using at most 2^(12589/100) total dense-Fp12-multiplication equivalents at the fixed C=20000 price in scalar 64-bit AArch64 instruction equivalents, including setup, pairing, table construction, walk starts, distinguished-point handling, cycle handling, detection delay, output and verification. Peak memory is below 2^73 bytes; preprocessing is at most 2^62 equivalents and is included in the total; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for R-adding rho walks (Brent-Pollard R/(R-1) correction, 3% explicit step slack, e^-20 detection tail), supported by historical toy-field experiments; no production-size run is claimed. All ledger identities and constants were independently re-derived in exact integer arithmetic; see certificate.json.",
+      "score": {
+        "numerator": "12589",
+        "denominator": "100"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

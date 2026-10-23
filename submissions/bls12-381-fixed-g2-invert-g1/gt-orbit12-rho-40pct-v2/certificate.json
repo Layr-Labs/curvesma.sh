@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "package": "gt-orbit12-rho-40pct-v2",
+  "track": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "tracks/docs/COST_MODEL.md (classical-group-work-v2), C=20000 dense Fp12 multiplication",
+  "rederivation": "independent host integer arithmetic (python3 exact Fractions); historical experiment code NOT executed on host",
+  "constants": {
+    "p_hex": "1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab",
+    "r_hex": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
+    "class_count_N_dec": "4369656264593849206620645042348830486474212708377303151883638224994881765376",
+    "log2_N": 251.2721,
+    "R": 1024,
+    "theta": "2^-60",
+    "M": "2^20",
+    "log2_S0": 125.6522,
+    "log2_S": 125.6949,
+    "step_cost_c": "1.14",
+    "fruitless_overhead_exact": "131129/131072",
+    "log2_W_rederived": 125.8845,
+    "claimed_score": {
+      "numerator": "12589",
+      "denominator": "100"
+    }
+  },
+  "exact_rational_bound": {
+    "statement": "W = c*S*(1+3/(12R)+200/R^2)+c*E+2^62; S^2=1.03^2*2*N*(1024/1023)*ln(5/3), ln(5/3)<0.510825623766; E=20*2^80 so c*E+2^62<2^85; sqrt via integer isqrt ceiling; verified W^100 <= 2^12589 in exact integers",
+    "passed": true,
+    "slack_bits": 0.0055
+  },
+  "success_model": {
+    "formula": "1-exp(-1.03^2*ln(5/3)) minus e^-20 detection tail",
+    "value": 0.418378,
+    "claimed": "0.40",
+    "track_floor": "0.39"
+  },
+  "checks": {
+    "ord_r_p_is_12": true,
+    "p6_is_minus_one_mod_r": true,
+    "one_plus_p4_plus_p8_zero_mod_r": true,
+    "twelve_divides_r_minus_1": true,
+    "class_count_log2_251_2720_to_251_2722": true,
+    "zeta_in_Fp": true,
+    "zeta_primitive_6th_root": true,
+    "B_key_formula_identity_8_random": true,
+    "norm_d1_equals_zeta": true,
+    "step_instruction_budget_2422_le_2800": true,
+    "fp_mul_4x383_1532": true,
+    "two_cycle_rate_1_over_12R": true,
+    "overhead_factor_1_000435": true,
+    "detection_window_b_below_2pow_85": true,
+    "total_work_W_le_2pow_125_89_exact_rational": true,
+    "dp_reports_log2_below_65_7": true,
+    "memory_reports_bytes_below_2pow_73": true,
+    "success_model_ge_040_after_detection_tail": true,
+    "float_ledger_log2W_125_884_to_125_89": true
+  },
+  "all_passed": true
+}

@@ -1,0 +1,21 @@
+{
+ "version": 1,
+ "title": "GT order-12 Frobenius-class parallel Pollard rho, hardened v3 (fixed-G2 invert-G1)",
+ "claims": [
+  {
+   "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in argument.md (g = e(P0,Q) via the pinned pairing(Q,P0,True); solve z = g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R = 1024 lockstep processors of M = 2^20 walkers each, theta = 2^-60, a class-only doubling ladder escape and a salted tau_max restart rule) succeeds with probability at least 0.40 (modelled 0.4184, named margin 0.0184 for detection delay and exceptional events, track floor 0.39) using at most 2^(6297/50) = 2^125.94 total dense-Fp12-multiplication equivalents at the fixed C = 20000 price in scalar 64-bit AArch64 instruction equivalents, including setup, pairing, tables, walk starts, distinguished-point handling, cycle handling, detection delay, output and verification. The raw ledger bound is < 2^125.8851 and the adversarially repriced bound (all non-reference overhead x1.2) is < 2^125.9207; the claim is deliberately reduced from the v2 value so both bounds sit inside it. Peak memory is below 2^73 bytes (78 B DP records, expected reports < 2^65.7, load factor <= 2/3, fingerprint-collision verification charged in W, Poisson tail P(pairs > 2^24) < 2^-80, silent-failure probability 0 since g^x = z catches every false fingerprint); preprocessing <= 2^62 equivalents included; nonuniform advice 0 bytes. Success relies on the disclosed random-mapping heuristic, with the first-principles cycle formula P(on L-cycle) = (N-1)_{L-1}/N^L and ladder-free waste omega < 2^-40 certified as exact rationals, and on an in-package toy experiment (scripts/toy_hard.py) at toy scale that verifies merge-preservation of the hardened walk (nonrestart_splits = 0, dp_mismatch = 0) and the cycle formula; no production-size run is claimed. Output is P = [x]P0 with e(P,Q) = z verified. All ledger identities and constants are re-derived in exact integer/Fraction arithmetic by scripts/verify_v3_ledger.py; see certificate.json.",
+   "score": {
+    "numerator": "6297",
+    "denominator": "50"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/toy_run.log",
+    "scripts/verify_v3_ledger.py",
+    "scripts/toy_hard.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

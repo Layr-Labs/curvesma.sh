@@ -1,0 +1,57 @@
+[
+ {
+  "name": "toy_hard r=61 class-only ladder + salted tau-restart merge/DP audit",
+  "script": "scripts/toy_hard.py",
+  "log": "evidence/toy_run.log",
+  "parameters": {
+   "r": 61,
+   "p": 21,
+   "N": 5,
+   "R": 4,
+   "s": 2,
+   "d": 2,
+   "M": 6,
+   "steps": 400,
+   "tau_max": 24,
+   "trials": 800
+  },
+  "results": {
+   "solved": 800,
+   "mergepairs": 2760590,
+   "nonrestart_splits": 0,
+   "dp_mismatch": 0,
+   "false_x": 3547136,
+   "restarts": 19803,
+   "fp_collisions": 0
+  },
+  "scope": "Toy scale only: confirms the hardened walk's class map is coalescence-preserving (merged walks stay merged and fire DP reports simultaneously absent a salted restart), that DP reporting and the salted tau_max restart rule keep all restart-induced divergence accounted (nonrestart_splits = 0), and that every false_x arises from fingerprint-key collision and is discarded by the exact-K match, i.e. fp-verify work only. Does NOT establish production partition counts, step costs, or success rates."
+ },
+ {
+  "name": "toy_hard r=109 class-only ladder + salted tau-restart merge/DP audit",
+  "script": "scripts/toy_hard.py",
+  "log": "evidence/toy_run.log",
+  "parameters": {
+   "r": 109,
+   "p": 8,
+   "N": 9,
+   "R": 8,
+   "s": 2,
+   "d": 3,
+   "M": 8,
+   "steps": 800,
+   "tau_max": 32,
+   "trials": 700
+  },
+  "results": {
+   "solved": 409,
+   "solved_trials": 700,
+   "mergepairs": 6338915,
+   "nonrestart_splits": 0,
+   "dp_mismatch": 0,
+   "false_x": 0,
+   "restarts": 133205,
+   "fp_collisions": 0
+  },
+  "scope": "Toy scale only: same mechanism audit at a second field size (small N, so many trials end unsolved within the step budget; the quantity certified is mechanism integrity: nonrestart_splits = 0, dp_mismatch = 0, fp_collisions = 0). Not a production success-rate estimate."
+ }
+]
