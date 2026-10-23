@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: parallel Pollard rho on GLV-negation classes",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 on BLS12-381 G1 with no auxiliary powers, the parallel distinguished-point Pollard rho in proof.md, reduced onto the six-element orbits of <-1, phi>, recovers x with success probability at least 0.4 using at most 2^128 total target-group-operation equivalents, including preprocessing, trail starts, hash-table work, drain, resolve and verification. Peak memory is at most 2^94 bytes; preprocessing is at most 2^30 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice or quantum steps. Success uses the random-mapping heuristic on r-adding walks stated in proof.md. This is not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "128",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-class-rho",
+      "source": "experiment.py",
+      "purpose": "Check the profile GLV identities and exhaustively recover every discrete logarithm in a tiny additive group by class-rho plus the six-element linear solve. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 500
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 73
+        }
+      ]
+    }
+  ]
+}

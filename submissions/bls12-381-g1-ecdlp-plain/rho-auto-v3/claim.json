@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "unrestricted-production",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-rho-automorphism",
+  "algorithm": "automorphism-aware-pollard-rho-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": "127016229/1000000",
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 94,
+    "preprocessing_log2": 22,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "A canonical r-adding walk on the (r-1)/6 orbits of <-1, phi> collides like a random mapping, so 1-exp(-t^2/(2N')) is the collision probability at t class-steps (Teske; van Oorschot-Wiener). At the charged t this is about 0.5446, and the ideal 0.39 quantile is a factor 1.2605 shorter, which is the allowance for residual short cycles after look-ahead is charged separately.",
+    "The initial experiment (seed 12648430, 40 trials) recovered every planted logarithm. Median collision times on orders 10009, 100003, 1000003 and 5000011 were 1.055, 0.896, 0.844 and 1.096 times the ideal class mean; the empirical 0.39 quantiles were 0.762, 0.748, 0.723 and 0.734 times that mean."
+  ],
+  "limitations": [
+    "Analytic attack. The random-mapping identification is a heuristic. The experiment covers prime orders up to 5000011 and one 4093-point j=0 curve, not the production group.",
+    "Generic automorphism-class rho. Not a number-field sieve estimate, a practical break, or a security bound.",
+    "Success probability 0.39 is the supported lower bound inside the ideal-model gap. It is not a worst-case guarantee."
+  ],
+  "lane": "exploratory"
+}
