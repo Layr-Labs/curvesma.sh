@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "Plain BLS12-381 G1: tableless twisted six-class rho with bounded Floyd and fully charged scalar actions",
+  "claims": [
+    {
+      "statement": "For the protected plain G1 input consisting only of T=[x]P0, recover and verify the canonical 32-byte scalar x with success at least 2/5 under the explicitly disclosed keyed-SHAKE random-function heuristic H1 and its 21/20 slowdown allowance. Identity returns zero. Maintain exact point relations R=[a]P0+[b]T on the six-element negation/endomorphism quotient; compute R+[h]P0 by a fully charged scalar action, canonicalize and reduce both labels modulo r. B is the least integer with 100B^2>=169(r-1)/6. Bounded Floyd, entry replay and one exact lap use at most 6B evaluations, with a derived ideal-model useful-cycle factor 5/6 rather than a spurious 1-1/r. The model lower bound 11/25, less a 3/100 extrapolation reserve and exact exceptional allowances, exceeds 2/5 and the 39/100 minimum. At fixed C=2000, H=0 and total W=(6B*154767096+2^40)/2000 has 145.3392<log2 W<145.3393; submitted time_log2=14547/100 deliberately covers 1.2x repricing of every nonmultiplication row with more than 0.10 bits of remaining headroom. Hard native peak memory is 2^20 bytes, cold preprocessing below 2^30 units is included in W, and nonuniform advice has zero bytes (reported log bound 0). Hashing, arithmetic, transfers, repeated traversal, unsuccessful attempts, input validation, initial labels, preprocessing, verification and output are charged. No auxiliary powers, n parameter, exponential lookup, DP store, checkpoint escapes or uncharged oracle are assumed. Toy execution and exact arithmetic support only their stated scopes; H1 is not proved at production size. This is a correctness-first noncompetitive repair, not a production break or best-known claim.",
+      "score": {"numerator": "14547", "denominator": "100"},
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "reference.py",
+        "check.py",
+        "test_reference.py",
+        "captured-output.txt",
+        "toy-results.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

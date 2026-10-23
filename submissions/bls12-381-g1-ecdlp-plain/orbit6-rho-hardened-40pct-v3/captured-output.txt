@@ -1,0 +1,18 @@
+Exact integer/Fraction certificate; no production-sized attack executed.
+certificate checks: 50/50
+C: 2000
+N: 8739312529187698413241290084697660972948425416754606303767276449989763530752
+B: 121529577364225250227431250500872470122
+evaluation cap: 729177464185351501364587503005234820732
+instruction rows: {"512_bit_hash_reduction": 65536, "affine_nonmultiply": 4186112, "class_keys_control_counter_and_transfers": 8192, "field_multiply_kernels": 150310648, "keyed_SHAKE256": 65536, "two_scalar_normalizations": 131072}
+per-evaluation instructions: 154767096
+W exact: 7053292412538178600339827817375716693892741378/125
+log2(W) exact bracket: 90837/625 < log2(W) < 1453393/10000
+stress log2 exact bracket: 58139/400 < log2(W_stress) < 363369/2500
+claim: 14547/100
+success claim: 2/5; conservative ideal-model useful-collision floor: 11/25
+native memory inventory bytes: 405504; hard cap: 1048576
+toy verified recoveries: 786/1200
+toy p=1543 r=523: 259/400, max evaluations 78 <= 78
+toy p=1549 r=541: 271/400, max evaluations 76 <= 78
+toy p=1621 r=523: 256/400, max evaluations 76 <= 78

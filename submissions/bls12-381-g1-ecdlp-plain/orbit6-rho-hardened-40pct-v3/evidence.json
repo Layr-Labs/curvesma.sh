@@ -1,0 +1,55 @@
+{
+  "scope": "SHA-256 of all package files except this non-self-referential manifest",
+  "files": [
+    {
+      "path": "argument.md",
+      "bytes": 19047,
+      "sha256": "1281d62577850b2ec30c140b1e0854e12e56b8817406e7864d5c10a7d1ac81ad"
+    },
+    {
+      "path": "captured-output.txt",
+      "bytes": 1083,
+      "sha256": "ee5856342cc1eb3794d6107126415f5854523540944ae4e17f6a482aee3279e3"
+    },
+    {
+      "path": "certificate.json",
+      "bytes": 5980,
+      "sha256": "881da7d5270c88f669985f686716511b4e8546fd885f3b425f901b30786c87c6"
+    },
+    {
+      "path": "check.py",
+      "bytes": 11966,
+      "sha256": "0102a717293fdf8fdfc2ac9ec49eee4440e50934a6cf3741e9017e5ff7d76da8"
+    },
+    {
+      "path": "dependencies.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "public-note.md",
+      "bytes": 11956,
+      "sha256": "6d6fa4373a1f8aa9bfb2ea60776db36f3795d3389962f02a90b50af5139dab4d"
+    },
+    {
+      "path": "reference.py",
+      "bytes": 4958,
+      "sha256": "c46111c77067623e74d78d0c9c6982863920762cf6981dbb65788bb0274dcfb5"
+    },
+    {
+      "path": "submission.json",
+      "bytes": 2140,
+      "sha256": "6fcedbc051cde336e5eba06e7195d33c3ec6b4c9fb5496fcb2bcfd74930d6ed3"
+    },
+    {
+      "path": "test_reference.py",
+      "bytes": 2709,
+      "sha256": "7f1bcfd3565ac0158841e9c6b2ab247825c242992d4c9df9c53a4fb3f4414847"
+    },
+    {
+      "path": "toy-results.json",
+      "bytes": 54453,
+      "sha256": "78f81b720c328e7d91fb40a6ceff28d601c7809c383adae9141846567c2dfbb4"
+    }
+  ]
+}

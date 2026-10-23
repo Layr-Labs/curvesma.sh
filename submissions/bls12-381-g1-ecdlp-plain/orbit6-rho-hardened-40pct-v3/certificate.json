@@ -1,0 +1,110 @@
+{
+  "version": 3,
+  "scope": "exact arithmetic and small-curve captured runs; production constant identities only; heuristic production success is not certified",
+  "normalization_C": 2000,
+  "protected_inputs_sha256": {
+    "tracks/bls12-381-g1-ecdlp-plain/target-profile.json": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6",
+    "tracks/bls12-381-g1-ecdlp-plain/rules.md": "14ce16128825a8b16930b30762806b1a115e2dac46ecc26cda06820b3d14e394"
+  },
+  "claim": {
+    "numerator": "14547",
+    "denominator": "100"
+  },
+  "checks": {
+    "embedded field and order equal the protected profile": true,
+    "protected problem supplies T only and requires a 32-byte scalar": true,
+    "normalization is read from the protected cost document": true,
+    "C fixed at 2000; no n parameter in this claim": true,
+    "field width is 381 bits stored in 48 bytes": true,
+    "scalar width is 255 bits stored in 32 bytes": true,
+    "six-class count is exact": true,
+    "lambda is a nonidentity cube root modulo r": true,
+    "public generator satisfies curve equation": true,
+    "beta is a nonidentity cube root modulo p": true,
+    "production public endomorphism identity checked": true,
+    "production negation has identical complete key and canonical point": true,
+    "production negation uses the opposite eigenvalue": true,
+    "budget is minimal integer with 100B squared at least 169N": true,
+    "Floyd including entry and one-lap replay uses at most 6B": true,
+    "step cap fits in three 64-bit limbs": true,
+    "all scalars fit in four 64-bit limbs": true,
+    "all field coordinates fit in six 64-bit limbs": true,
+    "binary scalar multiply uses at most 510 affine operations": true,
+    "transition uses at most 511 affine operations": true,
+    "Fermat inverse and affine formula fit 768 field multiplications": true,
+    "constant-width state record including key and counter fits 256 bytes": true,
+    "hard capped total native storage is below 2^20 bytes": true,
+    "fixed work inventory fits 2^40 instructions": true,
+    "preprocessing units are below 2^30": true,
+    "SHAKE one-block input is within its 136-byte rate": true,
+    "SHAKE one-block output fits its 136-byte rate": true,
+    "Keccak permutation and packing budget fit 65536 instructions": true,
+    "512-bit scalar reduction budget covers 512 steps at 128 instructions": true,
+    "two coefficient products fit 131072 instructions": true,
+    "affine nonmultiply operation census fits 8192 instructions": true,
+    "claim fraction is reduced": true,
+    "ledger log is inside exact 145.3392..145.3393 bracket": true,
+    "all instructions are counted exactly once and H is zero": true,
+    "submitted work bound covers computed ledger": true,
+    "1.2x all nonmultiplication rows still have at least 0.10 bits": true,
+    "submitted slack is explicitly in the 0.13..0.14 bit interval": true,
+    "finite B birthday exponent gives useful-collision model at least 0.44": true,
+    "modular-reduction bias over all distinct labels is below 2^-124": true,
+    "infinity and zero-initial-coefficient allowance is below 2^-124": true,
+    "model minus 0.03 extrapolation reserve and exact exceptional loss exceeds 0.40": true,
+    "success floor is strictly above the protected 0.39 minimum": true,
+    "toy 1543 exhaustive free six-class quotient and both signs": true,
+    "toy 1549 exhaustive free six-class quotient and both signs": true,
+    "toy 1621 exhaustive free six-class quotient and both signs": true,
+    "every returned toy logarithm is correct and every intermediate representation checked": true,
+    "all captured toy trials respect deterministic evaluation cap": true,
+    "captured trial total is exactly 1200": true,
+    "toy arithmetic reports a nonzero number of verified recoveries": true,
+    "identity target returns exactly the canonical zero scalar": true
+  },
+  "parameters": {
+    "p": "4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559787",
+    "r": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+    "beta": "4002409555221667392624310435006688643935503118305586438271171395842971157480381377015405980053539358417135540939436",
+    "lambda": "228988810152649578064853576960394133503",
+    "N": "8739312529187698413241290084697660972948425416754606303767276449989763530752",
+    "B": "121529577364225250227431250500872470122"
+  },
+  "ledger": {
+    "H": 0,
+    "instruction_rows_per_evaluation": {
+      "field_multiply_kernels": 150310648,
+      "affine_nonmultiply": 4186112,
+      "keyed_SHAKE256": 65536,
+      "512_bit_hash_reduction": 65536,
+      "two_scalar_normalizations": 131072,
+      "class_keys_control_counter_and_transfers": 8192
+    },
+    "fixed_instruction_bound": 1099511627776,
+    "W": "7053292412538178600339827817375716693892741378/125",
+    "stress_W": "35469558403435510584671214914915625582332026122/625",
+    "log2_W_bracket": [
+      "90837/625",
+      "1453393/10000"
+    ],
+    "stress_log2_bracket": [
+      "58139/400",
+      "363369/2500"
+    ],
+    "memory_inventory_bytes": 405504,
+    "memory_log2_bytes": 20,
+    "preprocessing_log2": 30,
+    "nonuniform_advice_bytes": 0
+  },
+  "success": {
+    "ideal_model_lower": "11/25",
+    "claimed": "2/5",
+    "extrapolation_reserve": "3/100",
+    "exact_exception_allowance": "1817166992767505058839984918190243114734140669648027696074559906404738647858346500400808460380432769770523385501104537577794215904211997354637811266227373214821525862771938491898763402042374975/351525071493268552069801646992481462237867570840332346172955182854590000045517751930041784328238287017165850361008185033396614832683919424218816287713911449865327468322258318814709091490567574632854558129352690860021199983685402624"
+  },
+  "toy": {
+    "trials": 1200,
+    "verified_recoveries": 786
+  }
+}
