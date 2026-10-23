@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "seed": 2026102306,
+  "trials_per_config": 10000,
+  "scope": "Exact structurally faithful toy class maps; finite-table correlations and DP censoring measured. Production transfer is an explicitly unproved scaling hypothesis, not a statistical confidence statement.",
+  "preregistered_length_reserve": {
+    "numerator": 11,
+    "denominator": 10
+  },
+  "elapsed_seconds": 46.048265375,
+  "configuration_files": [
+    "evidence/faithful-0.json",
+    "evidence/faithful-1.json",
+    "evidence/faithful-2.json",
+    "evidence/faithful-3.json",
+    "evidence/faithful-4.json",
+    "evidence/faithful-5.json",
+    "evidence/faithful-6.json"
+  ]
+}

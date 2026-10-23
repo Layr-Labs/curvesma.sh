@@ -1,0 +1,14 @@
+{
+  "decision": "HOLD",
+  "upload_authorized": false,
+  "claim": {
+    "numerator": "6441",
+    "denominator": "50"
+  },
+  "frontier": {
+    "numerator": "12589",
+    "denominator": "100"
+  },
+  "reason": "The retained square-and-add/Floyd schedule is noncompetitive even with all proposed safe reductions. No Yukon submit was run.",
+  "submission_id": null
+}

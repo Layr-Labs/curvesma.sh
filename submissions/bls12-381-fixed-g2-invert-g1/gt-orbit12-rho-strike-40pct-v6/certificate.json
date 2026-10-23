@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "package": "gt-orbit12-rho-strike-40pct-v6",
+  "scope": "Exact arithmetic and captured-toy consistency only. Production Hmix/Hkey remain unproved. HOLD: no frontier improvement.",
+  "constants": {
+    "p": 4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559787,
+    "r": 52435875175126190479447740508185965837690552500527637822603658699938581184513,
+    "N": 4369656264593849206620645042348830486474212708377303151883638224994881765376,
+    "Np_floor": 4373927678342230290889091420689347427321206073683634826518910598626352813044,
+    "Np_ceiling": 4373927678342230290889091420689347427321206073683634826518910598626352813045,
+    "T0": 66847802276462331670412349757297191499,
+    "T": 73532582504108564837453584733026910649,
+    "stretch": {
+      "numerator": "11",
+      "denominator": "10"
+    },
+    "ln5over3_lower": {
+      "numerator": "17912089908385456482166132749406742084758963550300748631528683625096020477187191377208580869203777897172425808767082039093821790158958709135256832900634824859769",
+      "denominator": "35064979270873436695015980907586531243359507533722335503813081960401293075368554924446850994183833399468530015565969473164049434772759356212817437491646693376000"
+    },
+    "ln5over3_upper": {
+      "numerator": "389393258877944706134046364117537871407803555441320622424536600545565662547547638634969149330516911990293597914742125486289179379374702221850538137965381967839",
+      "denominator": "762282158062466015109043063208402853116511033341789902256806129573941153812359889661888065090952899988446304686216727677479335538538246874191683423731449856000"
+    },
+    "order_two": 3277242198445386904965483781761622864855659531282977363912728668746161324032,
+    "order_mod_frobenius": 273103516537115575413790315146801905404638294273581446992727389062180110336,
+    "ordinary_rows": {
+      "four_base_field_products_4_times_383": 1532,
+      "nine_six_limb_add_sub_neg_9_times_64": 576,
+      "minimum_of_twelve_six_limb_keys_and_index": 600,
+      "two_scalar_double_add_reduce_updates": 384,
+      "twisted_jump_and_label_load_addressing": 256,
+      "DP_predicate_and_report_dispatch": 128,
+      "Floyd_key_comparison_and_control": 256,
+      "loop_and_meter_updates": 128,
+      "ordinary_state_load_store_and_scratch": 512
+    },
+    "ordinary_sum": 4372,
+    "ordinary_ceiling": 8000,
+    "W_executed": {
+      "numerator": "2647172976486161335289476057872484810244",
+      "denominator": "5"
+    },
+    "W_scored": {
+      "numerator": "588260661300519118927858079360918490568",
+      "denominator": "1"
+    },
+    "W_repriced": {
+      "numerator": "13677060409146723071177836835178165649514",
+      "denominator": "25"
+    },
+    "claim": {
+      "numerator": "6441",
+      "denominator": "50"
+    },
+    "ideal_039_schedule_floor": {
+      "numerator": "394544266409697822084444342610122144030",
+      "denominator": "1"
+    },
+    "hard_peak_bytes": 75557863727013835046912,
+    "ancillary_rows": {
+      "report_instructions": 5110216482170049774783584796672,
+      "clear_instructions": 155951430730287163537096704,
+      "candidate_units": 140737488355328,
+      "setup_units": 1125899906842624,
+      "exception_output_pairing_units": 1237940039285380274899124224
+    },
+    "ancillary_total": {
+      "numerator": "933411663104178697119798919168",
+      "denominator": "625"
+    },
+    "finite_FP_expectation": {
+      "numerator": "76148159536273029070719",
+      "denominator": "1152921504606846976"
+    },
+    "max_empirical_shared_control_mean_ratio": {
+      "numerator": "800713",
+      "denominator": "798942"
+    },
+    "trial_pairs": 70000
+  },
+  "log2_intervals": {
+    "v5_scored_envelope": [
+      1291196,
+      1291197,
+      10000
+    ],
+    "change_stretch_only_to_10percent": [
+      1289352,
+      1289353,
+      10000
+    ],
+    "strike_ln5over3_and_10percent_envelope": [
+      1287897,
+      1287898,
+      10000
+    ],
+    "track_floor_039_no_reserve_no_nonreference": [
+      1282134,
+      1282135,
+      10000
+    ],
+    "unjustified_2800_transplant": [
+      1284722,
+      1284723,
+      10000
+    ],
+    "rival_reconstruction": [
+      1258845,
+      1258846,
+      10000
+    ],
+    "executed": [
+      1286377,
+      1286378,
+      10000
+    ],
+    "repriced": [
+      1286850,
+      1286851,
+      10000
+    ]
+  },
+  "sensitivity": {
+    "v5_scored_envelope": {
+      "numerator": "739419340880010743669210921667024964928",
+      "denominator": "1"
+    },
+    "change_stretch_only_to_10percent": {
+      "numerator": "650689020126527526456293139246586353784",
+      "denominator": "1"
+    },
+    "strike_ln5over3_and_10percent_envelope": {
+      "numerator": "588260661300519118927858079360918490568",
+      "denominator": "1"
+    },
+    "track_floor_039_no_reserve_no_nonreference": {
+      "numerator": "394544266409697822084444342610122144030",
+      "denominator": "1"
+    },
+    "unjustified_2800_transplant": {
+      "numerator": "23603959047201379324234070774136798587129",
+      "denominator": "50"
+    },
+    "rival_reconstruction": {
+      "numerator": "128658348408329547522932368138736912700483403",
+      "denominator": "1638400"
+    }
+  },
+  "checks": {
+    "class_count_exact": true,
+    "lambda_order_12": true,
+    "cyclotomic_relation": true,
+    "branch_correction_ceiling": true,
+    "branch_correction_not_r_over_r_minus_one": true,
+    "ln5over3_exact_series_enclosure": true,
+    "ln_enclosure_width_less_2pow_minus300": true,
+    "T0_minimal_rational_sqrt": true,
+    "T_preselected_11over10_stretch": true,
+    "comparison_success_exceeds_0399": true,
+    "comparison_040_exact_target": true,
+    "retain_one_percent_probability_margin_to_track_floor": true,
+    "factorization_r_minus_one": true,
+    "factor_primality": true,
+    "order_of_two_upper": true,
+    "order_of_two_exact": true,
+    "no_initial_label_closure_through_two_T": true,
+    "identity_comparison_union_less_2pow_minus120": true,
+    "Hkey_tie_comparison_union_less_2pow_minus240": true,
+    "four_Fp_products_already_in_v5": true,
+    "nonreference_itemized_sum_4372": true,
+    "all_rows_inside_8000": true,
+    "square_and_add_two_dense_products_not_one": true,
+    "executed_ceiling_matches_ledger": true,
+    "all_nonreference_ceilings_repriced_6over5": true,
+    "executed_cost_below_nominal_envelope": true,
+    "claim_reduced": true,
+    "nominal_log_interval_1287897_1287898": true,
+    "nominal_claim_slack_at_least_0005": true,
+    "nominal_claim_slack_at_most_006": true,
+    "repriced_log_interval_1286850_1286851": true,
+    "repriced_headroom_at_least_010": true,
+    "claim_is_12882_over_100": true,
+    "HOLD_claim_does_not_beat_12589_over_100": true,
+    "ideal_039_six_reference_floor_above_1282134": true,
+    "ideal_039_six_reference_floor_below_1282135": true,
+    "reference_only_floor_above_frontier": true,
+    "ideal_uniform_map_union_at_2T_for_budget_2pow126_is_below_039": true,
+    "rival_reconstructed_log_125884_125885": true,
+    "even_unjustified_2800_ceiling_transplant_loses": true,
+    "128_byte_records": true,
+    "peak_below_2pow78": true,
+    "all_ancillary_ceiling_inside_2pow100": true,
+    "all_ancillary_1p2_repricing_inside_2pow101": true,
+    "FP_pair_expectation_less_2pow17": true,
+    "FP_Markov_cap_bound_less_2pow_minus15": true,
+    "DP_60_bits": true,
+    "all_generations_DP_predicate_within_field_key_bits": true,
+    "full_point_independent_linear_fingerprint_input_bits": true,
+    "independent_fingerprint_matrix_bytes_73728": true,
+    "full_point_fingerprint_work_inside_report_ceiling": true,
+    "linear_fingerprint_exhaustive_difference_1": true,
+    "linear_fingerprint_exhaustive_difference_2": true,
+    "linear_fingerprint_exhaustive_difference_3": true,
+    "linear_fingerprint_exhaustive_difference_4": true,
+    "linear_fingerprint_exhaustive_difference_5": true,
+    "linear_fingerprint_exhaustive_difference_6": true,
+    "linear_fingerprint_exhaustive_difference_7": true,
+    "linear_fingerprint_exhaustive_difference_8": true,
+    "linear_fingerprint_exhaustive_difference_9": true,
+    "linear_fingerprint_exhaustive_difference_10": true,
+    "linear_fingerprint_exhaustive_difference_11": true,
+    "linear_fingerprint_exhaustive_difference_12": true,
+    "linear_fingerprint_exhaustive_difference_13": true,
+    "linear_fingerprint_exhaustive_difference_14": true,
+    "linear_fingerprint_exhaustive_difference_15": true,
+    "new_report_mean_comparison_less_M_over_3": true,
+    "table_build_once_under_2pow50": true,
+    "table_bytes_under_2pow24": true,
+    "seven_complete_faithful_settings": true,
+    "preselected_seed_and_reserve": true,
+    "70000_new_independent_pairs": true,
+    "simultaneous_endpoint_failure_below_one_percent": true,
+    "simultaneous_paired_CDF_failure_below_one_percent": true,
+    "toy_0_zero_dead_branches": true,
+    "toy_0_exhaustive_branch_mass": true,
+    "toy_0_literal_tower_and_step_checks": true,
+    "toy_0_exact_mean_ratio_reproduced": true,
+    "toy_0_empirical_mean_ratio_less_103over100": true,
+    "toy_0_10percent_CDF_paired_lower_positive": true,
+    "toy_0_endpoint_lower_above_toy_039": true,
+    "toy_0_all_DP_densities_censored_honestly": true,
+    "toy_0_observed_histogram_trial_mass": true,
+    "toy_1_zero_dead_branches": true,
+    "toy_1_exhaustive_branch_mass": true,
+    "toy_1_literal_tower_and_step_checks": true,
+    "toy_1_exact_mean_ratio_reproduced": true,
+    "toy_1_empirical_mean_ratio_less_103over100": true,
+    "toy_1_10percent_CDF_paired_lower_positive": true,
+    "toy_1_endpoint_lower_above_toy_039": true,
+    "toy_1_all_DP_densities_censored_honestly": true,
+    "toy_1_observed_histogram_trial_mass": true,
+    "toy_2_zero_dead_branches": true,
+    "toy_2_exhaustive_branch_mass": true,
+    "toy_2_literal_tower_and_step_checks": true,
+    "toy_2_exact_mean_ratio_reproduced": true,
+    "toy_2_empirical_mean_ratio_less_103over100": true,
+    "toy_2_10percent_CDF_paired_lower_positive": true,
+    "toy_2_endpoint_lower_above_toy_039": true,
+    "toy_2_all_DP_densities_censored_honestly": true,
+    "toy_2_observed_histogram_trial_mass": true,
+    "toy_3_zero_dead_branches": true,
+    "toy_3_exhaustive_branch_mass": true,
+    "toy_3_literal_tower_and_step_checks": true,
+    "toy_3_exact_mean_ratio_reproduced": true,
+    "toy_3_empirical_mean_ratio_less_103over100": true,
+    "toy_3_10percent_CDF_paired_lower_positive": true,
+    "toy_3_endpoint_lower_above_toy_039": true,
+    "toy_3_all_DP_densities_censored_honestly": true,
+    "toy_3_observed_histogram_trial_mass": true,
+    "toy_4_zero_dead_branches": true,
+    "toy_4_exhaustive_branch_mass": true,
+    "toy_4_literal_tower_and_step_checks": true,
+    "toy_4_exact_mean_ratio_reproduced": true,
+    "toy_4_empirical_mean_ratio_less_103over100": true,
+    "toy_4_10percent_CDF_paired_lower_positive": true,
+    "toy_4_endpoint_lower_above_toy_039": true,
+    "toy_4_all_DP_densities_censored_honestly": true,
+    "toy_4_observed_histogram_trial_mass": true,
+    "toy_5_zero_dead_branches": true,
+    "toy_5_exhaustive_branch_mass": true,
+    "toy_5_literal_tower_and_step_checks": true,
+    "toy_5_exact_mean_ratio_reproduced": true,
+    "toy_5_empirical_mean_ratio_less_103over100": true,
+    "toy_5_10percent_CDF_paired_lower_positive": true,
+    "toy_5_endpoint_lower_above_toy_039": true,
+    "toy_5_all_DP_densities_censored_honestly": true,
+    "toy_5_observed_histogram_trial_mass": true,
+    "toy_6_zero_dead_branches": true,
+    "toy_6_exhaustive_branch_mass": true,
+    "toy_6_literal_tower_and_step_checks": true,
+    "toy_6_exact_mean_ratio_reproduced": true,
+    "toy_6_empirical_mean_ratio_less_103over100": true,
+    "toy_6_10percent_CDF_paired_lower_positive": true,
+    "toy_6_endpoint_lower_above_toy_039": true,
+    "toy_6_all_DP_densities_censored_honestly": true,
+    "toy_6_observed_histogram_trial_mass": true,
+    "two_genuine_1024_branch_scales": true,
+    "high_reuse_stress_exceeds_97percent": true,
+    "two_reexecuted_production_GT_identity_samples": true,
+    "reexecuted_exhaustive_scalar_alignment_cases": true,
+    "reexecuted_DP_fault_audit_zero_mismatch": true,
+    "reexecuted_DP_faults_detected": true
+  },
+  "all_checks_pass": true,
+  "source_sha256": {
+    "scripts/faithful_audit.py": "f6910491b4ad11c6f1ee2f2d54e805564ea270083f3abd1fd90dc0955f00ae7e",
+    "scripts/ledger.py": "97a002e101fd08fb549ed47fac8dca5b37ce2516490306655b3388d9fd7f2d3d",
+    "scripts/tower.py": "e446a2839e9dea0a1df0c5f9abfbf96409f4461e0753417f294b5f42cf992c3d",
+    "scripts/toy_audit.py": "f89fbf2bfc867b7484ef19505a18095fcfd308c8d30c14091bdd777df31d4597",
+    "scripts/verify_v6.py": "07a54f5b464f859d9893b5632a3a11a1359975cb2ac9899b36db085e3e20fa35"
+  },
+  "verifier_source": "#!/usr/bin/env python3\n\"\"\"Executed exact arithmetic/data consistency; does not certify production Hmix.\"\"\"\nimport argparse\nfrom fractions import Fraction as F\nfrom math import gcd, isqrt, prod\nfrom pathlib import Path\nimport hashlib\nimport json\nfrom ledger import (P,R,N,NP,BRANCHES,RESERVE,CLAIM,LN_LO,LN_HI,T0,T,\n                    ORDINARY_ROWS,ORDINARY_CEILING,WEXEC,W,WSTRESS,\n                    ceil_fraction,ceil_sqrt_fraction,exp_minus_upper,ln_bounds,\n                    below_pow2,interval)\nROOT=Path(__file__).resolve().parents[1]\nchecks={}\ndef ck(name,value): checks[name]=bool(value)\ndef frac(v):\n    v=F(v)\n    return {'numerator':str(v.numerator),'denominator':str(v.denominator)}\ndef prime(n):\n    return n>1 and (n==2 or (n%2 and all(n%d for d in range(3,isqrt(n)+1,2))))\n\nck('class_count_exact',12*N==R-1)\nck('lambda_order_12',pow(P,12,R)==1 and pow(P,6,R)==R-1 and pow(P,4,R)!=1)\nck('cyclotomic_relation',(1+pow(P,4,R)+pow(P,8,R))%R==0)\nck('branch_correction_ceiling',(NP-1)*1023<N*1024<=NP*1023)\nck('branch_correction_not_r_over_r_minus_one',BRANCHES==1024 and BRANCHES!=R)\nck('ln5over3_exact_series_enclosure',F(51082562376599,10**14)<LN_LO<LN_HI<F(51082562376600,10**14))\nck('ln_enclosure_width_less_2pow_minus300',LN_HI-LN_LO<F(1,1<<300))\nck('T0_minimal_rational_sqrt',(T0-1)**2<2*NP*LN_HI<=T0*T0)\nck('T_preselected_11over10_stretch',10*(T-1)<11*T0<=10*T and RESERVE==F(11,10))\n# For the uniform comparison map no-repeat <= exp[-t(t+1)/(2Np)].\n# T0^2/(2Np)>=ln(5/3), so the comparison success is >=2/5.\nsuccess_lower=1-exp_minus_upper(LN_LO)\nck('comparison_success_exceeds_0399',success_lower>F(399,1000))\nck('comparison_040_exact_target',F(1)-F(3,5)==F(2,5))\nck('retain_one_percent_probability_margin_to_track_floor',F(2,5)-F(39,100)==F(1,100))\n\nFACTORS={2:32,3:1,11:1,19:1,10177:1,906349:2,2508409:1,125527:1,\n         859267:1,2529403:1,52437899:1,254760293:2}\nck('factorization_r_minus_one',prod(q**e for q,e in FACTORS.items())==R-1)\nck('factor_primality',all(prime(q) for q in FACTORS))\no=R-1\nfor q in FACTORS:\n    while o%q==0 and pow(2,o//q,R)==1:o//=q\nd=o//gcd(o,12)\nck('order_of_two_upper',pow(2,o,R)==1)\nck('order_of_two_exact',all(pow(2,o//q,R)!=1 for q in FACTORS if o%q==0))\nck('no_initial_label_closure_through_two_T',d>2*T)\nck('identity_comparison_union_less_2pow_minus120',3*T*(1<<120)<N)\nck('Hkey_tie_comparison_union_less_2pow_minus240',3*T*66*(1<<240)<P)\n\nck('four_Fp_products_already_in_v5',ORDINARY_ROWS['four_base_field_products_4_times_383']==4*383)\nck('nonreference_itemized_sum_4372',sum(ORDINARY_ROWS.values())==4372)\nck('all_rows_inside_8000',sum(ORDINARY_ROWS.values())<=ORDINARY_CEILING==8000)\nck('square_and_add_two_dense_products_not_one',2*3==6)\nck('executed_ceiling_matches_ledger',WEXEC==F(36,5)*T+(1<<100))\nck('all_nonreference_ceilings_repriced_6over5',WSTRESS==(6+F(6,5)*F(3*8000,20000))*T+(1<<101))\nck('executed_cost_below_nominal_envelope',WEXEC<W)\nck('claim_reduced',gcd(CLAIM.numerator,CLAIM.denominator)==1)\nck('nominal_log_interval_1287897_1287898',not below_pow2(W,1287897,10000) and below_pow2(W,1287898,10000))\nck('nominal_claim_slack_at_least_0005',below_pow2(W,128815,1000))\nck('nominal_claim_slack_at_most_006',not below_pow2(W,128760,1000))\nck('repriced_log_interval_1286850_1286851',not below_pow2(WSTRESS,1286850,10000) and below_pow2(WSTRESS,1286851,10000))\nck('repriced_headroom_at_least_010',below_pow2(WSTRESS,128720,1000))\nck('claim_is_12882_over_100',CLAIM==F(12882,100))\nck('HOLD_claim_does_not_beat_12589_over_100',CLAIM>=F(12589,100))\n\n# This is a FLOOR FOR THE RETAINED SUFFICIENT MU+LAMBDA SCHEDULE,\n# not a lower bound on all algorithms or even on the exact Floyd CDF.\nll,lh=ln_bounds(F(100,61))\nFLOOR_T=ceil_sqrt_fraction(2*NP*ll)\nFLOOR_WORK=6*FLOOR_T\nck('ideal_039_six_reference_floor_above_1282134',not below_pow2(FLOOR_WORK,1282134,10000))\nck('ideal_039_six_reference_floor_below_1282135',below_pow2(FLOOR_WORK,1282135,10000))\nck('reference_only_floor_above_frontier',not below_pow2(FLOOR_WORK,12589,100))\n# Even using repeat-by-2T (a necessary condition for a Floyd meeting by T)\n# and a union bound P(repeat)<=2T(2T+1)/(2Np), a reference-only model\n# budget at the frontier is hopeless. Use a rational upper bound on 2^125.89.\ncap=1<<126\nck('ideal_uniform_map_union_at_2T_for_budget_2pow126_is_below_039',\n   F((2*(cap//6))*(2*(cap//6)+1),2*NP)<F(39,100))\n\n# Rival's own rounded reconstruction, not a validation of its mechanism.\nS0=ceil_sqrt_fraction(2*NP*LN_HI)\nS=ceil_fraction(F(103,100)*S0)\nRIVAL=F(57,50)*S*F(131129,131072)+F(57,50)*20*(1<<80)+(1<<62)\nck('rival_reconstructed_log_125884_125885',not below_pow2(RIVAL,125884,1000) and below_pow2(RIVAL,125885,1000))\n# An unrealistically aggressive transplant still retains SIX reference calls.\nB2800=(6+F(3*2800,20000))*T+(1<<100)\nck('even_unjustified_2800_ceiling_transplant_loses',not below_pow2(B2800,12589,100))\n\nM,G,FP=1<<69,129,128\nrecord=16+32+32+32+16\npeak=record*M+(1<<40)\nfp_pairs=F(G*M*(M-1),2*(1<<FP))\nancillary_rows={\n 'report_instructions':G*M*(1<<26),\n 'clear_instructions':G*M*record*16,\n 'candidate_units':(1<<32)*(1<<15),\n 'setup_units':1<<50,\n 'exception_output_pairing_units':1<<90,\n}\nancillary=F(ancillary_rows['report_instructions']+ancillary_rows['clear_instructions'],20000)+sum(ancillary_rows[k] for k in ['candidate_units','setup_units','exception_output_pairing_units'])\nck('128_byte_records',record==128)\nck('peak_below_2pow78',peak<1<<78)\nck('all_ancillary_ceiling_inside_2pow100',ancillary<1<<100)\nck('all_ancillary_1p2_repricing_inside_2pow101',F(6,5)*ancillary<1<<101)\nck('FP_pair_expectation_less_2pow17',fp_pairs<1<<17)\nck('FP_Markov_cap_bound_less_2pow_minus15',fp_pairs/(1<<32)<F(1,1<<15))\nck('DP_60_bits',len(range(10,70))==60)\nck('all_generations_DP_predicate_within_field_key_bits',70+G-1<=381)\nck('full_point_independent_linear_fingerprint_input_bits',12*6*64==4608)\nck('independent_fingerprint_matrix_bytes_73728',4608*128//8==73728)\nck('full_point_fingerprint_work_inside_report_ceiling',4608*16+2*256*256+72*383+(1<<20)<1<<26)\n# Exhaustive independent 4-input/3-output linear-hash model. Every nonzero\n# difference has exactly1/8 zero outputs over all4096 matrices.\nfor delta in range(1,16):\n    count=0\n    for matrix in range(1<<12):\n        columns=[(matrix>>(3*k))&7 for k in range(4)]\n        val=0\n        for k in range(4):\n            if (delta>>k)&1:val^=columns[k]\n        count+=val==0\n    ck('linear_fingerprint_exhaustive_difference_'+str(delta),count==512)\nck('new_report_mean_comparison_less_M_over_3',9*T<M*(1<<60))\n# The DP table is OPTIONAL: disabling reports cannot stop or change Floyd.\n# Hence no Poisson overflow premise is needed for either resources or success.\nck('table_build_once_under_2pow50',1024*(2*510*23000+12*(72*383+10000))+(1<<30)<(1<<50)*20000)\nck('table_bytes_under_2pow24',1024*12*(576+64)<1<<24)\n\n# Faithful larger experiment and toy-only confidence calculations.\ntoy=json.loads((ROOT/'toy_results.json').read_text())\nconfigs=[json.loads((ROOT/f).read_text()) for f in toy['configuration_files']]\nck('seven_complete_faithful_settings',len(configs)==7)\nck('preselected_seed_and_reserve',toy['seed']==2026102306 and toy['preregistered_length_reserve']=={'numerator':11,'denominator':10})\nck('70000_new_independent_pairs',sum(c['trials'] for c in configs)==70000 and all(c['trials']==10000 for c in configs))\n# 14 two-sided endpoint tails: 28*e^-8<1/100.\neight_lower=sum(F(8)**i/prod(range(1,i+1)) for i in range(41))\nck('simultaneous_endpoint_failure_below_one_percent',eight_lower>2800)\nck('simultaneous_paired_CDF_failure_below_one_percent',eight_lower>700)\nratios=[]\nfor i,c in enumerate(configs):\n    tag='toy_'+str(i)\n    n=c['classes']; hist=c['exhaustive_branch_histogram']; tr=c['trials']\n    ck(tag+'_zero_dead_branches',len(hist)==c['branches'] and min(hist)>0 and c['dead_branches']==0)\n    ck(tag+'_exhaustive_branch_mass',sum(hist)==n)\n    ck(tag+'_literal_tower_and_step_checks',c['literal_tower_crosschecks']==24 and c['literal_square_and_add_step_checks']==32)\n    ss,rr=c['shared'],c['control']\n    ratio=F(ss['first_repeat']['sum'],rr['first_repeat']['sum']);ratios.append(ratio)\n    ck(tag+'_exact_mean_ratio_reproduced',c['paired']['mean_first_repeat_ratio']=={'numerator':ratio.numerator,'denominator':ratio.denominator})\n    ck(tag+'_empirical_mean_ratio_less_103over100',ratio<F(103,100))\n    diff=F(ss['first_repeat_at_stretch']-rr['first_repeat_at_base'],tr)\n    ck(tag+'_10percent_CDF_paired_lower_positive',diff-F(1,25)>0)\n    ck(tag+'_endpoint_lower_above_toy_039',F(ss['first_repeat_at_stretch'],tr)-F(1,50)>F(39,100))\n    ck(tag+'_all_DP_densities_censored_honestly',all(\n        ss['dp'][str(d)]['hit_before_repeat']+ss['dp'][str(d)]['no_hit_before_repeat']==tr\n        and rr['dp'][str(d)]['hit_before_repeat']+rr['dp'][str(d)]['no_hit_before_repeat']==tr\n        for d in [2,4,6]))\n    ck(tag+'_observed_histogram_trial_mass',all(sum(z[1] for z in side[k]['histogram'])==tr\n        for side in [ss,rr] for k in ['mu','cycle_lambda','first_repeat','floyd_meeting']))\nck('two_genuine_1024_branch_scales',sum(c['branches']==1024 for c in configs)==2)\nck('high_reuse_stress_exceeds_97percent',any(100*c['reused_branch_transitions']>97*c['transitions'] for c in configs))\n\nalgebra=json.loads((ROOT/'evidence/algebra_results.json').read_text())\nck('two_reexecuted_production_GT_identity_samples',algebra['production_tower_identities']['samples']==2)\nck('reexecuted_exhaustive_scalar_alignment_cases',sum(c['pairs'] for c in algebra['all_pair_alignment'])==2995488)\nck('reexecuted_DP_fault_audit_zero_mismatch',algebra['additive_same_step_dp_audit']['counters']['dp_mismatch']==0)\nck('reexecuted_DP_faults_detected',algebra['additive_same_step_dp_audit']['counters']['injected_dp_faults_detected']==495)\n# Exact Fraction levers and deliberately unclaimed sensitivities.\nsensitivity={\n 'v5_scored_envelope':8*((5*(isqrt(5*NP//4)+1)+3)//4)+(1<<100),\n 'change_stretch_only_to_10percent':8*ceil_fraction(F(11,10)*(isqrt(5*NP//4)+1))+(1<<100),\n 'strike_ln5over3_and_10percent_envelope':W,\n 'track_floor_039_no_reserve_no_nonreference':FLOOR_WORK,\n 'unjustified_2800_transplant':B2800,\n 'rival_reconstruction':RIVAL,\n}\n\ndef main():\n    p=argparse.ArgumentParser();p.add_argument('--write',action='store_true');a=p.parse_args()\n    out={\n      'version':1,'package':'gt-orbit12-rho-strike-40pct-v6',\n      'scope':'Exact arithmetic and captured-toy consistency only. Production Hmix/Hkey remain unproved. HOLD: no frontier improvement.',\n      'constants':{'p':P,'r':R,'N':N,'Np_floor':N*1024//1023,'Np_ceiling':NP,\n        'T0':T0,'T':T,'stretch':frac(RESERVE),'ln5over3_lower':frac(LN_LO),'ln5over3_upper':frac(LN_HI),\n        'order_two':o,'order_mod_frobenius':d,'ordinary_rows':ORDINARY_ROWS,'ordinary_sum':sum(ORDINARY_ROWS.values()),\n        'ordinary_ceiling':ORDINARY_CEILING,'W_executed':frac(WEXEC),'W_scored':frac(W),'W_repriced':frac(WSTRESS),\n        'claim':frac(CLAIM),'ideal_039_schedule_floor':frac(FLOOR_WORK),'hard_peak_bytes':peak,\n        'ancillary_rows':ancillary_rows,'ancillary_total':frac(ancillary),'finite_FP_expectation':frac(fp_pairs),\n        'max_empirical_shared_control_mean_ratio':frac(max(ratios)),\n        'trial_pairs':sum(c['trials'] for c in configs)},\n      'log2_intervals':{k:interval(v) for k,v in sensitivity.items()}|{'executed':interval(WEXEC),'repriced':interval(WSTRESS)},\n      'sensitivity':{k:frac(v) for k,v in sensitivity.items()},\n      'checks':checks,'all_checks_pass':all(checks.values()),\n      'source_sha256':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'scripts').glob('*.py'))},\n      'verifier_source':Path(__file__).read_text(),\n    }\n    text=json.dumps(out,indent=2)+'\\n'\n    if a.write:\n        (ROOT/'certificate.json').write_text(text)\n        (ROOT/'evidence/certificate_run.log').write_text('COMMAND: python3 -B scripts/verify_v6.py --write\\n'+str(sum(checks.values()))+'/'+str(len(checks))+' exact checks\\n'+'\\n'.join(('PASS ' if b else 'FAIL ')+k for k,b in checks.items())+'\\n')\n    print(text,end='')\n    if not all(checks.values()):raise SystemExit('Exact verification failed')\nif __name__=='__main__':main()\n"
+}

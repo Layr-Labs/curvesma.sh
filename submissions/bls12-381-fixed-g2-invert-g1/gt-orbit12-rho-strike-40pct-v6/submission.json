@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "title": "Strike v6: faithful 10-percent-stretch square-and-add/Floyd ledger, HOLD at 128.82",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence/algebra_results.json",
+        "evidence/certificate_run.log",
+        "evidence/faithful-0.json",
+        "evidence/faithful-1.json",
+        "evidence/faithful-2.json",
+        "evidence/faithful-3.json",
+        "evidence/faithful-4.json",
+        "evidence/faithful-5.json",
+        "evidence/faithful-6.json",
+        "evidence/faithful_console.log",
+        "evidence/faithful_run.log",
+        "evidence/prior-context.json",
+        "ledger-diff.md",
+        "public-note.md",
+        "scripts/faithful_audit.py",
+        "scripts/ledger.py",
+        "scripts/tower.py",
+        "scripts/toy_audit.py",
+        "scripts/verify_v6.py",
+        "toy_results.json"
+      ],
+      "score": {
+        "numerator": "6441",
+        "denominator": "50"
+      },
+      "statement": "For the exact supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x with the explicit shared-table Frobenius-class square-and-add map and bounded Floyd detection, and return [x]P0 verified against the original equation. Conditional on the explicitly disclosed Hmix-strike production CDF extrapolation and Hkey exceptional-key hypothesis, success is at least0.39 within work<=2^(6441/50)=2^128.82 dense-Fp12 equivalents at fixed C=20000. This is a HOLD candidate: it does not beat the cited125.89 frontier and must not be submitted as a frontier improvement. The exact scored envelope8T+2^100 has log2 in(128.7897,128.7898); all executed nonreference ceilings repriced1.2 have log2 below128.6851. T=ceil(11*T0/10), T0=ceil_sqrt(2*ceil(N*1024/1023)*L_hi), where L_hi is a certified rational upper enclosure of ln(5/3). New faithful evidence contains10000 paired shared-table/fresh-map trajectories at each of seven settings, all branches live, two1024-branch scales, smaller-table high-reuse stress and three literal DP densities. Finite toy confidence and exact observed ratios do not prove production transfer. Labels retain full scalar entropy; the order argument excludes initial-label closure through the cap. An independent universal full-point128-bit fingerprint replaces coordinate-bit Hfp; DP reporting has deterministic caps and never interrupts Floyd. Peak memory<2^78 bytes, preprocessing<=2^50 units charged within the total, nonuniform advice zero. The certificate verifies exact arithmetic and captured-data consistency, not production mixing or measured assembly."
+    }
+  ],
+  "experiments": []
+}

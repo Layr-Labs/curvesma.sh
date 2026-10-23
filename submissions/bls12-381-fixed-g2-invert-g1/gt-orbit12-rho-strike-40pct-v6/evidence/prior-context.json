@@ -1,0 +1,54 @@
+[
+  {
+    "id": "7da5f23a-6633-46b1-9c03-11f6cfedeeec",
+    "solverUsername": "mpjunior92",
+    "status": "review",
+    "officialScore": 125.89,
+    "judgment": {
+      "valid": true,
+      "scores": [
+        125.89
+      ]
+    },
+    "submissionCommitSha": "bb7f3cbffd5d3113c1fe5556baf979b470d64e8e",
+    "validity": {
+      "valid": true,
+      "reason": "Accepted as plausible_not_refuted under exploratory-v1, not as a certified production attack. Nondegeneracy justifies computing g=e(P0,Q), recovering its discrete logarithm of z, and returning [x]P0 for the supplied Q. The Frobenius identities and twisted-table update support the proposed class walk; the captured run checked the identities on two production GT elements and recovered all 68 completed toy logarithms.\n\nThe analytical dominant-work calculation gives log2(W) approximately 125.8846, below the submitted 125.89, using the protected C=20,000 normalization. The preprocessing and storage estimates are compatible with the declared bounds. Some auxiliary accounting is optimistic: truncated distinguished-point keys can require additional collision reconstruction. That work remains far below the margin available beneath the submitted total bound under the stated distribution heuristics.\n\nThe principal uncertainty is the production extrapolation: random-mapping behavior, coordinate-bit partitioning, distinguished-point density and fruitless-cycle frequencies are heuristic. The toy code hashes complete canonical representatives rather than using the production K-bit partition, so it supports the mechanism and collision model, not that exact production partition. Neither the observed 0.426 toy fraction nor eventual recovery in every completed trial establishes production success. Nevertheless, the standard rho heuristic, explicit cycle handling, analytical model probability about 0.418 and relevant toy behavior provide plausible exploratory support for the claimed 0.40 success within the submitted resources. No surviving fatal discrepancy was identified; these uncertainties remain material conditions of acceptance.",
+      "evidence": {
+        "jobId": "fab568e4-f74f-47b5-9053-4a82f9649260",
+        "resultId": "a24580de-cf1e-4cd6-8c79-4b0edf86bbc9",
+        "commitSha": "bb7f3cbffd5d3113c1fe5556baf979b470d64e8e",
+        "sourceRef": "6423c2728dc03d5f2d647c7f22adf1dac0643a66",
+        "evaluatedAt": "2026-10-23T01:16:39.153703+00:00",
+        "evaluatorId": "e2a2288d-9557-4111-a866-0535b82933d9",
+        "policyVersionId": "e2a2288d-9557-4111-a866-0535b82933d9"
+      }
+    }
+  },
+  {
+    "id": "089cd8f1-38cd-4666-aaa4-d0f1f4d5468b",
+    "solverUsername": "GordoAR",
+    "status": "review",
+    "officialScore": 129.15,
+    "judgment": {
+      "valid": true,
+      "scores": [
+        129.15
+      ]
+    },
+    "submissionCommitSha": "e2dcd1f2615e44857459c195f1724c699b7430e0",
+    "validity": {
+      "valid": true,
+      "reason": "Accept the complete original claim as plausible_not_refuted under exploratory-v1, not as a proof or certified production attack. This assessment does not inherit any claimed prior acceptance.\n\nThe exact-Q reduction is sound: nondegeneracy makes e(P0,Q) a generator for every allowed Q, and recovering x and returning [x]P0 solves the supplied-Q equation. The Frobenius alignment and twisted update define a history-independent class map. Floyd meets by mu+ell; conditioning on the initial and jump elements leaves the initial scalar label uniform. The supplied order calculation excludes vanishing of its denominator coefficient throughout the enlarged budget, supporting the stated 1/r degeneracy probability.\n\nThe principal objection is whether this particular raw-coordinate, shared-table map follows the proposed production repeat-time comparison. The new evidence directly addresses that issue rather than merely checking uniform random maps: the exponent oracle implements the same toy class transition, the table is retained throughout each trajectory, and literal tower cross-checks support the implementation. The seven settings include exhaustive live-branch censuses, two actual 1024-branch scales and smaller-table stress exceeding 97% entry reuse. Their repeat-CDF comparisons, rather than just mean ratios, provide relevant exploratory support for the paid-for 25% length reserve. The stated Hoeffding calculations are consistent under the independent-toy-trial model; they are not production confidence bounds or guarantees about deterministic seeds.\n\nHmix-v5 remains a substantial extrapolation from log2(N) about 10\u201316 to about 251.27. Long-range production correlations could invalidate it, and Hkey's random-field-scale exception assumption also remains heuristic. Nevertheless, the faithful trajectory evidence and disclosed limitations make these plausible supported hypotheses at this exploratory standard. Neither verification nor the arithmetic certificate independently establishes frequent termination. Conditional on these hypotheses, the comparison success above 0.4647 and the label analysis support the claimed 0.39 floor.\n\nThe accounting uses the required H+R/20000 units. Three evaluations per Floyd iteration give the stated executed ceiling; the larger 8T+2^100 envelope lies below 2^129.15, and the displayed nonreference stress calculation is consistent. The fixed-limb instruction allowances are plausible analytical estimates, not measured assembly. Preprocessing is charged, ancillary processing is capped, and DP saturation does not interrupt Floyd. The stated record layout and scratch allowance fit below 2^78 bytes, with no external advice required. No surviving fatal correctness, resource or statistical discrepancy was identified. The submitted bound is not tightened; scores remain null as required by the protected score bindings.",
+      "evidence": {
+        "jobId": "21895147-10a4-4368-8907-7fb932c5439e",
+        "resultId": "d2bddd82-de6a-49b2-8e3b-32b2fd6304e1",
+        "commitSha": "e2dcd1f2615e44857459c195f1724c699b7430e0",
+        "sourceRef": "6423c2728dc03d5f2d647c7f22adf1dac0643a66",
+        "evaluatedAt": "2026-10-23T11:24:25.734445+00:00",
+        "evaluatorId": "e2a2288d-9557-4111-a866-0535b82933d9",
+        "policyVersionId": "e2a2288d-9557-4111-a866-0535b82933d9"
+      }
+    }
+  }
+]
