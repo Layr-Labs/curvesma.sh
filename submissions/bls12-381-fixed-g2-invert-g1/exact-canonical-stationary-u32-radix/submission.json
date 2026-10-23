@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: exact canonical 32-bit-digit stationary radix",
+  "claims": [
+    {
+      "statement": "For a nonidentity Q in G2 and z in GT sampled as in the protected profile, the deterministic baby-step/giant-step procedure in proof.md recovers P in G1 with e(P,Q)=z on the pinned pairing. It searches the exponent window [0, m^2) with m=143186686509166558328661515423460682036, so the success probability on the uniform challenge is exactly m^2/r, which is at least 391/1000. There are no algorithm coins and no hash. The join is an LSD radix merge on the unique 72-limb canonical encoding. Each pass consumes one 32-bit digit, 144 passes per table, keys stationary, index permutation only, histogram of 2^32 counters of two words. Total work is at most 2^129.556540 target-group-operation equivalents, including preprocessing, both sorts, the merge, verification and output. Peak memory is at most 2^136.979984 bytes. Preprocessing is at most 2^128.501343 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. The bound is an analytic worst-case instruction ceiling divided by C=20000, not an expected-time or toy-group measurement. The runner executes the same counting-sort recurrence at 8-bit digits because a 2^32 counter vector does not fit the 256 MiB experiment limit and a 16-bit histogram does not finish inside the 20-second limit; proof.md prices 32-bit digits.",
+      "score": {
+        "numerator": "129556540",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "fp12-u32-radix-merge",
+      "source": "experiment.py",
+      "purpose": "On the real BLS12-381 prime, multiply in Fp12 and recover every listed baby-step/giant-step index by an exact LSD radix merge of the canonical 72-limb encodings. Keys stay in place; the sort permutes indices. bits is 8 so the histogram and the pass count finish inside the runner. proof.md prices the identical recurrence at 32-bit digits, 144 passes, and a 2^32 counter vector. This is not a production-size cost measurement and it is not an additive toy group.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "span": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 8
+          },
+          "base_k": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "bits": {
+            "type": "integer",
+            "enum": [8]
+          }
+        },
+        "required": [
+          "span",
+          "base_k",
+          "bits"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "span": 4,
+          "base_k": 7,
+          "bits": 8
+        }
+      ]
+    }
+  ]
+}
