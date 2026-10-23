@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class parallel Pollard rho in GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT, the algorithm in proof.md (compute g=e(P,Q0) for the supplied P; if z=1 output infinity; else solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=4096 twisted multipliers shared by all walks, a 4-Fp-multiplication step key for the canonical conjugate whose twelve compared values are the Montgomery representatives blst_fp_mul returns (k*2^384 mod p, fully reduced, so no conversion is made or charged), deterministic fruitless-cycle escape, a stuck-walk restart after 40/theta = 40 x 2^80 steps, a hard global cap of L_max=2^125.6851 counted steps with theta=2^-80, a hard cap of 2^54 distinguished reports kept in a flat array of 640-byte records keyed on the FULL exact canonical class key (the canonical representative, all 12 Fp coefficients, 4,608 bits in 72 limbs, no truncation and no hash, so a key match is exactly a class match), batched collision detection that orders the records by that key with a fixed 288-pass 16-bit LSD radix sort and then scans runs of equal keys linearly, with no hash table, no probing, no load factor, no discarded report and no distributional assumption about key bits) succeeds with probability at least 0.39 (the exact ledger gives 0.3957) using at most 2^125.87 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, the scalar sampler, walk starts and restarts, the canonicalisation and storage of every report, the sort and scan of the report array, candidate solves, cycle handling, output and verification. Peak memory is 11,817,445,424,400,702,208 bytes = 2^63.36 < 2^64, so every array, counter, offset and byte address is a single 64-bit word and every access is one native AArch64 load or store; memory is supplementary on this track. All randomness comes from ONE fresh uniformly random 256-bit seed drawn from the platform randomness source at start, charged as one 64-word (512-byte) draw at 2^16 instructions (itemised 47,744); every sampled scalar is a 384-bit output of Keccak-f[1600] in counter mode under that seed, reduced modulo r by an exact Barrett reduction at 8,192 instructions per sample (itemised 7,581, of which a Keccak-f[1600] permutation at 300 instructions per round is 7,200), at most 2 x (1025 + 2^20 + n_r) = 2,828,231,406,414 < 2^41.39 samples, where n_r = 1,414,114,650,534 < 2^40.37 is the stuck-walk restart cap (table entries, walk starts, restarts and one spare pair; cycle escapes sample nothing). Nothing is rejected and there is no unbounded retry. Preprocessing is at most 2^31 units and is included; nonuniform advice is 0 bytes. Both success-side tails are Markov bounds on the H1 expectation, not Chernoff bounds over walk steps, because the per-step indicators are not independent (partition index and cycle entry are fixed functions of the class, and a cycle longer than 64 keeps reporting and re-arms the stuck counter): the expected report count is at most theta L_max <= 2^45.69, so P(reports >= 2^54) < 2^-8.31, and the mean cycle waste is at most 7.2956e-5 L_max = 7.369e-5 S, so P(cycle waste > 0.008 S) <= 0.0093; with the abandonment tail 2^-35.05, the detection tail 2^-57.7, the tie term 2^-248.9, the long-cycle case 2^-654 and the 2^-20 self-collision fraction all deducted, success is at least 0.3957, above the required 0.39. The success bound rests on two stated premises: H1, the generic random-mapping model of rho walks on Frobenius classes (with the Brent-Pollard R/(R-1) correction and 3% explicit step slack), which also covers the partition function and the distinguished test as fixed functions of the class; and H3, a scoped computational assumption that under the one fresh uniform 256-bit seed the Keccak-f[1600] counter-mode tape is computationally indistinguishable from independent uniform draws at the 2^125.87-work cost of this attack, and that the platform seed is uniform. No statistical closeness of the tape to independent draws is claimed and no distance figure is quoted: the tape is under 2^49.98 bits against a 256-bit seed, so the success bound is conditional on H3, as published packages on this track state. The toy-field experiments test the walk, the class map, the cycle escapes, the recovery of the logarithm and a replay of the report array keyed on the exact full canonical class key of the toy field, which is the same class-identity map production uses; they do not test production costs, and the production caps and instruction counts are analytic worst cases rather than measurements. No production-size run is claimed. Part C of experiment.py recomputes the whole ledger as exact rationals, prints the two Markov tails, the priced fresh-seed draw and the success sum, proves the bound by the integer check W^100 <= 2^12587, and checks every quoted figure against its exact value in the safe rounding direction.",
+      "score": {
+        "numerator": "12587",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-class-rho-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements, check the Frobenius formula, the 4-multiplication conjugate-key formula, distinctness of the 12 keys, consistency of the canonical representative, p^6 = inversion, ord_r(p)=12. Part B: run the complete Frobenius-class rho walk (kappa trick, twisted table, 2-cycle and checkpoint escapes, stuck-walk restart after 40/theta steps, distinguished points, collision solving) in a small field with the same tower shape and report collision times against the random-mapping model, including the fraction within the 0.39 step budget; then replay the distinguished reports of each replayed trial through the production store shape, a fixed LSD radix sort of the report array followed by a linear scan of runs of equal class keys, and check the same logarithm is recovered. Part C: recompute the production ledger (S0 at 0.39, S, L_max, the six additive cost terms including the bounded scalar sampler and the one fresh-seed draw, W and the memory total with both 2^20 allowances) as exact integers and fractions, print the priced fresh-seed draw, the sampling-site count, the report-cap and cycle-waste Markov tails and the final success sum, and check the final bound as the integer inequality W^100 <= 2^12587 and its tightness at 12586; a self-check tests every log2 figure quoted in proof.md against its exact value in the safe rounding direction and recomputes the quoted chains from their rounded operands. Toy scale only; part B does not validate production costs and does not apply the production caps, and it sorts the exact full canonical class key of the toy field with no hash, which is the same class-identity map production uses.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              163,
+              331,
+              787
+            ],
+            "minimum": 163,
+            "maximum": 787
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 1024
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 163,
+          "trials": 40,
+          "R": 64,
+          "dp_bits": 4,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 14
+        }
+      ]
+    }
+  ]
+}
