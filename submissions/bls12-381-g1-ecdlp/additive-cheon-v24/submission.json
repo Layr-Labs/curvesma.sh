@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: additive Cheon v24 (prime class lists: integer-level coincidences eliminated by construction, exact-rule modular d-ladder, one addition per BSGS step)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.391 (at least 0.39; the model value 1 - e^-0.52 = 0.40548 floor-rounded at 0.405, minus a 0.014 heuristic allowance for the production coverage deficit. The deficit's integer-level family is eliminated or bounded by construction: every element of the baby and giant sets is a product a*b of two primes (a in (2^81, 2^82], b a prime <= 2^70, baby and giant prime blocks disjoint), so an exact integer identity u*x1*y2 = u'*x2*y1 forces, by unique factorisation and the block disjointness, the diagonal or the shared-class-prefix duplicates - a family counted exactly per coverage run and bounded at production at 2^214.4 values = 2^-17.0 of pair products, 4,600x inside the allowance (a bound under H2, not an extrapolation in d; the u != u' exceptional family adds at most 2^151 values, covered by the same bound). The residual modular (k != 0) coincidences are the birthday collisions the model itself counts, measured under the exact declared block rule (ka = 2*n*d*LN//X2 + 1 with LN = floor(ln X2) + 1, no fallback; ascending blocks; X1*X2 < r asserted) at five no-wrap points across d = 2^4..2^8 with two independent seeds at d = 2^6: deficits +0.0026, +0.0021, -0.0003, +0.0000, -0.0005 - flat at |deficit| <= 0.0026, the worst point 5.4x inside the allowance, each positive deficit at or within counting noise of that point's exactly counted duplicate family (3,165 pairs = 0.0098 of pair products at d = 2^4; 978 at d = 2^5) - against a matched integer-list control at the same r, m, n, X1, X2, ka and prime blocks measuring +0.0912, which isolates the composite multiplicative family the construction eliminates; the random baseline at that point measures 0.4044 against the 0.4057 prediction and the smallest-integers-in-H baseline 0.3764) over the uniform challenge. The algorithm is Cheon's p-1 baby-step/giant-step in the subgroup H of 2^20-th powers. Its baby and giant sets are products a*b of two primes in H (a a prime in (2^81, 2^82], b a prime <= 2^70 with chi(a)+chi(b)=0), walked in increasing order at one batched affine G1 addition per element. It uses the 6-element symmetry group {+-1, +-lambda, +-lambda^2} via the hash key min(y, p-y). Provenance: the declared dependency cbadde77; every identity, itemisation and bound below is this package's own, restated in proof.md and re-verified by this package's runs. The per-element budgets: canonical y 30 (itemised ~25), walk bookkeeping 100 (itemised ~75), hash insert/lookup 240 (a complete per-transfer accounting: endpoint 61 plus six radix-1024 relay stages of 29 instructions each - 18 word moves, 4 destination selection, 4 queue updates, 3 control - over the sharded table; the linear-probing and sharding model is evidenced by a 16,384-key toy check measuring 1.486/2.512 mean probes against the 1.5/2.5 bounds and shard loads within 2.55 sigma). Its total work W(n) = W(2^20) is at most 2^116.918317 target-group-operation equivalents. This includes the distributed hash-table inserts and lookups, walk bookkeeping, per-prime tables, character precomputation and sieves, collision verification, the d-th root, the final mu_d search and input checks. Preprocessing (challenge-independent work) is at most 2^115.927 and is included. Peak memory is at most 2^122.9 bytes; there is no nonuniform advice. Heuristics: H1 (the product set U*B*G^-1 has random-like coincidences; the integer-level off-diagonal family is provably empty up to the counted shared-class-prefix duplicates, bounded at 2^-17.0 of pair products at production, and the modular residual is measured flat at |deficit| <= 0.0026 across d = 2^4..2^8 under the exact rule, 5.4x inside the 0.014 allowance at the worst point); H2 (the primes <= 2^70 and the primes in (2^81, 2^82] equidistribute over the chi-classes, affecting only how many primes are needed, with 16x availability slack); and expected-cost hashing and sharding, evidenced by a 16,384-key probe/shard toy check. All are disclosed and supported by toy experiments at their stated scope. This is an analytic bound, not a full-size execution.",
+   "score": {
+    "numerator": "116918317",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run with five parts. (1) Recomputes the cost ledger (canonical y 30, hash 240, bookkeeping 100; every charge asserted above its itemised count), the exact score, the preprocessing output and the shared-class-prefix duplicate bound. (2) Exact-rule coverage d-ladder (ascending prime blocks by the declared rule ka = 2*n*d*LN//X2 + 1 with no fallback, X1*X2 < r asserted in code, exact bitmap counts of U*B*G^-1 converted in 1 MB chunks): d = 2^4 with random-set and smallest-integers-in-H baselines and a matched integer-list control at the same r, m, n, X1, X2, ka and prime blocks; d = 2^5; d = 2^6 at two independent seeds; and d = 2^8. Every point reports the exact same-class-prefix duplicate count. (3) A 16,384-key hash_probe check on keys from the structured production-style walk. (4) The full end-to-end toy attack (shuffled, 60 trials) on a 24-bit j = 0 curve with d = 2^6. (5) A fixed-order attack run (20 trials) under the deterministic set rule. Toy results are evidence at their scale only. Input: K, cov_bits, cov_logd, atk_bits, atk_logd, trials, gmax, seed.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "K": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 6
+     },
+     "cov_bits": {
+      "type": "integer",
+      "minimum": 20,
+      "maximum": 29
+     },
+     "cov_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10
+     },
+     "atk_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 24
+     },
+     "atk_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 6
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "gmax": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 100000
+     }
+    },
+    "required": [
+     "K",
+     "cov_bits",
+     "cov_logd",
+     "atk_bits",
+     "atk_logd",
+     "trials",
+     "gmax",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "K": "0.52",
+     "cov_bits": 29,
+     "cov_logd": 8,
+     "atk_bits": 24,
+     "atk_logd": 6,
+     "trials": 60,
+     "gmax": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
