@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: GT transfer with special tower NFS",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), given T=[x]P0 in BLS12-381 G1 with the protected profile constants and no auxiliary powers, the attack in proof.md recovers x with probability at least 0.39 using at most 2^124.034216 total target-group-operation equivalents, including preprocessing, all trials and failures, verification, output and fourfold success amplification. Peak memory is at most 2^81 bytes; preprocessing (the fixed-base descent, one per execution) is at most 2^121.034216 target-group-operation equivalents per execution and at most 2^123.034216 in total across the four charged executions, already included in total work; nonuniform advice is 0 bytes. The attack is classical and cold: it computes z=e(T,Q0)=e(P0,Q0)^x with the pinned public pairing, applies the published SexTNFS/STNFS-JP cost estimate for the order-r subgroup of F_{p^12} to two discrete logarithms (of z and of the fixed g=e(P0,Q0)), divides modulo r, and verifies [x]P0=T. The base estimate is the larger of the two published BLS12-381 estimates, 2^126 elementary operations (Guillevic-Masson-Thome 2020, Table 5; the 2023 survey gives 2^122.54). The ledger charges two full published NFS runs, 64 scalar instructions per elementary operation, four independent executions, two pairings, field-representation work, I/O and verification. The bound is analytic and literature-grounded, not a production run; the heuristics, extrapolations and limitations are disclosed in proof.md.",
+      "score": {
+        "numerator": "15504277",
+        "denominator": "125000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "constants-ledger-toy-index-calculus",
+      "source": "experiment.py",
+      "purpose": "Check the BLS12-381 profile constants, the exact ledger and score arithmetic, and a toy factor-base index-calculus pipeline. This does not execute or validate a production NFS, pairing, or the production cost bound.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 28,
+          "seed": 7
+        },
+        {
+          "bits": 32,
+          "seed": 11
+        }
+      ]
+    }
+  ]
+}
