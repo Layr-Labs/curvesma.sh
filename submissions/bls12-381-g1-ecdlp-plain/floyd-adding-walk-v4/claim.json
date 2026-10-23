@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "floyd-adding-walk-v4",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": "138.921189",
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": "13.459432",
+    "preprocessing_log2": "0.000000",
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "The partition is assumed to behave as an independent uniform hash onto 32 buckets. Teske's corollary needs that assumption and is not a theorem about this mix. The success figure 0.39 is the acceptance floor. A recorded fresh-seed sample and each run of the declared program produce a one-sided Clopper-Pearson lower bound above that floor."
+  ],
+  "limitations": [
+    "Analytic construction. The production-size attack is not executed.",
+    "Instruction counts are the executed schedule, including loads that a register-blocked program could reuse.",
+    "Success probability 0.39 is a lower bound, not the measured sample rate."
+  ],
+  "lane": "exploratory"
+}
