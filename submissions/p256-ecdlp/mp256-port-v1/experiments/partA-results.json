@@ -1,0 +1,75 @@
+{
+ "A": {
+  "G_on_curve": true,
+  "N": 57896044605178124381348723474703786764998477612067880171211129530534256022184,
+  "N_is_half_r_minus_1": true,
+  "N_prime_exact_over_N": "2048/2047",
+  "a_is_minus_3": true,
+  "all_factors_prime": true,
+  "curve_discriminant_nonzero": true,
+  "doublings_cannot_cancel_structurally": true,
+  "dp_field_mask": "0xffffffffffffffff",
+  "factorisation_product_ok": true,
+  "fields_disjoint": true,
+  "log2_N": 254.99999999966408,
+  "log2_N_prime": 255.00070461264067,
+  "log2_ord_r_2": 254.99999999966408,
+  "mix64_bijective_on_sample": true,
+  "ord_r_2": 57896044605178124381348723474703786764998477612067880171211129530534256022184,
+  "ord_r_2_above_2_pow_250": true,
+  "ord_r_2_divides_r_minus_1": true,
+  "order_r_of_2": 115792089210356248762697446949407573529996955224135760342422259061068512044368,
+  "p_is_prime": true,
+  "r_is_prime": true,
+  "r_minus_1_factors": [
+   2,
+   2,
+   2,
+   2,
+   3,
+   71,
+   131,
+   373,
+   3407,
+   17449,
+   38189,
+   187019741,
+   622491383,
+   1002328039319,
+   2624747550333869278416773953
+  ],
+  "route_field_mask": "0xffffffffffffffff00000000000000000000000000000000",
+  "two_pow_r_minus_1_is_one": true,
+  "v2_r_minus_1": 4
+ },
+ "itemisation": [
+  {
+   "item": "p_is_prime",
+   "value": true
+  },
+  {
+   "item": "curve_discriminant_nonzero",
+   "value": true
+  },
+  {
+   "item": "G_on_curve",
+   "value": true
+  },
+  {
+   "item": "r_is_prime",
+   "value": true
+  },
+  {
+   "item": "ord_r_2_above_2_pow_250",
+   "value": true
+  },
+  {
+   "item": "fields_disjoint",
+   "value": true
+  },
+  {
+   "item": "mix64_bijective_on_sample",
+   "value": true
+  }
+ ]
+}

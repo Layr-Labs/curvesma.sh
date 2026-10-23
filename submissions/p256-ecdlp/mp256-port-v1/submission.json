@@ -1,0 +1,24 @@
+{
+ "version": 1,
+ "title": "P-256 negation-class rho, independent reimplementation of the c79cc19a re-price (carry-chain batch round) on 2ec1a0b0's base (claim 127.8009, strictly below the 127.86 gate)",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1278009",
+    "denominator": "10000"
+   },
+   "statement": "For the unrestricted-production P-256 challenge Q=[x]P, the fully specified negation-class distinguished-point rho construction of 5fa78d62 (Meganpark980320) as re-priced by c79cc19a (jungjipdo) on the base of 2ec1a0b0 recovers the canonical scalar with success at least 0.3925, using total classical work at most 2^(1278009/10000) = 2^127.8009 target-group-operation equivalents at the protected C=1000 scalar AArch64 instruction normalization, with peak memory below 2^73 bytes. Architecture, taken verbatim from the ported claim set: negation classes {P,-P} with class key x and canonical member (x,|y|); R = 2048 doubling-adding walk; doubling escape from the minimum-fingerprint class of a detected 2-cycle; 2-cycle test plus a prime-67 checkpoint window with the phase drawn per trail from the start-state hash; merging lemma; N' = N*R/(R-1) with N = (r-1)/2; heuristic H1 with kappa = 1.05; a global work meter that halts at W_max; 64-bit distinguished points; 2^16 storage nodes under a 16-bit routing field read from key bits 128..191 while the DP predicate reads only key bits 0..63 (disjoint fields, mix64 a bijection on 64-bit words); per-node caps fixed before the run, node set-up and routing charged inside H1; records 26 bytes = route16 + dp-fp64 + owner-trail-id64 + step64; 2^16 nodes each below 2^56.4 bytes. Pricing from the compiled and tested batch round: ordinary step 1.17 units (counted 1,050 instructions, 11.4% margin), doubling 1.80 units (counted 1,635, 10.1% margin), traversal step 1.45 units (counted 1,308, 10.9% margin), Fermat inversion 2^17 instructions shared by a round of at least 2^15 walkers, C = 1000 instructions per unit. Ledger: S0 = sqrt(2N' ln(1/0.605)) = 2^127.50399, S_ops = 1.05*S0 = 2^127.57438, phase 1 = 1.17*(S_ops + 2^64) = 2^127.80089; capped items (phase-2 2^97.37, re-walks 2^81.4, reports 2^70.9, final sort 2^67.3, lost meter blocks 2^90, set-up, table) below 2^97.4 in every run; random-count items expected below 2^114.52; headroom below W_max = 2^127.86 is above 2^123.22, so the Markov early-halt probability is below 0.00241; success at least 0.395 - 0.00241 - 2e-7 > 0.3925. This package claims the reproduced ledger value 2^127.8009, which is strictly below the 127.86 display value of 2ec1a0b0 and strictly below the live queue head at submission time; the reproduction of every published row from our own exact rational arithmetic is in experiments/verify.py and certificate.json.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "checks-1.json",
+    "experiments/verify.py",
+    "experiments/protocol.py",
+    "experiments/toy.py",
+    "experiments/toy-results.json",
+    "experiments/partA-results.json"
+   ]
+  }
+ ],
+ "experiments": []
+}
