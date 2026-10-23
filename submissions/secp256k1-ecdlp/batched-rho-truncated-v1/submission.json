@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: inversion-batched parallel double-or-add walk at birthday exponent 1",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the inversion-batched parallel double-or-add walk in proof.md recovers x with probability at least 0.39 using at most 2^128.988644 target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^120.084963 bytes; preprocessing is at most 2^20.001442 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. Each walk step is charged as one reference batched incomplete affine addition at the fixed price C=1000, plus the residual field multiplication, inversion slack, coefficient update and distinguished-point insert bound in proof.md. The random-mapping calculation gives a collision probability above 0.632 at this budget; the claimed probability is the 0.39 floor. Inputs that miss the collision run the full step budget. This is a classical cold attack with no uncharged advice, quantum steps or endomorphism speedup. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "128988644",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-double-or-add-walk",
+      "source": "experiment.py",
+      "purpose": "Check the double-or-add coefficient update on a small additive cyclic group: every invertible collision recovers the secret, and the step budget meets steps*(steps-1) >= 2*order. On order 1009 the observed recovery rate inside that budget is at least 0.39. This does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 1009
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-accounting-control",
+  "algorithm": "batched-rho-truncated-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.988644,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 120.084963,
+    "preprocessing_log2": 20.001442,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Random-mapping birthday bound for the double-or-add walk: once S(S-1) >= 2r the collision probability is taken to be at least 1-exp(-1) > 0.632, and the submitted success probability 0.39 keeps slack for partition bias, useless coefficient matches and the distinguished-point storage cap."
+  ],
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "The only heuristic is the random-mapping collision bound stated in proof.md. The submitted success probability is the 0.39 floor, not the larger model value.",
+    "Distinguished-point inserts are capped at S/2^16 records. The cap is 16 times the model mean at rate 2^{-20}.",
+    "Conservative generic control under C=1000, not a best-known attack estimate or security bound."
+  ],
+  "lane": "exploratory"
+}
