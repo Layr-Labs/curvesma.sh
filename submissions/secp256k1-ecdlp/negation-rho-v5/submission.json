@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: negation-only canonical Pollard rho v5 (complete fruitless-cycle census, ratchet-fenced)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q = [x]P for the fixed standard generator of secp256k1, y^2 = x^3 + 7 over Fp, the single-shot classical negation-only canonical Pollard rho algorithm v5 in proof.md recovers x with success probability at least 0.39 using at most 2^128.141547 total target-group-operation equivalents (time_log2 = 128.141547 = 128141547/1000000), including seeding of 2^16 walkers with sign-corrected lazy representations, all walk steps (useful, escape, ratchet and trapped alike, each charged exactly once), the 16-state look-back cycle detection over distances 2..16 with one charged forced-index escape step, the 2^10-step ratchet fencing undetected traps, distinguished-point processing at 2^-32 density with a 2^96-slot table and epoch E = 2^44 (missed-report loss <= 2^-11 by exact averaging, overflow <= exp(-2^89), both subtracted), extraction, verification and output. The walk runs on the (r-1)/2 negation classes (canonical representative: even y) with constants A_j = [2^j]P, whose power-of-two structure makes every cycle relation an exact integer equation; the per-step cost is one reference batched incomplete affine addition plus 248 other instruction equivalents (worst case, itemized in the ledger). The fruitless-cycle analysis is complete under the single walk heuristic (uniform independent indices and non-forced parities): the cycle families are (word, sign-pattern) pairs with per-symbol even multiplicity, the composed map returns C iff prod kappa = +1 and the per-symbol inclusive-suffix products balance (an exact integer relation since 16*2^31 < r, verified in Part A), the kappa-to-suffix map is a bijection giving exactly prod_s C(2 t_s, t_s)/2 solutions per word, and in a genuine family (no prefix closure) every kappa except the last is a free parity event, so rate_L = families(L) * 64^-(L-1) exactly; the census is executed at production parameters: L=2: 1 family (rate exactly 1/64), L=4: 157 (2^-10.705), L=6: 46,844 (2^-14.484), conservative partition-sum bounds 2^-13.19 over L=8..16 and 2^-23.25 over L>=18 (ratchet-fenced trapped waste 2^-13.25); the useful-visit fraction is rho = 0.9474130892447007 (exact rational recorded by the experiment). Budget t = 1.25*sqrt((r-1)/2); birthday ideal 0.5040; efficiency charged 0.85 (the declared toy run measures 91/200 = 0.455 against the same-parameters ideal 0.504, ratio 0.903 >= 0.85; Teske's r-adding-walk analysis; conservative direction; the claim survives an efficiency charge of 0.80): modeled success 0.4284 >= 0.39. Peak memory is the 2^96-slot distinguished-point table = 2^103 bytes plus positive walker histories (memory_log2_bytes = 103.0); preprocessing 2^22.0 units included; nonuniform advice 0 bytes. Classical cold attack; everything charged. Part A verifies the group structure, the constants, the census (asserted: 1, 157, 46,844), the integer-relation premise and the exact ledger rationals at production parameters; Part B runs the complete v5 attack on a 20-bit toy curve: 91/200 = 0.455 recoveries with 0 wrong extractions, escape census matching the 1/64 prediction at distance 2 (the toy's odd-distance events are artifacts of the toy modulus where 2^j mod n wrap - excluded at production by 16*2^31 < r).",
+      "score": {
+        "numerator": "128141547",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "negation-rho-v5-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at production parameters: p and r prime (Miller-Rabin); the generator on the curve with order exactly r; negation classes (r-1)/2 with -G distinct from G; the 32 constants [2^j]P pairwise distinct; the integer-relation premise 16*2^31 < r; the executed fruitless-cycle family census asserted (1, 157, 46,844 for L = 2, 4, 6) with conservative partition-sum bounds for longer lengths; and the exact waste/rho/ideal/claimed-success ledger rationals, asserted >= 0.39 (and >= 0.39 at efficiency 0.80). Part B runs the complete v5 attack on a 20-bit prime-order toy curve with the production-shaped machinery: sign-corrected lazy representations, 16-state look-back with one charged forced-index escape, ratchet every 64 toy steps, distinguished points at the declared density, canonical-state table keyed by x, extraction and brute-force verification. Toy evidence is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dbits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "walkers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dbits",
+          "walkers"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dbits": 0,
+          "walkers": 8
+        }
+      ]
+    }
+  ]
+}

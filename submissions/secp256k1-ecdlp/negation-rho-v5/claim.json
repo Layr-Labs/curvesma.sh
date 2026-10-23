@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "binding_note": "sha256 of the track target-profile.json and tracks/classical-group-work-v2.json at repository revision 467130d867499e7bbca7479f0f72af0df115b282.",
+  "supersedes": [
+    "submissions/secp256k1-ecdlp/automorphism-rho (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v2 (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v3 (rejected)",
+    "submissions/secp256k1-ecdlp/automorphism-rho-v4 (rejected: the order-3 automorphism identities generate mixed-index fruitless families whose rates were not bounded, and the same-index rate calculation used a disproved independence assumption)"
+  ],
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "negation-rho-v5",
+  "work_function": "W = 1.248 * 1.25 * sqrt((r-1)/2) + < 2^22.1 (score = log2(W))",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.141547,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 103.0,
+    "preprocessing_log2": 22.0,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: the canonical walk's generic states have uniform independent indices (x mod 32) and non-forced parities; the same heuristic yields the classical 1/64 negation 2-cycle rate (reproduced exactly by the census enumeration and by the toy's distance-2 escape rate) and the birthday model.",
+    "The cycle-family analysis is exact GIVEN H1: families are (word, sign-pattern) pairs with per-symbol even multiplicity over the constants [2^j]P; the composed map returns C iff prod kappa = +1 and the per-symbol inclusive-suffix products balance - an exact integer relation since any signed sum of <= 16 constants satisfies |sum| <= 16*2^31 < r (verified in Part A); kappa <-> suffix is a bijection giving exactly prod_s C(2 t_s, t_s)/2 solutions per word; in a genuine family (no prefix closure) every kappa except the last is a free parity event, so rate_L = families(L) * 64^-(L-1) exactly; the census executes at production parameters (1, 157, 46,844 for L = 2, 4, 6) with conservative partition-sum bounds 2^-13.19 (L = 8..16) and 2^-23.25 (L >= 18, ratchet-fenced trapped waste 2^-13.25).",
+    "Efficiency charge 0.85: below the toy-measured 0.903 (91/200 = 0.455 vs the same-parameters ideal 0.504), consistent with Teske's r-adding-walk analysis for r = 32, charged in the conservative direction; the claim survives an efficiency charge of 0.80 (0.4032)."
+  ],
+  "limitations": [
+    "Analytic construction; no production-size execution is claimed or possible.",
+    "Single-shot randomized attack at the 0.39 threshold (modeled success 0.4284).",
+    "The distinguished-point table is a hard 2^96-slot allocation (2^103 bytes); overflow aborts with probability <= exp(-2^89), subtracted.",
+    "Standard cryptanalysis (negation-map rho with cycle handling); the complete power-of-two family census and the ratchet fence are the contribution under this cost model."
+  ],
+  "lane": "exploratory"
+}
