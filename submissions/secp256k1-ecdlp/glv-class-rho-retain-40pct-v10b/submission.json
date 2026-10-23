@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "title": "secp256k1 fixed-spacing GLV class-rho v10b: conditional 128.21 with capped retention",
+  "claims": [{
+    "evidence": ["argument.md", "public-note.md", "ledger.py", "toy_group.py", "scripts/transports.py", "scripts/toy_sweep.py", "scripts/verify_certificate.py", "sweep-summary.json", "certificate.json", "evidence/certificate_run.log"],
+    "score": {"numerator": "12821", "denominator": "100"},
+    "statement": "Conditional analytic full-production secp256k1 ECDLP claim: the specified fixed-spacing, capped-retention GLV class-rho algorithm recovers the uniform challenge logarithm with probability at least 0.40 within 2^(12821/100) classical target-operation equivalents at C=1000. Put N=(r-1)/6, nu=153/125, T=ceil(sqrt((98859/100000)*nu^2*N)), L=40*2^64 and K=T+1024*L. The fixed coordinate distinguished spacing is 2^64, with M=2^72 records, S=2^85 event/start caps and 1024 workers. H-Rom is the useful-core collision lower law 1-exp(-(7/10)*T*(T-1)/(2*N)); H-rate bounds both the emitted-endpoint and terminal-event first moments by (11/10)*K/2^64; H-window is the disclosed geometric renewal/age and selected-pair transport model giving debit 64*(2^64)^2/N and the separately itemized detector, exception and trail-cap debits. Abort on full, never evict or filter a record: the two corresponding Markov debits are (11/10)*K/(2^64*M) and (11/10)*K/(2^64*(S-1024)). All applicable non-reference work receives 6/5 repricing, followed by a complete-ledger reserve of 27/25. A record occupies 192 bytes including 64 bytes of independent starting scalars and a 16-byte length; the pool is (2^72)*192=3*2^78 bytes and a separate auxiliary cap of 2^30 bytes keeps total peak below 2^80 bytes. Cold preprocessing, replay, verification, finite-cap failures and zero nonuniform advice are included. This is conditional on the stated production laws; exact arithmetic and finite coordinate-faithful toys do not prove their production extrapolation. No unconditional success theorem or production execution is asserted."
+  }],
+  "experiments": []
+}
