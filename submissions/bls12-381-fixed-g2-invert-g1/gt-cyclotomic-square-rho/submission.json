@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Pollard rho with cyclotomic squaring in GT",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, recover P in G1 with e(P,Q)=z under the pinned pairing convention. The algorithm in proof.md computes g=e(P0,Q) and solves z=g^a in GT by Pollard's three-way distinguished-point walk: cyclotomic squaring when the canonical residue modulo 3 is 0, dense multiplication by g when it is 1, and dense multiplication by z when it is 2. The walk state is an ordinary GT element. There is no Frobenius orbit and no representative selection. A distinguished-point collision yields the exponent a, or is rejected by the pinned pairing check. The algorithm stops after floor(1.2*sqrt(r)) steps or after ceil(11/16) of that many dense multiplications, whichever comes first, so the work is at most that many cyclotomic squarings and dense multiplications plus the one-time terms in proof.md. The attack uses at most 2^127.612559 total target-group-operation equivalents, including preprocessing, restarts, verification and failures. Peak memory is at most 2^57.04 bytes. Preprocessing is at most 2^30 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes. Heuristic H1 in claim.json is the only nondeterministic premise. Success probability is at least 0.42.",
+      "score": {
+        "numerator": "127612559",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-cyclotomic-square-rho",
+      "source": "experiment.py",
+      "purpose": "On a toy prime-order additive group, run Pollard's three-way distinguished-point walk (double, add the generator, or add the target) and check that a collision recovers the secret. Doubling is the additive image of the cyclotomic squaring branch. This does not establish production field costs or the BLS pairing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {"type": "integer", "minimum": 8, "maximum": 500000},
+          "secret": {"type": "integer", "minimum": 1, "maximum": 499999},
+          "theta": {"type": "integer", "minimum": 2, "maximum": 4096},
+          "budget": {"type": "integer", "minimum": 1, "maximum": 5000000}
+        },
+        "required": ["order", "secret", "theta", "budget"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"order": 10007, "secret": 4243, "theta": 32, "budget": 200000},
+        {"order": 65537, "secret": 9001, "theta": 64, "budget": 800000}
+      ]
+    }
+  ]
+}

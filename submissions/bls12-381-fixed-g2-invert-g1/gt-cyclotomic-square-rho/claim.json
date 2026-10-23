@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-accounting-control",
+  "algorithm": "gt-cyclotomic-pollard-rho-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.612559,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 57.04,
+    "preprocessing_log2": 30,
+    "success_probability": 0.42,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1: Pollard's three-way iteration on a prime-order group (cyclotomic square when the canonical residue mod 3 is 0, dense multiply by the base when it is 1, dense multiply by the target when it is 2) has the collision-time law of a random mapping, and those residues are unbiased up to an error far below 2^-64. The hard stop at floor(1.2*sqrt(r)) steps and at ceil(11/16) of that many dense multiplications therefore succeeds with probability 1-exp(-0.72) minus a Chernoff abort smaller than 2^(-2^100). The submitted success probability 0.42 is below that model value."
+  ],
+  "limitations": [
+    "Analytic instruction ledger plus a toy prime-order experiment; no full-size execution.",
+    "H1 is not a theorem. The 0.42 success bound is a discount from the random-mapping value 0.513, not a measured production frequency.",
+    "The cyclotomic-squaring instruction count is an AArch64 upper bound on the Granger-Scott straight-line formula, not a cycle measurement of a shipped kernel.",
+    "Beating a generic square-root control is not a finite-field security estimate and is not a practical break."
+  ],
+  "lane": "exploratory"
+}
