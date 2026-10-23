@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "floyd-adding-walk-v2",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 137.992069,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 20.000000,
+    "preprocessing_log2": 19.034216,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "The partition is the fixed mix64 function in proof.md, not a freshly sampled independent hash. Teske's corollary for r at least 16 therefore does not apply as a theorem. The success figure 0.39 is the claim. The declared sample, with this partition and these 512-bit coefficients, collides inside the budget on well above 0.39 of the draws."
+  ],
+  "limitations": [
+    "Analytic construction. The production walk is not executed.",
+    "Success probability 0.39 is a lower bound, not the measured sample rate.",
+    "Instruction prices are ceilings. A lower real instruction count would only decrease W.",
+    "No GLV, negation map, distinguished points, or number-field sieve is included."
+  ],
+  "lane": "exploratory"
+}
