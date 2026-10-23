@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 pairing inversion by parallel Pollard rho on order-12 Frobenius classes in GT (backport of historical submission 1c0ec6c4, ledger independently re-derived)",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT (identity target included), a classical randomized algorithm returns Q in G2 with e(P,Q)=z for the exact supplied P with probability at least 0.40 over the challenge and fresh algorithm coins. Compute g=e(P,Q0) for the profile's fixed G2 generator (one reduced pairing); g generates GT since P is nonidentity and the reduced pairing is nondegenerate on prime-order groups. Solve x=log_g z by parallel Pollard rho with distinguished points (van Oorschot-Wiener) on the 12-element classes {s^(p^i)} of the Frobenius action; the class invariant is min over 12 values Re(conj^i(c1)*gamma_i) of the coefficient-1 Fp2 part of the i-th conjugate (gamma_i = xi^((p^i-1)/6) public constants, 10 Fp multiplications total, v_{i+6}=-v_i since p^6 acts as inversion, and the full Frobenius is never evaluated), a step is one dense Fp12 multiplication by a conjugated jump-table entry y*M_j^{p^{-kappa}}, and fruitless cycles are removed by a class-only detection/escape rule so merged walks stay merged. R = 2^16-entry adding-walk table, distinguished-point rate theta = 2^-60, 2^20 processors, 3% step margin, collision budget k = sqrt(0.9886 N') for N' = (r-1)/12 + 1. Total work at most 2^(12616/100) target-group-operation equivalents at the fixed C = 20000 scalar 64-bit AArch64 instruction equivalents per dense Fp12 multiplication, including all preprocessing (independent bound 2^45: per-processor jump tables including random-exponent generation), starts, distinguished-point handling, cycle waste, detection delay, recovery reruns, the G2 scalar multiplication and two pairing checks. Peak total storage below 2^72 bytes (2^71.7 stored distinguished points plus 2^49.1 processor tables); memory is stated, justified and unscored. Nonuniform advice 2^0 bytes. Heuristic premises, disclosed: (H1) the class-level r-adding walk behaves like a random mapping on the N' classes (van Oorschot-Wiener 1999; Teske 2001, R >= 16 within a few percent, deviation shrinking with R); (H2) the fruitless-cycle rate bound rho_2 = 1/(12R) exact and rho_L <= L! R^-ceil(L/2) for L >= 3. Delivered success 0.408 from the 3% margin over the 0.39 budget, minus relative losses below 2^-40; the 0.40 floor is carried because the historical margin supports it. Analytic bounds, not measurements; no claim of novelty, acceptance or an official score.",
+      "score": {
+        "numerator": "3154",
+        "denominator": "25"
+      },
+      "evidence": [
+        "argument.md",
+        "evidence.json",
+        "certificate.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

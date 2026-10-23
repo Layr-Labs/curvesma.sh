@@ -1,0 +1,74 @@
+{
+ "version": 1,
+ "recordType": "Independent python3 re-verification of the backported gt-class-rho ledger against the current protected profile and COST_MODEL. Host python integer/float arithmetic only; no candidate code executed.",
+ "verifiedAt": "2026-10-22",
+ "claim_under_review": "time_log2 12616/100 = 126.16; success >= 0.40; memory 2^72 bytes; preprocessing 2^45",
+ "protected_sha256": {
+  "tracks/bls12-381-fixed-g1-invert-g2/target-profile.json": "af94a59fd63a014f6dd199b84e54e5a8f8ab3e5b220d432610ba785d0abef888",
+  "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "tracks/bls12-381-fixed-g1-invert-g2/rules.md": "f3c7e3613eb6a2239274771483b4fbc8a32921e140cf4739ec4df3bd1c4b2bd1",
+  "tracks/bls12-381-fixed-g1-invert-g2/verifier.json": "531a0f190dff87609fda1e732745d13d9ea7ee33b18cbb6d545c03018ba54b7d",
+  "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+ },
+ "historical_source_sha256": {
+  "proof.md": "6e0e2bbd72db392d3621a75eb22f605a5a0d9a50023e48d034b01d1dcd6c4ac7",
+  "claim.json": "1ae544c7f7df6021334b53709331245ce15812f5f907055453700718ecd83134",
+  "submission.json": "0e1544c131811bc92f74a05c28ffac925e317a978b186ad647617df85e3627d0"
+ },
+ "field_identities": {
+  "ord_p_exactly_12": true,
+  "p6_eq_minus1_mod_r": true,
+  "r_divides_p12_minus_1": true,
+  "gamma_chain_recurrence": true,
+  "random_gt_element_has_order_r": true,
+  "trials": 8,
+  "rot_all_pass": true,
+  "neg_all_pass": true,
+  "dist_all_pass": true,
+  "p6_all_pass": true,
+  "frob_all_pass": true,
+  "full_orbit_size_12": true
+ },
+ "ledger": {
+  "log2_r": 254.85709,
+  "log2_N_prime": 251.27213,
+  "log2_k39": 125.62779,
+  "log2_k40": 125.65151,
+  "log2_K": 125.67043,
+  "log2_step_c_1p4": 0.48543,
+  "log2_Kc": 126.15586,
+  "omega_log2": -17.25,
+  "P_at_K_under_H1": 0.4081,
+  "K_over_k40": 1.0132,
+  "undetected_long_cycle_fraction_log2": -55.2,
+  "relative_charges_log2": {
+   "delay": 84.8,
+   "starts": 74.7,
+   "dp": 64.7,
+   "recovery": 68.8,
+   "longcycle_frac": -55.2,
+   "preproc": 44.6,
+   "output": 15.2
+  },
+  "log2_W_total": 126.15587,
+  "within_claim_126_16": true,
+  "step_instruction_recount": 4254,
+  "charged_per_step": 8000
+ },
+ "memory": {
+  "dp_store_bytes_log2": 71.67,
+  "processor_tables_bytes_log2": 48.75,
+  "walker_windows_bytes_log2": 33.75,
+  "peak_below_2_pow_72": true
+ },
+ "verdict": {
+  "claim_126_16": "PASS (independently re-derived log2 W = 126.15587)",
+  "success_0_40": "PASS under disclosed H1/H2: P(K)=0.4081, K/k(0.40)=1.0132, all collision-relevant losses below 2^-40 relative",
+  "memory_2_pow_72": "PASS",
+  "preprocessing": "2^45 recomputed (historical 2^38.2 omitted random-exponent generation); relative effect below 2^-81",
+  "corrections": [
+   "Step instruction recount 4254 vs historical 4454; charged 8000 unchanged.",
+   "Historical proof.md cited table-index bits 40..55 in one place and 200..215 in another; resolved to 200..215, disjoint from the 60 distinguished-point bits. Immaterial to cost."
+  ]
+ }
+}
