@@ -1,0 +1,13 @@
+{
+  "package": "plain-sixclass-selfcontained-40pct-v15",
+  "track": "bls12-381-g1-ecdlp-plain",
+  "self_contained": true,
+  "dependencies": [],
+  "reproduce": [
+    {"command": "python3 ledger.py", "writes": "stdout", "expects": "log2 W = 126.26747523, success 0.39191"},
+    {"command": "nice -n 10 python3 scripts/toy.py", "writes": "evidence/toy.json", "expects": "verdict PASS, A_measured <= 1.03"},
+    {"command": "python3 scripts/verify_certificate.py", "writes": "certificate.json", "expects": "all checks pass"}
+  ],
+  "fixture": {"p": 600217, "q": 50047, "classes": 8341, "note": "hardcoded, no runtime search"},
+  "scope": "mechanism and conversion measurement at 20 bits; not a production-size execution"
+}

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Plain G1 v15: self-contained six-class quotient walk at 126.27 with a derived H1 allowance",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "ledger.py",
+        "certificate.json",
+        "scripts/verify_certificate.py",
+        "scripts/toy.py",
+        "evidence/toy.json"
+      ],
+      "score": {"numerator": "12627", "denominator": "100"},
+      "statement": "On the bls12-381-g1-ecdlp-plain input, which supplies only T=[x]P0 for x uniform in [0,r) with no auxiliary powers and no n, the algorithm specified in this package recovers the canonical 32-byte scalar x with success probability at least 0.39 and verifies it by [x]G=T, using at most 2^126.2675 native-equivalent work units at C=2000 and 2^74.585 bytes of storage. The algorithm is stated in full inside the package and depends on no other submission: the state is the canonical representative A of a six-class orbit under {+-1,+-lam,+-lam^2} with the invariant A=[a]G+[c]T; the transition is the FIXED function A -> canon(A+J_m) with m=floor(K*R/p), K=min(A.y,p-A.y), R=2048, and the coefficient pair updated by the same orbit element e returned by canon, so a'=e*(a+r_m), c'=e*(c+s_m) mod r; the selector uses 12 truncated limb products with an exact fallback on at most 267 boundary residues out of 2^64, so the fallback fires with probability below 2^-56 and costs below 2^89 units in total; a period-64 checkpoint confirmed by full-point equality triggers a doubling escape that doubles BOTH a and c, and an infinity restart draws a fresh pair and canonicalises it, so the invariant holds after every transition, escape and restart; records of 192 bytes hold the full pair at spacing 2^-60, so recovery is x=(a_stored-a)*(c-c_stored)^-1 and needs no re-walk. The H1 allowance is derived, not assigned: a merge is detected at the next distinguished point with mean residual wait half a spacing over a 40-spacing trail, so the budget must satisfy rho_ideal(A) >= 0.39+1/80, whose first 0.001-grid solution is A=1.021, and A=1.025 is charged with one further 0.005 grid step as reserve; rho_ideal(1.025)=0.4053824784, minus the derived transport 1/80, pool-overflow 2^-10, fingerprint 2^-190, degenerate-relation 2^-254 and detector-abort 2^-126 rows, leaves success 0.39191 >= 0.39. Work is S_ops=ceil(1.025*S0) with log2 S0=126.12885733 and S0^2>=2*N'*ln(1/(1-0.3903)), N'=N*R/(R-1), N=(r-1)/6; phase 1 is 1.074*(S_ops+2^60) with the step meter itemised in nine rows summing to 148 control instructions over the 2000-instruction reference addition; the extras row is 2^89.006; the total is 2^126.26747523 against the claim 126.27, headroom 0.00252 bits. The captured toy executes this same spec on a fixed 20-bit j=0 fixture with 8341 classes, draws a fresh target per trial, asserts A=[a]G+[c]T after every transition including every escape and restart, and passes only if its measured recovery at the charged budget reaches 0.39. The random-mapping premise H1 and the instruction ceilings are disclosed hypotheses; no production-size execution is claimed and no component is cited from another submission as authority."
+    }
+  ],
+  "experiments": []
+}
