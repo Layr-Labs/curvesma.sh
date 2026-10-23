@@ -1,0 +1,119 @@
+{
+ "C": 2000,
+ "N": 65834509541915422902038980414796450,
+ "P": 59400930180745402752,
+ "W": {
+  "denominator": 500,
+  "numerator": 74721888713094463768285116782534267451
+ },
+ "b_mean": 1125899906842624,
+ "b_min": 1108307720798208,
+ "c": {
+  "denominator": 1000,
+  "numerator": 1133
+ },
+ "checks": {
+  "B_min_is_a_floor_not_an_equality": "PASS",
+  "H0_census_stable_across_256x": "PASS",
+  "H0_charge_exceeds_estimate_by_2_30": "PASS",
+  "H0_transferred_dev_below_eps_charge": "PASS",
+  "N_is_walked_exactly_by_truncation": "PASS",
+  "P_is_minimal_for_floor_fibre": "PASS",
+  "c_budget_itemised": "PASS",
+  "c_equals_1133_over_1000": "PASS",
+  "claim_above_raw": "PASS",
+  "claim_below_gate": "PASS",
+  "claim_below_gate_plus_006": "PASS",
+  "claim_holds_at_13_hops": "PASS",
+  "coverage_meets_K": "PASS",
+  "d_divides_r_minus_1": "PASS",
+  "dup_charged_reserve_bits_ge_16": "PASS",
+  "dup_derived_covers_toy_measurement": "PASS",
+  "dup_derived_le_charged": "PASS",
+  "gap_bound_holds_per_class_at_toy": "PASS",
+  "gap_bound_is_span_over_table": "PASS",
+  "incomplete_routine_armed_zero_trips": "PASS",
+  "lemmaA_ln_X_below_50": "PASS",
+  "m_bits_235": "PASS",
+  "no_field_advice": "PASS",
+  "peak_below_2_129": "PASS",
+  "preprocessing_below_2_78_units": "PASS",
+  "preprocessing_included": "PASS",
+  "prime_supply_slack_ge_100x": "PASS",
+  "primes_available": "PASS",
+  "r_minus_1_factorisation": "PASS",
+  "r_prime": "PASS",
+  "raw_at_most_claim_minus_tenth": "PASS",
+  "success_floor_39pct_after_debits": "PASS",
+  "table_levels_cover_span": "PASS",
+  "table_term_covers_lockstep_levels": "PASS",
+  "two_not_in_H": "PASS",
+  "two_not_in_H_blocks_doubling_in_toy": "PASS",
+  "two_pow_m_has_order_2_16": "PASS",
+  "v2_r_minus_1_is_32": "PASS",
+  "walk_row_is_two_N_times_c": "PASS",
+  "zeta_is_primitive_dth_root": "PASS"
+ },
+ "claim": {
+  "denominator": "20",
+  "numerator": "2339"
+ },
+ "claim_window": {
+  "gate_margin": "0.032765",
+  "headroom": "0.102914"
+ },
+ "d": 1048576,
+ "gap_overflow": {
+  "adds_per_gap": 2,
+  "distribution_assumed": false,
+  "gaps_per_prime": "274877906944",
+  "source": "span/table_bound",
+  "units_per_add": 4
+ },
+ "gate": {
+  "denominator": "200000",
+  "numerator": "23396553"
+ },
+ "lockstep": 65536,
+ "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+ "peak_bytes": 6320112916023927822341635609584139456,
+ "peak_cap": 680564733841876926926749214863536422912,
+ "per_element": {
+  "addition": 2000,
+  "bookkeeping": 75,
+  "canonical_y": 40,
+  "instructions_per_hop": 18,
+  "key_hash": 61,
+  "routing": 90,
+  "routing_hops": 5,
+  "total": 2266
+ },
+ "preprocessing_units_ceiling": "200937874437724121254068224",
+ "raw_log2": "116.847086",
+ "raw_log2_at_13_hops": "116.935820",
+ "rows": {
+  "b_sieve_and_class_lists": 191266467880807087856418816,
+  "characters_per_prime": 19246970595304763908897536,
+  "final_verification": 766000,
+  "gap_overflow_chunks": 522496107475519229383041840316416000,
+  "input_read_and_output": 16777216,
+  "per_prime_scalar_mults": 91002225036901957016064000,
+  "per_prime_tables": 3061500630452181646835205616128000,
+  "prime_sieve_to_2_82": 9671406556917033397649408,
+  "recovery_root_and_mu_d": 2150441428,
+  "walk_baby": 149180998621980348296020329619928755700,
+  "walk_giant": 149180998621980348296020329619928755700
+ },
+ "success": {
+  "K_charged": "0.503876953",
+  "dup_charged": "2^-14",
+  "duplicate_loss_derived": "400/d^2 = 2^-31.3561",
+  "duplicate_phi_measured_toy": "0.029447",
+  "eps_charged": "2^-6",
+  "floor": "39/100"
+ },
+ "table_bound": 4294967296,
+ "table_bytes": 81064793311543296,
+ "table_levels": 3,
+ "total_instructions": 298887554852377855073140467130137069804
+}
