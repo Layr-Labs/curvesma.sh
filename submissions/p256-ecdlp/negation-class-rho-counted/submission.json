@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: negation-class parallel Pollard rho priced from a compiled and tested step kernel (class walk of 5fa78d62 with measured instruction counts)",
+  "claims": [
+    {
+      "statement": "For the uniform full-production P-256 target Q=[x]P, the classical cold attack in proof.md (negation-class parallel Pollard rho: twisted R=2048 adding walk on classes {P,-P} keyed by x, doubling escapes from detected 2-cycles and checkpoint cycles of length <= 64, distinguished classes appended to per-node logs on 2^16 storage nodes each natively addressable below 2^58 bytes and matched by a deterministic merge sort after phase 2, re-walk solving), whose algorithm, merging lemma, work meter and success analysis are those of submission 5fa78d62 (Meganpark980320) unchanged, halts on every run after at most 2^127.86 units of C=1000 scalar AArch64 instructions because a global work meter charges every action before it runs. The ordinary step (batched affine addition with Montgomery batch inversion shared by additions and doublings in one round, sign test, table lookup, arrival checks) is priced at 1,170 instructions = 1.17 units, from a C implementation (4x64-bit Montgomery limbs with adc/sbb carry chains) tested against Python big integers whose AArch64 assembly (kernels/p256_field.s, kernels/p256_loops.s, kernels/p256_slow.s, clang) has a longest loop iteration of 204 + 841 instructions plus 5 per-round share = 1,050 per step (the trail operation count is a 128-bit counter because the cap L_max = 20*2^64 needs 69 bits), 176 + 1,025 + 5 = 1,206 per doubling and 67,612 per Fermat inversion (priced 2^17); a traversal step is priced at 1.275 units (bound 1,147) and a doubling with its list moves at 1.57 (bound 1,410); every other price (ChaCha20 random words, starts, reports, the final sort, table, re-walks, solving, verification) is given an instruction basis in proof.md 5.3. The items with a hard cap (phase 2, re-walks, reports, the sort, lost meter blocks, set-up) total below 2^97.4 units; the items with a random count (doublings, traversals, starts, sampling) have expected total below 2^114.36 units and enter only the Markov bound. The meter is two lock-free 64-bit block counters advanced by one ldadd each. It succeeds with probability at least 0.39 under the disclosed heuristic H1 (random mapping on N=(r-1)/2 classes with Brent-Pollard correction and a 5% slowdown allowance; index, distinguished and routing bits pseudo-random), supported by toy runs; the meter's early-halt probability is < 0.0022 by Markov, giving success >= 0.3927. Peak memory < 2^74 bytes; preprocessing <= 2^60 units, enforced and included; no nonuniform advice. Not a practical break.",
+      "score": {
+        "numerator": "12786",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "README.md",
+        "kernels/p256_walk.c",
+        "kernels/p256_field.s",
+        "kernels/p256_loops.s",
+        "kernels/p256_slow.s",
+        "kernels/strip_asm.py",
+        "kernels/test_native.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "p256-negation-class-rho-counted-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production P-256 checks of every identity the walk uses; Part B: the complete per-trail algorithm on prime-order toy curves y^2=x^3-3x+b (T_c census, pipeline success with node routing, long-trail trap test); kernels: pure-Python port of the 4x64-bit Montgomery kernels of kernels/p256_walk.c checked against big integers, instruction counts and longest loop iterations parsed from the shipped AArch64 assembly kernels/p256_field.s, kernels/p256_loops.s and kernels/p256_slow.s, and the exact work/success ledger of proof.md section 5.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 3,
+          "seconds": 9,
+          "pipeline": true,
+          "kernels": true
+        }
+      ]
+    }
+  ]
+}
