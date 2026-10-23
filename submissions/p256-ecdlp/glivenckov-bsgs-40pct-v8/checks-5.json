@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "radix4_bijection_1": true,
+    "radix4_bijection_2": true,
+    "radix4_bijection_3": true,
+    "radix4_bijection_4": true,
+    "radix4_bijection_5": true,
+    "random_split_lossless": true,
+    "raw_candidate_fits_five_limbs": true,
+    "raw_candidate_two_corrections": true,
+    "raw_filter_would_discard_correct_match": true,
+    "record_indices_two_limbs": true,
+    "record_layout96": true,
+    "sort_new_counts": true,
+    "sorted_tree_duplicates_and_identity": true,
+    "stress_0p10_headroom": true,
+    "stress_all_nonM_and_one_time": true,
+    "total_exact_row_sum": true,
+    "toy_CIOS_and_smallfield_same_full_pipeline": true,
+    "toy_counted_prime_order": true,
+    "toy_exhaustive_recovered": true,
+    "toy_generator_on_curve_order": true,
+    "toy_max_two_verifications": true,
+    "toy_random_1000_zero_misses": true,
+    "toy_zero_recovered_without_shortcut": true,
+    "two_entry_seed_expanded_fits": true,
+    "v8_total_below_three_quarters_v7": true,
+    "verification_standalone": true,
+    "wider_nominal_reserve_disclosed": true,
+    "word64_instruction_price_one": true
+  },
+  "details": {
+    "toy_exhaustive_recovered": "107/107",
+    "toy_max_two_verifications": 1,
+    "toy_random_1000_zero_misses": "1000/1000"
+  }
+}

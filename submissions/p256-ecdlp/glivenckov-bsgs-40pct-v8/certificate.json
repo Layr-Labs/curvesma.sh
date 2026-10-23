@@ -1,0 +1,107 @@
+{
+  "M_total": "10152324417086199057429781412726804588789760",
+  "T": "71353639378468125934403289745063777604602562",
+  "T_stress": "417969511853722556548989957057655861038825612/5",
+  "advice_bytes": 0,
+  "check_count": 220,
+  "check_parts": [
+    "checks-1.json",
+    "checks-2.json",
+    "checks-3.json",
+    "checks-4.json",
+    "checks-5.json"
+  ],
+  "checks": {
+    "check_count_matches_split_files": true,
+    "every_named_check_passes": true
+  },
+  "claim": {
+    "denominator": "20",
+    "numerator": "2721"
+  },
+  "diagnostics_only_not_in_bounds": {
+    "nominal_bit_saving_vs_v7": 0.41701762274341014,
+    "nominal_claim_slack": 0.3378891885485018,
+    "nominal_log2": 135.7121108114515,
+    "stress_claim_slack": 0.10947849354292316,
+    "stress_log2": 135.9405215064571
+  },
+  "documentation_pending": false,
+  "integers": {
+    "A": 48,
+    "C": 1000,
+    "I": 424704,
+    "J": 14288,
+    "K_rec": 23121,
+    "L": "340282366920938463463374607431768211456",
+    "M": 765,
+    "V": 7746027,
+    "actual_records": "510423550302179532699244317627817918464",
+    "charged_records": "510423550381407695195061911147652317184",
+    "h": "340282366841710300967557013911933812736",
+    "m": "170141183460469231731687303715884105728",
+    "p": "115792089210356248762697446949407573530086143415290314195533631308867097853951",
+    "r": "115792089210356248762697446949407573529996955224135760342422259061068512044369"
+  },
+  "nonM_total": "61201314961381926876973508332336973015812802",
+  "pass_lines": [
+    "PASS 220/220 named checks",
+    "PASS exact nominal and 6/5 stress inequalities",
+    "PASS toy exhaustive 107/107 and random 1000/1000, zero misses"
+  ],
+  "peak_memory_bytes": "16725558898897967356151788704486271130533888",
+  "preprocessing_instructions": "34782472558374106450604030560549352598251244",
+  "proofs": {
+    "claim": "T^20<1000^20*2^2721",
+    "coverage": "z=x if x odd else x+r; i=(z-1)//(2L); b=abs(z-(2i+1)L)=2j+1; (h-1)L<r<=hL",
+    "margin_conflict": "0.06 maximum nominal slack conflicts with >=0.10 stress headroom; wider v7 nominal reserve retained, not hidden",
+    "sign_and_edges": "equal x gives center +/- odd; reduce with at most two r subtractions, THEN select unique odd lift; at most two full verifies",
+    "stress": "(T_stress/1000)^20<2^2719"
+  },
+  "protected_sha256": {
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6",
+    "tracks/p256-ecdlp/rules.md": "0cbd08d817e61a129cf16a9d2d962f343830e139fe64e9a33da85863b7db09a6",
+    "tracks/p256-ecdlp/target-profile.json": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605"
+  },
+  "rows_instructions": {
+    "R_baby_lookup_labels": "10889035741470030830827987437816582766592",
+    "R_gen": "11801502908368527320605026447644869225611264",
+    "R_init": "16725558898897967356151788704486271129485312",
+    "R_merge": "261336857795280739939871698507597986398208",
+    "R_place": "8406335592414863801399206301994401895809024",
+    "R_setup": "17179869184",
+    "R_small_table_and_seeds": "32089836",
+    "R_sort": "34148016085250016685476568604992803556032512",
+    "R_verify": "16540630"
+  },
+  "scope": "Exact analytic arithmetic plus real captured small ECC pipeline, not a formal or production certificate.",
+  "source_sha256": {
+    "argument.md": "4cd8ca0b65ef25921ecf564426c0ab771605eb0040ec42dc0125793c10b0971b",
+    "build_certificate.py": "b36436438489fc6f80b545353d581177723d1a0ef68c13261d416fdc1cd1a981",
+    "checks-1.json": "a23404fadc2d1d717b85ea66231e02c75e6c285ee71fe5677cbdacdd98a5255c",
+    "checks-2.json": "742639877d471f146c87d96167cc97757700032559000786b25d37cd75091a3b",
+    "checks-3.json": "c29d00fdecbd4e682911b6167f52f50f9d257a4b10ca6aac68ac5eae87bb5626",
+    "checks-4.json": "13f6a7442d8ae293ac0f9e47e6b171104bc491f0a249d7db28a7612202fc3955",
+    "checks-5.json": "8313551b6e44e409481fd3106a1028af3e0dd70f2a3d37ff966ff75f9cba5631",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "evidence.json": "dd4ca494145c1c56c9f6266e6cf69fc5954dc222f74fb6eea584131c33ac5a68",
+    "evidence/captured-run.txt": "202f6647d0f8b33ab2bfae6203b7c6a389d434fe71bffb24f410580c9abbaa98",
+    "evidence/toy-random-1.json": "1f1c178f1f7df2f7490c079d512bd3aed9c5c2f1952cc0b620b0ececd1a2342a",
+    "evidence/toy-random-2.json": "ffd5fb120b3009bf2dcd418e231992ade15d7dc638d5997d5e3e04c0bfdc0c27",
+    "kernel-ledger.md": "4a054ad2a7edfc80e05b0e71a5e52fa640d71f2e30767181753c93dad3aab6a1",
+    "ledger.md": "26fe684e72bc587094374fda95badbaff7cf650db4106c8c383c3a878eff1c7e",
+    "mechanism.py": "17e6080fb4591ee239c9762a76f8f68eb01901eeb9f71412b6bf639fb275652a",
+    "pricing.py": "0c3391c3ade501a6718c224168f59d0c918bca097753a366731a8a458d5f995b",
+    "provenance.json": "5c248b28b03d115fb09e7db69643094b20d52c1074dc3f9c15f5e2fd8502b1c3",
+    "public-note.md": "18634ab8eb8e3415e75033d6a400aa30997bd8fcec233bbcfb81cb46a5db0bcc",
+    "submission.json": "6345a696670a31f26372219df2cbcbabfda5a715128cf7fc24cfe8bbddc9ce62",
+    "test_mechanism.py": "6d7504ee28f0476b9be749d64cfd34c38994998860acb07ca90b96b3f567440c",
+    "validation.py": "ad883578dee1d9cbd71987da83c5648faf6d25273c5e9cb751cd9c5817c5c870"
+  },
+  "success_probability": {
+    "denominator": "1",
+    "numerator": "1"
+  },
+  "version": 1
+}

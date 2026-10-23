@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "own_prior": {
+    "id": "bea2ebe4-55ec-492a-a657-7905ea701168",
+    "claim": "13647/100",
+    "status_at_inspection": "review",
+    "valid_at_inspection": true,
+    "role": "prior valid v7 template, not an authenticated dependency",
+    "source_sha256": {
+      "evidence.json": "4d85b559a5a3336511b4d58508fb35471e39664302ee1a35fbc706136ae35fb6",
+      "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "mechanism.py": "beb26950f51f0fccd174cf63290690ad3db1770438203c0315cb35ffb5f79c4d",
+      "certificate.json": "bac1b61f71cc8052843b521289d9ce7e3fad5998bca9c6edb34308f4286f64ce",
+      "argument.md": "e11e9a7079850e273b7453b8e6f618735bf13b83b880778fb126b9b03861349e",
+      "build_certificate.py": "9e7753d010f40ee056f5b9ffc364ca942da31c3a2b0c6e41be4051ecef2960c6",
+      "submission.json": "cc95fe139b59dda4e79caaf1f2833c4d089dcf0921ecfb0ab2e027b5ebfaad3d",
+      "ledger.md": "0a27e922815a2dfef0cf67c19357ad23495a2335d885b9e4d31c00d264f2a1cd",
+      "public-note.md": "17e7f7e7f8e9bdd348c50bc2f57c7859619f318b90a8c3e67943eed5dd745637",
+      "kernel-ledger.md": "72dbf9138d962a0fa9d5b58c42073964e8f828dbdf4bc3ba810c407704eec13c"
+    }
+  },
+  "context_prior": {
+    "id": "7c7cb24b-bf83-4182-b24a-c1ab11c80353",
+    "solver": "kaankolcu",
+    "claim": "1382191/10000",
+    "role": "routing-pattern context only"
+  },
+  "scope": "Only the new v8 package is edited. No v6/v7, rho directories or research selectors are changed."
+}

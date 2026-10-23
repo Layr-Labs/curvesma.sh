@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "P-256 exact odd-lift radix-4 BSGS v8: half baby table, success one, retained v7 margins",
+  "claims": [
+    {
+      "score": {
+        "numerator": "2721",
+        "denominator": "20"
+      },
+      "statement": "On the exact protected P-256 profile, the deterministic cold odd-lift algorithm recovers every canonical scalar x with success exactly 1, including x=0. The 64-digit +/-1,+/-3 radix-4 lattice is all odd b with |b|<L=2^128. Store m=2^127 positive representatives [2j+1]P and stream h=ceil(r/L)<L points Q-[(2i+1)L]P. The unique odd lift z=x if x odd else x+r satisfies z=(2i+1)L +/- (2j+1), with i<h,j<m. Full y and at most two charged scalar verifications resolve any x-key match, reducing before the twin/edge filter. The total instruction ledger, including retained M=765/A=48 complete CIOS and Jacobian rows, all normalization and conversion, two-entry setup, 64 extra instructions per baby, unequal-height local-memory trees, every communication edge, initialization, END, merge, validation and output, is strictly below 2^(2721/20) target units at C=1000. All recurring non-M work and all one-time work repriced by 6/5 remain at least 0.10 bits below the claim; the incompatible maximum 0.06 nominal slack is disclosed rather than asserted. Peak memory is below 2^144 bytes; preprocessing is below 2^135 target units and included; advice is zero. This is analytic accounting, not a production run or measured instruction count. No index calculus, random walks, mixing or other heuristic premise is used. Prior valid bea2ebe v7 is credited, not a dependency.",
+      "evidence": [
+        "argument.md",
+        "kernel-ledger.md",
+        "ledger.md",
+        "certificate.json",
+        "evidence.json",
+        "provenance.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
