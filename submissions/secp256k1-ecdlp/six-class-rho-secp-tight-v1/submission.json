@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "title": "Six-class (negation + GLV) parallel Pollard rho on secp256k1 with a global work meter and itemised step accounting (derived from 189ebc42)",
+  "claims": [
+    {
+      "statement": "For the uniform full-production secp256k1 target Q=[x]P, the classical cold attack in proof.md (six-class negation+GLV parallel Pollard rho: twisted R=1048576 adding walk on classes keyed by |y|, exact 4-limb truncated canonical-index rule with metered fallback, doubling escapes from detected 2-cycles and checkpoint cycles of length <= 64, distinguished classes routed to 2^16 storage nodes each natively addressable below 2^56 bytes, re-walk solving) halts on every run after at most 2^126.92 target-group-operation equivalents (one unit = one batched incomplete affine secp256k1 addition, C=1000) because a global work meter charges every action before it runs. Each node holds an open-addressing table of B = 500,373,945,961,595 buckets of 104 bytes probed at most 8 deep in one fixed linear sequence; every probe is itemised at 39 instructions and charged 0.05 units, and every report whose eight buckets are occupied without a match enters a charged per-node overflow list of 8-byte bucket addresses, one per bucket, so the list can never exceed the node's slot count. The ordinary step is charged 1.099 units: the reference addition plus a 99-instruction itemised sequence, of which 4 instructions are the batch-inversion residual. Every scalar sequence is written to reproduce the package's own fast_j, which is the reference semantics: the 4-limb index rule (F1 from eight limb products, the F1 range test, S = F0 + F1 with its carry, the wrap test, F2), the decision row (min, max, the argmin index, a second compare for min(M1,F2), the distance from the smallest value to the second smallest and the 40-bit fallback), the sign and key, the partition index h = K mod 2^20, the twist index t = 3s + j and the table address 6h + t. The decision row takes its own compare and csel for min(M1,F2) instead of reading the flags of the m1-against-F2 compare, which do not decide it when m1 < F2 < M1, and its median select is csel mid, M1, u1, lo, which by csel d, a, b, cond = cond ? a : b is min(M1,u1) (the earlier form csel mid, u1, M1, lo returned max(M1,u1)). The organizer's 6M price is 3M of addition formula plus 3M of batch amortisation; the batch's 3(L-1) multiplications consume 3M(L-1)/L of that amortisation, so only 3M/L of the 3M is left for the batch's single inversion, and the residual I/L - 3M/L is charged. Batches are 2^15..2^16 walks, and the field inversion is I < 2^17 (from M <= 227), so that residual is below ceil(I/2^15) = 4 instructions per step, and the same row carries the batch's own four-instruction test of the product for zero, which is how an equal-x addition is detected without a per-step compare. Neither the formula nor the amortisation is charged twice. The ledger is carried in exact integer milli-units (one instruction is one milli-unit, 1000 milli-units are one unit): with S_int = ceil(S_ops) = 145,993,368,281,645,653,992,586,223,245,627,523,266, phase 1 is 1099*(S_int + 2^60) = 160,446,711,741,528,573,739,119,320,080,507,572,895,958, the hard extras 181,253,151,995,776,194,805,495,440,951,804,472 and the Markov allowance 8,712,090,954,853,069,256,357,547,903,112,533,334 (2^112.747), and those three rows sum exactly to W = 160,455,605,085,635,422,584,570,483,123,851,637,233,764 milli-units = 2^126.915442 units. The expected random extras 20,909,018,291,647,366,215,258,114,967,470,080 (below 2^104.044) are a bound the allowance replaces, not a fourth added row: the allowance is sized from that expectation and is an upper bound on the whole random group except with probability at most 3/1250 by Markov, so adding the expected row as well would charge the random group twice. The exact integer certificate is W^100 <= 1000^100*2^12692 with W^100 > 1000^100*2^12691, so 2^126.92 holds and 2^126.91 does not. A report costs 40.4 units (40 for route, message, entry write and node tests, plus eight probes at 0.05); the worst-case overflow insert is 2^41.45 units (6B + 20 instructions), the worst-case lookup is 16B = 8,005,983,135,385,520 instructions = 2^42.86422 units and is charged at the price 2^42.87 units, and D_cap*(6B + 20 + ceil(2^42.87*1000)) instructions = 2^107.158 units are charged in the hard extras. The wrap test of the index rule is stated as the function it needs and then as the one instruction that computes it: the distance is d = 2^64 - S when the add's carry C is clear and d = S when it is set, and CSNEG T, S, S, CC computes exactly that, because csneg d, a, b, cond is cond ? -b : a and here a = b = S with cond = CC (C = 0). Every per-step row of the table is a list of instructions in the package's straight-line sequence model, whose semantics dictionary states add/subtract with carry and borrow, cmp and ccmp flags, mul/madd/umulh, csel/csinc/csneg/cset, the four load/store forms and LO/HS/CC/CS/EQ/NE/HI/LS as the flags each code tests; experiment.py executes every row against its own fast_j on 200000 random production inputs and on boundary inputs at each row's branch (carry set and clear, S = 0, S = 2^64 - 1, wrap distances 0 to 42, exact ties and gaps of 0 to 42 among the three values, y = 0, 1 and p - 1, K = 0, 2^64 - 1, 2^64 and 2^64 + 1, fingerprints agreeing in all three words, in one word and only in the excluded limb 1, lengths 0 to 128 and meter remainders 0 to 2) with 0 mismatches on every row, and the composed chain returns fast_j's class index or its metered fallback on all 200000 inputs; each row's instruction count is the length of the sequence it ran, and the itemised total is 99. It succeeds with probability at least 0.39 under the disclosed heuristic H1 (random mapping on N'=(r-1)/6 * R/(R-1) classes with a 5% Brent-Pollard slowdown allowance; partition, distinguished, routing and bucket bits pseudo-random), supported by toy runs at R <= 8192; the H1 floor is 0.394, the meter's early-halt probability is below 0.0024 by Markov and the remaining failure events below 2*10^-7, so success >= 0.3916, and >= 0.3905 if the random charges run 45% above their bound. Peak memory < 2^72 bytes (2*D_cap slots of 104 bytes plus 8 bytes per slot of probe index arrays = 2^71.64, plus the 2^28.59-byte table); preprocessing <= 2^59.0 units, enforced and included; no nonuniform advice. Construction credited to submissions 189ebc42 and 1c600df4 (declared dependencies). Not a practical break.",
+      "score": {
+        "numerator": "12692",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "README.md",
+        "certificate.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-six-class-rho-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production secp256k1 checks of every identity the walk uses and of the truncated canonical-index rule; Part B: the complete per-trail algorithm on prime-order toy curves y^2=x^3+7 (T_c census, pipeline success with node routing, long-trail trap test).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q25",
+              "q29"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048,
+              8192
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "sequence_check": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q25",
+          "trials": 2000,
+          "R": 8192,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 14,
+          "pipeline": true,
+          "sequence_check": 200000
+        }
+      ]
+    }
+  ]
+}
