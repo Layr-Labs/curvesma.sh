@@ -1,0 +1,1 @@
+{"kind": "long_trails", "curve": "q29", "R": 4, "trails": 150, "length": 2048, "predicted_self_collision": 0.04578, "doubling": {"trails_with_nonfruitless_returns": 7, "escapes": 12902, "escapes_per_trail": 86.0}, "additive": {"trails_with_nonfruitless_returns": 99, "escapes": 40499, "escapes_per_trail": 270.0}}

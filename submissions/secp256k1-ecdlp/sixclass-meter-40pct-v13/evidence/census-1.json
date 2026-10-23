@@ -1,0 +1,1 @@
+{"kind": "census", "curve": "q25", "R": 2048, "classes": 2795536, "order": 16773217, "trials": 6000, "mean_tc": 2163.052, "mean_over_sqrtn": 1.293703, "model_mean_over_sqrtn": 1.253606, "s_ops": 1745.594, "p_within_s_ops": 0.4085, "model_p": 0.42, "two_cycle_per_step": 0.00012613, "model_two_cycle": 8.138e-05}

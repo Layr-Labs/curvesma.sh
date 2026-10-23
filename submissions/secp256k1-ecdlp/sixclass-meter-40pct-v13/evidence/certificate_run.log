@@ -1,0 +1,4 @@
+PASS 97/97 arithmetic, itemisation and capture checks; claim 12703/100
+PASS 21-row instruction itemisation sums to 110 of 1000; step 1.11, doubling 2.35
+PASS claim window: raw < 2^126.93 <= claim-0.10, claim < 2^127.08
+PASS pooled toy success and zero node overflows at 16 nodes

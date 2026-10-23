@@ -1,0 +1,1 @@
+{"curve": "q25", "R": 2048, "classes": 2795536, "trials": 3000, "seed": 1601, "dp_bits": 6, "node_bits": 4, "reports": 103133, "recovered": 1240, "escapes": 299, "s_ops": 1745.594, "mean_tc_over_sqrtn": 1.264597, "p_within_s_ops": 0.41333, "mean_per_node": 6445.81, "node_cap": 12892, "overflows": 0, "max_load_over_cap": 0.652, "nodes_used": 16}
