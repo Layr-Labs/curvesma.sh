@@ -1,0 +1,316 @@
+{
+ "C": 2000,
+ "d": 1048576,
+ "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+ "N": 65196422678611466571411401699906505,
+ "K": "51/100",
+ "K_exact": "4250573530088163557770784323879058040938100834624574671996125741315025/8334457902133654034844675144860897992084908882860761932151104402532352",
+ "c": "1119/1000",
+ "per_record": {
+  "addition": 2000,
+  "itemised": 198,
+  "charged_overhead": 238,
+  "total": 2238,
+  "stress": "6/5"
+ },
+ "itemised_rows": {
+  "walk_cursor_and_bound": 4,
+  "gap_load_2limb": 4,
+  "gap_index": 2,
+  "table_point_load": 6,
+  "point_store_into_record": 3,
+  "walk_loop_control": 3,
+  "p_minus_y": 12,
+  "even_rep_select": 7,
+  "key_pack_224_bits": 4,
+  "route_3copies_plus_final_store": 68,
+  "sort_3_passes_x_25": 75,
+  "group_scan": 10
+ },
+ "itemised_detail": {
+  "walk_cursor_and_bound": "index load, compare, advance",
+  "gap_load_2limb": "2 LDP from the gap array",
+  "gap_index": "shift/scale to byte offset",
+  "table_point_load": "6 LDP (12 limbs)",
+  "point_store_into_record": "3 STP",
+  "walk_loop_control": "counter, pointer, branch",
+  "p_minus_y": "6 sub + 6 sbc",
+  "even_rep_select": "parity, branch, 6 csel",
+  "key_pack_224_bits": "4 limb stores",
+  "route_3copies_plus_final_store": "3 hops x 20 (digit 2, bucket base 1, address 2, guard 3, 48-B copy 12) + final hop 8 (same without copy: the store IS the placement)",
+  "sort_3_passes_x_25": "digit 2, counting-key-load 1, counter read 1, add 1, counter store 1, scatter counter read 1, decrement 1, store 1, address 2, 48-B copy 12, loop 2 = 25 per record per pass",
+  "group_scan": "group_runs op list: 4 limb loads, 3 compare/OR-reduce, branch, emit, loop"
+ },
+ "rows": {
+  "records": 291819187909464924373637434008781516380,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 83076749736557242056487941267521536,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292260041580783599616,
+  "verification_cap": 237561312508884117443279388147712
+ },
+ "row_log2": {
+  "records": 127.778342,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 116.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "verification_cap": 107.549999
+ },
+ "total_instructions": 291903826490778238069429130668392952432,
+ "W_num": 18243989155673639879339320666774559527,
+ "W_den": 125,
+ "raw_log2": 116.812976,
+ "claim": {
+  "numerator": "292033",
+  "denominator": "2500"
+ },
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "claim_text": "116.8132",
+ "headroom_over_W": "0.000224",
+ "gate_margin": "0.0139",
+ "coverage_grid": {
+  "cells": [
+   {
+    "r": 8391553,
+    "d": 8,
+    "m": 1048944,
+    "distinct_covered": 422778,
+    "predicted_distinct": 422076,
+    "predicted_distinct_eff": 417816,
+    "diagonal_repetitions": 7104,
+    "rowA_num": -1301,
+    "rowA_den": 174824,
+    "rowB_num": -827,
+    "rowB_den": 174824,
+    "rowA_frac": "-1301/174824",
+    "rowB_frac": "-827/174824",
+    "rowA_dec": "-0.0074417700",
+    "rowB_dec": "-0.0047304718"
+   },
+   {
+    "r": 8391553,
+    "d": 16,
+    "m": 524472,
+    "distinct_covered": 204996,
+    "predicted_distinct": 210837,
+    "predicted_distinct_eff": 207838,
+    "diagonal_repetitions": 4992,
+    "rowA_num": 283,
+    "rowA_den": 174824,
+    "rowB_num": 1421,
+    "rowB_den": 262236,
+    "rowA_frac": "283/174824",
+    "rowB_frac": "1421/262236",
+    "rowA_dec": "0.0016187709",
+    "rowB_dec": "0.0054187831"
+   },
+   {
+    "r": 8391553,
+    "d": 64,
+    "m": 131118,
+    "distinct_covered": 49272,
+    "predicted_distinct": 51188,
+    "predicted_distinct_eff": 49711,
+    "diagonal_repetitions": 2400,
+    "rowA_num": -242,
+    "rowA_den": 65559,
+    "rowB_num": 439,
+    "rowB_den": 131118,
+    "rowA_frac": "-242/65559",
+    "rowB_frac": "439/131118",
+    "rowA_dec": "-0.0036913315",
+    "rowB_dec": "0.0033481292"
+   },
+   {
+    "r": 33555073,
+    "d": 8,
+    "m": 4194384,
+    "distinct_covered": 1665594,
+    "predicted_distinct": 1670963,
+    "predicted_distinct_eff": 1662400,
+    "diagonal_repetitions": 14208,
+    "rowA_num": -8839,
+    "rowA_den": 4194384,
+    "rowB_num": -1597,
+    "rowB_den": 2097192,
+    "rowA_frac": "-8839/4194384",
+    "rowB_frac": "-1597/2097192",
+    "rowA_dec": "-0.0021073416",
+    "rowB_dec": "-0.0007614944"
+   },
+   {
+    "r": 33555073,
+    "d": 16,
+    "m": 2097192,
+    "distinct_covered": 838698,
+    "predicted_distinct": 843283,
+    "predicted_distinct_eff": 837242,
+    "diagonal_repetitions": 10080,
+    "rowA_num": -5495,
+    "rowA_den": 2097192,
+    "rowB_num": -182,
+    "rowB_den": 262149,
+    "rowA_frac": "-5495/2097192",
+    "rowB_frac": "-182/262149",
+    "rowA_dec": "-0.0026201702",
+    "rowB_dec": "-0.0006942617"
+   },
+   {
+    "r": 33555073,
+    "d": 64,
+    "m": 524298,
+    "distinct_covered": 206220,
+    "predicted_distinct": 210821,
+    "predicted_distinct_eff": 207822,
+    "diagonal_repetitions": 4992,
+    "rowA_num": -391,
+    "rowA_den": 524298,
+    "rowB_num": 267,
+    "rowB_den": 87383,
+    "rowA_frac": "-391/524298",
+    "rowB_frac": "267/87383",
+    "rowA_dec": "-0.0007457591",
+    "rowB_dec": "0.0030555142"
+   }
+  ],
+  "cells_count": 6,
+  "maxA": {
+   "num": 283,
+   "den": 174824,
+   "dec": "0.00161878"
+  },
+  "maxB": {
+   "num": 1421,
+   "den": 262236,
+   "dec": "0.00541879"
+  },
+  "allowance": {
+   "num": 3691,
+   "den": 524472,
+   "dec": "0.00703757"
+  }
+ },
+ "gap": {
+  "n": 1199,
+  "mean": 468.3019,
+  "max": 2520,
+  "chi2_float": 7.478,
+  "bins": 11,
+  "mu_prod_float": 70573979.056,
+  "mu_prod_log2": 26.0726,
+  "G_charged": 8589934592,
+  "G_charged_log2": 33,
+  "tail_bound_log2": -125.598,
+  "tail_derivation": "H-prime density is 1/(d ln q) (residue prob 1/d, primality 1/ln q), so the mean gap is mu=d*ln q, at most d*ln(2^97.1)=2^26.07 over the list; gaps are geometric, so P(max gap over 2^50 > G) <= 2^50*exp(-G/mu) = 2^-125.6 at the charged G=2^33 (and 2^32.04 is the G that would give exactly 2^-40)",
+  "toy_mean_over_predicted": 0.828
+ },
+ "rate": {
+  "pairs_log2": 83.3007,
+  "R_num": 3,
+  "R_den": 1999079,
+  "R_log2": -19.3459,
+  "mu_log2": 63.9548,
+  "cap_log2": 88,
+  "markov_log2": -24.045,
+  "sensitivity": [
+   {
+    "rate": "rule_of_three_measured",
+    "rate_log2": -19.345941554520575,
+    "mu_log2": 63.95475451000223,
+    "markov_log2": -24.04524548999777,
+    "closes": true
+   },
+   {
+    "rate": "ten_x",
+    "rate_log2": -22.667869649407937,
+    "mu_log2": 60.63282641511486,
+    "markov_log2": -27.367173584885133,
+    "closes": true
+   },
+   {
+    "rate": "2^-30",
+    "rate_log2": -30.0,
+    "mu_log2": 53.3006960645228,
+    "markov_log2": -34.6993039354772,
+    "closes": true
+   },
+   {
+    "rate": "2^-40",
+    "rate_log2": -40.0,
+    "mu_log2": 43.3006960645228,
+    "markov_log2": -44.6993039354772,
+    "closes": true
+   },
+   {
+    "rate": "2^-60",
+    "rate_log2": -60.0,
+    "mu_log2": 23.300696064522803,
+    "markov_log2": -64.69930393547719,
+    "closes": true
+   }
+  ],
+  "claim_note": "no uniform-rate claim is made at 120 or 224 bits"
+ },
+ "order_audit": {
+  "p": 10009,
+  "field_order": 10192,
+  "prime_order": 7,
+  "n_divides_NE": true,
+  "nP_is_O": true,
+  "scope": "small j=0 fixture; partG's point order is NOT claimed to equal its scalar modulus"
+ },
+ "success": {
+  "design": 0.399504,
+  "debits": {
+   "census_rowA": 0.0016187708781403012,
+   "census_rowB": 0.00541878308088897,
+   "run_cap_markov": 0.0006014348404599061,
+   "verification_markov": 5.776434516509951e-08,
+   "gap_model": 9.094947017729282e-13,
+   "diagonal": 8.881784197001252e-16
+  },
+  "debit_sum": 0.00763905,
+  "after": 0.391865,
+  "claim_floor": 0.39
+ },
+ "checks": {
+  "K_at_or_above_design_point": "PASS",
+  "N_minimal_for_K": "PASS",
+  "per_record_rows_sum_to_itemised": "PASS",
+  "charged_overhead_is_ceiling_of_6_5": "PASS",
+  "ledger_rows_itemised": "PASS",
+  "claim_above_W": "PASS",
+  "claim_headroom_over_W_ge_2e5": "PASS",
+  "claim_below_gate_by_5e3": "PASS",
+  "census_maxA_is_exact_cell_fraction": "PASS",
+  "census_maxB_is_exact_cell_fraction": "PASS",
+  "census_printed_decimals_are_ceilings": "PASS",
+  "census_grid_three_d_values": "PASS",
+  "census_grid_two_fields": "PASS",
+  "census_cells_at_production_K": "PASS",
+  "gap_charged_bound_dominates_derived_40bit": "PASS",
+  "gap_tail_bound_below_2_40": "PASS",
+  "gap_histogram_sums_to_n": "PASS",
+  "gap_model_matches_toy_tail": "PASS",
+  "gap_toy_mean_matches_density_law": "PASS",
+  "rate_no_2_120_claim": "PASS",
+  "rate_charged_is_rule_of_three": "PASS",
+  "rate_budget_closes_at_2_30": "PASS",
+  "rate_markov_below_2_20": "PASS",
+  "verification_cap_row_below_W": "PASS",
+  "order_audit_prime_divides_field_order": "PASS",
+  "order_audit_nP_is_O": "PASS",
+  "success_after_debits_meets_39pct": "PASS",
+  "success_debits_from_derived_rows": "PASS"
+ }
+}
