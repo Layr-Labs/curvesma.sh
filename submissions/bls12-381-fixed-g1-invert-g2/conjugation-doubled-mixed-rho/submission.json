@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: conjugation-doubled mixed-map rho on GT",
+  "claims": [
+    {
+      "statement": "Fix the challenge point P in G1 and target z in GT. Compute g = e(P,Q0) with one pairing; then z = g^a and the answer is Q = [a]Q0. Run K = 2^20 parallel walks in GT whose step is, by a hash of the current element, either a Granger-Scott cyclotomic squaring (exponent map e -> 2e) or a Frobenius map (e -> p e), with a table addition (e -> e + c_i) on a fraction 1/1024 of the steps. Each visited state emits the pair {y, y^-1}; unitary inversion is a free coefficient conjugation, so one state yields two stored points and two collision event types. Collisions are solved as linear equations in a; the events have distinct solution values because the rare additions make the affine part of the walk exponent vary, which is exactly the property a pure power-map orbit lacks. With T = 2^126.9205 visited states, a stored set of 2T = 2^127.9205 elements, per-state cost 0.43818 target-group-operation equivalents and success probability 0.39, total work is at most 2^125.73 target-group-operation equivalents, including the one-time pairing, chain-start construction, all hashing, table probes, the scalar multiplication [a]Q0 and the final verification. Peak memory is at most 2^138.3 bytes; preprocessing is at most 2^20.1 target-group-operation equivalents and is included in the total; nonuniform advice is 0 bytes. The attack is classical and cold, uses no auxiliary powers or oracles, and claims no novelty.",
+      "score": {
+        "numerator": "125730",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "collision-solve",
+      "source": "experiment.py",
+      "purpose": "Check on a toy prime-order group that a collision of two hash-driven walks with exact affine exponent bookkeeping is solved correctly by both linear equations used in proof.md, including the sign-flipped (conjugation) equation. Toy scope only; establishes no production cost, memory or success bound.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 100000
+          },
+          "chains": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 10007,
+          "chains": 16
+        }
+      ]
+    }
+  ]
+}
