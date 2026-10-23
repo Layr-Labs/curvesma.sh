@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-orbit parallel rho in GT",
+  "claims": [
+    {
+      "statement": "For a uniform nonidentity P in BLS12-381 G1 and an independent uniform z in GT, the attack in proof.md returns Q=[a]Q0 in G2 with e(P,Q)=z under the pinned pairing convention, using at most 2^126.32 total target-group-operation equivalents (dense Fp12 multiplications, C=20,000). It computes g=e(P,Q0) and then solves z=g^a by parallel distinguished-point Pollard rho on orbits of the order-12 Frobenius automorphism of GT. A twisted-state 2^16-adding walk uses pre-twisted table entries, so each step is one dense Fp12 multiplication plus 8 Fp multiplications for the 12 one-coordinate class keys; 1.25 units per step are charged. Under the stated random-mapping heuristic, supported by toy experiments with an order-12 automorphism, the success probability is at least 0.39. The budget is 1.25*sqrt(2*N*ln(1/0.61)) useful steps on N=(r-1)/12+1 classes, times 1.03 for abandoned fruitless-cycle walks, plus additive setup, distinguished-point lag, storage and output costs below 2^-19 of the main term. Peak memory is at most 2^113 bytes; preprocessing is at most 2^27 units and is included; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice or quantum steps. It is generic accounting of known techniques, not a practical break.",
+      "score": {
+        "numerator": "3158",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-frobenius-orbit-rho",
+      "source": "experiment.py",
+      "purpose": "Run the twisted-state parallel distinguished-point rho on orbits of an order-12 automorphism x->x^lam in a prime-order-l subgroup of F_q^*, with look-ahead and stuck-walk restarts. Count all steps and report mean steps relative to sqrt(pi*N/2) and the success rate within the claimed 1.25*k0 budget. Toy-scale evidence for the random-mapping heuristic and for the full sqrt(12) class speedup only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {"type": "integer", "minimum": 16, "maximum": 26},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 200},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000},
+          "walks": {"type": "integer", "minimum": 1, "maximum": 32},
+          "theta_bits": {"type": "integer", "minimum": 1, "maximum": 6}
+        },
+        "required": ["bits", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"bits": 24, "trials": 120, "seed": 41, "walks": 8, "theta_bits": 4}
+      ]
+    }
+  ]
+}
