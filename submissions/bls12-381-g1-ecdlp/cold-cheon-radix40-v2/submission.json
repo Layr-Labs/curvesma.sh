@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: cold Cheon search with charged input access and explicit byte-size bounds",
+  "claims": [
+    {
+      "statement": "For every honest full-production BLS12-381 G1 powers input with 2^20<=n<r and secret s uniform in 1..r-1, the unchanged deterministic Cheon method in argument.md recovers the scalar s with probability at least 2/5. At the required scoring n=1048576, and more generally for 2^20<=n<=2^100, total work is less than 2^132 target-group-operation equivalents at C=2000, preprocessing is included and less than 2^132 units, and peak storage is less than 2^138 bytes, provided b_extra=max(0,ell-256*(n+1))<2^100. Here ell is the number of input bytes actually read; every standard compact encoding satisfies the condition. All logical secrets and points remain in scope. Valid JSON padding is never rejected because of length. Every input byte is charged at 2^20 scalar instructions for local node/code/state construction, input access, parser-state transfers, parsing, and control, with an additional retained-input memory bound 2^18*ell bytes. For all 2^20<=n<r and any finite valid serialization, use W(n,ell)=(R_core+2^28*(n+1)+2^20*max(0,ell-256*(n+1)))/2000 and M(n,ell)=M0+2^18*ell, with exact R_core and M0 in argument.md; do not extend the fixed 132 claim beyond its stated range. All cold factorization, generator search, scalar multiplications, table construction, routed transfers, normalization, sorting, failed search, root recovery, verification, and output remain charged. There is no uncharged advice, random-walk or hash-table heuristic, production run, official score, or practical feasibility claim.",
+      "score": {
+        "numerator": "132",
+        "denominator": "1"
+      },
+      "evidence": [
+        "argument.md",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

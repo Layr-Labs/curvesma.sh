@@ -1,0 +1,190 @@
+{
+  "schema": "certificate-v1",
+  "method": "host python3 exact integer arithmetic and 60-digit Decimal logarithms only; no candidate code executed on host",
+  "verdict_all": "PASS",
+  "identities": [
+    {
+      "id": "P1",
+      "statement": "product of listed prime powers equals q = (r-1)/2^20 exactly",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P2",
+      "statement": "every listed factor is prime (deterministic MR, 12 bases + trial)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P3",
+      "statement": "d = 2^20 divides r-1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P4",
+      "statement": "full factorization of r-1 (2^32 * q) reconstructs r-1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P5",
+      "statement": "xi=7 is a primitive root mod r (7^((r-1)/l) != 1 for all l | r-1)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P6",
+      "statement": "zeta = xi^d has exact order q",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P7",
+      "statement": "delta = xi^q has exact order d = 2^20",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P8",
+      "statement": "per-digit BSGS window m_l = ceil(sqrt(l)) satisfies m_l^2 >= l for every prime power l^e || q",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P9",
+      "statement": "d*q == r-1 so s = xi^(q*k1+k2) bijects [0,d)x[0,q) onto F_r*",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P10",
+      "statement": "phase-2 grid m2=1024 satisfies m2^2 = d = 2^20",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P11",
+      "statement": "log2(W) < 18.191212 certified at 60-digit Decimal (margin 4.37e-7 > 0)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P12",
+      "statement": "claim 4547803/250000 strictly beats staged v3 claim 118750473/1000000",
+      "verdict": "PASS"
+    },
+    {
+      "id": "P13",
+      "statement": "claim strictly beats selected claim (v3) and 0.39 floor untouched by success=1 design",
+      "verdict": "PASS"
+    }
+  ],
+  "exact_values": {
+    "d": 1048576,
+    "q": "50006747412801924209068050869165387952509453297164571592906626415194112",
+    "q_factorization": {
+      "2": 12,
+      "3": 1,
+      "11": 1,
+      "19": 1,
+      "10177": 1,
+      "125527": 1,
+      "859267": 1,
+      "906349": 2,
+      "2508409": 1,
+      "2529403": 1,
+      "52437899": 1,
+      "254760293": 2
+    },
+    "r_minus_1_factorization": {
+      "2": 32,
+      "3": 1,
+      "11": 1,
+      "19": 1,
+      "10177": 1,
+      "125527": 1,
+      "859267": 1,
+      "906349": 2,
+      "2508409": 1,
+      "2529403": 1,
+      "52437899": 1,
+      "254760293": 2
+    },
+    "factorization_reconstructs_q": true,
+    "primitive_root_xi": 7,
+    "zeta": "44580653893003952626002625081325463622826960835280297872176106820627572892892",
+    "delta": "1755840822790712607783180844474754741366353396308200820563736496551326485835",
+    "digit_windows_ceil_sqrt": [
+      [
+        2,
+        12,
+        2
+      ],
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        11,
+        1,
+        4
+      ],
+      [
+        19,
+        1,
+        5
+      ],
+      [
+        10177,
+        1,
+        101
+      ],
+      [
+        125527,
+        1,
+        355
+      ],
+      [
+        859267,
+        1,
+        927
+      ],
+      [
+        906349,
+        2,
+        953
+      ],
+      [
+        2508409,
+        1,
+        1584
+      ],
+      [
+        2529403,
+        1,
+        1591
+      ],
+      [
+        52437899,
+        1,
+        7242
+      ],
+      [
+        254760293,
+        2,
+        15962
+      ]
+    ],
+    "phase1_digit_bsgs_additions": 91330,
+    "phase2_additions": 2046,
+    "scalar_mults_charged": 78,
+    "scalar_mult_additions_at_512_each": 39936,
+    "H_reference_additions": 133312,
+    "hash_ops": 93378,
+    "R_hash_at_500_instructions": 46689000,
+    "R_factorization_search": 268435456,
+    "R_field": 16777216,
+    "R_io": 65536,
+    "R_instruction_equivalents": 331967208,
+    "N_equals_H*C_plus_R": 598591208,
+    "W_equals_N_over_C": "299295.604",
+    "time_log2_claim_6dp_ceiling": "18.191212",
+    "claim_rational": [
+      4547803,
+      250000
+    ],
+    "peak_memory_bytes_bound": 1853280,
+    "peak_memory_log2_bytes_rounded_up": 21
+  }
+}

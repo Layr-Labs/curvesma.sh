@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon d=2^20 with honestly-priced geometric baby/giant chains on encoded points (every chain step is a fixed-public-scalar multiply, never a bogus single addition or a scalar exponentiation of an encoded point); deterministic exhaustive grids; ledger re-derived from scratch",
+  "claims": [
+    {
+      "statement": "For every honest full-production BLS12-381 G1 powers input with 2^20<=n<r and secret s uniform in 1..r-1, the deterministic attack in argument.md recovers s with probability exactly 1 (floor 0.39). The attack fixes the fatal defects of both rejected Cheon packages: (v4) exponentiating the ENCODED scalar zeta^k2 is not a G1 operation on the point [zeta^k2]P0, so multiplicative Pohlig-Hellman on encoded points is impossible; (v3) a geometric baby chain [zeta^{v+1}]P0 cannot be extended by one G1 addition, because the encoding a -> [a]P0 preserves addition, not multiplication - so each baby/giant chain step must be a multiply by the PUBLIC fixed scalar zeta or zeta^{-m} mod r, charged at the 512-addition 255-bit double-and-add bound. Phase 1 recovers k2 in s = xi^(q*k1+k2) by BSGS on A_d = [zeta^k2]P0 with baby chain [zeta^v]P0 (v < m) and giant chain A_d then successive [zeta^{-m}]-multiplies (u < M), m = M = ceil(sqrt(q)) = 223621884914696853578958571250384896, exact coverage (M-1)*m + (m-1) >= q-1 (certificate C10-C11). Every table key is the full (x,y) pair, so the +/-P0 parity never collapses candidates; a match gives k2 in {u*m+v, u*m+v-q} certificate C11 and every surviving candidate is resolved only by the charged verification [s]P0 = T. Phase 2 recovers k1 by the exhaustive 1024x1024 grid on T' = [xi^-k2]T = [delta^k1]P0 with m2^2 = d. Output s = xi^(q*k1+k2) mod r, gated by [s]P0 = T. At the required scoring n = 1048576 the total work, charging every chain step at 512 reference additions (2m + 2*1023 multiplies plus 7 fixed scalar multiplications), all hashing at the staged 500-instruction budget, cold factorization of r-1 (2^28 instructions), cold F_r arithmetic (2^24) and input/output (2^20+2^16), is W = H + R/C < 2^(12752939/100000) (= 2^127.529390) target-group-operation equivalents at the fixed price C = 2000: H = 228988810152649578064853576960395184640 reference additions, R = 223621884914696853580958571252418896708 instruction equivalents, N = H*C + R counted exactly once. Repricing EVERY instruction row at 1.2x still leaves the claim beaten by more than 0.10 bits (certificate C15, exact integer comparison, no floats). The bound applies for every 2^20 <= n < r; the attack reads only A_1 and A_d and charges every access. Peak storage below 2^125 bytes, reported and unscored. The claim strictly beats the ACCEPTED frontier claim 134/1 (submission d73e5e61, deterministic grid, cheon-d20-hardened-40pct-v4) by 6.470610 bits (certificate C16) and also the historical generic-rho scale ~2^129. Every numeric identity is recomputed by scripts/certificate_check.py in pure Python integer and Decimal(110) arithmetic from the protected target-profile constants; experiments/grid_bsgs_toy.py runs the complete pipeline (geometric chains via public-scalar multiplies, exact coverage, candidate resolution by verification, and refutation demos of both rejected mechanisms) on 2000 random trials at small scope (prime r_t = 1045507 = 2^10*1021+1), at actual small scope only, never as a production complexity proof. No production run, timing, official score, practical feasibility, or new cryptanalysis is claimed.",
+      "score": {
+        "numerator": "12752939",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json",
+        "scripts/certificate_check.py",
+        "experiments/grid_bsgs_toy.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "file": "experiments/grid_bsgs_toy.py",
+      "scope": "small prime field toy (r_t = 1045507 = 2^10*1021+1), additive model of G1; 2000 random full-pipeline trials with hit/candidate histograms, plus constructive refutation of v3-style one-addition geometric steps and v4-style scalar exponentiation of encoded points; small scope only"
+    }
+  ]
+}

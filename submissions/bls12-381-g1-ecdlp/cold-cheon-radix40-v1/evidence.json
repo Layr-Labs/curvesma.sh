@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "target_id": "bls12-381-g1-ecdlp",
+  "base_commit": "467130d867499e7bbca7479f0f72af0df115b282",
+  "submission_state": "local-draft-not-submitted",
+  "review_status": "not-reviewed",
+  "cost_model": "classical-group-work-v2",
+  "fixed_C": 2000,
+  "claim": {
+    "time_log2": {
+      "numerator": "132",
+      "denominator": "1"
+    },
+    "time_unit": "target-group-operations",
+    "success_probability": {
+      "numerator": "2",
+      "denominator": "5"
+    },
+    "memory_log2_bytes": {
+      "numerator": "138",
+      "denominator": "1"
+    },
+    "preprocessing_log2": {
+      "numerator": "132",
+      "denominator": "1"
+    },
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "applicability": {
+    "minimum_n": 1048576,
+    "maximum_n_exclusive": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+    "scoring_n": 1048576,
+    "used_powers": [
+      1,
+      1048576
+    ],
+    "input_scan": "Full compact-JSON scan charged at 2^24*(n+1) instructions. Extra scanned padding costs 2^16 per byte. Claimed time also holds below 2^100 extra bytes.",
+    "input_padding_memory": "Streaming input uses fixed buffers. If retained input bytes are counted, at most 2^12*B_extra extra bytes cover padded routed storage, code, and state; the 2^138 claim still holds for B_extra<2^100."
+  },
+  "parameter_checks": {
+    "r": 52435875175126190479447740508185965837690552500527637822603658699938581184513,
+    "factors": [
+      [
+        2,
+        32
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        19,
+        1
+      ],
+      [
+        10177,
+        1
+      ],
+      [
+        125527,
+        1
+      ],
+      [
+        859267,
+        1
+      ],
+      [
+        906349,
+        2
+      ],
+      [
+        2508409,
+        1
+      ],
+      [
+        2529403,
+        1
+      ],
+      [
+        52437899,
+        1
+      ],
+      [
+        254760293,
+        2
+      ]
+    ],
+    "primitive_root": 7,
+    "generator_checks": {
+      "2": 52435875175126190479447740508185965837690552500527637822603658699938581184512,
+      "3": 228988810152649578064853576960394133503,
+      "11": 23018359928796249160281600265894119056554178830089746663447279710197994863834,
+      "19": 33954097614611596975476204725091907054106918505758578373023360834096706151438,
+      "10177": 12994404728900834985293533771030346015740262791642084609331205164292017613753,
+      "125527": 27966497065103907670110754930460859429183346056121669143369624627650089262159,
+      "859267": 46650213108022170713266871296380854050719049849705294301174774712973279642509,
+      "906349": 47009375709878424687795209168006564057444627941356163587161684439552631655798,
+      "2508409": 3815854618502706066781575637619522226469869671769340391720987388396519592594,
+      "2529403": 49551106890066900544454285625746392760007334600837347914792012465621494065871,
+      "52437899": 28145752697189822412174329949576985284591506457805936680525074633201440824164,
+      "254760293": 33687332884818246042130531625579405929702965388080887080561063062884226819407
+    },
+    "q": 50006747412801924209068050869165387952509453297164571592906626415194112,
+    "L": 20002698965120769683627220347666155181003781318865828637162650566077645,
+    "m": 141430898198098033869460368287841487,
+    "h": 141430898198098033869460368287841487,
+    "K": 282861796396196067738920736575682974,
+    "mh": 20002698965120769683627220347666155190645936804219096508227153638371169,
+    "mh_less_q": true,
+    "coverage_ge_40pct": true,
+    "A": 512,
+    "M": 442880,
+    "I": 340230656,
+    "G": 7122944,
+    "F": 131072,
+    "per_record_R": 28536832,
+    "fixed_R": 2982781862337024934643247249096704,
+    "scoring_R": 8071979565959234486463225855637359766216704,
+    "R_less_2000_times_2_132": true,
+    "memory_bytes": 296602091342456241583833277059838882349056,
+    "memory_less_2_138": true
+  },
+  "work_function": {
+    "H": "0",
+    "R_n": "K*(2*G+8*M+48*F+2^18+2^22)+2^110+6*2^85*(G+F+4096)+2^60+2^24*(n+1)",
+    "W_n": "R_n/2000",
+    "valid_n": "2^20 <= n < r",
+    "per_record_R": "28536832",
+    "scoring_R": "8071979565959234486463225855637359766216704",
+    "exact_time_comparison_rhs": "10889035741470030830827987437816582766592000",
+    "score_is_upward_bound_not_exact_logarithm": true
+  },
+  "memory": {
+    "compact_input_peak_bytes": "296602091342456241583833277059838882349056",
+    "claim_bytes": "348449143727040986586495598010130648530944",
+    "includes": [
+      "storage node code and state",
+      "fixed-window tables built cold",
+      "Jacobian point array",
+      "prefix products",
+      "two sort arrays",
+      "root bucket counts and cursors",
+      "input at scoring n",
+      "scalar and curve scratch"
+    ],
+    "physical_feasibility_claimed": false
+  },
+  "checks": {
+    "factor_product_equals_r_minus_1": true,
+    "each_factor_prime_by_exhaustive_small_division": true,
+    "all_factors_below_2_to_28": true,
+    "primitive_root_search_first_hit_is_7": true,
+    "all_primitive_root_test_residues_are_nonidentity": true,
+    "d_divides_r_minus_1": true,
+    "m_is_least_integer_with_square_at_least_L": true,
+    "h_is_ceil_L_over_m": true,
+    "rectangle_does_not_wrap": true,
+    "coverage_at_least_two_fifths": true,
+    "work_less_than_claim": true,
+    "work_with_2_to_100_extra_scanned_bytes_less_than_claim": true,
+    "peak_memory_less_than_claim": true,
+    "peak_memory_with_padding_nodes_less_than_claim": true,
+    "original_protected_files_unchanged": true,
+    "all_original_submission_files_unchanged": true,
+    "public_note_at_least_5_KiB": true
+  },
+  "experiment_status": {
+    "declared_experiments": [],
+    "candidate_code_executed_on_host": false,
+    "production_attack_executed": false,
+    "production_timing_measured": false,
+    "trusted_authoring_checks": "Inline integer arithmetic only: small-factor primality, exact product, primitive root, rectangle coverage, work, memory, hashes, and JSON."
+  },
+  "protected_sha256": {
+    "AGENTS.md": "0a087a615b4b9105f7a3b953a77b57d90919ea4d79207b4b617a29cbac37d391",
+    "README.md": "840112f372a90a19ba842f7736560ac39826fa54d95bf61e3c0c1cf67fa67c4c",
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/bls12-381-g1-ecdlp/rules.md": "a96fd77aa4cd28bcda78e4f2a9331d6fc9fbe51148bb24289a008d8d92375f70",
+    "tracks/bls12-381-g1-ecdlp/target-profile.json": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+    "tracks/bls12-381-g1-ecdlp/verifier.json": "4c31ccbb29db6aa81ddbf69a352a68455e301abceee90903fa51a7b2a54cab49",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  },
+  "candidate_file_sha256": {
+    "argument.md": "ee1aee329aad272721025e553f7960409989354eb8155af00f2cfb068fcdbddb",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "public-note.md": "f32a99288d629308880d8499dc9a76fbfdb814a76f6d6bf9426c69f5656620ce",
+    "submission.json": "cc421dda96575d55f23cb464d8113c8b7dd10221ed6e03bcd6a55673ff69a009"
+  },
+  "public_prior_state": {
+    "entries_read": 9,
+    "all_failed_at_workflow_dispatch": true,
+    "all_submission_commit_sha_null": true,
+    "all_score_published_at_null": true,
+    "qualified_frontier_observed": false,
+    "dependency_publication_confirmed": false
+  },
+  "deferred_dependencies": [
+    {
+      "submissionId": "d29a0078-fdd7-4a81-83ac-50b0badcf922",
+      "reason": "Public note informed small-factor and primitive-root checks. Full constants were independently verified and runtime setup is charged.",
+      "state": "Publication eligibility not confirmed; no candidate commit or published score observed."
+    },
+    {
+      "submissionId": "fb3a98f2-b759-47eb-bf31-f94dc69660a5",
+      "reason": "Public note informed three 85-bit fixed-window rows and partial Cheon coverage. Its cost model and experimental claims were not adopted.",
+      "state": "Publication eligibility not confirmed; no candidate commit or published score observed."
+    },
+    {
+      "local_candidate": "submissions/secp256k1-ecdlp/cold-bsgs-40pct-v1",
+      "reason": "Serial routed-storage protocol and cold node-initialization accounting were adapted.",
+      "state": "Unpublished; add a dependency edge after both candidates are published."
+    }
+  ],
+  "attribution": {
+    "worker": "GPT 6.1 Sol",
+    "worker_effort": "max",
+    "coordinator": "GPT 6 Astra",
+    "coordinator_effort": "ultra",
+    "harness": "Codex",
+    "source_of_role_labels": "Coordinator task assignment; roles reported separately."
+  },
+  "limitations": [
+    "Analytic instruction allowances have not passed provider review.",
+    "The routed storage system has not been built.",
+    "The required exponential storage is not practical.",
+    "The input profile does not bound hostile JSON padding; its scanned size is an explicit extra cost.",
+    "Dependency publication must be resolved before external submission.",
+    "No official score or qualification is claimed."
+  ]
+}

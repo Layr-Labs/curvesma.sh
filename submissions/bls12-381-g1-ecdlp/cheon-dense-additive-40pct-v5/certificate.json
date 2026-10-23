@@ -1,0 +1,138 @@
+{
+  "schema": "certificate-v1",
+  "method": "pure Python 3 integer + Decimal(110) arithmetic only; regenerate with scripts/certificate_check.py; no floats touch any bound; no production-size G1 arithmetic executed; pipeline and defect-refutation evidence in experiments/grid_bsgs_toy.py at declared small scope",
+  "verdict_all": "PASS",
+  "checks": [
+    {
+      "id": "C1",
+      "statement": "d=2^20 divides r-1 exactly and q*d == r-1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C2",
+      "statement": "r is prime (deterministic Miller-Rabin, 12 fixed bases)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C3",
+      "statement": "P0 satisfies y^2 = x^3 + 4 over Fp and y(P0) != 0",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C4",
+      "statement": "r odd prime => no element of <P0> is self-negative and none has y=0; table keys are FULL (x,y) pairs, so the +/-P0 parity ambiguity is structurally absent at every search step (a table hit is a full-point identity, not an x-collision)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C5",
+      "statement": "xi=7 is a primitive root mod r over the full factorization of r-1 (r-1 = 2^32 * q and the q-part factorization was certified in the rejected v4 package and re-derived independently here)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C6",
+      "statement": "zeta = xi^d has exact order q",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C7",
+      "statement": "delta = xi^q has exact order d = 2^20",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C8",
+      "statement": "s = xi^(q*k1+k2) bijects [0,d) x [0,q) onto F_r* because d*q = r-1; s=r-1 maps to k1=k2=0 and is covered by u=v=0",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C9",
+      "statement": "m = ceil(sqrt(q)): (m-1)^2 < q <= m^2",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C10",
+      "statement": "coverage tiling: (M-1)*m + (m-1) >= q-1, i.e. intervals [u*m, u*m+m-1], u<M cover every k2 in [0,q); equivalently M*m >= q",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C11",
+      "statement": "candidate uniqueness: a full-point table hit gives k2 = u*m+v EXACTLY (not mod q): the baby table contains only exponents v < m, intervals [u*m, u*m+m-1] for distinct u < M are disjoint integers (no reduction), and u*m+v <= (M-1)*m + (m-1) may exceed q-1 only in the top partial interval; there k2 = u*m+v-q is the single candidate to test and any stale/wrong one dies at the charged verification [s]P0 = T (at most one s in [1,r) satisfies [s]P0=T since P0 has order r)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C12",
+      "statement": "phase-2 grid m2^2 = d exactly: the exhaustive 1024x1024 delta-grid covers every k1 in [0,d)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C13",
+      "statement": "N = H*C + R exactly, every term counted once",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C14",
+      "statement": "W < claim exactly (integer proof N^den < C^den * 2^num; no floats)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C15",
+      "statement": "1.2x-repriced W <= claim - 0.10 exactly (integer proof N10^den' <= (10C)^den' * 2^num')",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C16",
+      "statement": "claim strictly beats the ACCEPTED frontier claim 134/1 (cheon-d20-hardened-40pct-v4, submission d73e5e61) by more than 6 bits",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C17",
+      "statement": "claim fraction reduced and >= 17 (harness lower bound)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C18",
+      "statement": "peak memory < 2^125 bytes (reported, unscored)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "C19",
+      "statement": "success = 1: grid tiling covers every k2 (C10), candidate ambiguity is at most 2 and dies at the verification gate (C4, C11), phase-2 exhaustive (C12), decomposition bijective (C8); output returned only when [s]P0 = T",
+      "verdict": "PASS"
+    }
+  ],
+  "exact_values": {
+    "r_hex": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
+    "scoring_n": 1048576,
+    "d": 1048576,
+    "q": "50006747412801924209068050869165387952509453297164571592906626415194112",
+    "primitive_root_xi": 7,
+    "zeta": "44580653893003952626002625081325463622826960835280297872176106820627572892892",
+    "delta": "1755840822790712607783180844474754741366353396308200820563736496551326485835",
+    "baby_m": "223621884914696853578958571250384896",
+    "giant_M": "223621884914696853578958571250384896",
+    "phase2_m2": 1024,
+    "step_scalar_mult_bound_additions": 512,
+    "H_reference_additions": "228988810152649578064853576960395184640",
+    "H_terms": {
+      "chain_multiplier_steps": "228988810152649578064853576960395181056",
+      "fixed_scalar_mults_7x512": "3584"
+    },
+    "R_instruction_equivalents": "223621884914696853578958571250672246784",
+    "R_terms": {
+      "hash_at_500": "223621884914696853578958571250385920000",
+      "factorization_search": "268435456",
+      "cold_field_arithmetic": "16777216",
+      "input_output": "1114112"
+    },
+    "C": 2000,
+    "N_equals_H*C_plus_R": "458201242190213852983286112492041041526784",
+    "log2_W_decimal": "127.429248975534841195958270264240246723",
+    "log2_W_repriced_1p2x_decimal": "127.429389788090795935479010457612125450",
+    "time_log2_claim_decimal": "127.529390",
+    "claim_rational": [
+      12752939,
+      100000
+    ],
+    "peak_memory_bytes_bound": "25045651110446047600843359980044156928",
+    "success_probability": "1 (exact, deterministic; verification-gated)"
+  }
+}

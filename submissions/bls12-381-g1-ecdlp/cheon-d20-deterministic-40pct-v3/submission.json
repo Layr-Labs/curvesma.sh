@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: deterministic Cheon d=2^20 two-phase BSGS with independently re-derived conservative ledger",
+  "claims": [
+    {
+      "statement": "For every honest full-production BLS12-381 G1 powers input with 2^20<=n<r and secret s uniform in 1..r-1, the deterministic Cheon r-1 method in argument.md (s=xi^(q*k1+k2), xi=7, two exhaustive baby/giant grids with corrected m1=ceil(sqrt((r-1)/d)) and m2=1024, final verification [s]P0=T) recovers s with probability exactly 1, above the required 0.39. At the required scoring n=1048576, total work including all cold setup, primitive-root search, scalar multiplications, both grid walks, hashing, input access, verification, and output is less than 2^(118750473/1000000) target-group-operation equivalents at the fixed price C=2000, with W=H+R/C counted exactly once; the bound applies for every 2^20<=n<r since the attack reads only A_1 and A_d and charges every access. Peak storage is below 2^125 bytes, reported and unscored. Every identity is certified in certificate.json by host Python exact integer and 60-digit Decimal arithmetic; no candidate code was executed. The ledger was re-derived independently from the historical design: the historical 118.59847 used an unproven 250-instruction hash-op budget and an m1 whose square misses about 1.7e-16 of the k2 space; this package charges 500 instructions per hash-table operation and restores exact coverage, and therefore claims the honest worse number 118.750473 rather than inheriting the historical one. The claim strictly beats the previously selected 132/1 claim. No production run, timing, official score, practical feasibility, or new cryptanalysis is claimed.",
+      "score": {
+        "numerator": "118750473",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

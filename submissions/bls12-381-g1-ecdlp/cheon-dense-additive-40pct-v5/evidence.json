@@ -1,0 +1,67 @@
+{
+  "schema": "evidence-v1",
+  "cost_model": "classical-group-work-v2 (C=2000 fixed, tracks/docs/COST_MODEL.md)",
+  "computation_method": "Host python3 exact integer arithmetic and Decimal(110) logarithms only via scripts/certificate_check.py; no floats touch a bound; no candidate package executed at production size. All protected constants re-read from target-profile.json. Factorization of r-1 recomputed cold (trial division to 2^20 + Pollard rho + deterministic Miller-Rabin); xi=7 re-certified as primitive root over the full factorization; zeta/delta orders re-certified.",
+  "mechanism": "Cheon d=2^20 two-phase BSGS in the ORDER-q subgroup and ORDER-d subgroup of the scalar field, executed on encoded points with honest chain pricing: every baby/giant chain step is ONE multiplication of a variable point by a PUBLIC fixed 255-bit scalar (zeta, zeta^{-m}, delta, delta^{-1024}), charged SM=512 reference additions. Table keys are FULL (x,y) pairs; success=1 from exact integer interval coverage of k2 and the exhaustive m2^2=d phase-2 grid; candidates resolved only by the charged verification [s]P0=T.",
+  "defect_fix_map": {
+    "v4_rejected_cheon-ph-smooth-cofactor-40pct-v4": "multiplicative Pohlig-Hellman was applied to encoded points: [q/l^e]A_d = [(q/l^e) zeta^k2]P0 is a scalar MULTIPLE, but PH needs the EXPONENTIATED encoded scalar [(zeta^k2)^(q/l^e)]P0; no G1 operation performs that. Fixed here by never exponentiating an encoded scalar: PH/BSGS indices are compared as integers in the scalar domain via exact grid coverage. Refuted empirically in experiments/grid_bsgs_toy.py T3 (0/4000 agreements).",
+    "v3_rejected_cheon-d20-deterministic-40pct-v3": "the geometric chain [zeta^{v+1}]P0 was priced as one G1 addition. B + vG with G=[zeta]P0 gives [(1+v zeta)]P0: an arithmetic progression in the exponent, not the geometric one the BSGS identity needs. Fixed here: chain steps are full public-scalar double-and-add (512 reference additions), which is why this honest claim (127.529390) is 8.78 bits WORSE than the rejected v3 number (118.750473). Refuted empirically in experiments/grid_bsgs_toy.py T2 (hit fraction 0.0020, every hit a wrong digit).",
+    "accepted_frontier_cheon-d20-hardened-40pct-v4_134": "grid in the full order-r group. This package runs the same deterministic-grid shape in the order-q subgroup unlocked by the supplied A_d: sqrt(q)=2^117.43 chains at 512 = 2^126.4 group-equivalents, beating 134 by 6.470610 bits."
+  },
+  "exact_parameters": {
+    "r_hex": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
+    "d": 1048576,
+    "q": "50006747412801924209068050869165387952509453297164571592906626415194112",
+    "primitive_root_xi": 7,
+    "baby_m": "223621884914696853578958571250384896",
+    "giant_M": "223621884914696853578958571250384896",
+    "phase2_m2": 1024,
+    "step_scalar_mult_bound_additions": 512
+  },
+  "ledger": {
+    "C": 2000,
+    "H_reference_additions": "228988810152649578064853576960395184640",
+    "H_terms": {
+      "baby_chain_multiplier_steps": "m*512",
+      "giant_chain_multiplier_steps": "(M-1)*512",
+      "phase2_chain_multiplier_steps": "(1024+1023)*512",
+      "fixed_scalar_mults": "7*512"
+    },
+    "R_instruction_equivalents": "223621884914696853578958571250672246784",
+    "R_terms": {
+      "hash_ops": "m + M + 2048 at 500 instructions each",
+      "factorization_search": 268435456,
+      "cold_field_arithmetic": 16777216,
+      "input_output": 1114112
+    },
+    "N_equals_H*C_plus_R": "458201242190213852983286112492041041526784",
+    "log2_W_30dp": "127.429248975534841195958270264",
+    "time_log2_claim": "127.529390",
+    "claim_rational": [12752939, 100000],
+    "repricing_1p2x_all_R_rows_log2": "127.429389788090795935479010458",
+    "repricing_margin_bits": 0.100000216
+  },
+  "memory_reported_not_charged": {
+    "peak_bytes_bound": "2*m*56 + 2^20",
+    "peak_log2_bytes": 125,
+    "nonuniform_advice_bytes": 0,
+    "model": "m=2^117.43 records, load factor 1/2, 56-byte packed (48B x||y limbs + tag); giant chain streaming; phase-2 table 1024 records; one cold attempt"
+  },
+  "success_probability": {
+    "value": 1,
+    "basis": "integer intervals [u*m, u*m+m-1], u<M, tile [0, M*m-1] and M*m >= q (cert C10), so every k2 in [0,q) is covered exactly once as an INDEX; full (x,y) keys mean no +/- collapse (r odd prime, no self-inverse nonidentity point, cert C4); top wraparound zone candidates (cert C11) and all candidates are gated by the unique verified [s]P0=T; phase-2 m2^2=d exhaustive (cert C12); decomposition bijective (cert C8). No heuristic.",
+    "floor_required": 0.39
+  },
+  "staged_comparison": {
+    "accepted_frontier_beaten": "cheon-d20-hardened-40pct-v4 claim 134/1 (submission d73e5e61): beaten by 6.470610 bits (cert C16)",
+    "rejected_v3": "118.750473 — arithmetically consistent only under the impossible 1-addition geometric chain; honest re-price is 8.78 bits worse here",
+    "rejected_v4": "18.191212 — phantom Pohlig-Hellman on encoded points"
+  },
+  "applicability": "every 2^20 <= n < r; reads only A_1 and A_d, charges every access, verification and output",
+  "experiments_run": {
+    "file": "experiments/grid_bsgs_toy.py",
+    "scope": "toy additive model r_t=1094657=2^10*1069+1, d_t=2^10, q_t=1069 (both prime; toy prime corrected from the brief's 1045507, which fails 2^10 | r_t-1)",
+    "results": "T1 2000/2000 exact full-pipeline recoveries; T2 v3-style arithmetic-grid hit fraction 0.0020 with 8/8 wrong digits; T3 v4-style encoded-scalar exponentiation agreed 0/4000"
+  },
+  "protected_files_modified": false
+}

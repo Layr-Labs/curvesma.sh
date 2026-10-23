@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: cold Cheon search with exact 40% coverage and routed radix sort",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 G1 powers target at n=1048576, recover the required scalar s with probability at least 2/5 using less than 2^132 target-group-operation equivalents at C=2000, including cold factorization and generator search, all scalar multiplications, all table construction, routed memory transfers, normalization, sorting, unsuccessful search, verification and output. The work function W(n)=R(n)/2000 in argument.md applies to 2^20<=n<r and includes a full compact-JSON input scan. Additional scanned JSON padding costs 65536 instructions per byte; the score bound also covers fewer than 2^100 such bytes. Peak storage at the scoring input is less than 2^138 bytes. Preprocessing is less than 2^132 units and is included in total work. Constructed tables are built and charged on this target; there is no uncharged nonuniform advice. This is a deterministic analytic Cheon accounting control, with no random-walk or hash-table heuristic. No production attack, measured run, independent qualification, or practical feasibility is claimed.",
+      "score": {
+        "numerator": "132",
+        "denominator": "1"
+      },
+      "evidence": [
+        "argument.md",
+        "evidence.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

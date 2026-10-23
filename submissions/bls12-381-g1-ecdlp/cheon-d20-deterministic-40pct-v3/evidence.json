@@ -1,0 +1,60 @@
+{
+  "schema": "evidence-v1",
+  "cost_model": "classical-group-work-v2 (C=2000 fixed, tracks/docs/COST_MODEL.md)",
+  "computation_method": "Host python3 exact integer arithmetic plus 60-digit Decimal logarithms. No candidate package Python was executed on the host. All identities in certificate.json re-run from the protected target-profile.json constants.",
+  "exact_parameters": {
+    "r_hex": "73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001",
+    "d": 1048576,
+    "q_equals_r_minus_1_over_d": "50006747412801924209068050869165387952509453297164571592906626415194112",
+    "primitive_root_xi": 7,
+    "m1_corrected": "223621884914696853578958571250384896",
+    "m2": 1024
+  },
+  "ledger": {
+    "C": 2000,
+    "H_reference_additions": "447243769829393707157917142500775420",
+    "H_terms": {
+      "phase1_baby_walk": "223621884914696853578958571250384895",
+      "phase1_giant_walk": "223621884914696853578958571250384895",
+      "phase2_walks": 2046,
+      "scalar_multiplications_at_512_each": 3584
+    },
+    "R_instruction_equivalents": "223621884914696853578958853829169225728",
+    "R_terms": {
+      "hash_ops_count": "447243769829393707157917142500769024",
+      "instructions_per_hash_op_charged": 500,
+      "input_access_and_parse": 4294967296,
+      "cold_field_scalar_margins": 281479274954752,
+      "primitive_root_trial_reserve": 1099511627776
+    },
+    "N_equals_H*C_plus_R": "1118109424573484267894793138830720065728",
+    "W_equals_N_over_C": true,
+    "time_log2_claim": "118.750473",
+    "claim_rational": [118750473, 1000000]
+  },
+  "memory_reported_not_charged": {
+    "peak_bytes_bound": "25045651110446047600843359980043108352",
+    "model": "2*m1 hash-table slots (load factor 1/2) x 56-byte packed records",
+    "memory_log2_bytes": 125,
+    "nonuniform_advice_bytes": 0
+  },
+  "success_probability": {
+    "value": 1,
+    "basis": "Both BSGS grids are exhaustive: m1^2 >= q (cert I8) and m2^2 = d (cert I9); representation bijects (cert I7); final verification [s]P0=T gates output.",
+    "floor_required": 0.39
+  },
+  "historical_comparison": {
+    "source_ref": "origin/submissions/57f50311-2472-4ca1-853c-d6a6464f1523",
+    "source_path": "submissions/bls12-381-g1-ecdlp/cheon-d20-v1",
+    "historical_claim_time_log2": 118.59847,
+    "reproduction": "Reading the historical branch via git show only (never executed, worktree untouched): its arithmetic reproduces to 118.598470 under a 250-instruction hash-op budget with the corrected m1 (cert I14).",
+    "discrepancies_found": [
+      "Historical hash budget 250 Ir/op is an unproven allowance; this package charges 500 Ir/op, costing +0.152 bits.",
+      "Historical m1 = 223621884914696835096185700517675008 has m1^2 < q (cert I10): claimed success 1 was optimistic by ~1.7e-16; actual coverage still >= 0.39 (cert I11). Corrected here."
+    ],
+    "decision": "Package the honest independent number 118.750473, worse than historical, stated in argument.md."
+  },
+  "fallback_ref_unused": "origin/submissions/d07d8fe8-1474-407c-bd85-c1e5592d0fea (122.820 deterministic comb variant)",
+  "selector_compared_claim": "submissions/bls12-381-g1-ecdlp/cold-cheon-radix40-v2 claim 132/1",
+  "protected_files_modified": false
+}

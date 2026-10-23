@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "target_id": "bls12-381-g1-ecdlp",
+  "base_commit": "467130d867499e7bbca7479f0f72af0df115b282",
+  "submission_state": "local-input-access-repair-not-submitted",
+  "review_status": "input-access-repair-pending-independent-review",
+  "cost_model": "classical-group-work-v2",
+  "fixed_C": 2000,
+  "claim": {
+    "time_log2": {
+      "numerator": "132",
+      "denominator": "1"
+    },
+    "time_unit": "target-group-operations",
+    "success_probability": {
+      "numerator": "2",
+      "denominator": "5"
+    },
+    "memory_log2_bytes": {
+      "numerator": "138",
+      "denominator": "1"
+    },
+    "preprocessing_log2": {
+      "numerator": "132",
+      "denominator": "1"
+    },
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "applicability": {
+    "minimum_n": 1048576,
+    "maximum_n_exclusive": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+    "scoring_n": 1048576,
+    "used_powers": [
+      1,
+      1048576
+    ],
+    "input_scan": "All input bytes use a charged adjacent-node parser. Standard compact bytes are at most 256*(n+1), charged at 2^20 instructions each. Extra actually read bytes use the same charge.",
+    "input_padding_memory": "The explicit retained-input bound is 2^18*ell bytes, including input bytes, decoder code/state, links, and return data. It is added to the unchanged base storage.",
+    "fixed_score_n_range": {
+      "minimum_inclusive": 1048576,
+      "maximum_inclusive": "1267650600228229401496703205376"
+    },
+    "fixed_score_byte_condition": "b_extra=max(0,ell-256*(n+1))<2^100; this is a cost condition, never a decoder rejection rule.",
+    "logical_challenge_scope": "For every n in the general range 2^20<=n<r, all honest powers inputs and all uniform nonzero secrets remain in scope. Valid JSON padding is accepted at every finite length."
+  },
+  "parameter_checks": {
+    "r": 52435875175126190479447740508185965837690552500527637822603658699938581184513,
+    "factors": [
+      [
+        2,
+        32
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        19,
+        1
+      ],
+      [
+        10177,
+        1
+      ],
+      [
+        125527,
+        1
+      ],
+      [
+        859267,
+        1
+      ],
+      [
+        906349,
+        2
+      ],
+      [
+        2508409,
+        1
+      ],
+      [
+        2529403,
+        1
+      ],
+      [
+        52437899,
+        1
+      ],
+      [
+        254760293,
+        2
+      ]
+    ],
+    "primitive_root": 7,
+    "generator_checks": {
+      "2": 52435875175126190479447740508185965837690552500527637822603658699938581184512,
+      "3": 228988810152649578064853576960394133503,
+      "11": 23018359928796249160281600265894119056554178830089746663447279710197994863834,
+      "19": 33954097614611596975476204725091907054106918505758578373023360834096706151438,
+      "10177": 12994404728900834985293533771030346015740262791642084609331205164292017613753,
+      "125527": 27966497065103907670110754930460859429183346056121669143369624627650089262159,
+      "859267": 46650213108022170713266871296380854050719049849705294301174774712973279642509,
+      "906349": 47009375709878424687795209168006564057444627941356163587161684439552631655798,
+      "2508409": 3815854618502706066781575637619522226469869671769340391720987388396519592594,
+      "2529403": 49551106890066900544454285625746392760007334600837347914792012465621494065871,
+      "52437899": 28145752697189822412174329949576985284591506457805936680525074633201440824164,
+      "254760293": 33687332884818246042130531625579405929702965388080887080561063062884226819407
+    },
+    "q": 50006747412801924209068050869165387952509453297164571592906626415194112,
+    "L": 20002698965120769683627220347666155181003781318865828637162650566077645,
+    "m": 141430898198098033869460368287841487,
+    "h": 141430898198098033869460368287841487,
+    "K": 282861796396196067738920736575682974,
+    "mh": 20002698965120769683627220347666155190645936804219096508227153638371169,
+    "mh_less_q": true,
+    "coverage_ge_40pct": true,
+    "A": 512,
+    "M": 442880,
+    "I": 340230656,
+    "G": 7122944,
+    "F": 131072,
+    "per_record_R": 28536832,
+    "fixed_R": 2982781862337024934643247249096704,
+    "scoring_R": 8071979565959234486463225855901242808541184,
+    "R_less_2000_times_2_132": true,
+    "memory_bytes": 296602091342456241583833277130207693635584,
+    "memory_less_2_138": true,
+    "base_memory_bytes": 296602091342456241583833277059838882349056
+  },
+  "work_function": {
+    "H": "0",
+    "R_n": "K*(2*G+8*M+48*F+2^18+2^22)+2^110+6*2^85*(G+F+4096)+2^60+2^28*(n+1)",
+    "W_n": "R_n/2000 for standard compact input",
+    "valid_n": "2^20 <= n < r",
+    "per_record_R": "28536832",
+    "scoring_R": "8071979565959234486463225855901242808541184",
+    "exact_time_comparison_rhs": "10889035741470030830827987437816582766592000",
+    "score_is_upward_bound_not_exact_logarithm": true,
+    "R_core": "8071979565959234486463225855619767563395072",
+    "R_n_ell": "R_core+2^28*(n+1)+2^20*max(0,ell-256*(n+1))",
+    "W_n_ell": "R_n_ell/2000 for any finite valid serialization",
+    "scoring_R_with_padding_upper_bound": "8071980895187230271379098759708303088885760",
+    "fixed_score_range_R_upper_bound": "8072321177554151209842562134034259880386560",
+    "fixed_score_range_slack": "2816714563915879620985425303782322886205440"
+  },
+  "memory": {
+    "compact_input_peak_bytes": "296602091342456241583833277130207693635584",
+    "claim_bytes": "348449143727040986586495598010130648530944",
+    "includes": [
+      "storage node code and state",
+      "fixed-window tables built cold",
+      "Jacobian point array",
+      "prefix products",
+      "two sort arrays",
+      "root bucket counts and cursors",
+      "input at scoring n",
+      "scalar and curve scratch",
+      "charged adjacent input nodes",
+      "decoder code and parser state on input nodes",
+      "input forward and return packets"
+    ],
+    "physical_feasibility_claimed": false,
+    "base_without_extra_input_nodes": "296602091342456241583833277059838882349056",
+    "scoring_input_with_padding_upper_bound": "296602423649455187812801503081972763721728",
+    "fixed_score_range_upper_bound": "296687494241185422428667346663461961596928",
+    "fixed_score_range_slack": "51761649485855564157828251346668686934016",
+    "general_bound": "M(n,ell)=M0+2^18*ell"
+  },
+  "checks": {
+    "factor_product_equals_r_minus_1": true,
+    "each_factor_prime_by_exhaustive_small_division": true,
+    "all_factors_below_2_to_28": true,
+    "primitive_root_search_first_hit_is_7": true,
+    "all_primitive_root_test_residues_are_nonidentity": true,
+    "d_divides_r_minus_1": true,
+    "m_is_least_integer_with_square_at_least_L": true,
+    "h_is_ceil_L_over_m": true,
+    "rectangle_does_not_wrap": true,
+    "coverage_at_least_two_fifths": true,
+    "work_less_than_claim": true,
+    "work_with_2_to_100_extra_scanned_bytes_less_than_claim": true,
+    "peak_memory_less_than_claim": true,
+    "peak_memory_with_padding_nodes_less_than_claim": true,
+    "original_protected_files_unchanged": true,
+    "all_original_submission_files_unchanged": true,
+    "public_note_at_least_5_KiB": true,
+    "fixed_score_n_range_within_profile": true,
+    "fixed_score_full_range_work_less_than_claim": true,
+    "fixed_score_full_range_memory_less_than_claim": true,
+    "per_byte_charge_covers_construction_access_and_parsing": true,
+    "parser_node_initialization_fits": true
+  },
+  "experiment_status": {
+    "declared_experiments": [],
+    "candidate_code_executed_on_host": false,
+    "production_attack_executed": false,
+    "production_timing_measured": false,
+    "trusted_authoring_checks": "Inline integer arithmetic only: small-factor primality, exact product, primitive root, rectangle coverage, work, memory, hashes, and JSON."
+  },
+  "protected_sha256": {
+    "AGENTS.md": "0a087a615b4b9105f7a3b953a77b57d90919ea4d79207b4b617a29cbac37d391",
+    "README.md": "840112f372a90a19ba842f7736560ac39826fa54d95bf61e3c0c1cf67fa67c4c",
+    "benchmark.json": "8f2ae300dcdb0e7c66369ce74bf0544107007780d202837e0f347856f4518b0b",
+    "tracks/bls12-381-g1-ecdlp/rules.md": "a96fd77aa4cd28bcda78e4f2a9331d6fc9fbe51148bb24289a008d8d92375f70",
+    "tracks/bls12-381-g1-ecdlp/target-profile.json": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+    "tracks/bls12-381-g1-ecdlp/verifier.json": "4c31ccbb29db6aa81ddbf69a352a68455e301abceee90903fa51a7b2a54cab49",
+    "tracks/classical-group-work-v2.json": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+    "tracks/docs/COST_MODEL.md": "a1d1e0c7dfd052f1306e7412781f832714a603f58e1d748733b63a258eb743c6"
+  },
+  "candidate_file_sha256": {
+    "argument.md": "09ccb7a7ebc0894e6f34e80b5ccbaff1b806c9e6f6f116b53737bd362a88c3e4",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "public-note.md": "1e4aebadffef326c053c533eaca91970a493255ef0097a89b934ac5d079fd6f4",
+    "submission.json": "fba4cc0dcf3abd1e40a9aa8528fcbc1c1a732d8c3b2296a6c7f00fba273f0ca2"
+  },
+  "public_prior_state": {
+    "entries_read": 9,
+    "all_failed_at_workflow_dispatch": true,
+    "all_submission_commit_sha_null": true,
+    "all_score_published_at_null": true,
+    "qualified_frontier_observed": false,
+    "dependency_publication_confirmed": false,
+    "observation_scope": "Recorded v1 public-note review, retained as provenance; not a fresh v2 network query."
+  },
+  "deferred_dependencies": [
+    {
+      "submissionId": "d29a0078-fdd7-4a81-83ac-50b0badcf922",
+      "reason": "Public note informed small-factor and primitive-root checks. Full constants were independently verified and runtime setup is charged.",
+      "state": "Publication eligibility not confirmed; no candidate commit or published score observed."
+    },
+    {
+      "submissionId": "fb3a98f2-b759-47eb-bf31-f94dc69660a5",
+      "reason": "Public note informed three 85-bit fixed-window rows and partial Cheon coverage. Its cost model and experimental claims were not adopted.",
+      "state": "Publication eligibility not confirmed; no candidate commit or published score observed."
+    },
+    {
+      "local_candidate": "submissions/secp256k1-ecdlp/cold-bsgs-40pct-v1",
+      "reason": "Serial routed-storage protocol and cold node-initialization accounting were adapted.",
+      "state": "Unpublished; add a dependency edge after both candidates are published."
+    },
+    {
+      "local_candidate": "submissions/bls12-381-g1-ecdlp/cold-cheon-radix40-v1",
+      "reason": "Immediate local predecessor: all Cheon mathematics, scalar and curve arithmetic, cold tables, routing, and radix accounting are unchanged.",
+      "state": "Unpublished; add a dependency edge after both candidates are published."
+    },
+    {
+      "local_candidate": "submissions/secp256k1-ecdlp/signed-batch-radix32-40pct-v4",
+      "reason": "The charged adjacent input-node parser and its code/state/transfer accounting informed this input-only repair.",
+      "state": "Unpublished; add a dependency edge after both candidates are published."
+    }
+  ],
+  "attribution": {
+    "worker": "GPT 6.1 Sol",
+    "worker_effort": "max",
+    "coordinator": "GPT 6 Astra",
+    "coordinator_effort": "ultra",
+    "harness": "Codex",
+    "source_of_role_labels": "Coordinator task assignment; roles reported separately.",
+    "coordinator_role": "Coordination only; all subagent authoring, repair, and review work uses GPT 6.1 Sol at max effort as instructed."
+  },
+  "limitations": [
+    "Analytic instruction allowances have not passed provider review.",
+    "The routed storage system has not been built.",
+    "The required exponential storage is not practical.",
+    "The input profile does not bound JSON padding. All finite valid input is accepted; the fixed 132/138 claims have explicit n and byte-size conditions, with W(n,ell) and M(n,ell) outside them.",
+    "Dependency publication must be resolved before external submission.",
+    "No official score or qualification is claimed."
+  ],
+  "input_access": {
+    "actual_bytes_symbol": "ell",
+    "compact_byte_bound": "256*(n+1)",
+    "compact_point_bytes": 207,
+    "compact_exact_formula_without_final_newline": "208*n+224+decimal_digits(n)",
+    "maximum_decimal_digits_for_n": 77,
+    "fixed_score_extra_bytes_strict_upper_bound": "1267650600228229401496703205376",
+    "instructions_per_input_byte": 1048576,
+    "extra_memory_bytes_per_input_byte": 262144,
+    "layout": "A sequential chain of adjacent local input nodes; one public byte per node. The parser-state packet moves forward; the decoded n,T,A_d packet returns once. All local addresses fit 64-bit registers, with no global byte-position counter.",
+    "node_bytes": 65536,
+    "program_words_64_maximum": 2048,
+    "parser_state_words_64_maximum": 128,
+    "construction_instructions_per_byte": 262144,
+    "two_transfers_instructions_per_byte": 262144,
+    "parsing_instructions_per_byte": 65536,
+    "other_control_instructions_per_byte": 65536,
+    "sum_instructions_per_byte": 655360,
+    "node_initialization_example_instructions": 229376,
+    "all_logical_secrets_preserved": true,
+    "valid_padding_rejected_for_length": false,
+    "outside_fixed_range": "The attack continues; use W(n,ell), not a constant 132 claim.",
+    "experiment_serialization_assumption": "None. No executable experiment is declared; the optional runner format is not a production serialization guarantee."
+  },
+  "predecessor_file_sha256": {
+    "evidence.json": "0e5e2e04feff73666d9d09335def8be0437c8b2922a88797dea245b7e9eba4b3",
+    "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "argument.md": "ee1aee329aad272721025e553f7960409989354eb8155af00f2cfb068fcdbddb",
+    "submission.json": "cc421dda96575d55f23cb464d8113c8b7dd10221ed6e03bcd6a55673ff69a009",
+    "public-note.md": "f32a99288d629308880d8499dc9a76fbfdb814a76f6d6bf9426c69f5656620ce"
+  },
+  "repair_scope": "Only input representation, access, code/state construction, parsing, retained-input memory, and their explicit cost conditions changed. Reviewed Cheon mathematics and arithmetic are unchanged."
+}

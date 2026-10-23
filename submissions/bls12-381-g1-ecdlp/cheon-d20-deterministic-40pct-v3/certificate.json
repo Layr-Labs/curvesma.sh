@@ -1,0 +1,106 @@
+{
+  "schema": "certificate-v1",
+  "method": "host python3 exact integer arithmetic and 60-digit Decimal logarithms only; no candidate code executed on host",
+  "verdict_all": "PASS",
+  "identities": [
+    {
+      "id": "I1",
+      "statement": "d=2^20 divides r-1",
+      "check": "(r-1) % 1048576 == 0",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I2",
+      "statement": "r-1 factorization product equals r-1",
+      "check": "prod(ell^e)==r-1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I3",
+      "statement": "all listed factors are prime",
+      "check": "trial division to sqrt(each)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I4",
+      "statement": "xi=7 is a primitive root mod r",
+      "check": "7^((r-1)/ell) != 1 mod r for every prime ell | r-1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I5",
+      "statement": "zeta=7^d has exact order q=(r-1)/d",
+      "check": "zeta^q==1 and zeta^(q/ell)!=1 for every prime ell | q",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I6",
+      "statement": "delta=7^q has exact order d=2^20",
+      "check": "delta^d==1 and delta^(d/2)!=1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I7",
+      "statement": "decomposition s=7^(q*k1+k2) bijects [0,d)x[0,q) onto Fr*",
+      "check": "d*q == r-1",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I8",
+      "statement": "corrected m1=ceil(sqrt(q)) fully covers k2",
+      "check": "(m1-1)^2 < q <= m1^2",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I9",
+      "statement": "m2=1024 fully covers k1",
+      "check": "m2^2 >= d",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I10",
+      "statement": "historical m1 from proof.md under-covers k2 (flag, not used here)",
+      "check": "m1_hist^2 < q",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I11",
+      "statement": "historical grid with m1_hist still covers > 39% of k2 space",
+      "check": "m1_hist^2 / q > 39/100",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I12",
+      "statement": "claimed ceiling is a true upper bound",
+      "check": "log2(N/C) < 118.750473 (50-digit Decimal, margin > 1e-40)",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I13",
+      "statement": "claim 118.750473 strictly beats selected target claim 132/1",
+      "check": "118750473/1000000 < 132",
+      "verdict": "PASS"
+    },
+    {
+      "id": "I14",
+      "statement": "historical 118.59847 reproduced under 250 Ir/hash-op budget with corrected m1",
+      "check": "ceil6(log2(N_hist/C)) == 118598470",
+      "verdict": "PASS"
+    }
+  ],
+  "exact_values": {
+    "d": 1048576,
+    "q": "50006747412801924209068050869165387952509453297164571592906626415194112",
+    "m1_corrected": "223621884914696853578958571250384896",
+    "m1_historical": "223621884914696835096185700517675008",
+    "m2": 1024,
+    "H_reference_additions": "447243769829393707157917142500775420",
+    "R_instruction_equivalents_mine_500Ir_per_hash_op": "223621884914696853578958853829169225728",
+    "R_instruction_equivalents_historical_250Ir_per_hash_op": "111810942457348426789479568203976265728",
+    "N_mine_H*C_plus_R": "1118109424573484267894793138830720065728",
+    "time_log2_claim_6dp_ceiling": "118.750473",
+    "time_log2_historical_budget_6dp_ceiling": "118.598470",
+    "peak_memory_bytes_bound": "25045651110446047600843359980043108352",
+    "peak_memory_log2_bytes_rounded_up": 125
+  }
+}
