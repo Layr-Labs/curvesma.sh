@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: exact compressed-key truncated BSGS",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed standard BLS12-381 G1 generator P0, recover x. The deterministic truncated baby-step/giant-step algorithm in proof.md keys both tables on the 48-byte compressed affine encoding, which is injective on G1, so the recoverable set is exactly the interval [0,m^2) and the success probability is exactly m^2/r = 20449991318299214286984618798192526676918749446216934733046686138239702458916/52435875175126190479447740508185965837690552500527637822603658699938581184513, which is at least 39/100. Total work is at most 2^128.295287 target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^134.071246 bytes; preprocessing is at most 2^127.271374 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, no quantum steps and no heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "128295287",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs-exactness",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check that the truncated baby-step/giant-step intersection recovers exactly the scalars below m^2 in a small additive cyclic group, and that every emitted candidate is correct. This is evidence about the coverage identity only; it does not validate production point encodings, instruction costs or the storage bound.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        },
+        {
+          "order": 9973
+        }
+      ]
+    }
+  ]
+}
