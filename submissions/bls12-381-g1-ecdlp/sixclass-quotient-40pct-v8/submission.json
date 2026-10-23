@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "Deterministic six-class exponent quotient with exact orbit digits and supplied-power lifting",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "ledger.md",
+        "floor-appendix.md",
+        "certificate.json",
+        "verify.py",
+        "toy.py",
+        "orbit_audit.py",
+        "toy-summary.json",
+        "toy-grid-a.json",
+        "toy-grid-b.json",
+        "test_sixclass.py",
+        "test_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "2649",
+        "denominator": "20"
+      },
+      "statement": "For the protected BLS12-381 G1 inputs T=A_1=[s]P0 and literal A_e=[s^e mod r]P0, uniform nonzero s and every integer 2^20<=n<=2^32, set d=2^20, q=(r-1)/d, Q=q/6, a=b=57012617742321962895928165416718183, and N=a+b. The deterministic six-class scalar-action exponent grid with exact stored orbit digits, followed by literal supplied-power binary root recovery, succeeds on exactly 6ab of the q equally likely exponents, hence with success 6ab/q>=39/100. It has H(n)=0 and R(n)=N*(79650816+21135360+65536+8192)+21*79650816+2^80+2^20*n scalar AArch64 instruction equivalents, with W(n)=R(n)/2000. At n=2^20, W<2^(2649/20); repricing every instruction row by 6/5 still gives work below 2^(2649/20-1/10). Hard peak memory is at most 1536L+2^64<2^129 bytes, L the least power of two at least N. Canonicalization is stored-record maintenance only, every chain retains its original geometric point, and every grid update and root candidate is a complete charged scalar action. The cube-root endomorphism is explicitly aligned over the prime-order EC subgroup; orbit matching recovers the exact exponent via the complete digit-pair table. No multiplicative PH, unknown encoded-scalar exponentiation, random-mapping or probabilistic collision premise is used."
+    }
+  ],
+  "experiments": []
+}

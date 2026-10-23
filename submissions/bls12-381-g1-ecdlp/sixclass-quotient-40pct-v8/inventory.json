@@ -1,0 +1,17 @@
+{
+  "argument.md": "c7b39980cf10ed126187fa144ee77b4da634dc64bf90b321fa2fbf3f1c045b37",
+  "certificate.json": "08ae8ccab1c89078217268d950830c118f3deee901c4334fbd76314115a9b264",
+  "dependencies.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "floor-appendix.md": "be83f3e0622566a466640fba5dbaef7caa8e43b96fd1b8d8547ae080d497fd94",
+  "ledger.md": "e070d08436714be1940f429c1b68bb7885aca8603341d585b93e1ea7e5f6b3a7",
+  "orbit_audit.py": "ae29026583c9ef23e1d38d0126dace307cf3d5ddf06c3b108f5eb69434ace741",
+  "public-note.md": "43fdfd35106982965abbcc1b3da497e285a300c6d4de8a9b3a066827d8d61ccb",
+  "submission.json": "dbed1cc079364e82a70d0998103cbe31a383c2d49458fb66d5e43aedaac169c6",
+  "test_certificate.py": "bf401f824027df09a18c0c55cc2a09d4e710e7c748cd8f10143880e8b9761c1e",
+  "test_sixclass.py": "d936a627b8ba7647ca3f3b57ad069ce02d7b8c3724d509803bbc736723d4e881",
+  "toy-grid-a.json": "ba57920809700beaacf854918fa2727a37c0a37b2e56e31ec9e05cbd52d5b9d1",
+  "toy-grid-b.json": "fc79b2ceb9e52115dbc958e46e72228ff21b29e7c200c3388af23cd17901cffa",
+  "toy-summary.json": "17ad27b68e55efed0f0b32fac4d8e5ee2dc3ec20f311fdbb9a4c5049999b91ac",
+  "toy.py": "31bc5730893cf2f02cff4bf1ccee9b65aebf1386716ad262bffc101070492aee",
+  "verify.py": "73af590be00644b193ff678ed2cd82ed1cad493f541f43eb3c0222f5b8c5d917"
+}
