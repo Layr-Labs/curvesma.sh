@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon fixed-base comb, revision 7",
+  "claims": [
+    {
+      "statement": "At n = 2^20 the fixed-base comb in proof.md recovers the BLS12-381 G1 scalar with probability 1. Group operations are the executed EFD schedules dbl-2009-l, add-2007-bl and madd-2007-bl on this curve. Histogram counters and record addresses are two words. One radix record pays 328 instructions per pass, and every algorithmic loop pays a compare and a branch. Total work is at most W = 9245870455897073182711296040491334261 target-group-operation equivalents. The declared score 122798221/1000000 = 122.798221 is a ceiling of log2(W) at resolution 10^(-6). Peak memory is 114494405117176810328844337551868239872 bytes. Preprocessing is 2214017074635674953568642572 reference units and is included in W. Nonuniform advice is 0 bytes.",
+      "score": {
+        "numerator": "122798221",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "recompute-bls-schedule",
+      "source": "experiment.py",
+      "purpose": "Remeasure the limb schedule on BLS12-381 G1, rebuild W with two-word counters and addresses, check full toy coverage from P0 and A_d, and write one JSON object.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
