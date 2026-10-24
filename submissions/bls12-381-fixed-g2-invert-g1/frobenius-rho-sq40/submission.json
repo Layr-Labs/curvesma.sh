@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class parallel Pollard rho in GT with a cyclotomic-squaring branch, success target 0.39",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (compute g=e(P0,Q); solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with M=2^20 walks, R=1024 partitions and theta=2^-60) succeeds with probability at least 0.39 using at most 2^125.667 total dense-Fp12-multiplication equivalents (C=20,000). The walk mixes two step types on the class space: with probability s=3/8 (a fixed 3-bit field of the free class invariant T0=Re(c_0), the Fp part of the w^0 coefficient, which is equal on all 12 Frobenius conjugates and costs no multiplication) the step is y<-y^2 by Granger-Scott cyclotomic squaring, valid on GT and commuting with Frobenius, with exponents (alpha,beta)<-(2alpha,2beta) mod r; otherwise it is one twisted-table multiplication y<-y*T[h][t] with the twelve conjugate keys computed from four Fp multiplications, the partition h taken from ten bits of T0 and the twist t from kappa, as in the published Frobenius-class rho design. The three per-step decision fields (partition bits 0..9, branch bits 10..12, distinguished bits 13..72 of T0) are disjoint bit ranges of one class invariant, so outside cycle handling every per-step decision is a function of the current class and two walks at one class take the same step, while the two cycle escapes are functions of the cycle reached rather than of the walker (the 2-cycle escape squares the smaller-T0 class of the two-cycle, the checkpoint escape walks the cycle once to its smallest-T0 class and squares it), so two walks that reach one cycle compute the same escape class and action and their class sequences coincide from their first common class onward, coalescing within one cycle length; a squaring step computes no class key, and the 128-bit report key is derived from the class key K, computed at a report and charged there. The 2-cycle and checkpoint comparisons run on every step and compare T0 (381 bits; a false match has probability about 2^-380.70 per comparison, total below 2^-253, and can only cause a spurious escape, never a false logarithm, because the report key comes from K). Collision law: squaring is injective on classes (|GT| is odd) so squaring-squaring pairs never merge, squaring-multiply pairs merge at about 1/N, and multiply-multiply pairs at about (1-1/(12R))/N, giving N'=N/(1-s^2-(1-s)^2/R)=2^251.491408, charged with 1/R instead of 1/(12R) in the third term (which makes N' larger by 5.87 x 10^-4 in log2), S0'=sqrt(2N'ln(1/0.61))=2^125.737428 and S=1.03 S0'=2^125.780073 steps. Fruitless cycles are all-multiply only: a cycle with t>=1 squaring steps multiplies the exponent pair by 2^t p^m, which is 1 mod r only when ord_r(2)=(r-1)/16=2^250.857 divides 12t, i.e. t>=2^247.27 (both computed in experiment.py part A), so the fruitless-cycle rates carry their (1-s)^L factors (0.0289 R^-2 for L=3..64 against 0.1391 R^-2 without the branch) and the ledger nonetheless charges the unbranched R^-2 with 200 steps per event. A class cycle containing a squaring step is a useful collision rather than a fruitless one; it is escaped by the 2-cycle check (L=2) or the checkpoint (L<=64), and the residual exposure a lapping cycle needs is a within-walk return to a visited class, charged at most M S_slot^2/(2N) = 2^-20.71 in proof.md section 3.2 (without one a class holds at most M records, under 2^39 pairs against P = 2^41). Because the charged work per step is now random (1.1125 units for a multiply step, 0.585 for a squaring step, 0.9146875 on average), the walk phase is metered per slot in instructions with a private 128-bit counter and a hard cap W_cap=2^119.954254, so all walk work is at most M x (W_cap-1+20,000+2,250)=2^125.666542 units as a deterministic bound; the abort's effect on success is charged as a stated heuristic allowance of 0.01 with no tail claim. The report machinery is direct-addressed: a log of exactly M R_w = 2^20 x 2^47 = 2^67 records of 80 bytes, an append rule that stores no repeat of the walk's last record and runs both cycle checks first, a per-slot cumulative report counter carried across restarts and stopping the slot at R_w, matched offline by an in-place heapsort of the whole 80-byte record (at most 67 levels at 130 instructions per record, budgeted 10,000) with one adjacent 80-byte comparison per record for duplicate removal (so byte-identical records from two walkers are collapsed before pairing and a coincident pair is never divided on) and at most one 200-instruction charge per pair of the remaining distinct records of an equal-key run, against a hard pair budget P=2^41 whose abort probability is at most 2^-36 by Markov over the about 2^5 expected false-key pairs; the first pair of equal canonical elements with different exponent pairs gives x=(A1-A2)/(B2-B1) mod r and the output is verified by e(P,Q)=z. Peak memory is below 2^73.4 bytes (a hard bound: 2^67 records of 80 bytes plus the multiplier table and the walk states, with no hash table, no chaining and no eviction); preprocessing and table construction are at most 2^57 group-operation equivalents, including the 2^56.30-unit initialization of all 2^67 log records, all included in W; nonuniform advice is 0 bytes. The success bound is 0.40808 (model at 1.03 S0', rounded down) minus the 0.01 meter allowance minus 2^-18 of loss terms >= 0.3980 >= 0.39, and rests on the standard random-mapping heuristic for the mixed walk (with the branch-adjusted Brent-Pollard correction and 3% explicit step slack), the same heuristic that gives the fruitless-cycle rates of proof.md section 3.2 and the heuristic report-cap margin (mean 2^45.7801 reports per slot against the cap 2^47, a ratio of 2.3293); it is supported by toy-field experiments that run the production decision fields from T0, the production Granger-Scott squaring, the production step order and append rule, the production work meter and the production offline matcher, plus a direct measurement of the branch-adjusted collision law in part E; no production-size run is claimed.",
+      "score": {
+        "numerator": "125667",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-sq40-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements, check GT membership, the Frobenius formula, the 4-multiplication conjugate-key formula and its distinctness, that the two-subtraction sign-set minimum equals the twelve-way argmin and class key, that kappa selects the same canonical representative from all 12 conjugates, p^6 = inversion, ord_r(p) = 12, the factorisation of r-1 and ord_r(2) = (r-1)/16 with the smallest t that a fruitless cycle could contain, that T0 = Re(c_0) is equal on all 12 conjugates, and that Granger-Scott cyclotomic squaring equals y*y with its Fp multiplication/addition/subtraction counts measured by running it. Part A2: frequencies of the 73 used bits of T0 (partition, branch and distinguished fields) and of the 128 record-key bits of the class key K on real GT elements, plus the measured branch-field and distinguished-field fractions. Part P: the production step rule on real GT elements with a 16-entry table, two walkers started at two different conjugates of one element, which must produce the same T0 sequence, with the exponent invariant y = g^alpha z^beta checked for both and the squaring fraction, multiply steps, reports and key computations counted. Part E: the branch-adjusted collision law measured directly in the toy field q = 67 by sampling distinct classes, applying one step to each and counting image coincidences by pair type, compared with 1 - s^2 - (1-s)^2/(12R) and with the charged 1 - s^2 - (1-s)^2/R, with squaring-squaring coincidences required to be exactly zero. Part B: the complete mixed walk (T0 bit fields, Granger-Scott squaring, four-multiplication keys only on multiply steps, 2-cycle and checkpoint escapes on T0, stuck-walk rule, append rule, per-slot report cap, per-slot work meter) in three toy fields near 2^20 with the production step order, every trial run to the fixed step budget 1.03 S0', then the production offline matcher (full 80-byte-record sort, adjacent dedup, charged equal-key pairs against a hard pair budget, element recomputation, exponentiation check), with stress passes for the report cap, the stuck-walk restart with the carried slot counter, the work meter and the pair budget. Part C: the bound arithmetic of proof.md, including the zero-sum probabilities, the fruitless-cycle rates with and without the branch, N', S0', the deterministic report-log capacity, the KL report-cap margin, the memory bound, the per-record report charge, the hard pair budget, the work-meter cap as an exact integer, the counter-width table, and an exact integer check that the claim is log2 W rounded up at three decimals. Toy scale only; does not validate production costs or production key statistics.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              1048963,
+              1049611,
+              1054003
+            ],
+            "minimum": 1048963,
+            "maximum": 1054003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 600
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 16,
+            "maximum": 1024
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "parts": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8
+          },
+          "fields": {
+            "type": "string",
+            "enum": [
+              "all",
+              "one"
+            ]
+          },
+          "toy_bits": {
+            "type": "string",
+            "enum": [
+              "t0",
+              "hash"
+            ]
+          },
+          "s8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "pair_q": {
+            "type": "integer",
+            "enum": [
+              67,
+              163,
+              211
+            ]
+          },
+          "pair_R": {
+            "type": "integer",
+            "enum": [
+              16,
+              64,
+              256
+            ]
+          },
+          "pair_bits": {
+            "type": "string",
+            "enum": [
+              "t0",
+              "hash"
+            ]
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 4000
+          },
+          "long_horizon": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 1048963,
+          "trials": 200,
+          "R": 64,
+          "dp_bits": 4,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 10
+        }
+      ]
+    }
+  ]
+}
