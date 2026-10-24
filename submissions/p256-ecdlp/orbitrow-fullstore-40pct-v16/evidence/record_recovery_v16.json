@@ -1,0 +1,16 @@
+{
+ "all_equal": true,
+ "fails": [],
+ "layout": "32B class x || 20-bit trail || 108-bit step",
+ "mechanism": "every record unpacked and replayed from (trail,step) alone: coefficient pair reconstructed by re-running the deterministic schedule; collision da,db gives x=-da/db, verified by cand*P==Q",
+ "record_bytes": 48,
+ "records": 38400,
+ "records_without_independent_replay": 0,
+ "recovered_secret": 777001,
+ "replay_checked": 38400,
+ "replay_cost": "two dependent trails re-run to their hit step; each replayed step pays the FULL extended-Euclid inversion (no 2^20 batch amortisation), priced in ledger_v16 replay_relative_loss",
+ "replay_equality_ok": 38400,
+ "secret_verified": true,
+ "trails": 1200,
+ "visits_per_trail": 32
+}

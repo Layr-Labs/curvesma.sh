@@ -1,0 +1,30 @@
+{
+ "indep_replay_ok": true,
+ "indep_replay_pairs": 20,
+ "pass": true,
+ "radix_control": {
+  "output": [
+   "sorted=1",
+   "n=1048576 elems_counted=16777216 records_scattered=16777216 bytes_moved=805306368"
+  ],
+  "sorted_line_present": true
+ },
+ "structural_control": {
+  "A": 3,
+  "B": 5,
+  "S": [
+   4,
+   685636
+  ],
+  "bucket": "struct_two_pair",
+  "caught": true
+ },
+ "vacuous_replay_control": {
+  "corrupted": true,
+  "detected": true,
+  "record": [
+   1100,
+   31
+  ]
+ }
+}

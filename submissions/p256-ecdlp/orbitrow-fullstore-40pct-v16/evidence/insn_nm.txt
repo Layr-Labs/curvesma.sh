@@ -1,0 +1,12 @@
+                 U ___stack_chk_fail
+                 U ___stack_chk_guard
+0000000000000000 T _fe_mul_obj
+0000000000000000 t ltmp0
+0000000000000250 T _fe_add_obj
+00000000000002bc T _fe_sub_obj
+0000000000000328 T _fe_inv_obj
+000000000000032c t _fe_inv
+0000000000000a3c T _affine_add_obj
+0000000000001348 s _fe_inv.E
+0000000000001348 s ltmp1
+0000000000001368 s ltmp2

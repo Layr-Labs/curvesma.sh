@@ -1,0 +1,19 @@
+{
+ "count_loop_insns": 8,
+ "scatter_loop_insns": 14,
+ "passes": 16,
+ "ir_per_record_sort": 365.5,
+ "prefix_per_record_ir": 0.25,
+ "elems_executed": 16777216,
+ "records_scattered": 16777216,
+ "bytes_moved": 805306368,
+ "sorted_check": "sorted=1 printed by the shipped build at n=2^20",
+ "build": "cc -O2 -o radix_sort_v16 radix_sort_v16.c (arm64), objdump -d",
+ "run": "./radix_sort_v16 20",
+ "digits": "16 passes x 16 bits over 4 x 64-bit limbs",
+ "count_loop": "0x1000006dc..0x1000006f8",
+ "scatter_loop": "0x100000724..0x100000758",
+ "detect_loop_insns_per_record": 13.5,
+ "detection": "adjacent equal-key witness pass compiled in; objdump span 0x100000934..0x1000009f4, 49 insns per 4 records = 12.25, charged 13.5",
+ "batch_scope": "one sort call handles 2^20 records (the batch-inversion batch); production runs 2^107.67 such batches, so uint32 bucket counts (max 2^20) and size_t indices are valid"
+}
