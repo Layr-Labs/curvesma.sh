@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "title": "Six-class rho on secp256k1 with generated AArch64 batch loops (126.335)",
+  "claims": [
+    {
+      "statement": "For uniform full-production secp256k1 Q=[x]P, the classical cold six-class negation+GLV parallel Pollard rho attack specified in proof.md recovers x with probability at least 0.3911 under the disclosed heuristic H1, and on every run its total work is at most 2^126.335 target-group-operation equivalents because a global meter charges every action before it runs. The exact integer ledger totals W_ledger = 107250573529096099755961056275083955596164 milli-units = 2^126.334253 units, of which phase 1 is 0.750*(S_ops+2^60) < 2^126.3258, the hard extras are < 2^107.156 and the Markov allowance is 2^118.923; the claim 126.335 (25267/200) is that total's three-decimal ceiling. The ordinary step is not charged as a reference addition plus allowance; it is charged its counted scalar AArch64 instructions, 750 instructions = 0.750 units of C=1000 with no margin: 111 + 521 counted instructions per walk for the two loop passes (hand-scheduled assembly emitted by kernels/gen_loops.py as kernels/secp_loops.s, executed natively and by an interpreter in experiment.py against affine arithmetic, which measures exactly 111 and 521 per walk; the pass-2 loop holds x(W) in registers between its two uses instead of loading it twice, which is the two-instruction cut this revision makes) plus 118 instruction rows for the class bookkeeping, each the sum of an explicit sequence. The doubling escape is charged 0.956 units (956 instructions: 758 arithmetic + 118 rows + 50 list moves + 30 escape logic) and the traversal step 0.774 (774 instructions); no reference operation is also charged. The distinguished report store is fully specified in proof.md section 3: 2^16 nodes, each holding B = ceil(2*D_cap/2^16) = 500,373,945,961,595 buckets of 104 bytes plus an overflow list of B 8-byte bucket addresses (112 bytes per bucket = 2^55.64 < 2^56 per node), a home bucket from bits 144..193 of the class key, linear probing with a fixed maximum depth of 8 buckets whose probe is itemised at 39 instructions and charged 50, and a list that every report past the eighth probe enters with its address appended, so its capacity is B entries by construction and no probability enters it. The report price is 40.4 units (40 + eight probes at 0.05) and the worst-case overflow insert and lookup, D_cap*(22B+35), is the hard row 2^107.154. Every counter's width is stated and shown to fit: a 192-bit meter (< 2^136.301 milli-units), a 128-bit global operation counter (< 2^126.741), a 128-bit start counter (< 2^113.335), a 128-bit preprocessing cap (2^68.966 milli-units) and a 128-bit block-refill counter (< 2^86.335); the at most 2^86.335 block refills are charged 30 instructions each, the hard row 2^81.28. Under H1 (random-mapping collision time, slowdown allowance kappa=1.02, floor p0=0.3953 at S_ops/kappa) the expected random charges are < 2^111.014 against the allowance 2^118.923, so by Markov the meter halts early with probability at most 0.00416 (exact ratio 0.00382294), and the chance of recovery is at least 0.3953 - 0.00416 - 2e-7 = 0.3911398 > 0.3911. certificate.py proves the bound in exact integer arithmetic both ways: W_ledger^200 < 1000^200*2^25267 (126.335 holds) and W_ledger^1000 > 1000^1000*2^126334 (126.334 fails). Peak memory is below 2^72 bytes (2^71.64 for the store); preprocessing is capped at 2^59.0 units and included; no nonuniform advice. The walk, the class key, the canonical-index rule, cycle handling, phases, the H1 constants, the generated loops, the doubling derivation and every experiment are those of public submission 88e72314 (six-class-rho-secp-counted-v8, 126.367); the 126.338 revision corrected that accounting in the three places where a price exceeded its own derivation and closed the four gaps itemised in proof.md section 0 (store specification, exact success chain, counter widths, charged block refills), and this package removes the pass-2 loop's second load of x(W) and re-derives every number that depends on the step price. That line descends from 061e00ca, 30f6f34e, 98e7729c, b52f8806, a9f1a6fe, 3682292, 758d8df6 and 189ebc42; all are credited dependencies but no prior verdict is a mathematical premise. This is an analytical, heuristic bound, not a practical break.",
+      "score": {
+        "numerator": "25267",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "certificate.py",
+        "experiment.py",
+        "README.md",
+        "kernels/secp_walk.c",
+        "kernels/gen_loops.py",
+        "kernels/secp_loops.s",
+        "kernels/secp_fe.s",
+        "kernels/strip_asm.py",
+        "kernels/test_native.py",
+        "kernels/build.sh"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-six-class-rho-kernels-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production secp256k1 checks of the walk identities and truncated canonical-index rule; Part B: a scaled sequential toy pipeline on configured subgroups of y^2=x^3+7 with an unreduced subgroup-order check, a T_c census, node routing, and a long-trail trap test; kernels: limb-for-limb Python ports of the field kernels checked against big integers and affine secp256k1, instruction counts parsed from the shipped AArch64 assembly, the shipped loops executed by an interpreter, and the work-meter ledger recomputed from the prices and rows of proof.md section 5. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q25",
+              "q29"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q25",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 6,
+          "pipeline": true,
+          "kernels": true
+        }
+      ]
+    }
+  ]
+}
