@@ -1,0 +1,13 @@
+{
+ "W": "127.771169743",
+ "charge": "1101.639764",
+ "claim": [
+  6389,
+  50
+ ],
+ "count_delta": 47,
+ "counted_step": 1101,
+ "kernel_control_mismatches": 25772,
+ "kernel_mismatches": 0,
+ "kernel_records": 10770
+}

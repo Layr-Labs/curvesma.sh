@@ -1,0 +1,119 @@
+{
+ "checks": {
+  "W_recompute": {
+   "expected": 127.772244,
+   "observed": 127.772244,
+   "verdict": "PASS"
+  },
+  "charge_terms_sum": {
+   "expected": 1102.460077,
+   "observed": 1102.460077,
+   "verdict": "PASS"
+  },
+  "claim_covers_W": {
+   "expected": 127.78,
+   "observed": 127.772244,
+   "verdict": "PASS"
+  },
+  "dense_arm_cp95_ge_floor": {
+   "expected": ">= 0.39",
+   "observed": 0.409822,
+   "verdict": "PASS"
+  },
+  "dense_arm_trials": {
+   "expected": 4000,
+   "observed": 4000,
+   "verdict": "PASS"
+  },
+  "dense_records_exceed_cap": {
+   "expected": "> 2^73",
+   "observed": 24500330418307569369362971735087311224832,
+   "verdict": "PASS"
+  },
+  "dependencies_empty": {
+   "expected": [],
+   "observed": [],
+   "verdict": "PASS"
+  },
+  "fixture_classes_log2_39": {
+   "expected": 39.000003,
+   "observed": 39.000003,
+   "verdict": "PASS"
+  },
+  "fixture_not_2e40": {
+   "expected": "< 39.001",
+   "observed": 39.000003,
+   "verdict": "PASS"
+  },
+  "inv_ir_is_384_fe_mul": {
+   "expected": 53760,
+   "observed": 53760,
+   "verdict": "PASS"
+  },
+  "inv_ladder_popcount": {
+   "expected": "popcount(E) for E = p-2",
+   "observed": 128,
+   "verdict": "PASS"
+  },
+  "inv_share_per_step": {
+   "expected": 0.8203125,
+   "observed": 0.8203125,
+   "verdict": "PASS"
+  },
+  "kernel_control_positive": {
+   "expected": "> 0",
+   "observed": 25772,
+   "verdict": "PASS"
+  },
+  "kernel_fixed_zero": {
+   "expected": 0,
+   "observed": 0,
+   "verdict": "PASS"
+  },
+  "point_walk_not_claimed": {
+   "expected": "NOT CLAIMED",
+   "observed": "NOT CLAIMED",
+   "verdict": "PASS"
+  },
+  "reserve_is_carried_not_assigned": {
+   "expected": 0.63976416015625,
+   "observed": 0.63976416015625,
+   "verdict": "PASS"
+  },
+  "sparse_arm_is_declared_pipeline": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "sparse_arms_below_floor": {
+   "expected": "< 0.39 in every sparse arm",
+   "observed": [
+    0.242197,
+    0.233338,
+    0.229402
+   ],
+   "verdict": "PASS"
+  },
+  "sparse_records_cap_fits": {
+   "expected": "<= 2^73",
+   "observed": 5312662293228350865408,
+   "verdict": "PASS"
+  },
+  "step_count_from_stepcount_json": {
+   "expected": 1101,
+   "observed": 1101,
+   "verdict": "PASS"
+  },
+  "success_floor_equals_sparse_cp95_headline": {
+   "expected": "no assigned reserve",
+   "observed": "headline success is the measured sparse CP-95, no +5% assigned",
+   "verdict": "PASS"
+  }
+ },
+ "method": "certificate re-parses evidence/census_sparse.json, evidence/recproc.json, evidence/cap.json and evidence/ledger.json, recomputes W, the charge terms, the inversion ladder and every CP-95 row in exact arithmetic from the raw counts, and checks the storage arithmetic in exact integers.",
+ "totals": {
+  "checks": 21,
+  "passed": 21
+ },
+ "verdict": "PASS"
+}
