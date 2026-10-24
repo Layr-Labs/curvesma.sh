@@ -1,0 +1,89 @@
+{
+ "kind": "certificate-v15p",
+ "claim": "79802/625",
+ "claim_value": 127.6832,
+ "W_time_log2": 127.68310620328697,
+ "W_exact": "613146871220391737297709147013412256981579263/2244500",
+ "ir_per_step_exact": "3579/2",
+ "ir_per_step": 1789.5,
+ "composition": [
+  {
+   "row": "step_core",
+   "ir": 737,
+   "source": "evidence/step_secp_v15g.s:step_asm",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "737"
+  },
+  {
+   "row": "align",
+   "ir": 515,
+   "source": "scripts/walk_v15o.s:_v15o_align+2*_fmul",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "515"
+  },
+  {
+   "row": "label",
+   "ir": 398,
+   "source": "scripts/walk_v15o.s:_v15o_label+2*_rmont",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "398"
+  },
+  {
+   "row": "detect",
+   "ir": 77,
+   "source": "scripts/walk_v15o.s:_v15o_detect",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "77"
+  },
+  {
+   "row": "report",
+   "ir": 125,
+   "source": "scripts/walk_v15o.s:_v15o_report",
+   "calls": "1/2",
+   "formula": "1/report x 1/2",
+   "ir_per_step": "125/2"
+  }
+ ],
+ "checks": [
+  {
+   "check": "layout_single_definition",
+   "pass": true,
+   "detail": "sizeof(rec_t)=88, offsets idx/len/esc=64/72/80 equal the listing .equ constants",
+   "evidence": "evidence/layout-check-v15p.json:verdict"
+  },
+  {
+   "check": "composition_rows_from_shipped_listing",
+   "pass": true,
+   "detail": "five symbols of scripts/walk_v15o.s + evidence/step_secp_v15g.s",
+   "evidence": "evidence/ledger-v15p.json:composition"
+  },
+  {
+   "check": "sum_rows_equals_W_exact_rational",
+   "pass": true,
+   "detail": "3579/2 Ir/step; planted +1 control fails",
+   "evidence": "evidence/ledger-v15p.json:W"
+  },
+  {
+   "check": "claim_covers_W_plus_2e-5",
+   "pass": true,
+   "detail": "79802/625 vs 2^127.68310620328697",
+   "evidence": "evidence/ledger-v15p.json:claim"
+  },
+  {
+   "check": "label_invariant",
+   "pass": false,
+   "detail": "DISCLOSED FAILURE: 1509 invariant violations in 2000 steps, partner walk 3000/3000 class mismatches; two arithmetic defects (fmul, rmont) found by this test and NOT repaired",
+   "evidence": "evidence/label-invariant-v15p.json:verdict"
+  },
+  {
+   "check": "mutation_controls_fire",
+   "pass": true,
+   "detail": "four label mutations FAIL the invariant; index-from-raw-x splits the partner walk",
+   "evidence": "evidence/label-invariant-v15p.json:rows"
+  }
+ ]
+}

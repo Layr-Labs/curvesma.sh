@@ -1,0 +1,20 @@
+{
+ "kind": "layout-check-v15p",
+ "compiler": {
+  "sizeof_rec_t": 88,
+  "off_x": 0,
+  "off_y": 32,
+  "off_idx": 64,
+  "off_len": 72,
+  "off_esc": 80
+ },
+ "listing_equ": {
+  "REC_SIZE": 88,
+  "OFF_IDX": 64,
+  "OFF_LEN": 72,
+  "OFF_ESC": 80
+ },
+ "rule": "sizeof(rec_t) and every field offset equal the listing's .equ constants",
+ "mismatches": {},
+ "verdict": "PASS"
+}
