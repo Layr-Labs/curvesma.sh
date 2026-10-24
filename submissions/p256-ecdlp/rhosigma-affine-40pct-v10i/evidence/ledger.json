@@ -1,0 +1,144 @@
+{
+ "W": {
+  "A_log2_Tprod": 127.631517202749,
+  "W": 127.77224361522359,
+  "charge_f": 1102.4600766601563,
+  "charge_terms": {
+   "batch_inversion_share": 0.8203125,
+   "rare_event_reserve": 0.63976416015625,
+   "record_processor_share": 8.673617379884035e-18,
+   "source": "evidence/stepcount.json:o3.longest_iteration; evidence/recproc.json:fields inv_ir_per_step, rec_share_per_step; evidence/ledger.json:charge_terms.reserve",
+   "step_instructions": 1101
+  },
+  "claim": [
+   6389,
+   50
+  ],
+  "claim_f": 127.78,
+  "formula": "W = log2 T_prod + log2(charge/1000), T_prod = sqrt(2*Lambda*N'), Lambda=0.60",
+  "headroom_bits": 0.007756384776413938
+ },
+ "census": {
+  "arm_A_dense": {
+   "batch_inversion": "Montgomery: pre[i+1]=pre[i]*den[i] over 16 slots, one fe_inv, back-substitution 3(n-1) muls (census_v10f41.c lines 297-306)",
+   "check_fail": 0,
+   "cp95": 0.40982219610337783,
+   "dc0": 0,
+   "dp_bits": 0,
+   "merges": 19165147,
+   "per_walker_steps": 50764,
+   "pipeline": "dense every-step records",
+   "records": 3248896000,
+   "records_per_walk": 812224.0,
+   "recovery": 0.42275,
+   "role": "control arm A (census instrument)",
+   "self_frac": 0.0015531725238357892,
+   "steps": 3248896000,
+   "successes": 1691,
+   "trials": 4000,
+   "verified": 19165147
+  },
+  "arm_B_sparse_dp4": {
+   "batch_inversion": "Montgomery: pre[i+1]=pre[i]*den[i] over 16 slots, one fe_inv, back-substitution 3(n-1) muls (census_v10f41.c lines 297-306)",
+   "check_fail": 0,
+   "cp95": 0.2421970970081904,
+   "dc0": 0,
+   "dp_bits": 4,
+   "merges": 1192538,
+   "per_walker_steps": 50764,
+   "pipeline": "DECLARED sparse pipeline: DP trigger mix64(x^DPSALT)&mask==0 -> record (x,a,b) -> hash insert -> pairwise key match -> solve x=(a-a2)/(b-b2) -> Python-free [x]P==Q verification",
+   "records": 202947784,
+   "records_per_walk": 50736.946,
+   "recovery": 0.2535,
+   "role": "production arm B (sparse records, cap-bounded)",
+   "self_frac": 0.001515838182298162,
+   "steps": 3248896000,
+   "successes": 1014,
+   "trials": 4000,
+   "verified": 1192538
+  },
+  "arm_B_sparse_dp6": {
+   "batch_inversion": "Montgomery: pre[i+1]=pre[i]*den[i] over 16 slots, one fe_inv, back-substitution 3(n-1) muls (census_v10f41.c lines 297-306)",
+   "check_fail": 0,
+   "cp95": 0.23333779166625063,
+   "dc0": 0,
+   "dp_bits": 6,
+   "merges": 295735,
+   "per_walker_steps": 50764,
+   "pipeline": "DECLARED sparse pipeline: DP trigger mix64(x^DPSALT)&mask==0 -> record (x,a,b) -> hash insert -> pairwise key match -> solve x=(a-a2)/(b-b2) -> Python-free [x]P==Q verification",
+   "records": 50634131,
+   "records_per_walk": 12658.53275,
+   "recovery": 0.2445,
+   "role": "production arm B (sparse records, cap-bounded)",
+   "self_frac": 0.0005024081483693282,
+   "steps": 3248896000,
+   "successes": 978,
+   "trials": 4000,
+   "verified": 295735
+  },
+  "arm_B_sparse_dp8": {
+   "batch_inversion": "Montgomery: pre[i+1]=pre[i]*den[i] over 16 slots, one fe_inv, back-substitution 3(n-1) muls (census_v10f41.c lines 297-306)",
+   "check_fail": 0,
+   "cp95": 0.22940243744164543,
+   "dc0": 0,
+   "dp_bits": 8,
+   "merges": 74788,
+   "per_walker_steps": 50764,
+   "pipeline": "DECLARED sparse pipeline: DP trigger mix64(x^DPSALT)&mask==0 -> record (x,a,b) -> hash insert -> pairwise key match -> solve x=(a-a2)/(b-b2) -> Python-free [x]P==Q verification",
+   "records": 12629667,
+   "records_per_walk": 3157.41675,
+   "recovery": 0.2405,
+   "role": "production arm B (sparse records, cap-bounded)",
+   "self_frac": 0.000226609300150194,
+   "steps": 3248896000,
+   "successes": 962,
+   "trials": 4000,
+   "verified": 74788
+  }
+ },
+ "fixture": {
+  "classes": 549756820252,
+  "classes_log2": 39.00000264094528,
+  "note": "(q+1)/2 = 549756820252 = 2^39.000003 classes, NOT 2^40.000 (verdict b8b00688 item 3); corrected here and in every note/argument citation.",
+  "order": 1099513640503,
+  "p": 1099511629627
+ },
+ "kernel": {
+  "control_mismatches": 25772,
+  "fixed_mismatches": 0,
+  "records": 10770
+ },
+ "point_walk": {
+  "verdict_rows": "PASS",
+  "verdict_walks": "FAIL",
+  "rows_mismatched": 0,
+  "log_stream_mismatched": 0,
+  "walks_mismatched": 208,
+  "cause": "canon_y decision is representation-dependent (Montgomery low bit on an unreduced product)",
+  "source": "evidence/point_walk.json"
+ },
+ "record_pipeline": {
+  "batch_inv_round_ir_n16": 982,
+  "batch_walkers": 65536,
+  "detection": "mix64(x3[0] ^ DPSALT) & ((1<<61)-1) == 0, executed inside the counted step (evidence/step_v10f_o3.c:71-72, rows mix_key+control in stepcount.json)",
+  "fe_mul_instructions": 140,
+  "inv_ir": 53760,
+  "inv_ir_per_step": 0.8203125,
+  "inv_ladder_muls": 128,
+  "inv_ladder_squarings": 256,
+  "rec_share_per_step": 8.673617379884035e-18,
+  "recovery": "pairwise key match on the sparse record key, solve x = (a-a2)/(b-b2) mod r, verify by recomputing [x]P and comparing the full point (census_v10f41.c:355-372)",
+  "recproc_ir_per_report": 40,
+  "reports_per_step": 2.168404344971009e-19,
+  "schedule": "per round of n walkers: forward pre-products (n-1 muls), ONE fe_inv of the product, back-substitution (n-1 muls + n-1 muls) = 3(n-1) muls + 1 inv; each walker keeps 1/d_i and forms lambda = num_i * inv_i (already inside the counted step's 6-mul schedule), so the marginal charge is inv_ir/n per step."
+ },
+ "storage": {
+  "record_bytes_compressed": 72,
+  "record_bytes_uncompressed": 96,
+  "log2_records": 65.631517202749,
+  "sparse_bytes_log2": 72.258,
+  "cap_log2": 73,
+  "slack_bits": 0.742,
+  "source": "evidence/cap.json"
+ }
+}

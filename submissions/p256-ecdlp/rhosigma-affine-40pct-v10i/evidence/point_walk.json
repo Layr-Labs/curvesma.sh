@@ -1,0 +1,17 @@
+{
+ "consequence": "the shipped step's canonicalisation decision is REPRESENTATION-DEPENDENT, so the walk map is not well-defined by the mathematical specification alone; the package does NOT claim the point-walk status, and the priced per-step count (1101) is unaffected because canon_y is 9 instructions either way",
+ "driver": "evidence/p256_point_walk_test.c -> evidence/p256_point_walk_test.py",
+ "mid_walk_checkpoints_mismatched": 16,
+ "point_additions_recomputed": 106496,
+ "root_cause_of_walk_failure": "canon_y in evidence/step_v10f_o3.c decides on the low bit of the MONTGOMERY limb (csel on tst y[0],#1). On a fully reduced Montgomery value that is the parity of y*R mod p; the shipped header returns Montgomery products whose top limb is not always reduced modulo p, so the same field element can carry an even or an odd low bit depending on the reduction path. Measured at walk 0 slot 0 step 1: driver y = p - model y (distinct sign), first divergence at step 2 of 512; tables are unaffected because they are canonicalised once from a reduced [t]G.",
+ "row_generation": "PRODUCTION policy of evidence/census_v10f41.c lines 164-190 (t <- splitmix|1 dup-checked, T <- [t]G, canon the STORED COPY and negate the log); the v10h ladder that canonicalised its accumulator in place is REPAIRED",
+ "steps_per_walk": 512,
+ "table_digest_matches": true,
+ "table_log_stream_mismatched": 0,
+ "table_rows_each": 2048,
+ "table_rows_mismatched": 0,
+ "verdict_rows": "PASS",
+ "verdict_walks": "FAIL",
+ "walk_count": 208,
+ "walk_final_mismatched": 208
+}
