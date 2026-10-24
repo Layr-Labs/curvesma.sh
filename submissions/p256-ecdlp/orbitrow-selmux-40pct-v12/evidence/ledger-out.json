@@ -1,0 +1,183 @@
+{
+ "C": 1000,
+ "N_classes_log2": 254.99999999966408,
+ "S_OPS_log2": 128.19973435027055,
+ "charge_columns": 0.10834896713309439,
+ "charge_dp": 4.754556904965079,
+ "charge_walkers": 0.9639569249434565,
+ "claim": 128.537,
+ "claim_2ref_delta": 0.8419999999999845,
+ "claim_at_2_reference_units": 129.379,
+ "claim_if_w2_at_design": 129.537,
+ "claim_log2_if_w2": 129.537,
+ "claims_ratio_ceiling": 2.062734427299441,
+ "cp95_design": 0.671531204453089,
+ "cp95_low_order": 0.6072256448394023,
+ "debits": 0.000336,
+ "dp_bits": 5,
+ "executed_claim_delta_bits": 0.0,
+ "fixture_R": 16384,
+ "fixture_trap_rate_log2": -15.0,
+ "fixture_trap_rate_log2_v11": -14.0,
+ "fixture_trap_rate_log2_v12": -15.0,
+ "floor": 0.39,
+ "floor_met": true,
+ "fresh_insn": 492300,
+ "fresh_ref": 492.3,
+ "gate": 127.237678,
+ "j_invariant": 7958909377132088453074743217357398615041065282494610304372115906626967530147,
+ "kappa_product": 1.2820494178807331,
+ "ladder_floor_slack": 0.7976338160891231,
+ "ladder_total_charge": 5.826862797041629,
+ "ladder_total_charge_worst": 14.342760648955235,
+ "log2_S0": 127.49244191075879,
+ "log2_W": 128.53670649601597,
+ "log2_extras": 114.95291102644535,
+ "log2_phase1": 128.53658898939602,
+ "margin_vs_gate": -1.299322,
+ "markov_loss_bound": 0.0033451355131502683,
+ "memory_log2_bytes": 76.5849625009591,
+ "order_span": 255.70325833896595,
+ "pair_cp95_w2": 0.4947529232566291,
+ "pair_cp95_w2_design": 0.7873411210314412,
+ "pair_cp95_w2_x1": 0.4947529232566291,
+ "pair_cp95_x1": 0.4947529232566291,
+ "pair_cp95_x16": 0.7873411210314412,
+ "pair_sets": 1600,
+ "pair_sets_x1": 1600,
+ "pair_sets_x16": 1600,
+ "posture": "w=1",
+ "premium_executed_per_mul": 24.0,
+ "premium_static_per_mul": 30.0,
+ "preprocessing_log2": 43.59991284218713,
+ "ranks": false,
+ "records_log2": 68.199734350584,
+ "report_slots_log2": 69.0,
+ "restart_loss": 0.0009375,
+ "restart_ref_log2": 109.53658898939602,
+ "selector_reach_16384_v11": 8192,
+ "selector_reach_16384_v12": 16384,
+ "selector_reach_rows": [
+  {
+   "R": 64,
+   "v11": 32,
+   "v12": 64
+  },
+  {
+   "R": 256,
+   "v11": 128,
+   "v12": 256
+  },
+  {
+   "R": 1024,
+   "v11": 512,
+   "v12": 1024
+  },
+  {
+   "R": 16384,
+   "v11": 8192,
+   "v12": 16384
+  }
+ ],
+ "selector_reach_v11": 32,
+ "selector_reach_v12": 64,
+ "selector_swap_delta_p": 0.6754166666666667,
+ "selector_swap_fire_ratio": 501.3779381824912,
+ "shape_measured": 1.6002022719673725,
+ "slope_columns": -0.018058161188849065,
+ "slope_columns_ci": 0.004804175812671204,
+ "slope_dp": -1.326250108336878,
+ "slope_dp_ci": 1.4383587753564484,
+ "slope_walkers": -0.06024730780896603,
+ "slope_walkers_ci": 0.20816315780009398,
+ "step_insn": 263,
+ "step_insn_charged": 263.0,
+ "step_insn_executed": 227.0,
+ "step_insn_static": 263,
+ "step_price": 1.263,
+ "step_rows": [
+  [
+   "class key: 4-limb compare x vs p-x (4), masked 4-limb subtract (8), select (2)",
+   14
+  ],
+  [
+   "column and orbit slot: 64-bit shift by constant (1), table base + index (2)",
+   3
+  ],
+  [
+   "sign bit: y low-limb test and key pack (3)",
+   3
+  ],
+  [
+   "P-256 REDUCTION PREMIUM over the borrowed reference addition: 6 field muls x +30 insn (Solinas: 8 mul-adds + 20 add/carry, vs secp256k1's 4 mul-add fold)",
+   180
+  ],
+  [
+   "loads/stores: 4 limb loads of J, 4 stores of S, 4 coefficient loads (20)",
+   20
+  ],
+  [
+   "coefficient update mod n: 4-limb add plus conditional subtract",
+   9
+  ],
+  [
+   "checkpoint: period-64 compare (4), 4-limb fingerprint compare (3), age (3)",
+   10
+  ],
+  [
+   "trap escape lag-1: class compare vs previous (3), alternate-slot select (2), join (1)",
+   6
+  ],
+  [
+   "trap escape lag-3: class compare vs the class two steps back (3), join (1)",
+   4
+  ],
+  [
+   "DP fingerprint: 64-bit mix (4) and threshold compare (2)",
+   6
+  ],
+  [
+   "counters: 64-bit length add (4), cap test (2), loop counter/branch (1)",
+   7
+  ],
+  [
+   "per-batch meter: 192-bit add share",
+   1
+  ]
+ ],
+ "success": 0.670257704453089,
+ "test": "ledger_p256_v12",
+ "transfer_charge_bits": 5.826862797041629,
+ "transfer_charge_bits_worst_ci": 14.342760648955235,
+ "transfer_floor_slack_bits": 0.7976338160891231,
+ "transfer_sets_per_cell": 2400,
+ "transfer_slopes": {
+  "DP density": {
+   "charge_bits": 4.754556904965079,
+   "ci95": 1.4383587753564484,
+   "sign": "unfavourable",
+   "slope": -1.326250108336878
+  },
+  "columns": {
+   "charge_bits": 0.10834896713309439,
+   "ci95": 0.004804175812671204,
+   "sign": "unfavourable",
+   "slope": -0.018058161188849065
+  },
+  "walkers": {
+   "charge_bits": 0.9639569249434565,
+   "ci95": 0.20816315780009398,
+   "sign": "unfavourable",
+   "slope": -0.06024730780896603
+  }
+ },
+ "transfer_supported": false,
+ "trap_rate_log2": -21.0,
+ "trap_ratio_meas_256": 2.0339632277834525,
+ "trap_ratio_meas_64": 2.03602978293791,
+ "trap_ratio_measured": [
+  2.03602978293791,
+  2.0339632277834525
+ ],
+ "w2_cost_bits": 1.0
+}

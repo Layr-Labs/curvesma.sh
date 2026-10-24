@@ -1,0 +1,43 @@
+{
+ "claims": [
+  {
+   "statement": "P-256 port of the judge-validated plain-lineage orbit-row walk (plain ticket 5ecbf15, 126.2364; secp retarget sigma-port-transfer-v18, verdict cd18d785 accepted every architecture point). A RETARGET, not a new family: the rhosigma family is abandoned on this track (its walk geometry measures p2 0.0705 at the shipped generator, below the 0.39 floor).\n\nTHE ONE STRUCTURAL CHANGE. The lineage's class map is the mu_6 orbit quotient, which exists only because BLS12-381 G1 and secp256k1 are j=0 (a=0) curves: x -> beta*x is then a curve automorphism and six points share a class key. NIST P-256 has a=-3 and b!=0, so its j-invariant is NEITHER 0 NOR 1728, so x -> beta*x sends y^2=x^3-3x+b to y^2=x^3-3*beta^2*x+b (P-256 only for beta=+-1) and (x,y)->(-x,i*y) needs b=0. P-256's automorphism group is {+1,-1}. The retarget is the same code with lam=1: canon(c)=min(c,q-c), e in {+1,-1}, N=(r-1)/2 instead of (r-1)/6. That is the +0.79-bit S0 cost of the port, charged not argued.\n\nV12 FIXES THE SHARED R/2 SELECTOR BUG (verdict 32143a2 point 2, the bug the secp census also carries). v11's fixture drew its class key on [0,2^39) and shifted by 40, because the proxy modulus 1<<40 has bit_length 41: a fixture with R columns reached R/2 and its trap rate was 1/R instead of the advertised 1/(2R). qwalk.Universe.col now spans the full proxy half-range. evidence/selector-diff.json measures it: reach 32 -> 64 at R=64 and 8192 -> 16384 at R=16384, and the two-step-return rate ratio 2.04 / 2.03 against the law 2.00. PRODUCTION WAS ALWAYS FULL-REACH (p/2 runs to 2^255, measured 1048576 == R_TAB), so this corrects the FIXTURE rows by one bit and does not move the production trap charge; every census cell was re-run after the fix at the same fixed budgets.\n\nTRANSFER, MEASURED NOT ASSERTED. The secp-v19/v20 parameter-sensitivity ladder is re-run at the p256 fixtures (evidence/ladder-*.json, ladder-analysis.json): walkers 16/64/256, columns 16384/4096/1024, DP density 2^-5/2^-8/2^-11, one at a time, 2400 sets a cell, log-linear slopes with 95% intervals, sign-honest charge (unfavourable slopes charged in full, favourable charged zero). Measured slopes (bits of success odds per log2 of the parameter): walkers -0.060 +/- 0.208, columns -0.018 +/- 0.005, DP density -1.326 +/- 1.438. The density axis is UNFAVOURABLE and its full extrapolation to 2^-60 is 5.827 bits against a floor slack of only 0.798 bits, so the ladder says the production-density transfer is NOT supported and this package says so instead of claiming it. The selector-swap row (uniform-key surrogate vs class-value truncation, the measured wrong model) reads delta p 0.675 and 501x the trap fires: the surrogate is the conservative choice.\n\nSUCCESS IS MEASURED AT THE FIXTURE, DECLARED AT PRODUCTION. 3,200-trial matched-pair census at the exact ledger budget (x = visits/sqrt(N) = 1.6002): escaped lag-3 arm CP-95 0.6715, minus priced debits 0.000336 and restart loss 0.000937 = 0.6703, floor 0.39 met. Matched no-escape control on the same starts reads 2034/3200. Order transfer is measured at two class counts (255.7x apart): CP-95 0.6072. POSTURE IS w=1: the w=2 pair census is now legal (0.4948 at the base shape, 0.7873 at the design shape) but a second full run costs +1.000 bit (129.537) for a success the first run already delivers, so no amplification is claimed and the claim never took that bit.\n\nPRICE, EXECUTED-COUNT STANDARD. W = (1 + 263/1000) * (S_OPS + 2^60) + EXTRAS, C=1000. STEP_INSN=263 = 83 insn walk overhead + a 180-insn P-256 Solinas premium. v12 DERIVES the premium instead of asserting it: evidence/exec-count.json runs an instrumented P-256 field multiply (both carry paths counted separately, traffic-weighted) on census traffic, with a control that the counters do not perturb the walk. Executed: 227.0 insn/step (24.0/mul executed vs 30 static), so the CHARGED price is the static 263 under the max rule and the claim does not move. A pessimistic weighting row is also emitted.\n\nLEDGER. log2 S0 = 127.4924, log2 S_OPS = 128.1997, log2 W = 128.5367, claim 128.537. Row sum 263 = STEP_INSN. M_insn=97 is structural; no disassembly or kernel price is claimed anywhere.\n\nNO RANK, AND THE LIVE GATE IS REPORTED, NOT ASSUMED. The 127.237678 head is REVIEW-STATE, and at fire time the board's currentBestScore was null (no scored head); the claim is 128.537 vs that review-state head = 1.299 bits behind. The honest content of this ticket is the port plus three measured repairs (selector reach, transfer ladder with a disclosed negative, executed price), not a frontier move.",
+   "score": {
+    "numerator": "128537",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "assemble.py",
+    "dependencies.json",
+    "evidence/absorb-direct.json",
+    "evidence/census-design.json",
+    "evidence/census-low.json",
+    "evidence/exec-count.json",
+    "evidence/ladder-analysis.json",
+    "evidence/ladder-cells.json",
+    "evidence/ledger-out.json",
+    "evidence/pair-census-x16.json",
+    "evidence/pair-census.json",
+    "evidence/selector-diff.json",
+    "evidence/selfaudit.json",
+    "ledger_v12.py",
+    "preflight.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/absorb_v20n.py",
+    "scripts/analyze_ladder.py",
+    "scripts/census_v20n.py",
+    "scripts/exec_count.py",
+    "scripts/pair_census.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "scripts/selftest_selector.py",
+    "scripts/sens_ladder.py",
+    "selfaudit.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "version": 1,
+ "title": "p256 v12: plain-lineage orbit-row port with the shared R/2 selector bug repaired and re-censused, a measured transfer ladder that discloses the density axis as unsupported, and an executed-count step price; success 0.6703 (floor met); claim 128.537 vs a review-state 127.237678 head (NO RANK)"
+}

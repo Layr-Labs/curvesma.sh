@@ -1,0 +1,56 @@
+{
+ "charge_rule": "charged = max(executed atomic-op step, static 263); the heavy-weight variant is reported as a sensitivity row and is NOT the charged price",
+ "claim_delta_bits": 0.0,
+ "claim_delta_heavy_weight_bits": 0.0,
+ "claim_if_executed": 128.537,
+ "claim_static": 128.5367065,
+ "control": {
+  "col_calls_counted": 268800,
+  "control_pass": true,
+  "fires_equal": true,
+  "instrumented_successes": 0,
+  "plain_successes": 0,
+  "succ_step_equal": true
+ },
+ "executed_per_field_mul": {
+  "insn_weight": "2*mul + add + carry_check + fold",
+  "secp_fold": {
+   "add": 34.0,
+   "carry": 19.9556,
+   "fold": 10.0,
+   "mul": 16.0,
+   "nocar": 4.0444
+  },
+  "secp_insn": 84.0,
+  "solinas": {
+   "add": 46.0,
+   "carry": 23.9556,
+   "fold": 18.0,
+   "mul": 16.0,
+   "nocar": 4.0444,
+   "sub": 8.0
+  },
+  "solinas_insn": 108.0
+ },
+ "per_mul_wall_us": {
+  "secp": 10.480940341949463,
+  "solinas": 12.764489650726318
+ },
+ "premium_delta": -156.0,
+ "premium_executed_heavy_weight": 24.0,
+ "premium_executed_per_mul": 24.0,
+ "premium_static": 180,
+ "price_executed": 1.263,
+ "price_static": 1.263,
+ "step_charged_max_rule": 263,
+ "step_executed": 227.0,
+ "step_executed_heavy_weight": 227.0,
+ "step_static": 263,
+ "test": "executed_count_p256_v12",
+ "traffic": {
+  "note": "both carry paths instrumented and counted separately",
+  "samples": 20000,
+  "stream": "uniform 256-bit field elements"
+ },
+ "verdict": "executed count is BELOW the static premium and does not contradict it: the static 180 stands as the CHARGED price (max rule), so the objection is answered by a measurement and the claim does not move"
+}

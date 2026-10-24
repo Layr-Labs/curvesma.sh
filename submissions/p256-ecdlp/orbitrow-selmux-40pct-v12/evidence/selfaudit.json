@@ -1,0 +1,18 @@
+{
+ "checks": {
+  "A1 step rows == STEP_INSN": true,
+  "A10 ladder slope refit": true,
+  "A11 executed price max rule": true,
+  "A2 submission score == ledger claim": true,
+  "A3 claim == ceil(log2 W)": true,
+  "A4 success arithmetic": true,
+  "A5 direction laws": true,
+  "A6 no orphan note numbers": true,
+  "A7 counter coverage": true,
+  "A8 evidence completeness": true,
+  "A9 selector reach differential": true
+ },
+ "controls_fired": 7,
+ "controls_total": 7,
+ "pass": true
+}

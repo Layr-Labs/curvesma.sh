@@ -1,0 +1,47 @@
+{
+ "commands": [
+  "python3 scripts/selftest_selector.py   # old-vs-new reach + trap-rate differential -> evidence/selector-diff.json",
+  "RCOLS=16384 SHAPE_SCALE=1.585 BT=3200 QMIN=4290000000 python3 scripts/census_v20n.py  # design row -> evidence/census-design.json",
+  "RCOLS=16384 SHAPE_SCALE=1.585 BT=3200 QMIN=16777216 python3 scripts/census_v20n.py    # low-order transfer -> evidence/census-low.json",
+  "BT=1600 ARM=lag3 python3 scripts/pair_census.py                            # w=2 base shape",
+  "BT=1600 ARM=lag3 SHAPE_SCALE=1.585 OUT=pair-census-x16.json python3 scripts/pair_census.py  # w=2 design shape",
+  "for c in base W64 W256 R4096 R1024 d8 d11 selval; do CELL=$c SETS=2400 python3 scripts/sens_ladder.py; done  # ladder cells",
+  "python3 scripts/analyze_ladder.py      # slopes, CIs, sign-honest budget -> evidence/ladder-analysis.json",
+  "python3 scripts/exec_count.py          # executed-count price + non-perturbation control",
+  "python3 scripts/absorb_v20n.py         # sampled absorption count",
+  "python3 ledger_v12.py                  # exact Fractions: S_OPS, W, claim, floor",
+  "python3 selfaudit.py                   # audits + planted-flip controls",
+  "python3 assemble.py                    # this file, submission.json, public-note.md"
+ ],
+ "entrypoint": "ledger_v12.py",
+ "environment": {
+  "cost_model": "tracks/classical-group-work-v2.json, C = 1000 for p256-ecdlp",
+  "disasm": "not claimed: no kernel or disassembly price anywhere; M_insn = 97 structural.",
+  "python": "/opt/homebrew/opt/python@3.14/bin/python3.14 (numpy 2.4.4)"
+ },
+ "expected": {
+  "claim": "128.537",
+  "cp95_design": 0.671531204453089,
+  "dp_bits": 5,
+  "floor": 0.39,
+  "floor_met": true,
+  "gate": 127.237678,
+  "log2_W": "128.53670650",
+  "memory_log2_bytes": 76.5849625009591,
+  "order_span": 255.70325833896595,
+  "pair_cp95_w2": 0.4947529232566291,
+  "posture": "w=1",
+  "preprocessing_log2": 43.59991284218713,
+  "ranks": false,
+  "selector_reach_v12": 64,
+  "shape_measured": 1.6002022719673725,
+  "step_insn": 263,
+  "step_insn_executed": 227.0,
+  "step_price": 1.263,
+  "success_design": 0.670257704453089,
+  "sum_of_step_rows": 263,
+  "transfer_supported": false
+ },
+ "provenance_note": "v11 is kept beside this tree as the provenance base; v12 differs only by the selector fix (scripts/selector.py cell_span + qwalk.col), the ladder scripts, the executed-count script, and the ledger rows that read them. Every census cell was re-run after the selector fix at the same fixed budgets.",
+ "test": "reproduction"
+}

@@ -1,0 +1,237 @@
+{
+ "base_success": 0.6779166666666666,
+ "budget": {
+  "DP density": {
+   "base": 5,
+   "charge_bits": 4.754556904965079,
+   "charge_bits_worst_ci": 9.911019177201153,
+   "delta_log2": 3.5849625007211565,
+   "param": "dp_bits",
+   "production": 60,
+   "sign": "unfavourable",
+   "slope_bits_per_log2": -1.326250108336878,
+   "slope_ci95": 1.4383587753564484
+  },
+  "columns": {
+   "base": 16384,
+   "charge_bits": 0.10834896713309439,
+   "charge_bits_worst_ci": 0.1371740220091216,
+   "delta_log2": 6.0,
+   "param": "R",
+   "production": 1048576,
+   "sign": "unfavourable",
+   "slope_bits_per_log2": -0.018058161188849065,
+   "slope_ci95": 0.004804175812671204
+  },
+  "walkers": {
+   "base": 16,
+   "charge_bits": 0.9639569249434565,
+   "charge_bits_worst_ci": 4.29456744974496,
+   "delta_log2": 16.0,
+   "param": "W",
+   "production": 1048576,
+   "sign": "unfavourable",
+   "slope_bits_per_log2": -0.06024730780896603,
+   "slope_ci95": 0.20816315780009398
+  }
+ },
+ "cells": {
+  "R1024": {
+   "R": 1024,
+   "W": 16,
+   "cp95_success_f": 0.6728308735071156,
+   "dp_bits": 5,
+   "elapsed_s": 11.4,
+   "fires_per_lane_step": 0.0004879607890759931,
+   "sets": 2400,
+   "success_rate": 0.68875,
+   "successes": 1653
+  },
+  "R4096": {
+   "R": 4096,
+   "W": 16,
+   "cp95_success_f": 0.6660809512776675,
+   "dp_bits": 5,
+   "elapsed_s": 11.4,
+   "fires_per_lane_step": 0.00012193819264536557,
+   "sets": 2400,
+   "success_rate": 0.6820833333333334,
+   "successes": 1637
+  },
+  "W256": {
+   "R": 16384,
+   "W": 256,
+   "cp95_success_f": 0.6239753045654606,
+   "dp_bits": 5,
+   "elapsed_s": 9.9,
+   "fires_per_lane_step": 3.064947018678161e-05,
+   "sets": 2400,
+   "success_rate": 0.6404166666666666,
+   "successes": 1537
+  },
+  "W64": {
+   "R": 16384,
+   "W": 64,
+   "cp95_success_f": 0.6985999891381061,
+   "dp_bits": 5,
+   "elapsed_s": 10.4,
+   "fires_per_lane_step": 3.139392630972942e-05,
+   "sets": 2400,
+   "success_rate": 0.7141666666666666,
+   "successes": 1714
+  },
+  "base": {
+   "R": 16384,
+   "W": 16,
+   "cp95_success_f": 0.661864127337562,
+   "dp_bits": 5,
+   "elapsed_s": 11.3,
+   "fires_per_lane_step": 3.037632232297064e-05,
+   "sets": 2400,
+   "success_rate": 0.6779166666666666,
+   "successes": 1627
+  },
+  "d11": {
+   "R": 16384,
+   "W": 16,
+   "cp95_success_f": 0.39295223819913316,
+   "dp_bits": 11,
+   "elapsed_s": 6.6,
+   "fires_per_lane_step": 3.037632232297064e-05,
+   "sets": 2400,
+   "success_rate": 0.40958333333333335,
+   "successes": 983
+  },
+  "d8": {
+   "R": 16384,
+   "W": 16,
+   "cp95_success_f": 0.6269182833135084,
+   "dp_bits": 8,
+   "elapsed_s": 7.3,
+   "fires_per_lane_step": 3.037632232297064e-05,
+   "sets": 2400,
+   "success_rate": 0.6433333333333333,
+   "successes": 1544
+  },
+  "selval": {
+   "R": 16384,
+   "W": 16,
+   "cp95_success_f": 0.0010892981103556671,
+   "dp_bits": 5,
+   "elapsed_s": 10.4,
+   "fires_per_lane_step": 0.015230017855857802,
+   "sets": 2400,
+   "success_rate": 0.0025,
+   "successes": 6
+  }
+ },
+ "dims": [
+  {
+   "charge_bits": 0.9639569249434565,
+   "dim": "walkers",
+   "n": 3,
+   "points": [
+    {
+     "cell": "base",
+     "cp95": 0.661864127337562,
+     "p": 0.6779166666666666,
+     "param": 16
+    },
+    {
+     "cell": "W64",
+     "cp95": 0.6985999891381061,
+     "p": 0.7141666666666666,
+     "param": 64
+    },
+    {
+     "cell": "W256",
+     "cp95": 0.6239753045654606,
+     "p": 0.6404166666666666,
+     "param": 256
+    }
+   ],
+   "slope": -0.06024730780896603,
+   "slope_ci95": 0.20816315780009398,
+   "slope_se": 0.10620569275514999
+  },
+  {
+   "charge_bits": 0.10834896713309439,
+   "dim": "columns",
+   "n": 3,
+   "points": [
+    {
+     "cell": "base",
+     "cp95": 0.661864127337562,
+     "p": 0.6779166666666666,
+     "param": 16384
+    },
+    {
+     "cell": "R4096",
+     "cp95": 0.6660809512776675,
+     "p": 0.6820833333333334,
+     "param": 4096
+    },
+    {
+     "cell": "R1024",
+     "cp95": 0.6728308735071156,
+     "p": 0.68875,
+     "param": 1024
+    }
+   ],
+   "slope": -0.018058161188849065,
+   "slope_ci95": 0.004804175812671204,
+   "slope_se": 0.0024511101085057164
+  },
+  {
+   "charge_bits": 4.754556904965079,
+   "dim": "DP density",
+   "n": 3,
+   "points": [
+    {
+     "cell": "base",
+     "cp95": 0.661864127337562,
+     "p": 0.6779166666666666,
+     "param": 5
+    },
+    {
+     "cell": "d8",
+     "cp95": 0.6269182833135084,
+     "p": 0.6433333333333333,
+     "param": 8
+    },
+    {
+     "cell": "d11",
+     "cp95": 0.39295223819913316,
+     "p": 0.40958333333333335,
+     "param": 11
+    }
+   ],
+   "slope": -1.326250108336878,
+   "slope_ci95": 1.4383587753564484,
+   "slope_se": 0.7338565180390043
+  }
+ ],
+ "floor": 0.39,
+ "floor_slack_bits": 0.7976338160891231,
+ "method": "secp v19/v20 sign-honest ladder",
+ "selector_swap": {
+  "cell": "selector-swap",
+  "class_value": {
+   "fires_per_lane_step": 0.015230017855857802,
+   "p": 0.0025
+  },
+  "delta_p": 0.6754166666666667,
+  "fire_ratio": 501.3779381824912,
+  "note": "class-value truncation is the measured WRONG model (v20g): the canonical class is concentrated near 0, so equal-width buckets collide far more often.  The shipped selector uses a uniform key and the row is the justification, not a claim input.",
+  "uniform_key": {
+   "fires_per_lane_step": 3.037632232297064e-05,
+   "p": 0.6779166666666666
+  }
+ },
+ "sets_per_cell": 2400,
+ "shape_x": 1.6002022719673725,
+ "test": "sensitivity_ladder_v12",
+ "total_charge_bits": 5.826862797041629,
+ "total_charge_bits_worst_ci": 14.342760648955235,
+ "transfer_supported": false
+}
