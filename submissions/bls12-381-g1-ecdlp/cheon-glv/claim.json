@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "algorithm": "cheon-auxiliary-powers-glv-2^20",
+  "claim": {
+    "time_log2": 126.756165,
+    "memory_log2_bytes": 124.2359,
+    "preprocessing_log2": 125.756165,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "parameters": {
+    "scoring_n": 1048576,
+    "d": 1048576,
+    "M_bits": 235,
+    "m": "223621884914696853578958571250384896",
+    "m_hat": "223621884914696853578958571250384896",
+    "generator_zeta": 7,
+    "lambda_bits": 128,
+    "glv_half_bits_charged": 130
+  },
+  "limitations": [
+    "Analytic bound; no production-size execution.",
+    "Cost pricing uses the protected batched-affine reference for additions, the 7M affine doubling formula and the measured field multiplication.",
+    "The 2^124-byte baby table is enormous and reported, not hidden.",
+    "Cheon and GLV are known methods; no novelty is claimed."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1: Cheon attack with fixed-base comb scalar multiplication",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 target T=[s]P0 with the supplied powers A_i=[s^i]P0, i=1..n, at the protected scoring n=2^20, the deterministic two-phase Cheon attack specified in proof.md recovers the uniform secret s in 1..r-1 with success probability 1. It uses only A_1=T and A_d for d=2^20, which divides r-1 and is supplied at the scoring n as the protected rules state. Phase 1 solves k0 in [0,M), M=(r-1)/d, by baby-step giant-step in [zeta_hat^k0]P0; phase 2 solves k1 in [0,d); s=zeta^(k0)*zeta_check^(k1) mod r is verified by [s]P0=T. Scalar multiplication uses the verified production GLV pair (beta,lambda) and, because each base is fixed across the table, a fixed-base comb with 16-bit digits: every 127-bit GLV half is evaluated with at most 8 table-point additions, so the online phase contains only protected reference additions and no doublings. The ledger charges 33 additions (1 unit each), 33 table lookups (2 units each) and 16 units of itemised overhead per scalar multiplication, i.e. E=115 units. The comb precomputation covers the four phase-1 bases (A_d, phi(A_d), P0, phi(P0)) and, after phase 1, two further runtime tables for S and phi(S); all six tables (8 blocks of 2^16 entries each, about 3.15 million point operations) are charged at most 10,000 instructions per operation, i.e. 2^23.9 units, and the ledger charges 2^30 + 2^29 units; they are included in preprocessing and in the total. Online additions are batched over B=2^64 live chains with the 240-byte-per-chain workspace counted; the baby table is a sorted array of m 112-byte records (96-byte point and 16-byte index; 118 index bits are needed) with merge sort charged 5 units per entry over 118 passes and binary-search lookup charged 4 units per giant point. The total is at most 2^125.329412 target-group-operation equivalents, i.e. the exact score 31332353/250000 = 125.329412. Peak memory is at most 2^126 bytes (ledger 2^125.2358996), preprocessing at most 2^124.336 units (ledger 2^124.3354353) and included, and nonuniform advice is zero bytes. The success probability is exact and unconditional; the cost is analytic under the protected accounting conventions. No production-size execution and no novelty are claimed.",
+      "score": {
+        "numerator": "31332353",
+        "denominator": "250000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cheon-glv-verification",
+      "source": "experiment.py",
+      "purpose": "Recompute the exact production ledger and assert the declared rounded score; verify the r-1 factorisation, the generator 7, the order of zeta_hat, the production GLV endomorphism pair and [r]P0=O on the protected curve, and the 130-bit GLV decomposition bound; run the complete two-phase Cheon algorithm end-to-end on a small elliptic curve and on a small prime-order group. The toy runs are evidence at their actual scope only and do not establish a production success probability or production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261024
+        }
+      ]
+    }
+  ]
+}
