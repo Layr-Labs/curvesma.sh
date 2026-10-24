@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v16: structural [A,A,B,B] charged R^-2, prime-order census meets 0.39 floor, executed radix and dependent replay priced, all 38400 records replayed; claim 128.2137",
+ "claims": [
+  {
+   "score": {
+    "numerator": "641003",
+    "denominator": "5000"
+   },
+   "statement": "For NIST P-256 Q=[x]P the full-store rho walk of argument.md is claimed at total classical work at most 2^128.2137 target-group-operation equivalents. Every price row is regenerated from the shipped 48-byte configuration: fe_mul = 148 Ir measured by objdump of the shipped arm64 object, fe_add/fe_sub = 27 Ir each, affine addition 606 Ir, batch-inversion share 444 Ir, table/canon/append rows 10+20+12 Ir, and a 365.50 Ir executed LSD radix sort (16 passes x 16 bits over 4 x 64-bit limbs, 2^20 records, 805306368 bytes moved, sorted=1) derived from experiments/radix_sort_v16.c and objdump of its count (8 Ir/record) and scatter (14 Ir/record) loops; total 1457.55 Ir = 1.457554 units at protected C=1000. Work = 127.67 + log2(1.457554) = 128.213697, plus cycle-channel 2.265e-7 and dependent replay 1.018e-4 relative, ceilinged to 128.2137. The 4-cycle channel is split by the exact cancel test canon(S+T_A)==-(S+T_A): the structural [A,A,B,B] family (16454 hits at R=64) is charged at R^-2, measured 6.130e-5 versus analytic 1/(4R^2)=6.104e-5 and scaled by the measured R=32/64/128 slope (0.238, 0.222 per doubling); the table's additive 4-sum family (664129 hits) is charged at its measured R^-1 slope (0.523, 0.461 per doubling); only 1093 residual hits are charged at 1/r * ratio 65.2. Total cycle loss 2.265e-7 relative. The two-step escape is deleted: no production schedule exists in the package and the shipped walk steps unconditionally. Success: the v15 178/600 composite-order census is explained by its own collision count (378 relations vs 384 birthday, ratio 0.984) with 200 nonunit denominators; v16 re-censuses on the prime-order fixture y^2=x^3-3x+1 mod 1000003 (order 999979) at the production walk shape, three shapes at lambda=0.640 with exact Clopper-Pearson 95% bounds: 100x8 gives 0.4588 (CP-lo 0.4432, collisions/birthday 0.9868), 200x4 gives 0.4615 (CP-lo 0.4395), 50x16 gives 0.4205 (CP-lo 0.3987); minimum CP-lo 0.3987 >= 0.39, so the floor is met by measurement. Replay: every one of 38400 records is independently replayed from its unpacked (trail, step), replay_checked=38400, all equal, 0 without independent replay, secret verified; price uses each replayed step's own 388-mul inversion (57616 Ir vs 1458 bulk = 40.2x, over 2 trails) rather than the 2^20 batch share. Peak storage is a maximum: 48V records + 2x48V sort arrays + 2^20x32B queue = log2 134.84, non-binding. Claim = min(work, storage) = 128.2137, shipped as the reduced rational 1282137/10000. Selector transfer stays OPEN; the success-semantics paragraph of tracks/p256-ecdlp/rules.md governs (exploratory acceptance, plausible_not_refuted).",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "evidence/insn_price.json",
+    "evidence/census_v16.json",
+    "evidence/cycle_channel_v16.json",
+    "evidence/ledger_v16.json",
+    "evidence/record_recovery_v16.json",
+    "evidence/radix_v16.json",
+    "evidence/audit_v16.json"
+   ]
+  }
+ ],
+ "experiments": []
+}

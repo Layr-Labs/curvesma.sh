@@ -1,0 +1,25 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v17: global detector (16-pass 256-bit radix over the whole store, witness extraction priced), period-ladder census with the walk-state fix (16 periods at R=64..2^20, fresh secret per trial), production collision policy from record fields; claim 128.4847",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1284847",
+    "denominator": "10000"
+   },
+   "statement": "For NIST P-256 Q=[x]P the full-store rho walk of argument.md is claimed at total classical work at most 2^128.4847 target-group-operation equivalents (reduced rational 1284847/10000, copied from evidence/claim_v17.json). Prices: fe_mul 148 Ir (objdump of the shipped arm64 object), fe_add/fe_sub 27 Ir, affine addition 606 Ir, batch-inversion share 444 Ir, table/canon/append 10+20+12 Ir, and a 666.50 Ir global radix sort plus collision-witness extraction derived from experiments/radix_sort_v17.c: 16 LSD passes of 16 bits over 4 x u64 limbs, every pass with 4 x u64 (256-bit) bucket counters because at V=2^127.67 a digit bucket holds ~2^111.67 records, count 22.0 + scatter 15.0 + clear 0.25 + prefix 2.06 = 39.31 Ir/record/pass, witness scan+emit 37.5; executed at 2^20 records (sorted=1, 16777216 records scattered, 805306368 bytes) and the uint32 path corrupts 59743/65536 buckets at production magnitudes while the 256-bit path corrupts 0. Total 1758.55 Ir = 1.758554 units at protected C=1000. Work = 127.67 + log2(units) = 128.484390, plus cycle 2.265e-07 and collision-replay 1.814e-04 relative, giving 2^128.4847. The detector is GLOBAL: the sort spans the whole store, so a hit can join any two visits, not two records of one 2^20 batch (v16's within-batch mean was V*B/r ~ 2^-108). Success: the selector-period ladder censuses R in {64,256,1024,4096,2^20} with trails of 16 full selector periods at every rung, 64 walkers, a fresh secret per trial, lambda held at 0.634 by sizing the group, exact Clopper-Pearson bounds, and the success event is at least one coefficient-nontrivial collision that recovers x -- measured per trial, not a mean collision count; useful_per_collision = 1.00 in every cell. Pooled ladder rate 0.4565 (703/1540) with CP-95 lower 0.4314, above the 0.39 floor. The ladder found and fixed a structural defect: v16 canonicalised the WALK STATE, so two consecutive equal rows were a permanent 2-cycle (canon(canon(S+v)+v)=S with coefficients returning exactly); every v16 trial cycles at gap 2, which is the real cause of its 0.36-class success. v17 canonicalises only the stored key, the walk steps on the true point. Collision policy uses only record fields (32B canonical key + 20-bit trail + 108-bit step): every cross-trail hit replays both trails at the dependent 57586 Ir/step (39.5x bulk), the replay decides triviality (da=db=0) and recovers x otherwise, and rejected hits are charged their own replay pair; measured 0.7827 collisions per challenge, 3.565 trail-pairs charged, relative cost 7.965e-05. The six-step waste allowance is DELETED (never derived from an implemented escape rule): the walk continues from the true point with t advanced, so a return costs zero extra steps and the cycle row charges the 4 spent steps. Scanner tuples are uniform over R (r = (x(S) ^ t*2654435761 ^ trail*7919) mod R). Storage log2 134.2550 bytes (48V store + 48V scratch), disclosed and non-binding. Selector-period transfer beyond R=4096, including the unexecuted R=2^20 rung, is disclosed as extrapolation.",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "evidence/insn_price.json",
+    "evidence/period_ladder_v17.json",
+    "evidence/ledger_v17.json",
+    "evidence/claim_v17.json",
+    "evidence/radix_v17.json",
+    "evidence/audit_v17.json",
+    "evidence/cycle_channel_v16.json"
+   ]
+  }
+ ],
+ "experiments": []
+}

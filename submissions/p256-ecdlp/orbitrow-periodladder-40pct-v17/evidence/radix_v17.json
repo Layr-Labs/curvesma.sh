@@ -1,0 +1,26 @@
+{
+ "audit_clean_run": "witness pass emits zero witnesses on a collision-free fill",
+ "build": "cc -O2 -o radix17 experiments/radix_sort_v17.c (arm64)",
+ "clear256_basis": "clear loop body 4 insns x 65536 buckets",
+ "clear256_ir_per_bucket": 4,
+ "clear_share_ir_per_record": 0.25,
+ "count256_basis": "unrolled-by-4 count loop body 0x100000658..0x1000007a8 = 88 insns / 4 records",
+ "count256_ir_per_record": 22.0,
+ "counter_width": "4 x u64 = 256 bits, every pass; production bucket ~2^111.67 records per 16-bit digit at V=2^127.67",
+ "digits": "16 passes x 16 bits over 4 x u64 limbs (full 256-bit key)",
+ "overflow_test": {
+  "fixture": "65536 buckets preloaded at 2^111.67-class counts (hi word 0x7FFF..., low word base*(d+1)); uint32 prefix wraps (bucket 65535 = 4286578688 vs exact 549747425280), 256-bit prefix exact",
+  "uint256_buckets_corrupt": 0,
+  "uint32_buckets_corrupt": 59743
+ },
+ "passes": 16,
+ "prefix256_basis": "carry-propagating prefix loop 33 insns x 65536 buckets",
+ "prefix256_ir_per_bucket": 33,
+ "prefix_share_ir_per_record": 2.062,
+ "run": "./radix17 20 -> sorted=1 collisions=256 n=1048576 elems=16777216 moved=16777216 bytes=805306368",
+ "scatter256_basis": "scatter loop 0x100000938..0x100000970 = 15 insns / record",
+ "scatter256_ir_per_record": 15.0,
+ "witness_basis": "equal-key scan+emit span 0x1000009d8..0x100000c24 = 150 insns, charged span/4 = 37.5 per record (4-word compare; conservative)",
+ "witness_extraction": "emits BOTH identities (trail,step) of every equal-adjacent pair, so replay has the pairs it must charge",
+ "witness_ir_per_record": 37.5
+}

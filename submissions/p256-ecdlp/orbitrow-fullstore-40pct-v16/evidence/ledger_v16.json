@@ -1,0 +1,101 @@
+{
+ "bounds": {
+  "claim": 128.2137,
+  "note": "peak = 48V live records + 2 x 48V sort arrays + 2^20 x 32B batch queue; MAX of live sets, not a sum of averages",
+  "storage_log2_peak": 134.84,
+  "storage_peak_bytes_per_visit": 144,
+  "storage_queue_log2": 25.0,
+  "storage_records_log2": 134.8399250014423,
+  "work_log2": 128.2137
+ },
+ "claim_reduced_rational": {
+  "denominator": 10000,
+  "numerator": 1282137
+ },
+ "claim_time_log2": 128.2137,
+ "instructions_per_visit": 1457.5543403625488,
+ "price_sources": {
+  "fe_add_ir": {
+   "owner": "evidence/insn_price.json",
+   "value": 27
+  },
+  "fe_mul_ir": {
+   "owner": "evidence/insn_price.json",
+   "value": 148
+  },
+  "fe_sub_ir": {
+   "owner": "evidence/insn_price.json",
+   "value": 27
+  },
+  "inversion": {
+   "chain_muls": 385,
+   "formula": "256 squarings + popcount(p-2)=128 muls + 1 fixup, 388 executed fe_mul"
+  },
+  "radix_sort": {
+   "basis": "shipped C, arm64 -O2, objdump inner loops x executed 16 passes; 2^20 records sorted, 805306368 bytes moved",
+   "ir_per_record": 365.5,
+   "owner": "evidence/radix_v16.json"
+  }
+ },
+ "record": {
+  "bytes": 48,
+  "layout": "32B class key || 16B identity (20-bit trail || 108-bit step)",
+  "peak_bytes_per_visit": 144,
+  "sort": "LSD radix, 16 passes of 4 bits over 4 x 64-bit limbs"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "radix_sort_detect": 365.5,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "success": {
+  "basis": "prime-order fixture (999979) at the production walk shape; the collision count matches the birthday prediction, so the measured success is the birthday success of this table+selector, not a recurrence-limited value",
+  "birthday_lower": 0.468938952330089,
+  "census_min_cp95_lower": 0.3987456867170444,
+  "census_min_measured": 0.4205,
+  "census_shapes": [
+   {
+    "collision_ratio": 0.9867606148310387,
+    "cp95_lower": 0.44321784613329174,
+    "measured": 0.45875,
+    "shape": "100x8",
+    "trials": 4000
+   },
+   {
+    "collision_ratio": 0.9918449937421776,
+    "cp95_lower": 0.4394720459534279,
+    "measured": 0.4615,
+    "shape": "200x4",
+    "trials": 2000
+   },
+   {
+    "collision_ratio": 0.9316146589486858,
+    "cp95_lower": 0.3987456867170444,
+    "measured": 0.4205,
+    "shape": "50x16",
+    "trials": 2000
+   }
+  ],
+  "floor": 0.39,
+  "lambda": 0.6328782969851414,
+  "meets_floor": true
+ },
+ "units_per_visit": 1.4575543403625488,
+ "work": {
+  "claim_time_log2": 128.2137,
+  "log2_rows": 128.2135496708084,
+  "log2_visits": 127.67,
+  "log2_work_final": 128.2136967894179,
+  "replay_bulk_step_ir": 1080,
+  "replay_full_step_ir": 57616,
+  "replay_inflation_factor": 53.34814814814815,
+  "replay_relative_loss": 0.00010175351743344907,
+  "restart_relative_loss": 2.2650852006533828e-07,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}

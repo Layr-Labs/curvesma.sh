@@ -1,0 +1,38 @@
+{
+ "a_overflow": {
+  "command": "./radix17 --overflow-test",
+  "meaning": "at production bucket magnitudes the v16 uint32 counters corrupt 59743/65536 buckets; the 256-bit counters corrupt none",
+  "pass": true,
+  "raw": "overflow-test buckets=65536 bad256=0 bad32=59743\nuint32_prefix_bucket_65535=4286578688 exact_low64=549747425280",
+  "uint256_buckets_corrupt": 0,
+  "uint32_buckets_corrupt": 59743
+ },
+ "all_pass": true,
+ "b_witness": {
+  "command": "./radix17 20 --clean",
+  "meaning": "collision-free fill -> witness pass emits zero; witnesses come from equal keys only",
+  "pass": true,
+  "raw": "sorted=1 collisions=0 n=1048576 elems=16777216 moved=16777216 bytes=805306368\nwitness_first=0/0 0/0",
+  "witnesses": 0
+ },
+ "c_period_flag": {
+  "inference_cells_all_16p": true,
+  "meaning": "runner config table flags every <1-period cell, so no sub-period cell can be presented as production-shape evidence",
+  "pass": true,
+  "subperiod_cells": [
+   [
+    "R64_W64_0p25",
+    0.25,
+    "FLAGGED_SUBPERIOD"
+   ]
+  ]
+ },
+ "d_policy": {
+  "has_coefficient_field": false,
+  "meaning": "production records are 32B key + 16B identity, no coefficients; every cross-trail hit therefore replays both trails and a rejected hit is charged its own replay pair",
+  "pass": true,
+  "record_bytes": 48,
+  "record_layout": "32B canonical key || 16B identity (20-bit trail || 108-bit step); no coefficient field, so a hit's triviality is only knowable at replay",
+  "reject_charged": true
+ }
+}

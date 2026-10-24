@@ -1,0 +1,153 @@
+{
+ "bounds": {
+  "claim": 128.4847,
+  "storage_log2_peak": 134.255,
+  "work_log2": 128.4847
+ },
+ "claim_reduced_rational": {
+  "denominator": 10000,
+  "numerator": 1284847
+ },
+ "claim_time_log2": 128.4847,
+ "cycle": {
+  "relative_loss": 2.2650852006533828e-07,
+  "source": "cycle_channel_v16.json: structural R^-2 2.283e-13/window + additive R^-1 1.510e-7/window, measured at R=32/64/128"
+ },
+ "instructions_per_visit": 1758.5543403625488,
+ "policy": {
+  "cycle_charge_steps_per_death": 4.0,
+  "measured_collisions_per_challenge": 0.782741116751269,
+  "measured_trivial_fraction": 0.0,
+  "measured_useful_fraction": 1.0,
+  "record_fields": "32B canonical key || 20-bit trail || 108-bit step; no coefficients",
+  "reject_relative_loss": 7.964666186922765e-05,
+  "replay_inflation_vs_bulk": 53.34814814814815,
+  "replay_relative_loss": 0.0001814001793026767,
+  "rule": "every hit replays both trails from their stored identities; the replay decides triviality (da=db=0) and, if nontrivial, recovers x=-da/db; rejected hits are charged their own replay",
+  "scanner": "rows are drawn uniformly: r = (x(S) ^ t*2654435761 ^ trail*7919) mod R, so tuple enumeration is uniform over R and carries no weight beyond the measured hit rate",
+  "trail_pairs_charged_per_challenge": 3.565482233502538,
+  "wasted_steps_per_return": 0.0,
+  "why_no_six_steps": "v16's six-step allowance was not derived from an implemented escape rule and the escape was deleted; here a return costs no extra step because the walk continues from the true point and t advances, so only the 4 spent steps are charged"
+ },
+ "record": {
+  "bytes": 48,
+  "layout": "32B canonical key || 16B identity (20-bit trail || 108-bit step); no coefficient field, so a hit's triviality is only knowable at replay"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "global_sort_and_witness": 666.5,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "sort": {
+  "clear256_ir_per_bucket": 4,
+  "count256_ir": 22.0,
+  "counters": "4 x u64 (256-bit) per bucket on every pass; at V=2^127.67 a bucket holds ~2^111.67 records, so no pass can use a 32-bit count",
+  "executed": "./radix17 20 -> sorted=1 collisions=256 n=1048576 elems=16777216 moved=16777216 bytes=805306368",
+  "passes": 16,
+  "per_pass_ir_per_record": 39.3125,
+  "prefix256_ir_per_bucket": 33,
+  "scatter256_ir": 15.0,
+  "scope": "GLOBAL: the sort spans the whole store, so a hit can be between any two visits of the challenge, not only inside one 2^20 batch",
+  "total_sort_ir_per_record": 666.5,
+  "witness_ir": 37.5
+ },
+ "success": {
+  "floor": 0.39,
+  "ladder": [
+   {
+    "R": 256,
+    "collisions": 226,
+    "cp95_lower": 0.35893789291047135,
+    "label": "R256_W64_16p",
+    "measured": 0.4075,
+    "periods": 16.0,
+    "trials": 400,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 1024,
+    "collisions": 204,
+    "cp95_lower": 0.42881727510440043,
+    "label": "R1024_W64_16p",
+    "measured": 0.4866666666666667,
+    "periods": 16.0,
+    "trials": 300,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 4096,
+    "collisions": 131,
+    "cp95_lower": 0.38188106726133225,
+    "label": "R4096_W64_16p",
+    "measured": 0.44583333333333336,
+    "periods": 16.0,
+    "trials": 240,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 64,
+    "collisions": 414,
+    "cp95_lower": 0.4377215528054289,
+    "label": "R64_W64_16p",
+    "measured": 0.47833333333333333,
+    "periods": 16.0,
+    "trials": 600,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 64,
+    "collisions": 362,
+    "cp95_lower": 0.34588068780219533,
+    "label": "R64_W64_64p",
+    "measured": 0.385,
+    "periods": 64.0,
+    "trials": 600,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 64,
+    "collisions": 1020,
+    "cp95_lower": 0.3393764476976057,
+    "label": "R64_W1_16p",
+    "measured": 0.37833333333333335,
+    "periods": 16.0,
+    "trials": 600,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 64,
+    "collisions": 363,
+    "cp95_lower": 0.38342727772285595,
+    "label": "R64_W4_16p",
+    "measured": 0.42333333333333334,
+    "periods": 16.0,
+    "trials": 600,
+    "useful_per_collision": 1.0
+   },
+   {
+    "R": 64,
+    "collisions": 364,
+    "cp95_lower": 0.38015257055619434,
+    "label": "R64_W16_16p",
+    "measured": 0.42,
+    "periods": 16.0,
+    "trials": 600,
+    "useful_per_collision": 1.0
+   }
+  ],
+  "min_cp95_lower": 0.3393764476976057,
+  "note": "success = at least one coefficient-nontrivial collision that recovers x, measured per trial on the global store; useful_per_collision = 1.0 in every ladder cell, so the success event is witness existence, not a mean collision count"
+ },
+ "units_per_visit": 1.7585543403625488,
+ "work": {
+  "log2_rows": 128.4843899157766,
+  "log2_visits": 127.67,
+  "log2_work_final": 128.48465192396455,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}
