@@ -1,0 +1,75 @@
+{
+ "checks": {
+  "control_has_cycles_longer_than_two": true,
+  "control_settles_into_cycles": true,
+  "control_structural_three_cycles": 0,
+  "escape_kcap_never_tripped": true,
+  "escape_two_cycle_collapses": true,
+  "structural_three_cycle_absent_with_escape": true
+ },
+ "control_no_escape": {
+  "R": 1024,
+  "R_eff": 513,
+  "classes": 44739244,
+  "esc": false,
+  "fires": 0,
+  "kcap_enforced": 0,
+  "kcap_max_seen": 0,
+  "lane_steps": 8388608,
+  "lanes": 256,
+  "one_cycle_visits": 0,
+  "q": 268435459,
+  "settled_cycle_lengths": {
+   "2": 221,
+   "3": 1,
+   "24": 1,
+   "42": 1,
+   "999": 32
+  },
+  "steps": 32768,
+  "three_cycle_all_columns_distinct": 31847,
+  "three_cycle_rate_per_step": 0.0037964582443237305,
+  "three_cycle_structural": 0,
+  "three_cycle_two_columns_equal": 0,
+  "three_cycle_visits": 31847,
+  "two_cycle_rate_per_step": 0.7965914011001587,
+  "two_cycle_visits": 6682293
+ },
+ "escape_armed": {
+  "R": 1024,
+  "R_eff": 513,
+  "classes": 44739244,
+  "esc": true,
+  "fires": 2581,
+  "kcap_enforced": 3,
+  "kcap_max_seen": 1,
+  "lane_steps": 8388608,
+  "lanes": 256,
+  "one_cycle_visits": 0,
+  "q": 268435459,
+  "settled_cycle_lengths": {
+   "3": 1,
+   "24": 1,
+   "42": 1,
+   "999": 253
+  },
+  "steps": 32768,
+  "three_cycle_all_columns_distinct": 31847,
+  "three_cycle_rate_per_step": 0.0037964582443237305,
+  "three_cycle_structural": 0,
+  "three_cycle_two_columns_equal": 0,
+  "three_cycle_visits": 31847,
+  "two_cycle_rate_per_step": 0.0,
+  "two_cycle_visits": 0
+ },
+ "fixture": {
+  "R": 1024,
+  "desc": "same trap regime as evidence/medium-fixture.json",
+  "lanes": 256,
+  "q_min": 268435457,
+  "spacing_bits": 14,
+  "steps": 32768
+ },
+ "passed": true,
+ "test": "three_cycle_census"
+}

@@ -1,0 +1,32 @@
+{
+ "identities": {
+  "claim_is_ceil4dp_W_plus_2e-5": true,
+  "control_shows_long_cycles": true,
+  "kcap_charged_equals_enforced": true,
+  "kcap_never_tripped": true,
+  "merge_cp95_gated_ge_floor": true,
+  "pair_cp95_d5_below_floor": true,
+  "r_eff_from_selector": true,
+  "records_budget_plus_drain_eq_records": true,
+  "six_r_eff_eq_cells": true,
+  "states_x_sigma_eq_comparisons": true,
+  "step_rows_sum_167": true,
+  "three_cycle_structural_zero": true,
+  "trap_rate_is_one_over_six_r_eff": true,
+  "twist_mutation_fails": true,
+  "twist_selector_exact": true
+ },
+ "matched": 175,
+ "numbers_checked": 175,
+ "orphans": [],
+ "passed": true,
+ "planted_typo": {
+  "caught": true,
+  "injected": "825105",
+  "orphans": [
+   "825105",
+   "825105,"
+  ]
+ },
+ "test": "selfaudit"
+}

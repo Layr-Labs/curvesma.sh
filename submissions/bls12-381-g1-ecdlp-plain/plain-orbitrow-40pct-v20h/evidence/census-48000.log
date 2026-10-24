@@ -1,0 +1,16 @@
+# census-48000.log (trimmed): 336,000 trials, two seeds, 24 workers.
+# seed 20290: d=5,7,9,11 x 48000 trials; seed 31337: d=5,7,9 x 48000 trials (pooled)
+
+d= 5 n= 48000 raw 0.4381 CPraw 0.4343 CPmg 0.4084 merge 0.4121
+d= 7 n= 48000 raw 0.5091 CPraw 0.5054 CPmg 0.3959 merge 0.3996
+d= 9 n= 48000 raw 0.4480 CPraw 0.4442 CPmg 0.3899 merge 0.3936
+d=11 n= 48000 raw 0.1896 CPraw 0.1866 CPmg 0.3876 merge 0.3913
+
+ "rule": "CP-95 of the UNCONDITIONAL coverage (merge) rate >= 0.39 at the production-protocol densities d=5,7,9; the unconditional pool-detection rate success_raw is reported alongside and is not filtered by it",
+ "gate_statistic": "merge_rate",
+ "min_cp95_raw": 0.18662332602187348,
+ "min_cp95_merge_gated": 0.3899098993217649,
+ "unconditional": true,
+ "passed": false,
+
+# wall clock: 417.8 s (seed 20290) + 301.8 s (seed 31337), 24 workers, nice -n 10

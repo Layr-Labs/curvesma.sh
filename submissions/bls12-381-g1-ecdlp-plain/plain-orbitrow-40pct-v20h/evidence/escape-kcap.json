@@ -1,0 +1,28 @@
+{
+ "checks": {
+  "cap_never_tripped_on_natural_arm": true,
+  "mutation_raises": true,
+  "observed_run_within_cap": true
+ },
+ "densities": [
+  5,
+  7,
+  9,
+  11
+ ],
+ "fast_path_of": "scripts/prod_sweep.py shard (same code as the 336,000-trial census)",
+ "fires_total": 392,
+ "kcap": 3,
+ "kcap_max_seen": 1,
+ "mutation": {
+  "max_run": 4,
+  "message": "K_ESC cap 3 exceeded: 4 consecutive substitutions at tick 3",
+  "name": "force_every=1 (a substitution on every step)",
+  "raised": true
+ },
+ "passed": true,
+ "test": "K_ESC enforced in the walker loop",
+ "trials_per_density": 600,
+ "trials_total": 2400,
+ "trips": []
+}
