@@ -1,0 +1,39 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers) this package ports the judge-validated plain-track mu6 orbit-row walk (bls12-381-g1-ecdlp-plain ticket 5ecbf15) and answers the one premise the last review left open. v17's claim was rejected because its success law was measured in a scalar quotient simulation at q~4.29e9 (N=7.15e8 classes) and quoted for secp256k1 (N~2^254) with no support for the transfer (verdicts 40b720e2, b86f973b, cd18d785; the last accepts every experimental repair and rejects only the transfer). TRANSFER, MEASURED AT FOUR ORDERS. scripts/transfer_arm.py measures the SAME statistic -- same-challenge two-run pairing, same lag-3 escape arm, same Clopper-Pearson helper, same 3,200-set protocol -- at four orders with the dimensionless shape held fixed at x = visits/sqrt(N) = 1.009696. Measured p_set (sets, CP-95): L24 q=2^24, N=2^21.42, 1600 sets -> 0.44375 (0.42310); L28 q=2^28, N=2^25.42, 1200 -> 0.54000 (0.51586); L32T q=2^32, N=2^29.41, 3200 -> 0.56781 (0.55321); L36B q=2^36, N=2^33.42, 1200 -> 0.49917 (0.47503). The largest arm is 4,096x the class count of the smallest. The L32T rung REPRODUCES the previous submission's census bit for bit (A 1097 / B 1093 / both 373 / neither 1383 / set-solved 1817 / CP 0.5532103 / identical challenge-block SHA-256), so the ladder is not a parallel experiment. ARITHMETIC ABOVE 2^32 IS PROVEN, NOT ASSUMED: qwalk.py is np.uint64-exact only for q<2^32, so the 2^36 arm uses a 12-bit-limb constant multiply (every term <2^48, three terms <2^50) with u[m]*x precomputed per run; validate_equiv drives the shipped and extended steps side by side for 400 steps at q~2^32 and asserts identical canonical class, DP gate and escape fire at every step (86 fires, zero divergences; evidence/transfer-equiv.json). THE LADDER IS NOT FLAT AND SAYS SO: p_set is flat from 2^25.4 to 2^29.4, then falls to 0.49917 at 2^33.4 (3 sigma against the 3,200-set arm). The design success is therefore the CP-95 of the LARGEST arm (0.47503), not the surrogate's 0.55321, and production is predicted as the MEASURED RANGE of the ladder [0.44375, 0.56781]; the worst point, minus the 2.211e-3 debits and the restart loss, is 0.44318, which is still above the 0.39 floor. No fit is extrapolated over the remaining 2^220 in log-order: the transfer statement is that the success law is a function of the dimensionless shape over the 4,096x range measured, and every measured order clears the floor at CP-95. Design success 0.474459 = 0.475029 - debits - restart loss. STALE RESTART DENOMINATOR, FIXED STRUCTURALLY: v17 said 0 restarts of 1,600 trials, a v20l literal. The shipped evidence is two census blocks x 3,200 trials x 2 armed arms = 12,800 armed trials, all 0 restarts, so the rule-of-three bound is 3/12800 = 2.344e-4, not 1.875e-3. ledger.py now READS the count from evidence/census-v20n.json and evidence/census-seed11.json, ASSERTS restarts==0 on every armed arm and asserts the 12,800 denominator; no trial count is typed. SIGN/KEY ROW CHARGED AT ITS ITEMISED SUM: the row was 12 against components 5+8+2=15 with no stated overlap. v18 charges 15, STEP_INSN=155, price 1+155/1000=1.155, and asserts sum(ROWS)==STEP_INSN. The +0.00375 bits is paid, not argued: 127.926 -> 127.930. THE CHARGE: W = (1+155/1000)*(S_OPS+2^60) + EXTRAS with S_OPS = ceil(A_H1*S0) = 2^126.72144016, A_H1=1.015, C=1000 (this track's protected normalization; the bls C=2000 is used nowhere). W2 = 2*W, exactly +1.000 bits, every term doubled rather than shared. log2 S0 = 126.69996043, log2 W = 126.92945732, log2 W2 = 127.92945732, claim 127.930. Step rows (155): index 35 (8 partial products, 4 at i+j=3 and 4 at i+j=4), v0 24, v2 4, argmin 12, sign+key 15, orbit slot 7, loads/stores 20, coefficient update 9, checkpoint 10, lag-1 escape 6, lag-3 escape 4, batch inversion 1, counters 7, meter 1. CORRECTIONS CARRIED (all accepted by cd18d785, unchanged here): same-challenge w=2 pairing with one hashed challenge block and fresh walker coins per run (measured 0.5678125 vs the same-target form 2p-p^2 = 0.5672827, diff +0.00053); substitutions applied from the SAME pre-step (class,a,c) tuple with the report gate recomputed on the class actually reported; the lag-3 trigger (successor class == class two steps back) proven to fire on a planted period-3 fixture (24/24 starts stop being period-3, lag-3 channel 150 fires vs lag-1's 0, zero invariant violations) and to remove the production 3-cycle channel (2,872/2,847 -> 0); the 8-product window (selector.py asserts the measured (8,3) at import). KERNEL PRICE WITHDRAWN AND REMOVED: no disassembly measurement is claimed anywhere; v17a's static span and v17b's kernel failed full-width reference tests, so cios4.c, row_extract.py and cios-disasm.json are DELETED from the package, not merely disclaimed. M_insn=97 is a STRUCTURAL count feeding only TABLE_BUILD_REF and INV_INSN inside EXTRAS, where +-5 insn moves W by 2^-113 bits. HONEST LIMITS: the transfer is measured support, not proof -- the ladder stops at N=2^33.4 and production is 2^254; the rate fell 0.068 between the two largest orders and that movement is inside the quoted band; no arm varies R (64 vs 2^20) or the DP density (2^-5 vs 2^-60), only the order; the run-to-run correlation is not modelled; the cycle census is a trace-period statistic, not a terminal basin period; meetings beyond the step cap are censored, not extrapolated; and 127.930 does not rank (frontier 126.338, 1.59 bits away). The goal of this round is an honest, floor-met, legality-preserving posture, not a leaderboard move.",
+   "score": {
+    "numerator": "127930",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "reproduction.json",
+    "ledger.py",
+    "evidence/transfer-equiv.json",
+    "evidence/transfer-ladder.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "evidence/pair-census-lag1.json",
+    "evidence/lag3-firing.json",
+    "evidence/absorb-direct.json",
+    "evidence/restart-count.json",
+    "evidence/ledger-out.json",
+    "scripts/transfer_arm.py",
+    "scripts/census_v20n.py",
+    "scripts/pair_census.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "scripts/restart_count.py",
+    "scripts/absorb_v20n.py",
+    "scripts/lag3_fixture.py",
+    "scripts/make_reproduction.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v18: fixture->production TRANSFER measured at four orders (2^21.4 -> 2^33.4 classes, 4096x span) -- w=2 p_set 0.4992 at the largest arm, CP-95 0.4750, band [0.4438,0.5678] all above 0.39; restart denominator 1600->12800; sign/key charged 15, STEP_INSN 155, claim 127.930",
+ "version": 1
+}
