@@ -1,0 +1,10 @@
+{
+ "inequalities_bad": [],
+ "inequalities_in_note": 17,
+ "labels": 3,
+ "labels_bad": [],
+ "pass": true,
+ "planted_label_flip_rejected": true,
+ "shipped_rows_missing_from_note": [],
+ "v18_round_up_rejected": true
+}
