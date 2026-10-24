@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp v15: x-class split fixed, generalized 4-cycle scan charged as ratio, disasm-priced fe_mul 148, ledger regenerated 127.9570",
+  "claims": [
+    {
+      "score": {
+        "numerator": "127957",
+        "denominator": "1000"
+      },
+      "statement": "For NIST P-256 Q=[x]P the full-store rho walk of argument.md is claimed at total classical work at most 2^127.9570 target-group-operation equivalents. Every price row is regenerated from the shipped 48-byte configuration: fe_mul = 148 Ir measured by objdump of the shipped object (p256_fe_v15.o, arm64 -O2 -fPIC; v14's 147 is superseded), fe_add/fe_sub = 27 Ir each, affine addition row 606 Ir, batch-inversion share 444 Ir plus a 385-mul chain per 2^20 batch, and the explicit memory/branch rows 10+20+12+128 Ir, total 1220.054 Ir = 1.220054 units per visit at protected C=1000. Work = 127.67 + log2(1.220054) = 127.9569 plus restart and replay terms; the 4-dp ceiling is 127.9570. The class key is the canonical x-coordinate: P and -P collide, x and p-x do NOT, and the v14 min(x,p-x) conflation is removed (the census, scan and record all key on x). The fixture order 1000839 is composite (3*333613) and is now disclosed; inverses use extended Euclid, 0 misses in 649969 trials, and no Fermat claim is made. The 4-cycle channel is enumerated over ALL 64^4 row windows, not just [A,B,A,B]: 268435456 windows scan, alternating ratio 4.024 and reversed ratio 3.969 applied as multiplicative factors (never min(1,ratio)), chance-family ratio 40599 charged at 2^-256 shape probability; total relative work loss 6.8e-13. The 48-byte record (32B x || 20-bit trail || 108-bit step) is demonstrated by REPLAY: 38400/38400 reconstructions equal truth and a verified scalar is recovered from the replayed coefficient pair. Storage is honestly 133.2549625 log2 bytes (48 B x 2^127.67), so storage does not bind; claim = min(bounds) = 127.9570. Success is the birthday law: lambda=0.6329 gives 0.4689 >= 0.39; the toy-group census is disclosed as unable to reach that regime (its walk recurs at ~sqrt(n)/7 steps) and is not used as the production value. Selector transfer stays OPEN. The success-semantics paragraph of tracks/p256-ecdlp/rules.md governs: exploratory acceptance, plausible_not_refuted, no baseline qualified.",
+      "evidence": [
+        "argument.md",
+        "public-note.md",
+        "evidence/insn_price.json",
+        "evidence/census_v15.json",
+        "evidence/cycle_channel_v15.json",
+        "evidence/ledger_v15.json",
+        "evidence/record_recovery_v15.json",
+        "evidence/selector_arm_v15.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

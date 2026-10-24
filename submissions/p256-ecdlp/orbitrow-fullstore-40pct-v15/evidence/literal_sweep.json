@@ -1,0 +1,19 @@
+{
+ "literals": {
+  "1000839": "evidence",
+  "127957": "evidence",
+  "220054": "evidence",
+  "2549625": "evidence",
+  "262144": "evidence",
+  "268435456": "evidence",
+  "278870": "evidence",
+  "333613": "evidence",
+  "38400": "evidence",
+  "40599": "evidence",
+  "649969": "evidence",
+  "680583": "evidence"
+ },
+ "pass": true,
+ "rule": "every integer >= 5 digits in the public text reconciles to an evidence value",
+ "unowned": []
+}

@@ -1,0 +1,13 @@
+{
+ "all_controls_fire": true,
+ "controls": {
+  "composite_fixture_fires": true,
+  "min1_ratio_detector_fires": true,
+  "planted_bad_relation_rejected": true,
+  "planted_good_relation_accepted": true
+ },
+ "independent_recompute_20": {
+  "of": 20,
+  "ok": 20
+ }
+}

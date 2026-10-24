@@ -1,0 +1,60 @@
+{
+ "claim_time_log2": 127.8076,
+ "completeness_argument": "The walk executes exactly one of each priced row per visit: one incomplete affine addition (all field kernels and the a=-3 chord law, including the x1==x2 branch that aborts the step), one canonicalisation, one record append, one batch normalisation and one sort/detect share. Anything not in a row is not executed: the walk keeps no ring, no escape table and no coefficient state between steps beyond the 48-byte record. Peak memory is charged as a bound; it has no scalar coefficient under classical-group-work-v2.",
+ "instructions_per_visit": 1100,
+ "normalization": "protected p256-ecdlp C = 1000 scalar AArch64 instructions per reference unit; every row is an instruction count, no borrowed one-unit-per-addition price, no inversion multiplier.",
+ "price_sources": {
+  "executed_count_route": "WITHDRAWN. The instrumented kernels failed the instrumented-vs-plain equality control 0/1024 in v13, so no executed number enters any row here; only static spans and explicit formula counts are used.",
+  "fe_mul_ir": {
+   "source": "evidence/stepspans_core.json span fe_mul=147, TEXT-only nm span of the shipped p256 object sha256 96b736ef..., the same row v10p's accepted accounting used",
+   "value": 147
+  },
+  "inversion": {
+   "derivation": "Fermat chain for p-2: 256 squarings + 129 multiplications = 385 fe_mul, so I = 385*147 = 56595 Ir per inversion (v10p accepted row). No M_insn multiplier is used; it is a chain length."
+  },
+  "step_close_ir": {
+   "source": "same pinned object",
+   "value": 694
+  },
+  "step_forward_ir": {
+   "source": "same pinned object",
+   "value": 239
+  }
+ },
+ "record": {
+  "address_basis": "records are radix-sorted on the full 256-bit class key and compared adjacently; no 64-bit bucket mix is used, so the lookup addresses the whole key instead of a 2^64 prefix.",
+  "identity_bits": 128,
+  "layout": "32-byte class key || 16-byte identity (20-bit trail || 108-bit step)",
+  "memory_log2_bytes": 133.25496250072115,
+  "store_bytes_log2": 133.25496250072115,
+  "v13_bytes": 40,
+  "v13_identity_bits": 64,
+  "v13_store_bytes_log2": 132.99192809488736,
+  "v14_bytes": 48
+ },
+ "rows_ir_per_visit": {
+  "affine_add_3M": 489,
+  "batch_normalize_3M": 441,
+  "canon_sign_rule": 20,
+  "radix_sort_and_detect": 128,
+  "store_append_48B": 12,
+  "table_read_index": 10
+ },
+ "success": {
+  "basis": "birthday over the full store: lambda = V^2/r with V visits and r ~ 2^256; the coefficient-trivial 4-cycle channel removes <=2^-34 of the visits (evidence/cycle_channel.json).",
+  "birthday_lower": 0.468938952330089,
+  "floor": 0.39,
+  "lambda": 0.6328782969851414,
+  "meets_floor": true
+ },
+ "units_per_visit": 1.1,
+ "work": {
+  "claim_time_log2": 127.8076,
+  "log2_visits": 127.67,
+  "log2_work_final": 127.80750352375007,
+  "log2_work_pre_restart": 127.80750352374994,
+  "restart_relative_loss": 8.526512829121202e-14,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "ci_contains_zero": true,
+ "delta_ci95": [
+  -8.522727272727272e-05,
+  0.0
+ ],
+ "delta_per_step": -2.840909090909091e-05,
+ "design": {
+  "R": 64,
+  "bootstrap_reps": 2000,
+  "cluster_unit": "one whole walk; bootstrap resamples walks, not steps",
+  "escape": "enabled, production form (one extra step on a detected trap)",
+  "history_depth": "cn compared to hist0 (2-step trap); v13 used hist1 and therefore counted 3-step returns",
+  "paired_seeds": true,
+  "steps_per_walk": 220,
+  "walks": 160
+ },
+ "nondegeneracy": {
+  "birthday_ratio": 0.0483998548004356,
+  "gate": 0.1,
+  "passes": true
+ },
+ "observed": {
+  "ec_rate": 0.0,
+  "ec_traps": 0,
+  "hash_rate": 2.840909090909091e-05,
+  "hash_traps": 1
+ },
+ "verdict": "inconclusive at this budget: the interval contains zero and the selector-transfer question stays declared OPEN. The arm is exploratory and no claim row depends on it."
+}

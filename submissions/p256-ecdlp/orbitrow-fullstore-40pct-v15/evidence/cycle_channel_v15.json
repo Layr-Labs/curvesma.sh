@@ -1,0 +1,39 @@
+{
+ "conclusion": "all coefficient-trivial 4-step returns are charged; the measured ratio is applied as-is",
+ "fixture": {
+  "R_fix": 64,
+  "b": 314159,
+  "cls": "canonical x (P/-P merged, x/p-x distinct)",
+  "order": 1000839,
+  "p": 1000003,
+  "seeds": 16
+ },
+ "method": "full 64^4 enumeration per seed via prefix/inverse-image split; every hit replayed with coefficient tracking; ratio charged as a multiplicative factor, never min(1,ratio)",
+ "pricing": {
+  "claim_delta_bits": 9.834519366708445e-13,
+  "deaths_per_walker": 2.9326827778474906e+19,
+  "per_4step_death_rate_upper": 4.5438652840346094e-13,
+  "pred_alt4": 4096.0,
+  "pred_other": 16.763151715710517,
+  "pred_rev4": 4096.0,
+  "ratio_alt4": 4.024169921875,
+  "ratio_other": 40599.94275194407,
+  "ratio_rev4": 3.969482421875,
+  "relative_work_loss": 6.815797926051914e-13,
+  "waste_per_death_steps": 6.0,
+  "windows_scanned": 268435456
+ },
+ "scan": {
+  "collapse_confirmed": 0,
+  "nonzero_delta_returns": 1093,
+  "probes_per_seed": 262144,
+  "returns": 714418,
+  "trivial": 713325,
+  "windows": 268435456
+ },
+ "trivial_by_family": {
+  "alt4": 16483,
+  "other": 680583,
+  "rev4": 16259
+ }
+}

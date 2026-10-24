@@ -1,0 +1,42 @@
+{
+ "birthday_check": {
+  "measured": 0.2966666666666667,
+  "note": "fixture-scope test of the same birthday law the production V is sized by",
+  "predicted": 0.47242359122065025
+ },
+ "config": {
+  "detector": "shared insert-time full store keyed on cls; unconditional product",
+  "lambda_fixture": 0.6394615733552349,
+  "rows": 64,
+  "seeds": "each walker: seed = (20251024<<24) ^ (trial<<12) ^ (w * 0x9E3779B97F4A7C15)",
+  "steps_per_walker": 8,
+  "trials": 600,
+  "visits_per_trial": 800,
+  "visits_total": 480000,
+  "walkers_per_trial": 100
+ },
+ "counts": {
+  "cp95_lower": 0.2603608733700413,
+  "gcd_nonunit_repeats": 200,
+  "measured_success": 0.2966666666666667,
+  "no_progress_repeats": 3432,
+  "trials": 600,
+  "verified_successes": 178
+ },
+ "fixture": {
+  "b": 314159,
+  "class_semantics": "cls = canonical x (y even); P and -P collide, x and p-x are distinct keys",
+  "classes": 500421,
+  "inverse_method": "extended Euclid (pow(a,-1,n)); no Fermat claim",
+  "inverse_misses": 0,
+  "inverse_nonunits_skipped": 278870,
+  "inverse_trials": 649969,
+  "order": 1000839,
+  "order_factorization": "3 * 7 * 47659",
+  "order_prime": false,
+  "p": 1000003,
+  "points": 1000839,
+  "v14_order_claim": "1000839 asserted prime; it is 3 * 333613"
+ },
+ "meets_floor": false
+}
