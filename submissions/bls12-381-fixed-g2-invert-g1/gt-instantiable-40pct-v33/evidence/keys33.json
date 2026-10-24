@@ -1,0 +1,71 @@
+{
+ "mode": "keys33-keys12-sampled-and-mulmod-derived",
+ "keys12": {
+  "construction": "twelve canonical 381-bit residues of a uniform Fp12 element, each reduced mod the subgroup order r",
+  "scope": "coordinates sampled at the tower level (a uniform Fp12 element's coordinate vector is the state distribution); NOT a pairing evaluation",
+  "calls": 12000,
+  "seed": 20261024,
+  "bits": 381,
+  "degeneracy_first": {
+   "distinct_lanes_per_element": {
+    "distinct_12": 12000,
+    "collapsed": 0
+   },
+   "zero_lanes": 0,
+   "residue_bits": 255,
+   "high_bit_degeneracy": {
+    "values_with_bits_above_255_set": 0,
+    "all_high_bits_zero": true,
+    "why": "canonical residues are < r < 2^255, so a 381-bit key extraction that reads bits above 254 is degenerate (single-bin histogram). The sampler detects this BEFORE measuring uniformity and bins the 255-bit residue span instead."
+   },
+   "min_distinct_values_per_lane": 12000,
+   "expected_distinct_per_lane": 12000,
+   "verdict": "no degeneration: every element has twelve distinct lanes and every lane takes (almost) all 12000 sampled values"
+  },
+  "uniformity": {
+   "bins": 4096,
+   "df": 4095,
+   "binning": "v*4096//r: equal-probability bins over the reachable residue span [0,r)",
+   "chi2_per_lane": [
+    4153.94,
+    3996.25,
+    4161.45,
+    4100.01,
+    4086.36,
+    4161.45,
+    4072.02,
+    4050.18,
+    4052.22,
+    3988.74,
+    3992.15,
+    4229.72
+   ],
+   "chi2_max": 4229.72,
+   "null_mean": 4095,
+   "null_sd": 90.5,
+   "chi2_999_quantile": 4374.64,
+   "all_lanes_under_999": true,
+   "note": "a 2^-12-class collapse would put chi2 in the 1e6 range; the observed values sit on the null mean"
+  },
+  "collision_rate": {
+   "keybits": 20,
+   "observed_pairs": 81,
+   "expected_pairs_birthday": 68.659,
+   "ratio": 1.18,
+   "verdict": "consistent with the 2^-20 birthday law"
+  }
+ },
+ "mulmod": {
+  "source": "scripts/mulmod33.c",
+  "implementation": "four 64-bit limbs: schoolbook 4x4 product (16 mul) + Montgomery reduction (16 mul) + branch-free conditional subtraction",
+  "object": "compiled here with cc -O2, disassembled, body counted",
+  "static_instructions": 179,
+  "mul_class_instructions": 60,
+  "executed_instructions": 179,
+  "why_executed_equals_static": "clang -O2 fully unrolls both 4-iteration loops; the disassembly contains no backward branch, so every instruction in the body executes exactly once per call",
+  "v32_price": 64,
+  "derived_price": 179,
+  "delta": 115,
+  "verdict": "the v32 64-Ir figure is not an implementation bound; the ledger charges the disassembled body count"
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "title": "Claim 127.6890: per-bucket retention measured at the production Poisson lambda with a matched-lambda control, a representable sparse directory store (2^128 heads, chained segments, 2^135.75 B) replacing the 2^128 dense table, keys12 sampled, the mulmod price derived from the disassembled shipped object (179 Ir), a first-principles Markov window bound, and the triangular route-B gap law",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT on 1024 workers, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W, exact integer check (W^10000 <= 20000^10000*2^n), n-1 asserted to fail; W is the exact sum of fourteen rows, every row a CEIL of its rational product. STORE (fix 2). The production store is a sparse directory: 2^128 64-bit segment heads (a 128-bit index, representable in the shipped unsigned __int128), segments of 16 nodes allocated on demand, records in segmented arenas; no dense 2^128 bucket array and no 2^130 preallocated node pool. Peak 2^135.75 B, reported as an unweighted memory row and REPLACING the v32 2^137.16 B spec; every table-touching row (lookup, insert, export, init) is re-priced on it. INIT 1490052703652228864131414538195674755160 Ir (v32: 1.667e40). RETENTION (fix 1). Chain loss is per-bucket: lambda_prod = S/2^128 = 0.28154, the Poisson tail P(N>4) <= lambda^5/5!/(1-lambda/6) = 1.547e-5 (log2 -15.98) with 3.5e33 expected overflowing slots, and the shipped store is RUN at a bucket count whose lambda is 0.2417 <= 0.28154: 2 evictions in 1278 records gives retention 0.998653 (dense control at lambda 17.89: 1513 evictions in 1278 records). Retention is measured, not asserted; the v32 'retention 1 by construction' is withdrawn. KEY PATH (fix 3). keys12 is SAMPLED over 12000 elements: degeneracy checked first (canonical residues are < r < 2^255, so bits above 254 are constant zero and any 381-bit extraction is degenerate -- detected before any uniformity test), then chi-square over 4096 equal-probability bins of the reachable span [0,r) per lane: max 4229.7 against the 0.999 quantile 4374.6, and 20-bit collision ratio 1.18 of the 2^-20 birthday law. The 255-bit mulmod price is DERIVED, not asserted: scripts/mulmod33.c compiled and disassembled, body 179 instructions (60 mul-class, no backward branch so executed equals static) -- the ledger charges 179 Ir, and the coefficient row becomes 2*179+48 = 406 Ir/step. The full-width state-key path stays at its executed maximum 1458 Ir (p50 1095, p95 1263, cmp 53/64/75). TRAP (fix 4). Derived from structure: a trapping window requires its 32 squarings to stay in a closed orbit of the walk map on the subgroup of order r (2^255); the 496 point-pairs give P(closed) <= 496/2^255 = 2^-245.25 per window, so the S/32 = 2.99e36 windows carry expected 2.56e-38 trapping windows and the ledger charges ONE window = 1532924 Ir. The census (0 aborts in the fixtures) is a corroboration row BELOW the derived bound, never its source; the v32 conversion of 4497 admissions into an expectation is withdrawn. SUCCESS (fix 5). Bootstrap at the matched lambda: the arms run at lambda 0.2417 <= production 0.28154 by construction of the bucket count, so the resampled population IS the production-lambda population; factors 225/320, 200/320 and the measured retention 1276/1278 give p5 = 0.577346, floor 0.39 met. ROUTE B recomputed with the correct TRIANGULAR gap law (pair weights (S-g)/N, density 2(S-g)/S^2, E[gap]=S/3): retention 2M/S = 4.378e-32, success 2.53e-32 -- still rejected, now with the right law. ROUNDING. Every row is an exact integer ceil; trap counts are Python ints; no float enters any arithmetic quantity.",
+   "score": {
+    "numerator": "127689",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger33.json",
+    "evidence/store33.json",
+    "evidence/keys33.json",
+    "evidence/sort32.json",
+    "evidence/exec31.json",
+    "evidence/probe31.json",
+    "evidence/trap31.json",
+    "evidence/census28.json",
+    "evidence/prices28.json",
+    "public-note.md",
+    "scripts/gen33.py",
+    "scripts/store33.py",
+    "scripts/keys33.py",
+    "scripts/cert33.py",
+    "scripts/mulmod33.c",
+    "scripts/protocol28.py",
+    "scripts/census28.py",
+    "scripts/exec31.py",
+    "scripts/trap31.py",
+    "scripts/ir28/dict28.c"
+   ]
+  }
+ ],
+ "experiments": []
+}

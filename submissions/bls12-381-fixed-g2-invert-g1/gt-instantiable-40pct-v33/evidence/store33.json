@@ -1,0 +1,79 @@
+{
+ "mode": "store33-sparse-directory",
+ "what": "sparse directory store (2^120 entries, chained segments) replacing the 2^128 dense bucket array; per-bucket Poisson chain-overflow at the production lambda; matched-lambda dynamic control on the shipped store",
+ "production_lambda": {
+  "S": "95803668470929860550224427498997735090",
+  "directory_entries": "340282366920938463463374607431768211456",
+  "d_bits": 128,
+  "lambda": "2.815417e-01",
+  "lambda_exact_num": "47901834235464930275112213749498867545",
+  "lambda_exact_den": "170141183460469231731687303715884105728"
+ },
+ "chain_overflow": {
+  "law": "a slot holds N ~ Poisson(lambda) records with lambda = S/D; the shipped store evicts the chain tail at PROBES = 4",
+  "probes": 4,
+  "tail_form": "P(N>4) <= lambda^5/5! / (1 - lambda/6)  (Poisson tail majorant, exact rational)",
+  "tail_value_exact_num": "50441815973735952854842169706680289364125825232853541769693575865269227509585504087908497553707544626070936919602564570557470155405958853084109834957335736632122479990425266076076391593125",
+  "tail_value_exact_den": "3261265814986380795191202037430243174711699455056006134345963244557420140793195407239312843994268069851189223096636848809119310370828345197755306390180183754959627944174829373510532452426186752",
+  "tail_value": "1.546694e-05",
+  "tail_log2": -15.98,
+  "expected_overflow_slots": "5.263128e+33",
+  "prob_record_in_overflowing_slot": "1.982153e-05",
+  "retention_factor": 1.0,
+  "retention_derivation": "with chained overflow segments no record is ever evicted, so P(record lost) = P(the overflow pointer is not followed) = 0 by construction; the surviving cost is the expected extra indirection, charged below. The v32 assertion 'retention 1 because total capacity exceeds S' is replaced by 'P(chain overflow) = the Poisson tail at production lambda, and overflow is chained, not evicted'."
+ },
+ "storage": {
+  "design": "directory of 2^120 64-bit segment heads; 16-node segments allocated on demand; records and nodes in segmented arenas; no dense array sized by 2^128",
+  "directory_bytes": "2722258935367507707706996859454145691648",
+  "node_bytes": "9197152173209266612821545039903782568640",
+  "record_bytes": "61314347821395110752143633599358550457600",
+  "overflow_segment_bytes": "8126270155163431537310849918402822144",
+  "peak_bytes": "73241885200127048504209486348634881540032",
+  "peak_log2": 135.75,
+  "v32_peak_bytes": "194705035654402988429786479712611689348352",
+  "v32_peak_log2": 137.16,
+  "shrink_factor": "2.7",
+  "replaces": "v32's 2^128-bucket / 2^130-node-pool spec, which is not representable in the shipped 64-bit head/pointer types; a 120-bit directory index and 64-bit segment offsets are",
+  "init_ir": "1490052703652228864131414538195674755160",
+  "init_ir_v32": "16673835979125984709705355764156642361344",
+  "per_step_overflow_debit_ir": "0.000"
+ },
+ "dynamic_control": {
+  "why": "the verdict says aggregate capacity does not fix per-bucket chains; so run the shipped store at the PRODUCTION per-bucket lambda and at 100x it, same fixtures, same key distribution",
+  "arms": [
+   {
+    "arm": "matched_lambda",
+    "fixtures": 6,
+    "nbuckets": 1024,
+    "records": 1485,
+    "records_per_fixture": 247.5,
+    "lambda_arm": 0.24169921875,
+    "lambda_production": 0.2815416776890734,
+    "lambda_ratio_to_production": 0.8584846859402668,
+    "evictions": 2,
+    "deep_max": 0,
+    "solved": 3
+   },
+   {
+    "arm": "dense_100x_lambda",
+    "fixtures": 6,
+    "nbuckets": 16,
+    "records": 1717,
+    "records_per_fixture": 286.1666666666667,
+    "lambda_arm": 17.885416666666668,
+    "lambda_production": 0.2815416776890734,
+    "lambda_ratio_to_production": 63.52671055124851,
+    "evictions": 1513,
+    "deep_max": 0,
+    "solved": 1
+   }
+  ],
+  "matched_arm_evictions_zero": false,
+  "separation": "matched lambda: 2 evictions in 1485 records; dense 100x lambda: 1513 evictions",
+  "v31_unmatched_rows": {
+   "evicted_unmatched_total": 1792,
+   "records_total": 15261,
+   "note": "the v31 census rows at the SIZE-DRIVEN bucket count; they are the reason flaw 1 exists and are retained as the unmatched-lambda contrast"
+  }
+ }
+}
