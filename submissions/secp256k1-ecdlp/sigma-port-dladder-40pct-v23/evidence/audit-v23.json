@@ -1,0 +1,58 @@
+{
+ "C1_two_class_spaces_differ": {
+  "ok": true,
+  "detail": "log2 S_OPS 2^254-variant 127.013921 vs canonical 126.721440 = 0.292481 bits apart (>0.2 required)"
+ },
+ "C2_withdrawn_row_is_half_p": {
+  "ok": true,
+  "detail": "(p-1)/2 = 16777233"
+ },
+ "C2_orbit_count_is_(N-1)/6": {
+  "ok": true,
+  "detail": "(N-1)/6 = 5593352; +infinity = 5593353"
+ },
+ "C2_quantities_differ": {
+  "ok": true,
+  "detail": "16777233 != 5593352 -> the v22 normalization row was the wrong quantity"
+ },
+ "C3_escape_arm_fires": {
+  "ok": true,
+  "detail": "1221 lag-1/lag-3 substitutions in the armed arm"
+ },
+ "C3_control_arm_silent": {
+  "ok": true,
+  "detail": "0 fires with esc=False (the switch is load-bearing)"
+ },
+ "C3_rate_moves": {
+  "ok": true,
+  "detail": "p_hat 0.3633 (esc off) -> 0.3867 (esc on), delta +0.0233, same 300 seed-matched trials"
+ },
+ "C4_inverse_row_20": {
+  "ok": true,
+  "detail": "20/20 equal, 2*inv2 mod N = 1"
+ },
+ "C4_orbit_count_consistent": {
+  "ok": true,
+  "detail": "(N-1)/6 = 5593352 exact under N = 33560113"
+ },
+ "C5_cells_canonical": {
+  "ok": true,
+  "detail": "3 cells: N_CLASSES == (N-1)/6, shape within 1% of 1.009696, p_hat == successes/trials"
+ },
+ "C5_class_space_span": {
+  "ok": true,
+  "detail": "span 14.003 -> 19.999 = 5.997 doublings"
+ },
+ "C6_withdrawn_literals_named": {
+  "ok": true,
+  "detail": "every 2^254-derived or (p-1)/2 row that survives is named as withdrawn"
+ },
+ "all": true,
+ "rows": 12,
+ "canonical": {
+  "log2_S_OPS": 126.72144016,
+  "claim": 127.92945732,
+  "N_CLASSES": "19298681539552699237261830834781317975472927379845817397100860523586360249056",
+  "success": 0.580437
+ }
+}
