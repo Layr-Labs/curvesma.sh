@@ -1,0 +1,56 @@
+{
+ "arithmetic": {
+  "385*147/16": 3537.1875,
+  "385*147/65536": 0.8635711669921875,
+  "385*147/8": 7074.375,
+  "sum_check_B65536_equals_v10o_charge": false
+ },
+ "charged_because": "worst of the shipped widths (8) is charged; the 65536 row is the production-lockstep reading",
+ "charged_row": 8,
+ "delta_vs_v10o_vs_128.9437": 2.7436273129341373,
+ "derivation": "one Fermat inversion per STEP per BATCH of B walkers: 385 fe_mul; prefix products (B-1) and back-substitution (B-1) muls are per-walker and already charged in the 293 row. per-walker share = 385*147/B.",
+ "note_shipped": "the disasm price is unchanged (fe_mul 147, 385 muls per inversion); only the amortization denominator changes, so this is a pure accounting correction, not a new measurement",
+ "rows": {
+  "16": {
+   "W_single_log2": 129.88787292968203,
+   "W_w2_log2": 130.88787292968203,
+   "batch_walkers": 16,
+   "charge_instr_per_walker_step": 4777.830678135395,
+   "claim_ceiling_4dp": 130.8879,
+   "escape_surcharge_kappa_charged": 0.003413975238800049,
+   "fe_mul_instr": 147,
+   "inversion_instr_per_batch": 56595,
+   "inversion_muls_per_batch": 385,
+   "prefix_backsub_per_walker_step": 293,
+   "share_per_walker_step": 3537.1875
+  },
+  "65536": {
+   "W_single_log2": 127.94360930732344,
+   "W_w2_log2": 128.94360930732344,
+   "batch_walkers": 65536,
+   "charge_instr_per_walker_step": 1241.5067493023873,
+   "claim_ceiling_4dp": 128.9437,
+   "escape_surcharge_kappa_charged": 0.003413975238800049,
+   "fe_mul_instr": 147,
+   "inversion_instr_per_batch": 56595,
+   "inversion_muls_per_batch": 385,
+   "prefix_backsub_per_walker_step": 293,
+   "share_per_walker_step": 0.8635711669921875
+  },
+  "8": {
+   "W_single_log2": 130.68723662025758,
+   "W_w2_log2": 131.68723662025758,
+   "batch_walkers": 8,
+   "charge_instr_per_walker_step": 8315.018178135395,
+   "claim_ceiling_4dp": 131.6873,
+   "escape_surcharge_kappa_charged": 0.003413975238800049,
+   "fe_mul_instr": 147,
+   "inversion_instr_per_batch": 56595,
+   "inversion_muls_per_batch": 385,
+   "prefix_backsub_per_walker_step": 293,
+   "share_per_walker_step": 7074.375
+  }
+ },
+ "test": "batch_inv_amortization",
+ "verdict_item": "inversion amortized over 65536 walkers, shipped W array 16, live census 8"
+}
