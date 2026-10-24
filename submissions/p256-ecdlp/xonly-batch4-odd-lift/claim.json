@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "submission_state": "ready",
+  "algorithm": "odd-lift-xonly-batch-bsgs-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 133,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 134,
+    "preprocessing_log2": 132,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [],
+  "limitations": [
+    "Analytic instruction bound; no full-size execution.",
+    "CIOS limb steps are charged at their literal 13-instruction sequence; special-branch doublings on mixed additions are O(1) per input and sit in the additive term.",
+    "Toy experiment checks recovery and the integer arithmetic of those ceilings, not AArch64 timings."
+  ],
+  "lane": "exploratory"
+}
