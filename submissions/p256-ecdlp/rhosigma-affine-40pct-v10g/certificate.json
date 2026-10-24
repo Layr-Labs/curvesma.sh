@@ -1,0 +1,140 @@
+{
+ "checks": {
+  "W_recompute_vs_printed": {
+   "expected": "127.771170",
+   "observed": "127.771170",
+   "verdict": "PASS"
+  },
+  "basin_two_table_cycle_free": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "census_conversion_unity": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "census_design_cp95_ge_floor": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "census_design_records_every_step": {
+   "expected": 0,
+   "observed": 0,
+   "verdict": "PASS"
+  },
+  "census_design_successes": {
+   "expected": 3447,
+   "observed": 3447,
+   "verdict": "PASS"
+  },
+  "census_design_trials": {
+   "expected": 8000,
+   "observed": 8000,
+   "verdict": "PASS"
+  },
+  "census_dp2_penalty_disclosed": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "charge_recompute": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "claim_covers_W": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "claim_minus_W": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "count_delta_fixed_minus_transposed": {
+   "expected": 47,
+   "observed": 47,
+   "verdict": "PASS"
+  },
+  "count_delta_is_constant_materialisation_only": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "counted_rows_sum_to_count": {
+   "expected": 1101,
+   "observed": 1101,
+   "verdict": "PASS"
+  },
+  "counted_step_instructions": {
+   "expected": 1101,
+   "observed": 1101,
+   "verdict": "PASS"
+  },
+  "dependencies_empty": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "kernel_edge_values_exercised": {
+   "expected": 15,
+   "observed": 15,
+   "verdict": "PASS"
+  },
+  "kernel_fixed_mismatches": {
+   "expected": 0,
+   "observed": 0,
+   "verdict": "PASS"
+  },
+  "kernel_mul_law": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "kernel_mutation_control_mismatches_positive": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "kernel_vectors_at_least_10000": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "note_states_sign_condition": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "production_dp_transfer_not_claimed": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "sensitivity_fraction_of_design_steps": {
+   "expected": "0.939859",
+   "observed": "0.939859",
+   "verdict": "PASS"
+  },
+  "sensitivity_labelled_940_not_40pct": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  },
+  "theorem_states_sign_condition": {
+   "expected": true,
+   "observed": true,
+   "verdict": "PASS"
+  }
+ },
+ "method": "certificate re-parses evidence/kernel_test.json, evidence/stepcount.json, evidence/census.json and evidence/basin.json; recomputes the counted step, the charge, W and the claim in exact rational arithmetic; and string-checks that the argument carries the sign condition and the note carries the 94.0 percent label and the sparse-DP non-claim",
+ "totals": {
+  "checks": 26,
+  "passed": 26
+ },
+ "verdict": "PASS"
+}

@@ -1,0 +1,38 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk, v10g: transposed-limb kernel repaired and tested against bigint on the shipped header (0/10,770), involution theorem restated with its sign condition, 1,101-instruction step, W = 127.78",
+ "claims": [
+  {
+   "score": {
+    "numerator": "6389",
+    "denominator": "50"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the fully specified two-table affine walk of argument.md is claimed to recover the canonical scalar with success at least 0.39 at its certified configuration, and to be priceable at total classical work at most 2^127.78 target-group-operation equivalents under the protected C=1000 scalar AArch64 instruction normalization. THE CERTIFIED CONFIGURATION AND ITS SCOPE: the 0.39 floor is claimed for the every-step-record census configuration (dp_bits=0) on the 2^40-class prime-order fixture, where 8,000 independent targets at T=812,224 steps (Lambda=0.60, 50,764 per walker x 16) recovered 3,447 = 0.430875 with Clopper-Pearson 95 percent lower bound 0.421725, 37,839,675 of 37,839,675 merges cryptographically verified by recomputing [x]P and comparing the full point, 0.126 percent self-hits, 0 degenerate denominators, 0 check failures. This package does NOT claim 0.39 for the sparse production predicate (mix64(x xor DPSALT) mod 2^61 == 0): the only sparsification measured is the DP-2 control, which recovers 0.263500 with CP-95 0.247311, and the transfer from dense records to the production filter is unproven and disclosed. The fixture has 2^40.000 classes against P-256's 2^254.999999999664; both regimes are pre-capture (first revisit approximately sqrt(classes) much greater than budget), which is the declared premise for reading the coverage statistic across scale, not a proved transfer. PRICE: charge = 1,101 counted instructions + (1+2^-10) x 0.639140 rare-event reserve = 1,101.639764; T_prod = sqrt(2 x Lambda x N') with Lambda=0.60 and N'=(order+1)/2, log2 T_prod = 127.631517202749; W = log2 T_prod + log2(charge/1000) = 127.771170; claim 127.78, headroom 0.0088 bits. The counted fragment is evidence/step_v10f_o3.c against evidence/p256_fe_cc.h, 1,101 instructions by the clang CFG longest-iteration method with opcode rows machine-classified and summing to the count (umulh=114=6x19, mul=94); the same source against the v10f transposed-limb header counts 1,054, so the repair costs +47 instructions, all constant materialisation, with the multiply counts unchanged. KERNEL CORRECTNESS: evidence/p256_fe_cc.h sets p's little-endian limbs P0=0xffffffffffffffff, P1=0x00000000ffffffff, P2=0, P3=0xffffffff00000001, and evidence/p256_kernel_test.c exercises THAT header and the shipped counted step source at the real P-256 modulus against Python big integers on 10,240 vector records plus 215 inversion and 315 canonicalisation records: 0 mismatches on 10,770 records, edges 0, 1, 2, p-1, p-2, (p-1)/2, 2^63, 2^64, 2^128, 2^192, 2^224, 2^255, 2^255+1, 2^256-2^224 and p-1-2^96, while the mutation control built from evidence/p256_fe_cc_broken.h (the v10f header verbatim) fails with 25,772 mismatches. fe_inv is repaired to fe_mul(a,fe_inv(a))=R and is not on the counted path. THEOREM: only the conditional lemma is claimed - if idx(S_{n+1})=idx(S_n)=j AND canon(S_n+T_j)=-(S_n+T_j) then S_{n+2}=S_n; the sign condition is required and is not implied by x(-S)=x(S) or by a birthday repetition. The single-table 2-cycle census (62.0 percent of 500 starts, median length 2, 40.2 percent trail repeats, 6/6 independent bigint closures) is reported as a measurement on the fixture, not as a universal theorem, and the two-table configuration measures 0/500 starts cycling within 5,000 steps and 0 of 1.5M trail steps repeating. Storage is two 2^16 x 64 B tables = 2^23 B, 2^-50 of the declared 2^73 B cap. The budget cell at T=763,376 is 94.0 percent of the design step budget (763,376/812,224=0.939859) and is disclosed as a sensitivity with CP-95 0.370050, below the 0.39 bar. No prior submission is claimed as authenticated support.",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "certificate.json",
+    "dependencies.json",
+    "checks-1.json",
+    "evidence/FINDINGS-part4.md",
+    "evidence/arith_gate.txt",
+    "evidence/basin.json",
+    "evidence/census.json",
+    "evidence/census_v10f41.c",
+    "evidence/diag_cycle.py",
+    "evidence/kernel_test.json",
+    "evidence/ledger.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_fe_cc_broken.h",
+    "evidence/p256_kernel_test.c",
+    "evidence/p256_kernel_test.py",
+    "evidence/probe_basin.c",
+    "evidence/step_v10f_o3.c",
+    "evidence/step_v10g_o3.s",
+    "evidence/stepcount.json",
+    "evidence/stepcount.py"
+   ]
+  }
+ ],
+ "experiments": []
+}
