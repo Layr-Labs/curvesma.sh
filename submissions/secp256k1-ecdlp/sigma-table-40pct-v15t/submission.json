@@ -1,0 +1,29 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15t: capacity = all reports at the measured load, retention charged into work, one full inversion per affine add (no batch premise), first-match retirement in the census, zero SIMD, total peak bytes",
+ "claims": [
+  {
+   "evidence": [
+    "dependencies.json",
+    "scripts/build_evidence_v15t.py",
+    "scripts/census_v15t.py",
+    "scripts/check_layout.py",
+    "scripts/drv_v15t.py",
+    "scripts/harness_v15t.py",
+    "scripts/invariant-row.json",
+    "scripts/invcheck.py",
+    "scripts/layout_assert.c",
+    "scripts/rec_layout.h",
+    "scripts/toy_core.py",
+    "scripts/walk_v15r.c",
+    "scripts/walk_v15r.s"
+   ],
+   "score": {
+    "numerator": "1338863",
+    "denominator": "10000"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim at success >= 0.39 over uniform production challenges and fresh algorithm coins, priced as a CONSERVATIVE PATH UPPER BOUND at the protected C=1000 in 10^3-instruction units. SUCCESS is the analytic claim, not a fixture extrapolation: the walk budget is S = ceil(sqrt(2 mu N6 R/(R-1) L)) with L = -ln(1-0.39), N6 = (r-1)/6 and mu = 2.842 charged (this round measures 1.020), and the survival probability of the resulting rho trail is 1 - exp(-L) = 0.39 by construction; the per-challenge jump table, the fresh-coin escapes and the evict-oldest pool are all inside that walk. The census supports the mechanism at its own scope only: 256 trials at the ledger-normalized budget give 188/256 successes on ONE run of S arrivals and a Clopper-Pearson 95% lower limit of 0.632400, which is above the 0.39 floor; it is not offered as the production proof. STEP: 744 point + 433 alignment + 604 label + 79 detector + 9 action = 1869 Ir, and the escape act and history reset are charged on their own rows at the census-MEASURED fire rate 3152/629917 (4071736 Ir per fire -> 20374.29 Ir/step; reset 0.0801 Ir/step). INVERSIONS: no batching is claimed. Every affine add on the shipped path calls v15q_add, which performs one Fermat inversion, and successive walk steps, the SMALL[v] recurrence and the escape ladders all consume earlier affine results, so no dependency-respecting batch exists; each add therefore carries its flat 744 Ir plus one full 60876-Ir inversion, including the walk step itself (v15t withdraws v15r's 67/2048/66 batch premise entirely and pays 60876.0 Ir per step for it). CAPACITY AND RETENTION: the pool now holds EVERY reported record at the measured load factor -- slots_total = reports / 0.5 = 2^127.508, shards = ceil(slots_total/2^34) = 2^93.508, per-shard load 0.5000, measured retention 31545/32768 at that load -- so the retained-match count is the all-history term H x M / N6 with M >= H rather than v15r's 2^-64.45 subsample, and the arrival budget is divided by the retention factor (one full power of conservatism) giving 241941295532617856272805037518322888088 arrivals. The demand-based allocation is stated (a shard is materialised only when a record maps into it) and the pool is charged at capacity (23226364371131314202189283601758997256640 bytes). RECOVERY: a walker halts at the FIRST collision it reports and makes exactly ONE solve attempt (the census now implements that retirement rule, so its successes validate it), so pairs <= 2^20 and attempts <= 2^20 at 61788 Ir each, verified at 361216 Ir. COUNTING: one convention over every span, operand-free `ret` included (_v15r_reset_hist is 16, not 15); ZERO SIMD is a compiler guarantee (-mgeneral-regs-only removes the NEON register file from the allocator, and the register-class scan of the shipped listing returns 0 matches); the manifest is regenerated from the certificate with a literal sweep and a planted stale 430 rejected. PEAK STORAGE is one row over the machine: worker x sizeof(worker_t) (264 B, static-asserted) + batch prefix scratch (67 x 64 B per worker) + the capacity-sized record pool + 16 B per shard + jump table + code + advice = 23226364371356639592450525634068927601008 bytes. Exact-rational rows sum to W_time = 2^133.886278 with a planted +1 control rejected; the claim is the smallest 1e-4 decimal with 2^claim >= W + 2e-5, checked both directions. Every mechanistic control still holds: per-challenge init_for_Q (stale-Q0 control 0/8), detector -> escape (210 trips / 210 verified resets / 210 endpoint holds; detached control 5,802 trips / 0 resets), derived endpoint identity (0/96; wrong-side control 2/2 fail), and the shipped-object census at the ledger-normalized budget (S/sqrt(N6) = 1.677048 fixture vs 1.676590 ledger, rel. 5.5e-4)."
+  }
+ ],
+ "experiments": []
+}

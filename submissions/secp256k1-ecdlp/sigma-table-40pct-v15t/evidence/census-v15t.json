@@ -1,0 +1,188 @@
+{
+ "kind": "census-v15s",
+ "curve": {
+  "name": "q25",
+  "p_bits": 25,
+  "p": "16780909",
+  "order": "16773217",
+  "beta": "4404088",
+  "lam": "11257748",
+  "R": 2048,
+  "rows_used": 128,
+  "ntrails": 16
+ },
+ "node_bits": 16,
+ "nodes": 65536,
+ "trials": 256,
+ "w": 2,
+ "S_ops": "2804",
+ "S_ops_log2": 11.453270634010623,
+ "mu": "1421/500",
+ "floor": "39/100",
+ "init_row_ids": {
+  "per_challenge": "v15r_init_for_Q",
+  "stale_control": "MUT_STALE_Q0"
+ },
+ "method": "w=2 sequential independent runs of the SHIPPED four-probe pool (v15o_report) with the SHIPPED align/label/detect/step, the SHIPPED per-challenge v15r_init_for_Q, and the SHIPPED v15r_action -> v15r_escape restart; success measured directly on the 2-run set",
+ "success_2run": 233,
+ "success_1run": 175,
+ "p_1run": 0.68359375,
+ "p_2run": 0.91015625,
+ "cp95_2run": "0.8751177917385231097568976110778748989105224609375",
+ "cp95_1run": "0.63239973738044685802606181823648512363433837890625",
+ "visits": 478315,
+ "distinct_classes": 475273,
+ "mu_measured": 1.006400531904821,
+ "mu_measured_exact": "478315/475273",
+ "detector_fires": 3152,
+ "detector_resets_verified": 3152,
+ "fires_per_step": 0.005003833838426333,
+ "fires_per_budgeted_step": 0.0021955242510699,
+ "steps_executed": 629917,
+ "pool_load": 0.0,
+ "mu_charged": "1421/500",
+ "budget_normalization": {
+  "fixture_S": "2804",
+  "fixture_N6": "2795536",
+  "ledger_S": "232911321031995552860279385635848861838",
+  "ledger_N6": "19298681539552699237261830834781317975472927379845817397100860523586360249056",
+  "fixture_S_over_sqrtN": 1.6770478902877313,
+  "ledger_S_over_sqrtN": 1.6765896423263882,
+  "rel_diff": 0.0005467176633783849,
+  "visits_per_run_full_budget": 2804,
+  "visits_observed_max_per_run": 2804,
+  "passed": true
+ },
+ "floor_met": true,
+ "stale_q0_control": {
+  "trials": 8,
+  "success": 0,
+  "matches": 70,
+  "verifies": 0,
+  "note": "shipped init_for_Q bypassed; the v15q fixed-Q0 table is used against fresh challenges",
+  "verdict": "FAIL"
+ },
+ "retention_curve": [
+  {
+   "load": "0.5",
+   "records": 32768,
+   "retrievable": 31545,
+   "exact_pair": 31489,
+   "retention": 0.962677001953125
+  },
+  {
+   "load": "0.75",
+   "records": 49152,
+   "retrievable": 42617,
+   "exact_pair": 42479,
+   "retention": 0.8670450846354166
+  },
+  {
+   "load": "1.0",
+   "records": 65536,
+   "retrievable": 46862,
+   "exact_pair": 46654,
+   "retention": 0.715057373046875
+  },
+  {
+   "load": "1.5",
+   "records": 98304,
+   "retrievable": 40811,
+   "exact_pair": 40335,
+   "retention": 0.4151509602864583
+  },
+  {
+   "load": "2",
+   "records": 131072,
+   "retrievable": 29460,
+   "exact_pair": 28736,
+   "retention": 0.224761962890625
+  },
+  {
+   "load": "4",
+   "records": 262144,
+   "retrievable": 7923,
+   "exact_pair": 5958,
+   "retention": 0.030223846435546875
+  },
+  {
+   "load": "8",
+   "records": 524288,
+   "retrievable": 4275,
+   "exact_pair": 221,
+   "retention": 0.008153915405273438
+  }
+ ],
+ "budget_column": {
+  "budget_S_per_trial": "2804",
+  "trials": 256,
+  "runs_per_trial": 2,
+  "all_trials_same_budget": true,
+  "max_steps_executed": 2804,
+  "min_steps_executed": 43,
+  "assert_executed_le_budget": true,
+  "note": "every trial (successful or not) is run at the same arrival budget S; a successful trial stops early, so fires/step uses the EXECUTED-step denominator, which is conservative (strictly above fires per budgeted step)"
+ },
+ "production_load_stress": [
+  {
+   "target_load": "0.5",
+   "slots": 4096,
+   "writes_per_trial_estimate": 2048,
+   "trials": 48,
+   "success": 41,
+   "p_success": 0.8541666666666666,
+   "cp95": "0.74346602774640313526788304443471133708953857421875",
+   "measured_per_slot_writes": 0.5548451741536459,
+   "resets_verified": 508,
+   "floor_met": true
+  },
+  {
+   "target_load": "1",
+   "slots": 2048,
+   "writes_per_trial_estimate": 2048,
+   "trials": 48,
+   "success": 41,
+   "p_success": 0.8541666666666666,
+   "cp95": "0.74346602774640313526788304443471133708953857421875",
+   "measured_per_slot_writes": 1.1129048665364583,
+   "resets_verified": 511,
+   "floor_met": true
+  },
+  {
+   "target_load": "2",
+   "slots": 1024,
+   "writes_per_trial_estimate": 2048,
+   "trials": 48,
+   "success": 42,
+   "p_success": 0.875,
+   "cp95": "0.76811827406897048575729058939032256603240966796875",
+   "measured_per_slot_writes": 2.2342936197916665,
+   "resets_verified": 523,
+   "floor_met": true
+  },
+  {
+   "target_load": "4",
+   "slots": 512,
+   "writes_per_trial_estimate": 2048,
+   "trials": 48,
+   "success": 39,
+   "p_success": 0.8125,
+   "cp95": "0.69560934214886316340198391117155551910400390625",
+   "measured_per_slot_writes": 4.934733072916667,
+   "resets_verified": 583,
+   "floor_met": true
+  },
+  {
+   "target_load": "8",
+   "slots": 256,
+   "writes_per_trial_estimate": 2048,
+   "trials": 48,
+   "success": 31,
+   "p_success": 0.6458333333333334,
+   "cp95": "0.51733833411951746228396586957387626171112060546875",
+   "measured_per_slot_writes": 11.915364583333334,
+   "resets_verified": 754,
+   "floor_met": true
+  }
+ ]
+}
