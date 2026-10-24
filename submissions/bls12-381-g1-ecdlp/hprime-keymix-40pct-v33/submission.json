@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v33: preprocessing recomputable from design-v33.json (planted-tautology control rejected), claim = MEASURED success 0.395879, production-distribution kappa 2.614, gap row at production ell=2^70.650; W=2^116.853863, claim 116.8539 OVER gate 116.8271 by 0.0268, disclosed",
+ "claims": [
+  {
+   "statement": "BLS12-381 G1 auxiliary powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, recover s. Claim 116.8539 (1168539/10000); charged W=2^116.853862541 in 2000-instruction units. Success probability claimed = 0.395879, the MEASURED one-sided CP-95 lower endpoint of the production-structure hit test (200000 trials), which clears the 0.39 floor by 0.005879. The live head at fire time is jungjipdo ticket 6ecec8e3 at 116.8271 (review-state). THIS CLAIM IS 0.0268 BITS ABOVE THAT HEAD AND THE CROSSING IS NOT HIDDEN: the records row (2*rps*2303) is 99.98% of W and no row is cut to fit; rank is lost, legality (claim >= log2 exact sum, aux inside the bound) is not.\\n\\n(1) PREPROCESSING IS NOW CONSTRUCTION-BASED, NOT TAUTOLOGICAL (verdict 5a8a74b6 flaw 1). v32 took each price as the lowest set bit of the row value and divided to manufacture a count (fixed_per_node became count=1, price=2^115): the product was equal BY CONSTRUCTION and justified nothing. v33 replaces every such factorisation with value = count(design) x price(accepted lattice). The design file design-v33.json declares n=2^20, sides=2, nb=2^45, ell=ceil(N/nb)=2^70.650, the itemised per-record table (194 instructions), the 6/5 charging overhead, the measured 70-instruction key kernel, and the price lattice P_walk_entry=18, P_even_form=19, P_scan=6, P_store=9, P_route_sort=153 (each a documented SUM of itemised operations). Every one of the 14 rows carries count_expr and price_expr over those constants only: walk_list = ell x (P_walk_entry+P_even_form); gap_point_tables = 2 x nb x 2^33 x 15 x 2000; gap_retry_worst = 192 x (q/(1-q)) x ell x 2303 with q=1163388/10^8 and exact integer ceil; candidate_scan_cap = 2^84 x 2^20; run_pair_cap = 2^95 x 2. NON-TAUTOLOGY IS PROVEN BY RECOMPUTE: audit_v33.py re-evaluates all 14 rows from design-v33.json with its own namespace that contains NO row value, and requires every per-item price to lie INSIDE the accepted lattice; a planted control replaces fixed_per_node with the v32 stub (count=1, price=the row value) and the audit REJECTS it (audit-v33.json:planted_tautology_control_caught), so the validator can demonstrably see the defect it is looking for. Carry-along consequence, disclosed: rebuild at the production sizing drops the small rows (chain_tables 109.6 -> 38.2 bits, walk_list 108.0 -> 75.9), which is a LOWER total, not a higher one; the dominant row is unchanged.\\n\\n(2) THE CLAIM IS THE MEASURED SUCCESS QUANTITY (flaw 2). v32 claimed K_eff=0.508674, a collision INTENSITY, as if it were success; under the reviewer's Poisson reading it would be 1-exp(-0.508674)=0.3987. v33 does not argue with that map: it removes K_eff from the claim entirely and claims success=0.395879 = structured-ladder.json:pooled_long_walks.cp95_lower, the one-sided CP-95 LOWER endpoint measured on the production structure (shared walk list, base x walk products, mu6 hit test, 200000 trials, q=0.397680). The identity is asserted by key path in audit_v33.py:success_claim_is_measured_quantity AND the literal 0.395879 is checked in this statement and in the note, so the claim string parses numerically to the owning JSON value. The Poisson value 0.398666 is printed in ledger-v33.json:success.poison_diagnostic_only as a DIAGNOSTIC and is not the claim.\\n\\n(3) CENSUS AT THE PRODUCTION DISTRIBUTION (flaw 3). v32's census_crossside.py drew independent uniform integers in Fp and hashed their low 20 bits; the reviewer is right that this is not the production stream. census_prod_v33.py samples the production DENSITY: bases a_i=[k]P0 with k uniform in [0,2^span), ONE SHARED walk list w_l=[s]P0 with s uniform in [0,2^band), record scalar e=k+s exact (span+band=37 bits, no wrap), y = the CANONICAL EVEN representative, key = key_mixed_final(y) over the full 168-bit image. Three cells at one records/trial and one key width: production-pool cross-side kappa=2.2376 (upper95 2.5954), canonicalised-uniform 0.9481 (1.1877), v32 uniform control 0.8723 (1.1028). kappa is NOT invariant: the production cell sits ABOVE the control, so the charge RISES to 2.613761 = max upper95 over all cells (v32 carried 1.231). E_bad = 2.613761*N^2/2^168 = 2^64.687 vs cap 2^84, still 19.3 bits under. The census also reports the joint 168-bit output: per-window balance and pairwise 8-bit joint chi-square for the three 56-bit windows, production vs uniform. The y-coordinate is modelled by a public injective map of the record scalar (disclosed surrogate: dependence structure exact, curve group law not executed at 41-bit scale).\\n\\n(4) GAP ROW: PRODUCTION ell AND AN ABORT BOUND (flaw 4). v32's gap_rows() put the FIXTURE ell=4774 into NB*ell. v33 uses ell=ceil(N/NB)=2^70.650, and replaces the expected maximum with a UNION BOUND over DISTINCT gaps: the walk list is SHARED, so repeated uses are not fresh draws and the bound counts ell-1=2^70.650 gaps once each. P(max gap > 2^33) <= (ell-1)*exp(-2^33/mu) = 2^-105.6 < 2^-100 with mu=2^26.067, so the gap tables are charged at 2^33 entries/base (2^32 in v32) and gap_self_check is charged over ell-1 distinct gaps. The expectation mu*ln(ell-1)=2^31.681 is printed as a diagnostic only; the abort probability, not an expectation, is what the row is built on.\\n\\nSCOPE: no production run (N=2^115.650). Unit costs are declared ledger integers, the key kernel is counted from the compiled body (70 instructions, 4096/4096 hot-path calls, 64/64 C==Python). DISCLOSED AND NOT CLAIMED AS TRANSFERABLE: the absolute nb/ell split, the 97-bit exponent sliver, the 2^38 fixture order, and the production gap tail's exponential hypothesis. The claim is the honest total and it is 0.0268 bits over the live head; shipping less would require either the 64-bit key the review refuted or a cut in the row that is 99.98% of W.",
+   "score": {
+    "numerator": "1168539",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "public-note.md",
+    "design-v33.json",
+    "derive_v33.py",
+    "ledger-v33.json",
+    "audit_v33.py",
+    "audit-v33.json",
+    "preflight_v33.py",
+    "census_prod_v33.py",
+    "census-prod-v33.json",
+    "key_collision_test.py",
+    "key-collision-v32.json",
+    "keymod.py",
+    "key_mixed_final.c",
+    "key_driver.c",
+    "structured_walk_v31.c",
+    "structured-ladder.json",
+    "arm-retune-v31.jsonl",
+    "certificate.json",
+    "kappa-v26.json",
+    "direct_v25.py",
+    "direct-v25.json",
+    "fixtures-v25.json",
+    "gate-v25.json"
+   ]
+  }
+ ],
+ "experiments": []
+}
