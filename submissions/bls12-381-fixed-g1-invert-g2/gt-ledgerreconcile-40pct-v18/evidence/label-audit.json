@@ -1,0 +1,342 @@
+{
+ "claim_rows": [
+  {
+   "row": "claim",
+   "printed": "125.7704",
+   "in_certificate": true
+  },
+  {
+   "row": "S",
+   "printed": "125.821225",
+   "in_certificate": true
+  },
+  {
+   "row": "W_raw",
+   "printed": "125.727538",
+   "in_certificate": true
+  },
+  {
+   "row": "W_stress",
+   "printed": "125.770322",
+   "in_certificate": true
+  },
+  {
+   "row": "success",
+   "printed": "0.3964571",
+   "in_certificate": true
+  },
+  {
+   "row": "success.net",
+   "printed": "0.3962569",
+   "in_certificate": true
+  },
+  {
+   "row": "reports.cap_log2",
+   "printed": "46.821225",
+   "in_certificate": true
+  },
+  {
+   "row": "reports.mean_log2",
+   "printed": "45.821225",
+   "in_certificate": true
+  },
+  {
+   "row": "aux.total_log2",
+   "printed": "56.510",
+   "in_certificate": true
+  },
+  {
+   "row": "trap.tau_log2",
+   "printed": "-10.951606",
+   "in_certificate": true
+  },
+  {
+   "row": "trap.waste_log2",
+   "printed": "-11.951606",
+   "in_certificate": true
+  },
+  {
+   "row": "storage.peak",
+   "printed": "13925508660337600",
+   "in_certificate": true
+  },
+  {
+   "row": "aux.over_W_stress",
+   "printed": "-69.260",
+   "in_certificate": true
+  }
+ ],
+ "claim_rows_missing_from_certificate": [],
+ "label_rows": [
+  {
+   "file": "public-note.md",
+   "label": "2^-10.9516",
+   "row": "trap.tau_log2",
+   "rel_err": 4.158891732024874e-06,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^125.821225",
+   "row": "S",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^125.727538",
+   "row": "W_raw",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^125.770322",
+   "row": "claim",
+   "rel_err": 5.4064018573342594e-05,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^46.821225",
+   "row": "reports.cap_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^45.821225",
+   "row": "reports.mean_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^-69.26",
+   "row": "aux.over_W_stress",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^45.821",
+   "row": "reports.mean_log2",
+   "rel_err": 0.00015594595479147334,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^46.821",
+   "row": "reports.cap_log2",
+   "rel_err": 0.00015594595479147334,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^56.51",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^125.821225",
+   "row": "S",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^125.770322",
+   "row": "claim",
+   "rel_err": 5.4064018573342594e-05,
+   "ok": true
+  },
+  {
+   "file": "public-note.md",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^125.821225",
+   "row": "S",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^45.821",
+   "row": "reports.mean_log2",
+   "rel_err": 0.00015594595479147334,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^46.821",
+   "row": "reports.cap_log2",
+   "rel_err": 0.00015594595479147334,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^56.51",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^125.821225",
+   "row": "S",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^125.727538",
+   "row": "W_raw",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^125.770322",
+   "row": "claim",
+   "rel_err": 5.4064018573342594e-05,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^-69.26",
+   "row": "aux.over_W_stress",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^125.770322",
+   "row": "claim",
+   "rel_err": 5.4064018573342594e-05,
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^125.7704",
+   "row": "claim",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^125.770322",
+   "row": "claim",
+   "rel_err": 5.4064018573342594e-05,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^125.821225",
+   "row": "S",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^45.821",
+   "row": "reports.mean_log2",
+   "rel_err": 0.00015594595479147334,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^46.821",
+   "row": "reports.cap_log2",
+   "rel_err": 0.00015594595479147334,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^56.51",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^125.821225",
+   "row": "S",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^125.727538",
+   "row": "W_raw",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^125.770322",
+   "row": "claim",
+   "rel_err": 5.4064018573342594e-05,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^56.510",
+   "row": "aux.total_log2",
+   "rel_err": 0.0,
+   "ok": true
+  },
+  {
+   "file": "submission.json",
+   "label": "2^-69.26",
+   "row": "aux.over_W_stress",
+   "rel_err": 0.0,
+   "ok": true
+  }
+ ],
+ "label_rows_bad": [],
+ "planted_flip_rejected": true,
+ "literals_checked": 116,
+ "literals_unmatched": []
+}

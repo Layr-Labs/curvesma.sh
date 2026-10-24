@@ -1,0 +1,21 @@
+{
+ "both_ways": {
+  "as_charged_2^46.82": "cap = 2 x ceil(S/2^80), matches the trigger",
+  "as_declared_2^121.56": "requires 19.1 steps/report, infeasible"
+ },
+ "cap": 124334897683328,
+ "cap_log2": 46.82122460991794,
+ "declared_cumulative": 124334897683328,
+ "mean_dp_hits": 62167448841664,
+ "mean_log2": 45.82122460991794,
+ "ships": "2^46.82 (the charge); the 2^121.56 declaration is withdrawn",
+ "theta_bits": 80,
+ "trigger": "a report is the trail-terminating distinguished point: the DP predicate at width theta = 2^80 ends the trail, a fresh trail starts, so reports = trail starts",
+ "withdrawn_v17": {
+  "derivation": "2 x measured fixture reports/step x S",
+  "log2": 121.55841,
+  "steps_per_report": 19.197072287926982,
+  "value": 3914963329669988619492121185676689408,
+  "why_wrong": "the fixture DP width is 2^-5, production is 2^-80"
+ }
+}

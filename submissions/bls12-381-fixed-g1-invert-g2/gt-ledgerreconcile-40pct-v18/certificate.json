@@ -1,0 +1,439 @@
+{
+ "aux": {
+  "cap_slack": "2^1.000",
+  "gt_exp_starts": "2^56.510",
+  "report_cap_drain": "2^41.248",
+  "report_writes": "2^37.341",
+  "restart_bookkeeping": "2^36.534",
+  "solve": "2^9.015",
+  "store_lookup": "2^41.248",
+  "table_build": "2^20.585",
+  "total": "2^56.510",
+  "verify": "2^9.000"
+ },
+ "aux_single_source": {
+  "dense_mults_charged": 191,
+  "gt_squarings": 381,
+  "note": "411.59 uses the mean Hamming weight 190; 191 is charged",
+  "superseded_value": 411.59,
+  "total_ref_units_one_gt_exp": 412.5896,
+  "total_ref_units_one_gt_exp_exact": "381*(11632/20000)+191"
+ },
+ "census": {
+  "5": {
+   "dp_bits": 5,
+   "dp_hits": 20990,
+   "model_reports_per_step": 0.03125,
+   "note": "DP density at the fixture is 2^-5 (production 2^-80); the row is a RATE calibration of the report stream, not a transfer of the count.",
+   "ratio_measured_over_model": 0.8396,
+   "reports_per_step": 0.0262375,
+   "reports_per_walk": 52.475,
+   "steps_per_walk": 2000,
+   "walks": 400
+  }
+ },
+ "certificate": "v18 ledger-and-label reconcile, bls12-381-fixed-g1-invert-g2",
+ "checks": [
+  {
+   "name": "success_model_at_least_floor",
+   "ok": true,
+   "value": "0.3964571"
+  },
+  {
+   "name": "success_strict_at_least_floor",
+   "ok": true,
+   "value": "0.3962569"
+  },
+  {
+   "name": "strict_is_the_claimed_success",
+   "ok": true,
+   "value": "pending/trapped walks scored FAILURE: 0.3962569"
+  },
+  {
+   "name": "strict_success_debit_is_the_trap_row",
+   "ok": true,
+   "value": "2.002e-04"
+  },
+  {
+   "name": "report_trigger_is_the_distinguished_point",
+   "ok": true,
+   "value": "theta = 2^80 steps; one report per trail, trail terminated by its first DP"
+  },
+  {
+   "name": "cumulative_reports_equal_trail_starts",
+   "ok": true,
+   "value": "ceil(S/theta) = 62167448841664 = 2^45.821225"
+  },
+  {
+   "name": "cap_is_two_times_mean",
+   "ok": true,
+   "value": "2^46.821225"
+  },
+  {
+   "name": "withdrawn_declaration_is_reproducible_from_the_fixture_rate",
+   "ok": true,
+   "value": "2 x 0.0262375 x 2^125.810636 = 2^121.558410"
+  },
+  {
+   "name": "withdrawn_declaration_was_also_priced_against_the_stale_S",
+   "ok": true,
+   "value": "stale 2^125.810636, regenerated 2^125.821225"
+  },
+  {
+   "name": "withdrawn_declaration_is_infeasible_under_the_trigger",
+   "ok": true,
+   "value": "needs 19.20 steps/report, but the production DP interval is 2^80"
+  },
+  {
+   "name": "report_bound_holds_on_the_trigger_not_on_the_fixture_rate",
+   "ok": true,
+   "value": "cap x theta = 2^126.8 > S = 2^125.8"
+  },
+  {
+   "name": "label_matches_decimal:ledger.log2_S",
+   "ok": true,
+   "value": "3.10e-09"
+  },
+  {
+   "name": "label_matches_decimal:ledger.log2_W_raw",
+   "ok": true,
+   "value": "9.60e-11"
+  },
+  {
+   "name": "label_matches_decimal:ledger.log2_W_stress",
+   "ok": true,
+   "value": "3.71e-09"
+  },
+  {
+   "name": "label_matches_decimal:claim.log2",
+   "ok": true,
+   "value": "6.20e-07"
+  },
+  {
+   "name": "label_matches_decimal:reports.cap_log2",
+   "ok": true,
+   "value": "8.33e-09"
+  },
+  {
+   "name": "label_matches_decimal:reports.mean_dp_hits_log2",
+   "ok": true,
+   "value": "8.51e-09"
+  },
+  {
+   "name": "label_matches_decimal:aux.total",
+   "ok": true,
+   "value": "9.32e-05"
+  },
+  {
+   "name": "label_matches_decimal:trap.tau_log2",
+   "ok": true,
+   "value": "1.94e-08"
+  },
+  {
+   "name": "label_matches_decimal:trap.waste_log2",
+   "ok": true,
+   "value": "1.78e-08"
+  },
+  {
+   "name": "label_matches_decimal:aux.over_W_stress",
+   "ok": true,
+   "value": "6.60e-06"
+  },
+  {
+   "name": "planted_flip_control_fails_the_audit",
+   "ok": true,
+   "value": "negating trap.tau_log2 makes rel_err 2.00 >> 5e-4"
+  }
+ ],
+ "checks_fail": 0,
+ "checks_pass": 22,
+ "checks_total": 22,
+ "claim": {
+  "above_W_raw_bits": "4.286e-02",
+  "above_W_stress_bits": "7.753e-05",
+  "denominator": 10000,
+  "log2": "125.770400",
+  "numerator": 1257704,
+  "value": 125.7704
+ },
+ "failed": [],
+ "failed_gate": [
+  {
+   "evidence": "evidence/sigma-set.json:enumeration.closed_and_inversion_free",
+   "name": "no_inversion_free_sigma_stable_column_table",
+   "status": "UNMET",
+   "why": "exhaustive over 2^12 subsets: only {} and Z/12 are closed, and Z/12 contains the inverse pairs {k,k+6}"
+  },
+  {
+   "evidence": "evidence/retention.json:marginal",
+   "name": "class_marginal_uniformity_refuted_at_fixture",
+   "status": "REFUTED",
+   "why": "chi2 = 238889.4 on 526 df; uniformity is a MODEL PREMISE, and the concentration can only raise the collision probability, so pricing with 1/N is conservative and the credit is not taken"
+  },
+  {
+   "evidence": "evidence/class-retention.json:class_stream",
+   "name": "production_scale_class_stream_census",
+   "status": "UNMET",
+   "why": "the sweep stops at R = 1024; no production census is claimed"
+  }
+ ],
+ "label_audit": [
+  {
+   "label": 125.821225,
+   "ok": true,
+   "printed": "125.821225",
+   "recomputed": 125.821225,
+   "rel_err": 3.1002883642867874e-09,
+   "row": "ledger.log2_S"
+  },
+  {
+   "label": 125.727538,
+   "ok": true,
+   "printed": "125.727538",
+   "recomputed": 125.727538,
+   "rel_err": 9.595108784012348e-11,
+   "row": "ledger.log2_W_raw"
+  },
+  {
+   "label": 125.770322,
+   "ok": true,
+   "printed": "125.770322",
+   "recomputed": 125.770322,
+   "rel_err": 3.706732236121196e-09,
+   "row": "ledger.log2_W_stress"
+  },
+  {
+   "label": 125.7704,
+   "ok": true,
+   "printed": "125.770322",
+   "recomputed": 125.7704,
+   "rel_err": 6.201777206880228e-07,
+   "row": "claim.log2"
+  },
+  {
+   "label": 46.821225,
+   "ok": true,
+   "printed": "46.821225",
+   "recomputed": 46.821225,
+   "rel_err": 8.331308302421706e-09,
+   "row": "reports.cap_log2"
+  },
+  {
+   "label": 45.821225,
+   "ok": true,
+   "printed": "45.821225",
+   "recomputed": 45.821225,
+   "rel_err": 8.513130337370515e-09,
+   "row": "reports.mean_dp_hits_log2"
+  },
+  {
+   "label": 56.509866,
+   "ok": true,
+   "printed": "2^56.510",
+   "recomputed": 56.509866,
+   "rel_err": 9.321148550080106e-05,
+   "row": "aux.total"
+  },
+  {
+   "label": -10.951606,
+   "ok": true,
+   "printed": "-10.951606",
+   "recomputed": -10.951606,
+   "rel_err": 1.9414727524652573e-08,
+   "row": "trap.tau_log2"
+  },
+  {
+   "label": -11.951606,
+   "ok": true,
+   "printed": "-11.951606",
+   "recomputed": -11.951606,
+   "rel_err": 1.7790282419112273e-08,
+   "row": "trap.waste_log2"
+  },
+  {
+   "label": -69.260457,
+   "ok": true,
+   "printed": "-69.260",
+   "recomputed": -69.260457,
+   "rel_err": 6.597352920386439e-06,
+   "row": "aux.over_W_stress"
+  }
+ ],
+ "ledger": {
+  "C_REF": 20000,
+  "FP_MUL": 383,
+  "S": "75155834044258079300444605238535429486",
+  "W_raw": "281721643914901410257716602736650057428271/4000",
+  "W_stress": "14510073833505752467259288377285700496858819/200000",
+  "c_raw": "0.937125",
+  "c_stress": "0.965333",
+  "delta": "0.030100",
+  "f_sqr": "3/8",
+  "log2_S": "125.821225",
+  "log2_W_raw": "125.727538",
+  "log2_W_stress": "125.770322",
+  "rows": {
+   "column_addr": 16,
+   "cyclo_sqr": 11632,
+   "dense_reference": 20000,
+   "dp_test": 8,
+   "escape": 0,
+   "fold_mul": 1921,
+   "fold_sqr": 1813,
+   "guard": 48,
+   "hist_slot": 32,
+   "key_hash": 72,
+   "label_add": 28,
+   "loop": 32,
+   "mul_step": 21921,
+   "renorm": 0,
+   "selector": 1613,
+   "sigma_on_state": 0,
+   "sqr_step": 13445,
+   "table_fetch": 72
+  }
+ },
+ "record": {
+  "bytes": 112,
+  "key_bytes": 48,
+  "label_bytes": 32,
+  "words": 14
+ },
+ "reports": {
+  "cap": 124334897683328,
+  "cap_log2": "46.821225",
+  "cap_over_mean": 2,
+  "charge_equals_declaration": true,
+  "chernoff_status": "WITHDRAWN: exp(-mean/3) needs an independence argument that repeated class-keyed DP tests do not supply",
+  "declared_cumulative_log2": "46.821225",
+  "declared_cumulative_reports": 124334897683328,
+  "inequality": "P(R > cap) <= 1/2 (per-walk Markov, mean only, no independence)",
+  "mean_dp_hits": 62167448841664,
+  "mean_dp_hits_log2": "45.821225",
+  "overflow_policy": "drop-oldest + drain, charged at the CAP",
+  "theta_bits": 80,
+  "trigger": "a report is the trail-terminating distinguished point: the DP predicate at width theta = 2^80 ends the trail, a fresh trail starts, so reports = trail starts",
+  "withdrawn_reason": "2^121.56 = 2 x fixture_rate(2^-5) x S conflates the fixture DP width with the production density; it needs 19.20 steps/report, below the 2^80 trigger interval, so it is infeasible and was never chargeable",
+  "withdrawn_v17_declaration_log2": 121.55841
+ },
+ "retention": {
+  "carried": 1.0,
+  "excess_charged": 1.014787,
+  "known_answer_gate": "240/240",
+  "marginal": {
+   "block_split": {
+    "blocks": 8,
+    "chi2_over_df_per_block": [
+     51.83916023051329,
+     56.41690916112173,
+     54.02408745247159,
+     60.52533002614071,
+     61.361291290399315,
+     54.36723859315591,
+     58.52559796815595,
+     61.88243643060837
+    ],
+    "chi2_per_block": [
+     27267.398281249993,
+     29675.29421875003,
+     28416.670000000056,
+     31836.323593750014,
+     32276.03921875004,
+     28597.16750000001,
+     30784.46453125003,
+     32550.161562500005
+    ],
+    "max_chi2_over_df": 61.88243643060837,
+    "min_chi2_over_df": 51.83916023051329,
+    "walks_per_block": 64
+   },
+   "chi2": 238889.4407031254,
+   "chi2_over_df": 454.16243479681634,
+   "class_cells_equal_expected_N": false,
+   "class_cells_observed": 527,
+   "df": 526,
+   "expected_classes": 785,
+   "expected_per_cell": 194.30740037950665,
+   "fixture_bits": 5,
+   "max_cell_deviation_relative": 6.5653320312500005,
+   "note": "the class key is the sigma-invariant min of the twelve Frobenius keys; cells = distinct keys observed = N = (r-1)/12 exactly; a uniform class marginal is the null, so chi2/df near 1 and a p-value that is not tiny is the confirmation the verdict asked for.",
+   "p_value": 0.0,
+   "r": 9421,
+   "samples": 102400,
+   "steps_per_walk": 200,
+   "walks": 512
+  },
+  "note": "215/240 is the DETECTION row; 215/215 witness usability; the 240/240 is the planted-label gate, not usability",
+  "p_detect": 0.8958333333333334,
+  "p_detect_cp95_lower": 0.8575558748268416,
+  "p_usable_given_detected": 1.0,
+  "witness_usable": "215/215"
+ },
+ "storage": {
+  "advice_bytes": "113246208",
+  "code_bytes": "262144",
+  "guard_history_bytes": "192",
+  "label_bytes": "256",
+  "overflow_policy": "drop-oldest + drain, charged in ledger.aux:report_cap_drain; capacity is the CAP, so no run exceeds it",
+  "peak_bytes": "13925508660337600",
+  "record_bytes": "112",
+  "records": "124334897683328",
+  "report_cap": "124334897683328",
+  "scratch_bytes": "4608",
+  "store_bytes": "13925508540532736",
+  "u_label_bytes": "6291456"
+ },
+ "success": {
+  "debit_bits": "2.002e-04",
+  "debit_row": "trapped/pending trails x tau = 2^-10.951606",
+  "floor": 0.39,
+  "lambda_": "0.5049381183",
+  "model": "0.3964571",
+  "mu": "11/10",
+  "net": "0.3962569",
+  "note": "success_model is the analytic birthday row; success.net scores every trail that has not reported by the cutoff, including absorbing-trapped trails, as FAILURE. The claim rests on success.net.",
+  "pending_as_failure": true
+ },
+ "trap": {
+  "absorbed_by_mu_allowance": true,
+  "max_p_pair_measured": 0.0019270718232044198,
+  "method": "measured element-repeat amplification x measured zero-increment fraction (the v16 cardinality count is WITHDRAWN)",
+  "reconciliation": {
+   "bound_at_fixture_scale": 0.07961783439490445,
+   "bound_at_or_above_observation": true,
+   "fixture_elements": 9420,
+   "fixture_window_steps": 400,
+   "observed_trap_fraction_at_fixture": 0.0
+  },
+  "tau": 0.0005049381183466453,
+  "tau_log2": "-10.951606",
+  "waste_fraction_of_walk": 0.00025246905917332267,
+  "waste_log2": "-11.951606",
+  "withdrawn_cardinality": [
+   {
+    "depth": 12,
+    "status": "WITHDRAWN (contradicted by 164/256 fixture repeats)",
+    "tau_log2": "-215.234190"
+   },
+   {
+    "depth": 24,
+    "status": "WITHDRAWN (contradicted by 164/256 fixture repeats)",
+    "tau_log2": "-426.253740"
+   },
+   {
+    "depth": 48,
+    "status": "WITHDRAWN (contradicted by 164/256 fixture repeats)",
+    "tau_log2": "-848.292840"
+   },
+   {
+    "depth": 128,
+    "status": "WITHDRAWN (contradicted by 164/256 fixture repeats)",
+    "tau_log2": "-2255.089840"
+   }
+  ],
+  "zero_increment_cp95_upper": 0.009375,
+  "zero_increment_events": 0,
+  "zero_increment_trials": 320
+ },
+ "verdict": "PASS"
+}
