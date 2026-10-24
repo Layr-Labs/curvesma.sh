@@ -1,0 +1,84 @@
+{
+ "checks": [
+  {
+   "detail": "log2 W 126.26594404 -> claim 126.266",
+   "name": "claim_is_ceil_of_W",
+   "ok": true
+  },
+  {
+   "detail": "167 itemised rows",
+   "name": "step_rows_167",
+   "ok": true
+  },
+  {
+   "detail": "1.099950711 <= 1.099993376",
+   "name": "kappa_budget",
+   "ok": true
+  },
+  {
+   "detail": "1.0000 at 10,921 classes and 1.0000 at 43,692 classes; period_2 == 0 at both (evidence/absorb-direct.json:fixtures)",
+   "name": "absorption_measured_on_shipped_process",
+   "ok": true
+  },
+  {
+   "detail": "three-cycle share of residual 0.0263 -> 0.0007, non-increasing, 16,384 starts per size (evidence/absorb-direct.json:fixtures[1].three_cycle_share_of_residual)",
+   "name": "three_cycle_channel_length_resolved",
+   "ok": true
+  },
+  {
+   "detail": "re-pin control moves ge3 mass by 0.7810 and 0.4626 (evidence/absorb-direct.json:mutation)",
+   "name": "absorption_mutation_control_moves",
+   "ok": true
+  },
+  {
+   "detail": "476.644 ref per scalar action, 1,485.1600 ref per fresh start, written by scripts/restart_count.py (evidence/restart-count.json:chain.chain_ref)",
+   "name": "restart_chain_repriced_by_script",
+   "ok": true
+  },
+  {
+   "detail": "ledger.FRESH_REF == evidence/restart-count.json:fresh_ref and ledger.RESTART_REF == METER_CAP",
+   "name": "ledger_consumes_restart_json",
+   "ok": true
+  },
+  {
+   "detail": "every cited path exists, every cited field resolves, 0 orphans, planted wrong path caught (evidence/selfaudit.json)",
+   "name": "citation_path_audit_with_planted_control",
+   "ok": true
+  },
+  {
+   "detail": "0.373911 measured (evidence/walk-census.json:arms[-1].cp95 minus debits); 0.3995 model row with analytic walker/DP factors (public-note.md)",
+   "name": "measured_row_and_model_row_labeled",
+   "ok": true
+  },
+  {
+   "detail": "measured 0.373911 < 0.39 and the note states the deficit (0.0161) and the DECISION HOLD",
+   "name": "floor_deficit_disclosed",
+   "ok": true
+  },
+  {
+   "detail": "the work cap is an expenditure bound; the note states the cap-loss row was NOT measured and no lossless-cap claim is made",
+   "name": "cap_loss_not_claimed",
+   "ok": true
+  },
+  {
+   "detail": "matched-pair d=0 control did not run (census_v20n.py aborted: zero escape fires in 86.4M lane-steps); the note ships that failure verbatim rather than a proxy",
+   "name": "matched_pair_control_not_shipped_disclosed",
+   "ok": true
+  }
+ ],
+ "claim": {
+  "log2_work": "126.26594404",
+  "score": "126.266",
+  "success_probability": "0.373911",
+  "success_model_row": "0.3995"
+ },
+ "cost_model": {
+  "C": 2000,
+  "N_classes": "(r-1)/6",
+  "R_eff": 852105,
+  "dp_bits": 60,
+  "kappa": "1.015"
+ },
+ "revision": "plain-orbitrow-decomposition-40pct-v20n",
+ "supersedes": "e9ee1dbc (v20m)"
+}
