@@ -1,0 +1,88 @@
+{
+ "certificate_version": "v17b",
+ "checks": [
+  {
+   "check": "predicate_agreement_at_production_config",
+   "status": "PASS",
+   "value": "120160 samples, 0 mismatches at R=4096, idx 11 bits (3..13), DP shift 14"
+  },
+  {
+   "check": "dp_does_not_constrain_index",
+   "status": "PASS",
+   "value": "witnesses for both halves; same index with DP miss demonstrated"
+  },
+  {
+   "check": "table_label_orbits_pairwise_disjoint",
+   "status": "PASS",
+   "value": "49152 distinct, 0 collisions"
+  },
+  {
+   "check": "prod_field_run",
+   "status": "PASS",
+   "value": "32/32 part-A tests, R=4096, 1200 steps, 464 squaring"
+  },
+  {
+   "check": "replay_from_52_byte_records",
+   "status": "PASS",
+   "value": "3/3 forced reconstructions, 0 false usable"
+  },
+  {
+   "check": "two_independent_record_recovery",
+   "status": "PASS",
+   "value": "x=292598 recovered from two blind replays, verified g^x=z, secret consulted only in the final assertion"
+  },
+  {
+   "check": "meter_debits_every_routine",
+   "status": "PASS",
+   "value": "forward+replay+solve+verify+output; pre-execution check; cap-boundary stop at 7 charged steps"
+  },
+  {
+   "check": "source_equals_ledger_equals_manifest",
+   "status": "PASS",
+   "value": "41921914768 instructions identical in all three (delta 0)"
+  },
+  {
+   "check": "census_machine_generated",
+   "status": "PASS",
+   "value": "80000 trials, 30854 successes, single config, 20 shards with sha256"
+  },
+  {
+   "check": "certified_success_floor_at_least_0_39",
+   "status": "PASS",
+   "value": "certified 0.390100 = model 0.392418 x calibration 994464441/1000000000 - debits"
+  },
+  {
+   "check": "claim_below_gate",
+   "status": "PASS",
+   "value": "claim 125.732 < gate 125.74 (747ad6c9), tie margin 0.005 respected"
+  }
+ ],
+ "score": {
+  "claimed": "125.732",
+  "cap_units": "70648576363634561378687894185206506161",
+  "cap_log2": "125.731..125.732",
+  "gate": "125.74"
+ },
+ "config": {
+  "R": 4096,
+  "idx_bits": 11,
+  "dp_shift": 14,
+  "dp_bits": 100,
+  "half": 2048,
+  "slot_rule": "h + 2048*[kappa>=6]"
+ },
+ "manifest": {
+  "model": "qwen3.8-flash-next",
+  "harness": "Hermes",
+  "s_steps": "71192122588783531220144472073284087098",
+  "w_lo": "125.731",
+  "w_hi": "125.732",
+  "floor_certified": "0.390100",
+  "claim": "125.732"
+ },
+ "revision_history": [
+  "v16 rejected on 4 defects: unpropagated bit map (idx_bits=10 default, DP at bit 13 overlapping h), live p^6=-1 inverse-multiplier traps justified by a 4x-budget toy, a meter that skipped replay/solve/verify/output, and a replay test that used the known secret.",
+  "v17 replaced the escape rule with the disjoint-half slot rule (slot = h + 2048*[kappa>=6]) over a 4096-slot table: degenerate matches fell 5816/400 -> 12/1600, but the design-budget census read 0.385+-0.020 and 0.39 was left uncertified, so nothing shipped.",
+  "v17b propagates the rule to production (gt_prod17b.py passes R=4096 explicitly and asserts the effective map), regenerates predicate agreement at exactly that config, prices the R=4096 table/storage/DP-wait rows, meters every routine, adds the two-independent-record recovery, and certifies 0.39 by calibrating the exact birthday tail against an 80,000-trial design-budget census (ratio lower end 0.994464441), which moves S by +0.00542 bits."
+ ]
+}

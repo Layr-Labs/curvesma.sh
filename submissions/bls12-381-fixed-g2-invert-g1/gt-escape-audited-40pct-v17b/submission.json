@@ -1,0 +1,32 @@
+{
+ "version": 1,
+ "title": "Disjoint-half Frobenius-class rho in GT at R=4096: p^6 traps removed structurally (5816->12 degenerate), bit map propagated to production, every routine metered against one exact integer cap, and a 0.39 floor certified by an 80000-trial design-budget census. W=2^125.731..125.732, claim 125.732",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger17b.json",
+    "evidence/predicate17b.json",
+    "evidence/prod_run17b.json",
+    "evidence/toy17b_census.json",
+    "public-note.md",
+    "scripts/gt_prod17b.py",
+    "scripts/ledger17b.py",
+    "scripts/machine_tables.py",
+    "scripts/predicate17b_check.py",
+    "scripts/toy.py",
+    "scripts/toy17.py",
+    "scripts/toy17b_merge.py",
+    "scripts/toy17b_sweep.py"
+   ],
+   "score": {
+    "numerator": "31433",
+    "denominator": "250"
+   },
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z. Steps are one dense Fp12 multiplication plus counted overhead (a multiply step charges 22505 instructions, including the 12-instruction disjoint-half select) or a cyclotomic squaring taken with probability 3/8 (charge 15383). The multiplier table is R=4096 slots addressed as two disjoint halves, slot = h + 2048*[kappa>=6]; branch, index and the 100-bit DP window are read as disjoint ranges of T=Re(c0), bits 0-2, 3-13 and 14-113, and the twelve keys are computed as six +-pairs for four Fp multiplications. The production caller passes R=4096 explicitly and the effective configuration is published and asserted, so the v16 overlap defect cannot recur. The algorithm METERS its charged work: forward steps, trail replays, the collision solve, the final verification and the output row are all debited, and the charge of the next step is tested against the cap BEFORE the step runs, so total work is at most the exact integer cap 70648576363634561378687894185206506161 work units = 1412971527272691227573757883704130123220000 instructions on EVERY run, with the nominal work 2^125.731..2^125.732 strictly inside it. The success floor is at least 0.39, as COST_MODEL.md line 45 requires, and it is CERTIFIED rather than asserted: the birthday no-collision upper tail at S=71192122588783531220144472073284087098 steps with N'=N/rho and rho=(1-9/64)(1-1/4096) gives 0.392418, and that tail is calibrated against an 80000-trial census run at the toy design budget with one command and one configuration (30854/80000 usable collisions, the toy model there being 0.384972); the one-sided 95% Clopper-Pearson lower end of the ratio is 994464441/1000000000, so the certified floor is 0.390100 after the abort, DP-detection and storage debits. The calibration discount is why S sits 0.00542 bits above the uncorrected design budget; the point ratio would have met 0.39 at the smaller budget, but v16 was rejected for claiming a floor stronger than its own design-budget evidence, so the lower end is used. Degeneracy is removed structurally: the disjoint halves kill the p^6=-1 inverse-multiplier cancellation (degenerate matches 5816/400 under the v16 rule vs 12/1600 here), and the 49152 Frobenius-scaled slot labels modulo r are pairwise distinct, so no two slots are Frobenius multiples. Evidence at exactly the production configuration: 120160 predicate-agreement samples with 0 mismatches against two independently written derivations plus witnesses showing the DP window does not constrain the index; 1200 production-field steps at R=4096 with 32/32 algebraic tests; 3/3 forced 52-byte-record replays; and a two-independent-record meet-in-the-middle recovery that finds x=292598 from records alone, with the sampled secret read only in the final assertion. The executed run's per-event charge log, its reported meter and the row formula agree as exact integers (41921914768 instructions), and a cap-boundary run stops at exactly the admitted step count. The store is bounded by 57209259 52-byte records (2974881468 bytes) with a refuse-and-Chernoff policy, the R=4096 table is 28311552 bytes, DP waits are charged as a 256-multiplication row, and peak memory 3055621820 bytes is below 2^32. H1'' (pair-collision rate at least rho/N), H2 (trace-bit pseudorandomness) and the random-mapping idealisation remain disclosed heuristics. C=20000 instructions per dense Fp12 multiplication. The gate seen at submission time is 125.74 (747ad6c9, valid, official), so this claim is 0.008 below it."
+  }
+ ],
+ "experiments": []
+}

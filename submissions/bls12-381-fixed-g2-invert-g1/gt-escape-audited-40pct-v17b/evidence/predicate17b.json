@@ -1,0 +1,134 @@
+{
+ "mode": "predicate-agreement-v17b",
+ "config": {
+  "R": 4096,
+  "idx_bits": 11,
+  "dp_shift": 14,
+  "dp_bits": 100,
+  "half": 2048
+ },
+ "ranges": {
+  "branch": [
+   0,
+   2
+  ],
+  "index": [
+   3,
+   13
+  ],
+  "dp": [
+   14,
+   113
+  ]
+ },
+ "ranges_pairwise_disjoint": true,
+ "samples_tested": 120160,
+ "mismatches_shared_vs_divmod": 0,
+ "mismatches_shared_vs_ranges": 0,
+ "witness_index_and_dp_hit_both_halves": [
+  {
+   "T": 5,
+   "branch": "multiply",
+   "index": 0,
+   "dp_hit": true,
+   "kappa_ge_6": false,
+   "slot": 0
+  },
+  {
+   "T": 5,
+   "branch": "multiply",
+   "index": 0,
+   "dp_hit": true,
+   "kappa_ge_6": true,
+   "slot": 2048
+  },
+  {
+   "T": 13,
+   "branch": "multiply",
+   "index": 1,
+   "dp_hit": true,
+   "kappa_ge_6": false,
+   "slot": 1
+  },
+  {
+   "T": 13,
+   "branch": "multiply",
+   "index": 1,
+   "dp_hit": true,
+   "kappa_ge_6": true,
+   "slot": 2049
+  },
+  {
+   "T": 8189,
+   "branch": "multiply",
+   "index": 1023,
+   "dp_hit": true,
+   "kappa_ge_6": false,
+   "slot": 1023
+  },
+  {
+   "T": 8189,
+   "branch": "multiply",
+   "index": 1023,
+   "dp_hit": true,
+   "kappa_ge_6": true,
+   "slot": 3071
+  },
+  {
+   "T": 8197,
+   "branch": "multiply",
+   "index": 1024,
+   "dp_hit": true,
+   "kappa_ge_6": false,
+   "slot": 1024
+  },
+  {
+   "T": 8197,
+   "branch": "multiply",
+   "index": 1024,
+   "dp_hit": true,
+   "kappa_ge_6": true,
+   "slot": 3072
+  },
+  {
+   "T": 16005,
+   "branch": "multiply",
+   "index": 2000,
+   "dp_hit": true,
+   "kappa_ge_6": false,
+   "slot": 2000
+  },
+  {
+   "T": 16005,
+   "branch": "multiply",
+   "index": 2000,
+   "dp_hit": true,
+   "kappa_ge_6": true,
+   "slot": 4048
+  },
+  {
+   "T": 16381,
+   "branch": "multiply",
+   "index": 2047,
+   "dp_hit": true,
+   "kappa_ge_6": false,
+   "slot": 2047
+  },
+  {
+   "T": 16381,
+   "branch": "multiply",
+   "index": 2047,
+   "dp_hit": true,
+   "kappa_ge_6": true,
+   "slot": 4095
+  }
+ ],
+ "witness_all_ok": true,
+ "same_index_dp_miss_example": {
+  "T": 32760,
+  "index": 2047,
+  "dp_hit": false
+ },
+ "dp_does_not_constrain_index": true,
+ "command": "python3 scripts/predicate17b_check.py > evidence/predicate17b.json"
+}
