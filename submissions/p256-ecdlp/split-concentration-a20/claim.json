@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "algorithm": "sigma-rho-split-concentration-a20",
+  "claim": {
+    "time_log2": 127.237678,
+    "memory_log2_bytes": 77,
+    "preprocessing_log2": 50,
+    "success_probability": 0.39,
+    "nonuniform_advice_bytes": 0
+  },
+  "premises": [
+    "H1 collision law with inherited epsilon, evaluated at A=2^20",
+    "M1 and L-ori including conditional fresh-class exposure at A=2^20",
+    "H3 instruction pricing and forced-path bounds, with the A-independent common-step argument of proof.md",
+    "A-independence of the measured common step (only compile-time immediates change at the two A-dependent sites)"
+  ],
+  "provenance": {
+    "submission_id": "70ff82dd-a912-4cb5-9224-e6254380606d",
+    "commit": "67c356d5f9896c00a04244b484edd5f6a0483cb0",
+    "predecessor_package": "submissions/p256-ecdlp/split-concentration-x",
+    "earlier_packages": [
+      {
+        "submission_id": "9709e57b-44fc-4085-9ec3-05d5106e66ae",
+        "role": "split-concentration package on which 70ff82dd builds"
+      },
+      {
+        "submission_id": "b89d1d72-d9a1-4ef9-9ed7-c6ef0eec1ed3",
+        "commit": "0e1d63e9afd0fdb04b311b1ae72a2618271b371b",
+        "role": "rho-sigma2 walk, proofs and measurements"
+      }
+    ]
+  },
+  "limitations": [
+    "Conditional analytic bound; no full-size attack execution.",
+    "The inherited Callgrind counts are reused; A-independence of the compiled step is a source-level instruction-for-instruction argument, not a new measurement.",
+    "Production arithmetic and reduced-order evidence originate from the predecessors unless separately identified.",
+    "The predecessor sensitivity multiplier 124 does not apply to the revised budget."
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "title": "P-256 sigma rho: 2^20 adders, concentrated two-cycle cost and residual Markov reserve",
+  "claims": [
+    {
+      "statement": "For uniform full-size P-256 targets Q=[x]P, the classical cold algorithm specified in proof.md and the included predecessor specification recovers x with probability at least 0.39 under the explicitly retained H1, M1/L-ori/global fresh-class exposure and H3 premises. All preprocessing, failures, restarts, memory transfers, lookup, replay, verification and output are charged. The total computation is at most 2^127.237678 target-group-operation equivalents at C=1000 scalar AArch64 instructions per unit. Relative to submission 70ff82dd, the fresh-source two-cycle and longer-entry reserves are reduced by using A=2^20 adders instead of 2^16, and tau is set to 496250/1000000; the walk, the anchor schedule, the measured common step, the split-concentration argument and every forced rare-path price are unchanged. The compiled common step depends on the adder count only through compile-time immediates at two sites, so the inherited Callgrind counts and forced maxima continue to price it instruction for instruction; no new measurement is claimed. Peak memory is at most 2^77 bytes, preprocessing is at most 2^50 units and is included, and nonuniform advice is zero bytes. The probability calculation is conditional on the disclosed heuristics and the arithmetic pricing on H3; these are not certified at production trajectory lengths. Historical evidence is attributed and its measured scope retained.",
+      "score": {
+        "numerator": "63618839",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "predecessor-proof.md",
+        "accounting.py",
+        "claim.json",
+        "evidence/declared-run-double.json",
+        "evidence/lemma-r-sensitivity.json",
+        "evidence/measurement/replay16-production.json",
+        "evidence/measurement/seed1.json",
+        "evidence/measurement/trail-paths.json",
+        "evidence/predecessor-accounting.json",
+        "evidence/sign-law.json",
+        "evidence/sign_law.py",
+        "evidence/trails/a3-b30-s1.json",
+        "evidence/trails/a3-b32-s1.json",
+        "evidence/trails/a3-b34-s1.json",
+        "evidence/trails/a3-b34-s2-a16.json",
+        "evidence/trails/a3-b36-s1.json",
+        "evidence/trails/summary.json",
+        "evidence/trails-stress.json",
+        "measurement/forced/summary.json",
+        "measurement/p256_field.h",
+        "measurement/p256_sub.h",
+        "measurement/reproduce.sh",
+        "measurement/run.sh",
+        "measurement/step.c",
+        "measurement/summarize.py",
+        "measurement/walk_ref.py",
+        "experiment.py",
+        "combined.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "accounting-and-procedure",
+      "source": "combined.py",
+      "purpose": "Recompute the revised full production cost ledger and order certificate, then run the inherited complete reduced-order procedure at tau=0.4965, retaining failures and replay checks. The two results have distinct scopes; neither establishes production mixing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 28
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 80
+          },
+          "adder_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 11
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "tau_e4": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 6000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "curve": {
+            "type": "string",
+            "enum": [
+              "a3"
+            ],
+            "maxLength": 2
+          },
+          "filter_bits": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 64
+          },
+          "check_all_replays": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "escape": {
+            "type": "string",
+            "enum": [
+              "double"
+            ],
+            "maxLength": 6
+          }
+        },
+        "required": [
+          "bits",
+          "trials",
+          "adder_bits",
+          "dp_bits",
+          "walks",
+          "tau_e4",
+          "seed",
+          "curve",
+          "filter_bits",
+          "check_all_replays",
+          "escape"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "a3",
+          "bits": 28,
+          "trials": 80,
+          "seed": 2801,
+          "adder_bits": 11,
+          "dp_bits": 5,
+          "walks": 16,
+          "tau_e4": 4965,
+          "filter_bits": 64,
+          "check_all_replays": 1,
+          "escape": "double"
+        }
+      ]
+    }
+  ]
+}
