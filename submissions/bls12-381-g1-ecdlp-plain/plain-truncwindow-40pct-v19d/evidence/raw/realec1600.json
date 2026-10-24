@@ -1,0 +1,209 @@
+{
+ "fixture": {
+  "G": [
+   218652,
+   2045
+  ],
+  "b": 1,
+  "beta": 43364,
+  "classes": 8341,
+  "log2_sqrtN": 6.513002321489472,
+  "order": 50047,
+  "p": 600217,
+  "table_rows": 2048
+ },
+ "kappa": 1.015,
+ "package": "plain-truncwindow-40pct-v19d",
+ "protocol": {
+  "D1_fix": "merge gated on kappa*S_ref; DP lag excluded and charged separately",
+  "D2_fix": "orbit element resolved on the point; recovery verified before success",
+  "collision_site": "every visited class (coverage S)",
+  "dp": "report gate only; lag <= one spacing, charged separately",
+  "pool": "session-global, shared by all walks"
+ },
+ "s_ref": 90.85184379478763,
+ "sweep_realec": [
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3837527391995895,
+   "dp_bits": 5,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    646,
+    646
+   ],
+   "invariant_row": [
+    125183,
+    125183
+   ],
+   "invariant_step": [
+    125179,
+    125179
+   ],
+   "mean_detect_over_sref": 0.6212441499599636,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.40375,
+   "successes": 646,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3534671019134855,
+   "dp_bits": 6,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    597,
+    597
+   ],
+   "invariant_row": [
+    128781,
+    128781
+   ],
+   "invariant_step": [
+    128781,
+    128781
+   ],
+   "mean_detect_over_sref": 0.6545528874211891,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.373125,
+   "successes": 597,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3788024972889459,
+   "dp_bits": 7,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    638,
+    638
+   ],
+   "invariant_row": [
+    127079,
+    127079
+   ],
+   "invariant_step": [
+    127077,
+    127077
+   ],
+   "mean_detect_over_sref": 0.6489086296114093,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.39875,
+   "successes": 638,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3763281943264675,
+   "dp_bits": 8,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    634,
+    634
+   ],
+   "invariant_row": [
+    126943,
+    126943
+   ],
+   "invariant_step": [
+    126943,
+    126943
+   ],
+   "mean_detect_over_sref": 0.6441832564813358,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.39625,
+   "successes": 634,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3547016129196327,
+   "dp_bits": 9,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    599,
+    599
+   ],
+   "invariant_row": [
+    128616,
+    128616
+   ],
+   "invariant_step": [
+    128612,
+    128612
+   ],
+   "mean_detect_over_sref": 0.652753287724586,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.374375,
+   "successes": 599,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3831338400091637,
+   "dp_bits": 10,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    645,
+    645
+   ],
+   "invariant_row": [
+    125823,
+    125823
+   ],
+   "invariant_step": [
+    125820,
+    125820
+   ],
+   "mean_detect_over_sref": 0.631541879498304,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.403125,
+   "successes": 645,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.38251497475307045,
+   "dp_bits": 11,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    644,
+    644
+   ],
+   "invariant_row": [
+    126773,
+    126773
+   ],
+   "invariant_step": [
+    126770,
+    126770
+   ],
+   "mean_detect_over_sref": 0.6471699570978323,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.4025,
+   "successes": 644,
+   "trials": 1600,
+   "walks": 32
+  }
+ ]
+}

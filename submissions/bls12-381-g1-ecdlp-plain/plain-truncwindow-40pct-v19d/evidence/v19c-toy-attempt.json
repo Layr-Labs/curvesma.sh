@@ -1,0 +1,38 @@
+{
+  "package": "plain-truncwindow-40pct-v19c",
+  "status": "NOT SUBMITTED -- HOLD",
+  "purpose": "reproduce rival 7b34f78d's published toy table on our fixture and find the v19b sweep divergence",
+  "fixture": {"p": 600217, "order": 50047, "classes": 8341, "log2_sqrtN": 6.513, "s_ref": 90.8518},
+  "kappa": 1.015,
+  "rival_table": "rival_toy_table.json",
+  "model_identity": {
+    "L": 0.4947882460683666,
+    "coverage_birthday_at_1.02_S0": 0.4023665609815751,
+    "rival_pure_model_row": 0.4024,
+    "rival_rows_z_vs_model_SE": [-1.5, 0.7, 0.5, -1.1, -2.8],
+    "verdict": "their five rows are the model to +-1%; a theta-capped pool would give 0.0317/0.0020/0.00013 at dp 2/4/6 and would not be flat"
+  },
+  "theta_capped_arm_prediction": {"2": 0.031662, "4": 0.002009, "6": 0.000126, "11": 3.1e-07},
+  "v19b_measured": {"5": 0.0500, "6": 0.0462, "7": 0.0587, "8": 0.0975, "9": 0.2244, "10": 0.1994, "11": 0.0956},
+  "v19c_attempt": {
+    "trials": 300, "walks": 64,
+    "rows": [
+      {"dp_bits": 5, "success": 0.1533, "cp95_lower": 0.1222, "mean_detect_over_sref": 0.936, "invariant_pass": 331, "invariant_checks": 507},
+      {"dp_bits": 8, "success": 0.4567, "cp95_lower": 0.4100, "mean_detect_over_sref": 2.581, "invariant_pass": 727, "invariant_checks": 1331},
+      {"dp_bits": 11, "success": 0.6067, "cp95_lower": 0.5595, "mean_detect_over_sref": 11.194, "invariant_pass": 737, "invariant_checks": 1311}
+    ],
+    "faithful": false,
+    "why_not": [
+      "density-dependent where theirs is flat: the success gate uses charge = ceil(kappa*S_ref) + 2^d, so at high d the DP lag dominates the merge budget",
+      "per-step invariant S == [a]G + [c]T fails 35% of checks after the table rebuilt with fresh (a,b) per row -- row cache and coefficient update disagree"
+    ]
+  },
+  "divergence_found": {
+    "primary": "v19b inserted only DISTINGUISHED points into the collision pool, so the collision space was theta*S instead of the walked coverage S: a 2^-d error in pool size and 2^-2d in the pair count",
+    "evidence": "rival rows are invariant in dp_bits (0.395/0.405/0.404 at dp 2/4/6) while a theta-capped pool must fall 4x per two dp_bits",
+    "secondary": "v19b gated the merge on the ledger's +2^d search charge, conflating report lag with search time"
+  },
+  "certificate": "unchanged from v19b: 16/17, the failing check is the v19b toy's CP-95 gate",
+  "claim": 126.263,
+  "shipped": false
+}

@@ -1,0 +1,36 @@
+{
+  "source": "~/.hermes/cache/scratch/rival-notes/plain-7b34f78d.md",
+  "rival": "mpjunior92 / 7b34f78d (review, valid, claim 126.274)",
+  "package": "submissions/bls12-381-g1-ecdlp-plain/glv-six-class-rho-v14",
+  "construction": "six-class (negation+GLV) rho, NOT the 448-bit truncwindow construction; shared base v13",
+  "kappa": 1.02,
+  "notes": {
+    "trail_definition": "mean trail = mean steps to first DP = 1/theta; column 'Trail / sqrt(N)' = (1/theta)/sqrt(N)",
+    "statistic_A": "P[T_c <= 1.02 S0] per trial, S0 = sqrt(2 N ln(1/0.6097))",
+    "statistic_B": "scaled full pipeline success (budget, phase 2, report capacity, 8-match cap)",
+    "pooled": "0.3988 +- 0.0021 over 54000 trials",
+    "production_trail_over_sqrtN": "2^-62"
+  },
+  "table_P_Tc_le_1.02S0": [
+    {"curve": "q34", "dp_bits": 2, "trail_over_sqrtN": 0.00017, "trials": 12000, "mean_vs_model_pct": 0.67, "mean_vs_model_se_pct": 0.47, "p_tc_le_1_02_S0": 0.395, "se": 0.005},
+    {"curve": "q34", "dp_bits": 4, "trail_over_sqrtN": 0.00067, "trials": 18000, "mean_vs_model_pct": -0.19, "mean_vs_model_se_pct": 0.39, "p_tc_le_1_02_S0": 0.405, "se": 0.004},
+    {"curve": "q34", "dp_bits": 6, "trail_over_sqrtN": 0.0027, "trials": 30000, "mean_vs_model_pct": 0.15, "mean_vs_model_se_pct": 0.30, "p_tc_le_1_02_S0": 0.404, "se": 0.003},
+    {"curve": "q30", "dp_bits": 4, "trail_over_sqrtN": 0.0023, "trials": 24000, "mean_vs_model_pct": 0.60, "mean_vs_model_se_pct": 0.34, "p_tc_le_1_02_S0": 0.399, "se": 0.003},
+    {"curve": "q30", "dp_bits": 6, "trail_over_sqrtN": 0.0093, "trials": 24000, "mean_vs_model_pct": 1.18, "mean_vs_model_se_pct": 0.34, "p_tc_le_1_02_S0": 0.394, "se": 0.003}
+  ],
+  "table_pipeline_success": [
+    {"curve": "q26", "dp_bits": 3, "trials": 18000, "success": 0.400},
+    {"curve": "q30", "dp_bits": 4, "trials": 24000, "success": 0.400},
+    {"curve": "q34", "dp_bits": 6, "trials": 12000, "success": 0.394}
+  ],
+  "table_fixtures": {
+    "q34": {"q": 10146855109, "r_prime": 3382230043, "N_log2": 29.07, "sqrtN": 23700},
+    "R": 2048
+  },
+  "key_structural_fact": "success is INVARIANT to dp_bits (0.395 @ dp2, 0.405 @ dp4, 0.404 @ dp6) at fixed curve: the DP condition therefore gates REPORTING/LAG, not pool membership. If DPs gated recording, success would fall as 2^-2*dp_bits between those rows; it does not move.",
+  "model_check": {
+    "claim": "pure model success at 1.02 S0 = 0.4024 (rival note, S_ops row)",
+    "identity": "1 - exp(-1.02^2 * ln(1/0.6097)) = 0.4022",
+    "verdict": "their toy reproduces the birthday law of the total walked coverage S, not of a theta*S DP table"
+  }
+}

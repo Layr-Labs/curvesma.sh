@@ -1,0 +1,26 @@
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+  File "/Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/bls12-381-g1-ecdlp-plain/plain-truncwindow-40pct-v19d/scripts/toy.py", line 312, in one_density_walkmap
+    r = run_trial_walkmap(Nc, s_ref, dp_bits, kappa,
+  File "/Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/bls12-381-g1-ecdlp-plain/plain-truncwindow-40pct-v19d/scripts/toy.py", line 251, in run_trial_walkmap
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/bls12-381-g1-ecdlp-plain/plain-truncwindow-40pct-v19d/scripts/toy.py", line 473, in <module>
+    main()
+  File "/Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/bls12-381-g1-ecdlp-plain/plain-truncwindow-40pct-v19d/scripts/toy.py", line 396, in main
+    rows = pool.map(one_density_walkmap, jobs)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 364, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 771, in get
+    raise self._value
+ModuleNotFoundError: No module named 'numpy'

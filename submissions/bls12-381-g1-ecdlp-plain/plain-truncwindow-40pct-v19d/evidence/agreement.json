@@ -1,0 +1,10 @@
+{
+ "classes": 420000,
+ "agree": 5000,
+ "mismatches": 0,
+ "max_window_dev": 23411374159329886394,
+ "near_ties_2_315": 0,
+ "fidelity_100": 100,
+ "toy_fidelity_100": 100,
+ "convention_log2W_161_kappa102": 126.26877393544949
+}

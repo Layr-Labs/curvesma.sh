@@ -1,0 +1,161 @@
+{
+ "fixture": {
+  "G": [
+   218652,
+   2045
+  ],
+  "b": 1,
+  "beta": 43364,
+  "classes": 8341,
+  "log2_sqrtN": 6.513002321489472,
+  "order": 50047,
+  "p": 600217,
+  "table_rows": 2048
+ },
+ "kappa": 1.015,
+ "package": "plain-truncwindow-40pct-v19d",
+ "protocol": {
+  "D1_fix": "merge gated on kappa*S_ref; DP lag excluded and charged separately",
+  "D2_fix": "orbit element resolved on the point; recovery verified before success",
+  "collision_site": "every visited class (coverage S)",
+  "dp": "report gate only; lag <= one spacing, charged separately",
+  "pool": "session-global, shared by all walks"
+ },
+ "rival_table": {
+  "flat_ours": 0.004968750000000022,
+  "flat_rival": 0.01100000000000001,
+  "kappa": 1.02,
+  "model": 0.4023665609815751,
+  "pipeline": [
+   {
+    "curve": "q26",
+    "diff": 0.0023611111111110916,
+    "dp_bits": 3,
+    "ours": 0.4023611111111111,
+    "rival": 0.4,
+    "rival_trials": 18000,
+    "successes": 28970,
+    "trials": 72000
+   },
+   {
+    "curve": "q30",
+    "diff": 0.0032604166666666545,
+    "dp_bits": 4,
+    "ours": 0.4032604166666667,
+    "rival": 0.4,
+    "rival_trials": 24000,
+    "successes": 38713,
+    "trials": 96000
+   },
+   {
+    "curve": "q34",
+    "diff": 0.008708333333333318,
+    "dp_bits": 6,
+    "ours": 0.40270833333333333,
+    "rival": 0.394,
+    "rival_trials": 12000,
+    "successes": 19330,
+    "trials": 48000
+   }
+  ],
+  "pipeline_pooled": 0.402837962962963,
+  "pipeline_pooled_n": 216000,
+  "pipeline_pooled_rival": 0.3988,
+  "pipeline_pooled_se": 0.0014912058545805296,
+  "rows": [
+   {
+    "curve": "q34",
+    "diff": 0.003291666666666637,
+    "dp_bits": 2,
+    "ours": 0.39829166666666665,
+    "rival": 0.395,
+    "rival_trials": 12000,
+    "se_combined": 0.005476570198982806,
+    "trials": 48000,
+    "within_2se": true,
+    "z": 0.6010452796310393,
+    "z_vs_model": -1.82365778570322
+   },
+   {
+    "curve": "q34",
+    "diff": -0.004583333333333384,
+    "dp_bits": 4,
+    "ours": 0.40041666666666664,
+    "rival": 0.405,
+    "rival_trials": 18000,
+    "se_combined": 0.004397099990843431,
+    "trials": 72000,
+    "within_2se": true,
+    "z": -1.0423536746668864,
+    "z_vs_model": -1.0678161185245172
+   },
+   {
+    "curve": "q34",
+    "diff": -0.0022166666666667,
+    "dp_bits": 6,
+    "ours": 0.4017833333333333,
+    "rival": 0.404,
+    "rival_trials": 30000,
+    "se_combined": 0.0033170688446137815,
+    "trials": 120000,
+    "within_2se": true,
+    "z": -0.668260675465358,
+    "z_vs_model": -0.4121008532903064
+   },
+   {
+    "curve": "q30",
+    "diff": 0.004260416666666655,
+    "dp_bits": 4,
+    "ours": 0.4032604166666667,
+    "rival": 0.399,
+    "rival_trials": 24000,
+    "se_combined": 0.0033921500264957527,
+    "trials": 96000,
+    "within_2se": true,
+    "z": 1.2559635138154142,
+    "z_vs_model": 0.5645700072950662
+   },
+   {
+    "curve": "q30",
+    "diff": 0.008624999999999994,
+    "dp_bits": 6,
+    "ours": 0.402625,
+    "rival": 0.394,
+    "rival_trials": 24000,
+    "se_combined": 0.0033919606384296753,
+    "trials": 96000,
+    "within_2se": false,
+    "z": 2.5427771484969175,
+    "z_vs_model": 0.16327504371965812
+   }
+  ],
+  "within_2se_all": false
+ },
+ "s_ref": 90.85184379478763,
+ "theta_capped_control": [
+  {
+   "dp_bits": 2,
+   "naive_theta_squared_prediction": 0.031661541590479625,
+   "note": "the naive theta^2 prediction does NOT apply: once two walks coalesce they stay together, so a DP-gated pool sees a chain of coincidences and the cap costs only ~theta, not theta^2. The measured collapse is the discrimination test.",
+   "success": 0.315,
+   "successes": 1260,
+   "trials": 4000
+  },
+  {
+   "dp_bits": 4,
+   "naive_theta_squared_prediction": 0.0020088299511805685,
+   "note": "the naive theta^2 prediction does NOT apply: once two walks coalesce they stay together, so a DP-gated pool sees a chain of coincidences and the cap costs only ~theta, not theta^2. The measured collapse is the discrimination test.",
+   "success": 0.16325,
+   "successes": 653,
+   "trials": 4000
+  },
+  {
+   "dp_bits": 6,
+   "naive_theta_squared_prediction": 0.0001256702501004625,
+   "note": "the naive theta^2 prediction does NOT apply: once two walks coalesce they stay together, so a DP-gated pool sees a chain of coincidences and the cap costs only ~theta, not theta^2. The measured collapse is the discrimination test.",
+   "success": 0.058,
+   "successes": 232,
+   "trials": 4000
+  }
+ ]
+}
