@@ -1,0 +1,34 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v29: gap scale derived at 2^25.72 (support 2^30) with priced tail, 97-bit pool-scalar exact-product arm q=0.3960 CP-lo 0.3908, per-walk kappa max 70.67 -> E_bad 2^70.44 under cap 2^84, extended label audit, crown carried (0.3986, CP-lo 0.3963); W=2^116.81279",
+ "claims": [
+  {
+   "statement": "BLS12-381 G1 auxiliary powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0, d=2^20, recover s. Claimed W=2^116.812794 in 2000-instruction units over 15 integer-asserted ledger rows; claim 116.8130; gate 116.8271; claim-W=0.000206.\n\nGAP SCALE (v28 verdict flaw 1, DERIVED not asserted): the shared walk list is consecutive H-primes, step g_k=w_(k+1)-w_k, and consecutive H-primes near q are spaced mu(q)=d*ln q, because an integer near q lies in the index-d subgroup (d=2^20) with density 1/d and is prime with density 1/ln q. At the production walk band q_w~2^76 (97-bit pool scalar x 77-bit walk element = the 174-bit key scalar): mu=2^20*ln(2^76)=2^20*52.68=5.5238e7=2^25.719. The list holds ell=2^49.65 gaps, so its maximum is mu*(ln ell+gamma)=2^30.848, and the even-gap support must run to <2^31, i.e. |G|=2^30 entries per base \u2014 19 bits above the v28 charge of 2^11, whose '2^12' was HOME_BITS, the number of recovery STEPS in keymod.py, not a gap magnitude (the mean gap is 2^25.72, 13.7 bits above the 2^12 label). CONSTRUCTION SUPPLIED: T_i[g]=[g*a_i]P0 for every even g<2^31 is built by the even-gap addition chain T_i[2]=2*(a_iP0), T_i[2j]=T_i[2(j-1)]+T_i[2], one group addition per entry, charged at 15 ops/entry (12 doublings + 3 additions) as a stress rule; per base that is 2^30 additions against ell=2^49.65 walk steps, 2^-19.65 of the walk, so the 19-bit larger table moves W by only 2.35e-5 bits. PRICED TAIL (so the row is a bound, not an expectation): a gap above the support is priced per base as a 32-doubling small-scalar multiple of a_iP0 (62 group ops); under the same density law P(gap>2^31)=exp(-2^31/mu)=2^-56.087, expected occurrences in the list 0.0115, and ONE worst-case occurrence over all 2nb bases is charged (2nb*62*2000=2^83.943). gap_point_tables 2^92.873 -> 2^111.873; W 2^116.812770 -> 2^116.812794 (+2.35e-5), still 2^15.9 below the records row.\n\n97-BIT POOL SCALAR (flaw 2): keymod.py stores a 97-bit INTEGER EXPONENT per pool slot (2 LDP), and the record scalar is a_i*w_k = 97-bit base x 77-bit walk element = 174 bits; 174 < log2(m)=234.857, so the product NEVER wraps mod m: production ratios are ratios of exact integers, not residues of a uniform draw. The hit test sees the ratio set {a_i w_k / (u b_j w_l)}: N^2 base-ratios walk-ratios and the mu6 factor: 6N^2 = 2^233.89 candidates against |H|=2^234.857, so the pair law 1-exp(-K), K=6N^2/m, is a statement about the ratio map, not about the base support. ARM at the production pool law: same walk object, same nb/ell and same K as the primary, bases drawn as H-elements with SMALL DISCRETE LOG (span 18 bits) and span+walk_band=39<41 so a_i*w_k is an EXACT product (no mod-p wrap); membership in the group is automatic, because production bases are [a_i]P0 for any 97-bit a_i. Result: 24000 trials, 9504 hits, q=0.396000, CP-95 [0.390796, 0.401223], lower CLEARS the 0.39 floor. Matched control, identical geometry and seeds, base law reverted to full support: 9524 hits, q=0.396833, CP-95 lower 0.391627; the pool law moves q by -0.000833 (0.2 sigma). An earlier run drew bases as bare integers, which puts records outside H and collapsed q to 0.0627 for that reason alone; it is kept in derive-v29.json as a disclosed confound, not used, and the arm was re-run with the production structure. NOT claimed: the fixture cannot attain the 2^97-of-2^234.857 exponent sliver (18 of 38 bits is the widest exact-product span a 41-bit fixture admits), and the CP interval bounds sampling error, not that residual.\n\nKAPPA per WALK (flaw 3): v28's 'max over 16 walks' was 12 big + 4 small key-width census AGGREGATES from kappa-v26, not walks. v29 measures kappa_walk=(colliding record pairs in that walk)/(C(N,2)/m) inside each walk at the primary rung: 24000 walks, expectation 0.042451 per walk, mean 0.939309, p50 0.000000, p95 0.000000, p99 23.556344, MAX 70.669032. The count is integer-valued, so one extra duplicate moves kappa_walk by 23.56 and the MAX is conservative by construction (p99 is one duplicate, the max is three). K is held at the production value and the duplicate expectation depends only on K, so the per-walk tail is scale-free between fixture and production. Charged kappa=70.669032 -> E_bad 2^70.443675 against cap 2^84.0, headroom 13.556 bits; no work row moves (kappa prices the failure debit only).\n\nLABELS (flaw 4): the audit is extended and ships as audit_labels.py. Beyond v28's 'a op b=c' and '2^e=v', it audits every 2^y against its paired magnitude within one sentence (log2 both directions), every percentage, every x-multiple, every COUNT ('ell>=64 selects four rungs plus the primary'), and every above/below direction word, with a planted-flip control per class; the script exits non-zero if a control survives. It re-derives the two v28 errors: ell/6944=883576288830423/6944=2^36.89 (not 2^45), and ell>=64 selecting FOUR rungs, not five.\n\nSUCCESS (carried crown, protected): the structured ladder at the production object \u2014 records a_i*w_k over one shared H-prime walk list, shared mu6 test, K=6N^2/m held at 0.509420 \u2014 PRIMARY nb=22, ell=6944 (108.5x the fixture walk), 120000 trials, 47835 hits, q=0.398625, CP-95 lower 0.396298>=0.39. Pooled over the four rungs with ell>=64 plus the primary (200000 trials): 79536 hits, q=0.397680, CP-95 lower 0.395879. The ell=16 rung is disclosed sub-floor at 0.371800. Fixture arm (carried): 131000 trials, q=0.396844. Pool-scalar arm: q=0.396000, CP-95 lower 0.390796.\n\nLEDGER: 15 rows, total==sum(rows), every row a Python int regenerated by derive_v29.py; S=42886830756854555715593527690576916. Control: +1% on the records row moves W to 2^116.827123, above the gate \u2014 the planted typo is detected. Secondary rows are 0.0147% of W. SCOPE: no production run (N=2^115.65); unit costs are declared, and the arms are measured at a 2^41 field with the density, walk object, mu6 test and (for the pool arm) the exact-product regime matched, while the absolute split nb/ell=2^16.35 and the exponent sliver are bracketed and disclosed.\n",
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "argument.md",
+    "audit_labels.py",
+    "census-key-v20.json",
+    "certificate.json",
+    "derive-v29.json",
+    "derive_v29.py",
+    "direct-v25.json",
+    "direct_v25.py",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v26.json",
+    "keymod.py",
+    "ledger-v29.json",
+    "ratios-v26.json",
+    "ratios_v26.py",
+    "structured-ladder.json",
+    "structured_walk_v29.c",
+    "verify_v26.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

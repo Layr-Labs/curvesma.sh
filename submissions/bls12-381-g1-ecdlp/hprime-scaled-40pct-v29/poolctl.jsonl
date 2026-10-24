@@ -1,0 +1,2 @@
+{"p":2199023255617,"m":274877906952,"log2_m":38.000000,"nb":22,"ell":6944,"span_bits":0,"walk_band_log2":20.8084,"wrap_free":false,"records_per_side":152768,"K":0.509420246,"trials":24000,"workers":12,"walk_len":6944,"hits":9524,"q":0.396833333,"distinct_mean":152767.9600,"max_duplicate_records":2,"expect_dup_per_walk":0.042451409,"kappa_walk_mean":0.942254,"kappa_walk_p50":0.000000,"kappa_walk_p95":0.000000,"kappa_walk_p99":23.556344,"kappa_walk_max":47.112688,"collision_hist":{0},"core_seconds":5901.87,"wall_seconds":45.00}
+DONE

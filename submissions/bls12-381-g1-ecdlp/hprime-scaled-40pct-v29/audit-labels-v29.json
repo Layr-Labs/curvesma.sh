@@ -1,0 +1,110 @@
+{
+ "kind": "v29 extended label audit",
+ "docs": [
+  "argument.md",
+  "public-note.md",
+  "submission.json"
+ ],
+ "n_pow_pairs": 3,
+ "n_claims": 7,
+ "passes": 10,
+ "failures": [],
+ "controls": [
+  {
+   "control": "2^ exponent vs magnitude",
+   "caught": true
+  },
+  {
+   "control": "rung count +1",
+   "caught": true
+  },
+  {
+   "control": "percentage x1.05",
+   "caught": true
+  },
+  {
+   "control": "log2 exponent +0.5",
+   "caught": true
+  }
+ ],
+ "controls_all_caught": true,
+ "rows": [
+  {
+   "doc": "argument.md",
+   "claim": "291819187909465245178922739327641321472 = 2^127.778342",
+   "exponent": 127.778342,
+   "against": "291819187909465245178922739327641321472",
+   "log2_of_number": 127.7783,
+   "delta": 0.0,
+   "direction": "magnitude vs 2^e"
+  },
+  {
+   "doc": "argument.md",
+   "claim": "5.5238e7 = 2^25.719",
+   "exponent": 25.719,
+   "against": "5.5238e7",
+   "log2_of_number": 25.7192,
+   "delta": 0.000158,
+   "direction": "magnitude vs 2^e"
+  },
+  {
+   "doc": "public-note.md",
+   "claim": "5.5238e7 = 2^25.719",
+   "exponent": 25.719,
+   "against": "5.5238e7",
+   "log2_of_number": 25.7192,
+   "delta": 0.000158,
+   "direction": "magnitude vs 2^e"
+  },
+  {
+   "claim": "rungs with ell >= 64 (ladder only)",
+   "computed": 4,
+   "claimed": 4,
+   "kind": "count",
+   "ok": true
+  },
+  {
+   "claim": "rungs with ell >= 64 including primary",
+   "computed": 5,
+   "claimed": 5,
+   "kind": "count",
+   "ok": true
+  },
+  {
+   "claim": "ell / 6944 (largest rung ratio)",
+   "computed": 127243129151.84663,
+   "log2": 36.8888,
+   "claimed_log2": 36.89,
+   "kind": "logpair",
+   "ok": true
+  },
+  {
+   "claim": "secondary rows as pct of W",
+   "computed": 0.016323,
+   "claimed": 0.0163,
+   "kind": "pct",
+   "ok": true
+  },
+  {
+   "claim": "primary arm hit rate (%)",
+   "computed": 39.8625,
+   "claimed": 39.8625,
+   "kind": "pct",
+   "ok": true
+  },
+  {
+   "claim": "primary ell / fixture ell",
+   "computed": 108.5,
+   "claimed": 108.5,
+   "kind": "multiple",
+   "ok": true
+  },
+  {
+   "claim": "kappa_walk_max / expectation-of-1-dup",
+   "computed": 3.0,
+   "claimed": 2.9999999810660882,
+   "kind": "multiple",
+   "ok": true
+  }
+ ]
+}
