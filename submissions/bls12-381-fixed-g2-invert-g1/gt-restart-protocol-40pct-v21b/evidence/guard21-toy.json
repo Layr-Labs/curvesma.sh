@@ -1,0 +1,37 @@
+{
+ "mode": "guard",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 128,
+ "depth": 5,
+ "statistic": "fraction of conjugate pairs still in ONE class; both sides start with INDEPENDENT uniform depth-d history (arbitrary-merge test); `prevparity` is the mutation control",
+ "rules": {
+  "indep_hist": {
+   "pairs": 1200,
+   "steps": 50,
+   "coalesce_at_1": 0.945,
+   "coalesce_at_last": 0.7833333333333333,
+   "by_step": {
+    "1": 0.945,
+    "2": 0.9033333333333333,
+    "5": 0.8358333333333333,
+    "10": 0.79,
+    "50": 0.7833333333333333
+   }
+  },
+  "prevparity": {
+   "pairs": 1200,
+   "steps": 50,
+   "coalesce_at_1": 0.44083333333333335,
+   "coalesce_at_last": 0.37083333333333335,
+   "by_step": {
+    "1": 0.44083333333333335,
+    "2": 0.43,
+    "5": 0.3933333333333333,
+    "10": 0.3725,
+    "50": 0.37083333333333335
+   }
+  }
+ }
+}

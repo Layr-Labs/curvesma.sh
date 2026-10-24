@@ -1,0 +1,139 @@
+{
+ "package": "gt-restart-protocol-40pct-v21",
+ "claim": "125.7905",
+ "checks": [
+  {
+   "name": "records_x_mean_trail_equals_S_EXACT",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "S_is_integer_multiple_of_trail_budget",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "identity_steps_field_equals_S_within_one_trail",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "restart_row_charged",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "replay_row_charged",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_waste_below_2_pow_minus_10_of_work",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "v20_traps_above_2_pow_80",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_census_v20_above_one",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_waste_row_charged",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "length4_abab_killed_at_depth2",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "length4_abab_admitted_at_depth1",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "guard_depth_is_5",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "guard_audit_evidence_is_depth_5",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "tower_source_shipped_in_package",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_uses_falling_factorial",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "table_R_is_2_pow_16",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "multi_target_instances_ge_64",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "per_instance_success_reported",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cp95_from_verbatim_v15k_helper",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "retention_equals_cp95",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "floor_ge_0_39",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_bounds_W_plus_2e5",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_minus_one_step_too_small",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cap_covers_nominal_work",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "coalescence_mutation_control_collapses",
+   "value": "True",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dependencies_empty",
+   "value": "True",
+   "verdict": "PASS"
+  }
+ ],
+ "n_checks": 26,
+ "all_pass": true,
+ "verdict": "PASS"
+}

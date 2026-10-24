@@ -1,0 +1,29 @@
+{
+ "mode": "keys",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "samples": 2000,
+ "squared_key_rule_mismatch": 2000,
+ "frobenius_key_rule_mismatch": 2000,
+ "key_vector_repeats": 11,
+ "distinct_key_vectors": 1989,
+ "keys_are_not_a_function_of_keys_of_y": 5,
+ "witness": {
+  "same_keys": true,
+  "keys_y2_differ": [
+   [
+    32,
+    463,
+    172
+   ],
+   [
+    206,
+    1,
+    192
+   ]
+  ],
+  "note": "equal twelve keys, different keys after squaring"
+ },
+ "conclusion": "no squared-state key update exists: keys(y^2) is not a function of keys(y), so the twelve keys + minimal rotation must be RECOMPUTED and charged on every squaring step (1946 instr)"
+}
