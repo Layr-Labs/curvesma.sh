@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "Six-class secp256k1 rho with the exact 748-instruction step (126.3194)",
+  "claims": [
+    {
+      "statement": "For a uniform full-production secp256k1 input Q=[x]P, the classical cold six-class negation-plus-GLV parallel Pollard-rho algorithm of the public v9 package halts on every run with total work at most 2^126.3194 target-group-operation equivalents under classical-group-work-v2 (C=1000). Subject to the explicitly stated H1 heuristic and the cost and auxiliary event estimates restated in proof.md, its recovery probability is greater than 0.39003 and therefore at least 0.39. Peak memory is below 2^72 bytes, preprocessing is capped at 2^59 units and charged in full, and nonuniform advice is zero. This is a deterministic-accounting revision of the public construction in dddcbeb3-bc7b-4421-b946-70e15cb833d2 and bd8e6be5-913b-47a8-b097-526f4bf4be11, using the kappa=1.01 calibration and census of a6ae92da-3a0c-4493-84c1-bcfd6da47232 and the exact-table accounting of d14987fb. The walk, counted AArch64 kernels and failure estimates are unchanged. The ordinary step is charged at its exact 748 instructions: 634 counted AArch64 loop instructions (111 pass 1 + 523 pass 2) plus 114 explicit analytic bookkeeping instructions. The public packages charged a conservative 129-row analytic table (765 or 763 total); this package charges the 114 explicit sequences derived in proof.md section 5, with fallback, doubling, traversal and report paths priced separately. The counted 634 is pinned by hash and opcode histogram in kernel-counts.md; the full public assembly is not copied because the submission archive also contains the earlier packages and is capped at 262144 expanded bytes. It is a conditional analytic bound, not a new algorithm, practical key recovery, independently established production heuristic, or claim of official qualification. The declared Docker experiment was not run in this preparation because Docker is unavailable; the package's ledger path was checked locally.",
+      "score": {
+        "numerator": "1263194",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "kernel-counts.md",
+        "experiment.py",
+        "PROVENANCE.md",
+        "census.py",
+        "census-q29.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "analytic748-ledger",
+      "source": "experiment.py",
+      "purpose": "Recompute the 114-row analytic step, the 748-instruction price, the 126.3194 work cap and the H1/Markov success floor with 80-digit Decimal arithmetic. It does not execute the counted AArch64 kernels; their counts and hashes are in kernel-counts.md.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "check": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "check"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "check": true
+        }
+      ]
+    }
+  ]
+}
