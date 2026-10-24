@@ -1,0 +1,37 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp this package claims the COMPUTATION BOUND W = 2^127.92945732 (submitted 127.930) for the shipped DP-walk configuration: workers 2^20 lanes, inversion BATCH 2^18, DP density d=60, trails_per_walker = ceil((S_OPS+2^60)/2^20) = 2^106.7214, step 155 itemised instructions at C=1000, w=2 exactly +1.000 bit, kappa product 2.344852037 <= 2.345734234. THREE FIXES. (1) PILOT AT THE SHIPPED d=60, MEASURED, NOT TRANSFERRED: scripts/pilot_prod_d60.py runs the shipped qwalk.step and the shipped report gate at d=60 with workers=2^20 exactly; evidence/prod-pilot-d60.json records 402,653,184 visits, 0 DP fires, 0 record collisions, 0 sampled invariant violations, 29,502,569.4 visits/s. IN THE PILOT'S OWN UNITS one DP record needs 2^60 = 1,152,921,504,606,846,976 visits = 3.91e10 s = 1,241 years for one record of one lane at the measured rate. A d=60 success measurement is therefore impossible, not merely slow: every runnable d=60 pilot is 0-success BY CONSTRUCTION, so a zero is not evidence about the production event in either direction and is not presented as one. The production event is a two-run collision at 2^127.014 visits with 2^67.014 DP records per run, where the gate is saturated (post-merge trail 2^106.72 steps, P(no DP after a merge) = exp(-2^46.72)), so d=60 is not a success bottleneck at production and is fully charged as the step's DP-mask row. The claim is the WORK CAP. The success row that is DEFENDED is measured and is the measured-regime one: design arm = largest measured order of the transfer ladder at d=5, N=2^33.42 classes, 1200 sets, CP-95 lower 0.475029, probability debits 5.700e-4 (seven named terms incl. restart loss 2.344e-4) = 0.474459 > 0.39 THERE. Production d=60 success is NOT claimed and no transfer is asserted; the ruling is accepted, not argued. (2) SELECTOR PARITY BUG: ROOT CAUSE ARITHMETIC. selector_pair.py wrote c = -(a1+a2) mod N then branched on c % 2: even c solved as c//2, ODD c counted as 'rotation channel' and DISCARDED. N=33560113 is odd, so 2 is invertible with inv2=(N+1)//2=16780057 and odd c is an ordinary sign case; the shortcut was written for even N and integer floor division was wrong for all c. v22 deletes the parity branch entirely and solves every mu6 channel exactly, verifying each candidate on the curve ([k]G == +-C): zeta=-1 gives x=c*inv2; zeta=+-lam,+-lam^2 gives (1-+lam)C = (+-lam*a2-a1)G, with the eigenvalue identified ON THE CURVE ([lam]G == (beta*G.x,G.y)) via CRT of the roots mod each prime factor of the composite toy order N=3121x10753, and lam^2+lam+1 == 0 mod N ASSERTED. MACHINE-VERIFIED ROW: parity_fix.inverse_row_20 has all 20 rows equal:true for x*2*inv2 mod N == x, and 2*inv2 mod N == 1. EFFECT MEASURED: sign channel 9, lambda channel 20 (now SOLVED; previously discarded), trivial 497, verify_fail 0; EC 29/800, hash 24/800. (3) LITERALS ALL AT THEIR ARTIFACT: the shipped arm is the 800-set run in evidence/selector-pair.json (p=33554467, order N=33560113 by CM, 16777233 classes, R=64, W=16, trails 258, d=5): EC 29/800 = 0.03625, hash 24/800 = 0.030, delta +0.00625, 95% CI [-0.01054,+0.02304], z=0.7296, discordant 47. The 1600-vs-1200 drift is dead: no literal in this package cites a run other than the one it ships. The verdict's arithmetic point is named: 0.475029-0.002211-0.0002344 = 0.472584 is NOT the ledger row because 2.211e-3 is the fallback reserve in REFERENCE OPERATIONS (2.21e18 ref), not a probability; the ledger's probability debits sum to 5.700e-4 and 0.475029-5.700e-4 = 0.474459 is the printed row. The old sentence mixed a ref count into a probability sum and is WITHDRAWN. NOT RANKING: frontier 126.338, 1.5975 bits away.",
+   "score": {
+    "numerator": "12793",
+    "denominator": "100"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "ledger.py",
+    "evidence/prod-pilot-d60.json",
+    "evidence/selector-pair.json",
+    "evidence/walker-arms.json",
+    "evidence/selector-swap.json",
+    "evidence/cap-recount.json",
+    "evidence/transfer-ladder.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "scripts/pilot_prod_d60.py",
+    "scripts/selector_pair.py",
+    "scripts/walker_slope.py",
+    "scripts/selector_arms.py",
+    "scripts/cap_recount.py",
+    "scripts/transfer_arm.py",
+    "scripts/census_v20n.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v22: pilot at shipped d=60 (2^20 workers, 402M visits, 0 DP fires, 29.5M/s = 1,241 yr per DP: d=60 success unmeasurable; claim is the work cap 127.930), selector parity fixed (no c%2 branch, all mu6 channels exact, 20-row inverse check, EC 29/800 vs hash 24/800)",
+ "version": 1
+}

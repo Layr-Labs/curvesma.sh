@@ -1,0 +1,66 @@
+{
+ "configuration": {
+  "batch": 262144,
+  "dp_bits": 60,
+  "shipped_trails_per_walker_log2": 106.7214,
+  "steps_per_pilot": 96,
+  "trials": 4,
+  "workers": 1048576,
+  "workers_log2": 20
+ },
+ "gate_consistent": true,
+ "impossible_by_arithmetic": {
+  "production_records_per_run_log2": 67.01392684713421,
+  "production_shape_visits_log2": 127.01392684713421,
+  "seconds_for_one_dp_at_measured_rate": 39078681258.666664,
+  "statement": "one DP record needs 2^60 visits; at the measured rate that is the years row, so every runnable d=60 pilot is 0-success BY CONSTRUCTION and cannot be evidence about the production event",
+  "visits_for_one_dp": 1152921504606846976,
+  "years_for_one_dp_at_measured_rate": 1240.5930558306877
+ },
+ "nominal_dp_rate": 8.673617379884035e-19,
+ "note": "SHIPPED configuration, shipped qwalk.step and shipped report gate; measures the gate's realized fire count and the visit rate. It does not and cannot measure the production success event at d=60.",
+ "realized_dp_rate": 0.0,
+ "test": "production_config_pilot_d60",
+ "totals": {
+  "dp_fires": 0,
+  "dp_record_collisions": 0,
+  "elapsed_s": 13.65,
+  "invariant_violations_sampled": 0,
+  "visits": 402653184,
+  "visits_per_s": 29502569.4
+ },
+ "trials": [
+  {
+   "dp_fires": 0,
+   "dp_record_collisions": 0,
+   "seconds": 3.437,
+   "trial": 0,
+   "visits": 100663296,
+   "visits_per_s": 29291748.6
+  },
+  {
+   "dp_fires": 0,
+   "dp_record_collisions": 0,
+   "seconds": 3.386,
+   "trial": 1,
+   "visits": 100663296,
+   "visits_per_s": 29730347.3
+  },
+  {
+   "dp_fires": 0,
+   "dp_record_collisions": 0,
+   "seconds": 3.369,
+   "trial": 2,
+   "visits": 100663296,
+   "visits_per_s": 29878109.5
+  },
+  {
+   "dp_fires": 0,
+   "dp_record_collisions": 0,
+   "seconds": 3.366,
+   "trial": 3,
+   "visits": 100663296,
+   "visits_per_s": 29905866.9
+  }
+ ]
+}
