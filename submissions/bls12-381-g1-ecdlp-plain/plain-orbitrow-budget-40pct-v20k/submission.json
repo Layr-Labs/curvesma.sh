@@ -1,0 +1,43 @@
+{
+ "claims": [
+  {
+   "statement": "On bls12-381-g1-ecdlp-plain (input T=[x]P0, x uniform in [0,r), no auxiliary powers), the algorithm in this package recovers and verifies x by [x]G=T with probability at least 0.436557, using at most 2^126.266 native-equivalent work units at C=2000. The budget is declared TWO-PHASE and priced as ONE budget: B_total = B_walk + B_drain, where B_walk is S_ops + 2^60 steps at the 167-instruction step price and B_drain is the drain row (2 DP spacings per walker, 2.4179e24 steps, 2.62e24 ref), total 9.4391e37 steps. The success asserted is the CP-95 of the statistic measured over that charged total: the end-to-end DP-record recovery rate, two pool records of one mu_6 class that solve x=(a1-a2)/(c2-c1) and verify, is 0.436893 (one-sided Clopper-Pearson, Decimal bisection copied from the secp v15k certificate helper) at the design arm d=5, which has the most DP spacings per walker and the worst gated CP-95; the walk-only row 0.361360 is DISCLOSED as the sensitivity obtained by removing the charged drain, not gated. Absorption by cycles the two-step escape cannot repair is a DIRECT COUNT, not a model: exhaustive enumeration of the class functional graph at two fixture sizes gives P(absorbed | uniform start) = 0.453702 at 10921 classes and 0.308533 at 43692 (ratio 0.680036, non-increasing) over 873808 starts, plus a second arm that walks the shipped step with the escape armed and detects the terminal period exactly; the random-map ln(N)/N debit and its 8.5966e-09 premise are DELETED, and no second debit is added because the success statistic is measured on the same map with the same escape armed. The restart is priced on its symbol qwalk.fresh_state, disjoint from the step symbols: x is secret, so a fresh state is the group element [a]P0+[c]T, i.e. two 256-bit scalar multiplications (255 doublings + 64 window additions each), one mixed addition, one batched normalization, the coin draws and the lane/record reset = 689.790 ref = 1379581 instructions per fresh start, 32847x the 42-instruction row it replaces, giving RESTART_REF 4.975e31 ref and moving the claim by 7e-07 bits. The escape tail is charged in two rows (measured run law 4.001e31 ref, reviewer chained-fire heuristic 2.000e31 ref) and the meter at 8.002e31 ref is a DETERMINISTIC work cap: a halted lane is charged in full and every instruction the walk can execute is a charged row, so no trip probability is claimed. The one tail statement in the package is Markov, which needs no independence: P(loss > A) <= E[loss]/A with E[loss] = E[restarts]/S_ops = 7.640e-10 taken over the declared coin distribution from the charged escape and restart rows, giving 1.641e-08 at A = 0.046557. The step is 167 itemised instructions at C=2000, log2 W = 126.26594362.",
+   "score": {
+    "numerator": "63133",
+    "denominator": "500"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/absorb-direct.json",
+    "evidence/budget2.json",
+    "evidence/c-fixture.json",
+    "evidence/cycle3-exhaust.json",
+    "evidence/escape-run.json",
+    "evidence/medium-fixture.json",
+    "evidence/prod-sweep.json",
+    "evidence/restart-count.json",
+    "evidence/rowbind.json",
+    "evidence/selfaudit.json",
+    "evidence/twist-index.json",
+    "ledger.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/absorb_direct.py",
+    "scripts/budget2.py",
+    "scripts/c_fixture.py",
+    "scripts/cycle3_exhaust.py",
+    "scripts/kcap_run.py",
+    "scripts/medium_fixture.py",
+    "scripts/qwalk.py",
+    "scripts/restart_count.py",
+    "scripts/selector.py",
+    "scripts/selfaudit.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "Plain G1 v20k: two-phase budget charged as one (B_total=walk+drain), restart priced on its symbol (two scalar mults), absorption counted directly at two sizes, one Markov inequality \u2014 126.266",
+ "version": 1
+}
