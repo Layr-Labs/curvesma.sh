@@ -1,0 +1,18 @@
+{
+ "C_instructions_per_unit": 2000,
+ "D": 20,
+ "N_floor": "10224995659149607095290321083529796280204964798843100696503472841739191975936",
+ "N_floor_log2": 252.499,
+ "coverage_model": "2N/r",
+ "ell": 1847141377131699200,
+ "key_width_bits": 168,
+ "mul_exec_declared": 9216,
+ "n": 168,
+ "nb": 5.535578264738626e+57,
+ "per_record_instructions": 2303,
+ "r": 52435875175126190479447740508185965837690552500527637822603658699938581184513,
+ "r_bits": 255,
+ "sides": 2,
+ "source": "all parameters declared here, none read from another package",
+ "success_floor": 0.39
+}

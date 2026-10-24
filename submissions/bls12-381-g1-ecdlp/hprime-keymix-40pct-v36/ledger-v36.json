@@ -1,0 +1,216 @@
+{
+ "C_instructions_per_unit": 2000,
+ "W_log2": 253.70215,
+ "W_n_table": {
+  "definition": "W(n) = [2*N(n)*c_rec + 2*N(n)*c_rec/100 + 2*2^D*P_lift_cand + 2*P_scalar + N*2^(D+20-168) + 2*nb*4 + 2*nb*2^33*15*C + ell*10 + 2*2^20*10]/C",
+  "n_dependence": "n enters in three places: the key width (2^-n is the truncation FP rate), the lifting depth D = log2(n) with m=(r-1)/n, and the record count N(n) = 0.195*r(n) required by the success floor",
+  "table": [
+   {
+    "D": 18,
+    "N_log2": 125.642,
+    "W_log2": 126.845,
+    "n": 128
+   },
+   {
+    "D": 20,
+    "N_log2": 157.642,
+    "W_log2": 158.845,
+    "n": 160
+   },
+   {
+    "D": 20,
+    "N_log2": 165.642,
+    "W_log2": 166.845,
+    "n": 168
+   },
+   {
+    "D": 21,
+    "N_log2": 189.642,
+    "W_log2": 190.845,
+    "n": 192
+   },
+   {
+    "D": 22,
+    "N_log2": 253.642,
+    "W_log2": 254.845,
+    "n": 256
+   }
+  ]
+ },
+ "anchors": {
+  "carried": false,
+  "declared": {
+   "inversion_calls": 569,
+   "lift_candidate": 184320,
+   "mul_exec": 9216,
+   "point_add_affine": 5354496,
+   "scalar_mult": 2040062976
+  },
+  "statement": "verdict-v35 flaw 3 (static-vs-executed mulmod, INV units, sort inner steps, SIMD expansion, op_point_construct borrow propagation) is NOT repaired in v36 and no anchor claim is made: the per-record charge is a declared 2303 and the field-op prices here are DECLARED MODELS labelled as such. Nothing in this claim depends on a compiled-body measurement."
+ },
+ "claim": {
+  "denominator": "5000",
+  "numerator": "1268511",
+  "reduced": true,
+  "value": 253.7022
+ },
+ "claim_vs_gate": "ABOVE the gate by 136.8751 bits -- no rank is taken, and that is the honest result of the correction: see success.coverage",
+ "diagnosis": {
+  "delta_bits": 138.2244,
+  "honest_at_v35_parameters": 255.0783,
+  "v35_claim": 116.8539,
+  "what_would_restore_the_gate": "nothing in this family: reaching the 0.39 floor needs N = 0.195*r = 2^252.5 records, i.e. 2^264.7 instructions, 136.9 bits above the gate. The line should be closed on the gate, not re-fired on pricing.",
+  "why": "coverage 2N/r = 2^-138.21 at N=2^115.65 and r=2^254.86; v35 charged the record row and then reported success 0.396243, which is only consistent with N ~ 2^168 records. The 116.8539 claim therefore priced a pool 52 bits too small for its own success claim."
+ },
+ "gate": {
+  "denominator": "10000",
+  "numerator": "1168271"
+ },
+ "gate_delta_claim_minus_gate": 136.8751,
+ "lifting": {
+  "control": {
+   "any_pass": 0,
+   "trials": 20,
+   "verdict": "PASS: a one-bit corruption of s0 yields zero passing candidates in all 20 trials"
+  },
+  "cost_rows": {
+   "candidates_per_seed": 1048576,
+   "note": "the lifting row is 2^38.5 of 2^264.7 total: it is a rounding error at this N, which is the honest reason it changes nothing -- coverage does",
+   "per_candidate_instructions": 184320,
+   "row_instructions": 390627182592,
+   "seeds": 2,
+   "share_of_total": 0.0
+  },
+  "evidence": "lift-verify.json",
+  "full_scale": {
+   "D": 20,
+   "ad_check": true,
+   "candidates": 1048576,
+   "exact": true,
+   "found": true,
+   "m": 341,
+   "passes": [
+    913427
+   ],
+   "per_candidate_us": 1.268,
+   "row": "2^20 candidates enumerated, exactly one passes, both checks pass",
+   "t_check": true,
+   "wall_s": 1.33
+  },
+  "hundred_secrets": {
+   "D": 10,
+   "ad_check_passed": 100,
+   "candidates_per_trial": 1025,
+   "m": 349525,
+   "misses": 0,
+   "nonunique": 0,
+   "recovered_exactly": 100,
+   "row": "100/100 random secrets recovered in full; [s]P0 == T and [s^d]P0 == A_d on every trial",
+   "t_check_passed": 100,
+   "trials": 100,
+   "wall_s": 0.209
+  },
+  "implemented": "keymod.lift(): s = s0 + k*m enumerated over k in [0,2^D), full-point check",
+  "pipeline": {
+   "D": 10,
+   "all_ok": 100,
+   "binding_verified": 100,
+   "bits": 12,
+   "ell": 50,
+   "filter_fired": 100,
+   "lift_verified": 100,
+   "nb": 40,
+   "records": 2000,
+   "row": "coverage planted (record (i,l) IS the target): binding + lift both verify 100/100",
+   "trials": 100,
+   "wall_s": 2.0
+  },
+  "real_curve": {
+   "D": 12,
+   "field_bits": 381,
+   "interval_bits": 250,
+   "note": "real 381-bit field, exhaustive enumeration over the whole interval; uniqueness is MEASURED (one pass per trial) rather than assumed, because ord(P0) is not known for a try-and-increment point on this curve",
+   "on_curve": true,
+   "passes_total": 20,
+   "per_candidate_us": 107.898,
+   "recovered_exactly": 20,
+   "trials": 20,
+   "wall_s": 8.839
+  }
+ },
+ "peak_storage": {
+  "components": {
+   "code_and_state": "< 2^20 B",
+   "records": "2*N*64 B (point x||y, 2*381 bits -> 96 B, charged 64 B minimum)",
+   "scratch": "O(1) per walker",
+   "tables": "2*nb*2^33*15 points for gap support = 2^226.8 points"
+  },
+  "max_row_bytes_log2": 259.5,
+  "records_bytes_log2": 259.5,
+  "statement": "the MAX row is the record store at 2^259.50 B; at the floor-meeting N the attack is storage-bound and infeasible on any real machine, which is stated rather than hidden"
+ },
+ "row_log2": {
+  "base_entries": 194.819,
+  "collision_false_positive_checks": 0.0,
+  "gap_self_check": 64.002,
+  "gap_tables": 240.691,
+  "lift_verification_A_d": 31.926,
+  "lifting": 38.507,
+  "records": 264.668,
+  "root_and_io": 24.322,
+  "walk_list": 67.205
+ },
+ "row_share": {
+  "base_entries": 0.0,
+  "collision_false_positive_checks": 0.0,
+  "gap_self_check": 0.0,
+  "gap_tables": 6.1e-08,
+  "lift_verification_A_d": 0.0,
+  "lifting": 0.0,
+  "records": 0.999999939,
+  "root_and_io": 0.0,
+  "walk_list": 0.0
+ },
+ "rows": {
+  "base_entries": 44284626117909007843191571724809704849159358494687398723584,
+  "collision_false_positive_checks": 1,
+  "gap_self_check": 18471413771316992000,
+  "gap_tables": 2853015313380099428854729452313439912258280867405332508916581358632960000,
+  "lift_verification_A_d": 4080125952,
+  "lifting": 390627182592,
+  "records": 47096330006043090280907218910738241666624067863471321808094995909050718241161216,
+  "root_and_io": 20971520,
+  "walk_list": 170158663661372130304
+ },
+ "success": {
+  "claimed_value": 0.385234,
+  "conditional": 0.987779,
+  "coverage_log2_at_floor": -1.358,
+  "floor": 0.39,
+  "measured_cells": "structured-ladder.json: 300/300 pools verified at widths 12/16/20/24",
+  "meets_floor": false,
+  "production_evaluation": {
+   "N": "6.5181e+34",
+   "conditional_success": 0.987779,
+   "coverage": "2.4861e-42",
+   "coverage_log2": -138.207,
+   "r": "5.2436e+76",
+   "r_log2": 254.857,
+   "records_needed_for_floor": "1.0225e+76",
+   "records_needed_formula": "N = -ln(1-floor)/2 * r = 0.2476*r",
+   "records_needed_log2": 252.499,
+   "statement": "success = P(target covered) x P(pipeline verifies | covered) = (2N/r) x 0.987779 = 2^-138.22. The binding term is COVERAGE 2N/r = 2^-138.21, not the width: a pool of N records reaches at most a 2N/r fraction of the exponent space, and r=2^255 against N=2^115.65 leaves 139 bits unreachable. The v35 0.396243 is WITHDRAWN: it was a 12-20-bit key-hit rate presented as a 168-bit success probability.",
+   "success_log2": -138.225,
+   "width_bits": 168
+  },
+  "uncovered_control": {
+   "false_accepts": 0,
+   "pools": 1200,
+   "statement": "an uncovered target still produces truncated hits at these widths, and EVERY one of them fails the full-point check: 165 hits, 0 false accepts. A filter coincidence never manufactures a secret.",
+   "truncated_hits": 165
+  },
+  "v35_claim_withdrawn": "0.396243 (withdrawn; it was a 12-20-bit key-hit rate)"
+ },
+ "total_instructions": 47096332859058403661050932391585602987907171693476998918276852814204591690247169,
+ "version": "v36"
+}

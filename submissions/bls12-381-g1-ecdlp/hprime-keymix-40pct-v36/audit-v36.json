@@ -1,0 +1,37 @@
+{
+ "hardcoded_ladder_control": {
+  "cell": "nb40_ell50_b12",
+  "cp95_moves": true,
+  "delta": 0.018242693,
+  "original": 1.0,
+  "perturbed": 0.99,
+  "verdict": "PASS: the endpoint is computed from the counted successes at run time, so moving a raw count moves the output"
+ },
+ "independent_recompute": {
+  "cells": 12,
+  "mismatches": [],
+  "verdict": "PASS"
+ },
+ "kind": "v36 audit",
+ "lifting_control": {
+  "correct_seed_found": 20,
+  "corrupted_seed_found": 0,
+  "trials": 20,
+  "verdict": "PASS"
+ },
+ "not_applicable": {
+  "borrow_propagation": "no limb-subtractor is claimed in v36 (anchors carried=False)",
+  "executed_vs_static": "no compiled-body price is claimed in v36 (anchors carried=False)"
+ },
+ "packing": {
+  "claim_matches_statement": true,
+  "claim_reduced": true,
+  "claim_value": 253.7022,
+  "evidence_missing": [],
+  "files": 16,
+  "packed_bytes": 101546,
+  "under_250KB": true,
+  "under_28_files": true
+ },
+ "verdict": "PASS"
+}

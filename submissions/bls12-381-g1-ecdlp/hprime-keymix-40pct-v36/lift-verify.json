@@ -1,0 +1,78 @@
+{
+ "control_corrupt_s0": {
+  "any_pass": 0,
+  "trials": 20,
+  "verdict": "PASS: a one-bit corruption of s0 yields zero passing candidates in all 20 trials"
+ },
+ "curve_fixture": {
+  "equation": "y^2 = x^3 + 4",
+  "p": 68719499327,
+  "r": 357914059,
+  "subgroup": "prime order r, verified [r]G = O in ec.selfcheck"
+ },
+ "full_scale_D20": {
+  "D": 20,
+  "ad_check": true,
+  "candidates": 1048576,
+  "exact": true,
+  "found": true,
+  "m": 341,
+  "passes": [
+   913427
+  ],
+  "per_candidate_us": 1.268,
+  "row": "2^20 candidates enumerated, exactly one passes, both checks pass",
+  "t_check": true,
+  "wall_s": 1.33
+ },
+ "kind": "v36 lifting + verified-recovery instrument (executed, not asserted)",
+ "lift_100_secrets": {
+  "D": 10,
+  "ad_check_passed": 100,
+  "candidates_per_trial": 1025,
+  "m": 349525,
+  "misses": 0,
+  "nonunique": 0,
+  "recovered_exactly": 100,
+  "row": "100/100 random secrets recovered in full; [s]P0 == T and [s^d]P0 == A_d on every trial",
+  "t_check_passed": 100,
+  "trials": 100,
+  "wall_s": 0.209
+ },
+ "pipeline_100_trials": {
+  "D": 10,
+  "all_ok": 100,
+  "binding_verified": 100,
+  "bits": 12,
+  "ell": 50,
+  "filter_fired": 100,
+  "lift_verified": 100,
+  "nb": 40,
+  "records": 2000,
+  "row": "coverage planted (record (i,l) IS the target): binding + lift both verify 100/100",
+  "trials": 100,
+  "wall_s": 2.0
+ },
+ "r": 357914059,
+ "real_bls12_381_g1": {
+  "D": 12,
+  "field_bits": 381,
+  "interval_bits": 250,
+  "note": "real 381-bit field, exhaustive enumeration over the whole interval; uniqueness is MEASURED (one pass per trial) rather than assumed, because ord(P0) is not known for a try-and-increment point on this curve",
+  "on_curve": true,
+  "passes_total": 20,
+  "per_candidate_us": 107.898,
+  "recovered_exactly": 20,
+  "trials": 20,
+  "wall_s": 8.839
+ },
+ "truncated_filter": {
+  "D_production": 20,
+  "b_production": 168,
+  "expected_spurious_at_production_log2": -148,
+  "expected_spurious_passes_over_expD": "2^(D-b)",
+  "false_positive_per_candidate": "2^-b",
+  "statement": "the truncated key is ONLY a filter; every pass is re-tested on the full point, so a false filter hit costs one extra lift, not a wrong secret. At production width 168 with D=20 the expected number of spurious filter passes is 2^-148, charged as its own ledger row.",
+  "width_bits": 12
+ }
+}

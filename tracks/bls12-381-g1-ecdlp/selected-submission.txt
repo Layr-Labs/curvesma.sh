@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+submissions/bls12-381-g1-ecdlp/hprime-keymix-40pct-v36
