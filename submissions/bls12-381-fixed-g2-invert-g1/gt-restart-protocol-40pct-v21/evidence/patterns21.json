@@ -1,0 +1,513 @@
+{
+ "mode": "patterns",
+ "S_log2": 125.8,
+ "W_table": {
+  "0": 1,
+  "1": 0,
+  "2": 12,
+  "3": 24,
+  "4": 396,
+  "5": 2160,
+  "6": 23160,
+  "7": 186480,
+  "8": 1845900
+ },
+ "phi12": "x^4 - x^2 + 1",
+ "length4_table": [
+  {
+   "word": "abab",
+   "slots": 2,
+   "canonical_labellings": 2,
+   "vanishing_shift_assignments": 144,
+   "log2_prob_at_R4096": -32.882,
+   "survives_depth1": true,
+   "survives_depth2": false
+  },
+  {
+   "word": "abac",
+   "slots": 0,
+   "canonical_labellings": 1,
+   "vanishing_shift_assignments": 0,
+   "log2_prob_at_R4096": null,
+   "survives_depth1": true,
+   "survives_depth2": false
+  },
+  {
+   "word": "abca",
+   "slots": 0,
+   "canonical_labellings": 1,
+   "vanishing_shift_assignments": 0,
+   "log2_prob_at_R4096": null,
+   "survives_depth1": true,
+   "survives_depth2": true
+  },
+  {
+   "word": "abcb",
+   "slots": 0,
+   "canonical_labellings": 1,
+   "vanishing_shift_assignments": 0,
+   "log2_prob_at_R4096": null,
+   "survives_depth1": true,
+   "survives_depth2": false
+  },
+  {
+   "word": "abcd",
+   "slots": 0,
+   "canonical_labellings": 1,
+   "vanishing_shift_assignments": 0,
+   "log2_prob_at_R4096": null,
+   "survives_depth1": true,
+   "survives_depth2": true
+  }
+ ],
+ "configs": [
+  {
+   "label": "v20_shipped_R4096_d1",
+   "R": 4096,
+   "depth": 1,
+   "nmax": 8,
+   "sum_word_prob_log2": -32.882,
+   "expected_traps_log2": 92.918,
+   "per_length_log2": {
+    "4": -32.882,
+    "5": -48.145,
+    "6": -45.916,
+    "7": -59.253,
+    "8": -58.009
+   },
+   "survivors": [
+    {
+     "n": 4,
+     "word": "abab",
+     "slots": 2,
+     "log2_prob": -32.882
+    },
+    {
+     "n": 5,
+     "word": "ababa",
+     "slots": 2,
+     "log2_prob": -48.145
+    },
+    {
+     "n": 6,
+     "word": "abacbc",
+     "slots": 3,
+     "log2_prob": -48.238
+    },
+    {
+     "n": 6,
+     "word": "abcabc",
+     "slots": 3,
+     "log2_prob": -48.238
+    },
+    {
+     "n": 6,
+     "word": "abcacb",
+     "slots": 3,
+     "log2_prob": -48.238
+    },
+    {
+     "n": 6,
+     "word": "abcbac",
+     "slots": 3,
+     "log2_prob": -48.238
+    },
+    {
+     "n": 6,
+     "word": "abcbca",
+     "slots": 3,
+     "log2_prob": -48.238
+    },
+    {
+     "n": 8,
+     "word": "ababcdcd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abacbdcd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abacdbcd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abacdbdc",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abacdcbd",
+     "slots": 4,
+     "log2_prob": -63.179
+    }
+   ],
+   "n_surviving_words_counted": 114
+  },
+  {
+   "label": "R4096_d2",
+   "R": 4096,
+   "depth": 2,
+   "nmax": 10,
+   "sum_word_prob_log2": -48.238,
+   "expected_traps_log2": 77.562,
+   "per_length_log2": {
+    "6": -48.238,
+    "7": -63.501,
+    "8": -59.858,
+    "9": -73.233,
+    "10": -71.169
+   },
+   "survivors": [
+    {
+     "n": 6,
+     "word": "abcabc",
+     "slots": 3,
+     "log2_prob": -48.238
+    },
+    {
+     "n": 8,
+     "word": "abcadbcd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcadcbd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdabcd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdabdc",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdacbd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdacdb",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdbacd",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdbadc",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdbcad",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 8,
+     "word": "abcdbcda",
+     "slots": 4,
+     "log2_prob": -63.179
+    },
+    {
+     "n": 7,
+     "word": "abcabca",
+     "slots": 3,
+     "log2_prob": -63.501
+    }
+   ],
+   "n_surviving_words_counted": 248
+  },
+  {
+   "label": "R4096_d4",
+   "R": 4096,
+   "depth": 4,
+   "nmax": 12,
+   "sum_word_prob_log2": -77.796,
+   "expected_traps_log2": 48.00399999999999,
+   "per_length_log2": {
+    "10": -77.799,
+    "11": -93.062,
+    "12": -86.833
+   },
+   "survivors": [
+    {
+     "n": 10,
+     "word": "abcdeabcde",
+     "slots": 5,
+     "log2_prob": -77.799
+    },
+    {
+     "n": 12,
+     "word": "abcdeafbcdef",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafbcedf",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafbdcef",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafbdecf",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafcbdef",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafcbedf",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafcdbef",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdeafcdebf",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdefabcdef",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdefabcdfe",
+     "slots": 6,
+     "log2_prob": -92.155
+    },
+    {
+     "n": 12,
+     "word": "abcdefabcedf",
+     "slots": 6,
+     "log2_prob": -92.155
+    }
+   ],
+   "n_surviving_words_counted": 43
+  },
+  {
+   "label": "v21_shipped_R65536_d5",
+   "R": 65536,
+   "depth": 5,
+   "nmax": 16,
+   "sum_word_prob_log2": -116.154,
+   "expected_traps_log2": 9.646,
+   "per_length_log2": {
+    "12": -116.155,
+    "13": -135.418,
+    "14": -127.967,
+    "15": -145.342,
+    "16": -140.87
+   },
+   "survivors": [
+    {
+     "n": 12,
+     "word": "abcdefabcdef",
+     "slots": 6,
+     "log2_prob": -116.155
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbcdefg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbcdfeg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbcedfg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbcefdg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbdcefg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbdcfeg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbdecfg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagbdefcg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagcbdefg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagcbdfeg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 14,
+     "word": "abcdefagcbedfg",
+     "slots": 7,
+     "log2_prob": -134.289
+    }
+   ],
+   "n_surviving_words_counted": 3781
+  },
+  {
+   "label": "R65536_d6",
+   "R": 65536,
+   "depth": 6,
+   "nmax": 18,
+   "sum_word_prob_log2": -134.288,
+   "expected_traps_log2": -8.488000000000014,
+   "per_length_log2": {
+    "14": -134.289,
+    "15": -153.552,
+    "16": -144.908,
+    "17": -162.283,
+    "18": -157.056
+   },
+   "survivors": [
+    {
+     "n": 14,
+     "word": "abcdefgabcdefg",
+     "slots": 7,
+     "log2_prob": -134.289
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcdefgh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcdegfh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcdfegh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcdfgeh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcedfgh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcedgfh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcefdgh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbcefgdh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbdcefgh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbdcegfh",
+     "slots": 8,
+     "log2_prob": -152.23
+    },
+    {
+     "n": 16,
+     "word": "abcdefgahbdcfegh",
+     "slots": 8,
+     "log2_prob": -152.23
+    }
+   ],
+   "n_surviving_words_counted": 10185
+  }
+ ]
+}
