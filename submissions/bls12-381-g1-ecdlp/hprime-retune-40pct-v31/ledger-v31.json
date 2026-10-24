@@ -1,0 +1,108 @@
+{
+ "C_instructions_per_unit": 2000,
+ "rows": {
+  "records": 292340759290893816106324289898923687936,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292242930980832149504,
+  "gap_self_check": 25924182448222977157188550656,
+  "gap_retry_worst": 3877290542265193293613612662784,
+  "base_entry_nw50": 17029236090994688000,
+  "gap_point_tables": 4533471823554859405148160000,
+  "gap_tail_fallback": 0,
+  "walker_state_nw50": 281474976710656
+ },
+ "row_log2": {
+  "records": 127.780919,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "gap_self_check": 94.388285,
+  "gap_retry_worst": 101.612892,
+  "base_entry_nw50": 63.884648,
+  "gap_point_tables": 91.872675,
+  "walker_state_nw50": 48.0
+ },
+ "row_derivation": {
+  "records": "2*rps*2242: rps=nb*ell records/side x 2242 charged instructions (201 itemised + 242 charged overhead at 1.2x; +4 over v30's 2238 = the mixed-digest finaliser)",
+  "base_entry_nw50": "2*nb*121*2000: 121 instructions/base to form the record-window entry, both sides",
+  "gap_point_tables": "2*nb*(K_max/2)*15*2000: <=K_max/2 even-gap entries/base (DETERMINISTIC cap), 15 per table point",
+  "walker_state_nw50": "2*nb*4: one 1-word walk cursor per base per side, 4 instructions",
+  "gap_tail_fallback": "0: the abort-at-first policy serves NO fallback (v30 charged a 4-call schedule its code never ran)",
+  "chain_tables": "carried v26 declared integer: chain-table entries x build rate, counted at the v26 nb=N sizing",
+  "fixed_per_node": "carried: per-node fixed setup x node count",
+  "hprime_supply": "carried: H-prime sieving supply for the walk list",
+  "gap_retry_worst": "carried: 192 draws x (1/(1-q_hi)-1) x build_draw_cost",
+  "run_pair_cap": "carried: 2^95 run pairs x 2 instructions / unit",
+  "candidate_scan_cap": "carried: 2^84 candidates x 2^20 instructions each",
+  "root_scan_T": "carried: root scan over T",
+  "root_and_io": "carried: root extraction + IO",
+  "walk_list": "carried: walk-list build rate x list length, counted at the v26 sizing",
+  "gap_self_check": "carried: self-check pass over the drawn bands"
+ },
+ "total_instructions": 292383646126184142502624260397733823508,
+ "W": "73095911531546035625656065099433455877/500",
+ "W_log2": 116.81534594044491,
+ "claim": {
+  "numerator": "584077",
+  "denominator": "5000"
+ },
+ "claim_minus_W": 5.40595550830858e-05,
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": 0.011700000000004707,
+ "integer_assert": "total == sum(rows); every row a Python int; regenerated from rows",
+ "typo_control": {
+  "planted": "+1% on records",
+  "detected": true
+ },
+ "secondary_rate_percent": 0.0147,
+ "carried_row_census": {
+  "count": 10,
+  "sum_instructions": 42886835290326396299970498810135572,
+  "note": "every carried row's count is a function of at most the v26 base count (nb=N) or the walk-list length; v31's nb=2^45 and ell=2^70.65 are both below the v26 sizing, so the carried integers are an upper bound. They are 0.0147% of W: doubling ALL of them moves W by 0.000212 bits"
+ },
+ "kappa_charged": 1.458074,
+ "kappa_provenance": "census-kappa-v31.json:charged",
+ "gap_cap": {
+  "k_max": 4294967296,
+  "support": 2147483648,
+  "row_log2": 91.872675,
+  "deterministic": true,
+  "policy": "abort at first above-cap gap",
+  "fallback_row": 0
+ },
+ "retune": {
+  "nb_log2": 45,
+  "ell": 1852993781273297218247,
+  "ell_log2": 70.650348,
+  "space_log2": 98,
+  "headroom_log2": 8,
+  "phi": 0.998049,
+  "row_moves": {
+   "gap_point_tables": "2^111.87 -> 2^91.87",
+   "base_entry": "2^84.88 -> 2^63.88",
+   "walker_state": "2^69.00 -> 2^48.00",
+   "fallback": "2^83.94 -> 0"
+  }
+ },
+ "complete_W": "W = [2*rps*2242 + 2nb*121*2000 + 2nb*2^31*15*2000 + 2nb*4 + S]/2000, nb=2^45, ell=1852993781273297218247, S=42886830756854555715593527690576916 (carried rows), K_max=2^32",
+ "S_written": 42886830756854555715593527690576916,
+ "applicability": [
+  "nw=2^50 geometry: nb=2^45 bases/side, ell=2^70.65 steps",
+  "no advice; preprocessing includes pool, gap tables and H-prime supply",
+  "carried rows 0.0147% of W"
+ ]
+}

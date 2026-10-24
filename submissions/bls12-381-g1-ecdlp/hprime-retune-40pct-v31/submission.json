@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v31 RETUNE: base-ratio saturation fixed by re-splitting N (nb=2^45, ell=2^70.65, nb^2/2^98=2^-8, Phi=0.998), retuned arm q=0.397792 CP-lo 0.392584, saturation control 0.0155, mixed-digest key kappa 1.458 vs low-bit 3.389, cap==policy K_max=2^32 0/24000 aborts, W=2^116.81534594",
+ "claims": [
+  {
+   "statement": "BLS12-381 G1 auxiliary powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, recover s. Claim 116.8154 (584077/5000); charged W=2^116.81534594 in 2000-instruction units; live gate 116.8271 (jungjipdo 6ecec8e, review state at fire time); claim-W=0.0000541 bits, gate-claim=0.0117 bits. v31 repairs the five flaws of verdict 8d347ceb with CHANGES OF OBJECT, each machine-emitted by derive_v31.py and re-checked by audit_v31.py.\n\n(1) BASE-RATIO SATURATION (the fatal one) IS FIXED BY RE-SPLITTING N. v30 split N=2^115.650 into nb=2^66 x ell=2^49.650. Pool exponents are 97-bit, so the base-ratio set is at most min(nb^2,2^98) elements; v30 asked for 2^132 and was clipped at 2^98, so its recoverable set was 6*2^98*ell^2 = 2^-34.97 of m, not 0.51. The reviewer's arithmetic reproduces exactly and the v30 success claim is void. v31 re-splits the same N: nb=2^45, ell=2^70.650. min(nb^2,2^98)=nb^2=2^90 (8 bits of headroom) and the reviewer's own form 6*nb^2*ell^2/m = 2^-0.971 = 0.510 = K = 6N^2/m, so the two readings agree. The retune is 3 bits TIGHTER than the bare nb^2<=2^98 prescription: below the capacity the map (i,j)->k_i-k_j is still not injective, and for a random nb-subset of a G-element space the distinct-difference count is nb^2*Phi(x), Phi=(1-e^-x)/x, x=nb^2/G. At nb=2^48 x=1/4, Phi=0.8848 -- an 11.5% ratio-set loss that puts q at ~0.351 and misses the 0.39 floor. v31 takes nb=2^45 (x=1/256, Phi=0.998049, K_eff=0.509005, 1.31x the floor). The attenuator is measured at fixture scale: nb=181, span=16, x=0.25 predicts 0.3504 and the arm measures 0.351750 (0.4% agreement). ARMS AT THE RETUNED SHAPE (24,000 trials, 41-bit fixture field, same walk/hit/counter path): retuned production shape nb=32, ell=4774, span=16, nb^2/space=2^-7 -> q=0.397792, CP-95 lower 0.392584 >= 0.39 (2.6 sigma of room); planted saturation control nb=1024, ell=149, span=14, nb^2/space=32 -> q=0.015500 (the reviewer's mechanism reproduces at fixture scale, 26x collapse, and it is the only knob that moves q); banked crown nb=22, ell=6944 stays as measured-fixture evidence (q=0.398625, CP-lo 0.396298). What transfers between scales is the saturation ratio nb^2/space, not the split ratio nb/ell (which needs nb<1 at fixture N) -- stated, not implied.\n\n(2) THE NO-WRAP CLAIM IS RETRACTED. v30's 'span+walk_band<41 => exact integer product, wrap_free' is withdrawn: the code computes mulmod(a,W[k]), a field multiplication that reduces mod p by definition, so no bound on integer representatives was needed and none was established. v31 claims only the group law (exact for every input pair) and PRINTS the wrap probability of the object it does claim: the integer product of the two representatives wraps with probability >= 1-2^-20 at the fixture and >= 1-2^-96.717 at production, i.e. O(1) wrap by design. No step of the argument uses a no-wrap property; the only exponent-domain quantity used is a COUNT (the 2^98 difference capacity above), which is a counting bound.\n\n(3) CAP CODE == POLICY, byte-identical and asserted. Implemented behaviour is abort at the first above-cap gap; v30 described a 4-fallback schedule its code never ran. v31: spec text 'K_max = 2^32 = 4294967296', code '#define K_MAX_DEFAULT 4294967296ULL' in structured_walk_v31.c, and census gap_cap in census-kappa-v31.json emitted by the very run that produced the charged q; derive_v31.py greps the C literal and asserts spec_value == code_constant == census_json_gap_cap == 2^32 (three_way.match=true). No fallback row exists (row=0). The abort counter is exercised (at the fixture's own p99 trail-max gap the cap fires); AT THE POLICY CAP THE CENSUS FIRES 0 ABORTS IN 24,000 TRIALS, one-sided Poisson 95% upper bound 2.996/24000=1.248e-04. K_max was RE-DERIVED, not inherited: lambda=ell*e^(-K/mu) is 2^21 larger at the retuned ell, so v30's 2^31 would abort every trail; at mu=d*ln(q_w)=2^26.067 (band=ell*mu=2^96.717, derived exactly as v30's 2^76 was from its own ell), P(gap>K_max)=2^-88.146, lambda=5.409e-06, P(abort)=2^-17.496, and the success debit 0.396298*(1-2^-17.5)=0.396296 leaves 13.5 bits over the floor.\n\n(4) MIXED-DIGEST KEY, measured against the low-bit key on the SAME walks. v30 indexed the low 168 bits of the even y-representative, whose low bits carry the walk's stride structure. v31 indexes truncate(mix64(residue),168), mix64 a 2-round xorshift-multiply finaliser (fmix64 shape, byte-identical in keymod.py and the C harness; +3 charged ops/record -> 201 itemised, 242 charged, 2242 per record). One walk set, two stores, same trials: low-bit mean 1.003095 / p99 1.221471 / max 3.389262 / pairs_max 37717; mixed mean 1.003073 / p99 1.026744 / max 1.458074 / pairs_max 16226. The clustering objection is REAL and MATERIAL (low-bit max 2.3x the mixed max) and it is removed by construction: the charged kappa is the mixed-key max 1.458074, not 3.389262. E_bad=2^64.845 vs cap_bad=2^84 (19.16 bits of headroom); at the low-bit key the charge would be +1.22 bits and still 18 bits under the cap. No work row moves.\n\n(5) THE PAIR-MAX TRANSCRIPTION SLIP AND A MACHINE LITERAL SWEEP. That census is superseded: the charged census is the retuned arm, whose pair maxima are 16226 (mixed) and 37717 (low), both JSON-owned. sweep_literals_v31.py extracts every integer of >=5 digits from the claims text and the public note, resolves each against the file that owns it, and prints one table (literal, source path, value, match); every row reads Y or it exits non-zero. The table is committed as literal-sweep-v31.json.\n\nLEDGER: 15 rows, every row a Python int with a count expression; total==sum(rows). The retune MOVES rows down, which is why the claim survives the +4 ops/record: gap_point_tables 2^111.87->2^91.87, base_entry 2^84.88->2^63.88, walker_state 2^69.00->2^48.00, fallback 2^83.94->0; the dominant row is unchanged in kind (2*rps*2242, rps=nb*ell=N). The ten carried rows are DECLARED carried: their counts were fixed at the v26 sizing (nb=N bases, one walk entry), v31's nb=2^45 and ell=2^70.650 are both below that, so each is an upper bound; they are 0.0147% of W and doubling ALL of them moves W by 0.000212 bits. S=42886830756854555715593527690576916. SCOPE: no production run (N=2^115.650); unit costs are declared ledger integers; the arms run at a 41-bit fixture field with the production base law (g^k, small discrete log), the production record object (base x shared walk element), the shared mu6 test, the saturation ratio matched (2^-7 vs 2^-8) and the key-collision regime matched under the mixed key. Disclosed and not transferable: the absolute split ratio nb/ell, the 97-bit exponent sliver, and the fixture's 2^38 group order against production's 2^234.857.",
+   "score": {
+    "numerator": "584077",
+    "denominator": "5000"
+   },
+   "evidence": [
+    "public-note.md",
+    "derive_v31.py",
+    "derive-v31.json",
+    "ledger-v31.json",
+    "census-kappa-v31.json",
+    "audit_v31.py",
+    "audit-v31.json",
+    "sweep_literals_v31.py",
+    "literal-sweep-v31.json",
+    "structured_walk_v31.c",
+    "arm-retune-v31.jsonl",
+    "arm-sat-span14.jsonl",
+    "arm-birthday-calib-v31.jsonl",
+    "certificate.json",
+    "structured-ladder.json",
+    "direct_v25.py",
+    "direct-v25.json",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v26.json",
+    "keymod.py",
+    "ratios_v26.py",
+    "ratios-v26.json",
+    "verify_v26.py",
+    "census-key-v20.json",
+    "preflight_v31.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

@@ -1,0 +1,27 @@
+{
+ "kind": "v31 census: paired low-bit vs mixed-digest key kappa on one walk set",
+ "rung": "nb=32, ell=4774, N=152768, span=16",
+ "key_bits": 20,
+ "trials": 24000,
+ "aborts": 0,
+ "gap_cap": 4294967296,
+ "kappa_key": {
+  "mean": 1.003095,
+  "p50": 0.993316,
+  "p95": 1.044806,
+  "p99": 1.221471,
+  "max": 3.389262,
+  "pairs_max": 37717
+ },
+ "kappa_mix": {
+  "mean": 1.003073,
+  "p50": 0.999966,
+  "p95": 1.016141,
+  "p99": 1.026744,
+  "max": 1.458074,
+  "pairs_max": 16226
+ },
+ "charged": 1.458074,
+ "E_bad_log2": 64.844733,
+ "cap_bad_log2": 84
+}

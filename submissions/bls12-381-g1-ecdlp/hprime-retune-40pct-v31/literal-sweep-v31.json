@@ -1,0 +1,111 @@
+{
+ "kind": "v31 literal sweep: every >=5-digit integer in the claims text and note vs the file that owns it",
+ "literals_checked": 14,
+ "unowned": 0,
+ "negative_control": {
+  "literal": "918273645",
+  "resolved": false,
+  "caught": true
+ },
+ "table": [
+  {
+   "literal": "584077",
+   "where": "claims[0].statement",
+   "source": "derive-v31.json.ledger.claim.numerator",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "24000",
+   "where": "claims[0].statement",
+   "source": "derive-v31.json.gap.three_way.census_trials",
+   "occurrences": 9,
+   "match": true
+  },
+  {
+   "literal": "4294967296",
+   "where": "claims[0].statement",
+   "source": "derive-v31.json.gap.k_max",
+   "occurrences": 36,
+   "match": true
+  },
+  {
+   "literal": "37717",
+   "where": "claims[0].statement",
+   "source": "derive-v31.json.kappa.low.pairs_max",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "16226",
+   "where": "claims[0].statement",
+   "source": "derive-v31.json.kappa.mixed.pairs_max",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "584077",
+   "where": "public-note.md",
+   "source": "derive-v31.json.ledger.claim.numerator",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "24000",
+   "where": "public-note.md",
+   "source": "derive-v31.json.gap.three_way.census_trials",
+   "occurrences": 9,
+   "match": true
+  },
+  {
+   "literal": "4294967296",
+   "where": "public-note.md",
+   "source": "derive-v31.json.gap.k_max",
+   "occurrences": 36,
+   "match": true
+  },
+  {
+   "literal": "37717",
+   "where": "public-note.md",
+   "source": "derive-v31.json.kappa.low.pairs_max",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "16226",
+   "where": "public-note.md",
+   "source": "derive-v31.json.kappa.mixed.pairs_max",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "1852993781273297218247",
+   "where": "public-note.md",
+   "source": "derive-v31.json.retune.ell",
+   "occurrences": 3,
+   "match": true
+  },
+  {
+   "literal": "42886835290326396299970498810135572",
+   "where": "public-note.md",
+   "source": "derive-v31.json.ledger.carried_row_census.sum_instructions",
+   "occurrences": 2,
+   "match": true
+  },
+  {
+   "literal": "292383646126184142502624260397733823508",
+   "where": "public-note.md",
+   "source": "derive-v31.json.ledger.total_instructions",
+   "occurrences": 4,
+   "match": true
+  },
+  {
+   "literal": "24000",
+   "where": "title",
+   "source": "derive-v31.json.gap.three_way.census_trials",
+   "occurrences": 9,
+   "match": true
+  }
+ ],
+ "verdict": "PASS"
+}

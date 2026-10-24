@@ -1,0 +1,293 @@
+{
+ "kind": "v31 retune: base-ratio saturation re-split, wrap retraction, cap==policy, mixed-digest key, literal sweep",
+ "retune": {
+  "nb": 35184372088832,
+  "nb_log2": 45,
+  "ell": 1852993781273297218247,
+  "ell_log2": 70.650348,
+  "rps": 65196422678611466571437174375317504,
+  "per_record": 2242,
+  "itemised": 201,
+  "charged_ov": 242
+ },
+ "saturation": {
+  "statement": "distinct base ratios <= min(nb^2, 2^98); the recoverable set is mu6*(A/B)*(W/W) of size <= 6*min(nb^2,2^98)*ell^2",
+  "capacity_log2": 98,
+  "v30": {
+   "nb_log2": 66,
+   "nb2_log2": 132,
+   "over_log2": 34,
+   "clipped_log2": 98,
+   "ell_log2": 49.650348,
+   "set_log2": 199.885659,
+   "success_log2": -34.971431,
+   "verdict": "reviewer's bound reproduces: 6*nb^2*ell^2/m = 2^-34.97, not 0.51 -- the v30 success claim is void at production (fixture never saturated)"
+  },
+  "v31": {
+   "nb_log2": 45,
+   "nb2_log2": 90,
+   "headroom_log2": 8,
+   "ell_log2": 70.650348,
+   "clipped": null,
+   "set_log2": 233.885659,
+   "success_log2": -0.971431,
+   "reviewer_form_log2": -0.971431,
+   "note": "min(nb^2,2^98)=nb^2 so the reviewer's own form equals 6N^2/m = K: no clip"
+  },
+  "birthday": {
+   "law": "distinct differences of a random nb-subset of a G-element group = G(1-e^{-nb^2/G})",
+   "x_v30": 0.25,
+   "phi_at_verdict_nb_2_48": 0.884797,
+   "x_v31": 0.00390625,
+   "phi_v31": 0.998049,
+   "why": "the verdict's nb=2^48 sits AT x=1/4: 11.5% of the ratio set is lost to difference collisions, q falls to ~0.351 and the 0.39 floor fails. v31 takes nb=2^45 (x=1/256, 0.19% loss) -- the saturation fix must be 3 bits tighter than the bare nb^2<=2^98",
+   "calibration": "fixture nb=181 span=16 x=0.25 predicts 0.396*0.885=0.3504, measured 0.351750 (0.4% agreement) -- the attenuator is measured, not assumed"
+  },
+  "K": {
+   "exact": "2075475356488361112194406687674983562278081771410523348559873441792/4069559522526198259201501535576610347697709415459356412183156446549",
+   "value": 0.51,
+   "K_charged": "51/100",
+   "K_eff": 0.509005,
+   "K_eff_over_floor": 1.305142
+  }
+ },
+ "gap": {
+  "policy": "ABORT AT FIRST ABOVE-CAP GAP (the implemented behaviour; v30 claimed a 4-fallback schedule its code never ran). (a) each base's even-gap table is built to at most K_max/2 = 2^31 entries, a DETERMINISTIC function of the cap; (b) a realised gap above K_max aborts the trail, which then contributes no success and its work is charged; (c) there is NO fallback row: K_max is chosen so that no trail is expected to abort",
+  "k_max": 4294967296,
+  "k_max_log2": 32,
+  "support_entries_per_base": 2147483648,
+  "mu": 70295813.99113314,
+  "mu_log2": 26.066935,
+  "band_top": 1.3025770617511414e+29,
+  "band_log2": 96.717283,
+  "band_note": "walk band = ell*mu is DERIVED from the retuned ell (v30's 2^76 was the same derivation at ell=2^49.65); at ell=2^70.65 it is 2^96.72",
+  "p_one_gap_above_cap": 2.9192267806323593e-27,
+  "p_one_log2": -88.146,
+  "lam_above_cap_per_trail": 5.409309070638229e-06,
+  "p_abort": 5.409294440372747e-06,
+  "p_abort_log2": -17.496,
+  "success_debit": "q_crown*(1-2^-17.50) = 0.396298*(1-5.409e-06) = 0.396295856, i.e. the debit is 2^-17.50, 13.5 bits under the 0.0063 margin over the 0.39 floor",
+  "why_K_max_moved": "v30's K_max=2^31 does NOT survive the retune: lam = ell*e^{-K/mu} is ell/ell30 = 2^21.00 larger at the same cap, so 2^31 would abort every trail (lam=2^26.58). 2^32 restores lam=2^-17.50.",
+  "three_way": {
+   "spec_text": "K_max = 2^32 = 4294967296",
+   "spec_value": 4294967296,
+   "code_constant": 4294967296,
+   "code_bits": 32,
+   "census_json_gap_cap": 4294967296,
+   "match": true,
+   "census_aborts": 0,
+   "census_trials": 24000,
+   "census_source": "arm-retune-v31.jsonl (the run that produced the charged q)"
+  },
+  "cap_demo": {
+   "fixture_cap": 1044,
+   "note": "at the fixture's own p99 trail-max gap the cap FIRES (v30 measured 3.85% aborts against 65.2% predicted by the unsuppressed law), so the abort counter is an exercised code path, not a story; at the policy cap the census above fires 0/24000 and the Poisson upper bound on the abort rate is 1.248e-04"
+  }
+ },
+ "wrap": {
+  "v30_claim_retracted": "v30 asserted 'span+walk_band<41 => a_i*w_k is an exact integer product, wrap_free'. RETRACTED: the code computes mulmod(a,W[k]), a field multiplication that reduces mod p by definition; no bound on integer representatives is needed and none was established",
+  "object_claimed": "record = a_i * W_k mod p, a_i = GH^{k_i} (k_i < 2^97 pool exponent), W_k a distinct H-element; the arithmetic is the group law, which is exact mod p for every input pair",
+  "wrap_probability": {
+   "definition": "integer-level wrap = the product of the two representatives is >= p, so the stored residue is the reduced one",
+   "fixture": {
+    "w_min": 1048576.0,
+    "note": "walk elements start at 2^20",
+    "p_no_wrap_upper": 9.5367431640625e-07,
+    "p_wrap_lower": 0.999999046
+   },
+   "production": {
+    "band_log2": 96.717,
+    "p_no_wrap_upper_log2": -96.717,
+    "p_wrap_lower": "1 - 2^-96.7"
+   },
+   "verdict": "the integer product wraps with probability >= 1-2^-20 at the fixture and >= 1-2^-96.7 at production: O(1) wrap, by design. v31 makes NO no-wrap claim. The only exponent-domain statement that IS used is the base-difference count (2^98 capacity), which is a count, not a no-wrap assumption"
+  },
+  "key_domain_note": "the key is a mixed digest of the FULL residue (168-bit truncation of a 2-round xorshift-multiply finaliser), so it does not read the low-bit structure that the v30 low-bit key exposed; measured side by side below"
+ },
+ "arms": {
+  "retuned_shape": {
+   "role": "PRODUCTION-SHAPE ARM: the retuned split (nb^2/2^98 = 2^-8, K held at 6N^2/m), the production base law (g^k), the mixed key, the policy cap",
+   "rung": "nb=32, ell=4774, span=16, cap=4294967296 (policy K_max)",
+   "nb_over_space": 0.007812,
+   "trials": 24000,
+   "aborts": 0,
+   "hits": 9547,
+   "q": 0.397791667,
+   "cp95_lower": 0.3925835347820814,
+   "cp95_upper": 0.4030180918269757,
+   "floor": 0.39,
+   "floor_met": true,
+   "K": 0.509420246,
+   "kappa_low": 3.389262,
+   "kappa_mix": 1.458074,
+   "abort_census": "0 aborts in 24000 trials at the policy cap; one-sided Poisson 95% upper bound on the abort rate = 2.996/24000 = 1.248e-04",
+   "shape_note": "the production split ratio nb/ell cannot be reproduced at fixture N (it needs nb<1); what IS reproduced is the saturation ratio nb^2/space, which is the quantity flaw 1 is about"
+  },
+  "saturation_control": {
+   "role": "PLANTED CONTROL: same N, same K, same span count -- only nb^2/space is broken",
+   "rung": "nb=1024, ell=149, span=14",
+   "nb_over_space": 32.0,
+   "trials": 24000,
+   "hits": 372,
+   "q": 0.0155,
+   "cp95_lower": 0.014211201231369111,
+   "cp95_upper": 0.016876804876327436,
+   "predicted_q": 0.012457,
+   "verdict": "q collapses from 0.39-class to 0.0155 when nb^2/space = 32: the reviewer's mechanism is REPRODUCIBLE at fixture scale, and it is the only knob that moves q here"
+  },
+  "crown_banked": {
+   "role": "BANKED measured fixture evidence (reviewer-accepted v30 crown)",
+   "rung": "nb=22, ell=6944 (108.5x the fixture walk length)",
+   "trials": 120000,
+   "hits": 47835,
+   "q": 0.398625,
+   "cp95_lower": 0.39629782828873783
+  },
+  "ladder_note": "the crown rung (nb=22, ell=6944, nb^2/space=2^-8.1) is the same saturation shape as the retuned production split; it stays banked and unchanged"
+ },
+ "kappa": {
+  "key_rule": "key = truncate(mix64(residue), KEY_BITS) with mix64 = 2-round xorshift-multiply (fmix64 shape); v30 truncated the raw residue, whose low bits carry the stride structure of the walk -- the reviewer's clustering objection",
+  "paired_design": "ONE walk set, TWO stores: the low-bit key and the mixed key are counted on the same walks, so the difference is not a sampling difference",
+  "low": {
+   "mean": 1.003095,
+   "p50": 0.993316,
+   "p95": 1.044806,
+   "p99": 1.221471,
+   "max": 3.389262,
+   "pairs_max": 37717
+  },
+  "mixed": {
+   "mean": 1.003073,
+   "p50": 0.999966,
+   "p95": 1.016141,
+   "p99": 1.026744,
+   "max": 1.458074,
+   "pairs_max": 16226
+  },
+  "expectancy": 11128.382233,
+  "trials": 24000,
+  "clustering_diag": {
+   "delta_max": 1.931188,
+   "delta_p99": 0.194727,
+   "delta_mean": 2.2e-05,
+   "verdict": "the low-bit key's max exceeds the mixed key's by 1.9312 (132.4% of the charged value): the clustering objection is REAL but SMALL at this truncation, and the mixed key is the one charged, so the charge is not understated by it"
+  },
+  "charged": 1.458074,
+  "charged_rule": "max(carried envelope 1.231, measured mixed-key max)",
+  "provenance": "census-kappa-v31.json:charged",
+  "price": {
+   "E_bad_log2": 64.844733,
+   "cap_bad_log2": 84,
+   "headroom": 19.155267,
+   "work_row_bits_moved": -9.543032
+  }
+ },
+ "ledger": {
+  "C_instructions_per_unit": 2000,
+  "rows": {
+   "records": 292340759290893816106324289898923687936,
+   "chain_tables": 994818461282523598820751704064000,
+   "fixed_per_node": 41538374868278621028243970633760768,
+   "hprime_supply": 11626940766239494561217535541248,
+   "run_pair_cap": 79228162514264337593543950336,
+   "candidate_scan_cap": 20282409603651670423947251286016,
+   "root_and_io": 421315604,
+   "root_scan_T": 4294967296000,
+   "walk_list": 317745634036292242930980832149504,
+   "gap_self_check": 25924182448222977157188550656,
+   "gap_retry_worst": 3877290542265193293613612662784,
+   "base_entry_nw50": 17029236090994688000,
+   "gap_point_tables": 4533471823554859405148160000,
+   "gap_tail_fallback": 0,
+   "walker_state_nw50": 281474976710656
+  },
+  "row_log2": {
+   "records": 127.780919,
+   "chain_tables": 109.616132,
+   "fixed_per_node": 115.0,
+   "hprime_supply": 103.197242,
+   "run_pair_cap": 96.0,
+   "candidate_scan_cap": 104.0,
+   "root_and_io": 28.650326,
+   "root_scan_T": 41.965784,
+   "walk_list": 107.969571,
+   "gap_self_check": 94.388285,
+   "gap_retry_worst": 101.612892,
+   "base_entry_nw50": 63.884648,
+   "gap_point_tables": 91.872675,
+   "walker_state_nw50": 48.0
+  },
+  "row_derivation": {
+   "records": "2*rps*2242: rps=nb*ell records/side x 2242 charged instructions (201 itemised + 242 charged overhead at 1.2x; +4 over v30's 2238 = the mixed-digest finaliser)",
+   "base_entry_nw50": "2*nb*121*2000: 121 instructions/base to form the record-window entry, both sides",
+   "gap_point_tables": "2*nb*(K_max/2)*15*2000: <=K_max/2 even-gap entries/base (DETERMINISTIC cap), 15 per table point",
+   "walker_state_nw50": "2*nb*4: one 1-word walk cursor per base per side, 4 instructions",
+   "gap_tail_fallback": "0: the abort-at-first policy serves NO fallback (v30 charged a 4-call schedule its code never ran)",
+   "chain_tables": "carried v26 declared integer: chain-table entries x build rate, counted at the v26 nb=N sizing",
+   "fixed_per_node": "carried: per-node fixed setup x node count",
+   "hprime_supply": "carried: H-prime sieving supply for the walk list",
+   "gap_retry_worst": "carried: 192 draws x (1/(1-q_hi)-1) x build_draw_cost",
+   "run_pair_cap": "carried: 2^95 run pairs x 2 instructions / unit",
+   "candidate_scan_cap": "carried: 2^84 candidates x 2^20 instructions each",
+   "root_scan_T": "carried: root scan over T",
+   "root_and_io": "carried: root extraction + IO",
+   "walk_list": "carried: walk-list build rate x list length, counted at the v26 sizing",
+   "gap_self_check": "carried: self-check pass over the drawn bands"
+  },
+  "total_instructions": 292383646126184142502624260397733823508,
+  "W": "73095911531546035625656065099433455877/500",
+  "W_log2": 116.81534594044491,
+  "claim": {
+   "numerator": "584077",
+   "denominator": "5000"
+  },
+  "claim_minus_W": 5.40595550830858e-05,
+  "gate": {
+   "numerator": "1168271",
+   "denominator": "10000"
+  },
+  "gate_margin": 0.011700000000004707,
+  "integer_assert": "total == sum(rows); every row a Python int; regenerated from rows",
+  "typo_control": {
+   "planted": "+1% on records",
+   "detected": true
+  },
+  "secondary_rate_percent": 0.0147,
+  "carried_row_census": {
+   "count": 10,
+   "sum_instructions": 42886835290326396299970498810135572,
+   "note": "every carried row's count is a function of at most the v26 base count (nb=N) or the walk-list length; v31's nb=2^45 and ell=2^70.65 are both below the v26 sizing, so the carried integers are an upper bound. They are 0.0147% of W: doubling ALL of them moves W by 0.000212 bits"
+  },
+  "kappa_charged": 1.458074,
+  "kappa_provenance": "census-kappa-v31.json:charged",
+  "gap_cap": {
+   "k_max": 4294967296,
+   "support": 2147483648,
+   "row_log2": 91.872675,
+   "deterministic": true,
+   "policy": "abort at first above-cap gap",
+   "fallback_row": 0
+  },
+  "retune": {
+   "nb_log2": 45,
+   "ell": 1852993781273297218247,
+   "ell_log2": 70.650348,
+   "space_log2": 98,
+   "headroom_log2": 8,
+   "phi": 0.998049,
+   "row_moves": {
+    "gap_point_tables": "2^111.87 -> 2^91.87",
+    "base_entry": "2^84.88 -> 2^63.88",
+    "walker_state": "2^69.00 -> 2^48.00",
+    "fallback": "2^83.94 -> 0"
+   }
+  },
+  "complete_W": "W = [2*rps*2242 + 2nb*121*2000 + 2nb*2^31*15*2000 + 2nb*4 + S]/2000, nb=2^45, ell=1852993781273297218247, S=42886830756854555715593527690576916 (carried rows), K_max=2^32",
+  "S_written": 42886830756854555715593527690576916,
+  "applicability": [
+   "nw=2^50 geometry: nb=2^45 bases/side, ell=2^70.65 steps",
+   "no advice; preprocessing includes pool, gap tables and H-prime supply",
+   "carried rows 0.0147% of W"
+  ]
+ }
+}

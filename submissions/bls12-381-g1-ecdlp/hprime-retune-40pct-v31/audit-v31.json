@@ -1,0 +1,308 @@
+{
+ "kind": "v31 independent audit: every check recomputes from raw evidence JSON",
+ "checks": 45,
+ "failures": 0,
+ "failed": [],
+ "controls": [
+  {
+   "control": "+1% on records",
+   "targeted_check": "claim >= W (claim is legal)",
+   "recomputed_W_log2": 116.829699,
+   "caught": true
+  },
+  {
+   "control": "x0.98 on the retuned arm CP-lo",
+   "targeted_check": "retuned arm clears the 0.39 floor",
+   "recomputed": 0.3847318640864398,
+   "caught": true
+  },
+  {
+   "control": "x1.01 on census kappa charged",
+   "targeted_check": "kappa charged == census",
+   "recomputed": 1.47265474,
+   "caught": true
+  },
+  {
+   "control": "+0.5 on row_log2.records",
+   "targeted_check": "W_log2",
+   "recomputed": 128.28091899999998,
+   "caught": true
+  }
+ ],
+ "controls_caught": 4,
+ "controls_total": 4,
+ "cp_implementation": "independent Numerical-Recipes betacf Clopper-Pearson (not direct_v25.py)",
+ "checks_table": [
+  {
+   "check": "records = 2*rps*2242",
+   "recomputed": 292340759290893816106324289898923687936,
+   "declared": 292340759290893816106324289898923687936,
+   "match": true
+  },
+  {
+   "check": "base_entry = 2*nb*121*2000",
+   "recomputed": 17029236090994688000,
+   "declared": 17029236090994688000,
+   "match": true
+  },
+  {
+   "check": "gap_point_tables = 2*nb*2^31*15*2000",
+   "recomputed": 4533471823554859405148160000,
+   "declared": 4533471823554859405148160000,
+   "match": true
+  },
+  {
+   "check": "walker_state = 2*nb*4",
+   "recomputed": 281474976710656,
+   "declared": 281474976710656,
+   "match": true
+  },
+  {
+   "check": "fallback row is 0 (abort-at-first policy)",
+   "recomputed": 0,
+   "declared": 0,
+   "match": true
+  },
+  {
+   "check": "total == sum(rows)",
+   "recomputed": 292383646126184142502624260397733823508,
+   "declared": 292383646126184142502624260397733823508,
+   "match": true
+  },
+  {
+   "check": "W == total/2000",
+   "recomputed": 1.4619182306309208e+35,
+   "declared": 1.4619182306309208e+35,
+   "match": true
+  },
+  {
+   "check": "W_log2",
+   "recomputed": 116.81534594044491,
+   "declared": 116.81534594044491,
+   "match": true
+  },
+  {
+   "check": "claim >= W (claim is legal)",
+   "recomputed": 116.8154,
+   "declared": 116.81534594044491,
+   "match": true
+  },
+  {
+   "check": "claim < gate 116.8271",
+   "recomputed": 116.8154,
+   "declared": 116.8271,
+   "match": true
+  },
+  {
+   "check": "claim cannot be cut by one 1e-4 tick",
+   "recomputed": 116.8153,
+   "declared": 116.81534594044491,
+   "match": true
+  },
+  {
+   "check": "v30 saturation success = 2^-34.97",
+   "recomputed": -34.971431,
+   "declared": -34.971431,
+   "match": true
+  },
+  {
+   "check": "v31 reviewer form = 6N^2/m",
+   "recomputed": -0.971431,
+   "declared": -0.971431,
+   "match": true
+  },
+  {
+   "check": "K = 6N^2/m",
+   "recomputed": 0.51,
+   "declared": 0.51,
+   "match": true
+  },
+  {
+   "check": "Phi(nb^2/2^98)",
+   "recomputed": 0.998049,
+   "declared": 0.9980494156499162,
+   "match": true
+  },
+  {
+   "check": "K_eff = K*Phi",
+   "recomputed": 0.509005,
+   "declared": 0.5090052019814573,
+   "match": true
+  },
+  {
+   "check": "retuned_shape: q = hits/(trials-aborts)",
+   "recomputed": 0.39779166666666665,
+   "declared": 0.397791667,
+   "match": true
+  },
+  {
+   "check": "retuned_shape: derive q",
+   "recomputed": 0.397791667,
+   "declared": 0.397791667,
+   "match": true
+  },
+  {
+   "check": "retuned_shape: CP-95 lower (independent)",
+   "recomputed": 0.392583535,
+   "declared": 0.392583535,
+   "match": true
+  },
+  {
+   "check": "retuned_shape: CP-95 upper (independent)",
+   "recomputed": 0.403018092,
+   "declared": 0.403018092,
+   "match": true
+  },
+  {
+   "check": "saturation_control: q = hits/(trials-aborts)",
+   "recomputed": 0.0155,
+   "declared": 0.0155,
+   "match": true
+  },
+  {
+   "check": "saturation_control: derive q",
+   "recomputed": 0.0155,
+   "declared": 0.0155,
+   "match": true
+  },
+  {
+   "check": "saturation_control: CP-95 lower (independent)",
+   "recomputed": 0.014211201,
+   "declared": 0.014211201,
+   "match": true
+  },
+  {
+   "check": "saturation_control: CP-95 upper (independent)",
+   "recomputed": 0.016876805,
+   "declared": 0.016876805,
+   "match": true
+  },
+  {
+   "check": "retuned arm clears the 0.39 floor",
+   "recomputed": 0.3925835347820814,
+   "declared": 0.39,
+   "match": true
+  },
+  {
+   "check": "saturation control FAILS the floor (planted mechanism visible)",
+   "recomputed": 0.0155,
+   "declared": 0.39,
+   "match": true
+  },
+  {
+   "check": "crown CP-lo unchanged",
+   "recomputed": 0.39629782828873783,
+   "declared": 0.39629782828873783,
+   "match": true
+  },
+  {
+   "check": "crown q",
+   "recomputed": 0.398625,
+   "declared": 0.398625,
+   "match": true
+  },
+  {
+   "check": "kappa charged == census",
+   "recomputed": 1.458074,
+   "declared": 1.458074,
+   "match": true
+  },
+  {
+   "check": "kappa provenance == ledger",
+   "recomputed": 1.458074,
+   "declared": 1.458074,
+   "match": true
+  },
+  {
+   "check": "E_bad = E_bad_v27 + log2(charged/1.231)",
+   "recomputed": 64.844733,
+   "declared": 64.84473317918943,
+   "match": true
+  },
+  {
+   "check": "E_bad < cap_bad",
+   "recomputed": 64.844733,
+   "declared": 84,
+   "match": true
+  },
+  {
+   "check": "mixed-key max < low-bit max (clustering removed)",
+   "recomputed": 1.458074,
+   "declared": 3.389262,
+   "match": true
+  },
+  {
+   "check": "census kappa_mix.max == arm kappa_mix_max",
+   "recomputed": 1.458074,
+   "declared": 1.458074,
+   "match": true
+  },
+  {
+   "check": "census kappa_key.max == arm kappa_key_max",
+   "recomputed": 3.389262,
+   "declared": 3.389262,
+   "match": true
+  },
+  {
+   "check": "cap: C constant == census JSON",
+   "recomputed": 4294967296,
+   "declared": 4294967296,
+   "match": true
+  },
+  {
+   "check": "cap: spec literal == C constant",
+   "recomputed": 4294967296,
+   "declared": 4294967296,
+   "match": true
+  },
+  {
+   "check": "cap: abort count is a census number, not a story",
+   "recomputed": 0,
+   "declared": 0,
+   "match": true
+  },
+  {
+   "check": "mu = d*ln(ell*mu) fixed point",
+   "recomputed": 70295813.99113314,
+   "declared": 70295813.99113314,
+   "match": true
+  },
+  {
+   "check": "lambda = ell*exp(-K_max/mu)",
+   "recomputed": 5.409309070638229e-06,
+   "declared": 5.409309070638229e-06,
+   "match": true
+  },
+  {
+   "check": "P(abort) = 1-exp(-lambda) log2",
+   "recomputed": -17.496,
+   "declared": -17.49612814047682,
+   "match": true
+  },
+  {
+   "check": "success after abort debit >= floor",
+   "recomputed": 0.39629585630743186,
+   "declared": 0.39,
+   "match": true
+  },
+  {
+   "check": "submission title carries W",
+   "recomputed": 1.0,
+   "declared": 1.0,
+   "match": true
+  },
+  {
+   "check": "claims[0].statement length <= 7965",
+   "recomputed": 6685,
+   "declared": 7965,
+   "match": true
+  },
+  {
+   "check": "experiments list present",
+   "recomputed": 0,
+   "declared": 0,
+   "match": true
+  }
+ ],
+ "verdict": "PASS"
+}
