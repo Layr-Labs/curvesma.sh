@@ -1,0 +1,91 @@
+{
+ "curve": "q29",
+ "R": 2048,
+ "dp_bits": 5,
+ "trials": 200000,
+ "seeds": [
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008
+ ],
+ "mean_tc_over_sqrtN": 1.2623559980055115,
+ "stderr": 0.0014649370872381745,
+ "model_mean_over_sqrtN": 1.2536202343129363,
+ "slowdown_vs_model": 0.0069684290772180635,
+ "slowdown_stderr": 0.0011685652856752533,
+ "frac_tc_le_S0": 0.38994,
+ "per_seed": [
+  {
+   "seed": 2001,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2584185071407854,
+   "stderr": 0.0041276596112968305,
+   "frac_tc_le_S0": 0.39212,
+   "seconds": 352.07
+  },
+  {
+   "seed": 2002,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2545871391002894,
+   "stderr": 0.004096200821912278,
+   "frac_tc_le_S0": 0.39044,
+   "seconds": 349.91
+  },
+  {
+   "seed": 2003,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2669445963572321,
+   "stderr": 0.004154028351357764,
+   "frac_tc_le_S0": 0.39192,
+   "seconds": 352.78
+  },
+  {
+   "seed": 2004,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2631742921319462,
+   "stderr": 0.0041557628372494845,
+   "frac_tc_le_S0": 0.38884,
+   "seconds": 353.99
+  },
+  {
+   "seed": 2005,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2552313671116408,
+   "stderr": 0.004133507687761808,
+   "frac_tc_le_S0": 0.39624,
+   "seconds": 350.82
+  },
+  {
+   "seed": 2006,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2614204341802189,
+   "stderr": 0.0041768838773213425,
+   "frac_tc_le_S0": 0.39164,
+   "seconds": 351.89
+  },
+  {
+   "seed": 2007,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.275529376271925,
+   "stderr": 0.004151079708340265,
+   "frac_tc_le_S0": 0.379,
+   "seconds": 355.6
+  },
+  {
+   "seed": 2008,
+   "trials": 25000,
+   "mean_tc_over_sqrtN": 1.2635422717500542,
+   "stderr": 0.004150563447349051,
+   "frac_tc_le_S0": 0.38932,
+   "seconds": 352.0
+  }
+ ],
+ "finite_size_prediction_q29": 0.00739683563793404,
+ "production_self_collision_log2_bound": -62.69,
+ "note": "Toy-scale census of the six-class walk; not a production cost measurement. The q29 excess is consistent with the finite-size self-collision term T_c*l/N."
+}
