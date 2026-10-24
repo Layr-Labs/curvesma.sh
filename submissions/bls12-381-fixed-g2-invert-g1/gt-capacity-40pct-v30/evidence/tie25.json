@@ -1,0 +1,21 @@
+{
+ "mode": "tie",
+ "samples": 200000,
+ "ties": 2983,
+ "tie_rate": 0.014915,
+ "resolution": "kappa = ks.index(min(ks)) is the FIRST minimum (deterministic); the pool slot is derived from sorted(ks), invariant to which rotation attains the minimum, so a tie cannot fork the table index or the record key.",
+ "example": [
+  "320",
+  "320",
+  "151",
+  "151",
+  "354",
+  "354",
+  "203",
+  "203",
+  "372",
+  "372",
+  "169",
+  "169"
+ ]
+}

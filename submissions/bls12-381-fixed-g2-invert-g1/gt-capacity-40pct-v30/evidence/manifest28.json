@@ -1,0 +1,126 @@
+{
+ "package": "gt-capacity-40pct-v30",
+ "generated_by": "scripts/gen28.py (os.walk of the package)",
+ "files": [
+  {
+   "path": "argument.md",
+   "bytes": 3254,
+   "sha256": "b426ed6a0381f77c2acc74d773c13a4008215c497d828d80659e05cd063ad6a8"
+  },
+  {
+   "path": "certificate.json",
+   "bytes": 2114,
+   "sha256": "d2cb6d90ed32d4d98be26cdc6537e47caed44e6d04d5e0e402ec2bac5d4f6026"
+  },
+  {
+   "path": "dependencies.json",
+   "bytes": 3,
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+   "path": "evidence/census28.json",
+   "bytes": 8206,
+   "sha256": "fd271b90b6c9ac94923f5154fa3fe3c3bf113f2395fbb0e5e3d265c9c89911a4"
+  },
+  {
+   "path": "evidence/dict28.json",
+   "bytes": 862,
+   "sha256": "259fdc15c46435cd75b86b4a00a91fa057809c3b03e25e6cfae4b94818f2ea7f"
+  },
+  {
+   "path": "evidence/exec28.json",
+   "bytes": 5466,
+   "sha256": "67a03fcc5b53db4ab676f5ab2fd64c696c450460bc0d45547b049bc051c425eb"
+  },
+  {
+   "path": "evidence/kernel_verify25.json",
+   "bytes": 2630,
+   "sha256": "aaa74fbc84fd371f12fdb43561887cd49320cee6446fc58c71c932100bcb8cbc"
+  },
+  {
+   "path": "evidence/ledger28.json",
+   "bytes": 11772,
+   "sha256": "f1bfec2beaf005b62049df86069d3e0f7b4112ad186ae301a562412b9b143108"
+  },
+  {
+   "path": "evidence/prices28.json",
+   "bytes": 402,
+   "sha256": "59e468bc254263a07d0ef4253ef63d04824654e26a26db8218e2e80db1619ab5"
+  },
+  {
+   "path": "evidence/survival25.json",
+   "bytes": 8872,
+   "sha256": "4590fbe7bf96ece45915221d0f4961cc4254243c6b7e73f146e6caa0bfc16978"
+  },
+  {
+   "path": "evidence/tie25.json",
+   "bytes": 430,
+   "sha256": "b7043b6cfb8ebedc2cb8d3ffdcdc8566f7bfb7a1d05447fe76e435b266b87e1f"
+  },
+  {
+   "path": "evidence/trap28.json",
+   "bytes": 2143,
+   "sha256": "7b15ae4568c2afc805a0e75ee680529c52e652d1c47ebdaca6680dc758c2b142"
+  },
+  {
+   "path": "experiments/README.md",
+   "bytes": 2632,
+   "sha256": "72eb934162ac3f8286c3a1c44cc6a6596bf3ccbd3d2453f471f675dddf18c29b"
+  },
+  {
+   "path": "public-note.md",
+   "bytes": 5654,
+   "sha256": "e7b4085c5263b03233ac4d3643bb330df80f275ce0d3891b2b40a096457cbb38"
+  },
+  {
+   "path": "scripts/census28.py",
+   "bytes": 7872,
+   "sha256": "ae73a4d8459b598c9b5a7e7eadeb9005f9a6129a57c989f741e0345862a9ea29"
+  },
+  {
+   "path": "scripts/dict28_model.py",
+   "bytes": 9072,
+   "sha256": "9b2bfec1d01e5ca8dfb219ccd32dcb991de3991e4f4524a8d5b9ce56ff2e35af"
+  },
+  {
+   "path": "scripts/exec28.py",
+   "bytes": 19082,
+   "sha256": "27dfa1d3539ad1a40767505de51c8e26cb6f723b8a9d9b8dbf74863a5e73422b"
+  },
+  {
+   "path": "scripts/gen28.py",
+   "bytes": 31756,
+   "sha256": "380f5094be519f67e2a8b5fd89b8003e1028caba1f5e5094530ff74bad5e8f3a"
+  },
+  {
+   "path": "scripts/ir25/consts.c",
+   "bytes": 1104,
+   "sha256": "e025fc98e34a19141bd2194360a87fbe915aebfde8dd83647506df4a07a6426e"
+  },
+  {
+   "path": "scripts/ir25/kernels.c",
+   "bytes": 11518,
+   "sha256": "52cd2c62abc03cb17720d11139ea7a337d1412ab1341ced54e07acfe3adf55e3"
+  },
+  {
+   "path": "scripts/ir28/dict28.c",
+   "bytes": 19990,
+   "sha256": "29a731e954a9702791910823283226517c20a6f5f0d44926ead4c73ce494b9b8"
+  },
+  {
+   "path": "scripts/protocol28.py",
+   "bytes": 17626,
+   "sha256": "dc5fa7842256453a234e8564bd006f252477c7ab2818427af01c9259a051ffd8"
+  },
+  {
+   "path": "scripts/toy28.py",
+   "bytes": 20008,
+   "sha256": "541d8d6f15854743a268e14aebddc4af5f880798604570ff0cc763edd84f81ae"
+  },
+  {
+   "path": "scripts/trap28.py",
+   "bytes": 11824,
+   "sha256": "d1b150fad30bd4c7f37e90abb83222d46d5b5fcd121ffba9e05656d04e4aacd5"
+  }
+ ]
+}
