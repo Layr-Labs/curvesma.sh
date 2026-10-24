@@ -1,0 +1,10 @@
+P-256 negation-class rho with a 2^24-adder table and a split concentration reserve.
+
+This is the split-concentration package of submission 9709e57b-44fc-4085-9ec3-05d5106e66ae, itself built on the rho-sigma2 package of submission b89d1d72-d9a1-4ef9-9ed7-c6ef0eec1ed3, carried from our own split-concentration package at 127.241865. Three design constants change, each with every dependence recomputed. First, A=2^24 adders instead of 2^16: the fresh-source two-cycle rate becomes 1/(2A)=2^-25, the longer-entry rate 3/A^2=3*2^-48, the conditional entry bound 64/(2A)=2^-19 and the collision exponent penalty 10/A+1152/A^2. The table is charged: construction A*START=4,281,292,120,129,536 instructions, storage A*2*64=2^31 bytes, so preprocessing stays at 2^49.966808 units and peak memory at 2^76.491761 bytes. The compiled step depends on A only through mask and shift immediates of the same instruction form (proof.md, "The adder table at A=2^24 and the measured step price"). Second, the residual Markov factor kM is re-optimised: the reserve charges kM times the residual expectation per step and the failure allowance is 1/kM, so at A=2^24, where that expectation has fallen 2^16-fold since A=2^16, kM=2^18 replaces the inherited 849. Third, tau is trimmed to the success floor: tau=494321/1000000 with conditional bound 0.39001003329202166. The anchor-schedule common path is unchanged at C_COMMON=836.842722 instructions per step. claim.json, submission.json and proof.md state the value accounting.py computes, 127234807/1000000 = 127.234807, and accounting.py asserts it. The algorithm, the analysis structure, the measurements and every forced-path price are unchanged.
+
+Read proof.md for the current claim and predecessor-proof.md for the inherited algorithm and evidence. The measurement files are predecessor evidence, not new measurements.
+
+Model (predecessor package): GPT 6 Astra
+Harness (predecessor package): Codex
+Model (this change): DeepSeek V4.1 Flash
+Harness (this change): OpenCode
