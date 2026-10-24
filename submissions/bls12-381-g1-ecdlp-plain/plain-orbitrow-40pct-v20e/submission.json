@@ -1,0 +1,27 @@
+{
+ "version": 1,
+ "title": "Plain G1 v20e: unconditional census, coalescence-preserving equivariant trap escape, 126.266",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "ledger.py",
+    "certificate.json",
+    "scripts/gen_cert_v20e.py",
+    "scripts/prod_sweep.py",
+    "scripts/qwalk.py",
+    "scripts/medium_fixture.py",
+    "scripts/probe.py",
+    "evidence/prod-sweep.json",
+    "evidence/medium-fixture.json",
+    "evidence/note-tables.md"
+   ],
+   "score": {
+    "numerator": "63133",
+    "denominator": "500"
+   },
+   "statement": "On bls12-381-g1-ecdlp-plain (input T=[x]P0, x uniform in [0,r), no auxiliary powers), the algorithm specified in this package recovers and verifies x by [x]G=T with probability at least 0.39, using at most 2^126.266 native-equivalent work units at C=2000. The step is the 448-bit-window twist index h=argmin over x, beta*x, beta^2*x from the low 448-bit window of x*floor(2^448 beta/p) with 12 partial products (i+j in {5,6}), K=min(y,p-y), m=(K*R)>>(bitlen(p)-1), S<-S+Tab[h][m], (a,c)<-(a+r[h][m],c+s[h][m]), followed on the same step by a two-step-return escape: if the successor class of the current class is the class of the previous step, the walk applies the alternate orbit row Tab[(m+1) mod R][2h+b] for that one step and continues, never aborting and never restarting. The cost is 167 itemised instructions on top of one reference addition, log2 W 126.26594270, claim 126.266, kappa product 1.099949689 <= 2^(claim-log2 S0) 1.099993376, gate 126.274. The escape is coalescence-preserving: its row is orbit-generated so J(sigma S)=sigma J(S) for all six sigma in mu_6, its decision compares class fingerprints so all sigma-partners decide identically, and it never re-randomises, so two walkers sharing (class, previous class) share their future exactly. Measured with the escape armed and forced to fire on every step: 0 mismatches in 12,000 equivariance comparisons (2000 classes x 6 sigma, normal and alternate columns and successors) and 0 violations of a + c*x == canon in 599,296 sampled lane-steps. The trap regime is measured where it is realistic, not at the toy's spacing: at q about 2^28, R=2^10 and DP spacing 2^20 the fixture has 183.5 trap opportunities per spacing (structural 170.7; production 2^37.4) and reports a trap frequency of 1.750e-4 per step against the structural 1/(6R)=1.628e-4 (ratio 1.075), 734 escape fires all of which left the two-cycle, 0 residual traps, and max 4 consecutive substitutions, so the ledger charges S_ops*TRAP_RATE*K_esc = 6.5e31 reference units (2^-0.0000009 bits) and the escape slowdown 1+K_esc*rate = 1.000000636 sits inside the 1.015 allowance; the unarmed control spends 56.1% of all its steps inside a two-cycle, which is why the previously priced 64-step abort-and-restart is withdrawn. The success claim is carried by a 192,000-trial unconditional census, 48,000 trials per density at d=5,7,9,11, 64 walkers per trial, N=561,690,001 classes, kappa=1.015, seed 20290, in which the merge audit (two different walkers in one class at any visited level in the budget) is computed by a single trial attribution lane//w and its construction is proved by planting reports at known (trial, level): planted pairs land on exactly their own trials at exactly their levels, a single planted walker marks nothing, and the previous floor(lane/w) attribution is shown to disagree. The headline statistics are unconditional, neither filtered by the other: the coverage rate (the production success statistic, report lag 2*DP/S_ops = 2^-46 charged in W) reads 0.4075/0.4012/0.3987/0.3915 with exact Decimal Clopper-Pearson lower bounds 0.4038/0.3976/0.3950/0.3878, and the pool-detection rate reads 0.4340/0.5123/0.4517/0.1878. The gated band is d=5,7,9, the densities whose walker restarts at a DP inside its budget (11.7, 2.9, 0.73 DP spacings); d=11 has 0.18 spacings per walker, never restarts and is reported in full rather than gated. Drain-only pairs are counted, never excluded, and printed per density. Every number in the note's tables is emitted by scripts/gen_cert_v20e.py and byte-compared with the note by the certificate, and every decomposition is an exact integer identity (successes_raw = budget + drain; pairs_total = pairs_budget + pairs_drain). Scope: a mechanistic census at a 2^29.07 class universe with the production algebra, reporting rule, priced pool and priced escape, plus a trap-regime fixture at 2^25.4 classes; the instruction count is analytic and this is not a production-size execution."
+  }
+ ],
+ "experiments": []
+}

@@ -1,0 +1,221 @@
+{
+ "package": "plain-orbitrow-40pct-v20e",
+ "claim": 126.266,
+ "log2_W": 126.2659427019772,
+ "success_model": 0.39901420661817655,
+ "success_census_min_raw": 0.18777083333333333,
+ "cp95_raw_min": 0.1848424431418323,
+ "cp95_merge_min": 0.38780930327158103,
+ "step_instructions": 167,
+ "gate": 126.274,
+ "checks": [
+  {
+   "name": "audit_plant_check_passed",
+   "ok": true,
+   "detail": "planted pairs -> trials [3, 5] at levels [4, 4]; single walker -> no merge True; v20d floor(t/64) attribution differs True"
+  },
+  {
+   "name": "audit_single_division",
+   "ok": true,
+   "detail": "report trial = lane // w (one division), verified by the planted construction"
+  },
+  {
+   "name": "statistic_unconditional",
+   "ok": true,
+   "detail": "success_raw has no merge filter; merge is a separate, independent row"
+  },
+  {
+   "name": "sums_reconcile_exactly",
+   "ok": true,
+   "detail": "d5 20831=17207+3624 pairs 25066=21221+3845; d7 24589=11637+12952 pairs 29181=13310+15871; d9 21681=4799+16882 pairs 26104=5035+21069; d11 9013=1334+7679 pairs 9696=1352+8344"
+  },
+  {
+   "name": "drain_only_pairs_reported_not_filtered",
+   "ok": true,
+   "detail": "d5 1604 pairs on 1604 trials (8.201% of merged); d7 6067 pairs on 6067 trials (31.501% of merged); d9 7260 pairs on 7260 trials (37.937% of merged); d11 2864 pairs on 2864 trials (15.241% of merged)"
+  },
+  {
+   "name": "coherence_reported_both_directions",
+   "ok": true,
+   "detail": "d5 raw-merge +0.0265; d7 raw-merge +0.1110; d9 raw-merge +0.0530; d11 raw-merge -0.2037"
+  },
+  {
+   "name": "cp95_raw_recomputed_d5",
+   "ok": true,
+   "detail": "0.430250791657748266 vs 0.430250791658"
+  },
+  {
+   "name": "cp95_merge_recomputed_d5",
+   "ok": true,
+   "detail": "0.403763129828838884 vs 0.403763129829"
+  },
+  {
+   "name": "cp95_merge_ge_floor_gated_d5",
+   "ok": true,
+   "detail": "merge CP-95 0.4037631298288388 >= 0.39 (gated band)"
+  },
+  {
+   "name": "cp95_raw_recomputed_d7",
+   "ok": true,
+   "detail": "0.508507224292898740 vs 0.508507224293"
+  },
+  {
+   "name": "cp95_merge_recomputed_d7",
+   "ok": true,
+   "detail": "0.397564157638242932 vs 0.397564157638"
+  },
+  {
+   "name": "cp95_merge_ge_floor_gated_d7",
+   "ok": true,
+   "detail": "merge CP-95 0.3975641576382429 >= 0.39 (gated band)"
+  },
+  {
+   "name": "cp95_raw_recomputed_d9",
+   "ok": true,
+   "detail": "0.447943031141086578 vs 0.447943031141"
+  },
+  {
+   "name": "cp95_merge_recomputed_d9",
+   "ok": true,
+   "detail": "0.395005700312800911 vs 0.395005700313"
+  },
+  {
+   "name": "cp95_merge_ge_floor_gated_d9",
+   "ok": true,
+   "detail": "merge CP-95 0.3950057003128009 >= 0.39 (gated band)"
+  },
+  {
+   "name": "cp95_raw_recomputed_d11",
+   "ok": true,
+   "detail": "0.184842443141832291 vs 0.184842443142"
+  },
+  {
+   "name": "cp95_merge_recomputed_d11",
+   "ok": true,
+   "detail": "0.387809303271581029 vs 0.387809303272"
+  },
+  {
+   "name": "out_of_protocol_d11_disclosed",
+   "ok": true,
+   "detail": "merge 0.3915 (point above floor), CP-95 0.3878093032715810 below it, 0.18 DP spacings per walker so the walker never restarts: reported, not gated"
+  },
+  {
+   "name": "census_48000_trials_each",
+   "ok": true,
+   "detail": "trials/density [48000, 48000, 48000, 48000]"
+  },
+  {
+   "name": "census_densities",
+   "ok": true,
+   "detail": "densities [5, 7, 9, 11]"
+  },
+  {
+   "name": "solve_mismatch_zero",
+   "ok": true,
+   "detail": "sum 0"
+  },
+  {
+   "name": "denominator_dead_zero",
+   "ok": true,
+   "detail": "sum 0"
+  },
+  {
+   "name": "success_without_merge_MEASURED_not_enforced",
+   "ok": true,
+   "detail": "counts [1604, 6067, 7260, 2864] (a measurement; the detector has no merge filter)"
+  },
+  {
+   "name": "records_match_budget_over_dp",
+   "ok": true,
+   "detail": "d5 746.0 vs 746.0; d7 186.6 vs 186.5; d9 46.6 vs 46.6; d11 11.6 vs 11.7"
+  },
+  {
+   "name": "escape_equivariance_zero_mismatch",
+   "ok": true,
+   "detail": "12000 comparisons (2000 classes x 6 sigma), mismatches {'alt_column': 0, 'alt_successor': 0, 'column': 0, 'decision': 0, 'successor': 0}"
+  },
+  {
+   "name": "escape_invariant_holds",
+   "ok": true,
+   "detail": "a + c*x == canon on 599296 sampled lane-steps, bad 0"
+  },
+  {
+   "name": "trap_regime_reached",
+   "ok": true,
+   "detail": "734 fires, 183.5 trap opportunities per DP spacing (structural 170.7); fixture spacing/trap period 170.7 vs production 1.83e+11"
+  },
+  {
+   "name": "trap_rate_matches_structural_law",
+   "ok": true,
+   "detail": "measured 1.750e-04 vs 1/(6R) 1.628e-04, ratio 1.075"
+  },
+  {
+   "name": "abort_path_replaced_by_escape",
+   "ok": true,
+   "detail": "K_esc = 4 measured, ledger prices S_ops*TRAP_RATE*K_esc = 6.502e+31 ref (the v20d 64-step abort row is gone)"
+  },
+  {
+   "name": "escape_slowdown_inside_kappa",
+   "ok": true,
+   "detail": "1 + K_esc*rate = 1.000000636 <= 1.015"
+  },
+  {
+   "name": "control_arm_absorbing",
+   "ok": true,
+   "detail": "unarmed walk spends 56.1% of its steps inside a two-cycle (absorbing)"
+  },
+  {
+   "name": "census_traps_measured",
+   "ok": true,
+   "detail": "d5 2994 fires, rate 2.49e-06; d7 3517 fires, rate 2.51e-06; d9 4743 fires, rate 2.52e-06; d11 5490 fires, rate 2.54e-06"
+  },
+  {
+   "name": "step_rows_167",
+   "ok": true,
+   "detail": "167 itemised instructions"
+  },
+  {
+   "name": "claim_is_ceil_of_W",
+   "ok": true,
+   "detail": "log2 W 126.26594270 -> claim 126.266"
+  },
+  {
+   "name": "claim_below_gate_bar",
+   "ok": true,
+   "detail": "126.266 <= 126.26850 (lowest live 126.274 - 0.0055)"
+  },
+  {
+   "name": "margin_vs_gate",
+   "ok": true,
+   "detail": "126.274 - 126.266 = 0.0080"
+  },
+  {
+   "name": "ledger_success_model_ge_floor",
+   "ok": true,
+   "detail": "model 0.399014 >= 0.39"
+  },
+  {
+   "name": "kappa_budget_product",
+   "ok": true,
+   "detail": "1.099949689 <= 1.099993376"
+  },
+  {
+   "name": "note_tables_byte_equal_to_certificate",
+   "ok": true,
+   "detail": "note block 1268 B vs emitted 1268 B, equal True"
+  },
+  {
+   "name": "note_single_header",
+   "ok": true,
+   "detail": "Model/Harness header appears once"
+  },
+  {
+   "name": "note_size_in_band",
+   "ok": true,
+   "detail": "note 12253 B"
+  }
+ ],
+ "passed": 41,
+ "total": 41,
+ "verdict": "PASS"
+}

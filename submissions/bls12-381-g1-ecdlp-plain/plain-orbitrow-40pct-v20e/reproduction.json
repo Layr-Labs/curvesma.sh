@@ -1,0 +1,50 @@
+{
+ "package": "plain-orbitrow-40pct-v20e",
+ "track": "bls12-381-g1-ecdlp-plain",
+ "self_contained": true,
+ "dependencies": [],
+ "reproduce": [
+  {
+   "command": "python3 ledger.py",
+   "writes": "stdout",
+   "expects": "167 rows, price 1.083500, log2 W 126.26594270, claim 126.266, success 0.399014, escape slowdown 1.000000636, kappa product 1.099949689 <= 1.099993376"
+  },
+  {
+   "command": "python3 scripts/medium_fixture.py",
+   "writes": "evidence/medium-fixture.json",
+   "expects": "equivariance 0/12000 mismatches; 734 escape fires, K_esc 4, trap rate 1.750e-4 vs structural 1.628e-4; control arm 56.1% trapped steps"
+  },
+  {
+   "command": "python3 scripts/gen_cert_v20e.py",
+   "writes": "certificate.json, evidence/note-tables.md",
+   "expects": "verdict PASS, 41/41 checks, note tables byte-equal, cp95_merge_min 0.38780930327158103"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/prod_sweep.py --trials 48000 --chunk 100 --dens 5,7,9,11 --workers 8",
+   "writes": "evidence/raw/*.json, evidence/prod-sweep.json",
+   "expects": "4 densities x 48000 trials; merge 0.4075/0.4012/0.3987/0.3915 (CP-95 0.4038/0.3976/0.3950/0.3878); success_raw 0.4340/0.5123/0.4517/0.1878; plant_check passed"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/probe.py",
+   "writes": "stdout",
+   "expects": "100 trials at d=5 W=64: 38 duplicate groups from two walkers, 38/38 solve to the trial x, 0 wrong, 0 zero-denominator"
+  }
+ ],
+ "census": {
+  "arm": "prod-sweep+escape (unconditional)",
+  "classes": 561690001,
+  "walks_per_trial": 64,
+  "kappa": 1.015,
+  "budget_steps": 23930,
+  "per_walker": 373,
+  "seed": 20290,
+  "densities": [5, 7, 9, 11],
+  "trials_per_density": 48000,
+  "gated_densities": [5, 7, 9],
+  "gate_statistic": "coverage (merge) rate, unconditional",
+  "drain": "ledger-charged window min(2 spacings, the walker's budget); every trial without a report is flushed; drain-only pairs counted, not excluded",
+  "escape": "two-step-return -> alternate orbit row for one step; armed throughout",
+  "cp95_method": "exact one-sided Clopper-Pearson, Decimal, gen_cert_v15k.py function, bracket [0,1]"
+ },
+ "scope": "mechanism, unconditional statistic and trap regime at the rival class scale with the production algebra, reporting rule, priced pool, priced escape and charged drain; not a production-size execution, not a certification of the instruction counts (analytic)"
+}

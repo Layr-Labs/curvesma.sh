@@ -1,0 +1,81 @@
+{
+ "arms": {
+  "escape": {
+   "R": 1024,
+   "arm": "escape",
+   "classes": 44739244,
+   "invariant_bad": 0,
+   "invariant_ok": 599296,
+   "lanes": 256,
+   "max_consecutive_escapes": 4,
+   "opportunities_per_spacing_measured": 183.5,
+   "opportunities_per_spacing_structural": 170.66666666666666,
+   "q": 268435459,
+   "rate_over_structural": 1.0751953125,
+   "steps": 16384,
+   "trap_fires": 734,
+   "trap_rate_measured": 0.00017499923706054688,
+   "trap_rate_structural": 0.00016276041666666666
+  },
+  "no_escape": {
+   "R": 1024,
+   "arm": "no_escape",
+   "classes": 44739244,
+   "invariant_bad": 0,
+   "invariant_ok": 599296,
+   "lanes": 256,
+   "max_consecutive_escapes": 0,
+   "opportunities_per_spacing_measured": 588410.5,
+   "opportunities_per_spacing_structural": 170.66666666666666,
+   "q": 268435459,
+   "rate_over_structural": 3447.7177734375,
+   "steps": 16384,
+   "trap_fires": 2353642,
+   "trap_rate_measured": 0.5611519813537598,
+   "trap_rate_structural": 0.00016276041666666666
+  }
+ },
+ "equivariance": {
+  "comparisons": 12000,
+  "mismatches": {
+   "alt_column": 0,
+   "alt_successor": 0,
+   "column": 0,
+   "decision": 0,
+   "successor": 0
+  },
+  "passed": true,
+  "rule": "row(sigma S) = sigma row(S) for all six sigma, escape armed",
+  "sigma_phases": 6,
+  "states": 2000,
+  "total_mismatches": 0
+ },
+ "escape": {
+  "control_arm": "escape disarmed; a two-cycle is absorbing, so this arm measures the fraction of ALL steps spent inside one",
+  "escape_arm_fires": 734,
+  "escape_success_rate": 0.9986376021798365,
+  "fires": 734,
+  "k_escape_steps_max": 4,
+  "production_aborts_per_spacing": 0.0,
+  "production_opportunities_per_spacing": 183251937962.66666,
+  "production_repeat_escape_events_per_spacing": 4095.999877929691,
+  "residual_failure_channel": "the substituted step lands back on the predecessor class, probability ~1/#classes",
+  "residual_probability": 2.235174112463769e-08,
+  "slowdown_bound": 1.0006999969482422,
+  "slowdown_bound_production": 1.0000006357828777,
+  "trapped_step_fraction_control": 0.5611519813537598
+ },
+ "fixture": {
+  "R": 1024,
+  "production": {
+   "R": 1048576,
+   "spacing_bits": 60,
+   "spacing_over_trap_period": 183251937962.66666
+  },
+  "q_min": 268435457,
+  "spacing_bits": 20,
+  "spacing_over_trap_period": 170.66666666666666,
+  "trap_period_steps": 6144
+ },
+ "passed": true
+}

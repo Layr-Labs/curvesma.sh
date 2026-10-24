@@ -1,0 +1,14 @@
+  d=11 n= 100 raw 0.1900 (b 0.0200 d 0.1700) merge 0.3400 donly  11 traps    9 99.4s
+  d=11 n= 100 raw 0.2100 (b 0.0200 d 0.1900) merge 0.4800 donly   6 traps   14 99.5s
+{
+ "rule": "min(CP-95 of success_raw, CP-95 of merge_rate) >= 0.39 at every density",
+ "min_cp95_raw": 0.1848424431418323,
+ "min_cp95_merge": 0.38780930327158103,
+ "unconditional": true,
+ "passed": false
+}
+d= 5 n= 48000 raw 0.4340 CPraw 0.4303 CPmg 0.4038 merge 0.4075
+d= 7 n= 48000 raw 0.5123 CPraw 0.5085 CPmg 0.3976 merge 0.4012
+d= 9 n= 48000 raw 0.4517 CPraw 0.4479 CPmg 0.3950 merge 0.3987
+d=11 n= 48000 raw 0.1878 CPraw 0.1848 CPmg 0.3878 merge 0.3915
+wrote /Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/bls12-381-g1-ecdlp-plain/plain-orbitrow-40pct-v20e/scripts/../evidence/prod-sweep.json 111.1s
