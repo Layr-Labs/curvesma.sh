@@ -1,0 +1,18 @@
+{
+ "bytes_per_slot": 8,
+ "cap_bytes_log2": 73.0,
+ "density_check": "the shipped predicate masks 62 bits ((1ULL<<62)-1, evidence/p256_recproc_v10k.c line 221), matching the declared 2^-62; v10j's 61-bit mask was a real defect",
+ "expected_probes_hit": 2.7182458356646864,
+ "fits": true,
+ "index_bytes_log2": 69.0,
+ "index_slots_log2": 66,
+ "instr_per_record": 58.61895002797624,
+ "load_factor": 0.7745966691513353,
+ "lookup": "one open-addressed index of 2^66 eight-byte slots (load factor 0.775, expected 2.72 probes for a hit, 10.34 for a miss) over the 104-byte record array; the index is a separate array from the records, so no sorted-insert memmove is claimed and no constant-shift allowance is needed",
+ "record_bytes_log2": 72.3319569208901,
+ "record_share_exact": 1.2710958593830212e-17,
+ "record_work_total_log2": 71.50481242460278,
+ "records_log2": 65.631517202749,
+ "supersedes": "v10j's '2^32 buckets at load factor 0.5 / chain 0.69' row, which divided 2^65.63 records among 2^32 buckets (2^33.63 per bucket), was arithmetically false",
+ "total_bytes_log2": 72.46855160851084
+}

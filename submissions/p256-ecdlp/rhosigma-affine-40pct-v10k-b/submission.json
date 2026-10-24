@@ -1,0 +1,36 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk v10k-b: invariant-matched census (Lambda=0.6000, ltheta saturated), full-width jump scalars, batch multiplications charged once, open-addressed record index, claim 128.5415",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1285415",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table affine sigma walk of argument.md is claimed at total classical work at most 2^128.5415 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, with per-instance success 0.2297 and w=2 amplification success 0.4066 >= 0.39.\n\nINVARIANT. Fixtures and production are matched on (Lambda, ltheta), not on recording density. Lambda = S^2/(2N') = 0.600000 with S = 2^127.631517 and N' = (r-1)/2 = 2^255.000; every census cell holds Lambda = 0.60 +- 0.02. ltheta = ell*theta = 2^49.63 at production against nine anchors from 1.55 to 3,172; p is monotone in ltheta and saturated from ltheta ~ 70. Fitted law A(1-exp(-ltheta/tau)) with A = 0.2421, tau = 3.35, max |residual| 0.0200 at the anchors, p = 0.2421 at the production ltheta. nu = R/sqrt(N') = 2^-61.87 is measured against over 2^4.0 across the 5 plateau cells (chi-square 4.77 on 4 dof, pooled 0.2471); it enters only through the accidental coincidence rate nu^2/2 = 2^-124.7, which full-point verification rejects. JUMP SCALARS ARE FULL WIDTH: four-limb table values below 2^252, so after ell steps the reachable scalar set is s_0 + d with |d| < ell*2^252 = 2^363.6 > r, not a 2^175.6 window.\n\np = exact one-sided Clopper-Pearson lower (0.2421, solving P_p[X >= k] = 0.05 for 4942/20000) minus the measured residual (0.0124) = 0.2297; success 1-(1-p)^2 = 0.4066, margin 0.0166.\n\nCHARGE. step_forward 235 (prefix product inside, computed once) + step_close 423 + back-substitution 2 fe_mul x 140 = 280 + inversion share 385 x 140/65536 = 0.822449 + reserve 0.639764 + record 1.27e-17 = 939.462213 per walker-step. batch_inv consumes the prefix array step_forward filled and does not recompute it (evidence/p256_recproc_v10k.c); PRE[0]=1 is set before the first batch.\n\nSTORAGE. 2^65.6315 records at 104 B plus an open-addressed index of 2^66 8-byte slots (load 0.775, 2.72 probes/hit, 58.6 instr/record): total 2^72.469 B against the 2^73.0 B cap, slack 0.531 bits. The DP predicate masks 62 bits, matching the declared density.\n\nMEASURED PRICE. W_single = 127.541424, W(w=2) = 128.541424, claim 128.5415, certificate recomputes all 9 checks.\n\nSELF-TEST. 64 rounds x 8 walkers x SPR 8 = 4096 counted walker-steps asserted in-binary against 64*8*SPR; invariant P==[a]G+[b]Q checked every step (0 failures, baseline 0); synthetic collision solved and verified (1).\n\nCARRIED: canonicaliser fixed (0/4096 table rows), 104 B record, two-table O3 index, replay index deleted. NOT CLAIMED: production-length execution; authenticated prior acceptance (dependencies.json is []).",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/bucket.json",
+    "evidence/census_multiscale.json",
+    "evidence/census_v10f41.c",
+    "evidence/invariant_fit.json",
+    "evidence/ledger.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_recproc_v10k.c",
+    "evidence/point_walk.json",
+    "evidence/prod_params.json",
+    "evidence/recproc_count.json",
+    "evidence/recproc_run.json",
+    "evidence/selfaudit.json",
+    "experiments/make_note_v10k.py",
+    "experiments/selfaudit.py",
+    "experiments/v10k_params.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

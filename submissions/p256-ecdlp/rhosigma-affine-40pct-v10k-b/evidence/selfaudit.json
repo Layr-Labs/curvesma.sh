@@ -1,0 +1,130 @@
+{
+ "checks": [
+  {
+   "name": "cited_evidence_exists",
+   "ok": true,
+   "cited": 20,
+   "missing": []
+  },
+  {
+   "name": "planted_wrong_path_control_fires",
+   "ok": true,
+   "caught": [
+    "evidence/planted_absent_control.json"
+   ]
+  },
+  {
+   "name": "stale_absent:0.2422",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:128.0309",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:counted step 1101",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:1,101-instruction",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:load factor 0.5",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:512*8",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:PROD[",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:SUF[",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:transfer remains unproven",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:the declared production density",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:72.331957",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "stale_absent:0.2294",
+   "ok": true,
+   "occurrences": 0
+  },
+  {
+   "name": "planted_stale_control_fires",
+   "ok": true,
+   "planted_hits": [
+    1,
+    1
+   ]
+  },
+  {
+   "name": "selftest_run_equals_spec",
+   "ok": true,
+   "rounds": 64,
+   "walkers": 8,
+   "spr": 8,
+   "run_steps": 4096,
+   "spec_steps": 4096
+  },
+  {
+   "name": "selftest_invariant_clean",
+   "ok": true
+  },
+  {
+   "name": "selftest_synthetic_solved",
+   "ok": true
+  },
+  {
+   "name": "claim_matches_certificate",
+   "ok": true,
+   "ledger": 128.5415,
+   "certificate": 128.5415
+  },
+  {
+   "name": "claim_matches_submission",
+   "ok": true,
+   "submission": 128.5415
+  },
+  {
+   "name": "claim_present_in_note",
+   "ok": true
+  },
+  {
+   "name": "certificate_all_checks_pass",
+   "ok": true,
+   "n_checks": 9
+  },
+  {
+   "name": "p_claims_cite_invariant",
+   "ok": true,
+   "paragraphs": 5
+  }
+ ],
+ "failures": 0,
+ "verdict": "PASS",
+ "failed": []
+}

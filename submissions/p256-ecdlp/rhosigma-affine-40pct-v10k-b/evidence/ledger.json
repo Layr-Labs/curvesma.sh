@@ -1,0 +1,46 @@
+{
+ "W": {
+  "A_log2_Tprod": 127.631517202749,
+  "W_amplified": 128.54142424250148,
+  "W_single_instance": 127.54142424250148,
+  "amplification_w": 2,
+  "charge_terms": {
+   "batch_backsub_instr_per_walker": 280,
+   "batch_backsub_muls_per_walker": 2,
+   "batch_inversion_muls": 385,
+   "batch_inversion_share": 0.82244873046875,
+   "batch_walkers": 65536,
+   "fe_mul_instr": 140,
+   "prefix_product_note": "the prefix product PRE[i+1]=PRE[i]*d_i is 1 fe_mul per walker per step and is INSIDE the counted step_forward (235); it is computed once there and is not recomputed",
+   "rare_event_reserve": 0.63976416015625,
+   "record_processor_share": 1.2710958593830212e-17,
+   "step_close": 423,
+   "step_forward": 235,
+   "step_instructions_integrated": 658
+  },
+  "charge_total": 939.462212890625,
+  "claim": 128.5415
+ },
+ "amplification": {
+  "floor": 0.39,
+  "independent": "two independent instances per target, fresh coins, separate table instances, work charged twice, run sequentially so the store is reused",
+  "p_per_instance": 0.22968569124951366,
+  "success": 0.40661586573426045,
+  "w": 2
+ },
+ "assert": {
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "claim_minus_W_bits": 7.575749853572233e-05,
+  "lambda_matched": true,
+  "storage_fits": true,
+  "success_ge_floor": true
+ },
+ "p_transfer": {
+  "headline": 0.22968569124951366,
+  "invariant": "(Lambda, ltheta) matched at the production point",
+  "pooled_cp95": 0.24208569124951368,
+  "residual": 0.012400000000000022,
+  "source": "evidence/invariant_fit.json"
+ }
+}
