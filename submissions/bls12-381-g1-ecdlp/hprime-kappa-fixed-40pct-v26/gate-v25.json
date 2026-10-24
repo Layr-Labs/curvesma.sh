@@ -1,0 +1,14 @@
+{
+ "kind": "known-answer gate (engineered collisions)",
+ "n": 72,
+ "ok": 72,
+ "passed": true,
+ "lam_one_cases": 44,
+ "lam_other_cases": 28,
+ "v23_path_solves": 0,
+ "on_curve_asserts": 1152,
+ "false_positive_n": 72,
+ "false_positives": 0,
+ "false_positive_matches": 0,
+ "seconds": 0.05
+}
