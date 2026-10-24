@@ -1,0 +1,73 @@
+{
+ "disjointness": {
+  "disjoint_charge": true,
+  "dispatch": "step -> fresh_state only on esc_run > K_ESC_MAX",
+  "fresh_state_present_in_apply": false,
+  "heavy_symbols_exclusive_to_restart": true,
+  "restart_calls_apply": false,
+  "restart_rows_charge_scalar_mult": true,
+  "restart_symbol": "fresh_state",
+  "step_rows_charge_scalar_mult": false,
+  "step_symbols": [
+   "step",
+   "_apply"
+  ]
+ },
+ "executed": {
+  "coin_draws": 14000,
+  "draws_per_restart": 2.0,
+  "lanes": 1000,
+  "restart_flag_rows": 0,
+  "restarts": 7000,
+  "steps": 64
+ },
+ "fresh_insn_equivalent": 1379581.0,
+ "fresh_ref": 689.7905,
+ "ratio": 32847.166666666664,
+ "rows": [
+  {
+   "op": "2 coin draws, 256-bit each, reduced mod q",
+   "unit": "insn",
+   "value": 16
+  },
+  {
+   "op": "[a]P0: 255 doublings + 64 window additions at 1 ref each",
+   "unit": "ref",
+   "value": 319
+  },
+  {
+   "op": "[c]T: 255 doublings + 64 window additions at 1 ref each",
+   "unit": "ref",
+   "value": 319
+  },
+  {
+   "op": "S = [a]P0 + [c]T, one batched mixed affine addition",
+   "unit": "ref",
+   "value": 1
+  },
+  {
+   "op": "normalization S -> affine: one batched-inverse share",
+   "unit": "ref",
+   "value": 50.7475
+  },
+  {
+   "op": "class key of S: two fixed-constant 4-limb mults, min/max, sign compare",
+   "unit": "insn",
+   "value": 40
+  },
+  {
+   "op": "esc_run[i] = 0, prev = class, restart flag, RESTARTS bump, length reset",
+   "unit": "insn",
+   "value": 22
+  },
+  {
+   "op": "record bookkeeping: reopen the lane segment, zero its DP mask",
+   "unit": "insn",
+   "value": 8
+  }
+ ],
+ "symbol": "qwalk.fresh_state",
+ "test": "restart_count",
+ "v20j_priced_insn": 42,
+ "v20j_priced_ref": 0.021
+}

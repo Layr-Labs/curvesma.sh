@@ -1,0 +1,36 @@
+{
+ "N": 4000,
+ "R": 1048576,
+ "agreement": 4000,
+ "band": 73786976294838206464,
+ "checks_pass": true,
+ "column_map": {
+  "R": 1048576,
+  "cell_is_truncated_quotient": true,
+  "ledger_R_EFF": 852105,
+  "max_column_at_K_p_over_2": 852104,
+  "monotone_in_K": true,
+  "reachable_columns": 852105
+ },
+ "disagreement": 0,
+ "fallback_agreement": 0,
+ "fallbacks": 0,
+ "h_histogram": {
+  "hist": [
+   1291,
+   1368,
+   1341
+  ],
+  "max_deviation_from_one_third": 0.010583333333333333,
+  "n": 4000
+ },
+ "mutation": {
+  "disagreements": 358,
+  "must_fail": true,
+  "n": 1000,
+  "name": "v2_without_v1_complement"
+ },
+ "near_ties": 0,
+ "p_bits": 381,
+ "test": "twist_index_production"
+}
