@@ -1,0 +1,273 @@
+{
+ "mode": "ledger23-meter-first",
+ "protocol": {
+  "name": "meter-first restarted workers",
+  "workers": 1024,
+  "trails": 56628313,
+  "mean_trail_steps": "20282409603651670423947251286016",
+  "trail_cap_steps": "20282409603651670423947251286016",
+  "steps_purchased": "71784914964362045983757977582135410688",
+  "meter": "one global work counter in C units; the walker checks it before every step and ABANDONS when it would exceed the cap. The ledger closes at sum(rows) == cap exactly, with the residual row charged.",
+  "exact_identity_claim": "WITHDRAWN (v22 flaw 1). Trail lengths and record counts are random; fixing total steps does not fix the record count and fixing the record count does not fix total steps. No exact-identity sentence remains."
+ },
+ "rows": {
+  "multiply_step": [
+   [
+    "dense_fp12_multiply_reference_C",
+    20000
+   ],
+   [
+    "key_six_plusminus",
+    1487
+   ],
+   [
+    "min_rotation_booth_plus_tie_fallback",
+    405
+   ],
+   [
+    "table_address_and_load",
+    150
+   ],
+   [
+    "exponent_pair_add",
+    60
+   ],
+   [
+    "common_per_step",
+    331
+   ]
+  ],
+  "squaring_step": [
+   [
+    "dense_fp12_squaring_REFERENCE",
+    27000
+   ],
+   [
+    "exponent_pair_double",
+    40
+   ],
+   [
+    "key_six_plusminus_RECOMPUTE",
+    1487
+   ],
+   [
+    "min_rotation_booth_RECOMPUTE",
+    405
+   ],
+   [
+    "common_per_step",
+    331
+   ]
+  ],
+  "guard_interaction": [
+   [
+    "measured_guard_conversions",
+    6230
+   ],
+   [
+    "measured_steps_scanned",
+    10240000
+   ],
+   [
+    "measured_guard_per_step",
+    0.0006083984375
+   ],
+   [
+    "measured_guard_per_step_min_segment",
+    0.0
+   ],
+   [
+    "measured_guard_per_step_max_segment",
+    0.00793125
+   ],
+   [
+    "measured_sqr_minus_mul",
+    6830
+   ],
+   [
+    "charge_instr_per_step",
+    4.155361328125
+   ],
+   [
+    "note",
+    "replaces v22's 3/8 nominal average; the guard converts a multiply into a squaring whenever the slot is in the depth-5 history, and the rate is measured on real walks, not assumed"
+   ]
+  ],
+  "steps": [
+   [
+    "steps_purchased_S",
+    "71784914964362045983757977582135410688"
+   ],
+   [
+    "step_price_instr",
+    "2559836709/102400"
+   ],
+   [
+    "steps_instr",
+    "1794508403107591719487985242054192254764974"
+   ]
+  ],
+  "fixed": [
+   [
+    "table_build_R65536",
+    670355685376
+   ],
+   [
+    "restart_row",
+    1679295746777726
+   ],
+   [
+    "replay_row",
+    61843602182734399581418162636782940
+   ],
+   [
+    "aux",
+    1264032
+   ]
+  ],
+  "trap": [
+   [
+    "measured_admits_at_len_4_6_8",
+    0
+   ],
+   [
+    "measured_steps",
+    10240000
+   ],
+   [
+    "rate_upper_bound_95",
+    "3/10240000"
+   ],
+   [
+    "waste_steps_upper_bound",
+    "13144210503728401974565059371728896/625"
+   ],
+   [
+    "waste_instr_upper_bound",
+    525734883722927261568745676383064137
+   ],
+   [
+    "model",
+    "a trap can only waste steps already purchased, so waste <= measured rate x S; no tail or independence argument is used and the v22 m! tail / prefix-extension text is deleted"
+   ]
+  ]
+ },
+ "charges": {
+  "MUL_CHARGE": 22433,
+  "SQR_CHARGE": 29263,
+  "STEP_PRICE": "2559836709/102400",
+  "step_price_float": 24998.405361328125,
+  "branch_squaring_mixture": "5/8 multiply, 3/8 branch squaring"
+ },
+ "kernel_pricing": {
+  "priced_by": "declared reference cost model (C = 20000 per dense Fp12 multiply, 27000 per Fp12 squaring); NO instruction span of an unverified kernel enters the price",
+  "f2mul": "verified 0/10000 mismatches vs plain-bigint reference",
+  "cyclotomic_sqr": "source repaired but NOT verified (10000/10000 mismatches); its span is therefore excluded from the price",
+  "v22_span_excluded": 25397
+ },
+ "success": {
+  "census_cp95": "0.989999999999944293449516408145427703857421875",
+  "census_success": 512,
+  "census_trials": 512,
+  "survival_gap40_worst_arm": 0.675,
+  "survival_arms": {
+   "indep_hist_R128": {
+    "1": 0.965,
+    "5": 0.81,
+    "20": 0.74,
+    "40": 0.675
+   },
+   "true_merge_R128": {
+    "1": 1.0,
+    "5": 0.9875,
+    "20": 0.9375,
+    "40": 0.8775
+   },
+   "classonly_R128": {
+    "1": 0.9925,
+    "5": 0.965,
+    "20": 0.9,
+    "40": 0.8275
+   },
+   "indep_hist_R1024": {
+    "1": 0.9825,
+    "5": 0.955,
+    "20": 0.89,
+    "40": 0.775
+   },
+   "true_merge_R1024": {
+    "1": 0.99,
+    "5": 0.9725,
+    "20": 0.8975,
+    "40": 0.795
+   },
+   "classonly_R1024": {
+    "1": 0.9875,
+    "5": 0.9575,
+    "20": 0.88,
+    "40": 0.795
+   },
+   "indep_hist_R8192": {
+    "1": 1.0,
+    "5": 0.98,
+    "20": 0.8975,
+    "40": 0.7875
+   },
+   "true_merge_R8192": {
+    "1": 1.0,
+    "5": 0.9775,
+    "20": 0.895,
+    "40": 0.7925
+   },
+   "classonly_R8192": {
+    "1": 0.9925,
+    "5": 0.98,
+    "20": 0.8775,
+    "40": 0.7875
+   }
+  },
+  "product": 0.6682499999999624,
+  "product_floor_claimed": 0.39,
+  "one_line": "production success = CP95(fresh census 512/512 = 0.989999999999944293449516408145427703857421875) x measured worst-arm merge survival at gap 40 (0.675) = 0.6682 >= 0.39"
+ },
+ "twoscale": {
+  "one_x_rate": 1.0,
+  "two_x_rate": 1.0,
+  "rate_delta": 0.0,
+  "cp95_delta": -0.0016338761631390364
+ },
+ "trap_controls": {
+  "production_R65536_d5": {
+   "admit_per_step": {
+    "4": 0.0,
+    "6": 0.0,
+    "8": 0.0
+   },
+   "steps": 10240000
+  },
+  "v20_R4096_d1": {
+   "admit_per_step": {
+    "4": 0.0166596875,
+    "6": 0.0,
+    "8": 0.03332140625
+   },
+   "steps": 6400000
+  },
+  "class_only_R12": {
+   "admit_per_step": {
+    "4": 0.0,
+    "6": 0.0,
+    "8": 0.00999375
+   },
+   "steps": 6400000
+  }
+ },
+ "W_instr": "1794508990686077625149646393897997378339185",
+ "cap_instr": "1794508990686077625149646393897997378340000",
+ "cap_units": "89725449534303881257482319694899868917",
+ "residual_charged": "815",
+ "W_log2": 140.3646,
+ "claim": 126.08,
+ "ledger_closes": true,
+ "sum_rows_equals_cap": true
+}

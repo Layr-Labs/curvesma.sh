@@ -1,0 +1,93 @@
+{
+ "package": "gt-executed-40pct-v23",
+ "claim": "126.0800",
+ "checks": [
+  {
+   "name": "exact_identity_claim_withdrawn",
+   "verdict": "PASS"
+  },
+  {
+   "name": "meter_first_ledger_closes_exactly",
+   "verdict": "PASS"
+  },
+  {
+   "name": "residual_row_charged_nonnegative",
+   "verdict": "PASS"
+  },
+  {
+   "name": "f2mul_verified_bigint",
+   "verdict": "PASS"
+  },
+  {
+   "name": "f2mul_mutation_control_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cyclotomic_sqr_span_excluded_from_price",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cyclotomic_sqr_status_disclosed",
+   "verdict": "PASS"
+  },
+  {
+   "name": "guard_row_is_measured_not_nominal",
+   "verdict": "PASS"
+  },
+  {
+   "name": "guard_rate_reported_with_denominator",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_rate_measured_on_real_walks",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_controls_present",
+   "verdict": "PASS"
+  },
+  {
+   "name": "no_independence_premise_in_trap_row",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_fixtures_ge_512",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_one_trial_per_fixture",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_fresh_target_and_coins",
+   "verdict": "PASS"
+  },
+  {
+   "name": "twoscale_stability_reported",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_curve_measured_live_guard",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_product_reported",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_covers_work",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_leq_126_15",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dependencies_empty",
+   "verdict": "PASS"
+  }
+ ],
+ "n_checks": 21,
+ "all_pass": true,
+ "verdict": "PASS"
+}

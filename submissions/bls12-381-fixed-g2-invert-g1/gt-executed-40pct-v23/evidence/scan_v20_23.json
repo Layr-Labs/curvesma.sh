@@ -1,0 +1,54 @@
+{
+ "mode": "scan",
+ "Rg": 4096,
+ "depth": 1,
+ "class_only": false,
+ "segments": 40,
+ "steps_per_segment": 160000,
+ "steps": 6400000,
+ "multiply": 4160853,
+ "branch_sqr": 2237620,
+ "guard_conversions": 1527,
+ "guard_per_step": 0.00023859375,
+ "guard_per_multiply": 0.00036699205667684005,
+ "branch_per_step": 0.349628125,
+ "word_admit": {
+  "4": 106622,
+  "6": 0,
+  "8": 213257
+ },
+ "word_alternating": {
+  "4": 532680,
+  "6": 532672,
+  "8": 532664
+ },
+ "admit_per_step": {
+  "4": 0.0166596875,
+  "6": 0.0,
+  "8": 0.03332140625
+ },
+ "admit_per_alternating": {
+  "4": 0.20016144777352257,
+  "6": 0.0,
+  "8": 0.40035932595407236
+ },
+ "distinct_slots_per_segment": 199.0,
+ "slot_range": 4096,
+ "kappa_histogram": [
+  469652,
+  499388,
+  582644,
+  491336,
+  522697,
+  643171,
+  486754,
+  490692,
+  544178,
+  477881,
+  511759,
+  679848
+ ],
+ "kappa_max_rel_dev": 0.274715,
+ "guard_per_step_min_seg": 0.0,
+ "guard_per_step_max_seg": 0.00584375
+}

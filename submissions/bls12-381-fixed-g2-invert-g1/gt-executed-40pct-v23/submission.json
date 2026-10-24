@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "title": "Meter-first restarted workers: cap closes exactly with residual charged; success measured on 512 fresh fixtures x measured merge survival; claim 126.08",
+ "claims": [
+  {
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z. PROTOCOL (meter-first): one global work counter in C units (C=20000 instructions per dense Fp12 multiply) is checked before every step and the walker ABANDONS at the cap. 1024 workers; a trail starts at g^a z^b for (a,b)=SHAKE256(sigma_w||j), ends at its FIRST DP report, emits one 52 B record, restarts. The budget purchases S=56628313*2^100 steps at a measured step price of 24998.405 instructions = 1.2499 C (5/8*22433 multiply + 3/8*29263 squaring + 4.1554 measured guard interaction); the ledger closes at sum(rows)=cap exactly with the residual charged. The guard row is MEASURED, not nominal: on 10240000 real walk steps at Rg=2^16, depth 5, 6230 multiply steps became cyclotomic squarings (6.083984375e-4 per step) times the measured (squaring - multiply) delta of 6830 instructions. No instruction span of an unverified kernel prices GT arithmetic: f2mul is repaired (cross term to c1, t0-t1 to c0 for u^2=-1) and verified with 0 mismatches on 10000 random vectors against a plain-bigint reference, with a mutation control that fails 10000/10000; cyclotomic_sqr is disclosed as NOT verified and its v22 span is excluded from the price. The v22 assertion that the record count is fixed by S, and that purchased work equals executed work, is WITHDRAWN: trail lengths are random and neither count fixes the other. SUCCESS is measured directly by running the full protocol (workers, meter, abandonment) on 512 FRESH fixtures, one trial each with fresh target, table and coins, so each fixture is one independent Bernoulli: 512/512 solves, exact Clopper-Pearson lower end 0.99. A two-scale check at 2x fixture (R 128->256, trails 128->256, cap 96->192) gives 256/256, CP95 0.98837, rate delta 0.0 and CP95 delta -0.00163, holding walk:record shape (0.1234 vs 0.1227). Production success = CP95(fresh census) 0.99 x measured worst-arm merge survival at gap 40 = 0.675, i.e. 0.668 >= 0.39; the survival curve is re-measured with a LIVE guard history (v22's harness never grew its history, so its guard never fired and its true-merge control read 1.0 spuriously; with a live guard that control reads 0.8775 and the decay is disclosed). The abab-family trap is counted on real walks: 0 admissions in 10240000 steps at lengths 4, 6 and 8 (95% upper bound 2.93e-7 per step), versus 1.666e-2 at length 4 for the v20 configuration and 9.994e-3 at length 8 for the class-only guard; waste is charged as rate x S because a trap can only waste purchased steps - no independence premise, no m! tail, no prefix-extension argument. Claim 126.08 in fixed C=20000 units covers W=1.7947e42 instructions.",
+   "score": {
+    "numerator": "252160",
+    "denominator": "2000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/census23.json",
+    "evidence/twoscale23.json",
+    "evidence/scan_prod23.json",
+    "evidence/scan_v20_23.json",
+    "evidence/scan_classonly23.json",
+    "evidence/survival23.json",
+    "evidence/kernel_verify23.json",
+    "evidence/ledger23.json",
+    "scripts/gen23.py",
+    "scripts/measure23.py",
+    "scripts/census23.py",
+    "scripts/toy.py",
+    "scripts/toy22.py",
+    "scripts/ir23/kernels.c",
+    "scripts/ir23/consts.c",
+    "scripts/ir23/driver.c",
+    "scripts/ir23/verify23.py"
+   ]
+  }
+ ],
+ "experiments": []
+}
