@@ -1,0 +1,23 @@
+{
+ "mode": "census",
+ "scale": 1,
+ "fixtures": 512,
+ "fixture": {
+  "q": 523,
+  "rp": 521041,
+  "dpbits": 3,
+  "depth": 2,
+  "R": 128,
+  "trails": 128,
+  "max_trail": 96
+ },
+ "trials_per_fixture": 1,
+ "independence": "fresh target + fresh table + fresh coins per fixture; one Bernoulli per fixture, so the pooled CP is over independent Bernoulli trials",
+ "success": 512,
+ "trials": 512,
+ "rate": 1.0,
+ "cp95_lower": "0.989999999999944293449516408145427703857421875",
+ "forward_steps": 152927,
+ "records": 18873,
+ "records_over_steps": 0.12341182394214233
+}

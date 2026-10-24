@@ -1,0 +1,51 @@
+{
+ "mode": "twoscale",
+ "one_x": {
+  "mode": "census",
+  "scale": 1,
+  "fixtures": 512,
+  "fixture": {
+   "q": 523,
+   "rp": 521041,
+   "dpbits": 3,
+   "depth": 2,
+   "R": 128,
+   "trails": 128,
+   "max_trail": 96
+  },
+  "trials_per_fixture": 1,
+  "independence": "fresh target + fresh table + fresh coins per fixture; one Bernoulli per fixture, so the pooled CP is over independent Bernoulli trials",
+  "success": 512,
+  "trials": 512,
+  "rate": 1.0,
+  "cp95_lower": "0.989999999999944293449516408145427703857421875",
+  "forward_steps": 152927,
+  "records": 18873,
+  "records_over_steps": 0.12341182394214233
+ },
+ "two_x": {
+  "mode": "census",
+  "scale": 2,
+  "fixtures": 256,
+  "fixture": {
+   "q": 523,
+   "rp": 521041,
+   "dpbits": 3,
+   "depth": 2,
+   "R": 256,
+   "trails": 256,
+   "max_trail": 192
+  },
+  "trials_per_fixture": 1,
+  "independence": "fresh target + fresh table + fresh coins per fixture; one Bernoulli per fixture, so the pooled CP is over independent Bernoulli trials",
+  "success": 256,
+  "trials": 256,
+  "rate": 1.0,
+  "cp95_lower": "0.988366123836805172686581499874591827392578125",
+  "forward_steps": 75743,
+  "records": 9296,
+  "records_over_steps": 0.1227308134084998
+ },
+ "rate_delta": 0.0,
+ "cp95_delta": -0.0016338761631390364
+}

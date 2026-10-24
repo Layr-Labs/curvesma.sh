@@ -1,0 +1,27 @@
+{
+ "vectors_per_kernel": 10000,
+ "p": "0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab",
+ "montgomery_R": "2^384",
+ "reference": "plain Python integers, schoolbook Fp6, no Montgomery and no Karatsuba (no shared code path with the C kernels)",
+ "kernels": {
+  "f2mul": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation_reverted_fix": "cross term written to c0 and t0+t1 to c1",
+   "mutation_build": "kernels_mut1.c",
+   "mutation_mismatches": 10000
+  },
+  "cyclotomic_sqr": {
+   "vectors": 10000,
+   "mismatches": 10000,
+   "verdict": "FAIL",
+   "identity_checked": "(2vt+1, s-vt-1-t) - (a0^2+v a1^2, 2 a0 a1) == (1-norm, 0) on every vector",
+   "mutation_reverted_fix": "nonzero constant in every Fp6 coefficient of the identity element",
+   "mutation_build": "kernels_mut2.c",
+   "mutation_mismatches": 10000
+  }
+ },
+ "all_pass": false,
+ "mutation_controls_detected": true
+}
