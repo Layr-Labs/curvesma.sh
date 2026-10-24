@@ -1,0 +1,15 @@
+== P1 product transfer ==
+commits traced          : 1000 (of 1000 attempted, 0 resampled, 0 failed)
+cbz observations        : 1000, register == independent prod(z): 1000
+distinct products       : 1000 (all non-zero: True)
+== P2 link preservation ==
+restore observations    : 1000, loaded == caller link: 1000
+elements traced         : 8000
+== C2 planted zero denominator ==
+zero-recover fires      : 1
+== C3 v29 moving-slot save ==
+restore observations    : 3, WRONG link values: 3
+== C4 missing hoisted save ==
+restore observations    : 3, WRONG link values: 3
+
+DYNAMIC TRACE OK
