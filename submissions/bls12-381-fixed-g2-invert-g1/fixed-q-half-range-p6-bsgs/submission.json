@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: half-range BSGS by Frobenius-6 inversion",
+  "claims": [
+    {
+      "statement": "For a nonidentity Q in G2 and a uniform z in GT, recover P in G1 with e(P,Q)=z under the pinned pairing convention. The deterministic half-range baby-step/giant-step procedure in proof.md succeeds with probability 1. Its total classical work is at most 2^130.704718 dense-Fp12-multiplication equivalents, including preprocessing, sorting, lookup, verification and output. Peak memory is at most 2^136.209454 bytes. Preprocessing is at most 2^129.161695 target-group-operation equivalents and is included in total work. Nonuniform advice is at most 2^0 bytes and is included in memory. No algorithm coins, restarts or uncharged advice are used. The exponential table is required by this procedure. This is an analytic generic bound, not a claim of a practical break.",
+      "score": {
+        "numerator": "130704718",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-half-range",
+      "source": "experiment.py",
+      "purpose": "Exhaust the half-range control flow on a small additive group, and check the public identities p^6 ≡ -1 (mod r) and w^{p^6} = -w in the pinned Fp12 monomial basis. This does not establish production memory or a timed attack.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
