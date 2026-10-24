@@ -1,0 +1,145 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp-plain: six-class (negation + GLV) parallel Pollard rho in G1, parity class key, instruction-listed step ledger, global work meter",
+ "claims": [
+  {
+   "statement": "For a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with success probability at least 0.39, and on every run its total work is at most 2^126.234 batched-affine-G1-addition equivalents (C=2000 instructions), enforced by a global work meter that charges every action at an upper-bound price before execution and halts with failure at 2^126.234; the work bound is W_up=2^126.233543 units, and W_up^1000<=2^126234 with W_up^1000>2^126233 in exact integer arithmetic, so 126.234 is the exact ceiling of log2 W_up in thousandths. The algorithm is parallel distinguished-point Pollard rho (2^20 walks, distinguished probability 2^-64, trail cap 20*2^64) on the (r-1)/6 classes of G1 under negation and phi(x,y)=(beta*x,y)=[lambda], lambda=0xac45a4010001a40200000000ffffffff. The class key is the parity key K=y if y is even else p-y: p is odd, so exactly one of y and p-y is even, the even representative is invariant under y->p-y and unchanged by phi, and bit 0 of K is identically zero; K is a complete class key (equal K gives y'=+-y and x'=beta^j*x). The exact |y|=min(y,p-y) rule of the earlier package is kept only as a reference check that both keys induce the same partition. The canonical twist index is decided exactly from a truncated 12-multiply fixed-point product of x by floor(2^448*beta/p) with an exact one-multiplication fallback on near-ties (a separately metered action). R=2^20 twisted table entries make every step one batched affine addition plus at most 117 scalar AArch64 instructions, listed instruction by instruction (ledger rows 24+15+14+11+8+19+12+9+1+1+1 = 115, plus 2 of stated slack: the key row is 11 instructions, since the parity bit replaces the exact six-limb comparison and a borrow never propagates downward, so only the four key limbs a step reads are formed). Cycles of F of length <=64 are detected by a period-64 checkpoint alone and escaped by doubling the cycle's minimum class under one fixed total order (192-bit key fingerprints), a class map that cannot close a cycle by cancellation because the order of 2 mod r is 2^250.86, so trails meeting a common class reunite (merging lemma); trail coefficients are stored in full, collisions are solved by re-walking with coefficients reduced mod r, and x=(e_2-e_1)/(f_1-f_2) mod r is verified before output. Phase 1 stops when a hard operation counter reaches S_ops=1.015*S0 with S0=sqrt(2N'*ln(1/0.6097)) (steps priced 1.0585, traversal steps 1.0675, doublings 1.511, 1.0585*(S_ops+2^60)<2^126.232007, N'=((r-1)/6)*R/(R-1)); phase 2 completes open trails; the report table holds exactly 2^63 records (1.79 times the expected 2^62.17 reports, Chernoff <2^-60) and at most 8 processed matches are allowed, both counted as failure when exceeded. Peak memory is below 2^72 bytes; preprocessing (jump table, report-table initialisation, the first 2^20 trail starts) is at most 2^57.2 units by a meter sub-cap and is included in the total; there is no advice. Heuristic H1: within S_ops class arrivals of all trails (every arrival counted, including trail starts and repeats inside fruitless cycles) the first inter-trail collision has occurred with probability at least 1-exp(-(S_ops/1.015)^2/(2N'))=0.3903, a random-mapping law with a 1.5% slowdown allowance; the walk-margin sweep in proof.md section 6 (110,000 toy trials over five trail lengths) measures P(T_c<=1.015*S0)=0.3975+-0.0015, 4.9 standard errors above that floor, and a mean T_c 0.08%+-0.16% above the model, consistent with the extrapolated production slowdown +0.09%+-0.23%. The meter's early-halt probability (expected doubling and traversal surcharges against the headroom, Markov) is below 0.000054, and below 0.000161 if those cycle rates are tripled, so success is at least 0.39013; the partition and distinguished bits of K are pseudo-random functions of the class, a trail returns to a class it visited earlier at most with the random-mapping self-collision probability L_max^2/(2N) apart from the detected and escaped fruitless cycles of length <=64 (whose repeats are counted in the collision budget), the canonical twist index of a new class is uniform on the 6 units and independent of its partition index, and beta*x mod p is equidistributed along the walk (affecting only the fallback rate and hence the meter, below 0.000054); supported by toy-curve experiments including a no-automorphism reference key; no production-size run.",
+   "score": {
+    "numerator": "126234",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "proof.md",
+    "experiment.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "glv-class-rho-parity-key",
+   "source": "experiment.py",
+   "purpose": "Part A: on BLS12-381 G1, check the GLV pair, orbit size 6 and unit action, the parity class key (invariant, bit 0 zero, complete), the exact |y| reference key inducing the same partition, the canonical member, the truncated-product canonical index against the exact rule on random and adversarial near-tie inputs, the twisted-step identity, the doubling class map, the multiplicative order of 2 mod r, table entries, coefficient tracking on production steps, and recovery of a planted x from two production trails forced to merge. Part B: run the per-trail algorithm of proof.md on a toy curve y^2=x^3+4 over F_q and report class visits to the first inter-trail collision against the random-mapping model; pipeline=true also applies the scaled production rules (phase-1 budget, phase 2, report capacity, 8-match cap) and reports the success rate; sweep=true reports the T_c distribution and the fractions P[T_c<=kappa*S0] on the kappa grid of proof.md section 4; class_key=abs runs the earlier |y| reference key as a control; classes=1 or 2 run control walks. The declared initial run is the sweep at dp_bits 2, which reproduces one row of proof.md section 6's walk-margin table alongside the stored 110,000-trial table. The cost block prints section 5's ledger, its derived prices, the exact integer ceiling check W_up^1000<=2^k and the claim's success bounds.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q26",
+       "q30",
+       "q34"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048,
+       16384
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "class_key": {
+      "type": "string",
+      "enum": [
+       "parity",
+       "abs"
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "sweep": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q26",
+     "trials": 900,
+     "R": 2048,
+     "dp_bits": 2,
+     "seed": 7001,
+     "production_checks": 2,
+     "seconds": 14,
+     "sweep": true
+    }
+   ]
+  }
+ ]
+}
