@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 into G2 at 2^125.79: a stationary Frobenius-class rho walk with no escape, a nine-row 1,813-instruction fold, and a derived 0.4711 success model against a declared 0.39 floor",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "constants.py",
+        "ledger.py",
+        "classwalk.py",
+        "routing.py",
+        "tower.py",
+        "pairing.py",
+        "part_a.py",
+        "part_a-out.json",
+        "routing-out.json",
+        "toy12d.py",
+        "toy12e.py",
+        "c-5.json",
+        "c-7.json",
+        "c-9.json",
+        "c-11.json",
+        "d-5.json",
+        "d-7.json",
+        "d-9.json",
+        "d-11.json",
+        "a-5.json",
+        "a-7.json",
+        "a-9.json",
+        "a-11.json",
+        "v10e-model.json",
+        "verify_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "12579",
+        "denominator": "100"
+      },
+      "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.39, and its complete classical work is at most 2^(12579/100) dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The algorithm solves a = log_g z in GT with g = e(P,Q0) on the twelve-element Frobenius classes of GT, N = (r-1)/12 = 2^251.2721269 classes, using a stationary walk whose step is one dense Fp12 multiply by a tabulated multiplier (2^14 multipliers with all twelve Frobenius twists) on five of every eight classes or, on three of every eight classes, one Granger-Scott cyclotomic squaring charged at its itemised 11632 instructions, each followed by a class fold charged at 1813 itemised instructions in nine rows; the fold uses the three-multiplication selector d = gamma0*a + gamma1*b = g0*(a-b), so the twelve class keys cost three base-field multiplies. There is no look-back window, no checkpoint field and no escape of any kind: every branch input is a function of the class key alone, so two trails at a common class take identical steps for ever. The walk runs at a 2^-80 distinguished-point density into one shared store of 96-byte records (32-byte class key plus two full 32-byte exponent limbs) with a fixed report cap and refusal on overflow, then aligns Frobenius offsets, solves the exponent and verifies against z. The step budget S is the least integer with S^2(1-f^2) >= 2 mu N ln(1/(1-0.392)) at f = 3/8 and mu = 11/10, giving log2 S = 125.81064; the work bound is the itemised S-step total, W_raw = 2^125.71174, repriced with every judgement-bounded fold row at 13/10, W_stress = 2^125.75316, and claimed at 125.79, which is 0.03684 above the stress ledger and 0.07826 above the raw ledger. Included in the bound: table construction 2^17.585, all trail starts, all report writes (2^38.693), the exponent solve and the verification, each below 2^-60 of the total. Peak memory is below 2^53 bytes with 96-byte records; memory is unscored and stated. Success is derived, not asserted: orbit coalescence at production is Lambda = 8w^2/N = S^2/(2N) = 0.6369029082 with w = S/4, the distinguished point is detected on the shared suffix at 1-2^-42.2 because E[L] = w/3 = 2^122.226 steps at theta = 2^-80, and the solve succeeds whenever the labels differ, so 1-exp(-Lambda) >= Lambda - Lambda^2/2 = 0.4340802 and P(success) = 0.4710720 at w/sqrt(N) = 0.2821575; the claimed 0.39 is a declared 17.21 per cent reserve under that model. The shipped evidence is a real-tower toy with a decision-only cache: 6400 groups over four densities, 5251 recovered, every merge solved and verified against the planted secret (5251/5251), 3585 per-step invariant checks with zero failures, zero degenerate denominators and zero false confirmations, plus 2112 class-id invariance checks and 2112 class-function checks with zero failures. The 2^-5 cell (547/1600) is disclosed as detection-limited with the self-merge channel exactly absent there (0 self-repeats against 4905, 4813 and 1364 at 2^-7, 2^-9 and 2^-11), so the closed form fits 2^-7 to 2^-11 and not 2^-5; no toy success number is quoted as the production floor. Success is conditional on three disclosed hypotheses: the class walk behaves as a random map to within the 10 per cent inefficiency allowance already carried in the step budget, the routing fields derived from the class key are pseudorandom, and the algorithm's coins are ideal. No production run, no unconditional success theorem, no novelty claim and no practical break is claimed."
+    }
+  ],
+  "experiments": []
+}

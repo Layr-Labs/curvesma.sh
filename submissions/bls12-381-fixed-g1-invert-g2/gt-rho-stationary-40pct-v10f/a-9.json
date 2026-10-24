@@ -1,0 +1,12 @@
+{
+ "density_bits": 9,
+ "prime_r": 150589,
+ "audit_A_key_invariance_checks": 528,
+ "audit_A_pass": 528,
+ "audit_A_fail": 0,
+ "audit_B_step_class_function_checks": 528,
+ "audit_B_pass": 528,
+ "audit_B_fail": 0,
+ "kappa_degenerate": 0,
+ "scope": "A: class id of a materialised element vs its 11 Frobenius conjugates; B: successor class and step type from each conjugate vs the base"
+}
