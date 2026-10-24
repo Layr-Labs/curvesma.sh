@@ -1,0 +1,92 @@
+{
+ "family_v23_step": {
+  "step": "classkey.step_v13 (v23 shipped step)",
+  "walks": 44,
+  "steps": 17600,
+  "mul_steps": 10935,
+  "consecutive_same_row_multipliers": 0,
+  "of_which_kappa_delta_6": 0,
+  "exact_returns": 0,
+  "class_repeats_seen": 16098,
+  "family_rate_per_mul_step": 0.0,
+  "structural_kill_holds": null
+ },
+ "family_v24_step": {
+  "step": "classkey.step_v24 (row difference)",
+  "walks": 44,
+  "steps": 17600,
+  "mul_steps": 10935,
+  "consecutive_same_row_multipliers": 0,
+  "of_which_kappa_delta_6": 0,
+  "exact_returns": 0,
+  "class_repeats_seen": 16098,
+  "family_rate_per_mul_step": 0.0,
+  "structural_kill_holds": true
+ },
+ "recovery_v24": {
+  "trials": 12006,
+  "workers": 6,
+  "bits": 5,
+  "rows": 64,
+  "dp_bits": 5,
+  "cap_steps": 4096,
+  "step": "classkey.step_v24 (row-difference kill)",
+  "seeds": "random.Random(20261024 + 1000*worker); starts drawn from THAT stream",
+  "worker_first_starts_distinct": true,
+  "worker_first_starts": [
+   "-9189454089512237928",
+   "-6544607601910717947",
+   "-4342579431621493575",
+   "1362017518191050672",
+   "-1607955555651596485",
+   "-3187465057212324538"
+  ],
+  "factor_a_trail_reaches_dp": 0.7407129768449109,
+  "factor_b_trail_reaches_dp": 0.736631684157921,
+  "both_reach_dp": 0.5456438447442945,
+  "same_dp_class_given_both": 0.170050373988704,
+  "solve_verified_given_collision": 0.9991023339317774,
+  "UNCONDITIONAL_RECOVERY": 0.09270364817591205,
+  "UNCONDITIONAL_CP95_LOWER": "0.0883817125196158297555939498",
+  "bootstrap_ci95": [
+   0.0878727303015159,
+   0.09786773280026653
+  ],
+  "trapped_trails": 6275,
+  "mean_steps_per_trial": 33.87864401132767,
+  "reading": "ONE product from the SAME runs: P(both reach a DP) x P(same DP class | both) x P(the twelve-shift solve verifies | same class).  No conditioning on a DP having been reached is applied to the numerator."
+ },
+ "recovery_v23_step_control": {
+  "trials": 1206,
+  "workers": 6,
+  "bits": 5,
+  "rows": 64,
+  "dp_bits": 5,
+  "cap_steps": 4096,
+  "step": "classkey.step_v13",
+  "seeds": "random.Random(20261024 + 1000*worker); starts drawn from THAT stream",
+  "worker_first_starts_distinct": true,
+  "worker_first_starts": [
+   "-9189454089512237928",
+   "-6544607601910717947",
+   "-4342579431621493575",
+   "1362017518191050672",
+   "-1607955555651596485",
+   "-3187465057212324538"
+  ],
+  "factor_a_trail_reaches_dp": 0.7470978441127695,
+  "factor_b_trail_reaches_dp": 0.7371475953565506,
+  "both_reach_dp": 0.5555555555555556,
+  "same_dp_class_given_both": 0.16716417910447762,
+  "solve_verified_given_collision": 1.0,
+  "UNCONDITIONAL_RECOVERY": 0.09286898839137644,
+  "UNCONDITIONAL_CP95_LOWER": "0.0794545224075717020660931667",
+  "bootstrap_ci95": [
+   0.07628524046434494,
+   0.10945273631840796
+  ],
+  "trapped_trails": 622,
+  "mean_steps_per_trial": 33.88142620232173,
+  "reading": "ONE product from the SAME runs: P(both reach a DP) x P(same DP class | both) x P(the twelve-shift solve verifies | same class).  No conditioning on a DP having been reached is applied to the numerator."
+ }
+}

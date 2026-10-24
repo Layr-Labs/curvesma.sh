@@ -1,0 +1,48 @@
+{
+ "experiment": "v24 census: family kill + unconditional recovery",
+ "seeds": "random.Random(20261024 + 1000*worker) for starts; 20261024+7919*worker for the family trace",
+ "counts": {
+  "recovery_trials": 12006,
+  "recovery_trails": 24012,
+  "family_walks": 44,
+  "family_steps": 17600
+ },
+ "family_v23_step": {
+  "step": "classkey.step_v13 (v23 shipped step)",
+  "walks": 44,
+  "steps": 17600,
+  "mul_steps": 10935,
+  "consecutive_same_row_multipliers": 0,
+  "of_which_kappa_delta_6": 0,
+  "exact_returns": 0,
+  "class_repeats_seen": 16098,
+  "family_rate_per_mul_step": 0.0,
+  "structural_kill_holds": null
+ },
+ "family_v24_step": {
+  "step": "classkey.step_v24 (row difference)",
+  "walks": 44,
+  "steps": 17600,
+  "mul_steps": 10935,
+  "consecutive_same_row_multipliers": 0,
+  "of_which_kappa_delta_6": 0,
+  "exact_returns": 0,
+  "class_repeats_seen": 16098,
+  "family_rate_per_mul_step": 0.0,
+  "structural_kill_holds": true
+ },
+ "recovery": {
+  "trials": 12006,
+  "both_reach_dp": 0.5456438447442945,
+  "same_dp_class_given_both": 0.170050373988704,
+  "solve_verified_given_collision": 0.9991023339317774,
+  "unconditional": 0.09270364817591205,
+  "cp95_lower": 0.08838171251961582,
+  "bootstrap_ci95": [
+   0.0878727303015159,
+   0.09786773280026653
+  ],
+  "worker_first_starts_distinct": true
+ },
+ "reading": "fixture-scale (N=785, theta=32, cycle-dominated): MECHANISM row, not the production rate. Production is the birthday model plus P(repeat within t) <= t(t-1)/2N."
+}
