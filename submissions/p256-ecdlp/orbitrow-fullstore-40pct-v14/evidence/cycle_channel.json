@@ -1,0 +1,49 @@
+{
+ "conclusion": "channel PRICED: losses are <= 2^-34 of total work at R=2^20, so the success law and the work claim carry the channel without a discount.",
+ "fixture": {
+  "R_fix": 64,
+  "analytic_prediction": 16384.0,
+  "b": 314159,
+  "measured_over_predicted": 1.779296875,
+  "p": 1000003,
+  "rows": [
+   {
+    "canon_every": 1,
+    "degenerate_collapses": 1330,
+    "pair_space": 4096,
+    "pairs_hit": 4032,
+    "seeds": 64,
+    "trivial_4cycles": 29152
+   },
+   {
+    "canon_every": 2,
+    "degenerate_collapses": 930,
+    "pair_space": 4096,
+    "pairs_hit": 4032,
+    "seeds": 64,
+    "trivial_4cycles": 57650
+   },
+   {
+    "canon_every": 3,
+    "degenerate_collapses": 0,
+    "pair_space": 4096,
+    "pairs_hit": 0,
+    "seeds": 64,
+    "trivial_4cycles": 0
+   }
+  ],
+  "seeds": 64,
+  "shipped_rule_reproduces_channel": true,
+  "structural_fix_verdict": "no table-level rule tested kills the channel; canon_every in {1,2,3} all reproduce it"
+ },
+ "production_pricing": {
+  "R_prod": 1048576,
+  "claim_delta_bits": 1.230115777464876e-13,
+  "deaths_per_walker": 3.6687644792814495e+18,
+  "lost_steps_total": 2.2012586875688698e+19,
+  "markov_note": "deaths are dependent (cycles cluster in R-windows); the bound is a union bound over steps/4 windows, so dependence only makes it looser, never invalid.",
+  "per_4step_death_rate_upper": 5.684341886080802e-14,
+  "relative_work_loss": 8.526512829121202e-14,
+  "waste_per_death_steps": 6.0
+ }
+}

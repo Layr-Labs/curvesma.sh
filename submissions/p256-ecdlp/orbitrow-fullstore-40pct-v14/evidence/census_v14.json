@@ -1,0 +1,32 @@
+{
+ "counts": {
+  "restarts": 177,
+  "store_occupancy": 9123,
+  "trivial_repeat_no_progress": 177,
+  "true_collisions": 300,
+  "visits": 9600
+ },
+ "params": {
+  "R": 64,
+  "b": 314159,
+  "curve_order": 1000839,
+  "p": 1000003,
+  "record_bytes": 48,
+  "secret": 1234567,
+  "steps_per_walker": 1200,
+  "walkers": 8
+ },
+ "rates": {
+  "collision_per_step": 0.03125,
+  "no_progress_per_step": 0.0184375
+ },
+ "reconciliation": {
+  "delta": 0,
+  "reading": "same events; v13 discarded the trail and reported a zero cell, v14 counts the event and restarts, so the channel now has a numerator.",
+  "v13_first_repeat_rejects": 177,
+  "v14_counted_no_progress": 177
+ },
+ "recovered_secret": null,
+ "secret_recovered": false,
+ "success_definition": "one verified scalar recovery: recovered*P == Q, recovered == secret mod n"
+}

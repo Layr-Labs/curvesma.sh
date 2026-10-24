@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp v14: full-store rho, 4-cycle channel measured and priced, 48-byte record, claim 2^127.8076",
+  "claims": [
+    {
+      "score": {
+        "numerator": "319519",
+        "denominator": "2500"
+      },
+      "statement": "For the NIST P-256 challenge Q=[x]P the full-store rho walk of argument.md is claimed at total classical work at most 2^127.8076 target-group-operation equivalents: 127.67 stored visits at 1100 scalar AArch64 instructions each, priced row by row under the protected p256 normalization C=1000 (fe_mul span 147 Ir carried from the pinned shipped object sha256 96b736ef...; inversion = 385-multiplication Fermat chain, not a multiplier). Success is the birthday probability over the full store, lambda=0.6329, giving 0.4689 >= 0.39 with no gating and no extrapolated Clopper-Pearson transfer. The coefficient-trivial 4-cycle channel the previous review found is now MEASURED and PRICED, not denied: the exhaustive fixture scan fires it 29152 times under the shipped sign rule (1.78x the 2^-4 flip prediction), no table partition tested kills it, so v14 charges it - deaths per walker <= 2^61.7 at R=2^20, <=6 wasted steps each, relative work loss 8.5e-14 (+0.0000 bits). Production record is resized from the recovery requirement: 48 bytes (32B class || 20-bit trail + 108-bit step) with 1200/1200 recoveries equal to truth through the shipped layout; the store is radix-sorted on the full 256-bit key, so no 64-bit bucket mix is asserted. The selector-swap arm was rebuilt at the correct history depth (successor vs hist0, escape enabled, cluster bootstrap over walks): delta -2.84e-05 with CI [-8.52e-05, 0.00e+00] contains zero, so selector transfer stays declared OPEN and no claim row depends on it. Peak storage 133.25 log2 bytes, charged but not scored. Honest scope: the success law is the standard birthday model supported at fixture scope, not a production run; the 4-cycle channel is bounded, not eliminated.",
+      "evidence": [
+        "argument.md",
+        "public-note.md",
+        "evidence/cycle_channel.json",
+        "evidence/census_v14.json",
+        "evidence/selector_arm.json",
+        "evidence/ledger_v14.json",
+        "evidence/record_recovery.json"
+      ]
+    }
+  ],
+  "experiments": []
+}

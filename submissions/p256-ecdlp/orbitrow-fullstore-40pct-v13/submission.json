@@ -1,0 +1,33 @@
+{
+ "claims": [
+  {
+   "statement": "P-256 port of the judge-validated plain-lineage orbit-row walk, submitted at log2 W = 129.405.\n\nSTRUCTURAL CHANGE FROM v12. v12's detector stored a class only when the DP report gate fired, so measured success depended on density (-1.326 bits of odds per bit, ladder CI 1.438) and the production density 2^-60 needed a 55-bit extrapolation that cost 5.83 bits against 0.80 of floor slack; reviewer 2620b615 refused that transfer and was right to. v13 DELETES the gate: every visited class is inserted and looked up, and a repeat is seen at INSERT time. Success is then a function of the single scale-free shape x = visits/sqrt(N) and of nothing else, so the density dimension does not exist to be extrapolated.\n\nWALK UNCHANGED. Shipped qwalk.step, orbit-row map at lam=1 (P-256 has no automorphism beyond +-1, so N = (r-1)/2, the +0.79-bit retarget cost charged in S0, j not in {0,1728}), accepted lag-1/lag-3 trap escape, and the v12 R/2 selector repair the reviewer ACCEPTED (reach 8192->16384 at R=16384, trap ratio 2.04/2.03 against law 2.00).\n\nMEASURED, TWO ORDERS. 1600 sets per cell at the exact charged budget x=1.600202 (16 walkers, 4632 steps each, the same per-walker count as v12's shipped census): full-store success 0.7050 at 2^31 classes (CP-95 0.6857) and 0.6900 at 2^23 classes (CP-95 0.6704), i.e. flat across a 255.7x span and within interval of the birthday model 0.7221/0.7219. MATCHED ABLATION on the SAME traces: the v12 gate reads 0.7025/0.6688/0.4306 at d=5/8/11 at the large order and 0.6144/0.2881/0.0519 at the small order -- the decline is a property of the gate, not of the walk, and it worsens as the class space shrinks. v12's 3200-set shipped census already contains the full-store reading (d0 row 2192/3200 = 0.685, CP-95 0.6712), which is what the ledger charges after 3.36e-4 of debits: success 0.6709, floor 0.39 met, slack 0.281.\n\nPRICE. 290 itemised insn/step (263 walk rows + 27 insert/probe rows, each a named scalar AArch64 sequence), step price 1.290. The SUBMITTED claim charges one FULL reference unit per random table access instead (a 2^128.2-record table is not cache-resident): log2 W = 129.405. The instruction-only row would read 128.577 and is disclosed, not claimed. v12's 227-insn executed row is WITHDRAWN: its fold loops did not perform the folds and its reduction used Python's arbitrary-width % p. No executed count is claimed here; the priced rows are itemised analytic instruction bounds, which COST_MODEL.md permits, and the 1000x-per-access row is what is submitted.\n\nSELECTOR SWAP, RANGE-MATCHED. v12's swap reached 32 of 16384 columns (a 512x range artefact). Here both arms share starts, R=256, the u-table, the escape and the budget, differ only in the row map, and BOTH reach exactly 256 columns: EC 36/5,120,000 = 7.03e-6, HASH 25/5,120,000 = 4.88e-6, difference -2.15e-6 with 95% CI [-5.14e-6, +0.84e-6] containing zero, so the surrogate is FAITHFUL, not merely conservative. Both rates lie below the 1/(2R) law the ledger charges, so the trap charge over-pays.\n\nMEMORY IS STATED, NOT HIDDEN. Full store = 2^128.1997 records x 40 B = 2^134.52 B, capacity 2^129.2 buckets at load 0.5, init charged (2^121.24 ref inside EXTRAS). rules.md makes memory supplementary with no scalar contribution; this is the theta->1 endpoint of the T*M ~ N trade-off and the bound is a TIME bound conditional on such a store, not a practical break. Per-trail support is a DESIGN CONSTANT (K_max = 4632 at the fixture, measured max 4631, P(support > K_max) = 0, P(abort) <= 3/1600), so the cost row is a deterministic function of the cap with no expectation.\n\nPosture w=1, no amplification, no rank claim: 129.405 is 2.17 bits behind the review-state head 127.237678, and the live currentBestScore was null at fire time (no scored head on this track).",
+   "score": {
+    "numerator": "129405",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "dependencies.json",
+    "evidence/census-design.json",
+    "evidence/exec-count.json",
+    "evidence/fullstore-census.json",
+    "evidence/ledger-out.json",
+    "evidence/selector-diff.json",
+    "evidence/selector-swap.json",
+    "evidence/selfaudit.json",
+    "ledger_v13.py",
+    "preflight.py",
+    "reproduction.json",
+    "scripts/fullstore_census.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "scripts/selector_swap.py",
+    "scripts/selftest_selector.py",
+    "selfaudit.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "version": 1,
+ "title": "p256 v13: full-store insert-time detection kills the DP-density dimension; success 0.6709 (floor met); claim 129.405"
+}
