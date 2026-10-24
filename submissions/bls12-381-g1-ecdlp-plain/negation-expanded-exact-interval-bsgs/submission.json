@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: negation-expanded exact-interval BSGS",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed standard BLS12-381 G1 generator P0, recover x. The deterministic negation-expanded baby-step/giant-step algorithm in proof.md builds baby points j*P0 for j in [0,m) and stores both compressed encodings, obtaining the negative key by flipping the 0x20 sign flag. Giant steps use stride s=2*m-1. Compressed keys are injective on G1, so a cross-list hit is point equality. The recoverable set is exactly [0, h*s-m] union [r-(m-1), r), with cardinality h*s, and the success probability is exactly h*s/r = 20449991318299214286984618798192526676726300062321169823908062635023576250050/52435875175126190479447740508185965837690552500527637822603658699938581184513, which is at least 39/100. Total work is at most 2^127.995855 target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^133.982508 bytes; preprocessing is at most 2^126.959413 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, no quantum steps and no heuristic assumptions. The exponential memory is required. This is an analytic generic accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "numerator": "127995855",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-negation-interval-exactness",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check that negation-expanded baby/giant intersection recovers exactly the claimed residue set in a small additive cyclic group, and that a prime order emits at most one match. This is evidence about the coverage identity only; it does not validate production point encodings, instruction costs or the storage bound.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        },
+        {
+          "order": 9973
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: unique GLV-coordinate rectangle baby-step/giant-step",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed standard BLS12-381 G1 generator P0, recover x. The deterministic unique GLV-coordinate rectangle baby-step/giant-step algorithm in proof.md builds baby points a*P0 for a in [0,m) and giant points T-b*[lambda]P0 for b in [0,h), with lambda the integer GLV eigenvalue satisfying lambda^2+lambda+1=r and [lambda]P0=phi(P0) for phi(x,y)=(beta*x,y). Each affine point is stored once, under the canonical compressed encoding of its order-6 orbit. The explicit recoverable set S of four units {±1, ±(1+lambda)} on the rectangle h<=m-1 has cardinality h*(4*m-h-2). At m=95929641369258993122728749523035932376 and h=63953094246172662083740702189702033217 this cardinality is at least ceil(39r/100), the chains obey 2*m-1<=lambda and (m-1)+(h-1)<=lambda-1, and one accepted scalar is verified by double-and-add. Total work is the exact fraction W=74945032319733588378032555490423231295467/250 target-group-operation equivalents under C=2000. The submitted score is log2(W) rounded upward at six decimal places. Peak storage is 11767369341295769823177704902052525241280 bytes. Preprocessing, included in W, is 177565766174498396270170915367294129649217/1000. Nonuniform advice is 0 bytes. Success probability is at least |S|/r >= 39/100. There are no algorithm coins.",
+      "score": {
+        "numerator": "127817173",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rectangle-coverage-and-generator-endomorphism",
+      "source": "experiment.py",
+      "purpose": "On Z/rZ with r=lambda^2+lambda+1, check that the four explicit blocks are pairwise disjoint and that their cardinality equals h*(4*m-h-2) for every feasible rectangle, and that orbit-minimum matching recovers every residue on the h=floor(2m/3) slice. Then, on the production generator only, check phi(P0)=[lambda]P0 for the stated beta. The toy check is not a production cost bound. The generator check is one finite identity; proof.md extends it to G1 by the endomorphism homomorphism property.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "lam": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 80
+          }
+        },
+        "required": [
+          "lam"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "lam": 18
+        },
+        {
+          "lam": 40
+        }
+      ]
+    }
+  ]
+}
