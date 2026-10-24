@@ -1,0 +1,19 @@
+{
+ "consequence": "the shipped step's canonicalisation decision is REPRESENTATION-DEPENDENT, so the walk map is not well-defined by the mathematical specification alone; the package does NOT claim the point-walk status, and the priced per-step count (1101) is unaffected because canon_y is 9 instructions either way",
+ "driver": "evidence/p256_point_walk_test.c -> evidence/p256_point_walk_test.py",
+ "mid_walk_checkpoints_mismatched": 0,
+ "point_additions_recomputed": 106496,
+ "remaining_open": "the table-row half still reports 2018/4096 row mismatches and 2048 log mismatches under the corrected even-representative convention; this is NOT claimed and is the next lane's first item",
+ "root_cause_of_walk_failure": "RESOLVED: judge c33c50c9 named it -- the shipped C canonicaliser keeps the EVEN Montgomery representative (csel Xd,Xn,Xm,cond selects Xn on true), the v10i Python oracle kept the odd one. With canon_y read correctly the 208-walk and 16-checkpoint halves pass 0/0.",
+ "row_generation": "PRODUCTION policy of evidence/census_v10f41.c lines 164-190 (t <- splitmix|1 dup-checked, T <- [t]G, canon the STORED COPY and negate the log); the v10h ladder that canonicalised its accumulator in place is REPAIRED",
+ "steps_per_walk": 512,
+ "table_digest_matches": true,
+ "table_log_stream_mismatched": 2048,
+ "table_rows_each": 2048,
+ "table_rows_mismatched": 2018,
+ "verdict_rows": "FAIL (unresolved row-canon check)",
+ "verdict_walks": "PASS",
+ "walk_count": 208,
+ "walk_driver_step": "step_real performs the exact fe_inv schedule and maintains a,b; it uses 3 fewer fe_mul per step than the priced 1101-instruction step, so the instrument is a lower bound on priced work",
+ "walk_final_mismatched": 0
+}

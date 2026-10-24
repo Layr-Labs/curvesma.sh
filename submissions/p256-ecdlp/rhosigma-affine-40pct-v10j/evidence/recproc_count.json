@@ -1,0 +1,44 @@
+{
+ "note": "the integrated step calls batch_inv (real prefix product over every denominator), maintains (a,b) mod n and emits a full 32-byte-key record; the v10i 1,101-instruction placeholder step is superseded",
+ "pipeline": "clang -O2 -S --target=aarch64-unknown-linux-gnu -ffreestanding -DPW_FREESTANDING; stepcount.py CFG longest-iteration, evidence/p256_recproc_v10j.c (step_forward + step_close = the INTEGRATED step)",
+ "step_close": {
+  "longest_iteration": 423,
+  "mul": 4,
+  "rows": {
+   "carry_chain": 47,
+   "carry_propagate": 2,
+   "control": 3,
+   "flagtest": 4,
+   "guard_read": 10,
+   "load": 20,
+   "masked_select": 46,
+   "mix_key": 121,
+   "move_extend": 16,
+   "other": 24,
+   "product": 4,
+   "store": 126
+  },
+  "sum_of_rows": 423,
+  "umulh": 0
+ },
+ "step_forward": {
+  "longest_iteration": 235,
+  "mul": 18,
+  "rows": {
+   "carry_chain": 82,
+   "carry_propagate": 30,
+   "control": 2,
+   "flagtest": 2,
+   "guard_read": 4,
+   "load": 17,
+   "masked_select": 26,
+   "mix_key": 15,
+   "move_extend": 10,
+   "other": 5,
+   "product": 38,
+   "store": 4
+  },
+  "sum_of_rows": 235,
+  "umulh": 20
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "declared_cap_bytes": 9444732965739290427392,
+ "declared_cap_log2": 73.0,
+ "dense_bytes_if_every_step": 1.882795362308567e+40,
+ "dense_over_cap_bits": 61.17,
+ "fits": true,
+ "log2_records": 65.631517202749,
+ "record_bytes": 104,
+ "replay_index_removed": "the v10i 32-bit step index is gone; b is stored (104 B record)",
+ "slack_bits": 0.668043079109907,
+ "sparse_bytes_log2": 72.3319569208901,
+ "why_sparse": "dense every-step records at S = 2^127.63 would need 2^133.79 B, 61.17 bits over the cap"
+}
