@@ -1,0 +1,17 @@
+{
+ "declared_cap_bytes": 9444732965739290427392,
+ "dense_bytes_if_every_step": 24500330418307569369362971735087311224832,
+ "dense_over_cap_bits": 61.169925001442316,
+ "dp_density_log2": -62,
+ "log2_sparse_records": 65.631517202749,
+ "log2_total_steps_S": 127.631517202749,
+ "record_bytes": 72,
+ "record_layout": "x (32 B, full P-256 coordinate) + (a,b) coefficient pair (32 B packed) + 8 B tag/owner word",
+ "slack_bits": 0.8300749985576875,
+ "sparse_bytes_ceil": 5312662293228350865408,
+ "sparse_fits": true,
+ "sparse_records_exact_pow2_ceil": 73786976294838206464,
+ "table_bytes": 8388608,
+ "walk_state_bytes": 8388608,
+ "why_sparse": "dense records at S = 2^127.63 steps would need 2^61.17 B against the 2^73 B cap, so the sparse DP predicate is a DESIGN NECESSITY, not a saving; the dense every-step configuration is the census instrument only, and arm B measures the sparse pipeline."
+}

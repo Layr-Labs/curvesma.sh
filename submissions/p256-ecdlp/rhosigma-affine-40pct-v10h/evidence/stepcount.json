@@ -1,0 +1,47 @@
+{
+ "count_delta": 47,
+ "note": "The repair changes limb CONSTANTS, not the instruction schedule: both builds count identically, so the v10f tally is carried through unchanged and the two-header double build is the delta proof.",
+ "o3": {
+  "header": "evidence/p256_fe_cc.h (v10g limb repair)",
+  "longest_iteration": 1101,
+  "mul": 94,
+  "rows": {
+   "carry_chain": 388,
+   "carry_propagate": 175,
+   "control": 2,
+   "flagtest": 9,
+   "guard_read": 12,
+   "load": 62,
+   "masked_select": 109,
+   "mix_key": 65,
+   "move_extend": 36,
+   "other": 4,
+   "product": 208,
+   "store": 31
+  },
+  "sum_of_rows": 1101,
+  "umulh": 114
+ },
+ "o3_control_transposed_header": {
+  "header": "evidence/p256_fe_cc_broken.h (v10f, limbs 1/2 transposed)",
+  "longest_iteration": 1054,
+  "mul": 94,
+  "rows": {
+   "carry_chain": 388,
+   "carry_propagate": 175,
+   "control": 2,
+   "flagtest": 9,
+   "guard_read": 12,
+   "load": 64,
+   "masked_select": 109,
+   "mix_key": 17,
+   "move_extend": 35,
+   "other": 4,
+   "product": 208,
+   "store": 31
+  },
+  "sum_of_rows": 1054,
+  "umulh": 114
+ },
+ "pipeline": "clang -O3 -S --target=aarch64-unknown-linux-gnu -ffreestanding; stepcount.py CFG longest-iteration, identical source step_v10f_o3.c, ONLY the header swapped"
+}

@@ -1,0 +1,45 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk, v10h: sparse production pipeline measured against the dense census (CP-95 0.2294-0.2422 vs 0.409822), batch-inversion record processor built and charged (+0.820313 instr/step), fixture corrected to 2^39.000003 classes, W = 127.772244",
+ "claims": [
+  {
+   "score": {
+    "numerator": "6389",
+    "denominator": "50"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the fully specified two-table affine walk of argument.md is claimed to be priceable at total classical work at most 2^127.78 target-group-operation equivalents under the protected C=1000 scalar AArch64 instruction normalization, and the package reports its measured recovery honestly rather than claiming a floor it did not reach in the production configuration. PRICE: charge = 1,101 counted instructions (repaired header) + (1+2^-10)*0.639140 carried rare-event reserve + 0.820313 batch-inversion share + 40*2^-62 record-processor share = 1,102.460077; T_prod = sqrt(2*Lambda*N') with Lambda=0.60 and N'=(order+1)/2, log2 T_prod = 127.631517202749; W = log2 T_prod + log2(charge/1000) = 127.772244; claim 127.78 (6389/50), headroom 0.0078 bits. THE INVERSION IS SCHEDULED, NOT NAMED: per round of n=2^16 walkers the processor forms forward pre-products pre[i+1]=pre[i]*d_i, performs ONE fe_inv of the product (fixed-exponentiation ladder, 256 squarings + 128 multiplies = 384 fe_mul at 140 instructions each = 53,760), and back-substitutes 3(n-1) multiplies, so the marginal charge is 53,760/65,536 = 0.820313 instructions per step; each report costs 40 instructions for record build, hash probe and store at the declared 2^-62 density. SUCCESS IS REPORTED AS MEASURED, IN BOTH ARMS, SAME BINARY, SAME FIXTURE, SAME BUDGET: arm A (dense every-step census instrument, dp_bits=0) 1,691/4,000 = 0.422750 with CP-95 0.409822; arm B (the DECLARED sparse production pipeline: DP trigger, sparse (x,a,b) records, pairwise match and solve on sparse records only) 1,014/4,000 = 0.253500 CP-95 0.242197 at dp_bits 4, 978/4,000 = 0.244500 CP-95 0.233338 at dp_bits 6, 962/4,000 = 0.240500 CP-95 0.229402 at dp_bits 8. THE PACKAGE THEREFORE STATES PLAINLY THAT THE SPARSE PIPELINE'S MEASURED CP-95 IS 0.2294-0.2422 AND IS BELOW THE 0.39 FLOOR; the 0.39 floor is claimed only for the dense census configuration, the transfer to 2^-61 is not claimed, and no reserve is added to the measured number. FIXTURE SCALE: (q+1)/2 = 549,756,820,252 = 2^39.000003 classes, not 2^40.000, corrected here and in argument.md. STORAGE, EXACT: sparse record = 32 B x + 32 B packed (a,b) + 8 B tag = 72 B; S = 2^127.632 steps at 2^-62 density emits 2^65.632 records = 2^71.79 B, which fits the declared 2^73 B cap with 0.83 bits to spare, while dense every-step records at the same S would need 2^133.79 B, 61.17 bits over the cap -- the sparse predicate is a design necessity and the two arms measure the difference. KERNEL: evidence/p256_fe_cc.h with P0=0xffffffffffffffff, P1=0x00000000ffffffff, P2=0, P3=0xffffffff00000001 is exercised at the real modulus on 10,240 vector + 215 inversion + 315 canonicalisation records: 0 mismatches on 10,770, while the mutation control built from the v10f transposed header fails with 25,772. THEOREM: only the conditional lemma is claimed (if idx(S_{n+1})=idx(S_n)=j AND canon(S_n+T_j)=-(S_n+T_j) then S_{n+2}=S_n); the single-table census (62.0 percent of 500 starts, median length 2) is a fixture measurement, and the two-table configuration measures 0/500 cycling and 0 of 1.5M trail repeats. NOT CLAIMED: 0.39 for the sparse predicate, any production-length transfer, a point-walk pass (the driver evidence/p256_point_walk_test.c is shipped as an instrument and its status is NOT CLAIMED in evidence/ledger.json:point_walk), and any authenticated prior submission (dependencies.json is []).",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "checks-1.json",
+    "dependencies.json",
+    "evidence/FINDINGS-part4.md",
+    "evidence/arith_gate.txt",
+    "evidence/basin.json",
+    "evidence/cap.json",
+    "evidence/census.json",
+    "evidence/census_sparse.json",
+    "evidence/census_v10f41.c",
+    "evidence/diag_cycle.py",
+    "evidence/kernel_test.json",
+    "evidence/ledger.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_fe_cc_broken.h",
+    "evidence/p256_kernel_test.c",
+    "evidence/p256_kernel_test.py",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_point_walk_test.py",
+    "evidence/p256_recproc.c",
+    "evidence/probe_basin.c",
+    "evidence/recproc.json",
+    "evidence/step_v10f_o3.c",
+    "evidence/stepcount.json",
+    "evidence/stepcount.py",
+    "experiments/make_cert_v10h.py",
+    "experiments/run_sparse_arms.sh",
+    "public-note.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
