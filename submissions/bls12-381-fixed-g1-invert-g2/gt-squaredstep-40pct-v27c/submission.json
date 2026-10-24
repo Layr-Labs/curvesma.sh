@@ -1,0 +1,42 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "public-note.md",
+    "classkey.py",
+    "constants.py",
+    "cp95.py",
+    "ledger.py",
+    "ledger26.py",
+    "ledger27.py",
+    "v27_measure.py",
+    "audit_v27.py",
+    "run_census_v27.py",
+    "build_v27.py",
+    "toy_census.py",
+    "routing.py",
+    "tower.py",
+    "factor_r.py",
+    "evidence/impossibility-theorem.md",
+    "evidence/v27-measure-model.json",
+    "evidence/v27-measure-recovery.json",
+    "evidence/v27-measure-theorem.json",
+    "evidence/v27-measure-cycle.json",
+    "evidence/v27-measure-census.json",
+    "evidence/v27-ledger.json",
+    "evidence/v27-audit.json",
+    "experiments/results.json"
+   ],
+   "score": {
+    "denominator": "625",
+    "numerator": "78917"
+   },
+   "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z with success floor 0.39, and its complete classical work is at most 2^126.2672 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. THREE JUDGE-NAMED DEFECTS OF v26 ARE FIXED AND RE-MEASURED, AND v27's OWN FIRST DRAFT OF THIS TEXT IS CORRECTED WHERE IT MISSTATED ITS OWN EVIDENCE. (1) DP PREDICATE AT CENSUS TIME: v26 stored and checked every visited class key and never applied the 2^-80 distinguished-point filter; v27 executes routing.dp_hit at census time, stores reports only, restarts the trail at each report, and counts success as DP-hit AND agree. Count row over n=180000 trials at four report depths, AS SHIPPED IN evidence/v27-measure-census.json: dp=1 stores 1,417,698 keys under the old protocol, makes 735,725 DP hits and 35,211 report collisions of which 35,207 verify (agreement 0.9998863991); dp=2 has 23,366 collisions and 23,365 recoveries (0.9999572028); dp=3 and dp=4 are 7,449/7,449 and 4,503/4,503. p_agree is NOT claimed to be 1 at shallow depth: the 5 unverified collisions across 180,000 trials are the useless-collision rate and are inside the CP interval. The production-like arm (S/theta=16, the largest the 785-element fixture admits) reads 0.5868 with CP-95 lower 0.5835; the deeper arms read 0.3894, 0.2483, 0.1501 and are DISCLOSED as budget-limited fixture regimes, not production rates, since production runs at S/theta=2^45.83. The model is the disclosed one, 1-exp(-S^2(1-f^2)/(2 mu N)), which at S=32,N=785,f=3/8,mu=1.1 gives 0.399237, reproducing the judge's own 0.399 to 2.4e-4; v26's code computed 0.479117, a different formula. The DP-restart retention is charged, not asserted away, and the v27-first-draft Markov step is RETRACTED: at a merge the follower is credited only if it reaches the common downstream report, so P(miss|merge)=E[e^(-R/theta)] with R the remaining permitted work; with the trail length min(Geometric(theta),128 theta) and a uniform-age position this is (1-e^-128)/128 = 0.0078, declared as a uniform-age PREMISE, not as E[D]/(128 theta). S is sized so (1-0.0078)(1-exp(-S^2(1-f^2)/(2 mu N))) >= 0.39 at production, costing +0.0075 bits; the fixture's global 32-step budget truncates trails, which is exactly why its deep-theta arms fall, and that is disclosed. (2) TRAP POPULATION: v26 charged four abandon probabilities against an S/theta restart schedule; v27 charges ceil(S/theta) = 62,484,585,866,263 trail starts row-by-row with P=E[L^2]/(2N), L=min(Exp(theta),128 theta), and wasted work charged CONDITIONALLY on the self-collision at the size-biased prefix mean E[L^2]/(2E[L]) = theta(1-129e^-128)/(1-e^-128) <= theta (the collision-weighted length law is size-biased by L^2, so unconditional E[L] would not do), giving 2^35.3257 instead of 2^11.497 (understated by 2^43.83), still 2^90.9 below the step term. The v27-first-draft claim that the report count is DETERMINISTICALLY <= ceil(S/theta) is RETRACTED: a trail reports at its first distinguished point, so trail lengths can be shorter than theta and the number of trail starts is a random variable with mean S/theta, deterministically <= S. The aux report rows are charged at 2*ceil(S/theta) with a Chernoff tail on the trail count (geometric sum, mean S/theta = 2^45.83, tail below 2^-(2^45)) charged as one reference operation; extra trail work is already counted inside S, and no 'cap' language is used for a tail. (3) ALGEBRA: sigma^j(y)=y^(p^j), so the two-step return is y^(4-p^j)=(m1^4 m2^2)^(-1), not y^3=sigma^j/(m1^4 m2^2); recovery inverts e_j=(4-p^j) mod r on the subgroup order r with gcd(e_j,r)=1. Dynamic proof on the shipped object: 200 table rows x 50 solves for each j in {0,1,2,3}, 40000 exact solves, 0 misses, 0 subgroup failures, j=0 arm reproduces the old cubing exactly (regression kept), old cubing returns 0 of 30000 for j!=0. This proves uniqueness per fixed multiplier pair and shift ONLY. CYCLE CENSUS, STATED PRECISELY: the exact-element map on 9420 representatives has 0 two-cycles (v26 collapsed 9420 onto 785 by dlog[class_key], factor 12.00); the CLASS-LEVEL map still shows 1 two-cycle, disclosed, and a class 2-cycle lifts to exact period 2*ord(sigma^J), so absence of exact two-cycles is NOT offered as absence of class-level absorption: the class-level abandon rate is priced in the trap row, not claimed zero. LEDGER, ONE SUM, EVERY ROW DISPLAYED, Fractions throughout: S*c_stress (2^126.267148) + trap charge (2^35.325690) + 8 enumerated aux rows at 2*ceil(S/theta) (2^56.517206) = 2^126.267148; claim 126.2672 = 78917/625, least 4-decimal log2 >= the exact total, reduced. f = 0.3473967898 is the POOLED EXECUTED squaring fraction over all four arms, exactly 1734128/4991779 = 0.3473967898017921 in evidence/v27-measure-census.json, priced in the ledger as the marginally larger 14566/41929 = 0.3473967898113 (+9.5e-12, conservative; declared 3/8 = 0.375), the number the ledger prices; the first draft's 0.346631 was a transcription error and is retracted. FAMILY-FREE BY THEOREM, NOT BY DEBIT: class merging forces m(k)=sigma^(-k)(A_t) and sigma^6 is inversion on the order-r subgroup, so the inverse-pair family is an identity of the orbit structure (384/384 columns measured, planted mutation flags exactly the mutated column); squaring is the family-free step among those tested (no minimality theorem is claimed). RANK LOSS DISCLOSED: 126.2672 is 0.4472 bits behind the live board minimum 125.82 and 0.4292 behind this account's valid 125.838."
+  }
+ ],
+ "experiments": [],
+ "title": "Squared-step class-merge rho for fixed-G1 pairing inversion: DP-predicate census, corrected trap population, and per-class return algebra",
+ "version": 1
+}
