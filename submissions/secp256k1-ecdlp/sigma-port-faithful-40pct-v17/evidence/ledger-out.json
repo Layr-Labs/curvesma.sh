@@ -1,0 +1,57 @@
+step rows (insn):
+    35  index: 8 partial products (4 at i+j=3, 4 at i+j=4), 4x5 limb 320-bit window
+    24  v0: 3 partial products (i+j in {4,5}) of x*floor(2^384/p), bits 256..383
+     4  v2 by subtraction: (1<<128) - v0 - v1, four 64-bit subtracts and a mask
+    12  3-way argmin on 128-bit windows, selects, near-tie band test
+    12  sign and key: 4-limb compare (5), conditional negate (8), store (2)
+     7  orbit slot and address: lea (2h+b) (1), base+(slot*R+m)*96 (3), DP mask (3)
+    20  loads/stores: 8 limb loads of J, 8 stores of S, 4 coefficient loads
+     9  modular coefficient update: 4-limb add mod n plus conditional subtract
+    10  checkpoint: period-64 compare (4), 8-limb fingerprint compare (3), age (3)
+     6  trap escape lag-1: class compare vs previous (3), alternate-slot select (2), join (1)
+     4  trap escape lag-3: class compare vs the class two steps back (3), join (1)
+     1  batch-inversion share: 4-limb inverse / batch, charged 1
+     7  counters: 69-bit length add (4), cap test (2), loop counter/branch (1)
+     1  per-batch meter: 192-bit add share
+   152  TOTAL   price 1.152000
+log2 S0            126.69996043   N' correction with 6291456 cells
+kappa              1.0150   log2 S_ops 126.72144016
+fallback total     2.1671e+21 insn = 2.1671e+18 ref  (<= 2^60: False)  bits 0.000000000
+escape run cost M  rho=1/2 E[L]=2.000  5.137e+31 ref  = 2^105.341
+escape run cost R  rho=p    E[L]=1.000000159  2.568e+31 ref  = 2^104.341
+meter cap (2x max) 1.027e+32 ref  [DETERMINISTIC work cap, no trip probability claimed]
+ONE inequality      P(loss > A) <= E[loss]/A  Markov:  E[loss] 1.875e-03, A = 0.170408 -> 1.100e-02
+restart cost       1.027e+32 ref at K_ESC_MAX=8 (rho^8 = 3.906e-03); 714070 insn per fresh start = 714.070 ref (2 scalar mults + normalize)
+restart reprice    v20j 42 insn -> v20k 714070 insn = x17002; row 1.027e+32 ref = 2^106.34
+restart alt. price 1.342e+61 ref if a restart minted a fresh lane budget (2^203.1); NOT charged
+restart success loss 1.875e-03 (restarts / S_OPS)
+K_ESC_MAX          8 allowed, NO raise: over-long run restarts the lane
+escape failure     9.242e-45
+escape slowdown    1 + K*rate = 1.000001272  (allowed 1.015)
+table build        3.917e+13 ref over 65536 nodes
+three-cycle work   9.095e-13/step, 4.409e+26 ref
+absorption DIRECT  p(ge3) 1.000000 -> 1.000000 at 4.0x classes (ratio 1.000000, non-increasing True); 32768 starts enumerated
+absorption debit   NONE (measured inside the success statistic; the random-map ln(N)/N premise is deleted)
+log2 phase1        126.92558088
+log2 extras        113.39719969
+log2 W (1 run)     126.92570297
+w=2 factor         2   (+1.00000000 bits, disclosed)
+log2 W (submitted) 127.92570297   claim 127.926
+success (DESIGN)   0.560408  = CP95_w2 0.562619 - debits (floor 0.39)
+w=2 row            p_run pooled 0.345938  measured p_set 0.577187  formula 1-(1-p)^2 0.572203  diff +0.004984
+CP helper calib    coverage 0.9535 (one-sided 0.95 target)
+success walk-only  0.560408  = CP95_walk_only 0.562619 - debits  (disclosed sensitivity, not the claim)
+two-phase budget   B_walk 1.4027e+38 + B_drain 3.9866e+24 = B_total 1.4027e+38 steps; drain price 4.593e+24 ref (design arm d=5)
+ship line 126.400  gate 126.338  gate bar 126.33250  margin gate -1.5880  line -1.5260
+log2 memory        74.584963  bytes 2.833e+22
+records            1.21662e+20  cap 147573952589676412928
+kappa budget table:
+  1.152000000  step price 1 + 152/1000                          152 itemised rows above
+  2.000000000  w=2 amplification x2                             two sequential runs; exactly +1.000 bit
+  1.015000000  slowdown allowance kappa = A_H1                  sweep mean T_c/S_ref <= 1.015; the trap escape consumes 1.27e-06 of it
+  1.000000000  lag + fallback reserve (1 + 2^60/(kappa*S0))     fallback total 2.17e+18 ref <= 2^60
+  1.000084635  extras (1 + EXTRAS/PHASE1)                       table build 3.92e+13 ref, trap escape 5.14e+31 ref
+  product 2.338757925 <= 2^(claim-log2 S0) 2.339239485
+basin tolerance    B_max = (success - 0.39)/workers = 1.6251e-07
+floor 0.39         measured production-shape success 0.560408 -> met True
+RANK POSTURE       claim 127.9260 vs bar 126.33250 -> no rank (delta -1.59350 bits); SUBMITTED regardless, floor met True
