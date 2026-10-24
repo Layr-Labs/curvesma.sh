@@ -1,0 +1,190 @@
+{
+ "checks": {
+  "W_recompute": {
+   "expected": "127.617822497",
+   "observed": "127.617822497",
+   "verdict": "PASS"
+  },
+  "basin_equivariance_zero": {
+   "expected": 0,
+   "observed": 0,
+   "verdict": "PASS"
+  },
+  "basin_single_table_2cycle_reproduced": {
+   "expected": 2,
+   "observed": {
+    "0": 2,
+    "1": 2,
+    "3": 2,
+    "4": 2
+   },
+   "verdict": "PASS"
+  },
+  "basin_two_table_cycle_free": {
+   "expected": {
+    "cyc_frac": 0.0,
+    "rep_frac": 0.0
+   },
+   "observed": {
+    "cyc_frac": 0.0,
+    "rep_frac": 0.0,
+    "starts": 500
+   },
+   "verdict": "PASS"
+  },
+  "census_conversion_unity_control_dp2": {
+   "expected": true,
+   "observed": "1.000000",
+   "verdict": "PASS"
+  },
+  "census_conversion_unity_design": {
+   "expected": true,
+   "observed": "1.000000",
+   "verdict": "PASS"
+  },
+  "census_conversion_unity_sensitivity_40pct": {
+   "expected": true,
+   "observed": "1.000000",
+   "verdict": "PASS"
+  },
+  "census_no_defects_control_dp2": {
+   "expected": {
+    "check_fail": 0,
+    "dc0": 0,
+    "escaping": 0
+   },
+   "observed": {
+    "check_fail": 0,
+    "dc0": 0,
+    "escaping": 0
+   },
+   "verdict": "PASS"
+  },
+  "census_no_defects_design": {
+   "expected": {
+    "check_fail": 0,
+    "dc0": 0,
+    "escaping": 0
+   },
+   "observed": {
+    "check_fail": 0,
+    "dc0": 0,
+    "escaping": 0
+   },
+   "verdict": "PASS"
+  },
+  "census_no_defects_sensitivity_40pct": {
+   "expected": {
+    "check_fail": 0,
+    "dc0": 0,
+    "escaping": 0
+   },
+   "observed": {
+    "check_fail": 0,
+    "dc0": 0,
+    "escaping": 0
+   },
+   "verdict": "PASS"
+  },
+  "charge_recompute": {
+   "expected": [
+    2157854237,
+    2048000
+   ],
+   "observed": [
+    2157854237,
+    2048000
+   ],
+   "verdict": "PASS"
+  },
+  "claim_covers_W": {
+   "expected": true,
+   "observed": "True",
+   "verdict": "PASS"
+  },
+  "claim_is_ceil4dp_W_plus_2e5": {
+   "expected": [
+    1276179,
+    10000
+   ],
+   "observed": [
+    1276179,
+    10000
+   ],
+   "verdict": "PASS"
+  },
+  "cp95_two_implementations_agree": {
+   "expected": "<=1e-12",
+   "observed": "1.449e-14",
+   "verdict": "PASS"
+  },
+  "design_floor_ge_bar": {
+   "expected": {
+    "bar": 0.39
+   },
+   "observed": {
+    "cp95": 0.4217254674243402
+   },
+   "verdict": "PASS"
+  },
+  "design_row_is_certified_config": {
+   "expected": {
+    "T_per_trial": 812224,
+    "lam": 0.6,
+    "per_walker": 50764,
+    "trials": 8000
+   },
+   "observed": {
+    "T_per_trial": 812224,
+    "lam": 0.6,
+    "per_walker": 50764,
+    "trials": 8000
+   },
+   "verdict": "PASS"
+  },
+  "design_row_is_the_largest_budget": {
+   "expected": true,
+   "observed": {
+    "control_dp2": 763376,
+    "design": 812224,
+    "sensitivity_40pct": 763376
+   },
+   "verdict": "PASS"
+  },
+  "sensitivity_row_disclosed": {
+   "expected": true,
+   "observed": {
+    "cp95": 0.3700501881026565,
+    "key": "sensitivity_40pct",
+    "lam": 0.53
+   },
+   "verdict": "PASS"
+  },
+  "step_rows_sum": {
+   "expected": 1055,
+   "observed": 1055,
+   "verdict": "PASS"
+  },
+  "step_umulh_bodies": {
+   "expected": 114,
+   "observed": 114,
+   "verdict": "PASS"
+  },
+  "storage_under_declared_cap": {
+   "expected": true,
+   "observed": {
+    "cap": 9444732965739290427392,
+    "two_tables_bytes": 8388608
+   },
+   "verdict": "PASS"
+  }
+ },
+ "method": "certificate re-parses evidence/ledger.json, evidence/census.json, evidence/stepcount.json and evidence/basin.json, recomputes W, charge, claim and the Clopper-Pearson floor with a second independent algorithm, and re-checks the budget roles and every census cell",
+ "package": "rhosigma-affine-40pct-v10f",
+ "totals": {
+  "checks": 21,
+  "passed": 21
+ },
+ "track": "p256-ecdlp",
+ "verdict": "PASS"
+}

@@ -1,0 +1,42 @@
+{
+ "o3": {
+  "longest_iteration": 1055,
+  "mul": 94,
+  "rows": {
+   "carry_chain": 388,
+   "carry_propagate": 175,
+   "control": 2,
+   "flagtest": 9,
+   "guard_read": 12,
+   "load": 65,
+   "masked_select": 109,
+   "mix_key": 17,
+   "move_extend": 35,
+   "other": 4,
+   "product": 208,
+   "store": 31
+  },
+  "sum_of_rows": 1055,
+  "umulh": 114
+ },
+ "ref": {
+  "longest_iteration": 1029,
+  "mul": 92,
+  "rows": {
+   "carry_chain": 388,
+   "carry_propagate": 174,
+   "control": 2,
+   "flagtest": 8,
+   "guard_read": 12,
+   "load": 55,
+   "masked_select": 108,
+   "mix_key": 12,
+   "move_extend": 30,
+   "other": 3,
+   "product": 206,
+   "store": 31
+  },
+  "sum_of_rows": 1029,
+  "umulh": 114
+ }
+}

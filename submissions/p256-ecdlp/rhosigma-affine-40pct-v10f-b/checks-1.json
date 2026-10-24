@@ -1,0 +1,193 @@
+{
+ "W": {
+  "W_at_artifact_count": "127.620558399",
+  "W_value": "127.617822497",
+  "claim": [
+   1276179,
+   10000
+  ],
+  "claim_at_artifact_count": [
+   638103,
+   5000
+  ]
+ },
+ "basin": {
+  "0": {
+   "cap": 5000,
+   "cyc_frac": 0.62,
+   "eqv_bad": 0,
+   "giant_share": 0.004,
+   "med_lam": 2,
+   "mode": 0,
+   "odd_y": 0,
+   "rep_frac": 0.4018,
+   "starts": 500
+  },
+  "1": {
+   "cap": 5000,
+   "cyc_frac": 0.592,
+   "eqv_bad": 0,
+   "giant_share": 0.004,
+   "med_lam": 2,
+   "mode": 1,
+   "odd_y": 0,
+   "rep_frac": 0.385,
+   "starts": 500
+  },
+  "2": {
+   "cap": 5000,
+   "cyc_frac": 0.0,
+   "eqv_bad": 0,
+   "giant_share": 0.0,
+   "med_lam": -1,
+   "mode": 2,
+   "odd_y": 0,
+   "rep_frac": 0.0,
+   "starts": 500
+  },
+  "3": {
+   "cap": 5000,
+   "cyc_frac": 0.6,
+   "eqv_bad": 0,
+   "giant_share": 0.004,
+   "med_lam": 2,
+   "mode": 3,
+   "odd_y": 0,
+   "rep_frac": 0.3937,
+   "starts": 500
+  },
+  "4": {
+   "cap": 5000,
+   "cyc_frac": 0.634,
+   "eqv_bad": 0,
+   "giant_share": 0.004,
+   "med_lam": 2,
+   "mode": 4,
+   "odd_y": 0,
+   "rep_frac": 0.4674,
+   "starts": 500
+  },
+  "5": {
+   "cap": 40000,
+   "cyc_frac": 0.0,
+   "eqv_bad": 0,
+   "giant_share": 0.0,
+   "med_lam": -1,
+   "mode": 5,
+   "odd_y": 0,
+   "rep_frac": 0.0,
+   "starts": 400
+  },
+  "6": {
+   "cap": 40000,
+   "cyc_frac": 0.0,
+   "eqv_bad": 0,
+   "giant_share": 0.0,
+   "med_lam": -1,
+   "mode": 6,
+   "odd_y": 0,
+   "rep_frac": 0.0,
+   "starts": 400
+  }
+ },
+ "budget": {
+  "bar": 0.39,
+  "design": {
+   "T_per_trial": 812224,
+   "T_per_walker": 50764,
+   "cp95": 0.4217254674243402,
+   "lam": 0.6,
+   "meets_bar": true,
+   "recovery": 0.430875,
+   "role": "design and production budget: the two-table spec runs T=812,224 steps (Lambda=0.60), exactly the configuration the census certified; this is the row a reviewer prices",
+   "slots": 16,
+   "successes": 3447,
+   "trials": 8000
+  },
+  "note": "v10f-b re-anchor: the design budget is the certified census point (Lambda=0.60, CP-95 0.421725 at 8,000 trials). The predecessor declared the 0.53 cell as the design row, where the measured CP-95 is 0.370050; that number is retained verbatim as a labelled sensitivity, not as the spec.",
+  "sensitivity_40pct": {
+   "T_per_trial": 763376,
+   "T_per_walker": 47711,
+   "cp95": 0.3700501881026565,
+   "lam": 0.53,
+   "meets_bar": false,
+   "recovery": 0.38275,
+   "role": "sensitivity only: the same walk at 40% of the design budget; disclosed because it is below the bar, and not a design, production or pricing row",
+   "slots": 16,
+   "successes": 1531,
+   "trials": 4000
+  }
+ },
+ "census": {
+  "control_dp2": {
+   "check_fail": 0,
+   "conversion": 1.0,
+   "cp95": 0.24731126691393412,
+   "cp95_beta_cf": 0.2473112669139312,
+   "dc0": 0,
+   "lam": 0.53,
+   "merges": 1936218,
+   "per_walker": 47711,
+   "recovery": 0.2635,
+   "role": "control: DP-2 band at the 40%-of-design budget, shows the DP penalty; not a design row",
+   "self_frac": 0.0014843329036117446,
+   "steps": 1526752000,
+   "successes": 527,
+   "trials": 2000,
+   "verified": 1936218
+  },
+  "design": {
+   "check_fail": 0,
+   "conversion": 1.0,
+   "cp95": 0.4217254674243402,
+   "cp95_beta_cf": 0.4217254674243365,
+   "dc0": 0,
+   "lam": 0.6,
+   "merges": 37839675,
+   "per_walker": 50764,
+   "recovery": 0.430875,
+   "role": "design and production budget: the configuration the 8,000-trial census certified; this is the row a reviewer prices",
+   "self_frac": 0.0012624257593964227,
+   "steps": 6497792000,
+   "successes": 3447,
+   "trials": 8000,
+   "verified": 37839675
+  },
+  "sensitivity_40pct": {
+   "check_fail": 0,
+   "conversion": 1.0,
+   "cp95": 0.3700501881026565,
+   "cp95_beta_cf": 0.370050188102671,
+   "dc0": 0,
+   "lam": 0.53,
+   "merges": 14864870,
+   "per_walker": 47711,
+   "recovery": 0.38275,
+   "role": "sensitivity only: the same walk at this lane's 40%-of-design budget; disclosed, never a design or production row",
+   "self_frac": 0.0012311780171239337,
+   "steps": 3053504000,
+   "successes": 1531,
+   "trials": 4000,
+   "verified": 14864870
+  }
+ },
+ "charge": {
+  "charge": [
+   2157854237,
+   2048000
+  ],
+  "reserve": [
+   1310237,
+   2048000
+  ],
+  "step": 1053
+ },
+ "cp95_max_abs_delta_between_implementations": 1.4488410471358293e-14,
+ "step": {
+  "artifact_count": 1055,
+  "charged": 1053,
+  "mul": 94,
+  "rows_sum": 1055,
+  "umulh": 114
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk: the 2-cycle involution of a single shared table proved and killed, 1,053-instruction step, certified recovery 0.421725 at the design budget (T=812,224, Lambda=0.60, 8,000 trials)",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1276179",
+    "denominator": "10000"
+   },
+   "statement": "For the unrestricted-production P-256 challenge Q=[x]P, including the identity Q, the fully specified two-table affine walk of argument.md recovers the canonical scalar with success at least 0.39 at its declared design budget, using total classical work at most 2^127.6179 target-group-operation equivalents at the protected C=1000 scalar AArch64 instruction normalization, with peak memory below 2^73 bytes and preprocessing at most 2^49.961206. The walk is on negation classes {P,-P} with class key x and the even-y representative as canonical member, and one step is an affine addition against a table row selected by the walker's step parity and a salted 64-bit mix of the canonical x, with the inverse supplied by a shared Montgomery batch inversion over the 16 walk slots. THEOREM, measured and proved: with ONE shared table, a repeated index is an involution - x(-S)=x(S) makes both representatives select the same row, so a repeated index in the step S -> canon(S + T_j) returns S to itself in one more step; a 2^11-row table repeats an index within ~2^11 steps by the birthday, so every walker collapses into a 2-cycle and all later records are self-hits. That is why the predecessor measured 91.4 percent self-hits and 0.00425 recovery at 2^39 classes and 2.8 percent self-hits at 200 steps on a 2^24-class fixture, and why NO index rule fixes it: x&2047, mix64(x)&2047, a per-walker coset offset and an xor-fold all measure 59-63 percent of starts cycling with median cycle length 2 and 38-47 percent trail repeats (exact-bigint reproduction: 6/6 starts, closure relation q + T[j'] == -p verified). FIX: two independent shared tables of 2048 even-y rows, alternated by step parity (all slots in lockstep) and each indexed by mix64(x XOR salt) & 2047, so a 2-cycle requires T^A_j == T^B_j' as group elements (~2^-40) instead of an 11-bit index collision; measured 0/500 starts cycling within 5,000 steps and 0 of 1.5M trail steps repeating, with 0/2,000 class-consistency splits and conversion 1.000 on every merge. DESIGN BUDGET, the production spec and the row this package asks to be priced: the two-table configuration runs T=812,224 steps (Lambda=0.60, 50,764 per walker x 16), which is exactly the cell the census certified. Census on a 2^40-class prime-order fixture (p=1099511629627, E:y^2=x^3+2, q=1099513640503 prime, cofactor 1, N'=(q+1)/2=549756820252=2^39.000 classes, generator (2,185782196093), arithmetic gated 2,000/2,000 against bigint and the batched inversion bit-identical to the scalar path): at T=812,224 steps the walk recovered 3,447 of 8,000 independent targets = 0.430875, Clopper-Pearson 95 percent lower bound 0.421725, with 37,839,675 of 37,839,675 merges cryptographically verified (conversion 1.000), 0.126 percent self-hits, 0 degenerate denominators and 0 check failures. SENSITIVITY, stated and not hidden: the same walk at 40 percent of the design budget (T=763,376, Lambda=0.53) measures 1,531/4,000 = 0.382750, CP-95 0.370050, 14,864,870/14,864,870 verified; that row is below 0.39 and is disclosed as a sensitivity, and it is NOT the design budget, the production spec, or a pricing row. Step: evidence/step_v10f_o3.c counts 1,055 by the clang CFG longest-iteration method, and since the same toolchain rebuilds the v10f anchor at 1,029 against its shipped 1,027 the same-toolchain delta is +26, so the charged step is 1,053 (umulh=114=6 x 19, mul=94, opcode rows machine-classified and summing to the count); declaring the shipped-artifact 1,055 instead gives 127.6206 and both are stated. Charge = 1,053 + (1+2^-10) x 0.639140 = 1053.639764 (the rare-event rebuild and d2 martingale reserve are inherited unchanged; the fix adds no rare path). W = A + log2(charge) with A = 127.370918 - log2(887.904982), W = 127.617822, claim 127.6179. Storage is charged at its maximum: two 2^16 x 64 B tables = 2^23 B, 2^-50 of the declared 2^73 B cap, so the second table is free at the declared precision. The package claims 0.39 at its declared design budget (CP-95 0.421725 at Lambda=0.60) and does not claim 0.39 at the 40 percent budget (CP-95 0.370050 there, disclosed as a sensitivity). It does not claim the v10e floor 0.401692, whose kernel header transposed p's middle limbs.",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger.json",
+    "evidence/census.json",
+    "evidence/basin.json",
+    "evidence/stepcount.json",
+    "evidence/step_v10f_o3.c",
+    "evidence/step_v10f_o3.s.excerpt",
+    "evidence/probe_basin.c",
+    "evidence/diag_cycle.py",
+    "evidence/census_v10f41.c",
+    "evidence/arith_gate.txt"
+   ]
+  }
+ ],
+ "experiments": []
+}
