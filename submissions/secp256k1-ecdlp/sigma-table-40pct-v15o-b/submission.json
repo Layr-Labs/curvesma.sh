@@ -1,0 +1,31 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15o: one 80-byte record layout, disjoint symbol rows summing to W (1982 Ir/step), retained-record report pool, labels and detector charged, claim 1278101/10000",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "certificate.json",
+    "scripts/walk_v15o.c",
+    "scripts/ledger_v15o.py",
+    "scripts/run_experiments.sh",
+    "scripts/census_v15n.py",
+    "scripts/census_reduce_v15m.py",
+    "scripts/toy_core.py",
+    "scripts/walk_v15o.s",
+    "evidence/step_secp_v15g.s",
+    "evidence/ledger-v15o.json",
+    "evidence/census-v15m-counts.json",
+    "evidence/census-v15m-dp1-rows.json",
+    "evidence/verdict-v15n.md"
+   ],
+   "score": {
+    "numerator": "1278101",
+    "denominator": "10000"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim at success >= 0.39: six-class (negation and GLV) parallel rho walk, priced from counted aarch64 symbols at the protected C=1000. The step is 1982 Ir, and every component is a separate symbol of the shipped object, counted by one method (static instruction count of the emitted symbol times the walk's own call count): 741 point listing (evidence/step_secp_v15g.s:step_asm) + 401 alignment (_v15o_align body 101 + 2 x _fmul 150) + 766 label update (_v15o_label body 118 + 3 x _rmont 216) + 34 detector (_v15o_detect) + 40 report share (_v15o_report 80 at dp1 density 2^-1). One 80-byte record type is shared by the listing and the alignment; the listing selects the stored three-slot row from rec->idx = 3*(key & 2047) + slot, not from raw x bits. The report processor is a retained-record pool keyed on 4 limbs with a 12-limb node stride, storing both exponents and returning the stored pair on a key match; it is charged at 78 Ir per report, ceil(arrivals/2) reports. The ledger sums integer rows exactly (SUM(rows) == W, checked with a planted-typo control), gives W_time = 2^127.810035, and the claim is the smallest 1e-4 decimal covering W + 2e-5, proved in both directions. Success is the fixture statistic 2643/6400 unconditional verified recoveries within the charged budget, CP-95 lower 0.402798 >= 0.39, at toy curve q25, R = 2048, ntrails = 16, dp1, under the disclosed random-map premise H1 at pooled mu = 1.107; it is not a production certification. The claim is above the live frontier observed at build time (126.3469) and is submitted as a correctness repair, not a competitive bid. No production execution and no practical break are claimed."
+  }
+ ],
+ "experiments": []
+}

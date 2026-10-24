@@ -1,0 +1,77 @@
+{
+ "kind": "certificate-v15o",
+ "claim": "1278101/10000",
+ "claim_value": 127.8101,
+ "W_time_log2": 127.81003465076017,
+ "W_exact": "167383943380813557932848931062590999685223382/561125",
+ "composition": [
+  {
+   "row": "step_core",
+   "ir": 741,
+   "source": "evidence/step_secp_v15g.s:step_asm",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "741"
+  },
+  {
+   "row": "align",
+   "ir": 401,
+   "source": "scripts/walk_v15o.s:_v15o_align+2*_fmul",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "401"
+  },
+  {
+   "row": "label",
+   "ir": 766,
+   "source": "scripts/walk_v15o.s:_v15o_label+3*_rmont",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "766"
+  },
+  {
+   "row": "detect",
+   "ir": 34,
+   "source": "scripts/walk_v15o.s:_v15o_detect",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "34"
+  },
+  {
+   "row": "report",
+   "ir": 80,
+   "source": "scripts/walk_v15o.s:_v15o_report",
+   "calls": "1/2",
+   "formula": "1/report x 1/2",
+   "ir_per_step": "40"
+  }
+ ],
+ "ir_per_step": 1982.0,
+ "checks": [
+  {
+   "check": "composition_rows_from_shipped_listing",
+   "pass": true,
+   "detail": "five symbols of scripts/walk_v15o.s + evidence/step_secp_v15g.s"
+  },
+  {
+   "check": "composition_sum_equals_step",
+   "pass": true,
+   "detail": "1982/1 Ir/step"
+  },
+  {
+   "check": "identity_sum_rows_eq_W",
+   "pass": true,
+   "detail": "integer-exact; planted +1 control fails"
+  },
+  {
+   "check": "record_layout_unified",
+   "pass": true,
+   "detail": "rec_t 80 B == stride #80 in step_secp_v15g.s"
+  },
+  {
+   "check": "claim_covers_W_plus_2e-5",
+   "pass": true,
+   "detail": "1278101/10000 vs 2^127.81003465076017"
+  }
+ ]
+}
