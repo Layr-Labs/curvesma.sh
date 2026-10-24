@@ -1,0 +1,142 @@
+{
+ "S_log2": {
+  "formatted": "125.903580",
+  "source": "ledger30.total29:S",
+  "value": 125.90358037208506
+ },
+ "aux_log2": {
+  "formatted": "56.592221",
+  "source": "ledger30.total29:aux_sum",
+  "value": 56.59222129268498
+ },
+ "bare_inflight": {
+  "formatted": "1023",
+  "source": "v30-stopping:bare_schedule_max_inflight",
+  "value": 1023
+ },
+ "claim": {
+  "formatted": "126.6729",
+  "source": "ledger30.claim29:claim_log2",
+  "value": 126.6729
+ },
+ "claim_den": {
+  "formatted": "10000",
+  "source": "ledger30.claim29:denominator",
+  "value": 10000
+ },
+ "claim_num": {
+  "formatted": "1266729",
+  "source": "ledger30.claim29:numerator",
+  "value": 1266729
+ },
+ "delta_charged_log2": {
+  "formatted": "-3.589688",
+  "source": "ledger30.delta_charge:charged",
+  "value": -3.5896883525728747
+ },
+ "delta_closed_log2": {
+  "formatted": "-166.216505",
+  "source": "ledger30.delta_closed_form",
+  "value": -166.21650473297103
+ },
+ "delta_measured_log2": {
+  "formatted": "-168.25",
+  "source": "ledger30.delta_charge:measured",
+  "value": -168.24946295197088
+ },
+ "delta_tail_log2": {
+  "formatted": "-3.589688",
+  "source": "ledger30.delta_tail_bound:tail",
+  "value": -3.5896883525728747
+ },
+ "enforced_inflight": {
+  "formatted": "128",
+  "source": "v30-stopping:enforced_trace_max_inflight",
+  "value": 128
+ },
+ "f": {
+  "formatted": "14566/41929",
+  "source": "ledger30.total29:f",
+  "value": "14566/41929"
+ },
+ "gate_census": {
+  "formatted": "0.586783",
+  "source": "v30-census:production_like p_recover",
+  "value": 0.5867833333333333
+ },
+ "gate_measured": {
+  "formatted": "0.579100",
+  "source": "v30-age-law:arm1 p_recover",
+  "value": 0.5791
+ },
+ "gate_per_merge": {
+  "formatted": "0.999976",
+  "source": "v30-age-law:arm1 verified/merges_all",
+  "value": 0.9999758605706561
+ },
+ "loss_rel_log2": {
+  "formatted": "-30.90",
+  "source": "ledger30.stop_loss29:loss_rel_S2",
+  "value": -30.903580372085063
+ },
+ "mean_w_log2": {
+  "formatted": "126.342163",
+  "source": "ledger30.total29:diagnostic_average_price",
+  "value": 126.34216287289405
+ },
+ "n_inflight": {
+  "formatted": "128",
+  "source": "ledger30.stop_loss29:n_inflight",
+  "value": 128
+ },
+ "overflow_log2": {
+  "formatted": "0",
+  "source": "ledger30.total29:overflow_row",
+  "value": 0.0
+ },
+ "ratio_over_theta": {
+  "formatted": "2.5252",
+  "source": "ledger30.moments_charged",
+  "value": 2.5251503463074862
+ },
+ "reserve_log2": {
+  "formatted": "94.00",
+  "source": "ledger30.stop_loss29:reserve_steps",
+  "value": 94.0
+ },
+ "reserve_steps": {
+  "formatted": "19807040628566084398385987584",
+  "source": "ledger30.stop_loss29:reserve_steps",
+  "value": 19807040628566084398385987584
+ },
+ "stop_log2": {
+  "formatted": "95.769251",
+  "source": "ledger30.total29:stop_loss_row",
+  "value": 95.76925125977309
+ },
+ "toosmall_inflight": {
+  "formatted": "127",
+  "source": "v30-stopping:toosmall_cap_trace_max_inflight",
+  "value": 127
+ },
+ "total_log2": {
+  "formatted": "126.672831633",
+  "source": "ledger30.total29:log2_total",
+  "value": 126.6728316329355
+ },
+ "trap_log2": {
+  "formatted": "94.769251",
+  "source": "ledger30.total29:trap_charge",
+  "value": 94.76925125977309
+ },
+ "underprice_bits": {
+  "formatted": "0.330669",
+  "source": "ledger30.total29:max minus mean",
+  "value": 0.3306687589640944
+ },
+ "w_stress_log2": {
+  "formatted": "126.672832",
+  "source": "ledger30.total29:w_stress (max price)",
+  "value": 126.67283163185814
+ }
+}
