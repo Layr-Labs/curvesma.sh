@@ -1,0 +1,50 @@
+{
+ "census": {
+  "joint_repeat_events": 1744,
+  "lag_histogram": {
+   "100": 220,
+   "120": 220,
+   "140": 220,
+   "160": 204,
+   "20": 220,
+   "40": 220,
+   "60": 220,
+   "80": 220
+  },
+  "nonzero_increment_events": 1744,
+  "nonzero_increment_lag_histogram": {
+   "100": 220,
+   "120": 220,
+   "140": 220,
+   "160": 204,
+   "20": 220,
+   "40": 220,
+   "60": 220,
+   "80": 220
+  },
+  "p_pair_all": 0.001744,
+  "step_pairs": 1000000,
+  "steps_per_walk": 200,
+  "walks": 5000,
+  "zero_increment_events": 0,
+  "zero_increment_fraction": 0.0,
+  "zero_increment_lag_histogram": {}
+ },
+ "fixture_elements": 9420,
+ "fixture_r": 9421,
+ "reading": "A repeat of (element, guard) is a cycle. The shipped attack stores DP records only and has no self-collision detector, so a cycle whose 20-odd elements contain no DP (probability 1 - 20*2^-80) never reports and the trail is PENDING at every cutoff. The increment is irrelevant to the trap; it only decides whether a solve WOULD have existed had both records been kept. Both classes are charged as traps in v19.",
+ "step_source": "classkey.step (shipped, imported), guard depth 12",
+ "table_rows": 64,
+ "window": {
+  "first_joint_repeat_lag_hist": {
+   "228": 164
+  },
+  "joint_repeat_events": 13546,
+  "nonzero_increment_events": 13546,
+  "walk_repeat_fraction": 0.640625,
+  "walks": 256,
+  "walks_with_joint_repeat": 164,
+  "window_steps": 400,
+  "zero_increment_events": 0
+ }
+}

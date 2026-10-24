@@ -1,0 +1,31 @@
+{
+ "chebyshev": "P(R >= k*mean) <= var/((k-1)*mean)^2 with the measured variance; the cap is charged at the measured worst window, not at the mean",
+ "fixture": {
+  "dp_bits": 5,
+  "guard_depth": 12,
+  "r": 9421,
+  "table_rows": 64,
+  "theta_steps": 32
+ },
+ "walks_row": {
+  "mean_hits_per_walk": 107.69166666666666,
+  "over_dispersion_var_over_mean": 0.2999963699203579,
+  "var_hits_per_walk": 32.30710907067321,
+  "walks": 600,
+  "worst_walk_hits": 205
+ },
+ "windows": {
+  "mean_hits_per_window": 3.365364583333333,
+  "measured_over_model": 0.8413411458333333,
+  "model_hits_per_window": 4.0,
+  "over_dispersion_var_over_mean": 0.12440433512124476,
+  "sd": 0.6470440042455908,
+  "steps_per_walk": 4096,
+  "var_hits_per_window": 0.4186659434301682,
+  "walks": 600,
+  "window_steps": 128,
+  "windows": 19200,
+  "worst_over_mean": 2.0800123810260778,
+  "worst_window_hits": 7
+ }
+}
