@@ -1,0 +1,204 @@
+{
+ "R": 64,
+ "W": 16,
+ "arms": {
+  "ci95_paired": [
+   -0.010540768948294182,
+   0.02304076894829418
+  ],
+  "delta_ec_minus_hash": 0.006249999999999999,
+  "discordant": 47,
+  "ec": 0.03625,
+  "ec_only": 26,
+  "hash": 0.03,
+  "hash_only": 21,
+  "se_paired": 0.0085667188511705,
+  "z": 0.7295675402194436
+ },
+ "birthday": {
+  "p_dp_records": 0.01574481206383893,
+  "p_raw_visits": 0.3982074551760776,
+  "ratio_dp_ec": 2.302345677612455,
+  "ratio_dp_hash": 1.9053895262999627,
+  "ratio_raw_ec": 0.09103295161556213,
+  "ratio_raw_hash": 0.07533761513012038
+ },
+ "claim_dependence": "NONE (EC selector transfer is declared OPEN; exploratory row)",
+ "counters": {
+  "ec": {
+   "fires": 0,
+   "records": 102944,
+   "restarts": 0,
+   "rotation_channel": 20,
+   "sign_channel": 9,
+   "trivial": 497,
+   "verify_fail": 0
+  },
+  "hash": {
+   "fires": 0,
+   "records": 102622,
+   "restarts": 0,
+   "rotation_channel": 21,
+   "sign_channel": 4,
+   "trivial": 485,
+   "verify_fail": 0
+  }
+ },
+ "cp95": {
+  "ec": 0.026051550092426528,
+  "hash": 0.020770602002999024
+ },
+ "curve": {
+  "b": 7,
+  "classes": 16777233,
+  "cm_A": 5645,
+  "j": 0,
+  "order_N": 33560113,
+  "p": 33554467,
+  "p_log2": 25.0
+ },
+ "degeneracy": {
+  "DEGEN_MAX": 10.0,
+  "flag": false
+ },
+ "design": "one challenge per set; two arms share challenge, walker offsets and step budget; arms differ ONLY in the column map; selector input is the WALK's current point at every jump (continuation); success = recovered scalar verified on the curve; EVERY mu6 channel solved exactly (no parity branch)",
+ "dp_bits": 5,
+ "elapsed_s": 78.5,
+ "parity_fix": {
+  "branch_removed": "no c%2 test anywhere; every mu6 channel solved exactly and verified on the curve",
+  "inv2": 16780057,
+  "inv2_check_2_times_inv2_mod_N": 1,
+  "inverse_row_20": [
+   {
+    "equal": true,
+    "times_inv2": 16416654,
+    "x": 16416654,
+    "x_times_2": 32833308
+   },
+   {
+    "equal": true,
+    "times_inv2": 15927524,
+    "x": 15927524,
+    "x_times_2": 31855048
+   },
+   {
+    "equal": true,
+    "times_inv2": 32753696,
+    "x": 32753696,
+    "x_times_2": 31947279
+   },
+   {
+    "equal": true,
+    "times_inv2": 3526752,
+    "x": 3526752,
+    "x_times_2": 7053504
+   },
+   {
+    "equal": true,
+    "times_inv2": 10332470,
+    "x": 10332470,
+    "x_times_2": 20664940
+   },
+   {
+    "equal": true,
+    "times_inv2": 9672471,
+    "x": 9672471,
+    "x_times_2": 19344942
+   },
+   {
+    "equal": true,
+    "times_inv2": 22482330,
+    "x": 22482330,
+    "x_times_2": 11404547
+   },
+   {
+    "equal": true,
+    "times_inv2": 8072849,
+    "x": 8072849,
+    "x_times_2": 16145698
+   },
+   {
+    "equal": true,
+    "times_inv2": 3721030,
+    "x": 3721030,
+    "x_times_2": 7442060
+   },
+   {
+    "equal": true,
+    "times_inv2": 23897124,
+    "x": 23897124,
+    "x_times_2": 14234135
+   },
+   {
+    "equal": true,
+    "times_inv2": 504823,
+    "x": 504823,
+    "x_times_2": 1009646
+   },
+   {
+    "equal": true,
+    "times_inv2": 17927156,
+    "x": 17927156,
+    "x_times_2": 2294199
+   },
+   {
+    "equal": true,
+    "times_inv2": 2285935,
+    "x": 2285935,
+    "x_times_2": 4571870
+   },
+   {
+    "equal": true,
+    "times_inv2": 4274054,
+    "x": 4274054,
+    "x_times_2": 8548108
+   },
+   {
+    "equal": true,
+    "times_inv2": 4142364,
+    "x": 4142364,
+    "x_times_2": 8284728
+   },
+   {
+    "equal": true,
+    "times_inv2": 30873970,
+    "x": 30873970,
+    "x_times_2": 28187827
+   },
+   {
+    "equal": true,
+    "times_inv2": 28575972,
+    "x": 28575972,
+    "x_times_2": 23591831
+   },
+   {
+    "equal": true,
+    "times_inv2": 4568763,
+    "x": 4568763,
+    "x_times_2": 9137526
+   },
+   {
+    "equal": true,
+    "times_inv2": 2177025,
+    "x": 2177025,
+    "x_times_2": 4354050
+   },
+   {
+    "equal": true,
+    "times_inv2": 32324844,
+    "x": 32324844,
+    "x_times_2": 31089575
+   }
+  ],
+  "inverse_row_all_equal": true,
+  "lambda_eigenvalue": 20758892,
+  "lambda_identity": "lam^2 + lam + 1 == 0 mod N: True",
+  "n_odd": true,
+  "verdict": "eaba3488 point 3"
+ },
+ "per_walker_steps": 258,
+ "sets": 800,
+ "test": "selector_pair_continuation_v22",
+ "visits_over_sqrtN": 1.0078119894027866,
+ "visits_per_set": 4128
+}
