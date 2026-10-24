@@ -1,0 +1,43 @@
+{
+ "commands": [
+  "python3 scripts/lag3_fixture.py    # planted 3-cycle fixture: lag-3 fires, invariant holds -> evidence/lag3-firing.json",
+  "python3 scripts/row_extract.py     # clang -O2 + otool -tv, span rows, assert M_insn == rows -> evidence/cios-disasm.json",
+  "BT=3200 SEED=20250 python3 scripts/census_v20n.py   # 3 arms x 3200 trials -> evidence/census-v20n.json",
+  "BT=3200 SEED=11 python3 scripts/census_v20n.py      # seed blocks 11, 12, 13 -> evidence/census-seed1x.json",
+  "ARM=lag3 BT=3200 python3 scripts/pair_census.py     # 3200 sets x 2 runs -> evidence/pair-census.json",
+  "ARM=lag1 BT=3200 python3 scripts/pair_census.py     # lag-1 control pair arm -> evidence/pair-census-lag1.json",
+  "python3 scripts/restart_count.py   # fresh-start rows at C=1000, 4-limb counts",
+  "python3 ledger.py                  # exact Fractions, log2 W2, claim, floor decision"
+ ],
+ "environment": {
+  "python": "/opt/homebrew/bin/python3 3.14 (numpy 2.4.4) -- NOT /usr/bin/python3 3.9, which has no numpy on this host",
+  "cost_model": "tracks/docs/COST_MODEL.md, C = 1000 on secp256k1-ecdlp (the bls track's C = 2000 is not used)",
+  "disasm": "clang -O2 -arch arm64 -c scripts/kernel/cios4.c + otool -tv; span _cios4.._cios4_end"
+ },
+ "entrypoint": "ledger.py",
+ "expected": {
+  "claim": "127.926",
+  "log2_work": "127.92570297",
+  "log2_work_one_run": "126.92570297",
+  "w2_factor": 2,
+  "step_insn": 152,
+  "step_price": 1.152,
+  "kernel_M_insn_span_rows": 95,
+  "window_products_v1": 8,
+  "success_measured": 0.560408,
+  "success_cp95_w2_sets": 0.5626189125489184,
+  "p_set_measured": 0.5771875,
+  "p_set_formula": 0.572203125,
+  "cp_helper_calibration_coverage": 0.9535,
+  "lag3_success_block20250": 0.3228,
+  "lag1_success_block20250": 0.2825,
+  "three_cycle_lag1": 2872,
+  "three_cycle_lag3": 0,
+  "lag3_fires_block20250": 8066,
+  "planted_period3_starts": 24,
+  "planted_lag3_channel_fires": 150,
+  "planted_lag1_channel_fires": 0,
+  "invariant_violations": 0
+ },
+ "test": "reproduction"
+}
