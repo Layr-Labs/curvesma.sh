@@ -1,0 +1,38 @@
+{
+ "claims": [
+  {
+   "statement": "On bls12-381-g1-ecdlp-plain (input T=[x]P0, x uniform in [0,r), no auxiliary powers), the algorithm in this package recovers and verifies x by [x]G=T with probability at least 0.373911, measured at PRODUCTION SHAPE, using at most 2^126.266 native-equivalent work units at C=2000. The budget is walk-dominated: production collects 2^46 DP spacings per walker, so the two-spacing drain window is a 2^-45 fraction of walk work, priced at 2.6827e24 steps and 2.9069e24 ref (v20k instead added the RAW drain step count while pricing B_DRAIN_PRICE separately; the row now multiplies by STEP_PRICE, reviewer-confirmed bug). The gated success row is the WALK-ONLY statistic of the shipped escape-armed process with drain_steps=0 (scripts/walk_census.py): one-sided Clopper-Pearson lower bound 0.376122 at 800 challenges, 64 walkers, DP spacing 2^5, q=3,370,140,001 (561,690,001 classes, visits/sqrt(N)=1.1342), minus the debits 2^-62-scale (CP helper cp95_lower copied from sigma-table-40pct-v15k/scripts/gen_cert_v15k.py). A second fixture with 4.9x fewer classes at the same visits/sqrt(N) reads CP-95 0.338007, so the statistic is NON-DECREASING in size (delta +0.0381) and the large fixture is the conservative row. Both fixtures have q<2^32 because qwalk.canon multiplies lambda*c in uint64; the script ASSERTS this, and v20k's 4x arm (q=1.35e10) silently wrapped and is not used. THE ROW IS 0.0139 BELOW THE 0.39 FLOOR AND THE PACKAGE REPORTS THAT AS A DECISION, NOT AN ASSERTION (ledger.py FLOOR_MET=False). Absorption is a COUNT on the right map: scripts/absorb_direct.py replays the shipped qwalk.step with prev and the escape-run counter supplied and declares a terminal period only when the PAIR (class, previous class) repeats; every class is a start, 873,808 starts over two sizes give P(cycle length != 2) = 0.454062 (10,921 classes) -> 0.308552 (43,692 classes), ratio 0.679537, non-increasing. The restart is a WORST-CASE allowance, not an expectation: the meter admits 8.0021e31 ref of substitution work, which fits at most 8.0021e31/689.790 = 1.1601e29 fresh starts, each priced at 1,379,581 instructions (two 256-bit scalar multiplications with 255 doublings and 64 window additions each, one mixed addition, one batched normalization, coin draws, lane reset), so the allowance row equals METER_CAP = 8.0021e31 ref; the expectation row 2^105.29 is published and not charged. The restart success loss is the MEASURED conditional: 0 restarts in 1600 census trials, rule-of-three 3/1600 = 1.875e-3 of trials times worst-case delta 1.0. Doublings inside the fresh-start chain are priced by that instruction block, not as affine additions. The step is 167 itemised instructions at C=2000, log2 W = 126.26594404.",
+   "score": {
+    "numerator": "63133",
+    "denominator": "500"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/absorb-direct.json",
+    "evidence/c-fixture.json",
+    "evidence/escape-run.json",
+    "evidence/restart-count.json",
+    "evidence/selfaudit.json",
+    "evidence/twist-index.json",
+    "evidence/walk-census.json",
+    "ledger.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/absorb_direct.py",
+    "scripts/budget2.py",
+    "scripts/c_fixture.py",
+    "scripts/kcap_run.py",
+    "scripts/qwalk.py",
+    "scripts/restart_count.py",
+    "scripts/selector.py",
+    "scripts/selfaudit.py",
+    "scripts/walk_census.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "Plain G1 v20l: escaped-walk success measured at PRODUCTION SHAPE (drain 2^-45), pair-state absorption census, drain row multiplied, worst-case restart allowance - 126.266 (success 0.376, below the 0.39 floor, reported)",
+ "version": 1
+}
