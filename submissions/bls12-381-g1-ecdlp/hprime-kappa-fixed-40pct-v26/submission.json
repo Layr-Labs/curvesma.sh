@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v26: nw=1 design, C-S check row + measured kappa, distinct-ratio SET recount, measured larger-m transfer arm, complete ledger",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "census-key-v20.json",
+    "certificate.json",
+    "dependencies.json",
+    "direct-v25.json",
+    "direct_v25.py",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v26.json",
+    "kappa_v26.py",
+    "keymod.py",
+    "ledger-v26.json",
+    "ledger_v26.py",
+    "population-v22.json",
+    "public-note.md",
+    "ratios-v26.json",
+    "ratios_v26.py",
+    "retry-v25.json",
+    "selfaudit_v26.py",
+    "toy.py",
+    "transfer-v26.json",
+    "transfer_v26.py",
+    "verify_v26.py"
+   ],
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "statement": "BLS12-381 G1 auxiliary-powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0, d=2^20, uniform nonzero s, recover s. Claimed charged work W=2^116.81148 in 2000-instruction units over 12 ledger rows (integer sum asserted; planted +1% typo caught), claim 116.8130, gate 116.8271. Design is nw=1 (nb=N independent bases/side); the nw=1 redesign's walker-state collapse is a real signed ledger row (-(N-1)*4 instructions), not prose. SUCCESS 0.392889 >= 0.39: measured nw=1 q=0.399071 (131072 trials, CP-95 lower 0.396844), production density N^2/m=0.08507 matches the anchor 0.084715 within 0.4%, and the v26 transfer arm at m=2^23.0 (24.4x the anchor, d=8) measures q=0.4038 with the prediction 0.399071 inside its CP interval; the band subtracts the worst fixed-W cell deviation 0.003955 (nw4). FLAW 1 FIXED: the v25 'sum_k N(k)^2<=6m' premise is RETRACTED - Cauchy-Schwarz gives sum_k N(k)^2>=m^2/D, which exceeds 6m by 2^65.272 at production m; kappa_168 is now bounded by the MEASURED census collision sums (kappa=observed/predicted, dense rows only, envelope 1.0166), with the charged kappa=1.231 above it and E_bad at the envelope top 2^64.32 (cap 2^84). FLAW 2 FIXED: distinct ratios are counted by SET (nw1 |S|=28357 of 29584 ordered pairs; nw4 |S|=23230 of 29584), the set-cardinality law is below the measured q in every cell and the ordered-pair nw4 law (0.338328) exceeds its CP upper (0.336523) and is WITHDRAWN as a production law. FLAW 3 FIXED: no toy-to-production hand-wave - density-matched transfer plus a measured larger-m arm. FLAW 4 FIXED: complete ledger regenerated with integer sum and typo control, integer sum == total, W(n) applicability conditions stated. SCOPE: no production run; production instruction counts are the regenerated ledger's declared unit costs, with the dominant row derived from the itemised per-record table; kappa_168 is bounded, not measured."
+  }
+ ],
+ "experiments": []
+}

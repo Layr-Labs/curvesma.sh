@@ -1,0 +1,79 @@
+{
+ "kind": "v26 complete regenerated ledger",
+ "C_instructions_per_unit": 2000,
+ "rows": {
+  "records": 291819187909464924373637434008781516380,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292242930980832149504,
+  "gap_self_check": 25924182448222977157188550656,
+  "gap_retry_worst": 3877290542265193293613612662784,
+  "walker_state_nw1_credit": -260785690714445866285645606799626016
+ },
+ "row_log2": {
+  "records": 127.778342,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "gap_self_check": 94.388285,
+  "gap_retry_worst": 101.612892
+ },
+ "row_derivation": {
+  "records": "2*N*2238: 2N records x 2238 charged instructions (v18 itemised per-record table: 198 itemised, 238 charged, unit c=2238/2000)",
+  "fixed_per_node": "per-node fixed setup x node count: exact declared integer",
+  "chain_tables": "chain-table entries x build rate: exact declared integer",
+  "walk_list": "N walk records x list-build rate: exact declared integer",
+  "candidate_scan_cap": "2^84 candidate cap x 2^20 instructions/candidate / unit (2^104)",
+  "hprime_supply": "H-prime supply sieve: exact declared integer",
+  "gap_retry_worst": "192 draws x (1/(1-q_hi)-1) x build_draw_cost: exact declared integer",
+  "run_pair_cap": "2^95 run pairs x 2 instructions / unit (2^96)",
+  "gap_self_check": "self-check pass over drawn bands: exact declared integer",
+  "root_scan_T": "root scan over T: exact declared integer",
+  "root_and_io": "root extraction + IO: exact declared integer",
+  "walker_state_nw1_credit": "-(nb*nw-1)*4: one walker state (nw=1) instead of nb*nw"
+ },
+ "total_instructions": 291601289049507333063067381929672467280,
+ "W": "3645016113118841663288342274120905841/25",
+ "W_log2": 116.81148041829874,
+ "claim": {
+  "numerator": "116813",
+  "denominator": "1000"
+ },
+ "claim_minus_W": 0.0015195817012596535,
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": 0.014099999999999113,
+ "integer_assert": "total == sum(rows); all rows are Python ints",
+ "typo_control": {
+  "planted": "+1% on records",
+  "detected": true,
+  "typo_W_log2": 116.82584638502705,
+  "log2_table_typo_caught": true
+ },
+ "complete_W": "W(n) = [2N*2238 + secondary(n)]/2000 with N = 2^115.650; secondary/dominant = -0.000747",
+ "applicability": [
+  "nw=1 design: nb=N independent bases per side, one walk entry",
+  "no advice; preprocessing included in the total",
+  "peak storage 2^123.235 B (unchanged; one walk list of N entries)",
+  "secondary rows are <= 0.015% of W: no hidden dominant term"
+ ],
+ "nw1_storage_row": {
+  "row": "walker_state_nw1_credit",
+  "value": -260785690714445866285645606799626016,
+  "states_removed": 65196422678611466571411401699906504,
+  "instr_per_state": 4,
+  "bits_saved": 0.001290812
+ }
+}
