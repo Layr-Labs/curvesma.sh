@@ -1,0 +1,88 @@
+{
+ "mode": "coalesce",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 4096,
+ "checkpoints": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  8,
+  16,
+  32,
+  64,
+  100
+ ],
+ "statistic": "fraction of same-class (conjugate) pairs still in ONE class at each checkpoint; `sync` = both prev=-1 (v19's audit), `indep_prev` = independent uniform previous slots (the honest arbitrary-merge test), `prevparity_indep` = mutation control",
+ "rules": {
+  "sync": {
+   "pairs": 1600,
+   "steps": 100,
+   "same_class_at": {
+    "0": 1600,
+    "1": 1600,
+    "2": 1600,
+    "3": 1600,
+    "4": 1600,
+    "8": 1600,
+    "16": 1600,
+    "32": 1600,
+    "64": 1600,
+    "100": 1600
+   },
+   "coalesce_at_1": 1.0,
+   "coalesce_at_last": 1.0,
+   "first_divergence": null
+  },
+  "indep_prev": {
+   "pairs": 1600,
+   "steps": 100,
+   "same_class_at": {
+    "0": 1600,
+    "1": 1600,
+    "2": 1600,
+    "3": 1600,
+    "4": 1600,
+    "8": 1600,
+    "16": 1600,
+    "32": 1600,
+    "64": 1600,
+    "100": 1600
+   },
+   "coalesce_at_1": 1.0,
+   "coalesce_at_last": 1.0,
+   "first_divergence": null
+  },
+  "prevparity_indep": {
+   "pairs": 1600,
+   "steps": 100,
+   "same_class_at": {
+    "0": 1600,
+    "1": 1126,
+    "2": 1126,
+    "3": 1126,
+    "4": 1126,
+    "8": 1126,
+    "16": 1126,
+    "32": 1126,
+    "64": 1126,
+    "100": 1127
+   },
+   "coalesce_at_1": 0.70375,
+   "coalesce_at_last": 0.704375,
+   "first_divergence": {
+    "pair": 8,
+    "j": 5,
+    "step": 1,
+    "prev": [
+     1158,
+     -1
+    ],
+    "why": "same class in, different class out"
+   }
+  }
+ }
+}

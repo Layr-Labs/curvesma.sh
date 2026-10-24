@@ -1,0 +1,34 @@
+{
+ "mode": "trap",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 4096,
+ "tables": 8,
+ "statistic": "traces with an exact length-L return of (class, A, D)",
+ "rules": {
+  "v20": {
+   "traces": 1600,
+   "steps_per_trace": 200,
+   "traces_with_2cycle": 0,
+   "traces_with_3cycle": 0,
+   "traces_with_4cycle": 0,
+   "per_1600_2cycle": 0.0,
+   "squaring_fraction": 0.388163,
+   "first_2cycle": null
+  },
+  "v18ctl": {
+   "traces": 1600,
+   "steps_per_trace": 200,
+   "traces_with_2cycle": 114,
+   "traces_with_3cycle": 0,
+   "traces_with_4cycle": 113,
+   "per_1600_2cycle": 114.0,
+   "squaring_fraction": 0.365294,
+   "first_2cycle": {
+    "table": 1,
+    "step": 25
+   }
+  }
+ }
+}

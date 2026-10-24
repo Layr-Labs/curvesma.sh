@@ -1,0 +1,28 @@
+{
+ "version": 1,
+ "title": "Repaired sparse-DP implementation on the Frobenius-class GT walk: squaring-step key recompute funded (1946 instr), single-label bit map, independent-prev coalescence 1.000, claim 125.8259",
+ "claims": [
+  {
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z.  A multiply step charges 22465 instructions (one dense Fp12 multiplication at the reference unit C=20000 plus 2465 counted overhead); a cyclotomic squaring taken with probability 3/8 charges 17337 because the twelve keys and their minimal rotation are RECOMPUTED after squaring (+1802+144): the keys are Fp-linear forms of one Fp2 coordinate of the state, so no squared-state key update exists (measured: 100% mismatch for both candidate cheap rules and a witness that keys(y^2) is not a function of keys(y)).  Branch bits 0-2, index bits 3-14 and the DP window bits 15.. are disjoint ranges of ONE mixed 128-bit label L=mix128(m0); a trail ends at its first report, the pool stores (fingerprint 32 B, trail 2 B, step 16 B) and recovery replays both trails from their stored (start, steps), all charged.  Coalescence of same-class pairs is 1.000 with INDEPENDENT random previous slots (1.000000 at step 100, mutation control 0.7044), and the residual merge-divergence rate 2/R is priced into rho.  The exact length-2/3/4 return census is 0 per 1600 traces x 200 steps (control 114 per 1600).  The algorithm meters its work: the charge of the next step is tested against the exact integer cap 75399789153097093489122056517499520185 work units = 1507995783061941869782441130349990403700000 instructions BEFORE it runs, and the nominal work 2^125.825 is strictly inside it.  Success floor is 0.3901 after abort, DP-detection and storage debits, with the census shortfall 0.950000 applied as a discount.",
+   "score": {
+    "numerator": "1258259",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/keys20.json",
+    "evidence/sparse20.json",
+    "evidence/coalesce20.json",
+    "evidence/trap20.json",
+    "evidence/ledger20.json",
+    "public-note.md",
+    "scripts/toy.py",
+    "scripts/toy20.py",
+    "scripts/gen20.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

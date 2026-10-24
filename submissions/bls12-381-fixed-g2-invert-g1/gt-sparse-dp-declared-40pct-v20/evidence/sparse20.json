@@ -1,0 +1,42 @@
+{
+ "mode": "sparse",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 128,
+ "protocol": "trail ends at FIRST report; pool=(fingerprint,trail,step); recovery replays both trails from (start,steps); declared single mixed-label bit map (branch 0-2, index 3-14, DP 15+)",
+ "rules": {
+  "v20": {
+   "trials": 1200,
+   "trails": 128,
+   "dpbits": 3,
+   "success": 1194,
+   "rate": 0.995,
+   "cp95_lower": 0.9901553482023546,
+   "collisions": 1194,
+   "degenerate": 0,
+   "records_per_trial": 128,
+   "birthday_model": 0.17071785759076152,
+   "replay_steps": 27299,
+   "forward_steps": 340396,
+   "record_bytes": 50,
+   "retention_vs_model": 5.828329935964736
+  },
+  "two_source": {
+   "trials": 1200,
+   "trails": 128,
+   "dpbits": 3,
+   "success": 1199,
+   "rate": 0.9991666666666666,
+   "cp95_lower": 0.9960529410149361,
+   "collisions": 1199,
+   "degenerate": 0,
+   "records_per_trial": 128,
+   "birthday_model": 0.17071785759076152,
+   "replay_steps": 24347,
+   "forward_steps": 343753,
+   "record_bytes": 50,
+   "retention_vs_model": 5.852736677740133
+  }
+ }
+}
