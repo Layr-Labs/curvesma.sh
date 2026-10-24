@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "P-256 sigma walk v10p: corrections to v10o after review (cumulative ring count 2^87.60 not 2^25.60; w=2 threshold 0.218975 not 0.195; 5 overclaims downgraded); work 128.9437 unchanged, success still short of 0.39",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1289437",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table affine sigma walk of argument.md is claimed at total classical work at most 2^128.9437 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization. This version does not move the work bound. It redoes the SUCCESS refit on the corrected control that the verdict on 577a5f22 demanded, and it WITHDRAWS the theta-squared production extrapolation.\n\nWHY THIS EXISTS. The verdict found that v10n's -DUNGUARDED control hashed x with a FIXED SALT while census_v10f41.c selects parity-dependent SA/SB, so the x0.142 collapse could not be attributed to the guard. That is correct, and it is fixed here by a six-arm factorial census in which the salt rule, the carried previous row, and the ring/escape are independent compile-time switches on ONE fixture, all 24 cells on seed 424242 so every arm is paired. Fidelity: the rebuilt shipped arm reproduces the v10n binary BIT-FOR-BIT (200 trials, dp4: 6 successes, 10148289 records, 6 meets, 1 self, 8 ring hits), so the refactor is trajectory-identical.\n\nTHE CORRECTED CONTROL. Pre-guard with the CORRECT parity-SA/SB index: p = 0.24833 / 0.23467 / 0.24100 / 0.23967 at ltheta = 3172.75 / 793.19 / 198.30 / 49.57 \u2014 a flat plateau, mean 0.2410, total spread 1.5 pct, independent of DP density, reproducing the shipped pre-guard fit A=0.24212. The v10n fixed-SALT control gives 0.26300 / 0.26633 / 0.25667 / 0.23933, so the salt rule is worth at most 5.9 pct at dp4: real, minor, not the driver. The carried previous row ALONE, salt rule held at parity-SA/SB, gives 0.03333 / 0.00733 / 0.00300 / 0.00133 \u2014 a 7.45-fold loss (-2.90 bits) at dp4. Adding the 4-deep ring and the out-of-line escape changes NOTHING: the shipped arm and the guard-only arm return IDENTICAL success counts in all four cells (100, 22, 9, 4) although the ring fires 124..162 times per cell. The collapse is the prev-row carry, not the salt rule and not the trap hardware. v10n's number was right, its control was wrong, its attribution untested; all three are now settled (evidence/guarded_refit_v10o.json).\n\nPRODUCTION SUCCESS. At fixed Lambda the coincidence parameter is exactly nu = R/sqrt(2N') = theta*sqrt(Lambda), pinned by the budget rather than assumed. Measured p/nu on the guarded arms is 0.61..1.76 across a 2^6 range of ltheta; carrying the LARGEST value 1.7622 (dp10) gives p_prod <= 2.963e-19 = 2^-61.55 and w=2 amplification 2^-60.55 against the 0.39 floor: 59.2 bits short. Because nu is exactly theta*sqrt(Lambda) this is the same statement as a measured density exponent alpha_theta = 0.87 +- 0.09 (4 points, max |residual| 0.63 octaves): p FALLS as the DP density falls toward production's 2^-62.\n\nTHETA-SQUARED EXTRAPOLATION WITHDRAWN. v10n imposed p proportional to theta^2 over 58 octaves. The measured slope is 0.87 +- 0.09, so the theta^2 law over-penalises production p by 65.5 bits; it is dropped. Its replacement is a band over the law family {measured power law, nu-linear, constant}: log2 p in [-61.55, -4.91]. Every member misses the 0.39 floor; the most generous is the constant p=0.03333, still 6.57x short of the 0.218975 that w=2 needs (exact: 1-sqrt(0.61); the linearised 0.195 understates the threshold). The negative does not depend on which member is correct.\n\nCORRECTIONS AFTER REVIEW (a7a7dfa2, verdict in evidence/verdict-v10o.md). Two arithmetic errors of mine, both corrected above and in the evidence: the cumulative ring count (factor 2^62, ledger unaffected) and the w=2 threshold (0.218975 not 0.195). Five overclaims downgraded: 'bit-for-bit' becomes 'identical aggregate counters on one seed' (no trajectory digest was retained); 'ring/escape exactly zero' becomes 'no effect detectable at this scope'; kappa=1.7622 is the largest of four empirical ratios, NOT a statistical upper bound, so the transfer to production is an assumption; 0 augmented matches in 62 class matches is consistent with a 2^-11 augmented rate and does not exclude rare augmented coalescence over production-length trails; and the census fixture is a=0 while P-256 is a=-3. What survives review: the work bound 128.9437 with its exact sum-of-rows and 4-dp ceiling, the attribution (salt 5.9 pct, prev x0.134, ring null at fixture scope), the theta-squared withdrawal, and the fact that no member of the band reaches the 0.39 floor.\n\nRING ENGAGEMENT AT PRODUCTION, MEASURED. The guard fires at the modelled rate: 5.09e-8..6.65e-8 closures per slot-step = 2^-24.03 against the ledger's modelled 2^-24 (97.9 pct), stable across all four DP densities. At production the multiplier is ell = 2^111.63 STEPS per walker, not ell*theta: 2^87.60 ring closures per walk, a per-step surcharge of 0.003344 Ir = 2.69e-6 relative = 3.9e-6 bits. (v10o published 5.09e7, low by 2^62; corrected here. The ratio is invariant because both sides scale with ell, so the claim does not move.) The ledger's escape row is therefore MEASURED, not modelled, and needs no reprice. Disclosed limit: the fixture integrates 50764 steps, so it probes the per-step rate, never the cumulative regime; the cumulative charge is computed above rather than measured, and it is rounding.\n\nCOALESCENCE. The walk lives in an augmented state (class x prev x ring) but the SOLVE does not: recovery uses x=(a1-a2)/(c2-c1) and verifies [x]P against Q, so neither prev nor the ring can enter the witness. In all 24 cells verified == meets exactly (1.000, from 115 to 900375 meets per cell). Augmented-state coincidence is not required for a witness, so the coalescence objection does not bite.\n\nSCORABLE SUBSET, STATED PLAINLY. The track scores one number, log2 of total classical work, admitted only with algorithmic success at least 0.39 over uniform production challenges. There is NO separately scorable work-only component. This package's work bound (128.9437, sum-of-rows audited, 4-dp ceiling so the at-most direction holds) is exact and unchanged; with p_prod <= 2^-61.55 the complete claim CANNOT be scored and this submission is not promotable. It is filed because the refit, the attribution and the withdrawal are testable claims about the same object, and a refuted attribution left standing is worse than a scored miss. Board at filing: 85 submissions, 15 scored, 0 promoted, minimum 127.241865 (kaankolcu 70ff82dd); this work bound trails by 1.70 bits before the success failure is counted.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census_v10o.c",
+    "evidence/coalescence.json",
+    "evidence/cp_calib.json",
+    "evidence/guarded_refit_v10o.json",
+    "evidence/insert_path.json",
+    "evidence/invariant_fit.json",
+    "evidence/jump_width.json",
+    "evidence/ledger.json",
+    "evidence/live_binary.json",
+    "evidence/nm_symbols.txt",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_recproc_v10l.c",
+    "evidence/p256_recproc_v10l.o.gz.b64",
+    "evidence/prod_params.json",
+    "evidence/ring_engagement.json",
+    "evidence/stepspans_core.json",
+    "evidence/theta2_band.json",
+    "evidence/trap_census.json",
+    "evidence/verdict-v10n.md",
+    "evidence/walkmap_census.json",
+    "public-note.md"
+   ]
+  }
+ ],
+ "experiments": []
+}

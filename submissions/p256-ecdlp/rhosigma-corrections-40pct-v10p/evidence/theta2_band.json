@@ -1,0 +1,15 @@
+{
+ "band_from_law_family_log2": [
+  -61.551,
+  -4.907
+ ],
+ "max_abs_log2_residual": 0.6299,
+ "measured_slope_alpha_theta": 0.87,
+ "octaves_from_fixture_to_production": 58.0,
+ "reading": "The theta-squared law applies a penalty of 65.5 bits over the 58 octaves to production that the measured slope (0.87 +- 0.09) does not support. It is dropped. The replacement band is the family {measured power law, nu-linear, constant}: log2 p in [-61.55, -4.91]. EVERY member of that family misses the 0.39 floor: even the most generous member is the constant p=0.0333, still 5.9x short.",
+ "slope_points": 4,
+ "slope_sigma": 0.0942,
+ "status": "WITHDRAWN",
+ "theta2_penalty_bits": 65.54,
+ "v10n_law": "p proportional to theta^2 (slope 2.00 in log p vs log theta)"
+}
