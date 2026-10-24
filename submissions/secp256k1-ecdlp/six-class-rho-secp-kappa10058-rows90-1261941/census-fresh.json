@@ -1,0 +1,186 @@
+{
+ "description": "Fresh-table hierarchical census of the six-class walk (offline evidence). Each table instance is one fresh cold-attack table (fresh random table points and fresh secret); B independent collision searches run on it with fresh start coins. For each probability p the per-table empirical p-quantile of T_c/sqrt(N) is computed; the mean over tables and its between-table standard error are reported, normalized by the random-mapping quantile x_model(p) = sqrt(2 ln(1/(1-p))). Reproduction: census_fresh.py (stdlib only).",
+ "R": 2048,
+ "dp_bits": 5,
+ "curves": [
+  {
+   "curve": "q21",
+   "q": 2096971,
+   "r": 2094091,
+   "N": 349015,
+   "log2_N": 18.413,
+   "tables": 201,
+   "trials": 201000,
+   "quantiles": {
+    "0.392": {
+     "q_over_sqrtN": 1.063281,
+     "se": 0.003697,
+     "normalized": 1.065863,
+     "normalized_se": 0.003706
+    },
+    "0.394": {
+     "q_over_sqrtN": 1.066322,
+     "se": 0.003708,
+     "normalized": 1.06539,
+     "normalized_se": 0.003705
+    },
+    "0.396": {
+     "q_over_sqrtN": 1.069608,
+     "se": 0.003737,
+     "normalized": 1.065163,
+     "normalized_se": 0.003721
+    }
+   }
+  },
+  {
+   "curve": "q23",
+   "q": 8388451,
+   "r": 8385931,
+   "N": 1397655,
+   "log2_N": 20.415,
+   "tables": 201,
+   "trials": 201000,
+   "quantiles": {
+    "0.392": {
+     "q_over_sqrtN": 1.027269,
+     "se": 0.002222,
+     "normalized": 1.029764,
+     "normalized_se": 0.002228
+    },
+    "0.394": {
+     "q_over_sqrtN": 1.030398,
+     "se": 0.002228,
+     "normalized": 1.029498,
+     "normalized_se": 0.002226
+    },
+    "0.396": {
+     "q_over_sqrtN": 1.033692,
+     "se": 0.002243,
+     "normalized": 1.029397,
+     "normalized_se": 0.002233
+    }
+   }
+  },
+  {
+   "curve": "q25",
+   "q": 33556867,
+   "r": 33563419,
+   "N": 5593903,
+   "log2_N": 22.415,
+   "tables": 300,
+   "trials": 240000,
+   "quantiles": {
+    "0.392": {
+     "q_over_sqrtN": 1.010918,
+     "se": 0.001798,
+     "normalized": 1.013373,
+     "normalized_se": 0.001802
+    },
+    "0.394": {
+     "q_over_sqrtN": 1.014104,
+     "se": 0.001808,
+     "normalized": 1.013218,
+     "normalized_se": 0.001807
+    },
+    "0.396": {
+     "q_over_sqrtN": 1.017479,
+     "se": 0.001805,
+     "normalized": 1.013251,
+     "normalized_se": 0.001797
+    }
+   }
+  },
+  {
+   "curve": "q29",
+   "q": 536873251,
+   "r": 178946401,
+   "N": 29824400,
+   "log2_N": 24.83,
+   "tables": 300,
+   "trials": 240000,
+   "quantiles": {
+    "0.392": {
+     "q_over_sqrtN": 1.004065,
+     "se": 0.001606,
+     "normalized": 1.006503,
+     "normalized_se": 0.00161
+    },
+    "0.394": {
+     "q_over_sqrtN": 1.007572,
+     "se": 0.001598,
+     "normalized": 1.006691,
+     "normalized_se": 0.001597
+    },
+    "0.396": {
+     "q_over_sqrtN": 1.011123,
+     "se": 0.001608,
+     "normalized": 1.006922,
+     "normalized_se": 0.001601
+    }
+   }
+  },
+  {
+   "curve": "q31",
+   "q": 2147482867,
+   "r": 715833421,
+   "N": 119305570,
+   "log2_N": 26.83,
+   "tables": 300,
+   "trials": 240000,
+   "quantiles": {
+    "0.392": {
+     "q_over_sqrtN": 0.998149,
+     "se": 0.001609,
+     "normalized": 1.000573,
+     "normalized_se": 0.001612
+    },
+    "0.394": {
+     "q_over_sqrtN": 1.001304,
+     "se": 0.001608,
+     "normalized": 1.000429,
+     "normalized_se": 0.001607
+    },
+    "0.396": {
+     "q_over_sqrtN": 1.004515,
+     "se": 0.001609,
+     "normalized": 1.000341,
+     "normalized_se": 0.001602
+    }
+   }
+  }
+ ],
+ "fits_at_p_0_394": {
+  "note": "Weighted least squares of the normalized quantile against functions of N; weights 1/se^2. chi2 has (points - parameters) degrees of freedom.",
+  "a_over_N": {
+   "intercept": 1.005774,
+   "se": 0.00095,
+   "chi2": 28.81,
+   "dof": 3
+  },
+  "a_over_sqrtN": {
+   "intercept": 0.997711,
+   "se": 0.001198,
+   "chi2": 2.39,
+   "dof": 3
+  },
+  "a_over_sqrtN_b_over_N": {
+   "intercept": 0.998542,
+   "se": 0.001687,
+   "chi2": 1.91,
+   "dof": 2
+  },
+  "a_over_N_b_over_N2": {
+   "intercept": 1.003271,
+   "se": 0.001094,
+   "chi2": 7.47,
+   "dof": 2
+  },
+  "a_over_sqrtN_b_over_N_c_over_N1_5": {
+   "intercept": 0.997404,
+   "se": 0.002788,
+   "chi2": 1.64,
+   "dof": 1
+  }
+ },
+ "selection": "The pure 1/N family is rejected (chi2 28.8 at 3 dof, and 7.5 at 2 dof for the quadratic, p = 0.024). The leading-1/sqrt(N) family fits (chi2 1.9-2.4). AIC and BIC select a/sqrt(N): intercept 0.9977 +- 0.0012, three-sigma upper bound 1.0013. The largest point estimate of any model is the rejected a/N intercept 1.005774; the largest three-sigma upper bound of any non-rejected model is the four-parameter model's 0.997404 + 3*0.002788 = 1.005768. The claimed kappa = 1.0058 is above both."
+}
