@@ -1,0 +1,32 @@
+{
+ "all_equal": true,
+ "equality_ok": 1200,
+ "identity_bits": 128,
+ "layout": "32B class key || 16B identity (20-bit trail || 108-bit step)",
+ "record_bytes": 48,
+ "recoveries": 1200,
+ "sample": [
+  {
+   "bytes": 48,
+   "identity_bits": 128,
+   "match": true,
+   "step": 1000,
+   "trail": 0
+  },
+  {
+   "bytes": 48,
+   "identity_bits": 128,
+   "match": true,
+   "step": 1037,
+   "trail": 1
+  },
+  {
+   "bytes": 48,
+   "identity_bits": 128,
+   "match": true,
+   "step": 1074,
+   "trail": 2
+  }
+ ],
+ "why_40_bytes_failed": "32B class + 8B tag = 64 identity bits, but one visit among 2^20 trails x 2^108 steps needs 20+108 = 128 bits; the old record could not name a visit at production scale."
+}

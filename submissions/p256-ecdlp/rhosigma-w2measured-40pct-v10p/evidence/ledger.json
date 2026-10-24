@@ -1,0 +1,48 @@
+{
+ "W": {
+  "A_log2_Tprod": 127.631517202749,
+  "W_amplified": 131.68723662025758,
+  "W_single_instance": 130.68723662025758,
+  "amplification_w": 2,
+  "charge_equals_sum": true,
+  "charge_rows": {
+   "batch_inv_backsub_per_walker": 293,
+   "batch_inv_inversion_share_B8": 7074.375,
+   "denominator_zero_scan": 14,
+   "escape_surcharge_kappa_charged": 0.003413975238800049,
+   "rare_event_reserve": 0.63976416015625,
+   "step_close": 694,
+   "step_forward": 239
+  },
+  "charge_sum_check": 8315.018178135395,
+  "charge_total_instr_per_walker_step": 8315.018178135395,
+  "claim": 131.6873,
+  "claim_ceiling_4dp": 131.6873
+ },
+ "amplification": {
+  "control_arm_meets_floor": true,
+  "control_arm_p2_cp95_lower": 0.44519155929682386,
+  "control_arm_p2_measured": 0.4558333333333333,
+  "floor": 0.39,
+  "reading": "the w=2 ticket is measured, not modelled: on the SHIPPED (guarded) walk the set probability is measured below the floor, so the success premise is UNMET for the shipped arm. The pre-guard control, measured the same way on the same cell, clears it. The guard - not the w=2 construction - is the whole obstacle.",
+  "shipped_arm_meets_floor": false,
+  "shipped_arm_p2_cp95_lower": 0.06513621332639644,
+  "shipped_arm_p2_measured": 0.0705,
+  "w": 2
+ },
+ "assert": {
+  "batch_inv_at_shipped_width": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "control_ge_floor": true,
+  "kappa_charged": true,
+  "rounding": "claim is the 4-dp CEILING of W_w2, so at-most holds",
+  "success_ge_floor": false
+ },
+ "object": {
+  "bytes": 32864,
+  "note": "same counted TU as v10o; the span prices are unchanged",
+  "sha256": "96b736ef6dd55cc7cee4be9dac2216b48f7fb56cd40cd4d99d16139451c2990f"
+ },
+ "version": "v10p-r1"
+}
