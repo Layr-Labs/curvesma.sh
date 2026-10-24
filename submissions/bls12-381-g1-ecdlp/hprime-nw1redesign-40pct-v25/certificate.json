@@ -1,0 +1,1861 @@
+{
+ "version": "v25",
+ "model": "bls12-381-g1-ecdlp",
+ "d": 1048576,
+ "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+ "N": 65196422678611466571411401699906505,
+ "K": "4250573530088163557770784323879058040938100834624574671996125741315025/8334457902133654034844675144860897992084908882860761932151104402532352",
+ "K_charged": "51/100",
+ "order_structure": {
+  "statement": "r-1 = 2^32 u, m = (r-1)/2^20, v2(m)=12, 6|m, gcd(d,m)=2^12",
+  "v2_m": 12,
+  "d_times_m_is_r_minus_1": true,
+  "d_invertible_mod_m": false,
+  "gcd_d_m": 4096,
+  "m_is_composite": true,
+  "six_divides_m": true,
+  "u_odd": true,
+  "r_minus_1_factor_2": 32,
+  "two_sylow": 32
+ },
+ "population": {
+  "identity": "E_v[C] = (|Y|/m) * sum_k B(k) N(k), N(k) the EXACT enumerated population",
+  "enumeration": "every h in H visited; sum_k N_w(k)==m asserted per width per fixture",
+  "fixtures": 9,
+  "cells": 36,
+  "sum_Nk_asserted_all": true,
+  "ratio_min": 0.9026,
+  "ratio_max": 1.2687,
+  "ratio_mean": 1.0361,
+  "weight_trend": [
+   {
+    "density_ratio_log2": 3,
+    "ratio_mean": 1.0871,
+    "ratio_min": 0.9107,
+    "ratio_max": 1.2687,
+    "weight_ratio_mean": 1.111168,
+    "cells": 9
+   },
+   {
+    "density_ratio_log2": 5,
+    "ratio_mean": 0.9987,
+    "ratio_min": 0.9026,
+    "ratio_max": 1.1774,
+    "weight_ratio_mean": 1.022636,
+    "cells": 9
+   },
+   {
+    "density_ratio_log2": 7,
+    "ratio_mean": 1.0426,
+    "ratio_min": 0.9744,
+    "ratio_max": 1.2654,
+    "weight_ratio_mean": 1.004342,
+    "cells": 9
+   },
+   {
+    "density_ratio_log2": 9,
+    "ratio_mean": 1.0357,
+    "ratio_min": 0.981,
+    "ratio_max": 1.1174,
+    "weight_ratio_mean": 1.00073,
+    "cells": 6
+   },
+   {
+    "density_ratio_log2": 11,
+    "ratio_mean": 0.9766,
+    "ratio_min": 0.9741,
+    "ratio_max": 0.9811,
+    "weight_ratio_mean": 1.0,
+    "cells": 3
+   }
+  ],
+  "weight_ratio_at_densest": 1.0,
+  "weights_note": "weight_ratio = [sum_{k:B(k)>0} N(k)/m] / [|occupied|/2^(w-1)].  It converges to 1.000000 as the density ratio m/D grows (1.126 at 2^3 -> 1.0000 at 2^11+), which is the measured shape law behind using the uniform form at production density m/D = 2^67.86.  It is not assumed: at the sparse end the shortcut is measurably wrong and the exact dot product is what the ledger's kappa is fitted to.",
+  "per_fixture": [
+   {
+    "tag": "r14_nb32_ny32",
+    "m": 2052,
+    "m_log2": 11.003,
+    "nb": 32,
+    "ny": 32,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 128.25,
+      "E": "32440/513",
+      "realized": [
+       56,
+       70,
+       68
+      ],
+      "ratio_mean": 0.987507,
+      "ratio_min": 0.90337,
+      "ratio_max": 1.129212,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.003249
+     },
+     {
+      "width": 7,
+      "density_ratio": 32.062,
+      "E": "8048/513",
+      "realized": [
+       18,
+       15,
+       18
+      ],
+      "ratio_mean": 0.929666,
+      "ratio_min": 0.871562,
+      "ratio_max": 1.045874,
+      "sum_Nk": 2052,
+      "weight_ratio": 0.99925
+     },
+     {
+      "width": 9,
+      "density_ratio": 8.016,
+      "E": "2192/513",
+      "realized": [
+       4,
+       4,
+       4
+      ],
+      "ratio_mean": 1.068226,
+      "ratio_min": 1.068226,
+      "ratio_max": 1.068226,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.082563
+     }
+    ]
+   },
+   {
+    "tag": "r14_nb64_ny64",
+    "m": 2052,
+    "m_log2": 11.003,
+    "nb": 64,
+    "ny": 64,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 128.25,
+      "E": "132320/513",
+      "realized": [
+       231,
+       245,
+       292
+      ],
+      "ratio_mean": 1.017574,
+      "ratio_min": 0.883335,
+      "ratio_max": 1.116596,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 32.062,
+      "E": "34480/513",
+      "realized": [
+       71,
+       59,
+       68
+      ],
+      "ratio_mean": 1.024756,
+      "ratio_min": 0.946655,
+      "ratio_max": 1.139195,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.035304
+     },
+     {
+      "width": 9,
+      "density_ratio": 8.016,
+      "E": "1072/57",
+      "realized": [
+       21,
+       23,
+       18
+      ],
+      "ratio_mean": 0.919368,
+      "ratio_min": 0.817696,
+      "ratio_max": 1.044834,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.172279
+     }
+    ]
+   },
+   {
+    "tag": "r14_nb128_ny64",
+    "m": 2052,
+    "m_log2": 11.003,
+    "nb": 128,
+    "ny": 64,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 128.25,
+      "E": "29744/57",
+      "realized": [
+       514,
+       528,
+       523
+      ],
+      "ratio_mean": 1.000426,
+      "ratio_min": 0.988304,
+      "ratio_max": 1.015223,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 32.062,
+      "E": "22624/171",
+      "realized": [
+       158,
+       122,
+       116
+      ],
+      "ratio_mean": 1.020793,
+      "ratio_min": 0.837368,
+      "ratio_max": 1.140553,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.018232
+     },
+     {
+      "width": 9,
+      "density_ratio": 8.016,
+      "E": "18304/513",
+      "realized": [
+       33,
+       45,
+       26
+      ],
+      "ratio_mean": 1.082146,
+      "ratio_min": 0.792896,
+      "ratio_max": 1.37232,
+      "sum_Nk": 2052,
+      "weight_ratio": 1.0754
+     }
+    ]
+   },
+   {
+    "tag": "r16_nb64_ny64",
+    "m": 8208,
+    "m_log2": 13.003,
+    "nb": 64,
+    "ny": 64,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 513.0,
+      "E": "44084/171",
+      "realized": [
+       260,
+       256,
+       273
+      ],
+      "ratio_mean": 0.980968,
+      "ratio_min": 0.944327,
+      "ratio_max": 1.007036,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.004288
+     },
+     {
+      "width": 7,
+      "density_ratio": 128.25,
+      "E": "33380/513",
+      "realized": [
+       61,
+       60,
+       62
+      ],
+      "ratio_mean": 1.066883,
+      "ratio_min": 1.049488,
+      "ratio_max": 1.08447,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.007797
+     },
+     {
+      "width": 9,
+      "density_ratio": 32.062,
+      "E": "8396/513",
+      "realized": [
+       13,
+       12,
+       18
+      ],
+      "ratio_mean": 1.17736,
+      "ratio_min": 0.909248,
+      "ratio_max": 1.363873,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.021301
+     },
+     {
+      "width": 11,
+      "density_ratio": 8.016,
+      "E": "2372/513",
+      "realized": [
+       4,
+       4,
+       11
+      ],
+      "ratio_mean": 0.910745,
+      "ratio_min": 0.420344,
+      "ratio_max": 1.155945,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.147349
+     }
+    ]
+   },
+   {
+    "tag": "r16_nb128_ny64",
+    "m": 8208,
+    "m_log2": 13.003,
+    "nb": 128,
+    "ny": 64,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 513.0,
+      "E": "265040/513",
+      "realized": [
+       493,
+       499,
+       504
+      ],
+      "ratio_mean": 1.036142,
+      "ratio_min": 1.025094,
+      "ratio_max": 1.047966,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 128.25,
+      "E": "1160/9",
+      "realized": [
+       136,
+       131,
+       130
+      ],
+      "ratio_mean": 0.97435,
+      "ratio_min": 0.947712,
+      "ratio_max": 0.991453,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.000696
+     },
+     {
+      "width": 9,
+      "density_ratio": 32.062,
+      "E": "624/19",
+      "realized": [
+       35,
+       35,
+       34
+      ],
+      "ratio_mean": 0.947545,
+      "ratio_min": 0.938346,
+      "ratio_max": 0.965944,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.016579
+     },
+     {
+      "width": 11,
+      "density_ratio": 8.016,
+      "E": "4576/513",
+      "realized": [
+       7,
+       10,
+       6
+      ],
+      "ratio_mean": 1.217661,
+      "ratio_min": 0.892008,
+      "ratio_max": 1.48668,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.088975
+     }
+    ]
+   },
+   {
+    "tag": "r16_nb128_ny128",
+    "m": 8208,
+    "m_log2": 13.003,
+    "nb": 128,
+    "ny": 128,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 513.0,
+      "E": "58088/57",
+      "realized": [
+       983,
+       1014,
+       1032
+      ],
+      "ratio_mean": 1.009739,
+      "ratio_min": 0.987488,
+      "ratio_max": 1.036712,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 128.25,
+      "E": "132464/513",
+      "realized": [
+       244,
+       242,
+       250
+      ],
+      "ratio_mean": 1.052705,
+      "ratio_min": 1.032858,
+      "ratio_max": 1.067002,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.001311
+     },
+     {
+      "width": 9,
+      "density_ratio": 32.062,
+      "E": "32912/513",
+      "realized": [
+       78,
+       63,
+       74
+      ],
+      "ratio_mean": 0.902611,
+      "ratio_min": 0.822512,
+      "ratio_max": 1.018348,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.004036
+     },
+     {
+      "width": 11,
+      "density_ratio": 8.016,
+      "E": "2936/171",
+      "realized": [
+       17,
+       26,
+       16
+      ],
+      "ratio_mean": 0.914481,
+      "ratio_min": 0.660369,
+      "ratio_max": 1.073099,
+      "sum_Nk": 8208,
+      "weight_ratio": 1.069786
+     }
+    ]
+   },
+   {
+    "tag": "r18_nb64_ny64",
+    "m": 32778,
+    "m_log2": 15.0,
+    "nb": 64,
+    "ny": 64,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 2048.625,
+      "E": "1393600/5463",
+      "realized": [
+       260,
+       260,
+       260
+      ],
+      "ratio_mean": 0.981146,
+      "ratio_min": 0.981146,
+      "ratio_max": 0.981146,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 512.156,
+      "E": "1047712/16389",
+      "realized": [
+       45,
+       62,
+       71
+      ],
+      "ratio_mean": 1.117367,
+      "ratio_min": 0.900391,
+      "ratio_max": 1.420617,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.000467
+     },
+     {
+      "width": 9,
+      "density_ratio": 128.039,
+      "E": "265312/16389",
+      "realized": [
+       15,
+       13,
+       11
+      ],
+      "ratio_mean": 1.265388,
+      "ratio_min": 1.079228,
+      "ratio_max": 1.471674,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.01545
+     },
+     {
+      "width": 11,
+      "density_ratio": 32.01,
+      "E": "70144/16389",
+      "realized": [
+       6,
+       3,
+       7
+      ],
+      "ratio_mean": 0.917131,
+      "ratio_min": 0.611421,
+      "ratio_max": 1.426648,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.073765
+     },
+     {
+      "width": 13,
+      "density_ratio": 8.002,
+      "E": "18848/16389",
+      "realized": [
+       1,
+       1,
+       0
+      ],
+      "ratio_mean": 1.15004,
+      "ratio_min": 1.15004,
+      "ratio_max": 1.15004,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.150443
+     }
+    ]
+   },
+   {
+    "tag": "r18_nb128_ny128",
+    "m": 32778,
+    "m_log2": 15.0,
+    "nb": 128,
+    "ny": 128,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 2048.625,
+      "E": "16793216/16389",
+      "realized": [
+       1044,
+       1048,
+       1064
+      ],
+      "ratio_mean": 0.97408,
+      "ratio_min": 0.96303,
+      "ratio_max": 0.981479,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 512.156,
+      "E": "4198592/16389",
+      "realized": [
+       242,
+       249,
+       246
+      ],
+      "ratio_mean": 1.042952,
+      "ratio_min": 1.02885,
+      "ratio_max": 1.05861,
+      "sum_Nk": 32778,
+      "weight_ratio": 0.999624
+     },
+     {
+      "width": 9,
+      "density_ratio": 128.039,
+      "E": "117184/1821",
+      "realized": [
+       70,
+       58,
+       63
+      ],
+      "ratio_mean": 1.016755,
+      "ratio_min": 0.919307,
+      "ratio_max": 1.109508,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.000878
+     },
+     {
+      "width": 11,
+      "density_ratio": 32.01,
+      "E": "9792/607",
+      "realized": [
+       16,
+       17,
+       17
+      ],
+      "ratio_mean": 0.968699,
+      "ratio_min": 0.948929,
+      "ratio_max": 1.008237,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.005693
+     },
+     {
+      "width": 13,
+      "density_ratio": 8.002,
+      "E": "24640/5463",
+      "realized": [
+       6,
+       6,
+       2
+      ],
+      "ratio_mean": 1.252873,
+      "ratio_min": 0.751724,
+      "ratio_max": 2.255171,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.121681
+     }
+    ]
+   },
+   {
+    "tag": "r18_nb256_ny128",
+    "m": 32778,
+    "m_log2": 15.0,
+    "nb": 256,
+    "ny": 128,
+    "rows": [
+     {
+      "width": 5,
+      "density_ratio": 2048.625,
+      "E": "33635648/16389",
+      "realized": [
+       2111,
+       2078,
+       2129
+      ],
+      "ratio_mean": 0.974614,
+      "ratio_min": 0.963988,
+      "ratio_max": 0.987647,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 7,
+      "density_ratio": 512.156,
+      "E": "311552/607",
+      "realized": [
+       497,
+       532,
+       474
+      ],
+      "ratio_mean": 1.026783,
+      "ratio_min": 0.964784,
+      "ratio_max": 1.082838,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.0
+     },
+     {
+      "width": 9,
+      "density_ratio": 128.039,
+      "E": "236096/1821",
+      "realized": [
+       134,
+       134,
+       121
+      ],
+      "ratio_mean": 1.002202,
+      "ratio_min": 0.967551,
+      "ratio_max": 1.071503,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.009696
+     },
+     {
+      "width": 11,
+      "density_ratio": 32.01,
+      "E": "543104/16389",
+      "realized": [
+       24,
+       31,
+       39
+      ],
+      "ratio_mean": 1.099814,
+      "ratio_min": 0.849701,
+      "ratio_max": 1.380764,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.029565
+     },
+     {
+      "width": 13,
+      "density_ratio": 8.002,
+      "E": "47936/5463",
+      "realized": [
+       5,
+       7,
+       11
+      ],
+      "ratio_mean": 1.268718,
+      "ratio_min": 0.797697,
+      "ratio_max": 1.754933,
+      "sum_Nk": 32778,
+      "weight_ratio": 1.092036
+     }
+    ]
+   }
+  ]
+ },
+ "coverage": {
+  "status": "DEBIT DELETED - no coverage transfer is claimed; the design shape is nw=1 (independent records)",
+  "production_shape": "nb = N = 2^115.650 independent bases per side, nw = 1 (claim design row); the parallel instantiation nb=2^65.65, nw=2^50 at the same N is priced by the corrected law row and differs from the design by the factor 1-2^-50",
+  "feasibility": {
+   "production_shape_log2": 15.6505,
+   "production_walk_log2": 50,
+   "m_required_at_nw1_log2": 34.86,
+   "m_required_formula": "m = (6/K) * (nb/nw)^2 * nw^4",
+   "largest_enumerated_m_log2": 15.0,
+   "max_feasible_census_ops_log2": 26,
+   "shortfall_bits_at_nw1": 19.86
+  },
+  "feasibility_argument": "A design-K cover census has N = nb*nw records/side with K = 6N^2/m, so m = (6/K)(nb/nw)^2 nw^4.  At nb/nw = 2^15.65 and K = 0.51 the SMALLEST possible walk (nw=1) already forces m = 2^34.86, i.e. a cover set of that many residues; the largest H we enumerate exhaustively is m = 2^15.00.  The shape-matched cell is therefore not merely unavailable in this budget, it is out of reach AT THE CLAIMED BUDGET C=2000 units by 19.86 bits.  No fixture can be shape-identical to production and NO debit is transferred from the ladder.",
+  "frontier_ladder": {
+   "cells": 28,
+   "k_matched": 28,
+   "max_abs_rowB_base_heavy": 0.00270272,
+   "max_abs_rowB_all": 0.00807556,
+   "shapes": [
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 1,
+     "nw": 299,
+     "K": 0.511377,
+     "rowB": -0.0035264036974328467,
+     "shape_ratio": 0.003
+    },
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 2,
+     "nw": 149,
+     "K": 0.507962,
+     "rowB": -0.0015787306090696929,
+     "shape_ratio": 0.013
+    },
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 4,
+     "nw": 75,
+     "K": 0.514803,
+     "rowB": -0.0047304717887704205,
+     "shape_ratio": 0.053
+    },
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 8,
+     "nw": 37,
+     "K": 0.501167,
+     "rowB": -0.002479636663158376,
+     "shape_ratio": 0.216
+    },
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 299,
+     "nw": 1,
+     "K": 0.511377,
+     "rowB": -0.0027027181622660506,
+     "shape_ratio": 299.0
+    },
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 149,
+     "nw": 2,
+     "K": 0.507962,
+     "rowB": -0.00210688082490581,
+     "shape_ratio": 74.5
+    },
+    {
+     "field_bits": 24,
+     "d": 8,
+     "nb": 75,
+     "nw": 4,
+     "K": 0.514803,
+     "rowB": -0.0005291035555758935,
+     "shape_ratio": 18.75
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 1,
+     "nw": 106,
+     "K": 0.514163,
+     "rowB": -0.0031574612181393858,
+     "shape_ratio": 0.009
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 2,
+     "nw": 53,
+     "K": 0.514163,
+     "rowB": -0.005132781158956055,
+     "shape_ratio": 0.038
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 4,
+     "nw": 26,
+     "K": 0.494943,
+     "rowB": 0.003348129166094663,
+     "shape_ratio": 0.154
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 8,
+     "nw": 13,
+     "K": 0.494943,
+     "rowB": 0.00580393233575863,
+     "shape_ratio": 0.615
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 106,
+     "nw": 1,
+     "K": 0.514163,
+     "rowB": -0.0014719565582147378,
+     "shape_ratio": 106.0
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 53,
+     "nw": 2,
+     "K": 0.514163,
+     "rowB": 0.0018456657362070806,
+     "shape_ratio": 26.5
+    },
+    {
+     "field_bits": 24,
+     "d": 64,
+     "nb": 26,
+     "nw": 4,
+     "K": 0.494943,
+     "rowB": 0.005254808645647432,
+     "shape_ratio": 6.5
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 1,
+     "nw": 597,
+     "K": 0.509837,
+     "rowB": -0.001413556794036979,
+     "shape_ratio": 0.002
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 2,
+     "nw": 299,
+     "K": 0.511547,
+     "rowB": -0.0007428981228232798,
+     "shape_ratio": 0.007
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 4,
+     "nw": 149,
+     "K": 0.508131,
+     "rowB": -0.0007614944172970333,
+     "shape_ratio": 0.027
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 8,
+     "nw": 75,
+     "K": 0.514974,
+     "rowB": -0.0005240340417091043,
+     "shape_ratio": 0.107
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 597,
+     "nw": 1,
+     "K": 0.509837,
+     "rowB": -0.00019192329553040447,
+     "shape_ratio": 597.0
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 299,
+     "nw": 2,
+     "K": 0.511547,
+     "rowB": -0.0019387829059046573,
+     "shape_ratio": 149.5
+    },
+    {
+     "field_bits": 26,
+     "d": 8,
+     "nb": 149,
+     "nw": 4,
+     "K": 0.508131,
+     "rowB": -0.0021423884889890865,
+     "shape_ratio": 37.25
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 1,
+     "nw": 211,
+     "K": 0.509493,
+     "rowB": 0.0014419280638110388,
+     "shape_ratio": 0.005
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 2,
+     "nw": 106,
+     "K": 0.514333,
+     "rowB": -0.0004005355732808441,
+     "shape_ratio": 0.019
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 4,
+     "nw": 53,
+     "K": 0.514333,
+     "rowB": 0.003055514230456725,
+     "shape_ratio": 0.075
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 8,
+     "nw": 26,
+     "K": 0.495108,
+     "rowB": -0.008075560082243305,
+     "shape_ratio": 0.308
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 211,
+     "nw": 1,
+     "K": 0.509493,
+     "rowB": 0.0015945130441085032,
+     "shape_ratio": 211.0
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 106,
+     "nw": 2,
+     "K": 0.514333,
+     "rowB": -0.0018329270758232913,
+     "shape_ratio": 53.0
+    },
+    {
+     "field_bits": 26,
+     "d": 64,
+     "nb": 53,
+     "nw": 4,
+     "K": 0.514333,
+     "rowB": -0.0007743687750096319,
+     "shape_ratio": 13.25
+    }
+   ],
+   "note": "Reported as an OBSERVATION at the feasible frontier only.  It is not charged, not transferred, and not an input to the success product."
+  },
+  "debit": 0,
+  "debit_log2": null,
+  "reserve_disclosed": 0.009504421,
+  "reserve_note": "success is claimed collision-only: the coverage correction is DELETED rather than transferred.  The reserve between the collision-only design point 0.399504421 and the 0.39 claim floor is 0.009504421, which is 3.52x the largest base-heavy frontier residual 0.00270272. That comparison is disclosed as the unpriced coverage risk, not as a bound."
+ },
+ "retry": {
+  "rule": "expected draws 1/(1-q); extra work (1/(1-q)-1) x one discarded draw",
+  "draws": 192,
+  "q_gap": "193521/12500000",
+  "q_route": null,
+  "q_gap_cp95": 0.01548168,
+  "q_route_cp95": 0.0,
+  "measured_gap_events": 0,
+  "measured_route_events": 0,
+  "separate_events": "gap = the drawn band's max/mean gap ratio exceeds 2^7.7; route = the drawn band's routing bucket load exceeds the charged factor 2.25.  They are different events and are counted separately.",
+  "build_draw_cost": 329398498984979960469355556241408,
+  "route_draw_cost": 79228162514264337593543950336,
+  "gap_retry_row": {
+   "old": 2172458690165734149414230949888,
+   "new": 3877290542265193293613612662784,
+   "old_log2": 100.777172,
+   "new_log2": 101.612892,
+   "factor_old": 0.01572515,
+   "factor_new": 0.01177082
+  },
+  "route_retry_row": null,
+  "self_check": {
+   "implementation": "gapcheck.scan_max_gap (this file, imported by the construction)",
+   "selftest": {
+    "clean_max": 7,
+    "clean_ok": true,
+    "injected_max": 26,
+    "injected_rejected": true,
+    "widened_limit_accepts": true,
+    "mutation_control_pass": true,
+    "per_step_state": "prev index, running max; one compare + one conditional store"
+   },
+   "counted_kernel": {
+    "counted": true,
+    "loop_body_instructions": 9,
+    "loop_target": 20,
+    "loop_branch": 52,
+    "function_instructions": 22,
+    "loop_body": [
+     "0014: ldr x11, [x0], #0x8",
+     "0018: sub x10, x11, x10",
+     "001c: cmp x10, x8",
+     "0020: csel x8, x10, x8, hi",
+     "0024: cmp x10, x2",
+     "0028: b.hi 0x4c <ltmp0+0x4c>",
+     "002c: mov x10, x11",
+     "0030: subs x9, x9, #0x1",
+     "0034: b.ne 0x14 <ltmp0+0x14>"
+    ],
+    "method": "clang -O2 -arch arm64 -c; objdump -d; body = [backward-branch target, branch] inclusive"
+   },
+   "description": "running max gap over the drawn walk positions with an early abort"
+  },
+  "censuses": [
+   {
+    "field_bits": 32,
+    "d": 8,
+    "draws": 96,
+    "band": 401,
+    "q_gap": 0.0,
+    "q_route": null,
+    "max_over_mean_max": 11.5414,
+    "seed_rule": "random.randrange per draw (independent construction coin)"
+   },
+   {
+    "field_bits": 36,
+    "d": 8,
+    "draws": 96,
+    "band": 401,
+    "q_gap": 0.0,
+    "q_route": null,
+    "max_over_mean_max": 9.9437,
+    "seed_rule": "random.randrange per draw (independent construction coin)"
+   }
+  ],
+  "route_vacuity": {
+   "statistic": "within-block pair occupancy of prime residues mod 64",
+   "max_possible": 64,
+   "threshold": 1478.58,
+   "max_below_threshold": true,
+   "consequence": "rejection was mathematically impossible; the route row is DELETED, not quoted"
+  },
+  "per_regime": [
+   {
+    "regime": "p32_d8",
+    "field_bits": 32,
+    "d": 8,
+    "m": 268435464,
+    "draws": 256,
+    "band": 401,
+    "ratio_cap": 207.9366134671963,
+    "seed_rule": "random.randrange per draw (independent construction coin)",
+    "gap_events": 0,
+    "q_gap": 0.0,
+    "q_gap_cp95_upper": 0.01163388,
+    "max_over_mean_max": 12.68,
+    "rows_summary": {
+     "n": 256,
+     "max_over_mean_max": 12.68,
+     "mean_gap_min": 153.18,
+     "mean_gap_max": 198.425,
+     "sample": [
+      {
+       "draw": 0,
+       "n": 401,
+       "mean_gap": 174.955,
+       "max_over_mean": 5.8186,
+       "gap_event": false
+      },
+      {
+       "draw": 1,
+       "n": 401,
+       "mean_gap": 183.86,
+       "max_over_mean": 5.9937,
+       "gap_event": false
+      },
+      {
+       "draw": 2,
+       "n": 401,
+       "mean_gap": 174.225,
+       "max_over_mean": 5.8201,
+       "gap_event": false
+      },
+      {
+       "draw": 3,
+       "n": 401,
+       "mean_gap": 191.55,
+       "max_over_mean": 4.3853,
+       "gap_event": false
+      }
+     ]
+    }
+   },
+   {
+    "regime": "p36_d8",
+    "field_bits": 36,
+    "d": 8,
+    "m": 4294967352,
+    "draws": 256,
+    "band": 401,
+    "ratio_cap": 207.9366134671963,
+    "seed_rule": "random.randrange per draw (independent construction coin)",
+    "gap_events": 0,
+    "q_gap": 0.0,
+    "q_gap_cp95_upper": 0.01163388,
+    "max_over_mean_max": 10.9125,
+    "rows_summary": {
+     "n": 256,
+     "max_over_mean_max": 10.9125,
+     "mean_gap_min": 169.02,
+     "mean_gap_max": 230.2,
+     "sample": [
+      {
+       "draw": 0,
+       "n": 401,
+       "mean_gap": 178.35,
+       "max_over_mean": 7.4012,
+       "gap_event": false
+      },
+      {
+       "draw": 1,
+       "n": 401,
+       "mean_gap": 202.16,
+       "max_over_mean": 5.8864,
+       "gap_event": false
+      },
+      {
+       "draw": 2,
+       "n": 401,
+       "mean_gap": 184.695,
+       "max_over_mean": 5.1003,
+       "gap_event": false
+      },
+      {
+       "draw": 3,
+       "n": 401,
+       "mean_gap": 216.525,
+       "max_over_mean": 6.5858,
+       "gap_event": false
+      }
+     ]
+    }
+   }
+  ],
+  "worst_regime_used": {
+   "regime": "p32_d8",
+   "q_gap_cp95_upper": 0.01163388,
+   "retry_factor": 0.01177082031099963,
+   "note": "worst of the two regimes prices the retry row; each regime has its own independent fresh-start census"
+  },
+  "pricing_rule": "retry row priced by max over regimes of q_gap_cp95_upper; the pooled rate is NOT used for pricing",
+  "pooled_descriptive_only": {
+   "draws": 512,
+   "gap_events": 0,
+   "q_gap": 0.0,
+   "q_gap_cp95": 0.005833955600556218,
+   "note": "descriptive only -- not used for pricing (mixed regimes)"
+  }
+ },
+ "rows": {
+  "records": 291819187909464924373637434008781516380,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292242930980832149504,
+  "gap_self_check": 25924182448222977157188550656,
+  "gap_retry_worst": 3877290542265193293613612662784
+ },
+ "row_log2": {
+  "records": 127.778342,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "gap_self_check": 94.388285,
+  "gap_retry_worst": 101.612892
+ },
+ "total_instructions": 291862074740221778929353027536472093296,
+ "W": "18241379671263861183084564221029505831/125",
+ "raw_log2": 116.81277,
+ "claim": {
+  "numerator": "116813",
+  "denominator": "1000"
+ },
+ "claim_text": "116.8130",
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": 0.0141,
+ "headroom_over_W": 0.00022992,
+ "debit": {
+  "kappa": 1.231,
+  "E_bad": "209298240621541173584633420107804817935792085096914056849089231502351831/7482888383134222941202866343507369060638374620037120",
+  "E_bad_log2": 64.6005,
+  "cap_bad_log2": 84,
+  "per_candidate_instr": 1048576,
+  "cap_work": 20282409603651670423947251286016,
+  "E_work_log2": 84.6005,
+  "markov": "209298240621541173584633420107804817935792085096914056849089231502351831/144740111546645244279463731260859884816587480832050705049321980009891412049920",
+  "markov_log2": -19.3995,
+  "route_pairs_log2": 147.3,
+  "prefix_charged_log2": 84.47,
+  "run_cap_pairs_log2": 95,
+  "run_cap_margin_bits": 10.53
+ },
+ "success": {
+  "design": 0.399504421,
+  "debits": {
+   "candidate": 1.446028e-06,
+   "coverage": 0.0,
+   "gap": 0.0
+  },
+  "measured": {
+   "by_nw": {
+    "nw1": {
+     "q": 0.39907073974609375,
+     "cp95_lower": 0.3968437,
+     "cp95_upper": 0.40130108,
+     "law": 0.398476666,
+     "trials": 131072,
+     "solves": 52307
+    },
+    "nw2": {
+     "q": 0.31542205810546875,
+     "cp95_lower": 0.31331007,
+     "cp95_upper": 0.31754008,
+     "law": 0.31697066,
+     "trials": 131072,
+     "solves": 41343
+    },
+    "nw4": {
+     "q": 0.33437347412109375,
+     "cp95_lower": 0.33222898,
+     "cp95_upper": 0.33652338,
+     "law": 0.338328179,
+     "trials": 131072,
+     "solves": 43827
+    }
+   },
+   "production": {
+    "nw_log2": 50,
+    "nw": "2^50",
+    "pair_correction": 0.9999999999999991,
+    "K": 0.5099999999999996,
+    "p": 0.39950442118773377,
+    "band_lo": 0.0060992,
+    "band_hi": 0.00282441,
+    "p_lower": 0.39340522118773374,
+    "p_upper": 0.40232883118773377
+   },
+   "design_row": {
+    "shape": "nw1",
+    "basis": "measured anchor, CP-95 one-sided LOWER endpoint",
+    "q": 0.39907073974609375,
+    "cp95_lower": 0.3968437,
+    "law": 0.398476666,
+    "law_dev": 0.00059407
+   },
+   "total_trials": 393216
+  },
+  "after": 0.39340522,
+  "claim_floor": 0.39,
+  "meets_floor": true,
+  "success_below_floor": false,
+  "margin_over_floor": 0.00340522,
+  "statement": "MEASURED at the design shape.  The claimed design is nw=1 (independent records per side, K = 6N^2/m exactly): the CP-95 one-sided LOWER endpoint of the 131072-trial nw=1 cells is 0.396844, ABOVE the 0.39 floor.  At fixed W the (nw-1)/nw^2 pair correction is minimised at nw=2 (factor 3/4) and returns to 1-2^-50 at the production parallel shape nw=2^50, whose corrected-law value with the measured band is 0.393405.  success_final = 0.393405 >= 0.39: the floor is MET, and the production shape is not weaker than the claimed one.",
+  "certified": true
+ },
+ "checks": {
+  "sum_Nk_equals_m_all_fixtures": true,
+  "population_enumerated_all_h": true,
+  "population_fixtures_ge_8": true,
+  "population_ratio_within_0.75_1.35": true,
+  "weights_converge_to_1": true,
+  "weights_measured_not_assumed": true,
+  "coverage_debit_deleted": true,
+  "coverage_shape_infeasible": true,
+  "coverage_no_transfer_claimed": true,
+  "retry_draws_ge_192": true,
+  "retry_rule_inverse_not_plus": true,
+  "retry_gap_route_separate": true,
+  "self_check_implemented": true,
+  "self_check_counted": true,
+  "self_check_row_in_ledger": true,
+  "gap_retry_row_in_ledger": true,
+  "route_row_deleted_vacuous": true,
+  "claim_above_W": true,
+  "claim_below_gate": true,
+  "success_meets_39pct": true,
+  "d_times_m_is_r_minus_1": true,
+  "m_v2_12_six_divides": true,
+  "kappa_dominates_model": true,
+  "cap_16_bits_above": true,
+  "markov_below_2_19": true,
+  "prefix_charge_keeps_10_bits": true,
+  "ledger_rows_11": true,
+  "cert_scope_declared": true,
+  "gate_known_answer_64_64": true,
+  "gate_old_path_zero": true,
+  "gate_no_false_positives": true,
+  "population_on_curve_asserted": true,
+  "success_measured": true,
+  "success_below_floor_disclosed": true,
+  "retry_per_regime": true,
+  "retry_priced_by_worst": true,
+  "kappa_168_fitted_not_measured": true,
+  "kappa_charged_dominates": true,
+  "gate_known_answer_passed": true,
+  "cp_direction_audit_passed": true,
+  "cp_endpoints_bracketed": true,
+  "pair_correction_active": true,
+  "nw_series_fixed_W": true,
+  "kappa_slope_row_present": true,
+  "kappa_pinned_fit_at_168_reported": true
+ },
+ "cert_scope": "Recomputes the ledger, the fixed-W nw series (nw=1,2,4), the CP direction audit, the kappa slope-consistency row and the claim from the raw evidence files. It does not run the production attack (n=2^20, N=2^115.65) and does not establish production instruction counts beyond the ledger's declared derivation.",
+ "direct": {
+  "kind": "v25 FIXED-W nw series (nw=1,2,4 at the same per-side record count N=172)",
+  "runner": "direct_v25.py",
+  "gate": "gate-v25.json",
+  "fixtures": "fixtures-v25.json",
+  "groups": [
+   {
+    "group": 0,
+    "p": 2097523,
+    "r": 698437,
+    "d": 2,
+    "m": 349218,
+    "nb": 172,
+    "nw": 1,
+    "shape": "nw1",
+    "records_per_side": 172,
+    "records_per_trial": 344,
+    "K": 0.508289950689827,
+    "K_distinct": 0.508289950689827,
+    "pair_correction": 1.0,
+    "trials": 65536,
+    "solves": 26203,
+    "q": 0.3998260498046875,
+    "model": 0.398476666,
+    "model_dev": 0.00338636,
+    "cp95_lower": 0.39667427,
+    "cp95_upper": 0.40298438,
+    "matches": 35393,
+    "verified_matches": 33546,
+    "matches_per_trial": 0.5401,
+    "points_on_curve": 22544384
+   },
+   {
+    "group": 1,
+    "p": 2098351,
+    "r": 700237,
+    "d": 2,
+    "m": 350118,
+    "nb": 172,
+    "nw": 1,
+    "shape": "nw1",
+    "records_per_side": 172,
+    "records_per_trial": 344,
+    "K": 0.5069833598958066,
+    "K_distinct": 0.5069833598958066,
+    "pair_correction": 1.0,
+    "trials": 65536,
+    "solves": 26104,
+    "q": 0.3983154296875,
+    "model": 0.397690207,
+    "model_dev": 0.00157213,
+    "cp95_lower": 0.3951657,
+    "cp95_upper": 0.40147181,
+    "matches": 35259,
+    "verified_matches": 33402,
+    "matches_per_trial": 0.538,
+    "points_on_curve": 22544384
+   },
+   {
+    "group": 2,
+    "p": 2097523,
+    "r": 698437,
+    "d": 2,
+    "m": 349218,
+    "nb": 86,
+    "nw": 2,
+    "shape": "nw2",
+    "records_per_side": 172,
+    "records_per_trial": 344,
+    "K": 0.508289950689827,
+    "K_distinct": 0.38121746301737025,
+    "pair_correction": 0.75,
+    "trials": 65536,
+    "solves": 20576,
+    "q": 0.31396484375,
+    "model": 0.31697066,
+    "model_dev": 0.00948295,
+    "cp95_lower": 0.31098138,
+    "cp95_upper": 0.31696047,
+    "matches": 34785,
+    "verified_matches": 32910,
+    "matches_per_trial": 0.5308,
+    "points_on_curve": 22544384
+   },
+   {
+    "group": 3,
+    "p": 2098351,
+    "r": 700237,
+    "d": 2,
+    "m": 350118,
+    "nb": 86,
+    "nw": 2,
+    "shape": "nw2",
+    "records_per_side": 172,
+    "records_per_trial": 344,
+    "K": 0.5069833598958066,
+    "K_distinct": 0.3802375199218549,
+    "pair_correction": 0.75,
+    "trials": 65536,
+    "solves": 20767,
+    "q": 0.3168792724609375,
+    "model": 0.316301002,
+    "model_dev": 0.00182823,
+    "cp95_lower": 0.31388828,
+    "cp95_upper": 0.31988225,
+    "matches": 34958,
+    "verified_matches": 33112,
+    "matches_per_trial": 0.5334,
+    "points_on_curve": 22544384
+   },
+   {
+    "group": 4,
+    "p": 2097523,
+    "r": 698437,
+    "d": 2,
+    "m": 349218,
+    "nb": 43,
+    "nw": 4,
+    "shape": "nw4",
+    "records_per_side": 172,
+    "records_per_trial": 344,
+    "K": 0.508289950689827,
+    "K_distinct": 0.41298558493548443,
+    "pair_correction": 0.8125,
+    "trials": 65536,
+    "solves": 21926,
+    "q": 0.334564208984375,
+    "model": 0.338328179,
+    "model_dev": 0.0111252,
+    "cp95_lower": 0.33153037,
+    "cp95_upper": 0.33760887,
+    "matches": 35157,
+    "verified_matches": 33211,
+    "matches_per_trial": 0.5365,
+    "points_on_curve": 22544384
+   },
+   {
+    "group": 5,
+    "p": 2098351,
+    "r": 700237,
+    "d": 2,
+    "m": 350118,
+    "nb": 43,
+    "nw": 4,
+    "shape": "nw4",
+    "records_per_side": 172,
+    "records_per_trial": 344,
+    "K": 0.5069833598958066,
+    "K_distinct": 0.41192397991534285,
+    "pair_correction": 0.8125,
+    "trials": 65536,
+    "solves": 21901,
+    "q": 0.3341827392578125,
+    "model": 0.337625372,
+    "model_dev": 0.01019661,
+    "cp95_lower": 0.33114978,
+    "cp95_upper": 0.33722655,
+    "matches": 34620,
+    "verified_matches": 32695,
+    "matches_per_trial": 0.5283,
+    "points_on_curve": 22544384
+   }
+  ],
+  "by_nw": {
+   "nw1": {
+    "nw": 1,
+    "cells": 2,
+    "trials": 131072,
+    "solves": 52307,
+    "q": 0.39907073974609375,
+    "cp95_lower": 0.3968437,
+    "cp95_upper": 0.40130108,
+    "pair_correction": 1.0,
+    "K_distinct": 0.508289950689827,
+    "law": 0.398476666,
+    "law_dev": 0.00059407,
+    "cp_lower_minus_law": -0.00163297,
+    "cp_upper_minus_law": 0.00282441
+   },
+   "nw2": {
+    "nw": 2,
+    "cells": 2,
+    "trials": 131072,
+    "solves": 41343,
+    "q": 0.31542205810546875,
+    "cp95_lower": 0.31331007,
+    "cp95_upper": 0.31754008,
+    "pair_correction": 0.75,
+    "K_distinct": 0.38121746301737025,
+    "law": 0.31697066,
+    "law_dev": -0.0015486,
+    "cp_lower_minus_law": -0.00366059,
+    "cp_upper_minus_law": 0.00056942
+   },
+   "nw4": {
+    "nw": 4,
+    "cells": 2,
+    "trials": 131072,
+    "solves": 43827,
+    "q": 0.33437347412109375,
+    "cp95_lower": 0.33222898,
+    "cp95_upper": 0.33652338,
+    "pair_correction": 0.8125,
+    "K_distinct": 0.41298558493548443,
+    "law": 0.338328179,
+    "law_dev": -0.0039547,
+    "cp_lower_minus_law": -0.0060992,
+    "cp_upper_minus_law": -0.0018048
+   }
+  },
+  "gate_result": {
+   "n": 72,
+   "ok": 72,
+   "passed": true,
+   "lam_one_cases": 44,
+   "v23_path_solves": 0,
+   "on_curve_asserts": 1152,
+   "false_positive_n": 72,
+   "false_positives": 0
+  },
+  "points_on_curve_total": 135266304,
+  "total_trials": 393216,
+  "law": "p(nw) = 1 - exp(-K*(1-(nw-1)/nw^2)), K = 6*N^2/m held at fixed W",
+  "pair_correction_note": "distinct A x B ratios = nb^2*(nw^2-nw+1) = N^2*(1-(nw-1)/nw^2): the diagonal walk repetitions remove nb^2*(nw-1) of the nb^2*nw^2 pair occurrences, fraction (nw-1)/nw^2. The factor is 1 at nw=1, 3/4 at nw=2, 13/16 at nw=4 and 1-2^-50+2^-100 at production nw=2^50: nw=2 is the WORST member of the family, and the correction -> 1 as nw grows (verdict ad391668 flaw 2).",
+  "factor_by_nw": {
+   "1": 1.0,
+   "2": 0.75,
+   "4": 0.8125
+  },
+  "production": {
+   "nw_log2": 50,
+   "nw": "2^50",
+   "pair_correction": 0.9999999999999991,
+   "K": 0.5099999999999996,
+   "p": 0.39950442118773377,
+   "band_lo": 0.0060992,
+   "band_hi": 0.00282441,
+   "p_lower": 0.39340522118773374,
+   "p_upper": 0.40232883118773377
+  },
+  "design_row": {
+   "shape": "nw1",
+   "basis": "measured anchor, CP-95 one-sided LOWER endpoint",
+   "q": 0.39907073974609375,
+   "cp95_lower": 0.3968437,
+   "law": 0.398476666,
+   "law_dev": 0.00059407
+  },
+  "success_final": 0.39340522,
+  "success_final_rule": "min(measured nw=1 CP-95 lower, production nw=2^50 corrected-law value minus the worst anchor band)",
+  "claim_floor": 0.39,
+  "meets_floor": true,
+  "success_below_floor": false,
+  "margin_over_floor": 0.00340522,
+  "redesign_decision": "SHIP nw=1 SEMANTICS: at fixed W the corrected law is minimised at nw=2, not at production nw=2^50; the nw=1 shape is exactly the design formula K=6N^2/m and its CP-95 lower endpoint clears 0.39 by measurement, so the claimed design is nb=N independent bases per side (nw=1). The production parallel instantiation nw=2^50 carries the same K up to 2^-50 and is priced in the production row above, so no work is added: W is unchanged (same N records/side, same ledger rows) and the parallelism row only changes the walker count (storage drops from nb*nw entries to N entries in one list of the same size).",
+  "cp_direction_audit": {
+   "kind": "CP direction audit: every endpoint labelled and checked",
+   "rows": [
+    {
+     "entry": "success probability claimed on production challenges",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "k": 20000,
+     "n": 65536,
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.302215870963213,
+     "point": 0.30517578125,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "retry row gap_retry_worst (cost charged from above)",
+     "quantity": "gap-event rate",
+     "direction": "UPPER",
+     "k": 20000,
+     "n": 65536,
+     "rule": "BETA.INV(0.95; k+1, n-k)",
+     "endpoint": 0.3081484386111756,
+     "point": 0.30517578125,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "census cell 0 (nw1) success line",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.39667427,
+     "k": 26203,
+     "n": 65536,
+     "point": 0.3998260498046875,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "census cell 1 (nw1) success line",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.3951657,
+     "k": 26104,
+     "n": 65536,
+     "point": 0.3983154296875,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "census cell 2 (nw2) success line",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.31098138,
+     "k": 20576,
+     "n": 65536,
+     "point": 0.31396484375,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "census cell 3 (nw2) success line",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.31388828,
+     "k": 20767,
+     "n": 65536,
+     "point": 0.3168792724609375,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "census cell 4 (nw4) success line",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.33153037,
+     "k": 21926,
+     "n": 65536,
+     "point": 0.334564208984375,
+     "ok": true,
+     "side_ok": true
+    },
+    {
+     "entry": "census cell 5 (nw4) success line",
+     "quantity": "per-trial solve rate",
+     "direction": "LOWER",
+     "rule": "BETA.INV(0.05; k, n-k+1)",
+     "endpoint": 0.33114978,
+     "k": 21901,
+     "n": 65536,
+     "point": 0.3341827392578125,
+     "ok": true,
+     "side_ok": true
+    }
+   ],
+   "all_rows_ok": true,
+   "planted_flip_all_caught": true,
+   "lower_rule": "BETA.INV(0.05; k, n-k+1)  (bounds a rate from BELOW)",
+   "upper_rule": "BETA.INV(0.95; k+1, n-k)  (bounds a rate from ABOVE)",
+   "verdict_flaw_fixed": "v24 used a CP LOWER endpoint (0.313393) as an UPPER bound on production success in argument.md sec.2. That sentence is deleted; the same cell is now a law ANCHOR, and every charge direction in the package is UPPER-tagged here.",
+   "passed": true
+  },
+  "certified": true
+ },
+ "kappa_168": {
+  "kind": "kappa transfer to the production width (slope-consistent, structural bound)",
+  "law": "kappa_w - 1 <= 6*2^(w-1)/m  (mu6 orbit count: every key-equal pair of H elements is a mu6 multiple, sum_k N(k)^2 <= 6m)",
+  "census_m_log2": 234.8571,
+  "production_m_log2": 234.857089,
+  "fits": {
+   "big": {
+    "widths": [
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30
+    ],
+    "n": 21,
+    "slope": 0.498497,
+    "intercept_log2": -14.579216,
+    "resid_max_abs": 0.296681
+   },
+   "small": {
+    "widths": [
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "n": 9,
+    "slope": 0.551571,
+    "intercept_log2": -11.283986,
+    "resid_max_abs": 0.349266
+   }
+  },
+  "pinned_formula_fit": {
+   "big": {
+    "n": 21,
+    "intercept_log2": -24.609278,
+    "resid_log2": [
+     5.2188,
+     4.3686,
+     3.8743,
+     3.2154,
+     3.3057,
+     2.4897,
+     1.8675,
+     1.6587,
+     1.1122,
+     0.3285,
+     0.0085,
+     -0.3594,
+     -0.8168,
+     -1.4575,
+     -1.9634,
+     -2.5076,
+     -3.0382,
+     -3.7946,
+     -4.0871,
+     -4.6117,
+     -4.8118
+    ],
+    "resid_max_abs": 5.218806,
+    "value_at_168_log2": 143.390722
+   },
+   "small": {
+    "n": 9,
+    "intercept_log2": -17.561997,
+    "resid_log2": [
+     2.143,
+     1.3086,
+     0.7156,
+     0.3545,
+     -0.2266,
+     -0.3637,
+     -1.122,
+     -1.2229,
+     -1.5864
+    ],
+    "resid_max_abs": 2.142984,
+    "value_at_168_log2": 150.438003
+   }
+  },
+  "slope_consistency": {
+   "big": {
+    "measured_slope_free_fit": 0.498497,
+    "formula_slope": 1.0,
+    "deviation_from_formula": 0.501503,
+    "noise_model_slope": 0.5,
+    "deviation_from_noise": 0.001503,
+    "consistent_with": "multinomial chi-square noise (slope 0.5)",
+    "consistent_with_formula": false
+   },
+   "small": {
+    "measured_slope_free_fit": 0.551571,
+    "formula_slope": 1.0,
+    "deviation_from_formula": 0.448429,
+    "noise_model_slope": 0.5,
+    "deviation_from_noise": 0.051571,
+    "consistent_with": "multinomial chi-square noise (slope 0.5)",
+    "consistent_with_formula": false
+   }
+  },
+  "band_source": "pinned-family residual scatter over the w=10..30 anchors",
+  "structural_excess_168_log2": -65.272127,
+  "kappa_168_lo": 1.0,
+  "kappa_168_hi": 1.0,
+  "kappa_168_band": [
+   1.0,
+   1.0
+  ],
+  "kappa_168_pinned_fit_log2": 150.438003,
+  "pinned_fit_rejected": {
+   "value_log2": 150.438003,
+   "reason": "slope-1 fit on dense-regime anchors evaluated far outside its regime: it exceeds the structural mu6 bound at the production point by 2^216 and would drive the collision floor above 1",
+   "admissibility": "not admitted: contradicts the measured anchors and exceeds the structural orbit count"
+  },
+  "kappa_charged": 1.231,
+  "charged_exceeds_band": true,
+  "charged_headroom": 0.231,
+  "measured": false,
+  "statement": "kappa_168 is not measured.  The value shipped is the mu6 STRUCTURAL bound 1 + 6*2^167/m = 1 + 2^-65.272, divided by the worst slack measured at the fit-residual scatter (+/-5.22 bits), giving a band [1+2^-65.272, 1+2^-60.053].  The charged 1.231 exceeds the top of that band, so the collision floor and the candidate debit are charged conservatively and no ledger row moves.",
+  "kappa_168_hi_excess_log2": -60.053321,
+  "band_log2_excess": [
+   -65.272127,
+   -60.053321
+  ],
+  "price": {
+   "entry_point": "collision floor (K), candidate debit (E_bad) and its work row",
+   "K_claim": 0.51,
+   "K_at_kappa_hi": 0.51,
+   "K_at_kappa_charged": 0.62781,
+   "E_bad_scale_at_band_top_vs_charge": 0.812347684809,
+   "work_row_bits_moved": 0.0,
+   "direction": "the charged kappa=1.231 is ABOVE the band top by 0.231, so E_bad, the candidate-scan cap and the 2^104 work row are all sized above the structural value: worst-in-band kappa_168 is absorbed with ZERO rows moved and the cap keeps its 19.40-bit headroom"
+  }
+ }
+}

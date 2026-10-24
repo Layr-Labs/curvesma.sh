@@ -1,0 +1,155 @@
+{
+ "kind": "kappa transfer to the production width (slope-consistent, structural bound)",
+ "law": "kappa_w - 1 <= 6*2^(w-1)/m  (mu6 orbit count: every key-equal pair of H elements is a mu6 multiple, sum_k N(k)^2 <= 6m)",
+ "census_m_log2": 234.8571,
+ "production_m_log2": 234.857089,
+ "fits": {
+  "big": {
+   "widths": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+   ],
+   "n": 21,
+   "slope": 0.498497,
+   "intercept_log2": -14.579216,
+   "resid_max_abs": 0.296681
+  },
+  "small": {
+   "widths": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+   ],
+   "n": 9,
+   "slope": 0.551571,
+   "intercept_log2": -11.283986,
+   "resid_max_abs": 0.349266
+  }
+ },
+ "pinned_formula_fit": {
+  "big": {
+   "n": 21,
+   "intercept_log2": -24.609278,
+   "resid_log2": [
+    5.2188,
+    4.3686,
+    3.8743,
+    3.2154,
+    3.3057,
+    2.4897,
+    1.8675,
+    1.6587,
+    1.1122,
+    0.3285,
+    0.0085,
+    -0.3594,
+    -0.8168,
+    -1.4575,
+    -1.9634,
+    -2.5076,
+    -3.0382,
+    -3.7946,
+    -4.0871,
+    -4.6117,
+    -4.8118
+   ],
+   "resid_max_abs": 5.218806,
+   "value_at_168_log2": 143.390722
+  },
+  "small": {
+   "n": 9,
+   "intercept_log2": -17.561997,
+   "resid_log2": [
+    2.143,
+    1.3086,
+    0.7156,
+    0.3545,
+    -0.2266,
+    -0.3637,
+    -1.122,
+    -1.2229,
+    -1.5864
+   ],
+   "resid_max_abs": 2.142984,
+   "value_at_168_log2": 150.438003
+  }
+ },
+ "slope_consistency": {
+  "big": {
+   "measured_slope_free_fit": 0.498497,
+   "formula_slope": 1.0,
+   "deviation_from_formula": 0.501503,
+   "noise_model_slope": 0.5,
+   "deviation_from_noise": 0.001503,
+   "consistent_with": "multinomial chi-square noise (slope 0.5)",
+   "consistent_with_formula": false
+  },
+  "small": {
+   "measured_slope_free_fit": 0.551571,
+   "formula_slope": 1.0,
+   "deviation_from_formula": 0.448429,
+   "noise_model_slope": 0.5,
+   "deviation_from_noise": 0.051571,
+   "consistent_with": "multinomial chi-square noise (slope 0.5)",
+   "consistent_with_formula": false
+  }
+ },
+ "band_source": "pinned-family residual scatter over the w=10..30 anchors",
+ "structural_excess_168_log2": -65.272127,
+ "kappa_168_lo": 1.0,
+ "kappa_168_hi": 1.0,
+ "kappa_168_band": [
+  1.0,
+  1.0
+ ],
+ "kappa_168_pinned_fit_log2": 150.438003,
+ "pinned_fit_rejected": {
+  "value_log2": 150.438003,
+  "reason": "slope-1 fit on dense-regime anchors evaluated far outside its regime: it exceeds the structural mu6 bound at the production point by 2^216 and would drive the collision floor above 1",
+  "admissibility": "not admitted: contradicts the measured anchors and exceeds the structural orbit count"
+ },
+ "kappa_charged": 1.231,
+ "charged_exceeds_band": true,
+ "charged_headroom": 0.231,
+ "measured": false,
+ "statement": "kappa_168 is not measured.  The value shipped is the mu6 STRUCTURAL bound 1 + 6*2^167/m = 1 + 2^-65.272, divided by the worst slack measured at the fit-residual scatter (+/-5.22 bits), giving a band [1+2^-65.272, 1+2^-60.053].  The charged 1.231 exceeds the top of that band, so the collision floor and the candidate debit are charged conservatively and no ledger row moves.",
+ "kappa_168_hi_excess_log2": -60.053321,
+ "band_log2_excess": [
+  -65.272127,
+  -60.053321
+ ],
+ "price": {
+  "entry_point": "collision floor (K), candidate debit (E_bad) and its work row",
+  "K_claim": 0.51,
+  "K_at_kappa_hi": 0.51,
+  "K_at_kappa_charged": 0.62781,
+  "E_bad_scale_at_band_top_vs_charge": 0.812347684809,
+  "work_row_bits_moved": 0.0,
+  "direction": "the charged kappa=1.231 is ABOVE the band top by 0.231, so E_bad, the candidate-scan cap and the 2^104 work row are all sized above the structural value: worst-in-band kappa_168 is absorbed with ZERO rows moved and the cap keeps its 19.40-bit headroom"
+ }
+}

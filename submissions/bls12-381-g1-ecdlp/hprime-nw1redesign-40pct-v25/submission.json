@@ -1,0 +1,34 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v25: nw=1 design, (nw-1)/nw^2-corrected success law measured at fixed W (floor MET), CP endpoints direction-audited, kappa slope-consistent",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "census-key-v20.json",
+    "certificate.json",
+    "coverage-v21.json",
+    "dependencies.json",
+    "direct-v25.json",
+    "direct_v25.py",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v25.json",
+    "kappa_v25.py",
+    "keymod.py",
+    "population-v22.json",
+    "public-note.md",
+    "retry-v25.json",
+    "selfaudit_v25.py",
+    "toy.py",
+    "verify_certificate.py"
+   ],
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20 and uniform nonzero s: charged work W=2^116.81277 in 2000-instruction units (11 ledger rows, UNCHANGED from v24), claimed at time_log2=116.8130, peak memory 2^123.235 B, no advice, preprocessing inside the total; gate 116.8271, margin 0.0141. SUCCESS FLOOR MET AT THE CLAIMED SHAPE: the design is nw=1 (nb=N independent records per side, K=6N^2/m exactly) and the CP-95 one-sided LOWER endpoint of the 131072 nw=1 end-to-end trials is 0.396844 >= 0.39. PAIR CORRECTION (flaw 2) DERIVED AND MEASURED: distinct A x B ratios are nb^2*(nw^2-nw+1) = N^2*(1-(nw-1)/nw^2), so p(nw)=1-exp(-K*(1-(nw-1)/nw^2)) at fixed W; fixed-W series (nw1 q=0.39907 cp95=[0.396844,0.401301] corr=16/16; nw2 q=0.31542 cp95=[0.313310,0.317540] corr=12/16; nw4 q=0.33437 cp95=[0.332229,0.336523] corr=13/16) confirms it cell by cell; the production nw=2^50 correction is 1-2^-50+2^-100, law value 0.399504 with band [0.393405,0.402329]; success_final = min(nw=1 CP lower, production law lower) = 0.393405, floor met with margin 0.003405. v24's 'production is deeper in the clustered family' was backwards: nw=2 is the family's WORST point (factor 3/4) and the correction ->1 as nw grows. REDESIGN: the claim ships nw=1 semantics; W unchanged (same N records/side, same ledger rows), and the parallel nw=2^50 instantiation is priced in the production row. CP DIRECTION (flaw 1): v24 used a CP LOWER endpoint 0.313393 as an UPPER bound; that sentence is DELETED; every endpoint is registered with its quantile (lower = BETA.INV(0.05; k, n-k+1) for success claims, upper = BETA.INV(0.95; k+1, n-k) for the retry charge) and checked per row, with a planted flip caught in all 8 rows; every census cell brackets q between its CP endpoints. KAPPA (flaw 3): free-fit slopes 0.498/0.552 vs formula slope 1.000 (deviations 0.502/0.448; multinomial-noise slope 0.500), the slope-1 pinned fit evaluated at w=168 (log2 excess 143.4/150.4) is REPORTED AND REJECTED as inadmissible (exceeds the mu6 structural bound by 2^208); the shipped value is the structural bound kappa_168-1 <= 6*2^167/m = 2^-65.272 with the +/-5.22-bit anchor residual band -> [2^-65.272, 2^-60.053]; the charged kappa=1.231 sits 0.231 above the band top, so E_bad, the candidate-scan cap and its 2^104 work row are all conservative and ZERO rows move. Recovery algebra unchanged: known-answer gate 72/72 engineered collisions, v23 path 0/72 on the same fixtures, 72 unplanted instances give 0 false solves, 1152 on-curve asserts; a truncated-key match is treated as accidental until affine verification plus s-extraction passes. Retry priced per regime by the worst CP-UPPER q_hi=0.011634 -> gap_retry_worst=2^101.613; population sum_k N(k)=m asserted per width. SCOPE: production instruction counts are the v24 ledger derivations (declared, not re-derived here); kappa_168 is a structural bound, not a measurement."
+  }
+ ],
+ "experiments": []
+}
