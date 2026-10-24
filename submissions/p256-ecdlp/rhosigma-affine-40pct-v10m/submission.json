@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk v10m: counted-from-the-shipped-object pricing, full-width jump generator (243-256 bit measured), verified 4-entry trap ring + transition-changing escape, 128-bit record addressing, ceil claim -- 128.9506",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1289506",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table affine sigma walk of argument.md is claimed at total classical work at most 2^128.9506 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, with per-instance success 0.24212 and w=2 amplification success 0.4256 >= 0.39.\n\nCOUNTED BINARY (55652457 item 3, c0376361 item 1, cbc03d46 item 5). One TU, one build: p256_recproc_v10l.c -> p256_recproc_v10l.o (clang -O2 -fPIC, sha256 65544a96b0edad358c98..., 31480 B; intake is UTF-8 only so the object ships gzip+base64 in evidence/p256_recproc_v10l.o.gz.b64 with nm/size rows in evidence/nm_symbols.txt, and base64 -d | gunzip reproduces it byte for byte). The census dlopen()s a dylib linked from that object; batch_inv has external linkage plus __attribute__((used)) and recproc_round() -- the counted entry -- calls step_forward -> batch_inv -> step_close. Counters read back after the census in the same process: calls 0 -> 64, denominators 0 -> 512 on 512 walker-steps. The prefix product is computed once in step_forward; batch_inv consumes pre and never writes it. Charge per walker-step, all measured in that object: step_forward 234 + step_close 705 (44 mul, 54 umulh) + back-substitution 293 + denominator scan 14 + inversion share 0.8636 (385 fe_mul: 256 squarings, 128 conditional, 1 correction, x 147/65536) + rare-event reserve 0.6398 + trap-escape share 4.02e-05 = 1247.5034. Claim is the 4-dp CEILING of log2(W): 128.950561 -> 128.9506, so at-most holds.\n\nJUMPS ARE FULL WIDTH (cbc03d46 item 2). v10k and the v10l draft built every row from a single 64-bit scalar, which confined a trail's scalar to +-s0+d with |d| < ell*2^64 ~ 2^175.63 against a 2^256 group, so 65536 uniform starts never overlapped and the full-space collision model was false at production scale. The shipped generator is full_scalar(): four splitmix limbs, one conditional subtract of n, uniform mod n to 2^-32, and main() prints the measured widths -- jump_bits_min 243, jump_bits_max 256 over 4096 scalars in two tables (evidence/jump_width.json). A trail is now a sum of 2^111.63 full-width scalars, i.e. uniform mod n after a few steps, which is exactly the regime the fixtures span; the confinement objection no longer applies to this generator.\n\nTRAP (c0376361 item 2, cbc03d46 item 1). The A,B,A,B family is real: period-2 rows plus signs e1=-e2, e3=-e4 (2 of 4 bits) return H exactly. evidence/walkmap_census.c censuses the map on a real short-Weierstrass fixture with the alternating-table phase in the repeat key; the measured class lag-2 precursor is 0.000536 = 2^-11, so the unguarded closure rate is 7.182e-08 per 4-step window = 2^87.6 closures per 2^111.63-step walker: v10k's success was unsupported and is CONCEDED. The shipped mechanism is implemented, not asserted: step_close keeps a FOUR-entry x ring (slot ridx&3 holds x(i-4); y is canonicalised even so x determines the point, hence x(i)==x(i-4) IS the period-4 trap) and on a match calls trap_escape(), which adds the fixed escape row T0[1] with the coefficients maintained mod n, canonicalises and re-seeds the guard register -- the transition changes, so the cycle cannot be re-entered at the point that closed it. Two self-test rows in the shipped binary: ring_depth_4_verified 1 (after five steps the four retained slots hold x(i-1..i-4)) and escape_changes_state 1 (the escape moves the point and increments trap_escapes). The escape is out of line (675 instructions) and priced at the measured closure rate 2^-24, 4.02e-05 Ir per walker-step; the compare and ring move are inside step_close. Observed over 22744718 guarded steps: 0 cycles of period <= 6, 0 period-4 returns -- an observation, not the basis of the claim.\n\nSUCCESS PROBABILITY (cbc03d46 item 3). p = 0.24212 is evidence/invariant_fit.json's own field fit.p_at_production_ltheta (A = 0.24212, tau = 3.35), not the 0.2297 that the v10k note quoted and not CP-minus-residual; the file's residuals reach about 0.020 and are reported as such. 1-(1-p)^2 = 0.4256, margin 0.0356 over the 0.39 floor. The transition caveat is real: the nine plateau cells were walked on the pre-guard map, and the guarded walk's own plateau is NOT re-measured here -- the guard XOR is a bijection for a fixed previous row but conditional uniformity along the correlated walk is an assumption, stated as one. CP is calibrated and no longer an input: 0.9941660444 for 512/512 (= 0.05^(1/512)), 0.8977466 for 95/100 with tail residual 0.05 to 1e-15, empirical coverage 0.94825 over 4000 binomial runs at p=0.3, n=20000.\n\nDENSITY, STORE, PRICE. Lambda = S^2/(2N') = 0.600000 with S=2^127.631517, N'=(r-1)/2=2^255.000, held in all nine cells; ltheta = 2^49.632; nu = 2^-61.87, whose record-record coincidences (2^-124.7) the full-point verification rejects, while exact full-point collisions with distinct coefficients are RECOVERY events, not false positives. Store: 65.6315-bit records x 104 B, load factor 0.77 -> 66.0086-bit slots of 8 B; the 66-bit composite index is returned as (hi,lo) by rec_index() and the 72-bit byte address is computed in unsigned __int128 by rec_byte_addr(), nothing multiplied in u64; index 2^69.01 B + records 2^72.332 B = 2^72.469 B against the 2^73.0 B cap. Inserts are priced on the unsuccessful search: 9.952 probes x 24 + 201 = 439.8 Ir/record, 9.54e-17 per walker-step. W_single = 127.631517 + log2(1247.5034/1000) = 127.950561; w=2 = 128.950561; claim 128.9506.\n\nSELF-TEST: 64 rounds x 8 walkers x SPR 8 = 4096 walker-steps through recproc_round, invariant P==[a]G+[b]Q after every step (baseline 0, walk 0 failures), synthetic collision solved and verified (1), 62-bit DP mask, ring and escape verified as above. NOT CLAIMED: production-length execution; any prior acceptance; a re-measured plateau for the guarded walk.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/bucket.json",
+    "evidence/census_multiscale.json",
+    "evidence/census_v10f41.c",
+    "evidence/invariant_fit.json",
+    "evidence/ledger.json",
+    "evidence/live_binary.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_recproc_v10l.c",
+    "evidence/point_walk.json",
+    "evidence/prod_params.json",
+    "evidence/stepspans_core.json",
+    "evidence/trap_census.json",
+    "evidence/walkmap_census.c",
+    "evidence/walkmap_census.json",
+    "evidence/insert_path.json",
+    "evidence/cp_calib.json",
+    "evidence/jump_width.json",
+    "evidence/nm_symbols.txt",
+    "evidence/p256_recproc_v10l.o.gz.b64",
+    "evidence/verdict-v10l-judged.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
