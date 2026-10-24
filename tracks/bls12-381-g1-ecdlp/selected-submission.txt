@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+hprime-challenge-honest-40pct-v19
