@@ -1,0 +1,48 @@
+{
+ "canonical_label": {
+  "bijection_note": "t is the discrete log of y base g, hence a bijection Z/r -> <g>; a canonical-label collision and an element collision are the same event",
+  "checked_at_every_step": true,
+  "definition": "t = a + x*b mod r with y = g^a z^b and z = g^x",
+  "invariant_failures": 0,
+  "states_checked": 25600
+ },
+ "census": {
+  "canonical_equals_element": true,
+  "distinct_canonical_labels": 3753,
+  "distinct_elements": 3753,
+  "nonzero_b_increment": 21847,
+  "repeat_pairs": 21847,
+  "repeats_are_all_element_repeats": true,
+  "states": 25600,
+  "step_kinds": {
+   "mul": 15726,
+   "sq": 9874
+  },
+  "zero_b_increment": 0
+ },
+ "derivation": {
+  "claim": "the record key is a function of the state (y, guard); the canonical label (t, guard) is in bijection with (y, guard), so a key collision on the canonical g^a z^b label IS a state collision, and vice versa. The shipped 48-byte class key is COARSER (twelve Frobenius partners share it), so element repeats imply key repeats but not conversely; the solve enumerates the twelve shifts, and the trap charge counts the finer (element, guard) event, which is the conservative side.",
+  "direction": "element/label repeat => key repeat (never the reverse implication is used)",
+  "key_repeat_violations": 0,
+  "row": "key_collision_iff_gab_label_collision"
+ },
+ "fixture": {
+  "guard_depth": 12,
+  "p": 1152921504607943563,
+  "p_bits": 61,
+  "planted_x_bits": 12,
+  "r": 9421,
+  "seed": 20261024,
+  "steps": 100,
+  "walks": 256
+ },
+ "note": "fixture-scale relabel witness only. The production census in evidence/repeat-classes-v19.json counts (element, guard) repeats over 1e6 step pairs; by the bijection above those are exactly the canonical g^a z^b label repeats, so the v20 trap numbers (1744 nonzero-increment / 0 zero-increment) are unchanged and the relabel is a derivation, not a recount.",
+ "numbers_move": false,
+ "script": "census_gab_v21.py",
+ "solvability_split": {
+  "all_repeats_charged": true,
+  "nonzero_b_increment": 21847,
+  "rule": "a repeat with delta-b = 0 mod r makes the collision equation independent of x (a1 + b x = p^j(a2 + b x) has no x term when b1 = b2), so it is UNSOLVABLE: the v18 trap class. delta-b != 0 gives one equation in x per shift and is solvable.",
+  "zero_b_increment": 0
+ }
+}
