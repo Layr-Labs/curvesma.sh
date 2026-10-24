@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "Squared-step class-merge rho for fixed-G1 pairing inversion: twelve-shift gate, enforced in-flight cap, max-price work ceiling, support-bounded retention tail",
+ "experiments": [],
+ "claims": [
+  {
+   "score": {
+    "numerator": "1266729",
+    "denominator": "10000"
+   },
+   "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z with success floor 0.39, and its complete classical work is at most 2^126.672831633 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. CLAIM 126.6729 = 1266729/10000 (reduced, gcd 1), the least 4-decimal log2 >= the exact total. THE FOUR v29 FLAWS ARE REPAIRED IN THE ARITHMETIC. (1) TWELVE-SHIFT RECOVERY GATE. v29_measure._solve_verify tested only j=0, x=(a2-a)/(b-b2), and rejected legitimate sigma-j collisions. v30 solves a+b*x = p^j*(a2+b2*x) for all j in 0..11 and verifies g^x=z. The measured arm-1 recovery frequency moves from v29's 0.066 to 0.579100 (11582/20000 trials; 0.999976 of 41426 merges verify), matching the independently measured census production-like rate 0.586783; both literals are machine-copied. (2) CONCURRENCY BOUND, DERIVED THEN ENFORCED. The ledger launch cadence is one trail start per theta AGGREGATE completed steps; a trail cap is 128 theta of its OWN steps. Those two clocks do not imply ceil(cap/theta)=128 in flight: the bare-schedule max-rate simulation measures 1023 live trails at a 4-cap horizon, so v29's 128 is WITHDRAWN as a derivation. v30 enforces an atomic in-flight cap of 128 and the max-launch-rate trace then measures 128; a cap of 127 measures 127 and is shown to under-cover by one trail's charge. reserve = 128*128 theta = 2^94.00 step-equivalents, priced at the MAX single-step price; halt launches when completed steps >= S - reserve. (3) MAX-PRICE WORK CEILING, NOT A MEAN. v29 multiplied S by the measured average mix (1-f)c_mul+f*c_sqr = 1.355272; a mean is not an upper bound on the realized mix. v30 charges every completed step at the dearer of the two step prices, c_max = 1.704385 (the mul step), so w_stress = 2^126.672832 replaces the mean-price 2^126.342163; the mean-price row undercounts by 0.330669 bits and is shipped only as a diagnostic, never summed. The trap row is likewise deterministic: n_inflight*cap = 128*128 theta step-equivalents (the max single-trail charge times the enforced in-flight cap), priced at c_max = 2^94.769251; the measured E[L^3]/(2E[L^2]) = 2.5252 theta is a diagnostic, not the charge. (4) RETENTION TAIL, SUPPORT STATED AND BOUNDED. The measured raw merge ages have support [1,16] theta (the fixture cap); the production cap is 128 theta, so the raw integral is a SUPPORT integral. v30 keeps it un-binned: 2^-168.25 at arm 1, versus the endpoint-only 2^-182.02. Beyond the support it charges an exponential-decay row at a conservative constant: the measured 1->4 theta decay is halved, anchored at the measured survival at 4 theta, and e^-128*integral_16^128 e^a P(A>a) da = 2^-3.589688. The charged delta is max(support 2^-168.25 + tail 2^-3.589688, closed 2^-166.216505) = 2^-3.589688. Route (a), disclosed, not an extended simulation. STOPPING LOSS IS MEASURED, UNIT-EXACT, TWELVE-SHIFT: each halt experiment counts trials whose verified recovery step exceeds S_toy - r; the lost fractions rise monotonically as the halt moves earlier (control d), and dp=2/3/4 rows are shipped. The production loss is charged, not asserted zero: reserve/S = 2^-31.90, success ~ S^2, so 2*reserve/S = 2^-30.90 of success is charged as stop_loss_row = 2^95.769251. TOTAL IS ONE SUM OF FIVE DISPLAYED ROWS: w_stress 2^126.672832 + trap_charge 2^94.769251 + aux_sum 2^56.592221 + overflow_row 1 + stop_loss_row 2^95.769251 = 2^126.672831633. regen_v30.py emits every exponent from ledger30; audit_v30.py sweeps every literal to its computing line (all Y) and runs four planted controls: gate shift 12->11 must change the gate literal; bare-schedule trace exceeds the derived 128; fat-tail synthetic charges make the mean-price row underprice the max-sum row; truncating the age support raises the tail row. UNCHANGED: the per-j return exponent with 40,000 exact solves; the DP census agreement 0.9998863991 and 0.9999572028; the model 1-exp(-S^2(1-f^2)/(2 mu N)) = 0.399237; f = 14566/41929; the orbit theorem; the N=785 toy scope. RANK DISCLOSED: 126.6729 is behind the live board minimum 125.82 and this account's valid 125.838.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "public-note.md",
+    "classkey.py",
+    "constants.py",
+    "cp95.py",
+    "ledger.py",
+    "ledger26.py",
+    "ledger27.py",
+    "ledger30.py",
+    "v30_measure.py",
+    "audit_v30.py",
+    "regen_v30.py",
+    "routing.py",
+    "tower.py",
+    "factor_r.py",
+    "toy_census.py",
+    "evidence/v30-age-law.json",
+    "evidence/v30-moments.json",
+    "evidence/v30-stopping.json",
+    "evidence/v30-census.json",
+    "evidence/v30-claim.json",
+    "evidence/v30-literals.json",
+    "evidence/v30-ledger.json"
+   ]
+  }
+ ]
+}
