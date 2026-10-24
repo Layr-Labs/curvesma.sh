@@ -1,0 +1,37 @@
+{
+ "commands": [
+  "SHAPE_SCALE=3.268 BT=3200 QMIN=4290000000 python3 scripts/census_v20n.py  # design row -> evidence/census-design.json",
+  "SHAPE_SCALE=3.268 BT=3200 QMIN=16777216 python3 scripts/census_v20n.py    # low-order transfer -> evidence/census-low.json",
+  "BT=3200 ARM=lag3 python3 scripts/pair_census.py                           # w=2 comparison -> evidence/pair-census.json",
+  "python3 scripts/absorb_v20n.py                                            # exhaustive absorption count",
+  "python3 ledger_v11.py      # exact Fractions: S_OPS, W, claim, floor decision",
+  "python3 selfaudit.py       # audits + planted-flip controls",
+  "python3 assemble.py        # this file, submission.json and public-note.md"
+ ],
+ "entrypoint": "ledger_v11.py",
+ "environment": {
+  "cost_model": "tracks/classical-group-work-v2.json, C = 1000 for p256-ecdlp",
+  "disasm": "WITHDRAWN/not claimed: no kernel or disassembly price anywhere; M_insn = 97 is structural.",
+  "python": "/opt/homebrew/opt/python@3.14/bin/python3.14 (numpy 2.4.4). NOT the login-shell python3, which has no numpy on this host."
+ },
+ "expected": {
+  "claim": "128.537",
+  "cp95_design": 0.6825924849022984,
+  "dp_bits": 5,
+  "floor": 0.39,
+  "floor_met": true,
+  "gate": 127.237678,
+  "log2_W": "128.53670650",
+  "memory_log2_bytes": 76.5849625009591,
+  "order_span": 255.70325833896595,
+  "pair_cp95_w2": 0.2808011251264499,
+  "preprocessing_log2": 43.59991284218713,
+  "ranks": false,
+  "shape_measured": 1.6002022719673725,
+  "step_insn": 263,
+  "step_price": 1.263,
+  "success_design": 0.6813189849022984,
+  "sum_of_step_rows": 263
+ },
+ "test": "reproduction"
+}
