@@ -1,0 +1,33 @@
+{
+ "version": 1,
+ "title": "Restarted-worker protocol (records x trail = S), abelian-valid trap census (exact Z[zeta12] enumeration; v20 walk traps every 2^33.882 steps; depth-5 guard + R=2^16 leaves 2^1.108, priced), 64-instance multi-target census with CP-95-derived reserve, claim 126.0415",
+ "claims": [
+  {
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z.  A multiply step charges 22433 instructions and a cyclotomic squaring 27660 (key+rotation recompute funded).  The walker is RESTARTED: 1024 workers, trail (w,j) starts at g^a z^b for (a,b)=SHAKE256(sigma_w||j), ends at its FIRST DP report, emits one 52 B record (32 B fingerprint, 2 B worker, 2 B restart, 16 B step), and restarts; records = S/2^100 and records x mean trail length = S exactly, so the priced 71784914964362045983757977582135410688 steps are the executed steps (restart row 1679295746777726 instructions, replay row 61843602182734399581418162636782940, both charged).  The trap analysis is exact, not an independence argument: GT is abelian, so a slot word's product is 1 identically iff every per-slot exponent sum vanishes in Z[x]/(x^4-x^2+1) (zeta=p^-1, zeta^6=-1); enumerating every canonical word shows the v20 configuration (R=4096, depth-1 guard) traps every 2^33.882 steps, and the submitted configuration (R=2^16, depth-5 slot-history guard, a class function of the walk's own slot history) leaves 2^1.108 traps, whose wasted trail budget T_MAX=2^104 is priced as 1066502469749131192112667501083245841 instructions.  Success is measured over 64 independent (target, table-seed) instances, 763/768, exact Clopper-Pearson lower end 0.98636023754575717248371802270412445068359375; that CP-95 value, not an assigned reserve, is the retention from which S is solved backwards, giving a certified success floor 0.390100 >= 0.39 after abort, DP-detection, trail-abort and storage debits.  The algorithm meters its work against the exact integer cap 87553235209898466707053455576252212071 work units = 1751064704197969334141069111525044241420000 instructions before each step.",
+   "score": {
+    "numerator": "252083",
+    "denominator": "2000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/patterns22.json",
+    "evidence/census22-toy.json",
+    "evidence/guard22-toy.json",
+    "evidence/keys20.json",
+    "evidence/ledger22.json",
+    "evidence/ir22.json",
+    "public-note.md",
+    "scripts/census22.py",
+    "scripts/toy22.py",
+    "scripts/gen22.py",
+    "scripts/toy.py",
+    "scripts/ir22/kernels.c",
+    "scripts/ir22/consts.c",
+    "scripts/ir22/count_ir.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

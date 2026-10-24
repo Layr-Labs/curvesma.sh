@@ -1,0 +1,117 @@
+{
+ "mode": "survival",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "depth": 5,
+ "pairs": 400,
+ "steps": 40,
+ "table_pool": 512,
+ "gaps": [
+  1,
+  5,
+  20,
+  40
+ ],
+ "arms": {
+  "indep_hist_R128": {
+   "Rg": 128,
+   "arm": "indep_hist",
+   "pairs": 400,
+   "survival": {
+    "1": 0.965,
+    "5": 0.8575,
+    "20": 0.82,
+    "40": 0.82
+   }
+  },
+  "true_merge_R128": {
+   "Rg": 128,
+   "arm": "true_merge",
+   "pairs": 400,
+   "survival": {
+    "1": 1.0,
+    "5": 1.0,
+    "20": 1.0,
+    "40": 1.0
+   }
+  },
+  "classonly_R128": {
+   "Rg": 128,
+   "arm": "classonly",
+   "pairs": 400,
+   "survival": {
+    "1": 0.9925,
+    "5": 0.9925,
+    "20": 0.9925,
+    "40": 0.9925
+   }
+  },
+  "indep_hist_R1024": {
+   "Rg": 1024,
+   "arm": "indep_hist",
+   "pairs": 400,
+   "survival": {
+    "1": 0.99,
+    "5": 0.965,
+    "20": 0.955,
+    "40": 0.955
+   }
+  },
+  "true_merge_R1024": {
+   "Rg": 1024,
+   "arm": "true_merge",
+   "pairs": 400,
+   "survival": {
+    "1": 1.0,
+    "5": 1.0,
+    "20": 1.0,
+    "40": 1.0
+   }
+  },
+  "classonly_R1024": {
+   "Rg": 1024,
+   "arm": "classonly",
+   "pairs": 400,
+   "survival": {
+    "1": 0.995,
+    "5": 0.995,
+    "20": 0.995,
+    "40": 0.995
+   }
+  },
+  "indep_hist_R8192": {
+   "Rg": 8192,
+   "arm": "indep_hist",
+   "pairs": 400,
+   "survival": {
+    "1": 1.0,
+    "5": 0.9975,
+    "20": 0.995,
+    "40": 0.995
+   }
+  },
+  "true_merge_R8192": {
+   "Rg": 8192,
+   "arm": "true_merge",
+   "pairs": 400,
+   "survival": {
+    "1": 1.0,
+    "5": 1.0,
+    "20": 1.0,
+    "40": 1.0
+   }
+  },
+  "classonly_R8192": {
+   "Rg": 8192,
+   "arm": "classonly",
+   "pairs": 400,
+   "survival": {
+    "1": 1.0,
+    "5": 1.0,
+    "20": 1.0,
+    "40": 1.0
+   }
+  }
+ }
+}

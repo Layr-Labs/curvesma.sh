@@ -1,0 +1,54 @@
+{
+ "mode": "disassembly",
+ "object": "kernels_arm64.o",
+ "toolchain": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+ "target": "arm64-apple-macos11",
+ "opt": "-O2",
+ "disassembler": "otool -tvV",
+ "rows": {
+  "key_six_plusminus": {
+   "symbol": "_key_six_plusminus",
+   "first_ir_addr": "0x0000000000000000",
+   "last_ir_addr": "0x0000000000001738",
+   "ir_count": 1487,
+   "distinct_mnemonics": 26,
+   "v21_constant": 1802,
+   "delta_vs_v21": -315,
+   "boundary_note": "count spans symbol entry through the instruction immediately before the next symbol label; no callee shares an instruction with this span (static dispatch)"
+  },
+  "min_rotation_booth": {
+   "symbol": "_min_rotation_booth",
+   "first_ir_addr": "0x000000000000173c",
+   "last_ir_addr": "0x0000000000001d2c",
+   "ir_count": 381,
+   "distinct_mnemonics": 12,
+   "v21_constant": 144,
+   "delta_vs_v21": 237,
+   "boundary_note": "count spans symbol entry through the instruction immediately before the next symbol label; no callee shares an instruction with this span (static dispatch)"
+  },
+  "min_rotation_full": {
+   "symbol": "_min_rotation_full",
+   "first_ir_addr": "0x0000000000001d30",
+   "last_ir_addr": "0x0000000000005f50",
+   "ir_count": 4233,
+   "distinct_mnemonics": 17,
+   "v21_constant": 0,
+   "delta_vs_v21": 4233,
+   "boundary_note": "count spans symbol entry through the instruction immediately before the next symbol label; no callee shares an instruction with this span (static dispatch)"
+  },
+  "cyclotomic_sqr": {
+   "symbol": "_cyclotomic_sqr",
+   "first_ir_addr": "0x0000000000005f54",
+   "last_ir_addr": "0x000000000001ec24",
+   "ir_count": 25397,
+   "distinct_mnemonics": 26,
+   "v21_constant": 15042,
+   "delta_vs_v21": 10355,
+   "boundary_note": "count spans symbol entry through the instruction immediately before the next symbol label; no callee shares an instruction with this span (static dispatch)"
+  }
+ },
+ "sum_new_ir": 31498,
+ "sum_v21_constants": 16988,
+ "delta_total": 14510,
+ "constant_folding_guard": "P6/ZETA6 are extern const arrays defined in consts.c (separate TU), so no priced table can be folded to zero"
+}
