@@ -1,0 +1,39 @@
+{
+ "mode": "ir26",
+ "object": "scripts/ir26/dict26.c (clang -O2, arm64)",
+ "tool": "otool -tvV",
+ "rows": {
+  "state_key48": {
+   "symbol": "_state_key48",
+   "first_ir_addr": "0x0000000000000000",
+   "last_ir_addr": "0x00000000000007b0",
+   "ir_count": 493,
+   "distinct_mnemonics": 16
+  },
+  "dict_lookup": {
+   "symbol": "_dict_lookup",
+   "first_ir_addr": "0x00000000000007b4",
+   "last_ir_addr": "0x0000000000000a24",
+   "ir_count": 157,
+   "distinct_mnemonics": 14
+  },
+  "dict_insert": {
+   "symbol": "_dict_insert",
+   "first_ir_addr": "0x0000000000000a28",
+   "last_ir_addr": "0x0000000000000dd8",
+   "ir_count": 237,
+   "distinct_mnemonics": 24
+  },
+  "dict_lf_ok": {
+   "symbol": "_dict_lf_ok",
+   "first_ir_addr": "0x0000000000000ddc",
+   "last_ir_addr": "0x0000000000000de8",
+   "ir_count": 4,
+   "distinct_mnemonics": 4
+  }
+ },
+ "lookup_ir": 157,
+ "insert_ir": 237,
+ "key_ir": 493,
+ "note": "the ledger's per-step lookup is state_key48 + dict_lookup; the record path is dict_insert; all three are priced here"
+}

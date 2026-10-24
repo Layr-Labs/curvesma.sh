@@ -1,0 +1,104 @@
+{
+ "mode": "census",
+ "config": {
+  "groups": [
+   {
+    "q": 523,
+    "rp": 521041,
+    "Rg": 65536,
+    "dpbits": 0,
+    "depth": 5,
+    "workers": 8,
+    "ratio": 1.45
+   },
+   {
+    "q": 547,
+    "rp": 10566001,
+    "Rg": 65536,
+    "dpbits": 0,
+    "depth": 5,
+    "workers": 8,
+    "ratio": 1.45
+   }
+  ],
+  "procs": 24,
+  "fixtures": 512,
+  "out": "census25.json"
+ },
+ "trials_per_fixture": 1,
+ "independence": "fresh target z, fresh g, fresh table, fresh coins per fixture; one Bernoulli per fixture",
+ "protocol": "protocol25.run_one: meter created first; table, starts, code, steps (guard-aware), lookups, records, replay, and candidate verification all charge the same global meter; a failed replay/verify charge abandons; 32-squaring abort implemented",
+ "scales": [
+  {
+   "q": 523,
+   "rp": 521041,
+   "N": 43420,
+   "Rg": 65536,
+   "depth": 5,
+   "dpbits": 0,
+   "workers": 8,
+   "trail_cap": 38,
+   "sqrtN": 208.37,
+   "steps_budget": 302,
+   "S_over_sqrtN": 1.4493,
+   "cap_ir": 15250496,
+   "fixtures": 512,
+   "success": 292,
+   "rate": 0.5703125,
+   "cp95_lower": "0.53311622322253260364277593907900154590606689453125",
+   "steps_executed": 122476,
+   "records": 122476,
+   "matches": 4279,
+   "verifies": 292,
+   "aborts": 0,
+   "abandoned": 0,
+   "mean_ir_used": 6444784,
+   "exhausted": 220,
+   "record_bytes": 688,
+   "rows_ir": {
+    "fixed": 4391,
+    "walk": 2979206096,
+    "record": 84263488,
+    "lookup": 11635220,
+    "replay": 17526784,
+    "verify": 207093907
+   }
+  },
+  {
+   "q": 547,
+   "rp": 10566001,
+   "N": 880500,
+   "Rg": 65536,
+   "depth": 5,
+   "dpbits": 0,
+   "workers": 8,
+   "trail_cap": 170,
+   "sqrtN": 938.35,
+   "steps_budget": 1360,
+   "S_over_sqrtN": 1.4494,
+   "cap_ir": 63451536,
+   "fixtures": 512,
+   "success": 304,
+   "rate": 0.59375,
+   "cp95_lower": "0.5567350283079637307537268497981131076812744140625",
+   "steps_executed": 534201,
+   "records": 534201,
+   "matches": 68093,
+   "verifies": 304,
+   "aborts": 0,
+   "abandoned": 0,
+   "mean_ir_used": 27380195,
+   "exhausted": 208,
+   "record_bytes": 688,
+   "rows_ir": {
+    "fixed": 4307,
+    "walk": 13054752111,
+    "record": 367530288,
+    "lookup": 50749095,
+    "replay": 278908928,
+    "verify": 266715313
+   }
+  }
+ ],
+ "seconds": 370.6
+}

@@ -1,0 +1,62 @@
+{
+ "mode": "scan",
+ "Rg": 65536,
+ "depth": 5,
+ "q": 523,
+ "rp": 521041,
+ "segments": 16,
+ "steps_per_segment": 120000,
+ "steps": 1920000,
+ "force_admit": false,
+ "abort_enabled": true,
+ "multiply": 1227683,
+ "multiply_per_step": 0.6394182291666667,
+ "branch_sqr": 689474,
+ "guard_conversions": 2843,
+ "guard_per_step": 0.0014807291666666667,
+ "guard_per_multiply": 0.0023157443737512047,
+ "word_alternating": {
+  "4": 0,
+  "6": 0,
+  "8": 0,
+  "10": 0,
+  "12": 0
+ },
+ "word_admit": {
+  "4": 0,
+  "6": 0,
+  "8": 0,
+  "10": 0,
+  "12": 0
+ },
+ "admit_per_step": {
+  "4": 0.0,
+  "6": 0.0,
+  "8": 0.0,
+  "10": 0.0,
+  "12": 0.0
+ },
+ "abandon_delays": [],
+ "abandon_events": 0,
+ "abort_events": 0,
+ "abort_disabled_stalls": 0,
+ "abandon_delay_mean": null,
+ "abandon_delay_max": null,
+ "max_squaring_run": 9,
+ "distinct_slots_per_segment": 204.8125,
+ "kappa_histogram": [
+  159100,
+  176194,
+  152990,
+  163146,
+  163254,
+  169168,
+  145779,
+  167853,
+  157558,
+  158896,
+  147050,
+  159012
+ ],
+ "kappa_max_rel_dev": 0.1012125
+}
