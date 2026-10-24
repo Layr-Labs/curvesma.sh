@@ -1,0 +1,277 @@
+{
+ "budget_conservative_ln": 0.0,
+ "budget_rows": [
+  {
+   "basis": "3 cells at f = per/2^d ~ 0.83 with different (W, d): 64/7, 128/6, 256/5",
+   "contribution_conservative_ln": 0.0,
+   "contribution_signed_ln": 0.6782384636624456,
+   "delta_ln": 11.090354888959125,
+   "direction": "favourable",
+   "parameter": "walkers W (at fixed detection f)",
+   "production": 1048576,
+   "slope_lnp_per_lnparam": 0.06115570425412248,
+   "slope_se": 0.03491453015300997,
+   "surrogate": 16
+  },
+  {
+   "basis": "3 cells at d = 5, W = 16: R = 64, 256, 1024",
+   "contribution_conservative_ln": 0.0,
+   "contribution_signed_ln": 0.05696567840191562,
+   "delta_ln": 9.704060527839234,
+   "direction": "favourable",
+   "parameter": "columns R (at fixed detection f)",
+   "production": 1048576,
+   "slope_lnp_per_lnparam": 0.005870292980808514,
+   "slope_se": 0.006038922204735105,
+   "surrogate": 64
+  },
+  {
+   "basis": "3 cells at W = 16: d = 3, 4, 5 (f = 52.8, 26.4, 13.2)",
+   "contribution_conservative_ln": 0.0,
+   "contribution_signed_ln": 1.520247562573821,
+   "delta_ln": 29.805565106443485,
+   "direction": "favourable",
+   "parameter": "DP detection f = steps per DP gap",
+   "production": 116025895324752.02,
+   "slope_lnp_per_lnparam": 0.05100549367692304,
+   "slope_se": 0.011637653579582291,
+   "surrogate": 13.188
+  }
+ ],
+ "budget_signed_ln": 2.2554517046381823,
+ "cap_loss_control": {
+  "S_nocap_p_set": 0.5459375,
+  "S_w16_p_set": 0.5459375,
+  "delta": 0.0,
+  "note": "kcap = 8 (shipped) vs kcap = 10^9: identical challenge block, zero restarts in both, so the cap-induced loss measured on this arm is 0 at the cell's own 19,200 armed run-trials",
+  "restarts_cap_off": 0,
+  "restarts_cap_on": 0
+ },
+ "cells": {
+  "S_R1024": {
+   "R": 1024,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.5464891314677536,
+   "dp_bits": 5,
+   "f_dp_per_walker": 13.1875,
+   "kcap": 8,
+   "p_run": 0.33630208333333333,
+   "p_set": 0.5548958333333334,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_R256": {
+   "R": 256,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.5500367842690396,
+   "dp_bits": 5,
+   "f_dp_per_walker": 13.1875,
+   "kcap": 8,
+   "p_run": 0.3341145833333333,
+   "p_set": 0.5584375,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_d11": {
+   "R": 64,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.05575756178951695,
+   "dp_bits": 11,
+   "f_dp_per_walker": 0.2060546875,
+   "kcap": 8,
+   "p_run": 0.030260416666666668,
+   "p_set": 0.0596875,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_d3": {
+   "R": 64,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.5775979845776866,
+   "dp_bits": 3,
+   "f_dp_per_walker": 52.75,
+   "kcap": 8,
+   "p_run": 0.35932291666666666,
+   "p_set": 0.5859375,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_d4": {
+   "R": 64,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.5651713195321184,
+   "dp_bits": 4,
+   "f_dp_per_walker": 26.375,
+   "kcap": 8,
+   "p_run": 0.3494791666666667,
+   "p_set": 0.5735416666666666,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_d8": {
+   "R": 64,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.2887857369358794,
+   "dp_bits": 8,
+   "f_dp_per_walker": 1.6484375,
+   "kcap": 8,
+   "p_run": 0.16078125,
+   "p_set": 0.2964583333333333,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_nocap": {
+   "R": 64,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.5375175684795632,
+   "dp_bits": 5,
+   "f_dp_per_walker": 13.1875,
+   "kcap": 1000000000,
+   "p_run": 0.3279166666666667,
+   "p_set": 0.5459375,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_w128d6": {
+   "R": 64,
+   "W": 128,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.2133659762166985,
+   "dp_bits": 6,
+   "f_dp_per_walker": 0.828125,
+   "kcap": 8,
+   "p_run": 0.11786458333333333,
+   "p_set": 0.2203125,
+   "per_walker_steps": 53,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_w16": {
+   "R": 64,
+   "W": 16,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.5375175684795632,
+   "dp_bits": 5,
+   "f_dp_per_walker": 13.1875,
+   "kcap": 8,
+   "p_run": 0.3279166666666667,
+   "p_set": 0.5459375,
+   "per_walker_steps": 422,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_w256": {
+   "R": 64,
+   "W": 256,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.21346893988440335,
+   "dp_bits": 5,
+   "f_dp_per_walker": 0.8125,
+   "kcap": 8,
+   "p_run": 0.11671875,
+   "p_set": 0.22041666666666668,
+   "per_walker_steps": 26,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_w64": {
+   "R": 64,
+   "W": 64,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.434954995845311,
+   "dp_bits": 5,
+   "f_dp_per_walker": 3.3125,
+   "kcap": 8,
+   "p_run": 0.25442708333333336,
+   "p_set": 0.44333333333333336,
+   "per_walker_steps": 106,
+   "restarts": 0,
+   "sets": 9600
+  },
+  "S_w64d7": {
+   "R": 64,
+   "W": 64,
+   "armed_run_trials": 19200,
+   "challenge_block_sha256": "2cfac8fee3b7ffba",
+   "cp95": 0.19576888189424685,
+   "dp_bits": 7,
+   "f_dp_per_walker": 0.828125,
+   "kcap": 8,
+   "p_run": 0.10645833333333334,
+   "p_set": 0.2025,
+   "per_walker_steps": 106,
+   "restarts": 0,
+   "sets": 9600
+  }
+ },
+ "invariance_control": {
+  "cells": {
+   "S_w128d6": 0.2203125,
+   "S_w256": 0.22041666666666668,
+   "S_w64d7": 0.2025
+  },
+  "note": "three (W, d) pairs chosen so f = per/2^d is the same: p_set collapses onto f, so WALKERS and DP DENSITY are one variable, not two free extrapolations",
+  "relative_spread": 0.08356275303643723,
+  "spread": 0.017916666666666664
+ },
+ "order_fixed": {
+  "classes": 715000012,
+  "classes_log2": 25.42,
+  "note": "every cell at the SAME order; one parameter at a time",
+  "q_min": 268435456,
+  "sets_per_cell": 9600
+ },
+ "production_f_dp_per_walker": 116025895324752.02,
+ "slopes": {
+  "DP detection f = steps per DP gap": {
+   "delta_ln": 29.805565106443485,
+   "se": 0.011637653579582291,
+   "signed_ln": 1.520247562573821,
+   "slope": 0.05100549367692304
+  },
+  "columns R (at fixed detection f)": {
+   "delta_ln": 9.704060527839234,
+   "se": 0.006038922204735105,
+   "signed_ln": 0.05696567840191562,
+   "slope": 0.005870292980808514
+  },
+  "walkers W (at fixed detection f)": {
+   "delta_ln": 11.090354888959125,
+   "se": 0.03491453015300997,
+   "signed_ln": 0.6782384636624456,
+   "slope": 0.06115570425412248
+  }
+ },
+ "surrogate_f_dp_per_walker": 13.1875,
+ "test": "parameter_sensitivity_ladder",
+ "unmeasured_dimension": {
+  "measured_slope": null,
+  "name": "elliptic-curve coordinate selector (vs the uniform scalar key K)",
+  "why": "the quotient walk imports selector.cell(K, R, p) verbatim and feeds it a uniform K, which is the ledger's own premise for min(y, p-y); the surrogate cannot vary the ORIGIN of K, so this dimension has no measured slope and is carried as an ALLOWANCE, not a slope"
+ }
+}
