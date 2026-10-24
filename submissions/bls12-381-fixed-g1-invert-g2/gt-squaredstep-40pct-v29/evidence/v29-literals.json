@@ -1,0 +1,97 @@
+{
+ "S_log2": {
+  "formatted": "125.821225",
+  "source": "ledger29.total29:S",
+  "value": 125.82122460991792
+ },
+ "aux_log2": {
+  "formatted": "56.509866",
+  "source": "ledger29.total29:aux_sum",
+  "value": 56.509865530519065
+ },
+ "claim": {
+  "formatted": "126.2599",
+  "source": "ledger29.claim29:claim_log2",
+  "value": 126.2599
+ },
+ "claim_den": {
+  "formatted": "10000",
+  "source": "ledger29.claim29:denominator",
+  "value": 10000
+ },
+ "claim_num": {
+  "formatted": "1262599",
+  "source": "ledger29.claim29:numerator",
+  "value": 1262599
+ },
+ "delta_charged_log2": {
+  "formatted": "-166.216505",
+  "source": "ledger29.delta_charge:charged",
+  "value": -166.21650473297103
+ },
+ "delta_closed_log2": {
+  "formatted": "-166.216505",
+  "source": "ledger29.delta_closed_form",
+  "value": -166.21650473297103
+ },
+ "delta_measured_log2": {
+  "formatted": "-168.61",
+  "source": "ledger29.delta_charge:measured",
+  "value": -168.60636131485282
+ },
+ "f": {
+  "formatted": "14566/41929",
+  "source": "ledger29.total29:f",
+  "value": "14566/41929"
+ },
+ "loss_rel_log2": {
+  "formatted": "-30.82",
+  "source": "ledger29.stop_loss29:loss_rel_S2",
+  "value": -30.82122460991792
+ },
+ "n_inflight": {
+  "formatted": "128",
+  "source": "ledger29.stop_loss29:n_inflight",
+  "value": 128
+ },
+ "overflow_log2": {
+  "formatted": "0",
+  "source": "ledger29.total29:overflow_row",
+  "value": 0.0
+ },
+ "ratio_over_theta": {
+  "formatted": "2.2650",
+  "source": "ledger29.moments_charged",
+  "value": 2.2649710259449494
+ },
+ "reserve_log2": {
+  "formatted": "94.00",
+  "source": "ledger29.stop_loss29:reserve_steps",
+  "value": 94.0
+ },
+ "reserve_steps": {
+  "formatted": "19807040628566084398385987584",
+  "source": "ledger29.stop_loss29:reserve_steps",
+  "value": 19807040628566084398385987584
+ },
+ "stop_log2": {
+  "formatted": "95.438583",
+  "source": "ledger29.total29:stop_loss_row",
+  "value": 95.43858250080899
+ },
+ "total_log2": {
+  "formatted": "126.259807111",
+  "source": "ledger29.total29:log2_total",
+  "value": 126.25980711148735
+ },
+ "trap_log2": {
+  "formatted": "36.497842",
+  "source": "ledger29.total29:trap_charge",
+  "value": 36.497841552451995
+ },
+ "w_stress_log2": {
+  "formatted": "126.259807",
+  "source": "ledger29.total29:w_stress",
+  "value": 126.25980711072691
+ }
+}

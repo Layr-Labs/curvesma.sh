@@ -1,0 +1,40 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "public-note.md",
+    "classkey.py",
+    "constants.py",
+    "cp95.py",
+    "ledger.py",
+    "ledger26.py",
+    "ledger27.py",
+    "ledger29.py",
+    "v29_measure.py",
+    "audit_v29.py",
+    "regen_v29.py",
+    "routing.py",
+    "tower.py",
+    "factor_r.py",
+    "toy_census.py",
+    "evidence/v29-age-law.json",
+    "evidence/v29-moments.json",
+    "evidence/v29-stopping.json",
+    "evidence/v29-census.json",
+    "evidence/v29-claim.json",
+    "evidence/v29-literals.json",
+    "evidence/v29-ledger.json"
+   ],
+   "score": {
+    "denominator": "10000",
+    "numerator": "1262599"
+   },
+   "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z with success floor 0.39, and its complete classical work is at most 2^126.259807111 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. CLAIM 126.2599 = 1262599/10000 (reduced, gcd 1), the least 4-decimal log2 >= the exact total. THE FOUR v28 FLAWS ARE REPAIRED IN THE ARITHMETIC. (1) LITERAL: v28's code computed 8192*2^-128 = 2^-115 while its text said 8192*e^-128 = 2^-171.66. Both are withdrawn. The closed form now carries the L^2 normalisation AND the cap atom: L = min(Exp(theta),128theta), E[L^2] = 2theta^2(1-e^-128(1+128)), E[e^(A/theta)] = (128^3/3+128^2)/(2(1-129e^-128)), so delta_closed = 2^-166.216505. The charged delta is max(raw-merge measured 2^-168.61, closed 2^-166.216505) = 2^-166.216505. regen_v29.py emits every exponent below from ledger29; audit_v29.py sweeps every literal in this statement against its computing line (all Y). (2) AGE AT THE MERGE EVENT, NOT AT A REPORT. v28 stored only report keys, so its ages were conditioned on reaching an already-stored report. v29 stores every visited class key; every repeat is a merge event; for each merge it records the follower age A in exact integer steps (1-step histogram, no coarse bins) and the remaining distance D to the follower's next report. Raw-merge residual integral (1/M)sum exp(-(128-A/theta)) = 2^-168.61 at arm 1, versus 2^-182.13 for the endpoint-only law: the endpoint conditioning understated the charge by 13.5 bits and the raw law is the charged measured row. The production-cap direct miss count is 0/51656 at arm 1, but the fixture cap is 16theta and cannot resolve 128theta misses; that limitation is disclosed and the closed form, not the zero, is charged. (3) CONCURRENCY-BOUND RESERVE AND A COMPLETED-STEP RULE. v28 reserved one maximal trail. Under the declared launch schedule (one trail start per theta executed steps, the ledger27 schedule measured in the census as trail_starts ~ S/theta) a trail lasts at most 128theta steps, so at most ceil(128theta/theta) = 128 trails are in flight. reserve = 128*128theta = 2^94.00 step-equivalents, and the rule is stated on COMPLETED STEPS, not on realized work at an averaged price: halt launches when completed steps >= S - reserve. Every launched trail then finishes inside the reserve, so total executed steps <= S deterministically. (4) MEASURED STOPPING LOSS, UNIT-EXACT. The recovery gate now solves x from the two (a,b) records and verifies g^x = z before a repeated report key counts. Recovery steps are unit-exact per trial, so each halt experiment is an exact count of trials with rec_step > S_toy - r, not decile arithmetic; the measured lost fractions rise monotonically as the halt moves earlier (control d). The production loss is not asserted zero: reserve/S = 2^-31.82, success ~ S^2, so 2*reserve/S = 2^-30.82 of success is charged as stop_loss_row = 2^95.438583. total29 IS ONE SUM OF FIVE DISPLAYED ROWS: w_stress 2^126.259807 + trap_charge 2^36.497842 + aux_sum 2^56.509866 + overflow_row 1 + stop_loss_row 2^95.438583 = 2^126.259807111. The wasted-work term is E[L^3]/(2E[L^2]) = 2.2650 theta from exact integer sums (the verify gate lengthens the trial after a rejected merge, so the sums moved from v28's 2.5250 to 2.2650; charged at the harsher arm). UNCHANGED FROM v28: the per-j return exponent y^(4-p^j) = (m1^4 m2^2)^(-1) with 40,000 exact solves and 0 misses; the DP-predicate census agreement 0.9998863991 and 0.9999572028; the model 1-exp(-S^2(1-f^2)/(2 mu N)) = 0.399237; f = 1734128/4991779 = 0.3473967898 priced as 14566/41929; the orbit theorem; the N=785 toy scope. RANK LOSS DISCLOSED: 126.2599 is 0.4399 bits behind the live board minimum 125.82 and 0.4219 behind this account's valid 125.838."
+  }
+ ],
+ "experiments": [],
+ "title": "Squared-step class-merge rho for fixed-G1 pairing inversion: normalised retention literal, raw merge-age law, concurrency-bound completed-step reserve, unit-exact stop loss",
+ "version": 1
+}

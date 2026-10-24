@@ -1,0 +1,373 @@
+{
+ "arms": {
+  "1": {
+   "S_toy": 32,
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 2,
+    "trail_cap_steps": 256,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0042,
+     "lost_trials": 84,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.05115,
+     "lost_trials": 1023,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.00825,
+     "lost_trials": 165,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.01645,
+     "lost_trials": 329,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.03,
+     "lost_trials": 600,
+     "recoveries": 1320,
+     "trials": 20000
+    }
+   },
+   "rec_frac_hist": {
+    "0": 5,
+    "1": 18,
+    "2": 64,
+    "3": 75,
+    "4": 94,
+    "5": 199,
+    "6": 157,
+    "7": 173,
+    "8": 206,
+    "9": 329
+   },
+   "rec_step_hist": {
+    "10": 16,
+    "11": 33,
+    "12": 26,
+    "13": 29,
+    "14": 27,
+    "15": 38,
+    "16": 41,
+    "17": 42,
+    "18": 56,
+    "19": 60,
+    "2": 1,
+    "20": 55,
+    "21": 55,
+    "22": 47,
+    "23": 60,
+    "24": 48,
+    "25": 65,
+    "26": 75,
+    "27": 63,
+    "28": 68,
+    "29": 79,
+    "3": 4,
+    "30": 85,
+    "31": 81,
+    "32": 84,
+    "4": 4,
+    "5": 4,
+    "6": 10,
+    "7": 16,
+    "8": 19,
+    "9": 29
+   },
+   "recoveries": 1320,
+   "trials": 20000
+  },
+  "2": {
+   "S_toy": 32,
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 4,
+    "trail_cap_steps": 512,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.00245,
+     "lost_trials": 49,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.0307,
+     "lost_trials": 614,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.0052,
+     "lost_trials": 104,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.00965,
+     "lost_trials": 193,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.0183,
+     "lost_trials": 366,
+     "recoveries": 772,
+     "trials": 20000
+    }
+   },
+   "rec_frac_hist": {
+    "1": 20,
+    "2": 27,
+    "3": 43,
+    "4": 51,
+    "5": 85,
+    "6": 120,
+    "7": 102,
+    "8": 131,
+    "9": 193
+   },
+   "rec_step_hist": {
+    "10": 15,
+    "11": 13,
+    "12": 15,
+    "13": 15,
+    "14": 19,
+    "15": 17,
+    "16": 17,
+    "17": 21,
+    "18": 21,
+    "19": 26,
+    "20": 41,
+    "21": 40,
+    "22": 39,
+    "23": 30,
+    "24": 30,
+    "25": 42,
+    "26": 38,
+    "27": 51,
+    "28": 42,
+    "29": 36,
+    "30": 53,
+    "31": 55,
+    "32": 49,
+    "4": 2,
+    "5": 5,
+    "6": 13,
+    "7": 7,
+    "8": 8,
+    "9": 12
+   },
+   "recoveries": 772,
+   "trials": 20000
+  },
+  "3": {
+   "S_toy": 32,
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 8,
+    "trail_cap_steps": 1024,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0018333333333333333,
+     "lost_trials": 22,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.021166666666666667,
+     "lost_trials": 254,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.003416666666666667,
+     "lost_trials": 41,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.0069166666666666664,
+     "lost_trials": 83,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.011833333333333333,
+     "lost_trials": 142,
+     "recoveries": 324,
+     "trials": 12000
+    }
+   },
+   "rec_frac_hist": {
+    "0": 2,
+    "1": 7,
+    "2": 11,
+    "3": 13,
+    "4": 31,
+    "5": 42,
+    "6": 40,
+    "7": 50,
+    "8": 45,
+    "9": 83
+   },
+   "rec_step_hist": {
+    "10": 4,
+    "11": 5,
+    "12": 4,
+    "13": 12,
+    "14": 5,
+    "15": 14,
+    "16": 6,
+    "17": 12,
+    "18": 11,
+    "19": 13,
+    "20": 10,
+    "21": 14,
+    "22": 16,
+    "23": 14,
+    "24": 22,
+    "25": 14,
+    "26": 16,
+    "27": 10,
+    "28": 19,
+    "29": 19,
+    "3": 2,
+    "30": 23,
+    "31": 19,
+    "32": 22,
+    "5": 2,
+    "6": 5,
+    "8": 6,
+    "9": 5
+   },
+   "recoveries": 324,
+   "trials": 12000
+  },
+  "4": {
+   "S_toy": 32,
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 16,
+    "trail_cap_steps": 2048,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0013333333333333333,
+     "lost_trials": 16,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.015666666666666666,
+     "lost_trials": 188,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.003,
+     "lost_trials": 36,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.00525,
+     "lost_trials": 63,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.009333333333333334,
+     "lost_trials": 112,
+     "recoveries": 219,
+     "trials": 12000
+    }
+   },
+   "rec_frac_hist": {
+    "1": 1,
+    "2": 5,
+    "3": 8,
+    "4": 13,
+    "5": 22,
+    "6": 27,
+    "7": 38,
+    "8": 42,
+    "9": 63
+   },
+   "rec_step_hist": {
+    "10": 4,
+    "11": 3,
+    "12": 1,
+    "13": 2,
+    "14": 4,
+    "15": 7,
+    "16": 4,
+    "17": 7,
+    "18": 6,
+    "19": 5,
+    "20": 9,
+    "21": 8,
+    "22": 10,
+    "23": 20,
+    "24": 11,
+    "25": 7,
+    "26": 17,
+    "27": 15,
+    "28": 10,
+    "29": 14,
+    "30": 13,
+    "31": 20,
+    "32": 16,
+    "6": 1,
+    "7": 3,
+    "8": 2
+   },
+   "recoveries": 219,
+   "trials": 12000
+  }
+ },
+ "rule": "halt launches when completed steps >= S - reserve; reserve = N_inflight * cap, N_inflight = ceil(cap/theta) = 128"
+}

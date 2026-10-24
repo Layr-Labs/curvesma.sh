@@ -1,0 +1,412 @@
+{
+ "S": {
+  "log2": 125.82122460991792,
+  "value": "75155834044258079300444605238535429486"
+ },
+ "age_law": {
+  "1": {
+   "delta_direct_miss": 0.44846678023850084,
+   "delta_residual_all_log2": -168.60636131485282,
+   "delta_residual_report_log2": -182.12899772845847,
+   "merges_all": 51656,
+   "merges_report": 16112
+  },
+  "2": {
+   "delta_direct_miss": 0.6569918871428038,
+   "delta_residual_all_log2": -177.20370271338206,
+   "delta_residual_report_log2": -182.29608816156664,
+   "merges_all": 80243,
+   "merges_report": 9609
+  },
+  "3": {
+   "delta_direct_miss": 0.7478455095393206,
+   "delta_residual_all_log2": -181.1062242667755,
+   "delta_residual_report_log2": -183.12046401254324,
+   "merges_all": 53725,
+   "merges_report": 3827
+  },
+  "4": {
+   "delta_direct_miss": 0.8240744278454897,
+   "delta_residual_all_log2": -182.9082150997333,
+   "delta_residual_report_log2": -183.79721969902158,
+   "merges_all": 52346,
+   "merges_report": 2304
+  }
+ },
+ "claim": {
+  "claim_log2": 126.2599,
+  "denominator": 10000,
+  "numerator": 1262599,
+  "total": "2101119484081593935449101203486785598420607446101612711315392360787209639386208507021472001998369953940449053532984689634702688113541481971/20628210892583305826229355630206092479228766180180295677689633142642941569086072888839582095769600000",
+  "total_log2": 126.25980711148735
+ },
+ "components": {
+  "aux_sum": {
+   "log2": 56.509865530519065,
+   "value": "64127541879038417063/625"
+  },
+  "overflow_row": {
+   "log2": 0.0,
+   "value": "1"
+  },
+  "stop_loss_row": {
+   "log2": 95.43858250080899,
+   "value": "10885546203951637915223417031463346309815221578940112788105279/202756202762487146665021014016000"
+  },
+  "trap_charge": {
+   "log2": 36.497841552451995,
+   "value": "1234077717985989256420469239870367727818152890032345340348260809522696638087299072/12717373507894369560004692298676907336555341923310488788072363895465625"
+  },
+  "w_stress": {
+   "log2": 126.25980711072691,
+   "value": "17082981992063354296164331781071648955133398403/167716000"
+  }
+ },
+ "delta": {
+  "analytic": 9.201238775566508e-51,
+  "analytic_log2": -166.21650473297103,
+  "charged": 9.201238775566508e-51,
+  "measured": 1.7556089430539575e-51,
+  "measured_arm": "1",
+  "measured_log2": -168.60636131485282,
+  "rule": "max(measured raw-merge, normalised closed form with cap atom)",
+  "uniform_rejected": "1/128",
+  "v28_text_value": 2.1071539180686662e-52
+ },
+ "literals": {
+  "S_log2": {
+   "formatted": "125.821225",
+   "source": "ledger29.total29:S",
+   "value": 125.82122460991792
+  },
+  "aux_log2": {
+   "formatted": "56.509866",
+   "source": "ledger29.total29:aux_sum",
+   "value": 56.509865530519065
+  },
+  "claim": {
+   "formatted": "126.2599",
+   "source": "ledger29.claim29:claim_log2",
+   "value": 126.2599
+  },
+  "claim_den": {
+   "formatted": "10000",
+   "source": "ledger29.claim29:denominator",
+   "value": 10000
+  },
+  "claim_num": {
+   "formatted": "1262599",
+   "source": "ledger29.claim29:numerator",
+   "value": 1262599
+  },
+  "delta_charged_log2": {
+   "formatted": "-166.216505",
+   "source": "ledger29.delta_charge:charged",
+   "value": -166.21650473297103
+  },
+  "delta_closed_log2": {
+   "formatted": "-166.216505",
+   "source": "ledger29.delta_closed_form",
+   "value": -166.21650473297103
+  },
+  "delta_measured_log2": {
+   "formatted": "-168.61",
+   "source": "ledger29.delta_charge:measured",
+   "value": -168.60636131485282
+  },
+  "f": {
+   "formatted": "14566/41929",
+   "source": "ledger29.total29:f",
+   "value": "14566/41929"
+  },
+  "loss_rel_log2": {
+   "formatted": "-30.82",
+   "source": "ledger29.stop_loss29:loss_rel_S2",
+   "value": -30.82122460991792
+  },
+  "n_inflight": {
+   "formatted": "128",
+   "source": "ledger29.stop_loss29:n_inflight",
+   "value": 128
+  },
+  "overflow_log2": {
+   "formatted": "0",
+   "source": "ledger29.total29:overflow_row",
+   "value": 0.0
+  },
+  "ratio_over_theta": {
+   "formatted": "2.2650",
+   "source": "ledger29.moments_charged",
+   "value": 2.2649710259449494
+  },
+  "reserve_log2": {
+   "formatted": "94.00",
+   "source": "ledger29.stop_loss29:reserve_steps",
+   "value": 94.0
+  },
+  "reserve_steps": {
+   "formatted": "19807040628566084398385987584",
+   "source": "ledger29.stop_loss29:reserve_steps",
+   "value": 19807040628566084398385987584
+  },
+  "stop_log2": {
+   "formatted": "95.438583",
+   "source": "ledger29.total29:stop_loss_row",
+   "value": 95.43858250080899
+  },
+  "total_log2": {
+   "formatted": "126.259807111",
+   "source": "ledger29.total29:log2_total",
+   "value": 126.25980711148735
+  },
+  "trap_log2": {
+   "formatted": "36.497842",
+   "source": "ledger29.total29:trap_charge",
+   "value": 36.497841552451995
+  },
+  "w_stress_log2": {
+   "formatted": "126.259807",
+   "source": "ledger29.total29:w_stress",
+   "value": 126.25980711072691
+  }
+ },
+ "moments": {
+  "1": {
+   "n": 310806,
+   "ratio_over_theta": 2.2649710259449494,
+   "sums": [
+    627114,
+    2277900,
+    20637510
+   ]
+  },
+  "2": {
+   "n": 154513,
+   "ratio_over_theta": 1.9092439853982357,
+   "sums": [
+    632744,
+    5379076,
+    82159748
+   ]
+  },
+  "3": {
+   "n": 51402,
+   "ratio_over_theta": 1.242202891537826,
+   "sums": [
+    380893,
+    5295625,
+    105251851
+   ]
+  },
+  "4": {
+   "n": 33780,
+   "ratio_over_theta": 0.7447188950475276,
+   "sums": [
+    382215,
+    7186653,
+    171265161
+   ]
+  }
+ },
+ "proof": "audit_v29.py sweeps every literal and runs controls a-d",
+ "stop": {
+  "launch_interval_steps": 1208925819614629174706176,
+  "loss_bits": 7.604338684731001e-10,
+  "loss_rel_S2": 5.270925638827195e-10,
+  "n_inflight": 128,
+  "reserve_over_S": 2.6354628194135977e-10,
+  "reserve_steps": "19807040628566084398385987584",
+  "rule": "halt launches when completed steps >= S - reserve",
+  "trail_cap_steps": 154742504910672534362390528
+ },
+ "stopping": {
+  "1": {
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 2,
+    "trail_cap_steps": 256,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0042,
+     "lost_trials": 84,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.05115,
+     "lost_trials": 1023,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.00825,
+     "lost_trials": 165,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.01645,
+     "lost_trials": 329,
+     "recoveries": 1320,
+     "trials": 20000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.03,
+     "lost_trials": 600,
+     "recoveries": 1320,
+     "trials": 20000
+    }
+   }
+  },
+  "2": {
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 4,
+    "trail_cap_steps": 512,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.00245,
+     "lost_trials": 49,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.0307,
+     "lost_trials": 614,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.0052,
+     "lost_trials": 104,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.00965,
+     "lost_trials": 193,
+     "recoveries": 772,
+     "trials": 20000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.0183,
+     "lost_trials": 366,
+     "recoveries": 772,
+     "trials": 20000
+    }
+   }
+  },
+  "3": {
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 8,
+    "trail_cap_steps": 1024,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0018333333333333333,
+     "lost_trials": 22,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.021166666666666667,
+     "lost_trials": 254,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.003416666666666667,
+     "lost_trials": 41,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.0069166666666666664,
+     "lost_trials": 83,
+     "recoveries": 324,
+     "trials": 12000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.011833333333333333,
+     "lost_trials": 142,
+     "recoveries": 324,
+     "trials": 12000
+    }
+   }
+  },
+  "4": {
+   "concurrency": {
+    "bound": 128,
+    "bound_attained": true,
+    "empirical_short_trails_max_inflight": 1,
+    "launch_interval_steps": 16,
+    "trail_cap_steps": 2048,
+    "worst_case_max_inflight": 128
+   },
+   "halts": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0013333333333333333,
+     "lost_trials": 16,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "16": {
+     "halt_step": 16,
+     "lost_frac": 0.015666666666666666,
+     "lost_trials": 188,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.003,
+     "lost_trials": 36,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.00525,
+     "lost_trials": 63,
+     "recoveries": 219,
+     "trials": 12000
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.009333333333333334,
+     "lost_trials": 112,
+     "recoveries": 219,
+     "trials": 12000
+    }
+   }
+  }
+ }
+}

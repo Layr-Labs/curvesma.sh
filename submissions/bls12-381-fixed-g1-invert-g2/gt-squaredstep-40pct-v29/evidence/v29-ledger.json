@@ -1,0 +1,165 @@
+{
+ "S": "75155834044258079300444605238535429486",
+ "S_log2": 125.82122460991792,
+ "all_checks": true,
+ "claim": {
+  "claim_log2": 126.2599,
+  "denominator": 10000,
+  "numerator": 1262599,
+  "total": "2101119484081593935449101203486785598420607446101612711315392360787209639386208507021472001998369953940449053532984689634702688113541481971/20628210892583305826229355630206092479228766180180295677689633142642941569086072888839582095769600000",
+  "total_log2": 126.25980711148735
+ },
+ "components": {
+  "aux_sum": "64127541879038417063/625",
+  "overflow_row": "1",
+  "stop_loss_row": "10885546203951637915223417031463346309815221578940112788105279/202756202762487146665021014016000",
+  "trap_charge": "1234077717985989256420469239870367727818152890032345340348260809522696638087299072/12717373507894369560004692298676907336555341923310488788072363895465625",
+  "w_stress": "17082981992063354296164331781071648955133398403/167716000"
+ },
+ "components_log2": {
+  "aux_sum": 56.509865530519065,
+  "overflow_row": 0.0,
+  "stop_loss_row": 95.43858250080899,
+  "trap_charge": 36.497841552451995,
+  "w_stress": 126.25980711072691
+ },
+ "controls": {
+  "concurrency": {
+   "bound": 128,
+   "bound_attained": true,
+   "empirical_short_trails_max_inflight": 1,
+   "reserve_inflight": 128,
+   "reserve_matches_bound": true,
+   "reserve_steps": "19807040628566084398385987584",
+   "worst_case_max_inflight": 128
+  },
+  "endpoint": {
+   "arm": "1",
+   "charge_upper": 3.203963570266392e-50,
+   "charge_upper_log2": -164.41654700027155,
+   "endpoints_differ": true,
+   "lower_endpoint": 1.1037304190553748e-53,
+   "lower_log2": -175.919801185342,
+   "raw": 1.7556089430539575e-51,
+   "raw_inside": true,
+   "raw_log2": -168.60636131485282,
+   "upper_endpoint": 3.203963570266392e-50,
+   "upper_log2": -164.41654700027155
+  },
+  "literal": {
+   "claim0": "1262599/10000",
+   "claim_grid_plus_1ulp": "6313/50",
+   "fraction_changed": true,
+   "grid_changed": true,
+   "total0": "2101119484081593935449101203486785598420607446101612711315392360787209639386208507021472001998369953940449053532984689634702688113541481971/20628210892583305826229355630206092479228766180180295677689633142642941569086072888839582095769600000",
+   "total_f_ulp": "16368314490214537562495993434804359201462948984061979599591526779867887804429004286453512878886982070484578726630699475691938523378506293857/160699710886081672154683643628392946202456651871685744946573113598696553487674539396066499467673600000"
+  },
+  "loss": {
+   "arm": "1",
+   "early_halt_bigger": true,
+   "lost_fracs": [
+    0.0042,
+    0.00825,
+    0.01645,
+    0.03,
+    0.05115
+   ],
+   "monotone": true,
+   "order": [
+    "1",
+    "2",
+    "4",
+    "8",
+    "16"
+   ],
+   "rises": true
+  }
+ },
+ "delta": {
+  "analytic": 9.201238775566508e-51,
+  "analytic_log2": -166.21650473297103,
+  "charged": 9.201238775566508e-51,
+  "measured": 1.7556089430539575e-51,
+  "measured_arm": "1",
+  "measured_log2": -168.60636131485282,
+  "rule": "max(measured raw-merge, normalised closed form with cap atom)",
+  "uniform_rejected": "1/128",
+  "v28_text_value": 2.1071539180686662e-52
+ },
+ "f": "14566/41929",
+ "independent_recompute": {
+  "all_equal": true,
+  "n": 20,
+  "passed": 20
+ },
+ "literal_checks": {
+  "claim_is_least_4dp": true,
+  "claim_matches_statement": true,
+  "statement_has_aux": true,
+  "statement_has_claim": true,
+  "statement_has_inflight": true,
+  "statement_has_new_delta": true,
+  "statement_has_reserve": true,
+  "statement_has_stop": true,
+  "statement_has_sumline": true,
+  "statement_has_trap": true,
+  "statement_has_w": true,
+  "total_is_sum_of_five": true
+ },
+ "literal_sweep": {
+  "all_Y": true,
+  "n_tokens": 20,
+  "tokens": {
+   "-115": "historical:v28 code literal (withdrawn)",
+   "-128": "historical:v28 code base literal (withdrawn form)",
+   "-166.216505": "computed:delta_charged_log2",
+   "-168.61": "computed:delta_measured_log2",
+   "-171.66": "historical:v28 text literal (withdrawn, unnormalised)",
+   "-177.20": "computed:age_2_delta_residual_all_log2",
+   "-181.11": "computed:age_3_delta_residual_all_log2",
+   "-182.13": "computed:age_1_delta_residual_report_log2",
+   "-182.30": "computed:age_2_delta_residual_report_log2",
+   "-182.91": "computed:age_4_delta_residual_all_log2",
+   "-183.12": "computed:age_3_delta_residual_report_log2",
+   "-183.80": "computed:age_4_delta_residual_report_log2",
+   "-30.82": "computed:loss_rel_log2",
+   "-31.82": "computed:reserve_over_S_log2",
+   "126.259807": "computed:claim",
+   "126.259807111": "computed:claim",
+   "36.497842": "computed:trap_log2",
+   "56.509866": "computed:aux_log2",
+   "94.00": "computed:reserve_log2",
+   "95.438583": "computed:stop_log2"
+  }
+ },
+ "planted": {
+  "concurrency_fires": true,
+  "endpoint_fires": true,
+  "literal_fires": true,
+  "loss_fires": true
+ },
+ "planted_score": "4/4",
+ "stop": {
+  "launch_interval_steps": 1208925819614629174706176,
+  "loss_bits": 7.604338684731001e-10,
+  "loss_rel_S2": 5.270925638827195e-10,
+  "n_inflight": 128,
+  "reserve_over_S": 2.6354628194135977e-10,
+  "reserve_steps": "19807040628566084398385987584",
+  "rule": "halt launches when completed steps >= S - reserve",
+  "trail_cap_steps": 154742504910672534362390528
+ },
+ "trap": {
+  "cap": 154742504910672534362390528,
+  "cap_mult": 128,
+  "charge_log2": 36.497841552451995,
+  "e_l2": 2923003274661805836407369665432566039311865085952,
+  "n_trails": 62167448841664,
+  "p_per_trail_log2": -91.27212691232603,
+  "population": "trail starts",
+  "theta": 1208925819614629174706176,
+  "wasted_over_theta": 2.2649710259449494,
+  "wasted_steps": 2738181953943885435633664,
+  "wasted_theta_mult": 2.2649710259449494
+ }
+}
