@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: commuting-square Frobenius-class rho",
+  "claims": [
+    {
+      "statement": "For every nonidentity P in G1 and every z in GT, the commuting-square Frobenius-class walk in proof.md recovers Q in G2 with e(P,Q)=z. Charging every Granger-Scott square, every dense Fp12 multiply, every canonical-index selection, distinguished-point materialisation, pairing setup, verification and output, the walk uses at most 2^125.826529 target-group-operation equivalents. Under the random-image heuristic on Frobenius orbits stated in proof.md the success probability on that step bound is at least 0.39 over uniform challenges and fresh algorithm coins. Peak memory is at most 2^119.961812 bytes. Preprocessing is at most 2^21.044773 target-group-operation equivalents and is included in the total. Nonuniform advice is at most 2^0 bytes and is included in memory. No quantum step and no uncharged advice are used.",
+      "score": {
+        "numerator": "125826529",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-commuting-square-class-rho",
+      "source": "experiment.py",
+      "purpose": "On a prime-order toy group with 12 dividing the order minus one, check that every collision of the canonical-orbit walk recovers the discrete log or is singular, and report the fraction of walks that collide within ceil(sqrt(pi*orbits/2)) steps. A wrong logarithm aborts the run. This does not establish production field costs or the BLS12-381 heuristic extrapolation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 13,
+            "maximum": 20000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          }
+        },
+        "required": [
+          "order",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 10009,
+          "trials": 200
+        }
+      ]
+    }
+  ]
+}

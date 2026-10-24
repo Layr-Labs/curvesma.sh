@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: windowed squaring-backbone Pollard walk",
+  "claims": [
+    {
+      "statement": "For every nonidentity P in G1 and every z in GT, the scheduled Pollard walk in proof.md recovers Q in G2 with e(P,Q)=z. Charging every Granger-Scott square, every dense Fp12 multiply, the shared squaring-backbone jump table, pairing setup, distinguished-point probes, verification and output, the walk uses at most 2^127.720581 target-group-operation equivalents. Under the random-image heuristic stated in proof.md the success probability on that step bound is at least 0.39 over uniform challenges and fresh algorithm coins. Peak memory is at most 2^121.917792 bytes. Preprocessing is at most 2^21.000389 target-group-operation equivalents and is included in the total. Nonuniform advice is at most 2^0 bytes and is included in memory. No quantum step and no uncharged advice are used.",
+      "score": {
+        "numerator": "127720581",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-sqchain-pollard",
+      "source": "experiment.py",
+      "purpose": "On a prime-order toy group, check that every collision of the windowed squaring-backbone schedule recovers the discrete log or is singular, and report the fraction of walks that collide within ceil(28/25 * sqrt(pi*order/2)) steps. A wrong logarithm aborts the run. This does not establish production field costs or the BLS12-381 heuristic extrapolation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 20000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          }
+        },
+        "required": [
+          "order",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 10007,
+          "trials": 200
+        }
+      ]
+    }
+  ]
+}
