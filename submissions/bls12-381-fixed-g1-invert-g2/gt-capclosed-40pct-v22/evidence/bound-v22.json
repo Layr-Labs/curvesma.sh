@@ -1,0 +1,12 @@
+{
+ "guarded_element_repeats": 55133,
+ "guarded_joint_repeats": 3816,
+ "monotonicity_guarded_le_unguarded": true,
+ "monotonicity_joint_le_element": true,
+ "reading": "the guard ADDS a coordinate to the state, so a joint repeat implies an element repeat (measured), and the guarded element stream repeats no more often than the unguarded one (measured): E[joint repeats] <= E[birthday count over r-1], which is the iid birthday value used as an UPPER bound in the trap row",
+ "step_pairs": 159200,
+ "step_source": "classkey.step (shipped) vs classkey.step_v13 (guard-off control)",
+ "steps_per_walk": 200,
+ "unguarded_element_repeats": 130634,
+ "walks": 800
+}
