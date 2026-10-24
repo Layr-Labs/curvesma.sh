@@ -1,0 +1,69 @@
+# Live-object rows for p256-ecdlp v10l
+
+Intake is UTF-8 only (`llm-verifier: utf8_required at ["evidence/p256_recproc_v10l.o"]` on
+submission 05fe3838), so the object itself ships gzip+base64 as
+`p256_recproc_v10l.o.gz.b64` and the rows below are the ones taken from it.
+
+    build:   clang -O2 -fPIC -Wall -fPIC -Wno-unused-const-variable -c p256_recproc_v10l.c -o p256_recproc_v10l.o
+    sha256:  4db376a3710f05b2cf41273753e498b920b126f8d26678cd5109d75fd932fc31
+    bytes:   26488
+    decode:  base64 -d p256_recproc_v10l.o.gz.b64 | gunzip > p256_recproc_v10l.o
+    then:    nm -g p256_recproc_v10l.o ; size -m p256_recproc_v10l.o ; otool -tV p256_recproc_v10l.o
+
+## nm -g (external symbols: the counted chain has external linkage)
+
+                 U ___stack_chk_fail
+                 U ___stack_chk_guard
+                 U _printf
+                 U _puts
+0000000000000000 T _batch_inv
+0000000000000b00 C _W
+0000000000000dd8 T _step_forward
+0000000000001220 T _step_close
+0000000000001d04 T _fe_mul_probe
+0000000000001f54 T _recproc_round
+0000000000001fac T _rec_addr
+0000000000001fbc T _recproc_insert_price
+0000000000001fe0 T _recproc_layout
+0000000000002038 T _recproc_init
+0000000000004350 T _main
+0000000000005148 S _trap_detected
+0000000000005150 S _batch_inv_calls
+0000000000005158 S _batch_inv_denominators
+0000000000010000 C _TLOG
+0000000000010000 C _TLOG2
+0000000000010000 C _TX
+0000000000010000 C _TX2
+0000000000010000 C _TY
+0000000000010000 C _TY2
+
+
+`T _batch_inv`, `T _recproc_round`, `T _step_forward`, `T _step_close` are TEXT symbols with
+external linkage, and `_batch_inv_calls` / `_batch_inv_denominators` / `_trap_detected` are
+the exported counters the census reads back. Mach-O `nm` reports size 0 for all text symbols
+(Apple nm: "sizes with --print-size for Mach-O files are always zero"), so the byte extents
+are given by the symbol-boundary spans below, which is also what the instruction pricing uses.
+
+## size -m
+
+Segment : 118772416
+	Section (__TEXT, __text): 19428
+	Section (__DATA, __common): 24 (zerofill)
+	Section (__TEXT, __const): 352
+	Section (__DATA, __bss): 118751584 (zerofill)
+	Section (__TEXT, __cstring): 318
+	Section (__LD, __compact_unwind): 576
+	Section (__TEXT, __eh_frame): 128
+	total 118772410
+total 118772416
+
+
+## symbol-boundary spans (otool -tV, bounded by the next symbol start in this object)
+
+see evidence/stepspans_core.json: step_forward 238 instructions, step_close 660 (44 mul,
+54 umulh), batch_inv longest iteration 274, fe_mul probe 147, recproc_round 21.
+
+## live counters, read back after the census in the same process
+
+see evidence/live_binary.json: batch_inv_calls 0 -> 64, batch_inv_denominators 0 -> 512 on
+512 walker-steps.

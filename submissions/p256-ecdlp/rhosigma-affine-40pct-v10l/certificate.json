@@ -1,0 +1,80 @@
+{
+ "assert": {
+  "batch_inv_denominators": true,
+  "batch_inv_live": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "cp_calibrated": true,
+  "storage_fits": true,
+  "success_ge_floor": true
+ },
+ "binds": {
+  "cp_calib.json": {
+   "bytes": 896,
+   "sha256": "d2c4dc0e68dd03da061990e54c5fa6b42b45fe56b9ade54e50147edbe98832a9"
+  },
+  "insert_path.json": {
+   "bytes": 700,
+   "sha256": "42608991bc35435ac8f070dc5561e3b812475d4cd0c3f704adc5680f36e8a25b"
+  },
+  "invariant_fit.json": {
+   "bytes": 5457,
+   "sha256": "517027931acd1ff19ab9abea2eb7ced71123402ba0b4403ff930df0f87f3fcbf"
+  },
+  "ledger.json": {
+   "bytes": 2475,
+   "sha256": "04367d9e0d2147b9dac2c0127dcc313f257e8636518e96fbbcf17e7030879300"
+  },
+  "live_binary.json": {
+   "bytes": 492,
+   "sha256": "bbb874cf55b145aa26945719975f4c337b6ffbb8cdc19491d7c6747a1b03acb3"
+  },
+  "p256_fe_cc.h": {
+   "bytes": 7254,
+   "sha256": "9383f8e6423af14deeb3699ffcd5ab250b42d675f5bb8b57a80dae882ebb51ab"
+  },
+  "p256_point_walk_test.c": {
+   "bytes": 11674,
+   "sha256": "f9dcabcdc96105ee5567bc96c6320dda1f30c3d1e56a0dcdaaf0b29589db007e"
+  },
+  "p256_recproc_v10l.c": {
+   "bytes": 24390,
+   "sha256": "208e66217c12a9ac11f891ae8d7a0bb9bad5bba08846c15597ccbe11e0cbd7ef"
+  },
+  "p256_recproc_v10l.dylib": {
+   "bytes": 51704,
+   "sha256": "fb7870328721c1642c138b4d6c41e3b25ac3115c32eaba9881245c2c1f1ddcae"
+  },
+  "p256_recproc_v10l.o": {
+   "bytes": 26488,
+   "sha256": "4db376a3710f05b2cf41273753e498b920b126f8d26678cd5109d75fd932fc31"
+  },
+  "stepspans_core.json": {
+   "bytes": 890,
+   "sha256": "aaf72d8fa486930c42bda09e2f99bdba723db25d68c185d0220b720dc9f005f1"
+  },
+  "trap_census.json": {
+   "bytes": 2317,
+   "sha256": "8f31dfdf201df4ba618123cf10d35a2d7d24be11e5f25041cdfd70c7afc04640"
+  },
+  "walkmap_census.c": {
+   "bytes": 10619,
+   "sha256": "1f73a22896c25b4338df05aba3fed94845ff05cec13377ba169daf7101d84714"
+  },
+  "walkmap_census.json": {
+   "bytes": 603,
+   "sha256": "770ab72d441f42450375565d5180de724058e1963046a27ea01ae5d60b2d2cd1"
+  }
+ },
+ "claim": 128.8794,
+ "generated_from": [
+  "evidence/ledger.json",
+  "evidence/live_binary.json",
+  "evidence/stepspans_core.json",
+  "evidence/trap_census.json",
+  "evidence/insert_path.json",
+  "evidence/cp_calib.json"
+ ],
+ "pass": true,
+ "version": 1
+}

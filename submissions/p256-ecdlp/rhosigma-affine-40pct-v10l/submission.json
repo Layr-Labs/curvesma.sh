@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk v10l: counted-from-the-shipped-object pricing (batch_inv live, nm + call-counter proven), A,B,A,B trap censused and guarded with a priced 4-step detector, insert-path store repriced, CP calibrated, claim 128.8794",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1288794",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table affine sigma walk of argument.md is claimed at total classical work at most 2^128.8794 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, with per-instance success 0.2297 and w=2 amplification success 0.4066 >= 0.39.\n\nCOUNTED-BINARY (judge 55652457 item 3, c0376361 item 1). One translation unit, one build: p256_recproc_v10l.c compiles to p256_recproc_v10l.o with clang -O2 -fPIC (sha256 4db376a3..., 26488 B). Intake is UTF-8 only, so the object ships gzip+base64 as evidence/p256_recproc_v10l.o.gz.b64 with the nm/size rows in evidence/nm_symbols.txt; `base64 -d | gunzip` reproduces it byte for byte. The census dlopen()s p256_recproc_v10l.dylib LINKED FROM THAT OBJECT and the instruction spans are taken from that same object. batch_inv has external linkage and __attribute__((used)); recproc_round() -- the counted entry point -- calls step_forward -> batch_inv -> step_close, so no build can strip it. Measured: counters before calls 0 / denominators 0 -> after calls 64 / denominators 512 on 512 walker-steps, i.e. every walker-step pushed exactly one denominator into a live inversion (evidence/live_binary.json). The prefix product is computed ONCE, inside step_forward; batch_inv consumes PRE and never writes it, so the v10k duplicate is gone by construction, not by assertion. The dead-code artefact shows in the corrected spans: step_close is 660 instructions with 44 mul and 54 umulh (three field multiplications actually present) against v10k's reported 423 with 4 mul and 0 umulh. The charge is therefore HIGHER than v10k's and is priced from the shipped object: step_forward 238 + step_close 660 + back-substitution 274 + denominator scan 14 + inversion share 0.8613 (384 fe_mul x 147/65536, fe_mul span measured in the same object) + rare-event reserve 0.6398 = 1187.501.\n\nTRAP CENSUS (judge c0376361 item 2). The v10k map admitted the A,B,A,B family: rows repeating with period 2 plus canonicalisation signs e1=-e2, e3=-e4 (2 of 4 free bits) returns H exactly. evidence/walkmap_census.c censuses that map directly on a real short-Weierstrass fixture (p=2^25-39, 2048 rows, 2^25 points, two tables, even-y canonicalisation). Measured class lag-2 precursor 0.000536 (2^-11, as theory requires), so the unguarded closure rate is 7.182e-08 per 4-step window, i.e. 2^87.6 closures per 2^111.63-step walker: the v10k success was unsupported and is CONCEDED. v10l ships two changes and prices both: the row is (class XOR previous row) & 2047, an exactly uniform bijection on the class that breaks the period-2 row repetition, and a per-walker 4-step-back x ring whose match IS the period-4 trap (y is canonicalised even, so x determines the point), escape latency 4. The detector is inside the 660-instruction step_close span, and trap_detected is an exported counter read back by the census. Over 22744718 guarded steps and 400 starts, period<=6 cycles 0 and period-4 returns 0: that is an observation, and the safety argument rests on the measured rate rows, not on the absence.\n\nCP (judge 55652457 item 1). The helper now solves Pr_p[X>=k]=0.05; it returns 0.9941660443994438 for 512/512 (=0.05^(1/512), exact) and 0.8977466 for 95/100, binomial-tail residual 0.05 to 1e-15; coverage of 4000 synthetic binomial runs at p=0.3, n=20000 is 0.94825 (target 0.95+-0.005), and the corrected 4942/20000 endpoint is 0.24209, BELOW p_hat 0.2471 as a lower endpoint must be (v10k reported 0.25212, above it). The shipped success probability does not use CP-minus-residual: it is the fitted saturation law A(1-exp(-ltheta/tau)), A=0.2421 tau=3.35, anchor residual 0.0095, at ltheta=2^49.632, giving p=0.2297 and 1-(1-p)^2=0.4066, margin 0.0166 over the 0.39 floor.\n\nRECORD STORE (judge c0376361 item 3). 65.6315-bit records at 104 B, load factor 0.77, so 66.0086-bit slots: 2^66.01 slots addressed by a 66-bit composite (32-bit shard id + 34-bit in-shard ordinal) mechanised in rec_addr(), 8 B per slot, index 2^69.01 B, records 2^72.332 B, total 2^72.469 B against the 2^73.0 B cap. New records are priced on the INSERT path (unsuccessful search): 9.952 expected probes x 24 + 201 = 439.8 instructions per record, 9.538e-17 per walker-step, under 1e-16 bits of the claim.\n\nDENSITY: Lambda=S^2/(2N')=0.600000 with S=2^127.631517 and N'=(r-1)/2=2^255.000, matched in all nine fixture cells; ltheta=2^49.632; nu=2^-61.87, record-record coincidences rejected by full-point verification.\n\nMEASURED PRICE: W_single=127.631517+log2(1187.501/1000)=127.879446; w=2 = 128.879446; claim 128.8794.\n\nSELF-TEST: 64 rounds x 8 walkers x SPR 8 = 4096 genuine walker-steps through recproc_round (the counted entry), invariant P==[a]G+[b]Q checked after every step (baseline 0 failures, walk 0 failures), synthetic collision solved and verified (1), 62-bit DP mask in the binary. NOT CLAIMED: any production-length execution, any authenticated prior acceptance.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/bucket.json",
+    "evidence/census_multiscale.json",
+    "evidence/census_v10f41.c",
+    "evidence/invariant_fit.json",
+    "evidence/ledger.json",
+    "evidence/live_binary.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_recproc_v10l.c",
+    "evidence/p256_recproc_v10l.o.gz.b64",
+    "evidence/nm_symbols.txt",
+    "evidence/point_walk.json",
+    "evidence/prod_params.json",
+    "evidence/recproc_run.json",
+    "evidence/stepspans_core.json",
+    "evidence/trap_census.json",
+    "evidence/walkmap_census.c",
+    "evidence/walkmap_census.json",
+    "evidence/insert_path.json",
+    "evidence/cp_calib.json",
+    "evidence/verdict-v10k.md",
+    "evidence/verdict-v10k-b.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
