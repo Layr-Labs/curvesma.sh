@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon reduction with H-prime semiprime walks, sort-based matching, drawn coins, capacity and caps",
+  "claims": [
+    {
+      "statement": "Setting: BLS12-381 G1, generator P0 of prime order r, d=2^20 (6d divides r-1), input T=A_1=[s]P0 and A_i=[s^i]P0, i<=n, n>=2^20 (only T and A_d are read, so the bound holds for every n>=2^20 including 2^20), s uniform in 1..r-1. Claim: the classical attack of proof.md recovers s with success probability at least 0.39 for every input and over fresh algorithm coins, using at most 2^116.7923 total target-group-operation equivalents (one equivalent = one batched incomplete affine G1 addition = 2000 AArch64 instructions, C=2000), including all preprocessing (at most 2^115.80, included), randomness, capped prime searches, failed runs, record routing, sorting, matching, caps, verification, output and the final scalar check; peak memory at most 2^124.1 bytes (2^74 owner nodes at 2^50 bytes each, 2^20 generating nodes at 2^50 and 2^31 storage nodes at 2^40, each counted at its full declared RAM); no advice, no quantum step, no retry. Attack (proof.md Sections 2-8): Cheon's reduction to z=s^d in the order-m subgroup H of d-th powers, m=(r-1)/2^20. The attack draws t uniform in F_r^* and tau uniform in F_r^*: it works on T'=[t]T and A'_d=[t^d]A_d, so z'=t^d z is uniform on H for every input and the success probability is exactly |S|/m with S the set of z values of the pair list; every base point is scaled by tau, so every record key is a function of the drawn coins and the key ensemble is not a fixed key set. Baby and giant scalars are products a*w of two H-primes (primes q with q^m=1 mod r), w from the list W of the first 2^50 H-primes above 2^39 and a from disjoint lists of H-primes in (2^77,2^96), each list built by one capped segmented sieve (candidate caps 2^78 and 2^94 odd integers, about 5x the expected scan) that trial-divides every candidate by every prime below the square root of the interval top, 2^40 for W and 2^48 for the base lists, so every survivor is prime by complete trial division and there is no Miller-Rabin base set and no primality probability; one 234-bit square-and-multiply mod r per surviving prime, charged at the number of primes the capped interval holds (2^73.26 and 2^88.99, Dusart's bound); the search itemises at 2^78.17 and 2^93.90 units and is charged 2^79 and 2^95 in every run; both caps are deterministic functions of the fixed modulus, built before t and tau are drawn and fully charged whatever they find, so the prime search carries no probability term, and the construction proceeds on the H-primes the charged sieves find and count (H2 only sizes the intervals, with about 5x and 7x headroom over the predicted scan). Each chain advances by one batched incomplete affine addition per step from a table of even multiples [g]Q, g<=2^33. The N=2^115.6644 baby and N giant points (6N^2/m=0.52) give 224-bit keys (bits 1..224 of the even one of y, p-y) invariant under the six GLV/negation automorphisms. The 2N=2^116.6644 records of 48 bytes are matched on a shared-nothing cluster with 2^50 bytes of RAM per forwarding node and no remote-memory instruction: the per-node record capacity C=(2^50 - 2^47.251 bytes of auxiliaries)/96=2^43.1827 records fixes the node count at every stage, since a pass must hold 2N records somewhere, so 2N needs at least 2N/C=2^73.4817 receiving nodes and the cluster uses S=2^74 forwarding and owner nodes (two 37-bit address digits), giving mu=2N/S=2^42.6644 records per node per stage and C/mu=1.4323; each record is routed by 2 passes on 37-bit digits of the 74-bit key prefix (29 instructions each: 19 control including the block-base add, the madd that adds 48*fill_count and the fill-count writeback, 4 for the full-block posting share, 6 transport copy) and sorted by 2 local LSD passes on 34-bit digits (25 each) to a 142-bit sort prefix, then scanned once (10); after the second pass each owner drains its arriving records into its sort buffer (10). The layout is chosen by an exact scan over pass counts, digit widths and node RAM: the scan prices every shape from its per-record row, its capacity at the declared RAM, the node count its own digits fix, its fixed rows and its total, and marks the infeasible ones (three routing passes plus one local pass needs a 2^59-byte histogram; two 36-bit digits leave C below mu). A bigger node does not win: at 2^64 bytes the total falls to the 2^116.7894 floor that 2Nc alone sets, 0.0029 bits below this claim, but that node holds 2^87 records and sorts them in one place, which is the flat-memory model, so the shipped layout keeps a routed cluster of 2^74 nodes. Success: the birthday model on S gives 1-e^-0.52=0.4054794, less a flat 0.01 model allowance (10x the 0.11 percentage point deviation measured at toy scale), less per-node cap bounds (2^-44.02, 2^-543037, 2^-36.27 at the 2^28-comparison and 128-verification caps), less the routing loads (a union bound under H3, independent uniform orbit keys: pass 2 and the final bucket, 2^74 nodes x 2^-6.897e10 = 2^-6.9e10; pass 1, 2^37 first-digit slabs x 2^-2^73.005 = 2^-2^73): success >= 0.3954794 >= 0.39. The posting charge is one global total over the whole run: 2*[(2N/25)*100 + (2^74+2^20+2^31)*2^37*107] + 107*2^20*2^74 = 2^120.2755 instructions, carried exactly by the 4-per-record-per-pass share, the final-block row and the pass-1 marker row, with no per-node bound on the records a node handles (a generating node streams 2^96.6644 records and holds none) and no mean; each pass is an exchange along one address digit, no stage's inbound is deterministically bounded by C, and under H3 every pass has its own union bound (pass 1 at most its first-digit slab's count over 2^37, i.e. N_a/2^37 + 26*2^20 <= C, with a digit-slab Chernoff 2^-2^73.005 per slab over 2^37 slabs, 2^-2^73 in all; pass 2 exactly its owner bucket, mean mu, with the bucket Chernoff 2^-6.897e10 over 2^74 nodes), those two events being the only exceptions to the C-record test, the records of a pass being held in one of the node's two C-record buffers while it routes the other out; the two buffers, the open-block area and the receive ring with per-block credits give a deadlock-free schedule (no receiver's copy-out waits on a sender) and the final block per destination detects the end of each pass, pass 1's markers being one per (generating node, owner) pair; W and the base lists are arrays of 16-byte fields (value in bits 0..96; every accepted base prime is below 2^96; 16-bit tag in bits 112..127) on the 2^31 storage nodes, a label resolved by a request/reply whose cost is inside the verification cap, and the walk stream reads one field per record; all F_r arithmetic is priced at a 128-instruction 4-limb Montgomery multiply. Ledger (unit 2000 instructions): 2Nc=2^116.7893 (c=1.0905, 181 itemised instructions per record) plus 2^107.8347 of fixed rows = 2^116.792250, score 1167923/10000.",
+      "score": {
+        "numerator": "1167923",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "evidence.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "mode all (the single initial run) runs ledger, coverage, distinct, ec and quotes, about 8 s. ledger: exact recomputation of the per-record row (181 itemised), the 74-bit owner id with its two 37-bit routing digits, the node count derived from the record capacity C of a declared 2^50-byte node (2N/C and the per-stage load table), the record and 16-byte prime-field layouts, the global posting total 2*[(2N/25)*100 + (2^74+2^20+2^31)*2^37*107] + 107*2^20*2^74 and its equality with the three rows that carry it, the scanned layout table (passes, routing and local digit widths, node RAM, node count, capacity, window, fixed rows and total for every shape, the infeasible ones marked with the reason), the two 34-bit LSD passes and the 142-bit sort prefix, every per-node fixed row, the capped H-prime searches with their itemised sieve, per-segment table and H-test costs and their charged values and the 128-instruction F_r multiply, the per-node run-pair and verification caps with their failure bounds, node capacity and its Chernoff margins for a bucket and for a pass, the success line, memory, the storage-node field budget, and the exact integer score (smallest k with W^10000 <= 2^k). coverage: scalar-level toy success at three primes against the diagonal-corrected Poisson model. distinct: occupied residues over all baby/giant ratios at one toy, the support for the success-set model allowance. ec: Algorithm A end to end on toy j=0 curves with truncated keys, a false-match cap, and the d-th root selected by matching T before the recovered scalar is compared. Each mode can be rerun with more trials. quotes prints every derived quantity the text quotes, at the display precision, and fails unless each printed string appears verbatim in proof.md and NOTE.md. Toy results are evidence at toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "ledger",
+              "coverage",
+              "distinct",
+              "ec",
+              "quotes"
+            ]
+          },
+          "toy": {
+            "type": "string",
+            "maxLength": 8,
+            "enum": [
+              "t28",
+              "t30",
+              "t32"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "K_permille": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 2000
+          },
+          "key_bits": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 2026
+        }
+      ]
+    }
+  ]
+}
