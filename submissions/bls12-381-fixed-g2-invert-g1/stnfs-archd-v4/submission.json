@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: STNFS in F_{p^12} with a defect-audited relation matrix, explicit A^T A square black-box Wiedemann, and a descent terminating exactly at the factor base",
+  "claims": [
+    {
+      "statement": "For every production instance (uniform nonidentity Q in G2, uniform z in GT, including z=1), the algorithm in proof.md returns P in G1 with e(P,Q)=z (P=infinity exactly for z=1) with success probability at least 0.39 over the uniform challenge and the algorithm's coins (>= 0.99982 under the stated heuristics). The attack solves the GT discrete logarithm of z base g=e(P0,Q) (a route the track rules explicitly admit) with a Special Tower Number Field Sieve in F_{p^12}: tower h = y^6+y^3+y^2-y-1, f = x^12-2y x^10+2y^3 x^6+y^5 x^2+(-y^3-y^2+y+1), g = x^2+|u|y (resultant identity checked exactly, evidence.py part [0]); automorphism x -> -x (aut = 2). Relation collection over the 12-dimensional (a,b) space restricted to a SIGMA-SYMMETRIC yield-weighted covariance ellipsoid of volume fraction 1/32 (refit on a full-box 500k exact-norm pool with a/b cross blocks zeroed; bit-exact sigma-invariance verified on every held-out sample, part [2b]); yield measured on the disjoint 400k held-out pool (in-box mass 0.02813); every sieved point charged, yield credited only from the in-box part; exact B-smoothness, no large primes. ARCH-D: small ideals sieved per 3-dim slab (coords 2,3,4, mean slice 1.4183 A^3); large ideals walked once per conjugate pair, each hit canonicalised and routed. Production slab id: 9 coordinates in balanced radix 4097 (108-bit id, two uint64 words), injective on the measured production bound |v_i| <= 1699.1 at A = 2^10.00 (part [2c]), with exact in-slab strides. C_HIT is charged at 256: 161.8 retired instructions per hit measured on archd_hit2.c with full production addressing, plus the routing hop, times a 1.58x production-envelope pad covering lattice/node-density variation; the per-hit path does not depend on the node count, and the sensitivity to C_HIT is flat. Smaller sieve constants are v1 static counts padded 1.25x. Operating point A = 2^10.00, B = 2^63.75, EXCESS = 2 collected relation points per factor-base element (0.25-bit yield margin). Linear algebra charges the RAW COLLECTED rectangular system A: m = EXCESS*U = 2U rows by N = U+41 columns with NO filtering credit, reduced to the explicit square black box B = A^T A (rank(B)=rank(A), ker(B)=ker(A)): one B-product is an A-product plus an A^T-product (2*m*c_row), block Wiedemann uses 3N products plus N^2*147 instructions of Berlekamp-Massey, giving 2^118.715 units. Sparse-support solvability is computed, not asserted: with R = 2U charged rows and the per-ideal Poisson model, E[zero columns] = 5.39e16 (7.65% of the FB), E[same-row singleton pairs] = 7.29e15 and E[identical support-2 pairs] = 0.025; the defect set Z (zero columns plus ideals in singleton/size-2 support collisions) is 9.72% of the FB, is detected during matrix construction in O(nnz+R), and is ELIMINATED by singleton/duplicate-support filtering (each defining row expresses one eliminated unknown and is removed with the class; the LA is charged on the pre-filtering m,N, so this only reduces work). After dropping Z the remaining columns have unique supports of size <=2; isolated singletons are independent, and the expected number of 3-column dependencies from F_r coincidences is O(|W|^3/r) < 2^-80, so rank(A_W)=|W|-1 and the kernel on W is 1-dimensional. The descent's terminal factors are required to lie in W; a +1.0 bit retry pad covers discarding candidates that hit Z. Individual logarithms: boot = subfield-coset lattice L_z (det=p^6 verified exactly, part [7a]), LLL once per boot (2^25 charged), candidates sieved at 482 instr/point with ECM, boot g-side norms MEASURED (part [7b]); special-q nodes may place the prime on EITHER side, both norms are factored and both sides' children counted, and EVERY chain ends exactly at the terminal bound B0 = 2^63.75 (asserted at run time; the code refuses uncharged residual children above B0, part [6c]/[7c]); best chain [166,125,85,70,66,63.75] at 2^96.56 per log, two logs 2^97.56, metered cap 2^110 (Markov abort <= 1.8e-4). Total work W <= 2^120.246690 target-group-operation equivalents (1 unit = one dense Fp12 multiplication = 20,000 AArch64 instructions), full ledger: relation collection 2^119.633 + linear algebra 2^118.715 (= 2^120.245502 together) + descent cap 2^110 + Schirokauer 2^83 + factor-base construction 2^68 + misc 2^60 + verification 2^11; evidence.py prints total_log2W_full_ledger = 120.246690. No preprocessing or advice beyond charged work. Peak memory 2^126.973 bytes over ~2^62.97 nodes (reported, not scored), using the EXACT 3-slice bbox/volume ratio 1.951093 computed from the embedded covariance (part [3b]). Comparison: orbit-12 rho step floor 2^125.96, best public claim 125.73, best NFS claim 123.98. Unclaimed merge credit is reported as a sensitivity, not taken. All heuristics are disclosed in proof.md section 12: H1 smoothness; H1' yield margin; H2 measured region capture plus sigma-invariance plus injectivity; H3' defect-audited matrix with the quantitative identical-support/F_r dependency bound; H4 kernel constants (C_HIT charged at a 1.58x production envelope; full-size orchestration not executed); H5 measured boot plus a complete both-sides special-q tree ending at B0; H6 pairing transfer. This is an analytic cost claim supported by exact-norm simulation, exact boot-lattice measurements, and retired-instruction kernel counts, not a full-size execution.",
+      "score": {
+        "numerator": "120246690",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One stdlib-only run. (0) Exact resultant check. (1) Dickman self-test. (2) Held-out exact-norm verification and bit-exact sigma-invariance. (2c) Production slab-id injectivity (radix 4097, production coordinate bound, rejected-alias reproduction, collision tests, exact in-slab strides). (3) Slab geometry and the EXACT 3-slice bbox/volume ratio (part [3b]). (4) Joint (A,B) optimizer with the A^T A square black-box LA charge, EXCESS=2, C_HIT sweep. (4b) True peak bucket memory with the exact ratio. (5) Toy smoothness and conditioning-weight validation. (6) Exact degree-1 ideal statistics. (6b) Sparse-support defect audit (zero columns, singletons, same-row singleton pairs, identical support-2 pairs, defect set Z) at R=EXCESS*U and the quantitative rank argument. (6c) Assert B0 <= B. (7) Boot lattice verification, complete both-sides descent chains that must END at B0, and the Markov bound under the 2^110 meter. (8) LA kernel re-counts. Prints the full ledger total_log2W_full_ledger.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 2000,
+            "maximum": 20000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 4000,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
