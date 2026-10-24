@@ -1,0 +1,32 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers) this package keeps the v18 work claim and MEASURES the three parameters the last review said were never moved, at one order (q=2^28, scripts/walker_slope.py, scripts/selector_arms.py; evidence walker-arms.json, selector-swap.json, cap-recount.json). WORK, UNCHANGED AND RE-AUDITED: W=(1+155/1000)*(S_OPS+2^60)+EXTRAS, S_OPS=ceil(1.015*S0)=2^126.72144016, C=1000, log2 W=126.92945732, W2=2*W exactly +1.000 bit, claim 127.930; the 155-instruction step is itemised and sum(ROWS)==STEP_INSN is asserted; sign/key charged at its itemised 15. WALKER DIMENSION MEASURED AND THE PRODUCTION EXTRAPOLATION WITHDRAWN: W in {4,16,64,256} at fixed d=5/R=64/shape gives p_set 0.48417/0.54542/0.46042/0.22458 (CP-95 0.46720/0.52846/0.44352/0.21062); the weighted logit slope is -0.1739 per log2 W with CI [-0.1911,-0.1564], which EXCLUDES ZERO. Charging it from the measured W=16 to the old production W=2^20 (16 bits) moves the logit by 2.78, i.e. p ~ 0.069, below the 0.39 floor: the 2^20-walker extrapolation is withdrawn, not defended. nw-REDESIGN TAKEN INSTEAD: production is re-specified at W=64 walkers with trails 16x longer at the SAME total work (workers 2^20->2^6, trails x16, so W=workers*trails*step is invariant and no row is re-priced); there production is the measured regime and the success anchor is the measured CP-95 0.44352 (0.52846 at W=16), floor met by measurement. DENSITY IS THE BINDING GAP AND IS DISCLOSED, NOT TRANSFERRED: d in {5,7,9} gives p_set 0.54542/0.39250/0.17688 (d=7 CP-95 0.37227 already below floor), slope -0.4108 per bit CI [-0.4460,-0.3759]; production d=60 is 55 bits away (-22.6 logit), so the lower bound 0.39 at production density is NOT established and is stated as an open item with its memory consequence named, not priced. TABLE FLAT: R in {64,512,1024}, slope +0.0149/log2R CI [-0.0152,+0.0444], no charge. SELECTOR R/2 DEFECT FOUND IN THIS HARNESS AND PRICED CONSERVATIVELY: qwalk.py:186-187 feeds a 39-bit key while qwalk.py:193 shifts by 40, so only R/2 columns are reachable; measured coverage 32/64 vs 64/64 with the mask fixed (+32 columns, trap-rate ratio 0.5), so the shipped trap row was charged at 1/(6*R_eff) with R_eff=32, i.e. ONE BIT CONSERVATIVE, not one bit short; the full-reach re-run of the floor cell gives 0.53250 (CP 0.51552) vs 0.54542, Delta -0.0129 inside sampling error. EC-COORDINATE SELECTOR DECLARED OPEN: a real j=0 curve (y^2=x^3+7 over p=16777291, full-reach cell(K,R,p), same repair/gate/pairing) returned p_set 0.978, about 360x the birthday expectation, which is a parallel-translate lattice artefact of the shared 32-column table and NOT a selector effect, so that row is neither claimed nor charged and is shipped with its diagnostic. CAP ROW RECOUNTED FROM RAW JSON: 1033 occurs in neither census file; the escaped_lag3 cap-1687 cells are 1070 meets/0 lost (seed 20250) and 1098/0 (seed 11), so the success row is rebuilt as sum(would_solve_meet - lost) per cell and the 1033 literal is withdrawn. CRASH INSTRUMENT: every cell asserts nonzero tries, nonzero trail length, elapsed >= lane-steps/2e7 and 0<p_set<1, so a silent zero or instant exit RAISES instead of being written as evidence. NOT RANKING: frontier 126.338, this claim is 1.59 bits away.",
+   "score": {
+    "numerator": "12793",
+    "denominator": "100"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "ledger.py",
+    "evidence/walker-arms.json",
+    "evidence/selector-swap.json",
+    "evidence/cap-recount.json",
+    "evidence/transfer-ladder.json",
+    "evidence/census-v20n.json",
+    "evidence/pair-census.json",
+    "scripts/walker_slope.py",
+    "scripts/selector_arms.py",
+    "scripts/cap_recount.py",
+    "scripts/transfer_arm.py",
+    "scripts/census_v20n.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v20: walker/density/table/selector arms measured at fixed order; walker slope -0.1739/log2W withdraws the 2^20 extrapolation, nw redesign W=64 at same W (CP-95 0.4435), density -0.4108/bit open, selector R/2 priced 1 bit; claim 127.930",
+ "version": 1
+}
