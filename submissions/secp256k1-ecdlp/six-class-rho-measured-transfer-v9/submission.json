@@ -1,0 +1,152 @@
+{
+ "version": 1,
+ "title": "Six-class rho on secp256k1 with a load-normalized end-to-end success census (126.338)",
+ "claims": [
+  {
+   "statement": "For uniform full-production secp256k1 Q=[x]P, the classical cold six-class negation+GLV parallel Pollard rho attack specified in proof.md recovers x with probability at least 0.3911 under the disclosed heuristic H1, and on every run its total work is at most 2^126.338 target-group-operation equivalents because a global meter charges every action before it runs. The exact integer ledger total is W_ledger = 107529267059811478367772329467123690012431 milli-units = 2^126.337997 units (phase 1 0.752*(S_ops+2^60) < 2^126.3296, hard extras < 2^107.156, Markov allowance 2^118.910); 126.338 = 63169/500 is that total's three-decimal ceiling, and certificate.py proves W_ledger^500 < 1000^500*2^63169 and W_ledger^1000 > 1000^1000*2^126337 in exact integers. A step is charged its counted 752 AArch64 instructions from kernels/secp_loops.s (111 + 523 per walk, executed by the interpreter in experiment.py against affine arithmetic), the doubling escape 0.956 units and the traversal step 0.776; the report store, the seven counter widths and the block refills are those of proof.md section 3. SUCCESS IS MEASURED END TO END, NOT INHERITED FROM A MERGE STATISTIC. With nu = operations/sqrt(N_class) the ledger row is nu_ledger = S_ops/sqrt(N') = 1.023328, and the census measures p at nu = 0.4093, 0.7163, 1.0233 and 1.3303 on five groups that hold lambda = mean trail/sqrt(N) fixed at 0.006765 while sqrt(N) doubles from 2,365 to 75,684 (a 32x span): 2365 (dp 4), 4730 (dp 5), 18921 (dp 7), 37843 (dp 8), 75684 (dp 9). Each cell is 512 fresh fixtures x 1 trial through the shipped walk (experiment.py Walker._run, the same code path Part B uses, reached through run_trail_budgeted), which CHARGES BEFORE IT RUNS: Walker._charge is called before the addition or doubling and an exhausted meter returns without executing it, so a fixture's executed operations equal its charged operations. A fixture therefore performs exactly round(nu*sqrt(N)) operations unless it solves earlier, in which case it stops there (the census asserts, per fixture, executed == V or solved, and records the early-stop fraction per cell); the nominal budget satisfies |V/sqrt(N) - nu| <= 1e-3 in every cell (max 0.000175). A fixture succeeds only if two distinct trails collide at a distinguished class AND the shipped re-walk, coefficient solve and verification return the generated secret (x == x_secret and [x]P == Q); recovery is never chained from occupancy. At the ledger load the pooled measurement is 2127/5120 = 0.4154 with exact one-sided Clopper-Pearson 95% lower endpoint 0.4040 (10 cells, per group 0.4355, 0.4355, 0.3926, 0.4082, 0.4316, 0.4570, 0.3965, 0.3730, 0.4023, 0.4219), and the independent replication gives 1050/2560 = 0.4102. The fit p(nu) = 1 - exp(-c*nu^2) gives c = 0.5104 with RMS residual 0.0029 and maximum residual 0.0055 over the four anchors (free exponent 2.00, RMS 0.0028), i.e. the birthday form H1 assumes, so at nu_ledger the fit reads 0.4140, which is 0.0187 ABOVE the ledger's H1 row P0 = 0.3953: the measured law sits above the analytic row, not on it, and no agreement between them is claimed. What the floor needs is weaker and is measured: the pooled 0.4154 (CP95 lower 0.4040) and the analytic row 0.3953 both lie above the claimed 0.3911, which is the ledger's own P0 minus the meter term and epsilon. Trap repair, DP recovery, cap and restart behaviour are counted at the same normalized load: the 2-cycle repair fires at 7.2e-04 per operation against the model 1/(6R) = 6.5e-4 for the R = 256 partition, and p is flat over a 16x span of that rate (R = 64 gives 0.3994, R = 256 gives 0.4154, R = 1024 gives 0.4219), so success is not carried by the repair machinery; cap abandonments stay at or below 0.0078 per fixture and exceptional additions at or below 0.0020, and every one of the 6181 recorded merges in the 17408 fixtures is re-walked and verified. The off-ladder group q29 (cofactor 3, trail length 1.73x the target) gives 0.3984 at the ledger load, a measured sensitivity to the normalized trail length. The one normalized quantity a fixture cannot match is the budget per trail: the declared distinguished probability 2^-64 gives a mean trail of 2^64, so production has S_ops/2^64 = 2^62.74 operations per trail against 157 in the fixtures. That orders the completion delay after a merge, not end-to-end success across group sizes, partition sizes and escape dynamics, so NO production bound is claimed from it: the census measures the same normalized law on five group sizes with no trend in sqrt(N), and the production premise remains the disclosed H1. The step from class spaces 2^22.4..2^32.4 to 2^253.4 is an extrapolation and is labelled as one. A known-answer gate ran before any scale-up (320/320 hand-verified fixtures solved), every fixture draws a fresh RNG from a fresh seed, and evidence/nu-census.json carries the per-cell rows, pooled anchors, fit residuals, repair-rate and trail-length sensitivities, budget assertions and gate rows. Peak memory is below 2^72 bytes, preprocessing is capped at 2^59.0 units and included, no nonuniform advice is used. This is an analytical, heuristic bound, not a practical break.",
+   "score": {
+    "numerator": "63169",
+    "denominator": "500"
+   },
+   "evidence": [
+    "README.md",
+    "certificate.py",
+    "evidence/nu-census.json",
+    "experiment.py",
+    "kernels/gen_loops.py",
+    "kernels/secp_fe.s",
+    "kernels/secp_loops.s",
+    "kernels/secp_walk.c",
+    "kernels/strip_asm.py",
+    "merge_census.py",
+    "nu_census.py",
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-six-class-rho-kernels-evidence",
+   "source": "experiment.py",
+   "purpose": "Part A: production secp256k1 checks of the walk identities and truncated canonical-index rule; Part B: a scaled sequential toy pipeline on configured subgroups of y^2=x^3+7 with an unreduced subgroup-order check, a T_c census, node routing, and a long-trail trap test; kernels: limb-for-limb Python ports of the field kernels checked against big integers and affine secp256k1, instruction counts parsed from the shipped AArch64 assembly, the shipped loops executed by an interpreter, and the work-meter ledger recomputed from the prices and rows of proof.md section 5. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q25",
+       "q29"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "nodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q25",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 5,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 6,
+     "pipeline": true,
+     "kernels": true
+    }
+   ]
+  }
+ ]
+}
