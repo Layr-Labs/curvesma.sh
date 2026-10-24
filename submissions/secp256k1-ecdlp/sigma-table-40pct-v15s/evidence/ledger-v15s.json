@@ -1,0 +1,254 @@
+{
+ "kind": "ledger-v15s",
+ "method": "every counted row is a CONSERVATIVE PATH UPPER BOUND on executed instructions per call; every instruction in the span counts, INCLUDING operand-free instructions (ret, and the stp frame); branch targets matched for Darwin LBB and ELF .L; loop-bearing symbols body x trip + remainder",
+ "counting_convention": "an instruction is any line whose first token is an opcode with or without operands; `.` directives excluded; the rule is applied identically to every span, so _v15r_reset_hist is 16 (15 + ret)",
+ "composition": [
+  {
+   "row": "step_core",
+   "ir": 744,
+   "source": "evidence/step_secp_v15g.s:step_asm",
+   "calls": "1/step"
+  },
+  {
+   "row": "align",
+   "ir": 433,
+   "source": "scripts/walk_v15r.s:_v15o_align + 2*_fmul",
+   "calls": "1/step"
+  },
+  {
+   "row": "label",
+   "ir": 604,
+   "source": "scripts/walk_v15r.s:_v15o_label + 2*_rmont",
+   "calls": "1/step"
+  },
+  {
+   "row": "detect",
+   "ir": 79,
+   "source": "scripts/walk_v15r.s:_v15o_detect",
+   "calls": "1/step"
+  },
+  {
+   "row": "action",
+   "ir": 9,
+   "source": "scripts/walk_v15r.s:_v15r_action",
+   "calls": "1/step"
+  },
+  {
+   "row": "escape_act_amortized",
+   "ir": 2026.0330949416568,
+   "source": "scripts/walk_v15r.s:_v15r_escape x census-measured fire rate",
+   "calls": "per step (amortized)"
+  },
+  {
+   "row": "reset_hist_amortized",
+   "ir": 0.20354981613921302,
+   "source": "scripts/walk_v15r.s:_v15r_reset_hist x census-measured fire rate",
+   "calls": "per fire (amortized)"
+  },
+  {
+   "row": "report",
+   "ir": 125,
+   "source": "scripts/walk_v15r.s:_v15o_report (4-probe bound)",
+   "calls": "separate row"
+  }
+ ],
+ "ir_per_step": 1869,
+ "ir_per_step_with_action": 5486.624704459288,
+ "accounting": {
+  "walk": "1478513420247627912755037572055115999754960874893/1156989500",
+  "drain": "121237929984/8375",
+  "report_lookup": "14556957564499722053767461602240553865",
+  "init_for_Q": "639041/200",
+  "init_static_table": "92471296/125",
+  "recovery_solve": "8098676736/125",
+  "verification": "47345303552/125",
+  "output": "1099511627776"
+ },
+ "accounting_log2": {
+  "walk": 129.90896726760636,
+  "drain": 23.787176693516123,
+  "report_lookup": 123.45304837150199,
+  "init_for_Q": 11.641692780152244,
+  "init_static_table": 19.496717987935178,
+  "recovery_solve": 25.949254770856527,
+  "verification": 28.496717987935178,
+  "output": 40.0
+ },
+ "escape": {
+  "ir_per_fire": 159256,
+  "rows": {
+   "self_listing_upper_bound": 4800,
+   "adds": 66,
+   "add_flat_each": 744,
+   "batch_inversion": 105336,
+   "reset_hist": 16
+  },
+  "measured_fire_rate": "3515/276296",
+  "measured_fire_rate_source": "evidence/census-v15s.json:detector_fires/steps_executed (executed-step denominator; the budgeted-step rate in the same file is strictly smaller, so this is conservative)",
+  "amortized_ir_per_step": 2026.0330949416568,
+  "reset_hist_amortized_ir_per_step": 0.20354981613921302,
+  "charged_in_row": "walk"
+ },
+ "batching_schedule": {
+  "rule": "Montgomery's trick: a batch of n affine additions costs 1 inversion + 3(n-1) modmuls for the shared inversion, so the amortized inversion price per add is (INV + 3(n-1) RM)/n; every add is additionally charged its own flat add price (ADD_FLAT = step_core)",
+  "inv_ir": 60876,
+  "rmont_ir": 228,
+  "add_flat_ir": 744,
+  "walk_refill_batch": 67,
+  "walk_refill_per_step_ir": 1582.3880597014925,
+  "init_for_Q_batch": 2062,
+  "init_for_Q_batch_ir": 1470600,
+  "init_for_Q_per_add_ir": 1457.1910766246363,
+  "escape_batch": 66,
+  "escape_batch_ir": 105336,
+  "escape_per_add_ir": 2340.0,
+  "note": "the batch size is the number of adds per call, so no add waits on work that is not charged inside its own row"
+ },
+ "recovery_bound": {
+  "stopping_cap": "each worker halts at the FIRST collision it reports (v15o_report returns the resident label at the matching write) and makes exactly ONE solve attempt; a failed solve is the deterministic failure branch, never a retry",
+  "delivered_pairs_upper_bound": 1048576,
+  "solve_attempts_upper_bound": 1048576,
+  "pairs_per_attempt": 1,
+  "solve_ir_per_pair": 61788,
+  "verify_ir_per_pair": 361216,
+  "charged_recovery_ir": 64789413888,
+  "charged_verification_ir": 378762428416,
+  "candidate_pair_law": "candidate pairs = sum over reports of P(match) x pool occupancy; every delivered pair belongs to exactly one worker, and a worker stops at its first delivered pair, so the sum is bounded by the worker count 2^20"
+ },
+ "pool_addressing": {
+  "slot_rule": "slot = hash(x) mod n_slots, n_slots = 2^34 per shard (fixed cap)",
+  "probes": 4,
+  "overflow": "evict-oldest (last probed node replaced)",
+  "shard_slots": 17179869184,
+  "shard_bytes": 1649267441664,
+  "rec_bytes": 96,
+  "records": 4611686018427387904,
+  "shards": 268435456,
+  "per_shard_fits_64bit_bytes": true,
+  "total_bytes": 442721857769029238784,
+  "retention_curve_measured": {
+   "0.5": 0.962677001953125,
+   "0.75": 0.8670450846354166,
+   "1.0": 0.715057373046875,
+   "1.5": 0.4151509602864583,
+   "2": 0.224761962890625,
+   "4": 0.030223846435546875,
+   "8": 0.008153915405273438
+  },
+  "retention_source": "evidence/census-v15s.json:retention_curve"
+ },
+ "production_load": {
+  "reports_total": "116455660515997776430139692817924430920",
+  "reports_total_log2": 126.45304837150199,
+  "shards": 268435456,
+  "slots_per_shard": 17179869184,
+  "reports_per_shard": "14556957564499722053767461602240553865/33554432",
+  "arithmetic": "(reports_total / shards) / slots_per_shard = (2^126.453 / 2^28) / 2^34 = 2^64.453 per slot",
+  "per_shard_load": 2.5252296025935835e+19,
+  "per_shard_load_log2": 64.45304837150199,
+  "regime": "SATURATED: at the declared 2^62-slot pool every slot is rewritten 2^64.45 times, so the pool is a streaming filter; occupancy, not historical survival, is the quantity the collision law reads",
+  "required_property": "A report is compared against the RESIDENT records at its own write, and the shipped v15o_report copies the matching resident's label pair into its out parameters AT THAT WRITE, before any eviction. The pair the algorithm solves is therefore captured at match time and can never be lost to a later eviction: historical survival of old records is not a precondition of the law.",
+  "occupancy_law": "occupancy = min(writes, fill x slots); the measured curve gives occupancy 0.4813, 0.7151 and 0.6227 of slots at loads 0.5, 1.0 and 1.5, i.e. occupancy SATURATES near 0.72 of slots for load >= 1; production (load 2^64.45) is in that saturated regime",
+  "measured_basis": "evidence/census-v15s.json:production_load_stress -- the shipped object run with EVERY arrival writing into a small pool (several writes per slot, retention-as-history collapsed) with success measured per arm",
+  "stress_rows": [
+   {
+    "target_load": "0.5",
+    "slots": 4096,
+    "writes_per_trial_estimate": 2048,
+    "trials": 48,
+    "success": 43,
+    "p_success": 0.8958333333333334,
+    "cp95": "0.7933712172606046664213863550685346126556396484375",
+    "measured_per_slot_writes": 0.496978759765625,
+    "resets_verified": 512,
+    "floor_met": true
+   },
+   {
+    "target_load": "1",
+    "slots": 2048,
+    "writes_per_trial_estimate": 2048,
+    "trials": 48,
+    "success": 43,
+    "p_success": 0.8958333333333334,
+    "cp95": "0.7933712172606046664213863550685346126556396484375",
+    "measured_per_slot_writes": 0.9941202799479166,
+    "resets_verified": 512,
+    "floor_met": true
+   },
+   {
+    "target_load": "2",
+    "slots": 1024,
+    "writes_per_trial_estimate": 2048,
+    "trials": 48,
+    "success": 43,
+    "p_success": 0.8958333333333334,
+    "cp95": "0.7933712172606046664213863550685346126556396484375",
+    "measured_per_slot_writes": 1.9957275390625,
+    "resets_verified": 513,
+    "floor_met": true
+   },
+   {
+    "target_load": "4",
+    "slots": 512,
+    "writes_per_trial_estimate": 2048,
+    "trials": 48,
+    "success": 43,
+    "p_success": 0.8958333333333334,
+    "cp95": "0.7933712172606046664213863550685346126556396484375",
+    "measured_per_slot_writes": 4.227457682291667,
+    "resets_verified": 552,
+    "floor_met": true
+   },
+   {
+    "target_load": "8",
+    "slots": 256,
+    "writes_per_trial_estimate": 2048,
+    "trials": 48,
+    "success": 39,
+    "p_success": 0.8125,
+    "cp95": "0.69560934214886316340198391117155551910400390625",
+    "measured_per_slot_writes": 10.295654296875,
+    "resets_verified": 717,
+    "floor_met": true
+   }
+  ],
+  "allocation_model": "demand-based: a shard is materialised only when a record maps to it, so allocated bytes = min(reports x 96, shards x shard_bytes); the pool is charged at its declared capacity, not at the allocation bound",
+  "allocated_bytes_upper_bound": 442721857769029238784,
+  "allocated_log2": 68.58496250072116,
+  "sensitivity": "if a reader insists that historical survival (not match capture) gates the law, the effective class count is r x N6 with r the measured survival at that load; at load 0.5 r = 0.9627 gives S/sqrt(r N6) = 1.708781 against the fixture's 1.677048, i.e. the ledger already charges MORE steps per effective record than the census exercised"
+ },
+ "storage_bytes": {
+  "record_pool": 442721857769029238784,
+  "worker_states": 276824064,
+  "batch_prefix_scratch": 4496293888,
+  "shard_metadata": 4294967296,
+  "jump_table": 196608,
+  "code_bytes": 65536,
+  "advice_bytes": 1048576
+ },
+ "peak_storage_bytes": 442721857778098634752,
+ "peak_storage_log2": 68.5849625007507,
+ "storage_model": {
+  "worker_state_bytes": 264,
+  "worker_state_provenance": "scripts/rec_layout.h:worker_t, sizeof machine-derived by scripts/layout_assert.c with _Static_assert on every offset (264 = rec_t 88 + a,c 64 + prev0,prev1 64 + minx 32 + rep,win 16)",
+  "batch_prefix_scratch_per_worker": 4288,
+  "batch_prefix_provenance": "Montgomery prefix array, WORKER_BATCH=67 x 64 B per worker (two 32-byte field-element arrays)",
+  "shard_metadata_bytes_each": 16,
+  "peak_row": "sum(workers x worker_state + prefix scratch + record_pool + shard_metadata + jump_table + code + advice)"
+ },
+ "S_ops": "232911321031995552860279385635848861838",
+ "S_ops_log2": 127.45304837150199,
+ "mu": "1421/500",
+ "mu_note": "priced at 2.842 (measured on the long-trail v15q census; this round's normalized-budget census re-measures 1.020, so the price is conservative)",
+ "reports": "116455660515997776430139692817924430920",
+ "arrivals": "232911321031995552860279385635848861838",
+ "W": "2990711334603399327848329923686431397441720560633/2313979000",
+ "W_log2": 129.92530859627578,
+ "claim": "649627/5000",
+ "claim_value": 129.9254,
+ "selfaudit": {
+  "sum_rows_equals_W": true,
+  "planted_control_rejected": true,
+  "claim_covers_W_plus_2e-5": true
+ }
+}

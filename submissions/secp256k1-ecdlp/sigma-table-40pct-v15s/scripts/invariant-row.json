@@ -1,0 +1,11 @@
+{
+ "id": "inv-v15r",
+ "text": "P == [a]G + [c]Q",
+ "relation": "sum of terms == point at infinity",
+ "terms": [
+  {"point": "P", "coef": "1"},
+  {"point": "G", "coef": "-a"},
+  {"point": "Q", "coef": "-c"}
+ ],
+ "note": "SINGLE SOURCE for the endpoint comparison. harness_v15r.py, census_v15r.py and certificate.json all derive the comparison from this row; the v15q harness hand-wrote '[a]G == [c]Q + P' (the wrong side) and its 480 endpoint failures measured the harness, not the walk."
+}

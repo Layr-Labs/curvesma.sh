@@ -1,0 +1,82 @@
+{
+ "kind": "path-upper-bound-check-v15s",
+ "rule": "every counted row is a CONSERVATIVE PATH UPPER BOUND on executed instructions per call; every instruction in the span counts, INCLUDING operand-free instructions (ret, and the stp frame); branch targets matched for Darwin LBB and ELF .L; loop-bearing symbols body x trip + remainder",
+ "counting_convention": "an instruction is any line whose first token is an opcode with or without operands; `.` directives excluded; the rule is applied identically to every span, so _v15r_reset_hist is 16 (15 + ret)",
+ "listing": "scripts/walk_v15r.s (clang -O2 -S -fno-vectorize -fno-slp-vectorize -mgeneral-regs-only)",
+ "symbols": {
+  "_v15o_align": {
+   "static": 101,
+   "backward_branches": 12,
+   "loop_trip": 1,
+   "path_upper_bound": 101,
+   "method": "body x trip + remainder"
+  },
+  "_fmul": {
+   "static": 166,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 166,
+   "method": "acyclic: static length bounds every path"
+  },
+  "_v15o_label": {
+   "static": 148,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 148,
+   "method": "acyclic: static length bounds every path"
+  },
+  "_rmont": {
+   "static": 228,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 228,
+   "method": "acyclic: static length bounds every path"
+  },
+  "_v15o_detect": {
+   "static": 79,
+   "backward_branches": 6,
+   "loop_trip": 1,
+   "path_upper_bound": 79,
+   "method": "body x trip + remainder"
+  },
+  "_v15o_report": {
+   "static": 125,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 125,
+   "method": "acyclic: static length bounds every path"
+  },
+  "_v15r_action": {
+   "static": 9,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 9,
+   "method": "acyclic: static length bounds every path"
+  },
+  "_v15r_reset_hist": {
+   "static": 16,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 16,
+   "method": "acyclic: static length bounds every path"
+  },
+  "_v15r_escape": {
+   "static": 300,
+   "backward_branches": 1,
+   "loop_trip": 16,
+   "path_upper_bound": 4800,
+   "method": "body x trip + remainder"
+  },
+  "_v15r_init_for_Q": {
+   "static": 106,
+   "backward_branches": 2,
+   "loop_trip": 2048,
+   "path_upper_bound": 190477,
+   "method": "body x trip + remainder"
+  }
+ },
+ "simd_scan_regex": "\\b(q[0-9]|d[0-9]+|v[0-9]+\\.[0-9]+[bhsdq])\\b|movi\\.|dup\\.|ins\\.|umaxv|addv|fmla|fmul\\s+v|fadd\\s+v|ld1|st1|stp\\s+q|ldp\\s+q|eor\\.16b|and\\.16b|orr\\.16b|bic\\.16b|bsl|bif|bit\\s+v",
+ "simd_instructions_in_counted_symbols": 0,
+ "scalar_detector": "the counted TU is rebuilt with -mgeneral-regs-only, which removes the NEON register file from the compiler's model entirely (no q/d/v/s/h/b register can be allocated and no ASIMD-only instruction can be emitted); the register-class scan above ships zero matches, so this is a compiler guarantee, not a flag assertion",
+ "verdict": "PASS"
+}
