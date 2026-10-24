@@ -1,0 +1,34 @@
+{
+ "census": {
+  "arm": "prod-sweep+escape+real-restart (unconditional)",
+  "classes": 561690001,
+  "cp95_method": "exact one-sided Clopper-Pearson, Decimal; second seed pooled before the bound is taken",
+  "densities": [5, 7, 9, 11],
+  "drain": "ledger-charged window min(2 spacings, walker budget)",
+  "escape": "alternate orbit row for one step; armed throughout",
+  "restart": "K_ESC_MAX=8; a breach resamples (a,b) from the shard's coin stream and resets canon, prev and the run counter",
+  "gate_statistic": "UNCONDITIONAL end-to-end DP-record recovery (success_raw), one-sided CP-95",
+  "diagnostic_statistics": ["merge coverage (any visited class)", "pair (class_t, class_{t-1}) coverage", "DP co-record fraction of class meetings"],
+  "gated_densities": [5, 7, 9],
+  "kappa": 1.015,
+  "seeds": [20290, 31337],
+  "trials": {"11": 48000, "5": 96000, "7": 96000, "9": 96000},
+  "walks_per_trial": 64
+ },
+ "dependencies": [],
+ "expects": "167 rows, price 1.083500, log2 W 126.26594291, claim 126.266, success model 0.399014, worst gated success_raw CP-95 0.436893, co-record fraction 0.005570, merge x co_record 0.002187 (disclosed as NOT the success model), CYC3_DEBIT 9.7273e-65 at measured basin/vertex ratio 4636.333, basin tolerance 8.5966e-09, RESTART_REF 1.5145e+27, RESTART_LANE_REF 7.0340e+60 (NOT charged), restart success loss 7.64e-10, METER_CAP 8.0015e+31",
+ "regenerate": [
+  "python3 ledger.py",
+  "python3 scripts/cycle3_exhaust.py",
+  "python3 scripts/kcap_run.py",
+  "python3 scripts/medium_fixture.py",
+  "python3 scripts/selfaudit.py --inject-typo",
+  "python3 scripts/rowbind.py --plant-wrong-row"
+ ],
+ "results": {
+  "escape_run": "2400 fast-path trials, 392 fires, longest natural run 1, 0 natural restarts, 16/16 restarted lanes match the coin-replayed fresh state, counter-only control 0/16",
+  "co_record": "510 of 91569 class-meeting groups co-recorded in budget",
+  "basin": "16 fixtures x 8 x values; basin of >=3 cycles 0.6395 (q=4093) to 0.2268 (q=262147) of classes; up to 4636.333 classes per cycle vertex"
+ },
+ "sanity": "no production-size execution is claimed; the instruction count is analytic and the fixtures transfer the mechanism, not the width"
+}

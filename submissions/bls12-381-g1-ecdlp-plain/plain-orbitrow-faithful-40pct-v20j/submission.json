@@ -1,0 +1,42 @@
+{
+ "claims": [
+  {
+   "statement": "On bls12-381-g1-ecdlp-plain (input T=[x]P0, x uniform in [0,r), no auxiliary powers), the algorithm in this package recovers and verifies x by [x]G=T with probability at least 0.39, using at most 2^126.266 native-equivalent work units at C=2000. The mechanism is the mu_6 quotient walk on classes: one seed u[m] per column, m = cell(K,R,p) = (K*R)>>(bitlen(p)-1); each step applies an orbit row, so a + c*x == canon holds at every step and two DP records of one class solve x = (a1-a2)/(c2-c1). A two-step return (successor class == previous class) is repaired by re-applying the step with the alternate orbit row; a run of more than K_ESC_MAX=8 consecutive substitutions RESAMPLES (a,b) from the walker's coin stream and resets the lane's canonical state and run counter (qwalk.fresh_state, exercised by a coin-replay detector whose counter-only control fails). Absorption by cycles of length >= 3 is charged as a SUCCESS debit computed from BASIN mass, not vertex count: the exhaustive toy enumeration measures basin-per-vertex ratios up to 4636.33 and the ledger prices workers x 4636.33 x ln(N)/N, with the production basin fraction bounded by premise H3 at 8.5966e-09 (what the 0.39 floor absorbs). The recovery claim is scoped to DP records: the measured co-record fraction of visited-class meetings is 0.005570, so merge x co_record = 0.002187 and success is instead the UNCONDITIONAL end-to-end DP-record rate, whose worst gated one-sided CP-95 is 0.436893. The escape tail is priced in two rows (measured run law 4.001e31 ref, reviewer chained-fire heuristic 2.000e31 ref) and a work METER at 8.002e31 ref caps it, tripping with probability far below 2^-32; the restart costs 1.514e27 ref for fresh-start construction plus a success loss of 7.64e-10, and the alternative convention of minting a fresh lane budget per restart (7.034e60 ref) is disclosed as NOT charged because a lane's budget is fixed. The step is 167 itemised instructions at C=2000, log2 W = 126.26594291.",
+   "score": {
+    "numerator": "63133",
+    "denominator": "500"
+   },
+   "evidence": [
+    "argument.md",
+    "ledger.py",
+    "certificate.json",
+    "reproduction.json",
+    "scripts/selfaudit.py",
+    "scripts/qwalk.py",
+    "scripts/prod_sweep.py",
+    "scripts/kcap_run.py",
+    "scripts/cycle3_exhaust.py",
+    "scripts/medium_fixture.py",
+    "scripts/twist_probe.py",
+    "scripts/rowbind.py",
+    "scripts/selector.py",
+    "evidence/prod-sweep.json",
+    "evidence/escape-run.json",
+    "evidence/cycle3-exhaust.json",
+    "evidence/medium-fixture.json",
+    "evidence/c-fixture.json",
+    "evidence/twist-index.json",
+    "evidence/equivariance-rows.json",
+    "evidence/rowbind.json",
+    "evidence/selfaudit.json",
+    "public-note.md",
+    "scripts/c_fixture.py",
+    "scripts/orbit.py",
+    "scripts/probe.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "Plain G1 v20j: real fresh-coin restart (coin-replay detector + counter-only control), basin-mass absorption debit, DP co-record scoping, 126.266",
+ "version": 1
+}
