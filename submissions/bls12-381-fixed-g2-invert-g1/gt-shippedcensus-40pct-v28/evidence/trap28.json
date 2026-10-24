@@ -1,0 +1,90 @@
+{
+ "mode": "trap28-enumeration",
+ "ring_words": 6,
+ "depth": 6,
+ "Rg": 65536,
+ "measured": {
+  "steps": 7680000,
+  "multiply": 4940167,
+  "guard_conversions": 24613,
+  "branch_sqr": 2715220,
+  "f_mul": 0.6432509114583334,
+  "guard_per_step": 0.0032048177083333334,
+  "windows": 1280000,
+  "period_windows": {
+   "2": 4940161,
+   "3": 4940155,
+   "4": 4940149,
+   "5": 4940143,
+   "6": 4940137,
+   "7": 4940131,
+   "8": 4940125,
+   "9": 4940119,
+   "10": 4940113,
+   "11": 4940107,
+   "12": 4940101
+  },
+  "admissions": {
+   "2": 0,
+   "3": 0,
+   "4": 0,
+   "5": 0,
+   "6": 0,
+   "7": 0,
+   "8": 0,
+   "9": 0,
+   "10": 0,
+   "11": 0,
+   "12": 0
+  },
+  "admissions_total": 0,
+  "observer": "windows of length 2..12 tested for EVERY period p <= 12 (not only 2-slot alternating words), at depth 6",
+  "one_sided_95_poisson_upper_per_window": {
+   "2": 2.34375e-06,
+   "3": 2.34375e-06,
+   "4": 2.34375e-06,
+   "5": 2.34375e-06,
+   "6": 2.34375e-06,
+   "7": 2.34375e-06,
+   "8": 2.34375e-06,
+   "9": 2.34375e-06,
+   "10": 2.34375e-06,
+   "11": 2.34375e-06,
+   "12": 2.34375e-06
+  },
+  "independence": "the Poisson upper limit needs independent windows and is reported under that hypothesis; the charge does not use it"
+ },
+ "family_census": {
+  "short_lengths": "2..6",
+  "nmax": 6,
+  "expected_windows_fraction": 0.0,
+  "per_length": {
+   "2": 0.0,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0
+  },
+  "expected_windows_at_S": null,
+  "route": "MARKOV: the charge is the expected number of trapping windows from this exact census (P(any) <= E[count]); no independence and no observed-zero rule of three is used",
+  "extended_lengths": "7..12 NOT enumerated exactly (canonical-word count too large); covered by the period<=12 observer below",
+  "W_kappa_counts": {
+   "0": 1,
+   "1": 0,
+   "2": 12,
+   "3": 24,
+   "4": 396,
+   "5": 2160,
+   "6": 23160
+  },
+  "premise": "H4: kappa uniform on Z/12, independent of the slot; vanishing sums exact in Z[zeta] mod Phi_12"
+ },
+ "mechanism": {
+  "forced_admission_events": 120,
+  "forced_delay_mean": 31.433333333333334,
+  "forced_delay_max": 32,
+  "control_no_abort_events": 3654,
+  "control_aborts": 0
+ },
+ "seconds": 66.4
+}
