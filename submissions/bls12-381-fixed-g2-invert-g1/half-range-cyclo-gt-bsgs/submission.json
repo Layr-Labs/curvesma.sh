@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: half-range BSGS on cyclotomic compressed GT keys",
+  "claims": [
+    {
+      "statement": "For a nonidentity Q in G2 and a uniform z in GT, recover P in G1 with e(P,Q)=z under the pinned pairing convention. The deterministic half-range baby-step/giant-step procedure in proof.md succeeds with probability 1. Its lookup key is the canonical odd part of the cyclotomic decomposition plus one even-part sign bit, which is injective on unordered pairs {α, α^{-1}} because the even part satisfies a degree-2 equation over the fixed field of π^6. Total classical work is at most 2^130.116670 dense-Fp12-multiplication equivalents, including preprocessing, sorting, lookup, verification and output. Peak memory is at most 2^135.321929 bytes. Preprocessing is at most 2^128.516394 target-group-operation equivalents and is included in total work. Nonuniform advice is at most 2^0 bytes and is included in memory. No algorithm coins, restarts or uncharged advice are used. The exponential table is required by this procedure. This is an analytic generic bound, not a claim of a practical break.",
+      "score": {
+        "numerator": "130116670",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-half-range-cyclo",
+      "source": "experiment.py",
+      "purpose": "Exhaust the half-range control flow on a small additive group, check p^6 ≡ -1 (mod r) and w^{p^6} = -w in the pinned monomial basis, and exhaust the odd-part-plus-sign key on the norm-1 set of the prime field 1009. This does not establish production memory or a timed attack.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
