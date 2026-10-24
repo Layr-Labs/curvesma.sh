@@ -1,0 +1,30 @@
+{
+ "anchor": {
+  "below_p_hat": true,
+  "cp_lower_95": 0.24208569124954976,
+  "k": 4942,
+  "n": 20000,
+  "note": "the wrong helper solved the 5% quantile and returned a value ABOVE p_hat",
+  "p_hat": 0.2471,
+  "v10k_wrong_endpoint_0.05": 0.2521183560850915
+ },
+ "coverage": {
+  "coverage": 0.94825,
+  "n_per_trial": 20000,
+  "ok": true,
+  "p_true": 0.3,
+  "target": 0.95,
+  "tolerance": 0.005,
+  "trials": 4000
+ },
+ "known_pairs": {
+  "cp_lower_512_of_512": 0.9941660443994438,
+  "cp_lower_95_of_100": 0.8977466223567179,
+  "expected_0.05_pow_1_over_512": 0.9941660443994438,
+  "note_0.916": "0.916 is NOT the one-sided 95% lower endpoint for 95/100; the exact value is 0.89775 (Beta(95,6) 5% quantile). The endpoint is asserted by residual instead of by a quoted constant.",
+  "ok": true,
+  "tail_residual_512": 0.050000000000059774,
+  "tail_residual_95": 0.05000000000000038
+ },
+ "pass": true
+}

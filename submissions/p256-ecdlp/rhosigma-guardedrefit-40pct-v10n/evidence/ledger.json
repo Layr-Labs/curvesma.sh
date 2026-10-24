@@ -1,0 +1,103 @@
+{
+ "W": {
+  "A_log2_Tprod": 127.631517202749,
+  "W_amplified": 128.94360930732344,
+  "W_single_instance": 127.94360930732344,
+  "amplification_w": 2,
+  "charge_terms": {
+   "batch_backsub_instr_per_walker": 293,
+   "batch_inversion_muls": 385,
+   "batch_walkers": 65536,
+   "batch_zero_scan_instr_per_walker": 14,
+   "denominator_scan": 14,
+   "escape_rate": "modelled 2^-24 from the measured 2^-11 precursor, not measured",
+   "fe_mul_instr_measured": 147,
+   "inversion_share_per_walker_step": 0.8635711669921875,
+   "measured_from": "evidence/stepspans_core.json, decimals from otool -tV on p256_recproc_v10l.o, the SAME object p256_recproc_v10l.dylib was linked from",
+   "prefix_product_note": "computed ONCE in step_forward (1 fe_mul, inside its 238); batch_inv consumes PRE and never writes it (judge 55652457 item 3 / c0376361 item 1)",
+   "rare_event_reserve": 0.63976416015625,
+   "record_processor_share": 9.537576895554244e-17,
+   "span_method": "text-symbol boundaries only",
+   "step_close_instr_per_walker": 694,
+   "step_forward_instr_per_walker": 239,
+   "step_instructions_integrated": 898,
+   "trap_escape_cost_ir": 57277,
+   "trap_escape_instr": 682,
+   "trap_escape_share_per_walker_step": 0.003413975238800049
+  },
+  "charge_total": 1241.5067493023873,
+  "claim": 128.9437,
+  "claim_ceiling_4dp": 128.9437
+ },
+ "amplification": {
+  "floor": 0.39,
+  "meets_floor": false,
+  "note": "w=2 row recomputed on the guarded p; the 0.39 floor is not met (gap ~118 bits)",
+  "p_cp95_lower": 0.029038,
+  "p_per_instance": 0.034333,
+  "production_success_log2": -119.864,
+  "success": 0.067487,
+  "success_cp95_lower": 0.057233,
+  "w": 2
+ },
+ "assert": {
+  "batch_inv_denominators": true,
+  "batch_inv_live": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "cp_calibrated": true,
+  "rounding": "claim is the 4-dp CEILING of W, so at-most holds (judge cbc03d46 item 5)",
+  "storage_fits": true,
+  "success_ge_floor": false
+ },
+ "guarded_refit": {
+  "all_guarded": true,
+  "cells": 6,
+  "law": "no saturation plateau; p_g falls with DP density (record-coincidence channel)",
+  "pre_guard_points_in_fit": 0,
+  "production_p_g_log2_bracket": [
+   -121.0,
+   -118.0
+  ]
+ },
+ "object": {
+  "bytes": 32864,
+  "sha256": "96b736ef6dd55cc7cee4be9dac2216b48f7fb56cd40cd4d99d16139451c2990f"
+ },
+ "p_transfer": {
+  "cp95_lower_correct": 0.029038,
+  "delta_vs_2297": -0.195367,
+  "delta_vs_fit": -0.207787,
+  "headline": 0.034333,
+  "pre_guard_2297": 0.2297,
+  "pre_guard_fit_A": 0.24212,
+  "source": "evidence/guarded_refit.json: guarded-walk plateau refit (6 cells, 3000 trials, transition = shipped guard/ring/escape); the pre-guard fit A=0.24212 and v10k's 0.2297 are EXCLUDED from the refit set and appear only as delta rows"
+ },
+ "record_store": {
+  "address": "66-bit composite: 32-bit shard id + 34-bit in-shard ordinal, mechanised in rec_addr()",
+  "append_instr": 201,
+  "cap_bytes_log2": 73.0,
+  "cmp_instr": 24,
+  "index_bytes_log2": 69.00858685182882,
+  "index_entry_bytes": 8,
+  "insert_instr_per_record": 439.84310018903597,
+  "insert_share_per_walker_step": 9.537576895554244e-17,
+  "load_factor": 0.77,
+  "probe_path": "INSERT = unsuccessful search (probe to first free slot, then append), not the hit path",
+  "probes_per_insert": 9.951795841209831,
+  "record_bytes": 104,
+  "record_bytes_log2": 72.332,
+  "records_log2": 65.631517202749,
+  "slots_log2": 66.00858685182882,
+  "total_bytes_log2": 72.46936858205578
+ },
+ "selfcheck": {
+  "batch_inv_calls": 64,
+  "batch_inv_denominators": 512,
+  "escape_changes_state": 1,
+  "jump_bits_max": 256,
+  "jump_bits_min": 243,
+  "ring_depth_4_verified": 1
+ },
+ "version": "v10m-r4"
+}

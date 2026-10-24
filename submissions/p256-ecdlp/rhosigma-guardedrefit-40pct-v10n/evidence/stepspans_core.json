@@ -1,0 +1,28 @@
+{
+ "escape_cost_ir": 57277,
+ "escape_rate": 5.960464477539063e-08,
+ "escape_share": 0.003413975238800049,
+ "flags": "-O2 -fPIC",
+ "live_counters": {
+  "batch_inv_calls": 64,
+  "batch_inv_denominators": 512
+ },
+ "object_bytes": 32864,
+ "object_sha256": "96b736ef6dd55cc7cee4be9dac2216b48f7fb56cd40cd4d99d16139451c2990f",
+ "selfcheck": {
+  "batch_inv_calls": 64,
+  "escape_changes_state": 1,
+  "jump_bits_max": 256,
+  "jump_bits_min": 243,
+  "ring_depth_4_verified": 1,
+  "tables_independent": 1
+ },
+ "span_method": "TEXT symbols only bound spans (common/data symbols excluded, judge 1770e2b1 item 2)",
+ "spans": {
+  "batch_inv_iter": 293,
+  "fe_mul": 147,
+  "step_close": 694,
+  "step_forward": 239,
+  "trap_escape_span": 682
+ }
+}

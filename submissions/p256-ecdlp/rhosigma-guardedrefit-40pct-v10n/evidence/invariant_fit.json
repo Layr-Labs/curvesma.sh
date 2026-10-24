@@ -1,0 +1,232 @@
+{
+ "cells": [
+  {
+   "cell": "2p25_dp4",
+   "classes_log2": 24.995797508444074,
+   "dp_bits": 4,
+   "lambda": 0.5999506468514413,
+   "ltheta": 24.75,
+   "nu": 0.06846250381432807,
+   "p_hat": 0.239,
+   "per_walker_steps": 396,
+   "successes": 956,
+   "theta": 0.0625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p25_dp6",
+   "classes_log2": 24.995797508444074,
+   "dp_bits": 6,
+   "lambda": 0.5999506468514413,
+   "ltheta": 6.1875,
+   "nu": 0.017115625953582018,
+   "p_hat": 0.198,
+   "per_walker_steps": 396,
+   "successes": 792,
+   "theta": 0.015625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p25_dp8",
+   "classes_log2": 24.995797508444074,
+   "dp_bits": 8,
+   "lambda": 0.5999506468514413,
+   "ltheta": 1.546875,
+   "nu": 0.0042789064883955044,
+   "p_hat": 0.0975,
+   "per_walker_steps": 396,
+   "successes": 390,
+   "theta": 0.00390625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p32_dp4",
+   "classes_log2": 31.97057919495461,
+   "dp_bits": 4,
+   "lambda": 0.5998852720213026,
+   "ltheta": 277.5625,
+   "nu": 0.06845877363542548,
+   "p_hat": 0.2445,
+   "per_walker_steps": 4441,
+   "successes": 978,
+   "theta": 0.0625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p32_dp6",
+   "classes_log2": 31.97057919495461,
+   "dp_bits": 6,
+   "lambda": 0.5998852720213026,
+   "ltheta": 69.390625,
+   "nu": 0.01711469340885637,
+   "p_hat": 0.24675,
+   "per_walker_steps": 4441,
+   "successes": 987,
+   "theta": 0.015625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p32_dp8",
+   "classes_log2": 31.97057919495461,
+   "dp_bits": 8,
+   "lambda": 0.5998852720213026,
+   "ltheta": 17.34765625,
+   "nu": 0.004278673352214092,
+   "p_hat": 0.22075,
+   "per_walker_steps": 4441,
+   "successes": 883,
+   "theta": 0.00390625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p39_dp4",
+   "classes_log2": 39.00000264094528,
+   "dp_bits": 4,
+   "lambda": 0.5999996742865329,
+   "ltheta": 3172.75,
+   "nu": 0.06846530110474604,
+   "p_hat": 0.2595,
+   "per_walker_steps": 50764,
+   "successes": 1038,
+   "theta": 0.0625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p39_dp6",
+   "classes_log2": 39.00000264094528,
+   "dp_bits": 6,
+   "lambda": 0.5999996742865329,
+   "ltheta": 793.1875,
+   "nu": 0.01711632527618651,
+   "p_hat": 0.2395,
+   "per_walker_steps": 50764,
+   "successes": 958,
+   "theta": 0.015625,
+   "trials": 4000,
+   "walkers": 16
+  },
+  {
+   "cell": "2p39_dp8",
+   "classes_log2": 39.00000264094528,
+   "dp_bits": 8,
+   "lambda": 0.5999996742865329,
+   "ltheta": 198.296875,
+   "nu": 0.004279081319046627,
+   "p_hat": 0.24525,
+   "per_walker_steps": 50764,
+   "successes": 981,
+   "theta": 0.00390625,
+   "trials": 4000,
+   "walkers": 16
+  }
+ ],
+ "chi2": 4.769363667554121,
+ "chi2_dof": 4,
+ "chi2_note": "pooled Binomial heterogeneity across the plateau cells; a small chi2 against dof is the measured Nu-invariance (cells differ only in nu and scale)",
+ "fit": {
+  "A": 0.24212,
+  "extrapolation_bits": 37.99999907094723,
+  "label": "fitted saturation law p=A(1-exp(-ltheta/tau)); anchors are the 9 measured cells; production ltheta exceeds the largest anchor by log2(production/anchor) bits, where the law is flat to 2^-38",
+  "p_at_production_ltheta": 0.24212,
+  "rows": [
+   {
+    "cell": "2p25_dp4",
+    "ltheta": 24.75,
+    "p_fit": 0.24196989519031367,
+    "p_hat": 0.239,
+    "resid": -0.0029698951903136817
+   },
+   {
+    "cell": "2p25_dp6",
+    "ltheta": 6.1875,
+    "p_fit": 0.203914872709995,
+    "p_hat": 0.198,
+    "resid": -0.005914872709994995
+   },
+   {
+    "cell": "2p25_dp8",
+    "ltheta": 1.546875,
+    "p_fit": 0.08952039422152382,
+    "p_hat": 0.0975,
+    "resid": 0.007979605778476187
+   },
+   {
+    "cell": "2p32_dp4",
+    "ltheta": 277.5625,
+    "p_fit": 0.24212,
+    "p_hat": 0.2445,
+    "resid": 0.0023799999999999932
+   },
+   {
+    "cell": "2p32_dp6",
+    "ltheta": 69.390625,
+    "p_fit": 0.2421199997540173,
+    "p_hat": 0.24675,
+    "resid": 0.004630000245982702
+   },
+   {
+    "cell": "2p32_dp8",
+    "ltheta": 17.34765625,
+    "p_fit": 0.24075306097540394,
+    "p_hat": 0.22075,
+    "resid": -0.02000306097540394
+   },
+   {
+    "cell": "2p39_dp4",
+    "ltheta": 3172.75,
+    "p_fit": 0.24212,
+    "p_hat": 0.2595,
+    "resid": 0.017380000000000007
+   },
+   {
+    "cell": "2p39_dp6",
+    "ltheta": 793.1875,
+    "p_fit": 0.24212,
+    "p_hat": 0.2395,
+    "resid": -0.002620000000000011
+   },
+   {
+    "cell": "2p39_dp8",
+    "ltheta": 198.296875,
+    "p_fit": 0.24212,
+    "p_hat": 0.24525,
+    "resid": 0.003129999999999994
+   }
+  ],
+  "sse": 0.0008534295556603106,
+  "tau": 3.351
+ },
+ "fit_beats_disclaimer": true,
+ "invariant": "(Lambda, ltheta)",
+ "nu_channel": {
+  "accidental_record_collisions_log2": -124.73696559416611,
+  "note": "records over sqrt(class space); at production the accidental record-record coincidence rate is nu^2/2 (2^-124.7), and such a coincidence is rejected by the full-point verification, so nu is a false-positive channel, not a success channel",
+  "nu_prod_log2": -61.868482797083054
+ },
+ "nu_range_log2": [
+  0.004279081319046627,
+  0.06846530110474604
+ ],
+ "p_headline": 0.23971835608509146,
+ "p_max_cell": 0.2595,
+ "p_pooled": 0.2471,
+ "p_pooled_cp95": 0.2521183560850915,
+ "plateau_cells": [
+  "2p32_dp4",
+  "2p32_dp6",
+  "2p39_dp4",
+  "2p39_dp6",
+  "2p39_dp8"
+ ],
+ "plateau_successes": 4942,
+ "plateau_trials": 20000,
+ "saturation_threshold_ltheta": 40.0,
+ "scale_residual": 0.012400000000000022
+}

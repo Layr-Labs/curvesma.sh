@@ -1,0 +1,233 @@
+{
+ "assert": {
+  "cells_all_guarded": true,
+  "control_reproduces_pre_guard": true,
+  "pre_guard_points_in_fit": 0,
+  "sum_ok": true
+ },
+ "cells": [
+  {
+   "cp95_lower": 0.029038,
+   "dc0": 0,
+   "doubles": 0,
+   "dp_bits": 4,
+   "escapes": 0,
+   "fail": 0,
+   "fixture_classes_log2": 40.000003,
+   "lambda": 0.6,
+   "ltheta": 3172.75,
+   "meets": 104,
+   "p_hat": 0.034333,
+   "per_walker_steps": 50764,
+   "records": 152294228,
+   "ring_hits": 146,
+   "self": 13,
+   "successes": 103,
+   "transition": "guarded:prev-row-xor+ring4+escape",
+   "trials": 3000,
+   "verified": 104
+  },
+  {
+   "cp95_lower": 0.007207,
+   "dc0": 0,
+   "doubles": 0,
+   "dp_bits": 6,
+   "escapes": 0,
+   "fail": 0,
+   "fixture_classes_log2": 40.000003,
+   "lambda": 0.6,
+   "ltheta": 793.1875,
+   "meets": 30,
+   "p_hat": 0.01,
+   "per_walker_steps": 50764,
+   "records": 38064216,
+   "ring_hits": 163,
+   "self": 3,
+   "successes": 30,
+   "transition": "guarded:prev-row-xor+ring4+escape",
+   "trials": 3000,
+   "verified": 30
+  },
+  {
+   "cp95_lower": 0.000657,
+   "dc0": 0,
+   "doubles": 0,
+   "dp_bits": 8,
+   "escapes": 0,
+   "fail": 0,
+   "fixture_classes_log2": 40.000003,
+   "lambda": 0.6,
+   "ltheta": 198.296875,
+   "meets": 5,
+   "p_hat": 0.001667,
+   "per_walker_steps": 50764,
+   "records": 9518512,
+   "ring_hits": 140,
+   "self": 1,
+   "successes": 5,
+   "transition": "guarded:prev-row-xor+ring4+escape",
+   "trials": 3000,
+   "verified": 5
+  },
+  {
+   "cp95_lower": 0.000273,
+   "dc0": 0,
+   "doubles": 0,
+   "dp_bits": 10,
+   "escapes": 0,
+   "fail": 0,
+   "fixture_classes_log2": 40.000003,
+   "lambda": 0.6,
+   "ltheta": 49.574219,
+   "meets": 3,
+   "p_hat": 0.001,
+   "per_walker_steps": 50764,
+   "records": 2380656,
+   "ring_hits": 142,
+   "self": 0,
+   "successes": 3,
+   "transition": "guarded:prev-row-xor+ring4+escape",
+   "trials": 3000,
+   "verified": 3
+  },
+  {
+   "cp95_lower": 1.7e-05,
+   "dc0": 0,
+   "doubles": 0,
+   "dp_bits": 12,
+   "escapes": 0,
+   "fail": 0,
+   "fixture_classes_log2": 40.000003,
+   "lambda": 0.6,
+   "ltheta": 12.393555,
+   "meets": 1,
+   "p_hat": 0.000333,
+   "per_walker_steps": 50764,
+   "records": 595633,
+   "ring_hits": 157,
+   "self": 0,
+   "successes": 1,
+   "transition": "guarded:prev-row-xor+ring4+escape",
+   "trials": 3000,
+   "verified": 1
+  },
+  {
+   "cp95_lower": 0.0,
+   "dc0": 0,
+   "doubles": 0,
+   "dp_bits": 14,
+   "escapes": 0,
+   "fail": 0,
+   "fixture_classes_log2": 40.000003,
+   "lambda": 0.6,
+   "ltheta": 3.098389,
+   "meets": 0,
+   "p_hat": 0.0,
+   "per_walker_steps": 50764,
+   "records": 149143,
+   "ring_hits": 157,
+   "self": 0,
+   "successes": 0,
+   "transition": "guarded:prev-row-xor+ring4+escape",
+   "trials": 3000,
+   "verified": 0
+  }
+ ],
+ "control_pre_guard_same_harness": [
+  {
+   "dp_bits": 4,
+   "ltheta": 3172.75,
+   "p_hat": 0.255333,
+   "successes": 766,
+   "trials": 3000
+  },
+  {
+   "dp_bits": 6,
+   "ltheta": 793.1875,
+   "p_hat": 0.265333,
+   "successes": 796,
+   "trials": 3000
+  }
+ ],
+ "delta_rows": [
+  {
+   "delta": -0.221,
+   "guarded": 0.034333,
+   "pre_guard_control_same_harness": 0.255333,
+   "ratio": 0.1345,
+   "row": "plateau value dp4"
+  },
+  {
+   "delta": -0.255333,
+   "guarded": 0.01,
+   "pre_guard_control_same_harness": 0.265333,
+   "ratio": 0.0377,
+   "row": "plateau value dp6"
+  },
+  {
+   "delta": -0.207787,
+   "guarded_at_dp4": 0.034333,
+   "pre_guard_fit_A": 0.24212,
+   "ratio": 0.1418,
+   "row": "vs shipped pre-guard FIT A"
+  },
+  {
+   "delta": -0.195367,
+   "guarded_at_dp4": 0.034333,
+   "pre_guard_2297": 0.2297,
+   "ratio": 0.1495,
+   "row": "vs v10k headline"
+  }
+ ],
+ "fixture": {
+  "classes_log2": 40.000003,
+  "lambda": 0.6,
+  "per_walker_steps": 50764,
+  "slots": 16,
+  "trials_per_cell": 3000
+ },
+ "guard_ir_row": {
+  "charged": "charged spans ARE the guarded spans: step_forward 239, step_close 694 measured on the shipped .o (same object as the live-binary proof). Guard XOR+prev store and the ring compare/store/index are inside those spans; no separate charge, delta 0 Ir in the ledger.",
+  "note": "a pre-guard measurement build was not produced inside this window; the ledger charge is the guarded charge, so no reprice is required for correctness of the work bound."
+ },
+ "guarded_fit": {
+  "A_g": 0.034333,
+  "law": "NOT a saturating plateau: p_g FALLS as DP density falls (fixed Lambda=0.6). Measured p_g: 0.034333 (2^-4), 0.010000 (2^-6), 0.001667 (2^-8), 0.001000 (2^-10). A saturation law p=A(1-exp(-ltheta/tau)) cannot represent this: the guarded walk has no coalescent tail, so a merge does not deliver a common distinguished point.",
+  "physical_reading": "success requires an accidental RECORD coincidence at a distinguished point: p ~ (S/theta)^2/(2N') x clustering. That is the channel the package already prices as nu (false positive) at 2^-124.7.",
+  "tau_g": null
+ },
+ "harness": "evidence/census_guarded_v10n.c (fixture arithmetic; guard/ring/escape logic identical to the shipped source). Control arm -DUNGUARDED is census_v10f41.c's class-only index and validates the harness; it is NOT in the refit set.",
+ "pre_guard_fit": {
+  "A": 0.24212,
+  "cells": 9,
+  "note": "the 9 pre-guard cells are EXCLUDED from this fit",
+  "pre_guard_headline_2297": 0.2297,
+  "source": "evidence/invariant_fit.json",
+  "tau": 3.351
+ },
+ "production_extrapolation": {
+  "bracket_log2": [
+   -121.0,
+   -118.0
+  ],
+  "ltheta_prod_log2": 189.631517,
+  "method": "p proportional to theta^2 at fixed S (record-pair coincidence), anchored on the measured cells; the exponent range measured across the cells is 0.37..1.29, so the production figure is quoted as an order 2^-118..2^-121 bracket",
+  "p_g_prod_from_dp4_theta2": 4.132684548790436e-37,
+  "p_g_prod_from_dp4_theta2_log2": -120.864,
+  "p_g_prod_from_dp6_theta2": 1.925929944387236e-36,
+  "p_g_prod_from_dp6_theta2_log2": -118.644
+ },
+ "source_of_transition": "evidence/p256_recproc_v10l.c step_forward/step_close/trap_escape (the object the live proof certified, sha256 96b736ef...)",
+ "transition": "guarded: row=(mix64(x^par_const)^prev)&2047 with prev carried; 4-entry x ring, x(i)==x(i-4) => committed out-of-line escape (fixed row 1, a+=TLOG[1], resalt prev)",
+ "verdict": "REFIT REFUTES THE SUCCESS CLAIM. The guarded transition as shipped removes the coalescence channel the birthday argument depends on. The measured guarded per-instance success at production DP density is ~2^-119, not 0.24212; w=2 is ~2^-118, below the 0.39 floor by ~118 bits. The work bound 128.9437 is priced and unchanged; the success premise is not met.",
+ "version": "v10n-guarded-refit",
+ "w2_row": {
+  "floor": 0.39,
+  "meets_floor": false,
+  "p_per_instance": 0.034333,
+  "p_per_instance_cp95_lower": 0.029038,
+  "production_success_w2_log2": -119.864,
+  "success_w2": 0.067487,
+  "success_w2_cp95_lower": 0.057233
+ }
+}
