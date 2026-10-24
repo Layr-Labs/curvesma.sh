@@ -1,0 +1,197 @@
+{
+ "cells": {
+  "cartesian_nochal_b12": {
+   "birthday_expected_pairs": 70309.570312,
+   "cell": "cartesian_nochal",
+   "kappa": 0.995185,
+   "keys": 24000,
+   "observed_pairs": 69971,
+   "pool_kappa_p50": 1.010684,
+   "pool_kappa_p95": 1.02252,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 12
+  },
+  "cartesian_nochal_b16": {
+   "birthday_expected_pairs": 4394.348145,
+   "cell": "cartesian_nochal",
+   "kappa": 0.989225,
+   "keys": 24000,
+   "observed_pairs": 4347,
+   "pool_kappa_p50": 1.00522,
+   "pool_kappa_p95": 1.034357,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 16
+  },
+  "cartesian_nochal_b20": {
+   "birthday_expected_pairs": 274.646759,
+   "cell": "cartesian_nochal",
+   "kappa": 0.953953,
+   "keys": 24000,
+   "observed_pairs": 262,
+   "pool_kappa_p50": 0.932378,
+   "pool_kappa_p95": 0.932378,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 20
+  },
+  "cartesian_nochal_b24": {
+   "birthday_expected_pairs": 17.165422,
+   "cell": "cartesian_nochal",
+   "kappa": 0.407797,
+   "keys": 24000,
+   "observed_pairs": 7,
+   "pool_kappa_p50": 0.0,
+   "pool_kappa_p95": 0.0,
+   "powered": false,
+   "validity": "unpowered: expected pairs < 100",
+   "width_bits": 24
+  },
+  "chal_bside_b12": {
+   "birthday_expected_pairs": 70309.570312,
+   "cell": "chal_bside",
+   "kappa": 0.998513,
+   "keys": 24000,
+   "observed_pairs": 70205,
+   "pool_kappa_p50": 0.989741,
+   "pool_kappa_p95": 0.992473,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 12
+  },
+  "chal_bside_b16": {
+   "birthday_expected_pairs": 4394.348145,
+   "cell": "chal_bside",
+   "kappa": 1.004245,
+   "keys": 24000,
+   "observed_pairs": 4413,
+   "pool_kappa_p50": 1.034357,
+   "pool_kappa_p95": 1.121768,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 16
+  },
+  "chal_bside_b20": {
+   "birthday_expected_pairs": 274.646759,
+   "cell": "chal_bside",
+   "kappa": 1.063184,
+   "keys": 24000,
+   "observed_pairs": 292,
+   "pool_kappa_p50": 1.398568,
+   "pool_kappa_p95": 1.398568,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 20
+  },
+  "chal_bside_b24": {
+   "birthday_expected_pairs": 17.165422,
+   "cell": "chal_bside",
+   "kappa": 1.165133,
+   "keys": 24000,
+   "observed_pairs": 20,
+   "pool_kappa_p50": 0.0,
+   "pool_kappa_p95": 0.0,
+   "powered": false,
+   "validity": "unpowered: expected pairs < 100",
+   "width_bits": 24
+  },
+  "chal_shared_b12": {
+   "birthday_expected_pairs": 70309.570312,
+   "cell": "chal_shared",
+   "kappa": 0.998954,
+   "keys": 24000,
+   "observed_pairs": 70236,
+   "pool_kappa_p50": 1.023431,
+   "pool_kappa_p95": 1.036178,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 12
+  },
+  "chal_shared_b16": {
+   "birthday_expected_pairs": 4394.348145,
+   "cell": "chal_shared",
+   "kappa": 0.987632,
+   "keys": 24000,
+   "observed_pairs": 4340,
+   "pool_kappa_p50": 1.078062,
+   "pool_kappa_p95": 1.180041,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 16
+  },
+  "chal_shared_b20": {
+   "birthday_expected_pairs": 274.646759,
+   "cell": "chal_shared",
+   "kappa": 1.008568,
+   "keys": 24000,
+   "observed_pairs": 277,
+   "pool_kappa_p50": 0.932378,
+   "pool_kappa_p95": 1.631662,
+   "powered": true,
+   "validity": "powered",
+   "width_bits": 20
+  },
+  "chal_shared_b24": {
+   "birthday_expected_pairs": 17.165422,
+   "cell": "chal_shared",
+   "kappa": 1.980726,
+   "keys": 24000,
+   "observed_pairs": 34,
+   "pool_kappa_p50": 0.0,
+   "pool_kappa_p95": 3.729513,
+   "powered": false,
+   "validity": "unpowered: expected pairs < 100",
+   "width_bits": 24
+  }
+ },
+ "charged_kappa": 1.631662,
+ "charged_kappa_rule": "max per-pool p95 over POWERED cells (birthday-expected pairs >= 100), floored at the carried 1.231 envelope; every cell measures its own pair rate against its own birthday prediction, so this is a collision law and not a hash-bit artefact",
+ "curve": {
+  "b": 4,
+  "field_bits": 37,
+  "generator": [
+   53819041672,
+   36186556919
+  ],
+  "group_order": 68719499328,
+  "map": "e -> [e mod r]G -> x-coordinate, masked to b bits",
+  "order_method": "baby-step giant-step over the Hasse interval",
+  "p": 68719499327,
+  "subgroup_order": 357914059
+ },
+ "design": {
+  "cells": [
+   "cartesian_nochal",
+   "chal_shared",
+   "chal_bside"
+  ],
+  "kappa_def": "observed colliding pairs / (C(n,2)/2^b)",
+  "keys_per_cell": 24000,
+  "pools": 8,
+  "powered_threshold": "birthday-expected pairs >= 100",
+  "widths": [
+   12,
+   16,
+   20,
+   24
+  ]
+ },
+ "fixture_disclosure": "31-bit-prime curve, real prime-order subgroup found by BSGS, keys are real x-coordinates: the collision law is measured on the production MAP with a small SPACE. No SHAKE, no synthetic modulus. Transfer of the absolute kappa to 381-bit coordinates is NOT claimed; the pairwise law and its upper envelope are.",
+ "kind": "v35 EC-coordinate collision census on a real prime-field curve",
+ "trend": {
+  "by_width": {
+   "12": 0.997551,
+   "16": 0.993701,
+   "20": 1.008568,
+   "24": 0.0
+  },
+  "extrapolation": "the largest POWERED width is 24 bits; the 168-bit production envelope is charged at the measured p95 with the carried floor, NOT by extrapolating a bit-dependence slope. The 24->168 step is a declared hypothesis.",
+  "why_not_slope": "a per-bit dependence fit is not evidence about a 168-bit coordinate; the charge is max(measured p95, 1.231) and the residual step is disclosed"
+ },
+ "unpowered_reported": {
+  "cartesian_nochal_b24": 0.407797,
+  "chal_bside_b24": 1.165133,
+  "chal_shared_b24": 1.980726
+ }
+}

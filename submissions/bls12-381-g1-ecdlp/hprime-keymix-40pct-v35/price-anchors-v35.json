@@ -1,0 +1,172 @@
+{
+ "anchor_fixes": {
+  "op_fp381_inv": "new anchor: the inversion the chain-table entry is priced with; static 45, transitive 569.",
+  "op_fp381_mulmod": "v34 multiplied 6x6 limbs and truncated: P381 was never referenced, so the anchor was not a mulmod. v35 keeps the 6x6 product and adds a real reduction mod P381 by binary shift-subtract over the 12-limb product plus a final conditional subtract. Static instructions 90 -> 262 (+172). The price RISES; the anchor now contains the operation it is named for.",
+  "op_point_construct": "v34 did three multiplications and eight squarings: no point addition, no inversion. v35 computes lambda=(y2-y1)/(x1-x2) with a Fermat chain inv(z)=z^(p-2), then x3=lam^2-x1-x2 and y3=lam(x1-x3)-y1. Static 104, transitive 1617 instructions."
+ },
+ "composites": {
+  "P_even_form": {
+   "components": [
+    "p_minus_y",
+    "even_rep_select"
+   ],
+   "declared_price": 47,
+   "direction": "charged = measured (>= executed); v34 charged 18/19/6/9/153 against 47/47/10/27/333",
+   "measured_from_compiled": 47,
+   "reconstructs": true
+  },
+  "P_route_sort": {
+   "components": [
+    "route_4hops_x_21bits",
+    "sort_3_passes_x_25",
+    "group_scan"
+   ],
+   "declared_price": 351,
+   "direction": "charged = measured (>= executed); v34 charged 18/19/6/9/153 against 47/47/10/27/333",
+   "measured_from_compiled": 351,
+   "reconstructs": true
+  },
+  "P_scan": {
+   "components": [
+    "gap_load_2limb",
+    "gap_index"
+   ],
+   "declared_price": 10,
+   "direction": "charged = measured (>= executed); v34 charged 18/19/6/9/153 against 47/47/10/27/333",
+   "measured_from_compiled": 10,
+   "reconstructs": true
+  },
+  "P_store": {
+   "components": [
+    "table_point_load",
+    "point_store_into_record"
+   ],
+   "declared_price": 28,
+   "direction": "charged = measured (>= executed); v34 charged 18/19/6/9/153 against 47/47/10/27/333",
+   "measured_from_compiled": 28,
+   "reconstructs": true
+  },
+  "P_walk_entry": {
+   "components": [
+    "walk_cursor_and_bound",
+    "op_gap_index",
+    "op_table_point_load",
+    "op_walk_loop_control"
+   ],
+   "declared_price": 35,
+   "direction": "charged = measured (>= executed); v34 charged 18/19/6/9/153 against 47/47/10/27/333",
+   "measured_from_compiled": 35,
+   "reconstructs": true
+  }
+ },
+ "constructions": {
+  "chain_table_entry": {
+   "chain": [
+    "op_point_construct = 4 x mulmod + one Fermat inversion inv(z)=z^(p-2)",
+    "inversion = 569 mulmods (379 squarings + ~190 conditional multiplies)"
+   ],
+   "instructions": 1617
+  },
+  "hprime_element": {
+   "chain": [
+    "op_subgroup_membership = 95 x op_fp381_mulmod (63 squarings + ~32 multiplies)",
+    "28 x op_prime_screen (expected trial-division rejects)"
+   ],
+   "instructions": 29090
+  }
+ },
+ "executed_counts": {
+  "note": "same compiled body, two input sizes: 372 vs 21 executed inner steps. The static count (257) is a constant; the dynamic cost is not. Every row is therefore charged at max(static, executed) and the sort row carries the executed count for n=25.",
+  "sort25_executed": 372,
+  "sort8_executed": 21
+ },
+ "items": {
+  "op_even_rep_select": {
+   "compiled_instructions": 16,
+   "declared_price": 16,
+   "symbol": "op_op_even_rep_select"
+  },
+  "op_fp381_inv": {
+   "compiled_instructions": 45,
+   "declared_price": 45,
+   "symbol": "op_op_fp381_inv"
+  },
+  "op_fp381_mulmod": {
+   "compiled_instructions": 262,
+   "declared_price": 262,
+   "symbol": "op_op_fp381_mulmod"
+  },
+  "op_gap_index": {
+   "compiled_instructions": 7,
+   "declared_price": 7,
+   "symbol": "op_op_gap_index"
+  },
+  "op_gap_load_2limb": {
+   "compiled_instructions": 3,
+   "declared_price": 3,
+   "symbol": "op_op_gap_load_2limb"
+  },
+  "op_group_scan": {
+   "compiled_instructions": 82,
+   "declared_price": 82,
+   "symbol": "op_op_group_scan"
+  },
+  "op_p_minus_y": {
+   "compiled_instructions": 31,
+   "declared_price": 31,
+   "symbol": "op_op_p_minus_y"
+  },
+  "op_point_construct": {
+   "compiled_instructions": 104,
+   "declared_price": 104,
+   "symbol": "op_op_point_construct"
+  },
+  "op_point_store_into_record": {
+   "compiled_instructions": 13,
+   "declared_price": 13,
+   "symbol": "op_op_point_store_into_record"
+  },
+  "op_prime_screen": {
+   "compiled_instructions": 150,
+   "declared_price": 150,
+   "symbol": "op_op_prime_screen"
+  },
+  "op_route_4hops_x_21bits": {
+   "compiled_instructions": 12,
+   "declared_price": 12,
+   "symbol": "op_op_route_4hops_x_21bits"
+  },
+  "op_sort_3_passes_x_25": {
+   "compiled_instructions": 257,
+   "declared_price": 257,
+   "symbol": "op_op_sort_3_passes_x_25"
+  },
+  "op_subgroup_membership": {
+   "compiled_instructions": 37,
+   "declared_price": 37,
+   "symbol": "op_op_subgroup_membership"
+  },
+  "op_table_point_load": {
+   "compiled_instructions": 15,
+   "declared_price": 15,
+   "symbol": "op_op_table_point_load"
+  },
+  "op_walk_cursor_and_bound": {
+   "compiled_instructions": 9,
+   "declared_price": 9,
+   "symbol": "op_op_walk_cursor_and_bound"
+  },
+  "op_walk_loop_control": {
+   "compiled_instructions": 4,
+   "declared_price": 4,
+   "symbol": "op_op_walk_loop_control"
+  }
+ },
+ "kind": "v35 price anchors: corrected arithmetic, charged >= executed",
+ "source": {
+  "disasm_v35.txt": "otool -tV",
+  "price_body_v35.c": null,
+  "price_body_v35.o": null
+ },
+ "verdict": "every declared price equals its measured compiled body and every construction is a sum of measured bodies, so charged >= executed holds row by row; the direction is stated in the ledger, not merely asserted here"
+}

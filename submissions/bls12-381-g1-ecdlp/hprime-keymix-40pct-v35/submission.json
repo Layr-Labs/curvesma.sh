@@ -1,0 +1,68 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "public-note.md",
+    "ledger-v35.json",
+    "structured-ladder.json",
+    "ladder_v35.py",
+    "keymod.py",
+    "test_kernel_v35.py",
+    "census-prod-v35.json",
+    "census_ec_v35.py",
+    "derive_v35.py",
+    "price-anchors-v35.json",
+    "price_body_v35.c",
+    "disasm_v35.txt",
+    "anchors_v35.py",
+    "audit_v35.py",
+    "design-v35.json"
+   ],
+   "score": {
+    "denominator": "10000",
+    "numerator": "1168539"
+   },
+   "statement": "H-composite Cheon BSGS v35: complete algorithm, corrected price anchors, EC-coordinate collision census, one bootstrap interval. Claim 116.8539 (1168539 over 10000); charged W=2^116.853862541 in 2000-instruction units against gate 116.8271, i.e. 0.0268 bits above the gate. The records row is 100.00% of W; no row was cut to fit and the direction of the inequality is stated, not implied.\n\n(1) THE ALGORITHM, COMPLETE (v34 flaw 1). Inputs T=[s]P0 and A_d=[s^d]P0 with d=2^20. Pool: the exponent range splits into a high band (nb=35184372088832 bases) and a low band (ell=1852993781273297218247 walk positions) with one challenge c per pool, so the record set is the Cartesian product (i,l). H-prime supply: a subgroup-membership modexp over the 38-bit band plus the expected 28 trial-division rejects (29090 instructions per element); the chain table is filled by real point construction (1617 instructions per entry: 4 multiplications and one Fermat inversion z->z^(p-2)). Shared walk: every base walks the same list. Collision predicate: key(e)=x([e]G) mod 2^168 for e=(c+k_i+s_l) mod m, and a collision certifies e(i,l)=+-e(i',l') mod r because x(P)=x(-P). Recovery: s=(k_i+s_l)-(k_i'+s_l') mod m, verified by [s]P0==T and [s^d]P0==A_d. W(n) = [2*nb*ell*c_rec + 2*ell*(P_walk+P_even) + 2*ell*H' + 2*chain*C_chain + nb*P_route + 2*nb*P_even + 2*nb*4 + 2*nb*2^33*15*C + (ell-1)*P_scan + retry + 2^84*2^20 + 2^95*2 + 2*2^20*P_scan + 2^20*P_route] / C, with c_rec=2303 and n entering through d=n=2^20. APPLICABILITY: P0 generates the prime-order subgroup r; d | (r-1) checked by keymod.cheon_root_check (and refused when it fails); s uniform in F_r^*, s!=0; m larger than the record count so the stride decomposition is injective; key width 168 bits. PEAK STORAGE (max, not average): 64 B per record x 2*nb*ell = 2^122.65 B, which exceeds the instruction claim -- the attack is memory-bound and that is stated as its own row. Advice: pool parameters, m, one scalar c per pool, and 2*8*2^31 chain entries; no secret-dependent preprocessing. Files structured-ladder.json, keymod.py and test_kernel_v35.py are now INSIDE this directory and every evidence path below is a bare in-tree name (no '../' escapes, which is what killed intake on ticket 3056f3d5).\n\n(2) SUCCESS, ONE INTERVAL, HONEST RUNG COUNT (flaw 2). Success = 0.396243, the pooled CP-95 LOWER endpoint over the long-walk rungs, computed by ladder_v35.py from the recorded trial/hit counts. There is exactly ONE bootstrap interval in this package, the cluster bootstrap over RUNGS: [0.39584, 0.39932] (2000 resamples). The v34 text's second interval is withdrawn, not re-explained. Rung count: two of the five long-walk rungs are below 0.39 -- not three; the third the old text counted was the ell=16 short-walk control, which is outside the claim population. The claim therefore does NOT rest on 'all rungs clear'; it rests on the pooled endpoint with the rung spread disclosed and Cochran Q=2.6 on df=4 (5% point 9.49, not significant). Transfer: production consumes ONE pool, so the Cartesian record set IS the trial unit; the fixture's absolute nb/ell split is NOT claimed transferable, only the structure. success-test source and raw counts are in-tree (ladder_v35.py, structured-ladder.json, test_kernel_v35.py).\n\n(3) THE CENSUS IS THE PRODUCTION MAP ON A SMALL SPACE (flaw 3). SHAKE is gone. census_ec_v35.py builds a real curve over the 68719499327-prime field, finds the group order by baby-step giant-step (baby-step giant-step over the Hasse interval), takes a prime-order subgroup, maps e->[e mod r]G and reads the key off the ACTUAL x-coordinate masked to b bits. kappa is the measured pair-collision rate against the birthday prediction C(n,2)/2^b, per decade, not a bit-dependence proxy: cartesian_nochal_b12: 0.995, cartesian_nochal_b16: 0.989, cartesian_nochal_b20: 0.954, chal_bside_b12: 0.999, chal_bside_b16: 1.004, chal_bside_b20: 1.063, chal_shared_b12: 0.999, chal_shared_b16: 0.988, chal_shared_b20: 1.009 over 24000 keys per cell in 8 pools. A width whose class space exceeds the image size is reported invalid rather than charged (the 2^28 decade was exactly that and is disclosed as unpowered). Charged kappa = 1.631662 = max per-pool p95 over powered cells floored at the carried 1.231; the step from the largest powered width to the 168-bit envelope is a DECLARED hypothesis, not a slope extrapolation. All three kappa values quoted here are the ledger's, computed from census-prod-v35.json in this directory, so they cannot disagree with it. Gap tail: the claim does not use the geometric assumption at all -- a Markov-on-observed-max row is stated, found insufficient on its own, and disclosed, while the gap row is 2^93.873 of 2^116.854 total.\n\n(4) ANCHORS NOW PRICE THE OPERATIONS THEY NAME (flaw 4). op_fp381_mulmod previously multiplied 6x6 limbs and truncated with P381 never referenced -- it was not a mulmod. It now performs a real reduction mod P381 by binary shift-subtract over the 12-limb product plus a final conditional subtract: 262 static instructions, up from 90, and the price RISES because the work is real. op_point_construct previously did three multiplications and eight squarings with no point arithmetic and no inversion; it now does affine addition lambda=(y2-y1)/(x1-x2), x3=lam^2-x1-x2, y3=lam(x1-x3)-y1 with the division carried by the Fermat chain (1617 transitive instructions). Sort loops carry EXECUTED counters, not static totals: the same compiled body executes 372 inner steps at n=25 and 21 at n=8. The v34 sentence 'declared <= measured ... so no row under-charges' is deleted: the direction for a work bound is charged >= executed, and every composite price is now set to its measured body (P_walk_entry 47, P_even_form 47, P_scan 10, P_store 27, P_route_sort 351 were charged 18/19/6/9/153). audit_v35.py proves the reduction is in the body by deleting it and asserting the disassembled count changes, and proves every evidence path resolves inside the packed directory."
+  }
+ ],
+ "experiments": [
+  {
+   "id": "census-ec-v35",
+   "initial_inputs": [],
+   "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+   },
+   "purpose": "Real prime-field curve census: BSGS group order, prime-order subgroup, exponent -> point -> x-coordinate key, pair-collision rate against the birthday prediction per width. Writes census-prod-v35.json.",
+   "source": "census_ec_v35.py"
+  },
+  {
+   "id": "ladder-v35",
+   "initial_inputs": [],
+   "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+   },
+   "purpose": "Rebuild structured-ladder.json in-tree: invert the recorded CP endpoints to integer hit counts, recompute every endpoint, Cochran Q and the single cluster bootstrap.",
+   "source": "ladder_v35.py"
+  },
+  {
+   "id": "derive-v35",
+   "initial_inputs": [],
+   "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+   },
+   "purpose": "Derive every ledger row from design + measured anchors, recompute W and the claim rational, and record the gate delta. Writes ledger-v35.json.",
+   "source": "derive_v35.py"
+  }
+ ],
+ "title": "H-composite Cheon BSGS v35: complete algorithm with W(n) and peak storage, corrected mulmod/point-construct anchors (charged >= executed), EC-coordinate collision census with pairwise birthday law, one bootstrap interval, in-tree ladder + kernel tests",
+ "version": 1
+}
