@@ -1,0 +1,176 @@
+row-enumeration completeness -- plain BLS12-381 G1 span (v32)
+================================================================================================
+source    : schedule.py build() rows in emit_asm() order, not the disassembly
+object    : clang -arch arm64 -c span.s -o span.o ; otool -t -v / -l
+
+| # | row | refresh | asm (source) | object instruction | encoding | addr |
+|---:|---:|---|---|---|---|---:|
+| 1 | 15 | no | sub sp, sp, #16 | sub sp, sp, #0x10 |  | 0x0 |
+| 2 | 15 | no | stur x30, [sp, #8] | stur x30, [sp, #0x8] |  | 0x4 |
+| 3 | 13 | no | ldr x2, [x0, #96] | ldr x2, [x0, #0x60] |  | 0x8 |
+| 4 | 13 | no | add x0, x0, #512 | add x0, x0, #0x200 |  | 0xc |
+| 5 | 13 | no | subs x1, x1, #1 | subs x1, x1, #0x1 |  | 0x10 |
+| 6 | 13 | no | b.ne L_prefix | b.ne _batch_prefix |  | 0x14 |
+| 7 | 6 | no | ldr x5, [x19, #96] | ret  |  | 0x18 |
+| 8 | 6 | no | ldp x0, x1, [x5, #0] | ldr x5, [x19, #0x60] |  | 0x1c |
+| 9 | 6 | no | ldp x2, x3, [x5, #16] | ldp x0, x1, [x5] |  | 0x20 |
+| 10 | 6 | no | ldp x4, x6, [x5, #32] | ldp x2, x3, [x5, #0x10] |  | 0x24 |
+| 11 | 6 | no | ldp x7, x8, [x5, #48] | ldp x4, x6, [x5, #0x20] |  | 0x28 |
+| 12 | 6 | no | ldp x9, x23, [x5, #64] | ldp x7, x8, [x5, #0x30] |  | 0x2c |
+| 13 | 6 | no | ldp x24, x25, [x5, #80] | ldp x9, x23, [x5, #0x40] |  | 0x30 |
+| 14 | 6 | no | ldp x5, x26, [x19, #0] | ldp x24, x25, [x5, #0x50] |  | 0x34 |
+| 15 | 6 | no | ldp x27, x28, [x19, #16] | ldp x5, x26, [x19] |  | 0x38 |
+| 16 | 6 | no | ldp x29, x30, [x19, #32] | ldp x27, x28, [x19, #0x10] |  | 0x3c |
+| 17 | 6 | no | ldp x0, x1, [x19, #48] | ldp x29, x30, [x19, #0x20] |  | 0x40 |
+| 18 | 6 | no | ldp x2, x3, [x19, #64] | ldp x0, x1, [x19, #0x30] |  | 0x44 |
+| 19 | 6 | no | ldp x4, x6, [x19, #80] | ldp x2, x3, [x19, #0x40] |  | 0x48 |
+| 20 | 6 | no | stur x8, [sp, #0] | ldp x4, x6, [x19, #0x50] |  | 0x4c |
+| 21 | 6 | no | stp x5, x26, [x19, #0] | stur x8, [sp] |  | 0x50 |
+| 22 | 6 | no | stp x27, x28, [x19, #16] | stp x5, x26, [x19] |  | 0x54 |
+| 23 | 6 | no | stp x29, x30, [x19, #32] | stp x27, x28, [x19, #0x10] |  | 0x58 |
+| 24 | 6 | no | stp x0, x1, [x19, #48] | stp x29, x30, [x19, #0x20] |  | 0x5c |
+| 25 | 6 | no | stp x2, x3, [x19, #64] | stp x0, x1, [x19, #0x30] |  | 0x60 |
+| 26 | 6 | no | stp x4, x6, [x19, #80] | stp x2, x3, [x19, #0x40] |  | 0x64 |
+| 27 | 1 | no | ldp x0, x1, [x19, #0] | stp x4, x6, [x19, #0x50] |  | 0x68 |
+| 28 | 1 | no | ldp x2, x3, [x19, #16] | ldp x0, x1, [x19] |  | 0x6c |
+| 29 | 1 | no | ldp x4, x5, [x19, #32] | ldp x2, x3, [x19, #0x10] |  | 0x70 |
+| 30 | 1 | no | ldp x6, x7, [x22, #0] | ldp x4, x5, [x19, #0x20] |  | 0x74 |
+| 31 | 1 | no | umulh x8, x5, x6 | ldp x6, x7, [x22] |  | 0x78 |
+| 32 | 1 | no | umulh x9, x4, x7 | umulh x8, x5, x6 |  | 0x7c |
+| 33 | 1 | no | add x8, x8, x9 | umulh x9, x4, x7 |  | 0x80 |
+| 34 | 1 | no | madd x8, x5, x7, x8 | add x8, x8, x9 |  | 0x84 |
+| 35 | 1 | no | ldp x6, x7, [x22, #16] | madd x8, x5, x7, x8 |  | 0x88 |
+| 36 | 1 | no | umulh x9, x3, x6 | ldp x6, x7, [x22, #0x10] |  | 0x8c |
+| 37 | 1 | no | add x8, x8, x9 | umulh x9, x3, x6 |  | 0x90 |
+| 38 | 1 | no | madd x8, x4, x6, x8 | add x8, x8, x9 |  | 0x94 |
+| 39 | 1 | no | umulh x9, x2, x7 | madd x8, x4, x6, x8 |  | 0x98 |
+| 40 | 1 | no | add x8, x8, x9 | umulh x9, x2, x7 |  | 0x9c |
+| 41 | 1 | no | madd x8, x3, x7, x8 | add x8, x8, x9 |  | 0xa0 |
+| 42 | 1 | no | ldp x6, x7, [x22, #32] | madd x8, x3, x7, x8 |  | 0xa4 |
+| 43 | 1 | no | umulh x9, x1, x6 | ldp x6, x7, [x22, #0x20] |  | 0xa8 |
+| 44 | 1 | no | add x8, x8, x9 | umulh x9, x1, x6 |  | 0xac |
+| 45 | 1 | no | madd x8, x2, x6, x8 | add x8, x8, x9 |  | 0xb0 |
+| 46 | 1 | no | umulh x9, x0, x7 | madd x8, x2, x6, x8 |  | 0xb4 |
+| 47 | 1 | no | add x8, x8, x9 | umulh x9, x0, x7 |  | 0xb8 |
+| 48 | 1 | no | madd x8, x1, x7, x8 | add x8, x8, x9 |  | 0xbc |
+| 49 | 1 | no | ldr x6, [x22, #48] | madd x8, x1, x7, x8 |  | 0xc0 |
+| 50 | 1 | no | madd x9, x0, x6, x8 | ldr x6, [x22, #0x30] |  | 0xc4 |
+| 51 | 2 | no | sub x7, x9, #16 | madd x9, x0, x6, x8 |  | 0xc8 |
+| 52 | 2 | no | cmn x7, #31 | sub x7, x9, #0x10 |  | 0xcc |
+| 53 | 2 | no | b.hs L_fallback | cmn x7, #0x1f |  | 0xd0 |
+| 54 | 2 | no | umulh x0, x16, x9 | b.hs 0x218 |  | 0xd4 |
+| 55 | 2 | no | mul x1, x17, x9 | umulh x0, x16, x9 |  | 0xd8 |
+| 56 | 2 | no | umulh x2, x17, x9 | mul x1, x17, x9 |  | 0xdc |
+| 57 | 2 | no | cmn x1, x0 | umulh x2, x17, x9 |  | 0xe0 |
+| 58 | 2 | no | adc x1, x2, xzr | cmn x1, x0 |  | 0xe4 |
+| 59 | 2 | no | add x2, x5, x1 | adc x1, x2, xzr |  | 0xe8 |
+| 60 | 2 | no | subs x3, x2, x17 | add x2, x5, x1 |  | 0xec |
+| 61 | 2 | no | csel x4, x17, xzr, hs | subs x3, x2, x17 |  | 0xf0 |
+| 62 | 2 | no | add x6, x3, #16 | csel x4, x17, xzr, hs |  | 0xf4 |
+| 63 | 2 | no | cmp x6, #32 | add x6, x3, #0x10 |  | 0xf8 |
+| 64 | 2 | no | b.ls L_fallback | cmp x6, #0x20 |  | 0xfc |
+| 65 | 2 | no | sub x2, x4, x3 | b.ls 0x218 |  | 0x100 |
+| 66 | 3 | no | cmp x1, x5 | sub x2, x4, x3 |  | 0x104 |
+| 67 | 3 | no | csel x3, x1, x5, lo | cmp x1, x5 |  | 0x108 |
+| 68 | 3 | no | csel x4, x5, x1, lo | csel x3, x1, x5, lo |  | 0x10c |
+| 69 | 3 | no | cset x6, lo | csel x4, x5, x1, lo |  | 0x110 |
+| 70 | 3 | no | cmp x2, x4 | cset x6, lo |  | 0x114 |
+| 71 | 3 | no | csel x7, x2, x4, lo | cmp x2, x4 |  | 0x118 |
+| 72 | 3 | no | cmp x2, x3 | csel x7, x2, x4, lo |  | 0x11c |
+| 73 | 3 | no | csel x7, x3, x7, lo | cmp x2, x3 |  | 0x120 |
+| 74 | 3 | no | csel x3, x2, x3, lo | csel x7, x3, x7, lo |  | 0x124 |
+| 75 | 3 | no | mov x8, #2 | csel x3, x2, x3, lo |  | 0x128 |
+| 76 | 3 | no | csel x8, x8, x6, lo | mov x8, #0x2 |  | 0x12c |
+| 77 | 3 | no | sub x7, x7, x3 | csel x8, x8, x6, lo |  | 0x130 |
+| 78 | 3 | no | cmp x7, #16 | sub x7, x7, x3 |  | 0x134 |
+| 79 | 3 | no | b.ls L_fallback | cmp x7, #0x10 |  | 0x138 |
+| 80 | 4 | no | ldp x23, x24, [x19, #48] | b.ls 0x218 |  | 0x13c |
+| 81 | 4 | no | ldp x25, x26, [x19, #64] | ldp x23, x24, [x19, #0x30] |  | 0x140 |
+| 82 | 4 | no | ldp x27, x28, [x19, #80] | ldp x25, x26, [x19, #0x40] |  | 0x144 |
+| 83 | 4 | no | subs x6, x10, x23 | ldp x27, x28, [x19, #0x50] |  | 0x148 |
+| 84 | 4 | no | sbcs x7, x11, x24 | subs x6, x10, x23 |  | 0x14c |
+| 85 | 4 | no | sbcs x9, x12, x25 | sbcs x7, x11, x24 |  | 0x150 |
+| 86 | 4 | no | sbcs x29, x13, x26 | sbcs x9, x12, x25 |  | 0x154 |
+| 87 | 4 | no | sbcs x30, x14, x27 | sbcs x29, x13, x26 |  | 0x158 |
+| 88 | 4 | no | sbc x5, x15, x28 | sbcs x30, x14, x27 |  | 0x15c |
+| 89 | 4 | no | cmp x6, x23 | sbc x5, x15, x28 |  | 0x160 |
+| 90 | 4 | no | sbcs xzr, x7, x24 | cmp x6, x23 |  | 0x164 |
+| 91 | 4 | no | sbcs xzr, x9, x25 | sbcs xzr, x7, x24 |  | 0x168 |
+| 92 | 4 | no | sbcs xzr, x29, x26 | sbcs xzr, x9, x25 |  | 0x16c |
+| 93 | 4 | no | sbcs xzr, x30, x27 | sbcs xzr, x29, x26 |  | 0x170 |
+| 94 | 4 | no | sbcs xzr, x5, x28 | sbcs xzr, x30, x27 |  | 0x174 |
+| 95 | 4 | no | cset x4, lo | sbcs xzr, x5, x28 |  | 0x178 |
+| 96 | 4 | no | csel x0, x6, x23, lo | cset x4, lo |  | 0x17c |
+| 97 | 4 | no | csel x1, x7, x24, lo | csel x0, x6, x23, lo |  | 0x180 |
+| 98 | 4 | no | csel x2, x9, x25, lo | csel x1, x7, x24, lo |  | 0x184 |
+| 99 | 4 | no | csel x3, x29, x26, lo | csel x2, x9, x25, lo |  | 0x188 |
+| 100 | 5 | no | and x5, x0, #0xfffff | csel x3, x29, x26, lo |  | 0x18c |
+| 101 | 5 | no | cbz x1, L_report | and x5, x0, #0xfffff |  | 0x190 |
+| 102 | 5 | no | add x6, x4, x5, lsl #1 | cbz x1, 0x224 |  | 0x194 |
+| 103 | 5 | no | add x6, x6, x6, lsl #1 | add x6, x4, x5, lsl #1 |  | 0x198 |
+| 104 | 5 | no | add x6, x6, x8 | add x6, x6, x6, lsl #1 |  | 0x19c |
+| 105 | 5 | no | add x6, x6, x6, lsl #2 | add x6, x6, x8 |  | 0x1a0 |
+| 106 | 5 | no | add x6, x21, x6, lsl #5 | add x6, x6, x6, lsl #2 |  | 0x1a4 |
+| 107 | 5 | no | str x6, [x19, #96] | add x6, x21, x6, lsl #5 |  | 0x1a8 |
+| 108 | 8 | no | ldp x27, x28, [x19, #136] | str x6, [x19, #0x60] |  | 0x1ac |
+| 109 | 8 | no | cmp x28, #20 | ldp x27, x28, [x19, #0x88] |  | 0x1b0 |
+| 110 | 8 | no | b.hs L_abandon | cmp x28, #0x14 |  | 0x1b4 |
+| 111 | 7 | no | ldp x7, x8, [x19, #104] | b.hs 0x23c |  | 0x1b8 |
+| 112 | 7 | no | ldp x9, x29, [x19, #120] | ldp x7, x8, [x19, #0x68] |  | 0x1bc |
+| 113 | 7 | no | cmp x0, x7 | ldp x9, x29, [x19, #0x78] |  | 0x1c0 |
+| 114 | 7 | no | ccmp x2, x8, #0, eq | cmp x0, x7 |  | 0x1c4 |
+| 115 | 7 | no | ccmp x3, x9, #0, eq | ccmp x2, x8, #0x0, eq |  | 0x1c8 |
+| 116 | 7 | no | ccmp x29, #1, #0, eq | ccmp x3, x9, #0x0, eq |  | 0x1cc |
+| 117 | 7 | no | b.eq L_traversal | ccmp x29, #0x1, #0x0, eq |  | 0x1d0 |
+| 118 | 7 | no | tst x27, #63 | b.eq 0x230 |  | 0x1d4 |
+| 119 | 7 | no | b.ne L_norefresh | tst x27, #0x3f |  | 0x1d8 |
+| 120 | 7 | yes | stp x0, x2, [x19, #104] | b.ne 0x1ec |  | 0x1dc |
+| 121 | 7 | yes | mov x26, #1 | stp x0, x2, [x19, #0x68] |  | 0x1e0 |
+| 122 | 7 | yes | stp x3, x26, [x19, #120] | mov x26, #0x1 |  | 0x1e4 |
+| 123 | 8 | no | adds x27, x27, #1 | stp x3, x26, [x19, #0x78] |  | 0x1e8 |
+| 124 | 8 | no | adc x28, x28, xzr | adds x27, x27, #0x1 |  | 0x1ec |
+| 125 | 8 | no | stp x27, x28, [x19, #136] | adc x28, x28, xzr |  | 0x1f0 |
+| 126 | 8 | no | add x19, x19, #512 | stp x27, x28, [x19, #0x88] |  | 0x1f4 |
+| 127 | 8 | no | cmp x19, x20 | add x19, x19, #0x200 |  | 0x1f8 |
+| 128 | 8 | no | b.ne L_loop | cmp x19, x20 |  | 0x1fc |
+| 129 | 10 | no | ldur x8, [sp, #0] | b.ne _leaf_span |  | 0x200 |
+| 130 | 10 | no | cbz x8, L_zero | ldur x8, [sp] |  | 0x204 |
+| 131 | 14 | no | ldur x30, [sp, #8] | cbz x8, 0x248 |  | 0x208 |
+| 132 | 14 | no | add sp, sp, #16 | ldur x30, [sp, #0x8] |  | 0x20c |
+
+synthetic lines appended by emit_asm() -- belong to no ledger row:
+
+| # | asm | object instruction | encoding | addr |
+|---:|---|---|---|---:|
+| 1 | ret | add sp, sp, #0x10 |  | 0x210 |
+| 2 | ret | ret  |  | 0x214 |
+| 3 | ldur x30, [sp, #8] | ldur x30, [sp, #0x8] |  | 0x218 |
+| 4 | add sp, sp, #16 | add sp, sp, #0x10 |  | 0x21c |
+| 5 | ret | ret  |  | 0x220 |
+| 6 | ldur x30, [sp, #8] | ldur x30, [sp, #0x8] |  | 0x224 |
+| 7 | add sp, sp, #16 | add sp, sp, #0x10 |  | 0x228 |
+| 8 | ret | ret  |  | 0x22c |
+| 9 | ldur x30, [sp, #8] | ldur x30, [sp, #0x8] |  | 0x230 |
+| 10 | add sp, sp, #16 | add sp, sp, #0x10 |  | 0x234 |
+| 11 | ret | ret  |  | 0x238 |
+| 12 | ldur x30, [sp, #8] | ldur x30, [sp, #0x8] |  | 0x23c |
+| 13 | add sp, sp, #16 | add sp, sp, #0x10 |  | 0x240 |
+| 14 | ret | ret  |  | 0x244 |
+| 15 | ldur x30, [sp, #8] | ldur x30, [sp, #0x8] |  | 0x248 |
+| 16 | add sp, sp, #16 | add sp, sp, #0x10 |  | 0x24c |
+| 17 | ret | ret  |  | 0x250 |
+
+accounting closure
+------------------------------------------------------------------------------------------------
+  enumerated rows                 : 132  (129 literal non-refresh + 3 refresh)
+  synthetic scaffolding           : 17  (2 returns + 5 stubs x 3)
+  object instruction count        : 149
+  __text bytes                    : 0x254 = 4 x 149
+  unattributed instructions       : 0
+  charged per non-refresh step    : 131 = 129 literal + 2 amortised (meter, Fermat share)
+  charged on the refresh step     : 134 = 132 literal + 2 amortised
+  scaffolding budget              : 17 per batch / 2^18 elements = 6.485e-05 per element
+  reserve inside the charged price: 1 - 232,864/2^18 = 0.1117 per element
+  the level price 1.0655234375    : (63 x 131 + 134)/64 = 131.046875 exactly, no per-step max
+
+RESULT: COMPLETE -- every instruction in __text is enumerated or charged
