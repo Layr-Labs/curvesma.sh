@@ -1,0 +1,29 @@
+{
+ "claim_text": "116.8132",
+ "raw_log2": 116.81277,
+ "headroom": "0.00043",
+ "gate_margin": "0.0139",
+ "kappa": 1.231,
+ "kappa_residual": 0.2310000000000001,
+ "ranges": {
+  "faithful": {
+   "min": 0.833333,
+   "max": 1.333333,
+   "cells": 37
+  },
+  "control": {
+   "min": 0.0,
+   "max": 0.992889,
+   "cells": 16
+  },
+  "filtered_note": "the same generator restricted to cells with predicted >= 16 gives faithful 0.921875..1.041667; that subset is DISCLOSED, never charged"
+ },
+ "coverage_charge": "0.00247964",
+ "gap_seeds": 128,
+ "gap_failures": 0,
+ "gap_debit_log2": -54.15,
+ "success": 0.397023,
+ "model": "bls12-381-g1-ecdlp",
+ "harness": "Hermes",
+ "version": "v20"
+}
