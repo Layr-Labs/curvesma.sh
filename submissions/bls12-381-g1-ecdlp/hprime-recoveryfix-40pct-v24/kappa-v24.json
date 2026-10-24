@@ -1,0 +1,149 @@
+{
+ "kind": "kappa transfer to the production width (FITTED, not measured)",
+ "law": "kappa_w = 1 + 6*2^(w-1)/m",
+ "census_m_log2": 234.8571,
+ "production_m_log2": 234.857089,
+ "fits": {
+  "big": {
+   "widths": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ],
+   "n": 15,
+   "slope": 0.507301,
+   "intercept_log2": -14.710005,
+   "resid_log2": [
+    0.2465,
+    -0.111,
+    -0.1126,
+    -0.2788,
+    0.3042,
+    -0.0191,
+    -0.1486,
+    0.1353,
+    0.0815,
+    -0.2095,
+    -0.0368,
+    0.088,
+    0.1233,
+    -0.0247,
+    -0.0379
+   ],
+   "resid_max_abs": 0.304208,
+   "m_implied_log2": 16.294967,
+   "points": [
+    [
+     10,
+     0.00149
+    ],
+    [
+     11,
+     0.001653
+    ],
+    [
+     12,
+     0.002347
+    ],
+    [
+     13,
+     0.002973
+    ],
+    [
+     14,
+     0.00633
+    ],
+    [
+     15,
+     0.007191
+    ]
+   ]
+  },
+  "small": {
+   "widths": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+   ],
+   "n": 9,
+   "slope": 0.551571,
+   "intercept_log2": -11.283986,
+   "resid_log2": [
+    0.3493,
+    -0.0366,
+    -0.1812,
+    -0.094,
+    -0.2266,
+    0.0847,
+    -0.2251,
+    0.1224,
+    0.2073
+   ],
+   "resid_max_abs": 0.349266,
+   "m_implied_log2": 12.868948,
+   "points": [
+    [
+     10,
+     0.023373
+    ],
+    [
+     11,
+     0.026217
+    ],
+    [
+     12,
+     0.034761
+    ],
+    [
+     13,
+     0.054126
+    ],
+    [
+     14,
+     0.072361
+    ],
+    [
+     15,
+     0.131606
+    ]
+   ]
+  }
+ },
+ "fit_band_log2": 0.349266,
+ "fitted_excess_168_log2": -65.272127,
+ "kappa_168_fitted": 1.0,
+ "kappa_168_upper": 1.0,
+ "kappa_168_band": [
+  1.0,
+  1.0
+ ],
+ "kappa_charged": 1.231,
+ "charged_exceeds_fitted": true,
+ "charged_headroom": 0.231,
+ "measured": false,
+ "statement": "kappa_168 is an EXTRAPOLATION of the census law with the production m; it is not measured at w=168.  The charged kappa=1.231 exceeds the fitted upper end, so keeping 1.231 charges the collision surface conservatively and no ledger row moves.",
+ "price": {
+  "entry_point": "candidate debit (success.debits.candidate)",
+  "candidate_debit": 1.446028e-06,
+  "max_residual_priced_in_success": 2.7135050203086924e-07,
+  "note": "even at the charged kappa the whole candidate debit is 1.4e-6 of success, i.e. 1e-5 of the 0.07 shortfall; the measured shortfall is caused by shared-walk clustering, not by kappa"
+ }
+}

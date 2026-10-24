@@ -1,0 +1,110 @@
+{
+ "kind": "known-answer gate (engineered collisions)",
+ "n": 64,
+ "ok": 64,
+ "passed": true,
+ "lam_one_cases": 43,
+ "lam_other_cases": 21,
+ "v23_path_solves": 0,
+ "on_curve_asserts": 1024,
+ "false_positive_n": 64,
+ "false_positives": 0,
+ "false_positive_matches": 0,
+ "seconds": 0.05,
+ "rows_summary": {
+  "n": 64,
+  "all_ok": true,
+  "on_curve_asserts": 1024,
+  "v23_path_solves": 0,
+  "sample": [
+   {
+    "group": 0,
+    "t": 0,
+    "lam_is_one": 1,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 1,
+    "lam_is_one": 0,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 2,
+    "lam_is_one": 1,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 3,
+    "lam_is_one": 0,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 4,
+    "lam_is_one": 1,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 5,
+    "lam_is_one": 0,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 6,
+    "lam_is_one": 1,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   },
+   {
+    "group": 0,
+    "t": 7,
+    "lam_is_one": 1,
+    "matches": 2,
+    "got_v": 2,
+    "got_s": 2,
+    "v23_path": 0,
+    "on_curve": 16,
+    "ok": true
+   }
+  ]
+ }
+}
