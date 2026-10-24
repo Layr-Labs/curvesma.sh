@@ -1,0 +1,35 @@
+{
+ "test": "walk_only_production_shape",
+ "source": "evidence/census-v20n.json",
+ "note": "single fixture at secp256k1 production shape (3,200 trials x 16 walkers x 1,687 steps); the template's multi-size sweep is NOT repeated here, so this is one size, not a trend",
+ "dp_bits": 5,
+ "classes": 715000012,
+ "ledger_shape": 1.0096962927804567,
+ "visits_over_sqrtN": 1.009443557701476,
+ "arms": [
+  {
+   "arm": "control_noescape",
+   "trials": 3200,
+   "successes": 16,
+   "success_rate": 0.005,
+   "cp95": "0.0031386735464488282332240487448871135711669921875",
+   "cp95_f": 0.0031386735464488283
+  },
+  {
+   "arm": "escaped_lag1",
+   "trials": 3200,
+   "successes": 904,
+   "success_rate": 0.2825,
+   "cp95": "0.26940354315404609764073029509745538234710693359375",
+   "cp95_f": 0.2694035431540461
+  },
+  {
+   "arm": "escaped_lag3",
+   "trials": 3200,
+   "successes": 906,
+   "success_rate": 0.283125,
+   "cp95": "0.270019359920823518450561095960438251495361328125",
+   "cp95_f": 0.27001935992082354
+  }
+ ]
+}

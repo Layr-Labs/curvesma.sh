@@ -1,0 +1,38 @@
+{
+ "arms": {
+  "control_noescape": {
+   "dp_checks": 50,
+   "escape_fires": 0,
+   "invariant_violations": 0,
+   "lanes": 1024,
+   "steps": 400
+  },
+  "escaped_lag1": {
+   "dp_checks": 50,
+   "escape_fires": 2147,
+   "invariant_violations": 0,
+   "lanes": 1024,
+   "steps": 400
+  },
+  "escaped_lag3": {
+   "dp_checks": 50,
+   "escape_fires": 2147,
+   "invariant_violations": 0,
+   "lanes": 1024,
+   "steps": 400
+  }
+ },
+ "classes": 715000012,
+ "passed": true,
+ "planted_control": {
+  "dp_checks": 25,
+  "escape_fires": 1068,
+  "invariant_violations": 77547,
+  "lanes": 1024,
+  "steps": 200
+ },
+ "planted_control_caught": true,
+ "protocol": "shipped qwalk.step; after every step recompute (a + c*x) mod q and compare against the reported class; re-evaluate the DP gate on the post-substitution class",
+ "q": 4290000067,
+ "test": "invariant_v16"
+}

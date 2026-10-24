@@ -1,0 +1,35 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers), this package ports the judge-validated plain-track mu6 orbit-row walk (bls12-381-g1-ecdlp-plain ticket 5ecbf15, 126.2364) to secp256k1 and re-prices every row in THIS track's normalization C = 1000 (the first port wrongly used the bls C = 2000; the claim rises from 126.822 to 126.916 as a result, not falls). Step: 144 instructions from a measured 4-limb 256-bit field (Montgomery CIOS mul 92 insn, 4x4 schoolbook 89, add 22, cmp 30, cneg 42 by disassembly on this host), price 1 + 144/1000 = 1.144. Class count N=(n-1)/6, R_eff from bitlen(p)-1=255; log2 S0 = 126.69996043; log2 W = 126.91564633, claim 126.916. The selector is genuinely retargeted and numerically checked over 4,000 random field elements: spec_window_secp is 7 products over a 4x5 limb 320-bit window with bands i+j in {3,4} (max error 2^64.2 against exact 2^128 frac(beta x/p), inside the 2^66 band) and spec_recip3_secp is 3 products with bands {4,5} at shift 256, exact (max error 0). Census 3,200 trials x 16 walkers at the exact ledger budget (visits/sqrt(N) 1.009444 vs 1.009696, dev 2.5e-4), three arms on identical fixed starts: no-escape control succeeds 0.0050 (CP-95 0.003139) and is absorbed in a 2-cycle in 3,200 of 3,200 trials; escape lag-1 succeeds 0.2825 (CP-95 0.269404) and leaves 2,872 of 3,200 trials in a 3-cycle (0.91699 of absorbed); escape lag-1+2+3 removes the 3-cycle channel (0 of 3,200) and succeeds 0.28313 (CP-95 0.270019). All 3,200 matched pairs have byte-identical prefix traces up to the branch step. The coefficient invariant a + c*x == canon is re-checked after EVERY step on all three arms (2,147 escape fires per escaped arm, 0 violations) with a planted control reproducing the alleged post-step/pre-step defect that violates 77,547 times, so the lag-3 escape is faithful. Cap loss uses the would-solve denominator: 0 of 941 lost, one-sided CP-95 upper 0.003179, and meeting steps beyond the 1,687-step cap are censored rather than extrapolated. The port has NO sigma pool: state is a static orbit table plus one record per visited class, so the secp retention-at-load flaw class cannot arise. HONEST LIMIT: measured production-shape success is 0.267808, BELOW the 0.39 floor, and no amplification that attains 0.39 is claimed; the claim is above the live frontier 126.338 by 0.578 bits and therefore does not lead the track.",
+   "score": {
+    "numerator": "126916",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census-v20n.json",
+    "evidence/invariant.json",
+    "evidence/ledger-out.json",
+    "evidence/walk-census.json",
+    "evidence/absorb-direct.json",
+    "evidence/restart-count.json",
+    "evidence/selfaudit.json",
+    "ledger.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/census_v20n.py",
+    "scripts/invariant_check.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "scripts/selfaudit.py",
+    "scripts/restart_count.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v16: plain-track orbitrow/periodicity port re-priced at C=1000 (144 rows, 4-limb disasm), selector retargeted and numerically verified, invariant tested with a firing planted control, cap loss 0/941 CP 0.003179 - 126.916, honest sub-floor success 0.267808",
+ "version": 1
+}

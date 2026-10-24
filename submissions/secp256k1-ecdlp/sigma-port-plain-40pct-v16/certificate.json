@@ -1,0 +1,65 @@
+{
+ "checks": [
+  {
+   "name": "claim_is_ceil_of_W",
+   "ok": true,
+   "detail": "log2 W 126.91564633 -> claim 126.916 at C = 1000"
+  },
+  {
+   "name": "step_rows_144",
+   "ok": true,
+   "detail": "144 itemised rows, 4-limb disasm (mont mul 92, schoolbook 89, add 22, cmp 30, cneg 42), price 1.144"
+  },
+  {
+   "name": "normalization_C_1000",
+   "ok": true,
+   "detail": "ledger and restart_count both at C = 1000; fresh_ref regenerated from 4-limb counts"
+  },
+  {
+   "name": "kappa_budget",
+   "ok": true,
+   "detail": "1.161255874 <= 1.161540589"
+  },
+  {
+   "name": "census_at_exact_budget",
+   "ok": true,
+   "detail": "visits/sqrtN 1.009444 vs 1.0096963, dev 2.5e-04"
+  },
+  {
+   "name": "selector_v0_exact_v1_banded",
+   "ok": true,
+   "detail": "4000 samples: v0 max error 0, v1 max error 2^64.2 < 2^66 band"
+  },
+  {
+   "name": "lag3_removes_three_cycle_channel",
+   "ok": true,
+   "detail": "lag1 2872/3200 -> lag3 0/3200"
+  },
+  {
+   "name": "invariant_tested_not_asserted",
+   "ok": true,
+   "detail": "0 violations after every step on 3 arms (2147 fires/arm); planted control violates 77547"
+  },
+  {
+   "name": "cap_loss_would_solve_denominator",
+   "ok": true,
+   "detail": "0 of 941 lost, CP95 upper 0.003179 = 1-0.05^(1/941)"
+  },
+  {
+   "name": "floor_reported_not_asserted",
+   "ok": true,
+   "detail": "measured production-shape success 0.267808 < 0.39; FLOOR_MET=False, DECISION HOLD"
+  },
+  {
+   "name": "no_sigma_pool",
+   "ok": true,
+   "detail": "static orbit table + one record per visited class; no per-candidate pool"
+  },
+  {
+   "name": "frontier_position",
+   "ok": true,
+   "detail": "claim 126.916 vs frontier 126.338: +0.578, states it does not lead"
+  }
+ ],
+ "test": "certificate_v16"
+}

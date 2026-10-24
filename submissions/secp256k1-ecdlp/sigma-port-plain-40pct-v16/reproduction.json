@@ -1,0 +1,28 @@
+{
+ "commands": [
+  "python3 scripts/census_v20n.py      # 3 arms x 3200 trials -> evidence/census-v20n.json",
+  "python3 scripts/invariant_check.py  # a+c*x==canon after every step + planted control -> evidence/invariant.json",
+  "python3 scripts/restart_count.py    # fresh-start rows at C=1000, 4-limb counts",
+  "python3 ledger.py                   # exact Fractions, log2 W, claim, floor decision",
+  "python3 scripts/selfaudit.py        # citation-path audit + planted wrong-path control"
+ ],
+ "environment": {
+  "python": "3.14 (numpy 2.4.4)",
+  "cost_model": "tracks/docs/COST_MODEL.md, C = 1000 on secp256k1-ecdlp",
+  "disasm": "clang -O2 -arch arm64 + objdump on 4x64-bit references"
+ },
+ "entrypoint": "ledger.py",
+ "expected": {
+  "claim": "126.916",
+  "log2_work": "126.91564633",
+  "step_insn": 144,
+  "step_price": 1.144,
+  "success_measured": 0.267808,
+  "success_cp95": 0.2694035431540461,
+  "lag3_success": 0.283125,
+  "three_cycle_lag1": 2872,
+  "invariant_violations": 0,
+  "planted_control_violations": 77547
+ },
+ "test": "reproduction"
+}
