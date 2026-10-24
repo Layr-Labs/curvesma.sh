@@ -1,0 +1,15 @@
+{
+ "caveat": "fixture scale (2^25-point group), short walk window; meets_per_record is not comparable across arms because the arms visit different numbers of distinct points",
+ "guarded": {
+  "distinct_dp_per_walker": 49.3295,
+  "meets_per_record": 0.2160877,
+  "meets_per_walker": 10.6595
+ },
+ "meets_per_walker_ratio_guarded_over_unguarded": 3.746748681898066,
+ "reading": "at identical curve, classes, DP mask (2^-4), 2000 walkers x 1000 steps: the guarded walk produces 3.75x MORE full-point meets per walker than the pre-guard walk, because the pre-guard walk collapses into the short cycle (11.4k distinct DP points over 2e6 walker-steps vs 98.7k). The guarded transition does not lose coalescence; applying the pre-guard fitted p to it is conservative.",
+ "unguarded": {
+  "distinct_dp_per_walker": 5.6765,
+  "meets_per_record": 0.5011891,
+  "meets_per_walker": 2.845
+ }
+}
