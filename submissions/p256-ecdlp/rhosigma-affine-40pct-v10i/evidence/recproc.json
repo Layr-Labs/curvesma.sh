@@ -1,0 +1,27 @@
+{
+ "W": 127.77224361522359,
+ "W_amplified_w2": 128.77224641093244,
+ "W_single_instance": 127.77224641093245,
+ "batch_inv": 982,
+ "batch_walkers": 65536,
+ "charge": 1102.4622130509376,
+ "claim": 128.7723,
+ "inv_ir": 53900,
+ "inv_ir_per_step": 0.8203125,
+ "inv_ir_per_step_fraction": [
+  53900,
+  65536
+ ],
+ "inv_ladder": {
+  "conditional_muls": 128,
+  "fe_mul_total": 385,
+  "final_correction_mul": 1,
+  "note": "judge c33c50c9 objection 5: fe_inv performs a FINAL CORRECTION MULTIPLICATION after the 256 squarings and 128 conditional multiplies; v10h's 384 omitted it",
+  "squarings": 256
+ },
+ "listing": "clang -O2 -S --target=aarch64-unknown-linux-gnu -ffreestanding -I<evidence>",
+ "mul_once": 140,
+ "rec_share_per_step": 8.673617379884035e-18,
+ "recproc": 40,
+ "source": "evidence/p256_recproc.c (recproc, batch_inv), evidence/p256_fe_cc.h (fe_mul, fe_inv)"
+}
