@@ -1,0 +1,72 @@
+{
+ "note": "full per-arm rows are in evidence/*-v23.json; this file is the compact aggregate shipped with the runner",
+ "v23_aggregates": {
+  "bound-v23": {
+   "E_repeats_per_walk_measured": 0.208955223880597,
+   "birthday_formula_per_walk": 0.24203821656050956,
+   "measured_over_formula": 0.8633150039277298,
+   "step_pairs": 30552
+  },
+  "cap-v23": {
+   "abandons_at_cap": 56,
+   "control_force_admission": {
+    "control_fails_without_the_cap": true,
+    "rule": "the SAME state continues WITHOUT the cap for 2 x cap steps",
+    "still_without_dp": 56,
+    "trails_tested": 56
+   },
+   "dp_first_exits": 208,
+   "mean_steps_to_abandon": 4096.0,
+   "trails_trapping_in_cycle": 56,
+   "var_steps_to_abandon": 0.0,
+   "walks": 256
+  },
+  "reports-v23": {
+   "abandons_measured": 72,
+   "ceil_formula_reports_per_walk": 256,
+   "check_measured_vs_formula_ratio": 0.9013671875,
+   "mean_steps_to_dp_measured": 7.216955579631636,
+   "reports_per_walk_measured": 230.75,
+   "trail_starts_measured": 29704
+  },
+  "retention-bigN-v23": {
+   "any_step": 1.0,
+   "cp95_lower": 0.9989256825254366,
+   "detected": 2787,
+   "dp_pairs": 2787,
+   "known_answer_gate": [
+    3008,
+    3008
+   ],
+   "p_detect_dp_gated": 1.0,
+   "pairs": 3008,
+   "trap_before_dp_fixture": 0.07347074468085106
+  },
+  "retention-lag-v23": {
+   "any_step": 1.0,
+   "cp95_lower": 0.9975474940617891,
+   "detected": 1220,
+   "dp_pairs": 1220,
+   "known_answer_gate": [
+    2008,
+    2008
+   ],
+   "p_detect_dp_gated": 1.0,
+   "pairs": 2008,
+   "trap_before_dp_fixture": 0.39243027888446214
+  },
+  "retention-v23": {
+   "any_step": 1.0,
+   "cp95_lower": 0.9996008084368575,
+   "detected": 7503,
+   "dp_pairs": 7503,
+   "known_answer_gate": [
+    10008,
+    10008
+   ],
+   "p_detect_dp_gated": 1.0,
+   "pairs": 10008,
+   "trap_before_dp_fixture": 0.2502997601918465
+  }
+ }
+}

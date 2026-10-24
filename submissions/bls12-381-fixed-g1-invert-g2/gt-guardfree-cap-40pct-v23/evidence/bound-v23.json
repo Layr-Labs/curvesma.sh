@@ -1,0 +1,14 @@
+{
+ "E_repeats_per_walk_measured": 0.208955223880597,
+ "birthday_formula_per_walk": 0.24203821656050956,
+ "guard_free_element_repeats": 336,
+ "iid_birthday_value_fixture": 3.597706618400039e+72,
+ "iid_birthday_value_production": 0.6463207914837059,
+ "measured_over_formula": 0.8633150039277298,
+ "reading": "the guard-free walk carries NO ring coordinate, so the classic birthday count over the class stream is back in its hypothesis domain (a random map on N classes, the disclosed mu = 11/10 allowance); this census is the measured cross-check that plugs into Markov E_meas/t, which needs no independence at all.  The v22 monotonicity route is WITHDRAWN, not patched.",
+ "regime": "L = 20 steps against a 785-class pool: UNSATURATED (L^2/(2N) = 0.2420), so the measured repeat count is a direct check of the birthday value used by the trap row and the Markov cross-check; the L = 200 census is the saturated arithmetic demo, not a rate.",
+ "step_pairs": 30552,
+ "step_source": "classkey.step_v13 (guard-free, shipped)",
+ "steps_per_walk": 20,
+ "walks": 1608
+}

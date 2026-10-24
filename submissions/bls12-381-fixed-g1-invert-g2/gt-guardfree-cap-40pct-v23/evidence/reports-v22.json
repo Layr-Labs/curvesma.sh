@@ -1,0 +1,12 @@
+{
+ "ceil_formula_reports_per_walk": 64,
+ "chebyshev_free": "the report count enters the ledger only as a COST CEILING; this row is the census-direct count the ceiling is checked against",
+ "check_measured_vs_formula_ratio": 0.8289713541666667,
+ "dp_bits": 5,
+ "model_reports_per_step": 0.03125,
+ "reports_measured": 12733,
+ "reports_per_step_measured": 0.025905354817708334,
+ "reports_per_walk_measured": 53.05416666666667,
+ "steps_per_walk": 2048,
+ "walks": 240
+}

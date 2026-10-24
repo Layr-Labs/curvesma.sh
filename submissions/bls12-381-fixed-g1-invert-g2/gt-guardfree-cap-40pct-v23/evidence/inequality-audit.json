@@ -1,0 +1,272 @@
+{
+ "inequalities": [
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3965",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3963",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.model",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.product",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.product_cp95_lower",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.39",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net_cp95_lower",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3965",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net_cp95_lower",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 1.0396450289119281e-14,
+   "literal": "1e-12",
+   "ok": true,
+   "op": "<=",
+   "row": "success.trap_tau",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 1.0,
+   "literal": "1.0",
+   "ok": true,
+   "op": "<=",
+   "row": "success.retention_eff",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.82",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.8345",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.84",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.7675",
+   "ok": true,
+   "op": ">=",
+   "row": "claim.value",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.6463207914837059,
+   "literal": "0.7000",
+   "ok": true,
+   "op": "<=",
+   "row": "trap.repeat_probability",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 2.0800123810260778,
+   "literal": "2.10",
+   "ok": true,
+   "op": "<=",
+   "row": "density.density_factor",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 24.0,
+   "literal": "24",
+   "ok": true,
+   "op": ">=",
+   "row": "ladder.passed",
+   "rule": "literal is a FLOOR: value >= literal"
+  }
+ ],
+ "note_literals": [
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.net"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3965",
+   "op": "<=",
+   "row": "success.net"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3963",
+   "op": ">=",
+   "row": "success.net"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.model"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.product"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.product_cp95_lower"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.39",
+   "op": ">=",
+   "row": "success.net_cp95_lower"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3965",
+   "op": "<=",
+   "row": "success.net_cp95_lower"
+  },
+  {
+   "cert_value": 1.0396450289119281e-14,
+   "in_note": false,
+   "literal": "1e-12",
+   "op": "<=",
+   "row": "success.trap_tau"
+  },
+  {
+   "cert_value": 1.0,
+   "in_note": false,
+   "literal": "1.0",
+   "op": "<=",
+   "row": "success.retention_eff"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.82",
+   "op": "<=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.8345",
+   "op": "<=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.84",
+   "op": "<=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.7675",
+   "op": ">=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 0.6463207914837059,
+   "in_note": false,
+   "literal": "0.7000",
+   "op": "<=",
+   "row": "trap.repeat_probability"
+  },
+  {
+   "cert_value": 2.0800123810260778,
+   "in_note": false,
+   "literal": "2.10",
+   "op": "<=",
+   "row": "density.density_factor"
+  },
+  {
+   "cert_value": 24.0,
+   "in_note": true,
+   "literal": "24",
+   "op": ">=",
+   "row": "ladder.passed"
+  }
+ ],
+ "planted_flip": {
+  "control_rejects_it": true,
+  "old_note_literal": "0.3963",
+  "old_note_passes": false,
+  "old_note_value": 0.3962569,
+  "tightest_row": {
+   "literal": "125.7675",
+   "row": "claim.value",
+   "value": 125.7675
+  }
+ }
+}

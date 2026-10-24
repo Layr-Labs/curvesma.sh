@@ -1,0 +1,105 @@
+{
+ "any_step_agree": {
+  "cp95_lower": 0.9985092137847597,
+  "detected": 2008,
+  "p_detect": 1.0,
+  "role": "the v22 STATISTIC, shipped for comparison only; it counts class agreement at ANY step and does NOT feed success (verdict 3eb6d983 item 1)"
+ },
+ "arm": "LAG ARM: theta = 2^7 = 128 steps so the segment does not end before lag 56; pairs that reach lag k are counted at lag k (the conditioning the v22 verdict used: 0.10625 at lag 32 with the guard).",
+ "cap_steps": 16384,
+ "curve_any_step": {
+  "1": {
+   "detected": 1984,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 1,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 1984
+  },
+  "16": {
+   "detected": 1278,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 16,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 1278
+  },
+  "2": {
+   "detected": 1966,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 2,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 1966
+  },
+  "32": {
+   "detected": 370,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 32,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 370
+  },
+  "4": {
+   "detected": 1901,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 4,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 1901
+  },
+  "56": {
+   "detected": 1,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 56,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 1
+  },
+  "8": {
+   "detected": 1738,
+   "dp_detected": 0,
+   "dp_pairs": 0,
+   "lag": 8,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "pairs": 1738
+  }
+ },
+ "dp_bits": 7,
+ "dp_gated_agree": {
+  "cp95_lower": 0.9975474940617891,
+  "detected": 1220,
+  "p_detect_given_dp_hit": 1.0,
+  "pairs_with_a_dp_hit": 1220,
+  "role": "THE SUCCESS STATISTIC: detection = a DP-HIT event with the DP mask applied to the class key, both trails in the same class key at that step"
+ },
+ "fixture_bits": 5,
+ "fixture_classes": 785,
+ "known_answer_gate_pass": 2008,
+ "known_answer_gate_required": 2008,
+ "lag32_row": {
+  "lag": 32,
+  "p_agree_any_step": 1.0,
+  "p_agree_given_dp": null,
+  "reading": "the lag-32 arm the v22 verdict singled out (0.10625 with the guard); guard-free the two trails are the same trail, so agreement at lag 32 is the same event as at lag 1"
+ },
+ "pairs": 2008,
+ "protocol": "GUARD-FREE step (classkey.step_v13: column = kappa, no ring) + the v22 cap (first DP or 128*theta steps; a capped trail is abandoned, labels discarded, a fresh trail started)",
+ "reading": "the guard was the ONLY thing that broke the lockstep of two trails that share a start point: with the guard off the successor class is a function of the class alone, so the pair stays in one class until its first DP and reports there with two different label pairs (the solvable event).  The fixture measures the mechanism and the trap-before-DP loss in the regime where that loss is visible; the production loss is the closed-form bound.",
+ "step_source": "classkey.step_v13 (shipped control rule, imported) -- the guard-free walk of the v23 design",
+ "steps": 64,
+ "trap_before_dp": {
+  "fraction_fixture": 0.39243027888446214,
+  "pairs": 788,
+  "production_bound": 1.672330211844188e-28,
+  "production_bound_log2": -92.27212691232603,
+  "reading": "a class repeat is a cycle; the guard-free walk state IS the class, so a repeat before the first DP leaves no report and the trail is abandoned at the cap.  At PRODUCTION a DP arrives after ~2^80 steps while the class pool is 2^251.27, so this loss is bounded by theta^2/(2N) = 2^-92.3, not by the fixture fraction (the fixture deliberately runs theta ~ sqrt(N), the regime where the loss is visible at all)"
+ }
+}
