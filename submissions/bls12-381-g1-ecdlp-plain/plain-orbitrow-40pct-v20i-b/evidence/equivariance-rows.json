@@ -1,0 +1,48 @@
+{
+ "arm": "field-labelled",
+ "rows": [
+  {
+   "arm": "control",
+   "collisions": 7644,
+   "corrupt": true,
+   "passed": true,
+   "test": "conversion",
+   "verified": 0
+  },
+  {
+   "arm": "fixed",
+   "collisions": 7644,
+   "corrupt": false,
+   "passed": true,
+   "test": "conversion",
+   "verified": 7644
+  },
+  {
+   "arm": "control",
+   "comparisons": 9000,
+   "mismatch_alt_successor": 7494,
+   "mismatch_column": 7494,
+   "mismatch_decision": 0,
+   "mismatches": 14988,
+   "passed": false,
+   "selector": "raw",
+   "sigma_phases": 6,
+   "states": 1500,
+   "test": "equivariance"
+  },
+  {
+   "arm": "fixed",
+   "comparisons": 9000,
+   "mismatch_alt_successor": 0,
+   "mismatch_column": 0,
+   "mismatch_decision": 0,
+   "mismatches": 0,
+   "passed": true,
+   "selector": "class",
+   "sigma_phases": 6,
+   "states": 1500,
+   "test": "equivariance"
+  }
+ ],
+ "test": "equivariance+conversion"
+}

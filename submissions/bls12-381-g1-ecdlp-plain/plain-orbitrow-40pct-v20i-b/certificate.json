@@ -1,0 +1,146 @@
+{
+ "checks": [
+  {
+   "detail": "log2 W 126.26594293 -> claim 126.266",
+   "name": "claim_is_ceil4dp_W_plus_2e-5",
+   "ok": true
+  },
+  {
+   "detail": "167 rows",
+   "name": "step_rows_167",
+   "ok": true
+  },
+  {
+   "detail": "1.099949863 <= 1.099993376",
+   "name": "kappa_budget",
+   "ok": true
+  },
+  {
+   "detail": "0.399014",
+   "name": "success_floor",
+   "ok": true
+  },
+  {
+   "detail": "R_EFF 852105 -> 1.9559e-07",
+   "name": "trap_rate_is_1_over_6R_eff",
+   "ok": true
+  },
+  {
+   "detail": "852105",
+   "name": "r_eff_from_selector",
+   "ok": true
+  },
+  {
+   "detail": "8",
+   "name": "kcap_equals_ledger_walker_evidence",
+   "ok": true
+  },
+  {
+   "detail": "raise_free=True mutation.raised=False",
+   "name": "escape_branch_has_no_raise",
+   "ok": true
+  },
+  {
+   "detail": "test=equivariance arm=fixed mismatches=0",
+   "name": "equivariance_fixed_row_zero_bound_by_test_arm",
+   "ok": true
+  },
+  {
+   "detail": "test=equivariance arm=control mismatches=14988",
+   "name": "equivariance_control_row_nonzero_bound_by_test_arm",
+   "ok": true
+  },
+  {
+   "detail": "9000 = 1500 x 6",
+   "name": "e2_pairs_consistent",
+   "ok": true
+  },
+  {
+   "detail": "fixed 7644/7644, control 0",
+   "name": "conversion_fixed_and_mutation",
+   "ok": true
+  },
+  {
+   "detail": "7/7 bound, planted wrong row caught on 4 paths",
+   "name": "row_binding_passes_and_planted_wrong_row_fails",
+   "ok": true
+  },
+  {
+   "detail": "832 cycles, 0 fires",
+   "name": "no_fire_on_any_simple_cycle_ge3",
+   "ok": true
+  },
+  {
+   "detail": "detected=True",
+   "name": "planted_three_cycle_detected",
+   "ok": true
+  },
+  {
+   "detail": "4000/4000",
+   "name": "twist_selector_exact",
+   "ok": true
+  },
+  {
+   "detail": "358/1000",
+   "name": "twist_mutation_fails",
+   "ok": true
+  },
+  {
+   "detail": "log2 p -8878473956760745566154048667648.000",
+   "name": "meter_trip_below_2^-32",
+   "ok": true
+  },
+  {
+   "detail": "8.002e+31",
+   "name": "meter_cap_is_twice_max_row",
+   "ok": true
+  },
+  {
+   "detail": "4.001e+31 >= 2.000e+31",
+   "name": "run_cost_measured_is_larger_row",
+   "ok": true
+  },
+  {
+   "detail": "0 in 8388608 lane-steps",
+   "name": "three_cycle_structural_zero",
+   "ok": true
+  },
+  {
+   "detail": "11.64 + 10.37 = 22.01",
+   "name": "d11_split_sums",
+   "ok": true
+  },
+  {
+   "detail": "0.4109/0.3977/0.3927",
+   "name": "merge_cp95_gated_ge_floor",
+   "ok": true
+  },
+  {
+   "detail": "0.3894 -- reported, not gated",
+   "name": "pair_cp95_d5_below_floor",
+   "ok": true
+  },
+  {
+   "detail": "185 numbers, 0 orphans",
+   "name": "selfaudit_passes",
+   "ok": true
+  },
+  {
+   "detail": "all 10 table citations resolved",
+   "name": "cited_paths_all_resolve",
+   "ok": true
+  }
+ ],
+ "claim": 126.266,
+ "k_esc_max": 8,
+ "log2_W": 126.26594292970901,
+ "n_checks": 26,
+ "n_ok": 26,
+ "note_bytes": 19532,
+ "package": "plain-orbitrow-40pct-v20i",
+ "passed": true,
+ "r_eff": 852105,
+ "sqrtN_log2": 126.13606345616301,
+ "success_model": 0.39901420661817655,
+ "trap_rate": 1.9559404846429334e-07
+}

@@ -1,0 +1,67 @@
+{
+ "bound": [
+  {
+   "ok": true,
+   "path": "E2.fixed.mismatches",
+   "token": "0",
+   "value": 0,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.fixed.comparisons",
+   "token": "9000",
+   "value": 9000,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.fixed.column",
+   "token": "0",
+   "value": 0,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.fixed.alt",
+   "token": "0",
+   "value": 0,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.control.mismatches",
+   "token": "14988",
+   "value": 14988,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.control.column",
+   "token": "7494",
+   "value": 7494,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.control.alt",
+   "token": "7494",
+   "value": 7494,
+   "why": ""
+  }
+ ],
+ "bound_ok": 7,
+ "bound_total": 7,
+ "passed": true,
+ "planted_wrong_row": {
+  "caught": true,
+  "failed_paths": [
+   "E2.fixed.mismatches",
+   "E2.fixed.column",
+   "E2.control.mismatches",
+   "E2.control.column"
+  ],
+  "injected": "fixed<->control mismatches swapped"
+ },
+ "test": "rowbind"
+}

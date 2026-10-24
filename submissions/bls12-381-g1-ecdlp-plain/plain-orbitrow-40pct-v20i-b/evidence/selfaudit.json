@@ -1,0 +1,38 @@
+{
+ "identities": {
+  "claim_is_ceil4dp_W_plus_2e-5": true,
+  "control_shows_long_cycles": true,
+  "escape_branch_has_no_raise": true,
+  "exhaustive_cycle_census_covers_two_sizes": true,
+  "kcap_equals_ledger_and_walker": true,
+  "merge_cp95_gated_ge_floor": true,
+  "meter_cap_is_twice_max_row": true,
+  "meter_trip_below_2^-32": true,
+  "no_fire_on_any_simple_cycle_ge3": true,
+  "pair_cp95_d5_below_floor": true,
+  "planted_three_cycle_detected": true,
+  "r_eff_from_selector": true,
+  "records_budget_plus_drain_eq_records": true,
+  "row_binding_passes_and_planted_wrong_row_fails": true,
+  "run_cost_measured_is_larger_row": true,
+  "six_r_eff_eq_cells": true,
+  "states_x_sigma_eq_comparisons": true,
+  "step_rows_sum_167": true,
+  "trap_rate_is_one_over_six_r_eff": true,
+  "twist_mutation_fails": true,
+  "twist_selector_exact": true
+ },
+ "matched": 185,
+ "numbers_checked": 185,
+ "orphans": [],
+ "passed": true,
+ "planted_typo": {
+  "caught": true,
+  "injected": "825105",
+  "orphans": [
+   "825105",
+   "825105,"
+  ]
+ },
+ "test": "selfaudit"
+}

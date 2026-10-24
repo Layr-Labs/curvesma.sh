@@ -1,0 +1,31 @@
+{
+ "checks": {
+  "mutation_exceeds_cap_and_restarts": true,
+  "natural_restarts_are_rare": true,
+  "natural_run_within_allowed": true,
+  "no_raise_in_escape_branch": true
+ },
+ "densities": [
+  5,
+  7,
+  9,
+  11
+ ],
+ "fast_path_of": "scripts/prod_sweep.py shard (same code as the 336,000-trial census)",
+ "fires_total": 392,
+ "kcap": 8,
+ "mutation": {
+  "lanes_restarted": 8,
+  "max_run_after_reset": 2,
+  "name": "force_every=1 (a substitution on every step)",
+  "raised": false,
+  "restarts": 16
+ },
+ "natural_max_run_per_walk": 1,
+ "natural_restarts": 0,
+ "passed": true,
+ "raise_free": true,
+ "test": "escape run priced, never asserted",
+ "trials_per_density": 600,
+ "trials_total": 2400
+}
