@@ -1,0 +1,36 @@
+{
+ "commands": [
+  "python3 scripts/lag3_fixture.py     # planted 3-cycle fixture -> evidence/lag3-firing.json",
+  "python3 scripts/absorb_v20n.py      # exhaustive two-size absorption count -> evidence/absorb-direct.json",
+  "BT=3200 SEED=20250 python3 scripts/census_v20n.py  # 3 arms x 3200 trials -> evidence/census-v20n.json",
+  "BT=3200 SEED=11 python3 scripts/census_v20n.py     # second seed block -> evidence/census-seed11.json",
+  "ARM=lag3 BT=3200 python3 scripts/pair_census.py    # 3200 sets x 2 runs, same challenge",
+  "python3 scripts/transfer_arm.py     # ORDER ladder (v18 evidence, unchanged)",
+  "python3 scripts/sensitivity_arm.py  # 12 fixed-order cells -> evidence/transfer-arm-S_*.json",
+  "python3 scripts/analyze_sensitivity.py  # slopes + production budget -> evidence/sensitivity.json",
+  "python3 scripts/sensitivity_assert.py   # M_insn +-5 recompile -> evidence/sensitivity-assert.json",
+  "python3 scripts/restart_count.py    # fresh-start rows at C=1000, 4-limb counts",
+  "python3 ledger.py                   # exact Fractions, log2 W2, claim, budget, floor decision"
+ ],
+ "entrypoint": "ledger.py",
+ "environment": {
+  "cost_model": "tracks/docs/COST_MODEL.md, C = 1000 on secp256k1-ecdlp",
+  "disasm": "WITHDRAWN. No disassembly measurement is claimed. M_insn = 97 is a STRUCTURAL count and its +-5 sensitivity is machine-measured at 6.3129e-06 bits (2^-17.27).",
+  "python": "/opt/homebrew/opt/python@3.14/bin/python3.14 3.14.8 (numpy 2.4.4); stdlib-only apart from numpy in the census arms"
+ },
+ "expected": {
+  "claim": "127.930",
+  "log2_work": "127.92945732",
+  "success_design": 0.474224,
+  "success_floor": 0.39,
+  "restart_armed_trials_depooled": 6400,
+  "restart_events": 0,
+  "restart_loss_fraction": 0.00046875,
+  "sensitivity_budget_conservative_ln": 0.0,
+  "sensitivity_budget_signed_ln": 2.2555,
+  "selector_allowance": 0.084224,
+  "aux_minsn_delta_bits": 6.312945e-06,
+  "cells": 12,
+  "sets_per_cell": 9600
+ }
+}

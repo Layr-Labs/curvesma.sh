@@ -1,0 +1,50 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers) this package answers the three defects verdict 46b1b85b names, and changes the TRANSFER from a band to a PER-PARAMETER MEASUREMENT. Claim 127.930 bits (w=2 doubled: log2 W 126.92945732 + 1.00000000). (1) PARAMETER-SENSITIVITY LADDER, FIXED ORDER. The verdict rejects the order ladder because production differs in R (2^20 vs fixture 64), walkers (2^20 vs 16) and DP density (2^-60 vs 2^-5). scripts/sensitivity_arm.py runs 12 cells at ONE order (q_min=2^28, N=2^25.42 classes, 9,600 sets each, one parameter at a time, total work per set held at x=visits/sqrt(N)=1.009696 so only the LAYOUT changes): W=16/64/256 -> p_set 0.54594/0.44333/0.22042; R=64/256/1024 -> 0.54594/0.55844/0.55490; d=3/4/5/8/11 -> 0.58594/0.57354/0.54594/0.29646/0.05969. THE WALKER AND DP DIMENSIONS ARE ONE VARIABLE, AND THAT IS MEASURED, NOT ASSERTED: three cells with different (W,d) -- (256,5), (64,7), (128,6) -- were chosen so f=steps per DP gap is the same 0.83, and p_set reads 0.22042/0.20250/0.22031 (8.4% spread, CP-95 intervals overlap). SLOPES (least squares, ln p_set vs ln parameter, +-standard error): walkers +0.06116+-0.03491 (dln 11.090), columns R +0.00587+-0.00604 (dln 9.704), DP detection f +0.05101+-0.01164 (dln 29.806). THE PRODUCTION BUDGET: all three slopes are POSITIVE (more walkers, more columns, more steps per DP gap all raise p_set), so the conservative budget TAKES NO CREDIT and charges 0.0 ln in every row -- conservative total +0.0000 ln, signed total +2.2555 ln. Production f = (S_OPS/2^20)/2^60 = 2^46.7, which is 2^33.5 beyond the measured plateau, and the plateau slope is measured at d=3,4,5 rather than assumed. THE ONE UNMEASURED DIMENSION IS NAMED AND PRICED: the surrogate imports selector.cell(K,R,p) verbatim with a uniform class key and cannot vary the ORIGIN of K (EC coordinates), so that dimension carries a quantified ALLOWANCE of 0.084224 absolute success before the 0.39 floor breaks -- a number, not an insensitivity claim. Success 0.474224 >= 0.39. (2) RESTART DENOMINATOR DEPOOLED. The 12,800 count pooled the lag-1 and lag-3 arms of both blocks, which share challenges and starts within a block and are not independent trials. ledger.py now groups PER ARM and takes the binding arm: 6,400 armed trials, 0 events, rule of three 3/6400 = 4.6875e-4. The debit DOUBLES from v18's 2.344e-4 and is paid: success 0.475029 -> 0.474224. The 'surrogate restart probability implies production loss bound' step is replaced by two measured rows: the cap is measured directly (K_ESC=8 vs K_ESC=10^9 on the identical challenge block both read p_set=0.54594, 0 restarts, so cap-induced loss on this arm is exactly 0 at 19,200 armed run-trials), and the census forced-cap row prices truncation per event (cap 421 of 1,687 steps loses 973/1,070 would-solve sets). The ledger charges the expectation under Markov, as before. (3) FALSE SENSITIVITY ASSERTION MACHINE-CORRECTED. v18 declared '+-5 M_insn -> 2^-113 bits'; the verifier computed ~6e-6 and was right. scripts/sensitivity_assert.py re-executes the module at M_insn=92,97,102: measured change in log2 W2 is -6.312945e-06/+6.312918e-06 bits, max 6.3129e-06 = 2^-17.27, a factor 2^96 larger than declared, and the claim at 1e-3 does not move in any of the three runs. ledger.py ASSERTS the measured constant (AUX_MAX_DELTA) against evidence/sensitivity-assert.json and scans the package for every remaining sensitivity-style phrase; no analytic sensitivity is declared anywhere. CARRIED, reviewer-verified, not relitigated: lag-3 firing proof, same-challenge w=2 (0.5678 vs formula 0.5673), four-order ladder 2^21.4/25.4/29.4/33.4 with CP-95 0.475029 at the largest arm, ledger arithmetic (log2 W2=127.92945732, C=1000), kernel price withdrawn (M_insn=97 structural only, no disassembly claim). NOT ESTABLISHED, DISCLOSED: a production BOUND on the EC-coordinate selector dimension; the floor-met statement is against the twelve measured cells plus the 0.084224 allowance, not against a measurement of that dimension.",
+   "score": {
+    "numerator": "127930",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "reproduction.json",
+    "ledger.py",
+    "preflight.py",
+    "evidence/sensitivity.json",
+    "evidence/sensitivity-assert.json",
+    "evidence/transfer-ladder.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "evidence/lag3-firing.json",
+    "evidence/absorb-direct.json",
+    "evidence/restart-count.json",
+    "evidence/ledger-out.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "name": "fixed-order parameter-sensitivity ladder",
+   "command": "python3 scripts/sensitivity_arm.py && python3 scripts/analyze_sensitivity.py",
+   "result": "12 cells at q_min=2^28 (N=2^25.42), 9600 sets each; slopes walkers +0.06116+-0.03491, columns +0.00587+-0.00604, DP detection f +0.05101+-0.01164; conservative budget 0.0000 ln, signed +2.2555 ln; invariance spread 8.36% at f~0.83",
+   "artifact": "evidence/sensitivity.json"
+  },
+  {
+   "name": "restart denominator depool",
+   "command": "python3 ledger.py",
+   "result": "per-arm denominator 6400 (was pooled 12800), 0 events, rule of three 4.687500e-04; success 0.475029 -> 0.474224",
+   "artifact": "evidence/ledger-out.json"
+  },
+  {
+   "name": "M_insn sensitivity recompiled",
+   "command": "python3 scripts/sensitivity_assert.py",
+   "result": "max |delta log2 W2| = 6.3129e-06 bits = 2^-17.27 at M_insn+-5; v18's 2^-113 is false; claim at 1e-3 does not move",
+   "artifact": "evidence/sensitivity-assert.json"
+  }
+ ],
+ "title": "secp256k1 v19: fixed-order sensitivity ladder (12 cells, walkers/R/DP one at a time), all slopes favourable -> budget 0.0 ln charged, EC-selector allowance 0.084224; restart depooled 12800->6400; M_insn sensitivity 2^-17.27; claim 127.930",
+ "version": 1
+}

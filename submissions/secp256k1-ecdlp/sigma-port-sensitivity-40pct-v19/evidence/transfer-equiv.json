@@ -1,0 +1,12 @@
+{
+ "class_divergences": 0,
+ "dp_divergences": 0,
+ "fire_divergences": 0,
+ "fires_in_trace": 86,
+ "lanes": 48,
+ "note": "shipped qwalk.step and the 12-bit-limb extended step agree on canonical class, DP gate and escape fire at every step",
+ "q": 4290000067,
+ "steps": 400,
+ "test": "equiv_extended_vs_shipped",
+ "trace_equal": true
+}

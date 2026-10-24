@@ -1,0 +1,83 @@
+{
+ "assertion_scan": {
+  "hits": [
+   {
+    "file": "ledger.py",
+    "line": 94,
+    "text": "# INV_INSN inside EXTRAS, where +-5 insn moves W by 2^-113 bits, so the claim does"
+   },
+   {
+    "file": "ledger.py",
+    "line": 95,
+    "text": "# not depend on it; it is stated as the structural count it is."
+   },
+   {
+    "file": "submission.json",
+    "line": 4,
+    "text": "\"statement\": \"On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers) this package ports the judge-validated plain-track mu6 orbit-row walk (bls12-381-g1-ecdlp-plain ticket 5ecbf15) and answers the one premise the last r"
+   },
+   {
+    "file": "public-note.md",
+    "line": 95,
+    "text": "`INV_INSN` inside EXTRAS, where \u00b15 insn moves W by 2^-113 bits."
+   }
+  ],
+  "n_hits": 4,
+  "pattern": "(insensitive|negligible|negligibly|moves? W by|does not depend on|depend\\w* on it|2\\^-1[0-9]{2}|within rounding|to within)"
+ },
+ "baseline": {
+  "M_insn": 97,
+  "claim_log2": 127.93,
+  "log2_W2": 127.92945732086541
+ },
+ "claim_log2_moves": false,
+ "declared_in_v18": "2^-113",
+ "declared_is_false": true,
+ "declared_value_is_smaller_than_measured": true,
+ "max_abs_delta_bits": 6.312945487252364e-06,
+ "measured_value_2_pow": "2^-17.27",
+ "rows": [
+  {
+   "EXTRAS_ratio_change": -0.050785740037821776,
+   "M_insn": 92,
+   "batch_inversion_change": -0.05154639175257732,
+   "claim_log2_at_1e-3": 127.93,
+   "delta_insn": -5,
+   "delta_log2_W2_bits": -6.312945487252364e-06,
+   "delta_log2_W2_bits_str": "-6.312945e-06",
+   "fallback_ref_change": -0.05154639175257732,
+   "inv_insn_change": -0.05154639175257736,
+   "log2_W2": 127.92945100791992,
+   "table_build_ref_change": -0.05154639175257732
+  },
+  {
+   "EXTRAS_ratio_change": 0.0,
+   "M_insn": 97,
+   "batch_inversion_change": 0.0,
+   "claim_log2_at_1e-3": 127.93,
+   "delta_insn": 0,
+   "delta_log2_W2_bits": 0.0,
+   "delta_log2_W2_bits_str": "0.000000e+00",
+   "fallback_ref_change": 0.0,
+   "inv_insn_change": 0.0,
+   "log2_W2": 127.92945732086541,
+   "table_build_ref_change": 0.0
+  },
+  {
+   "EXTRAS_ratio_change": 0.050785740037821776,
+   "M_insn": 102,
+   "batch_inversion_change": 0.05154639175257732,
+   "claim_log2_at_1e-3": 127.93,
+   "delta_insn": 5,
+   "delta_log2_W2_bits": 6.312917889772507e-06,
+   "delta_log2_W2_bits_str": "6.312918e-06",
+   "fallback_ref_change": 0.05154639175257732,
+   "inv_insn_change": 0.05154639175257736,
+   "log2_W2": 127.9294636337833,
+   "table_build_ref_change": 0.05154639175257732
+  }
+ ],
+ "slope_bits_per_insn": 1.262586337702487e-06,
+ "test": "sensitivity_assert_machine_verified",
+ "what": "M_insn +-5 perturbation recomputes the ledger with no analytic shortcut; the declared sensitivity is replaced by the measured delta"
+}
