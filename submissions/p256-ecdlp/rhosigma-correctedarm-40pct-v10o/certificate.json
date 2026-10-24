@@ -1,0 +1,82 @@
+{
+ "about": "What this certificate does and does not assert. It binds the shipped evidence by hash and states which checks pass and which do NOT. It is deliberately not a claim of algorithmic success: the success premise fails and is recorded as failing.",
+ "assert": {
+  "batch_inv_denominators": true,
+  "batch_inv_live": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "claim_is_ceiling": true,
+  "control_reproduces_v10n_bit_for_bit": true,
+  "control_uses_parity_SA_SB": true,
+  "escape_changes_state": true,
+  "ring_depth_4_verified": true,
+  "ring_escape_exactly_inert": true,
+  "ring_rate_measured_not_modelled": true,
+  "solve_is_class_level": true,
+  "storage_fits": true,
+  "success_ge_floor": false,
+  "tables_independent": true,
+  "theta2_law_withdrawn": true
+ },
+ "assert_notes": {
+  "claim_is_ceiling": "128.9437 is the 4-dp ceiling of 128.9436093073, so the at-most direction holds.",
+  "control_reproduces_v10n_bit_for_bit": "200 trials dp4: 6 successes, 10148289 records, 6 meets, 1 self, 8 ring hits, identical to the v10n binary.",
+  "escape_changes_state": "carried from v10n: integrated path test, unchanged in this version.",
+  "ring_depth_4_verified": "carried from v10n: self-test rows in the shipped object, unchanged in this version.",
+  "ring_escape_exactly_inert": "P1 (guard, no ring) and P2 (guard, ring, escape) return identical success counts in all four DP cells (100/22/9/4) at 3000 trials.",
+  "success_ge_floor": "FALSE, and it is the reason this package is not promotable. p per instance <= 2^-61.55 (w=2 2^-60.55) against a 0.39 floor. The previous certificate carried success_ge_floor=true while its own claim text said the floor was not met; that contradiction is corrected here."
+ },
+ "binds": {
+  "argument.md": {
+   "bytes": 9001,
+   "sha256": "4cdf34cccc920bef6f6faf7d21960009d8206271fb4ec1a3509923a8012cedf4"
+  },
+  "evidence/census_v10o.c": {
+   "bytes": 14882,
+   "sha256": "85d4c30b18f2e8a807681d5d9df1530c49308bf28ff4589943c1148a38fb6eda"
+  },
+  "evidence/coalescence.json": {
+   "bytes": 2255,
+   "sha256": "af417ac8e01ad27a7b7dc57ceb1266de33e654b84e9797413a7860b4fd3cf8f8"
+  },
+  "evidence/cp_calib.json": {
+   "bytes": 896,
+   "sha256": "d2c4dc0e68dd03da061990e54c5fa6b42b45fe56b9ade54e50147edbe98832a9"
+  },
+  "evidence/guarded_refit_v10o.json": {
+   "bytes": 21016,
+   "sha256": "884b00cf7bae6e9d7bc6b07fd846eba584b18e8260f28ee8fd1aec93d6c79546"
+  },
+  "evidence/ledger.json": {
+   "bytes": 3654,
+   "sha256": "c5371809829b001e9eef2273dab505e573f8bbf6fd4e0e2b9a97cacdc51f63a1"
+  },
+  "evidence/ring_engagement.json": {
+   "bytes": 1132,
+   "sha256": "f75913765eb0bf55930b030ee9cd0406f5d0c9fa4e5b6b99b84f4e7cddebf064"
+  },
+  "evidence/theta2_band.json": {
+   "bytes": 754,
+   "sha256": "10e07c6cd96d6bcd3395b8316741675972709849f44b8951a6d3f83e36bc1ea7"
+  },
+  "evidence/verdict-v10n.md": {
+   "bytes": 2310,
+   "sha256": "a34f4a40a59708ba6536e3e3382a0492952de37ed21521dcd92113de517adf1c"
+  },
+  "public-note.md": {
+   "bytes": 8353,
+   "sha256": "f8fd057632329d3d54e924ec06ca14920f4d7d68c5affe773232166be52a3a36"
+  },
+  "submission.json": {
+   "bytes": 6349,
+   "sha256": "7ae897164c25761ed28def73b1f565db87841b6423748f7a86c6c0e2663243d3"
+  }
+ },
+ "not_certified": [
+  "production-length execution",
+  "success at or above 0.39",
+  "any extrapolation outside log2 p in [-61.55, -4.91]",
+  "that the guard is repairable without changing the transition"
+ ],
+ "version": "v10o"
+}

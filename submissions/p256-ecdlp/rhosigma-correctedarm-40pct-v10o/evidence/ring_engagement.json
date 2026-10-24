@@ -1,0 +1,20 @@
+{
+ "cells_rate_log2": {
+  "10": -24.033,
+  "4": -24.228,
+  "6": -24.043,
+  "8": -23.842
+ },
+ "charge_in_bits": 3.89e-06,
+ "escape_ir_each": 57277.0,
+ "expected_ring_closures_per_walk_at_production": 50913225.36805079,
+ "expected_ring_closures_per_walk_log2": 25.602,
+ "ledger_charge_ir_per_step": 0.003414,
+ "ledger_modelled_rate_log2": -24.0,
+ "measured_rate_log2": -24.03,
+ "measured_rate_per_slot_step": 5.84e-08,
+ "reading": "The guard DOES fire, at exactly the modelled rate: 124..162 closures per 3000x16 walkers is 5.09e-8..6.65e-8 per slot-step = 2^-24.03, against the ledger's modelled 2^-24 (a 97.9% match). At production ltheta=2^49.63 that is 5.091e+07 closures per walk, each charged 57277 Ir: a relative work surcharge of 2.69e-06 = 2^3.89e-06 bits, i.e. rounding. The ledger's escape row is therefore MEASURED, not modelled, and needs no reprice. The fixture integrates only 50764 steps, so it probes the RATE, never the cumulative regime; that gap is charged above, not hidden.",
+ "walk_ir_per_walk": 1.0827407775379386e+18,
+ "waste_fraction_of_walk": 2.693310227067406e-06,
+ "waste_ir_per_walk": 2916156809405.845
+}
