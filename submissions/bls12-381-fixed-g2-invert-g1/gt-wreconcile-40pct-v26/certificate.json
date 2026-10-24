@@ -1,0 +1,96 @@
+{
+ "package": "gt-wreconcile-40pct-v26",
+ "claim": "126.5431",
+ "checks": [
+  {
+   "name": "row_sum_equals_W_exactly",
+   "verdict": "PASS"
+  },
+  {
+   "name": "planted_typo_every_row_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_covers_W",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_minimal_ceil",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_direction_inverted_from_v25",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_ops_ge_10000",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_zero_mismatches",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_mutation_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_load_factor_ok",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_key_builder_zero_mismatch",
+   "verdict": "PASS"
+  },
+  {
+   "name": "every_cited_symbol_priced",
+   "verdict": "PASS"
+  },
+  {
+   "name": "lookup_row_cites_implemented_symbol",
+   "verdict": "PASS"
+  },
+  {
+   "name": "record_row_cites_implemented_symbol",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_coverage_from_protocol_traffic",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_forced_executes_real_steps",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_control_never_aborts",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_measured_at_Rg65536",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_band_charged",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_worst_band_ge_floor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cp95_not_clipped",
+   "verdict": "PASS"
+  },
+  {
+   "name": "all_kernels_pass",
+   "verdict": "PASS"
+  },
+  {
+   "name": "kernel_count_ge_10",
+   "verdict": "PASS"
+  }
+ ],
+ "all_pass": true,
+ "verdict": "PASS"
+}

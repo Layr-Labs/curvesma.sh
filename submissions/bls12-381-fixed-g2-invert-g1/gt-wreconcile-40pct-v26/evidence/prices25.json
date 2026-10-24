@@ -1,0 +1,20 @@
+{
+ "MUL_CHARGE": 22409,
+ "SQR_CHARGE": 27611,
+ "LOOKUP": 95,
+ "VERIFY_PROD": 57526800,
+ "VERIFY_RESERVE": 1434176,
+ "TABLE_IR": 15320000,
+ "START_IR": 7660000,
+ "CODE_IR": 1048576,
+ "W_PROD": 2.4e+42,
+ "KERNEL_SPANS": {
+  "key_six_plusminus": 1487,
+  "min_rotation_booth": 381,
+  "min_rotation_full": 4233,
+  "cyclotomic_sqr": 25372,
+  "f12mul": 47924,
+  "lookup_probe": 95
+ },
+ "REPLAY_IR": 4096
+}
