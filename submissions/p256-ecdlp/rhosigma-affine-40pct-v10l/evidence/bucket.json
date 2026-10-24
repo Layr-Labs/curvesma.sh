@@ -1,0 +1,16 @@
+{
+ "bucket_bytes_log2": 40.331956920890086,
+ "cap_bytes_log2": 73.0,
+ "directory_bytes": 68719476736,
+ "fits": true,
+ "instr_per_record": 1008.1564128659759,
+ "lookup": "one 2^32-way radix shard on the high 32 key bits; inside a shard the records are kept in key order and searched by binary search, so the per-record cost is log2(records_per_bucket) comparisons, not a load factor",
+ "n_buckets_log2": 32,
+ "record_share_exact": 2.1860907460689684e-16,
+ "record_work_total_log2": 75.60902097402688,
+ "records_log2": 65.631517202749,
+ "records_per_bucket": 13307469446.382069,
+ "records_per_bucket_log2": 33.631517202748995,
+ "supersedes": "v10j's '2^32 buckets at load factor 0.5 / chain 0.69' row, which divided 2^65.63 records among 2^32 buckets (2^33.63 per bucket), was arithmetically false",
+ "total_bytes_log2": 72.33195692090676
+}

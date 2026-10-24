@@ -1,0 +1,116 @@
+{
+ "flags": "-O2 -fPIC -Wall -Wno-unused-const-variable",
+ "object": "p256_recproc_v10l.o",
+ "spans": {
+  "W": {
+   "instructions": 181,
+   "load": 6,
+   "longest_iteration": 179,
+   "mul": 17,
+   "next_symbol": "step_forward",
+   "start": "0xb00",
+   "store": 4,
+   "umulh": 21
+  },
+  "batch_inv": {
+   "instructions": 700,
+   "load": 28,
+   "longest_iteration": 274,
+   "mul": 57,
+   "next_symbol": "W",
+   "start": "0x0",
+   "store": 16,
+   "umulh": 73
+  },
+  "fe_mul_probe": {
+   "instructions": 147,
+   "load": 4,
+   "longest_iteration": 147,
+   "mul": 16,
+   "next_symbol": "recproc_round",
+   "start": "0x1d04",
+   "store": 2,
+   "umulh": 20
+  },
+  "main": {
+   "instructions": 547,
+   "load": 88,
+   "longest_iteration": 82,
+   "mul": 3,
+   "next_symbol": "trap_detected",
+   "start": "0x4350",
+   "store": 43,
+   "umulh": 0
+  },
+  "rec_addr": {
+   "instructions": 3,
+   "load": 0,
+   "longest_iteration": 3,
+   "mul": 1,
+   "next_symbol": "recproc_insert_price",
+   "start": "0x1fac",
+   "store": 0,
+   "umulh": 0
+  },
+  "recproc_init": {
+   "instructions": 2241,
+   "load": 148,
+   "longest_iteration": 730,
+   "mul": 133,
+   "next_symbol": "main",
+   "start": "0x2038",
+   "store": 122,
+   "umulh": 158
+  },
+  "recproc_insert_price": {
+   "instructions": 8,
+   "load": 0,
+   "longest_iteration": 8,
+   "mul": 0,
+   "next_symbol": "recproc_layout",
+   "start": "0x1fbc",
+   "store": 0,
+   "umulh": 0
+  },
+  "recproc_layout": {
+   "instructions": 21,
+   "load": 0,
+   "longest_iteration": 21,
+   "mul": 0,
+   "next_symbol": "recproc_init",
+   "start": "0x1fe0",
+   "store": 6,
+   "umulh": 0
+  },
+  "recproc_round": {
+   "instructions": 21,
+   "load": 4,
+   "longest_iteration": 21,
+   "mul": 0,
+   "next_symbol": "rec_addr",
+   "start": "0x1f54",
+   "store": 2,
+   "umulh": 0
+  },
+  "step_close": {
+   "instructions": 695,
+   "load": 42,
+   "longest_iteration": 660,
+   "mul": 44,
+   "next_symbol": "fe_mul_probe",
+   "start": "0x1220",
+   "store": 24,
+   "umulh": 54
+  },
+  "step_forward": {
+   "instructions": 273,
+   "load": 24,
+   "longest_iteration": 238,
+   "mul": 18,
+   "next_symbol": "step_close",
+   "start": "0xdd8",
+   "store": 16,
+   "umulh": 20
+  }
+ }
+}

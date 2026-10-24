@@ -1,0 +1,70 @@
+{
+ "abab_family": {
+  "closure_condition": "rows repeat with period 2 AND canonicalisation signs satisfy e1=-e2, e3=-e4 (2 of 4 free bits) => P(closure|row repeat)=1/4",
+  "implication_unguarded": "2^-24 x 2^111.63 = 2^87.6 closures per walker => the v10k success was unsupported; CONCEDED",
+  "precursor_measured_guarded": 0.000492,
+  "precursor_measured_unguarded": 0.000536,
+  "predicted_rate_note": "2^-24 per 4-step window at 2048 rows",
+  "predicted_rate_unguarded": 7.182400000000001e-08
+ },
+ "census": {
+  "base": [
+   1,
+   4447284
+  ],
+  "field_prime": 33554393,
+  "maps": {
+   "guarded": {
+    "basin_mass": 0.1425,
+    "class_lag2": 11198,
+    "class_lag2_rate": 0.000492,
+    "cycles": 57,
+    "cycles_le6": 0,
+    "mean_entry_step": 19805.9,
+    "period2": 0,
+    "period4": 0,
+    "period6": 0,
+    "periods": {},
+    "return2": 9,
+    "return4": 0,
+    "return4_rate": 0.0,
+    "steps_run": 22744718
+   },
+   "unguarded": {
+    "basin_mass": 1.0,
+    "class_lag2": 460,
+    "class_lag2_rate": 0.000536,
+    "cycles": 400,
+    "cycles_le6": 0,
+    "mean_entry_step": 883.3,
+    "period2": 0,
+    "period4": 0,
+    "period6": 0,
+    "periods": {
+     "11": 2
+    },
+    "return2": 0,
+    "return4": 0,
+    "return4_rate": 0.0,
+    "steps_run": 857998
+   }
+  },
+  "max_steps": 60000,
+  "rows": 2048,
+  "starts": 400
+ },
+ "fixture": "y^2=x^3-3x+12345 over p=2^25-39 (33554393), 2048 rows, 2^25-point group, real short-Weierstrass",
+ "map": "class of x -> row; canon y even; two tables by step parity",
+ "observation": {
+  "period4_returns_guarded": 0,
+  "period_le_6_cycles_guarded": 0,
+  "statement": "not observed in this census window; the guard+detector pair is shipped on the strength of the measured rate row above, not on the absence of observations",
+  "steps_censused_guarded": 22744718
+ },
+ "v10l_fix": {
+  "detector": "per-walker 4-step-back x ring; x determines the point (y canonicalised even) so x==x_{i-4} IS the period-4 trap; escape latency 4 steps",
+  "detector_priced_inside": "step_close (the 660-instruction span includes the 4-limb compare and the ring move)",
+  "guard": "row = (class XOR previous row) & 2047 -- an exactly uniform bijection on the class that breaks the period-2 row repetition",
+  "trap_detected_counter": "exported u64 trap_detected, read back by the census"
+ }
+}
