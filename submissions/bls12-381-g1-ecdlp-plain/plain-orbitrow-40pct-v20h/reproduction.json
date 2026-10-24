@@ -1,0 +1,72 @@
+{
+ "census": {
+  "arm": "prod-sweep+escape (unconditional)",
+  "classes": 561690001,
+  "cp95_method": "exact one-sided Clopper-Pearson, Decimal; second seed pooled before the bound is taken",
+  "densities": [
+   5,
+   7,
+   9,
+   11
+  ],
+  "drain": "ledger-charged window min(2 spacings, walker budget)",
+  "escape": "alternate orbit row for one step; armed throughout",
+  "gate_statistic": "coverage (merge) rate, unconditional",
+  "gated_densities": [
+   5,
+   7,
+   9
+  ],
+  "kappa": 1.015,
+  "pair_statistic": "pair (class_t, class_{t-1}) coverage, unconditional, second implementation",
+  "seeds": [
+   20290,
+   31337
+  ],
+  "trials": {
+   "11": 48000,
+   "5": 96000,
+   "7": 96000,
+   "9": 96000
+  },
+  "walks_per_trial": 64
+ },
+ "dependencies": [],
+ "expects": "167 rows, price 1.083500, log2 W 126.26594263, claim 126.266, success 0.399014, TRAP_RATE 1/(6*R_EFF) with R_EFF 852105 (= 1.9559e-07 = 2^-22.29), three-cycle charge 2^-39.40, escape slowdown 1.000000587, kappa product 1.099949635 <= 1.099993376, sqrt(N) = 2^126.14 in class units",
+ "package": "plain-orbitrow-40pct-v20g",
+ "reproduce": [
+  {
+   "command": "python3 ledger.py",
+   "expects": "167 rows, price 1.083500, log2 W 126.26594263, claim 126.266, success 0.399014, TRAP_RATE 1/(6*R_EFF) with R_EFF 524289, escape slowdown 1.000000587, kappa product 1.099949635 <= 1.099993376",
+   "writes": "stdout"
+  },
+  {
+   "command": "python3 scripts/medium_fixture.py",
+   "expects": "E1 forced arm 150123 fires and forced_broken 149797 invariant violations; E2 equivariance 0 mismatches of 12000 vs control 14988; E3 natural arm 2581 fires, K_obs 1, residual 0, trap rate ratio 0.947; control 79.66% trapped steps; conversion 7644/7644 and its mutation 0",
+   "writes": "evidence/medium-fixture.json"
+  },
+  {
+   "command": "python3 scripts/c_fixture.py --trials 6 --workers 6",
+   "expects": "2^26.0 classes, 2^20-step spacing, 340.7 trap opportunities per spacing, 18971 fires, residual 0, K_obs 1, invariant 0 of 518928, trap ratio ~1.16, class and pair collisions equal, conversion 24000/24000, 8/8 checks",
+   "writes": "evidence/c-fixture.json"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/prod_sweep.py --trials 48000 --chunk 100 --dens 5,7,9,11 --workers 24 --raw RAW/ --out evidence/prod-sweep.json  (twice: --seed 20290 then --seed 31337 with --dens 5,7,9)",
+   "expects": "d=5,7,9 n=96000 each, d=11 n=48000; coverage 0.4135/0.4003/0.3953/0.3913 with CP-95 0.4109/0.3977/0.3927/0.3876; pair coverage 0.3920/0.3939/0.3926/0.3894; plant_check passed; every shard's pair-census class set equals the audit merge set",
+   "writes": "RAW/*.json, evidence/prod-sweep.json"
+  },
+  {
+   "command": "python3 scripts/gen_cert_v20g.py",
+   "expects": "63/63 checks pass, note tables byte-equal, note 14336 B",
+   "writes": "certificate.json, evidence/note-tables.md"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/probe.py",
+   "expects": "100 trials at d=5 W=64: duplicate groups from two walkers, 38/38 solve to the trial x, 0 wrong, 0 zero-denominator",
+   "writes": "stdout"
+  }
+ ],
+ "scope": "mechanism, unconditional class and pair statistics, trap regime at two scales (2^25.4 classes x 2 spacings; 2^26.0 classes x one full 2^20-step spacing); not a production-size execution",
+ "self_contained": true,
+ "track": "bls12-381-g1-ecdlp-plain"
+}
