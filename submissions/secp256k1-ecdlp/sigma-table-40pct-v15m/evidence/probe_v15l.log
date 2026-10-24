@@ -1,0 +1,10 @@
+curve p=8392333 r=8386579 beta=672261 R=32 slots=6
+A' v15l aligned (min-x key, 6 slots)           trials  600 depth 1 : class splits    0 / 600 ; (class,exp) splits  600
+A' v15l aligned, 8-step class sequence         trials  600 depth 8 : class splits    0 / 600 ; (class,exp) splits  597
+B  shipped v15g (x&2047, 1 point)              trials  600 depth 1 : class splits  600 / 600 ; (class,exp) splits  600
+B  shipped v15g, 8-step sequence               trials  600 depth 8 : class splits  600 / 600 ; (class,exp) splits  600
+A' v15l aligned                                S vs -S :    0 splits / 600
+B  shipped v15g                                S vs -S :  600 splits / 600
+state space: priced-B (r-1)/2 = 2^21.9997 ; six-class (r-1)/6 = 2^20.4147 ; divisor 1.5850 bits
+VERDICT A': PASS (0 splits) ; VERDICT B: FAIL
+JSON {'A_splits': 0, 'A_trials': 600, 'B_splits': 600, 'B_trials': 600, 'A_SvsNegS': 0, 'B_SvsNegS': 600, 'divisor_bits': 1.5849625007211579}

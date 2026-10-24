@@ -1,0 +1,396 @@
+{
+ "version": 1,
+ "verdict": "PASS",
+ "scope": "Exact work and probability arithmetic for the ALIGNED (A') secp256k1 step at the dp1 reporting band with the charged two-spacing drain arm: 902-Ir counted aarch64 listing, unconditional verified recovery re-summed from the shipped dp1 rows (6400 trials, 2643 pass-bounded, CP-95 0.402798 clears the fixed 0.39 floor; the strict steps<=S_ops cut 2612/6400 gives 0.397974 and also clears), claim 126.6468 = smallest 4-decimal cover of the scored W. The 192-byte record row (2^133.36 B at dp1) is declared, not scored, per COST_MODEL.md's 'memory has no scalar contribution'; the byte-charged convention is shipped as a sensitivity (dp1 133.3713, dp0 134.3645). The claim is 0.2817 bits ABOVE the live gate, so this revision is staged behind a gate-drift trigger and is not a competitive claim today; H1 collision-rate heuristics and instruction ceilings remain disclosed hypotheses supported at toy scale. No production execution, no practical break.",
+ "pass_count": 39,
+ "check_count": 39,
+ "checks": [
+  {
+   "id": "protected_C_is_1000",
+   "verdict": "PASS",
+   "detail": {
+    "C": "1000",
+    "source": "COST_MODEL.md secp256k1 row (1,074 measured is context, never a divisor)"
+   }
+  },
+  {
+   "id": "floor_is_fixed_0p39",
+   "verdict": "PASS",
+   "detail": {
+    "floor": 0.39,
+    "source": "COST_MODEL.md line 45"
+   }
+  },
+  {
+   "id": "mu_is_pooled_ceiling_1p107",
+   "verdict": "PASS",
+   "detail": {
+    "mu": "1107/1000"
+   }
+  },
+  {
+   "id": "table_rows_and_slots",
+   "verdict": "PASS",
+   "detail": {
+    "rows": 2048,
+    "slots": 3,
+    "walk_length": "1048576"
+   }
+  },
+  {
+   "id": "declared_band_is_dp1",
+   "verdict": "PASS",
+   "detail": {
+    "density": "2^-1",
+    "drain_spacings": 2,
+    "reporting": "every second step in the declared band"
+   }
+  },
+  {
+   "id": "base_step_recounted",
+   "verdict": "PASS",
+   "detail": {
+    "counted": 748
+   }
+  },
+  {
+   "id": "aligned_step_recounted",
+   "verdict": "PASS",
+   "detail": {
+    "counted": 902,
+    "note": "the merged listing counts 902; the 901 in the design note was fragment arithmetic before the merged listing existed"
+   }
+  },
+  {
+   "id": "aligned_count_identity",
+   "verdict": "PASS",
+   "detail": {
+    "identity": "748 - 2 + 1 + 155 = 902",
+    "superseded": 2,
+    "reload": 1,
+    "block_ir": 155
+   }
+  },
+  {
+   "id": "aligned_listing_is_the_counted_bytes",
+   "verdict": "PASS",
+   "detail": {
+    "sha256": "30043c6f5ad721b91ee0187067047185"
+   }
+  },
+  {
+   "id": "beta_mul_is_sliced_from_shipped_listing",
+   "verdict": "PASS",
+   "detail": {
+    "mul_macro_ir": 107,
+    "note": "the priced field multiply is the shipped schoolbook+fold idiom, not an estimate"
+   }
+  },
+  {
+   "id": "dp1_rows_decode_to_recorded_digest",
+   "verdict": "PASS",
+   "detail": {
+    "sha256": "53778e0f0139c560b768df5e33df8fc3",
+    "recorded": "53778e0f0139c560b768df5e33df8fc3",
+    "plain_bytes": 138621
+   }
+  },
+  {
+   "id": "dp1_rows_resummed",
+   "verdict": "PASS",
+   "detail": {
+    "trials": 6400,
+    "verified_pass_bounded": 2643,
+    "verified_strict": 2612,
+    "audit_merge": 2696,
+    "drain_only_pairs": 0,
+    "reports": 4771696,
+    "note": "integers re-derived field by field from the shipped rows"
+   }
+  },
+  {
+   "id": "dp1_trial_ids_are_a_permutation",
+   "verdict": "PASS",
+   "detail": {
+    "first": 0,
+    "last": 6399,
+    "note": "audit_key is the single derivation of a trial index; planted-attribution selftest ships in evidence/attribution-selftest-v15m.json"
+   }
+  },
+  {
+   "id": "dp1_cp95_clears_fixed_floor",
+   "verdict": "PASS",
+   "detail": {
+    "cp95_verified": "0.4027980275399263180195088551727167214266955852508544921875",
+    "p_uncond": "0.41296875",
+    "floor": "0.39",
+    "slack": "0.0127980275399263180195088551727167214266955852508544921875"
+   }
+  },
+  {
+   "id": "dp1_cp95_strict_cut_also_clears",
+   "verdict": "PASS",
+   "detail": {
+    "cp95_strict": "0.39797401512083760355550143827940701157785952091217041015625",
+    "strict_count": 2612,
+    "note": "the census tests the budget once per pass of walkers, so a recovery may land up to ntrails-1 steps past S_ops; re-cutting the same rows at steps <= S_ops gives 2612/6400 and CP-95 0.397974, which also clears the floor"
+   }
+  },
+  {
+   "id": "audit_published_side_by_side_not_filtered",
+   "verdict": "PASS",
+   "detail": {
+    "cp95_audit_merge": "0.41104786967307770716610804129231837578117847442626953125",
+    "audit_merge": 2696,
+    "note": "the audit is an independent coverage upper bound; the headline is the unconditional verified count and is NOT conditioned on the audit"
+   }
+  },
+  {
+   "id": "every_density_cp95_recomputed",
+   "verdict": "PASS",
+   "detail": {
+    "rows": {
+     "2^-0": "0.4126047",
+     "2^-1": "0.4027980",
+     "2^-2": "0.3685852",
+     "2^-3": "0.3502566",
+     "2^-4": "0.3218630",
+     "2^-5": "0.2446545",
+     "2^-7": "0.0990570",
+     "2^-9": "0.0310050"
+    }
+   }
+  },
+  {
+   "id": "verified_recovery_is_density_sensitive",
+   "verdict": "PASS",
+   "detail": {
+    "p_min": 0.034688,
+    "p_max": 0.422812,
+    "note": "0.4228 at dp0 down to 0.0347 at dp9: pool sparsity, not report lag"
+   }
+  },
+  {
+   "id": "audit_merge_rate_is_flat_in_density",
+   "verdict": "PASS",
+   "detail": {
+    "audit_p_min": 0.397344,
+    "audit_p_max": 0.42625,
+    "note": "the audit-merge rate stays ~0.40 while verified recovery collapses, which is the pool-sparsity reading of the collapse"
+   }
+  },
+  {
+   "id": "drain_channel_honest",
+   "verdict": "PASS",
+   "detail": {
+    "dp1_drain_success": 0,
+    "dp1_drain_only": 0,
+    "drain_success_by_density": {
+     "2^-0": 0,
+     "2^-1": 0,
+     "2^-2": 0,
+     "2^-3": 0,
+     "2^-4": 2,
+     "2^-5": 3,
+     "2^-7": 10,
+     "2^-9": 14
+    },
+    "note": "at dp1 no pair is still co-located at the cutoff, so the charged drain arm is idle; it first fires at d=4 and the channel never counts as success on its own"
+   }
+  },
+  {
+   "id": "s_ops_is_exact_ceiling",
+   "verdict": "PASS",
+   "detail": {
+    "S_ops": "145327072308294472639794924382168891106",
+    "log2_S_ops": 126.772571,
+    "ln_bound_terms": "70"
+   }
+  },
+  {
+   "id": "arrivals_include_the_charged_drain",
+   "verdict": "PASS",
+   "detail": {
+    "arrivals": "145327072308294472640947845886779932386",
+    "drain_steps": 4194304,
+    "note": "2^20 workers x 2 spacings x 2^1 = 2^22 steps, charged, and 2^-104.8 of the walk"
+   }
+  },
+  {
+   "id": "dp1_record_row_declared_not_scored",
+   "verdict": "PASS",
+   "detail": {
+    "records": "72663536154147236320473922943389966193",
+    "bytes_log2": 133.357534,
+    "convention": "COST_MODEL.md: 'Peak memory ... memory has no scalar contribution or tie-break'; the record row is declared here and priced in the sensitivity row below, never silently dropped",
+    "production_realisable": "no"
+   }
+  },
+  {
+   "id": "W_time_exact_fraction",
+   "verdict": "PASS",
+   "detail": {
+    "W_num_bits": 184,
+    "W_log2": "126.646772086610",
+    "W_den": "154240865533952000"
+   }
+  },
+  {
+   "id": "claim_is_smallest_4dp_both_directions",
+   "verdict": "PASS",
+   "detail": {
+    "claim": "1266468/10000",
+    "claim_decimal": "316617/2500",
+    "headroom_bits": "0.000027913390",
+    "note": "k passes 2^k >= W+2e-5 and k-1 does not"
+   }
+  },
+  {
+   "id": "claim_fraction_reduced",
+   "verdict": "PASS",
+   "detail": {
+    "numerator": "316617",
+    "denominator": "2500"
+   }
+  },
+  {
+   "id": "claim_equals_the_family_floor",
+   "verdict": "PASS",
+   "detail": {
+    "claim": "316617/2500",
+    "floor_claim": "316617/2500",
+    "note": "zero records and no drain price the same 4-decimal cover: the record row is the declared memory row, so every legal density shares this scored claim"
+   }
+  },
+  {
+   "id": "byte_charged_sensitivity_reproduces_the_lane_grid",
+   "verdict": "PASS",
+   "detail": {
+    "dp1_byte_charged": "1333713/10000",
+    "dp0_byte_charged": "268729/2000",
+    "note": "charging 192 B per record at 1 unit/byte gives the v15l convention exactly (dp1 133.3713, dp0 134.3645); the shipped grid in the note is this column"
+   }
+  },
+  {
+   "id": "unlock_is_claim_plus_tie_cap_plus_margin",
+   "verdict": "PASS",
+   "detail": {
+    "unlock": "1266523/10000",
+    "unlock_decimal": "126.6523",
+    "tie_cap": "0.004",
+    "margin": "0.0015"
+   }
+  },
+  {
+   "id": "claim_is_above_the_live_gate",
+   "verdict": "PASS",
+   "detail": {
+    "claim": "316617/2500",
+    "live_gate": "126.3651",
+    "holder": "pepedesigner",
+    "submission": "dddcbeb3",
+    "delta_bits": "0.281700",
+    "action": "no direct submit; the revision is staged behind the gate-drift trigger"
+   }
+  },
+  {
+   "id": "trap_channel_measured_and_over_charged",
+   "verdict": "PASS",
+   "detail": {
+    "structural": "1/(6R), R=2048",
+    "rows": {
+     "q25": {
+      "measured": 0.00011831,
+      "over_structural": 1.4538,
+      "ledger_over_measured": 1.8829
+     },
+     "q29": {
+      "measured": 9.363e-05,
+      "over_structural": 1.1505,
+      "ledger_over_measured": 2.3792
+     }
+    },
+    "note": "the ledger prices escapes at 1/67^2 per step, 1.88x / 2.38x the measured rate, so the escape row is over-charged"
+   }
+  },
+  {
+   "id": "aligned_rule_is_a_class_map",
+   "verdict": "PASS",
+   "detail": {
+    "depth1": "0/600",
+    "depth8": "0/600"
+   }
+  },
+  {
+   "id": "aligned_rule_is_negation_equivariant",
+   "verdict": "PASS",
+   "detail": {
+    "S_vs_negS": "0/600"
+   }
+  },
+  {
+   "id": "shipped_rule_is_not_a_class_map",
+   "verdict": "PASS",
+   "detail": {
+    "depth1": "600/600",
+    "S_vs_negS": "600/600",
+    "note": "the retro-audit contrast that killed v15k: the shipped step splits 600/600"
+   }
+  },
+  {
+   "id": "attribution_selftest",
+   "verdict": "PASS",
+   "detail": {
+    "planted": 40,
+    "bad": 0
+   }
+  },
+  {
+   "id": "note_byte_band",
+   "verdict": "PASS",
+   "detail": {
+    "note_bytes": 14088
+   }
+  },
+  {
+   "id": "submission_claim_matches_certificate",
+   "verdict": "PASS",
+   "detail": {
+    "score": "316617/2500"
+   }
+  },
+  {
+   "id": "archive_caps",
+   "verdict": "PASS",
+   "detail": {
+    "files": 24,
+    "bytes": 211858,
+    "max_file": 46414
+   }
+  },
+  {
+   "id": "no_local_paths_in_shipped_text",
+   "verdict": "PASS",
+   "detail": {
+    "offenders": []
+   }
+  }
+ ],
+ "computed": {
+  "census_dp1_verified": 2643,
+  "census_dp1_trials": 6400,
+  "census_dp1_strict": 2612,
+  "census_dp1_audit": 2696,
+  "cp95_verified": "0.4027980275399263180195088551727167214266955852508544921875",
+  "cp95_strict": "0.39797401512083760355550143827940701157785952091217041015625",
+  "cp95_audit": "0.41104786967307770716610804129231837578117847442626953125",
+  "step_ir": 902,
+  "W_time_log2": "126.646772086610",
+  "claim": "316617/2500",
+  "claim_decimal": "316617/2500",
+  "claim_byte_charged_dp1": "1333713/10000",
+  "claim_byte_charged_dp0": "268729/2000",
+  "record_bytes_dp1_log2": 133.357534,
+  "unlock": "1266523/10000"
+ }
+}

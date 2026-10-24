@@ -1,0 +1,43 @@
+{
+ "kind": "equivariance-v15l",
+ "curve": {
+  "p": 8392333,
+  "r": 8386579,
+  "beta": 672261
+ },
+ "R": 32,
+ "slots": 6,
+ "A_aligned_depth1": {
+  "trials": 600,
+  "depth": 1,
+  "class_splits": 0,
+  "label_splits": 600
+ },
+ "A_aligned_depth8": {
+  "trials": 600,
+  "depth": 8,
+  "class_splits": 0,
+  "label_splits": 597
+ },
+ "B_shipped_depth1": {
+  "trials": 600,
+  "depth": 1,
+  "class_splits": 600,
+  "label_splits": 600
+ },
+ "B_shipped_depth8": {
+  "trials": 600,
+  "depth": 8,
+  "class_splits": 600,
+  "label_splits": 600
+ },
+ "A_aligned_S_vs_negS": 0,
+ "B_shipped_S_vs_negS": 600,
+ "trials_per_cell": 600,
+ "verdict": {
+  "aligned_rule_is_class_map": true,
+  "aligned_rule_is_negation_equivariant": true,
+  "shipped_rule_is_not_a_class_map": true,
+  "shipped_rule_splits_negation": true
+ }
+}

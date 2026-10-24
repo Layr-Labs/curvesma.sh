@@ -1,0 +1,20 @@
+{
+ "kind": "counts-step-v15l",
+ "base_listing": "evidence/step_secp_v15g.s",
+ "base_ir": 748,
+ "aligned_listing": "evidence/step_secp_v15l_aligned.s",
+ "aligned_ir": 902,
+ "alignment_block_ir": 155,
+ "superseded_insns": 2,
+ "added_head_reload": 1,
+ "identity": "748 - 2 + 1 + 155 = 902",
+ "identity_holds": true,
+ "mul_macro_ir": 107,
+ "note": "aligned_ir is the counted longest iteration of the merged listing; the record/carried-slot init sits in the prologue, outside the priced iteration",
+ "sha256": {
+  "evidence/step_secp_v15g.s": "1e570655ccc9151b40348b21dd80e12f28d4ba046d715a27288a55a040fbc481",
+  "evidence/step_secp_v15l_aligned.s": "30043c6f5ad721b91ee0187067047185c2cf81ea11d416b3570f4c45a1706e9e"
+ },
+ "base_stdout": "step_asm       in_file   779   longest_iteration   748",
+ "aligned_stdout": "step_asm       in_file   936   longest_iteration   902"
+}

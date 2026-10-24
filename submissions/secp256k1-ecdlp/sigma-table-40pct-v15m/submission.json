@@ -1,0 +1,38 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15m: dp1 reporting band with a charged two-spacing drain arm, unconditional verified-recovery CP-95 0.402798 at n=6400, exact-Fraction claim 316617/2500 (126.6468) behind a gate-drift trigger at 126.6523",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "certificate.json",
+    "scripts/ledger_v15m.py",
+    "scripts/gen_cert_v15m.py",
+    "scripts/gen_note_v15m.py",
+    "scripts/census_reduce_v15m.py",
+    "scripts/build_aligned_step.py",
+    "scripts/count_iter.py",
+    "scripts/equivariance_probe.py",
+    "scripts/toy_core.py",
+    "evidence/step_secp_v15g.s",
+    "evidence/step_secp_v15l_aligned.s",
+    "evidence/delta_block_v15l.s",
+    "evidence/counts-step-v15l.json",
+    "evidence/census-v15m-counts.json",
+    "evidence/census-v15m-dp1-rows.json",
+    "evidence/attribution-selftest-v15m.json",
+    "evidence/trap-v15m.json",
+    "evidence/equivariance-v15l.json",
+    "evidence/live-bar-v15m.json",
+    "evidence/probe_v15l.log"
+   ],
+   "score": {
+    "numerator": "316617",
+    "denominator": "2500"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim, CONDITIONAL ON THE LIVE GATE: the claim 126.6468 is offered at success >= 0.39 and is submitted only while the lowest live non-self claim on this track is >= 126.6523 (claim + 0.004 tie cap + 0.0015 declared margin floor); the submitting watcher re-polls at fire time and the certificate carries the exact-Fraction check of that inequality. The algorithm is the six-class (negation and GLV) parallel rho walk with doubling escapes, a global work meter and a 2^16-node report partition, made EQUIVARIANT: the table is indexed by the minimum x over the orbit {x, beta*x, p-x-beta*x} and stores three alignment slots per row, tbl[j][u] = [u*e_j]P0, with the slot carried in the state record, so the map is a map on the six-element orbits rather than on raw points. The step is priced 902/1000 units at the PROTECTED C=1000 (COST_MODEL.md secp256k1 row; 1,074 measured is disclosed context, never a divisor): evidence/step_secp_v15l_aligned.s is a generated listing whose beta-multiply-plus-reduce is sliced verbatim from the shipped 748-Ir listing, whose alignment block is appended to the priced loop body, and whose head is one reload of the address computed at the end of the previous iteration (prologue initialisation outside the priced loop); scripts/count_iter.py counts its longest iteration at 902 = 748 - 2 + 1 + 155, machine-checked in evidence/counts-step-v15l.json. Equivariance is measured, not asserted: in scripts/equivariance_probe.py the aligned rule splits 0/600 orbit partners at depth 1 and 0/600 at depth 8, with 0/600 splits between S and -S, while the previously shipped rule splits 600/600. Success: the fixed floor 0.39 (COST_MODEL.md line 45) is certified at the DECLARED dp1 reporting band (one record every second step) with a charged two-spacing drain arm, from an UNCONDITIONAL census that applies no conditioning filter: evidence/census-v15m-dp1-rows.json holds the 6,400 per-trial rows (zlib+base64 with a recorded plain sha256, re-decoded and re-summed field by field in certificate.json), 2,643 verified recoveries within the charged budget, p = 0.412969, one-sided Clopper-Pearson 95% lower bound 0.402798 recomputed by exact Decimal bisection; the audit-merge count 2,696 (CP-95 0.411048) is published side by side and never used as a filter, and re-cutting the same rows at steps <= S_ops gives 2,612 with CP-95 0.397974, which also clears 0.39. The band is declared honestly: verified recovery is record-density sensitive (0.4228 at dp0 down to 0.0347 at dp9 measured at n = 6,400 per density) while the audit-merge rate stays flat near 0.40, so the collapse is pool-sparsity recovery loss rather than report lag; denser and sparser rows are reported, not certified. S_ops = ceil(sqrt(2 mu N' ln(1/(1-0.39)))) = 2^126.772571 with mu = 1.107 and N = (r-1)/6; arrivals are S_ops + 2^60 + WORKERS*2*2^1 (the drain is the ledger's own WORKERS*2*2^d charge, 2^22 steps at d = 1); W = 2^126.646772 from (902/1000)(arrivals) + escape surcharge (1/67)^2 (67*902/1000 + 2*2.35) per arrival + itemised hard extras (3*2^26 table, 2^36 node setup, 2^61 meter remainders, 2^12/2^50 near-tie fallback per report, 2^40 output, 2^24 fresh starts). The claim 126.6468 = 316617/2500 is the smallest 1e-4 decimal with 2^(claim-2e-5) >= W, proved in both directions in integer arithmetic. The 192-byte record row is DECLARED AND NOT SCORED: at dp1 the band writes 2^133.357534 bytes of records, COST_MODEL.md scores computation and states that peak memory has no scalar contribution or tie-break, and the conservative alternative - charging the record row at one unit per byte - is shipped as a certificate sensitivity at 133.3713 (dp1) and 134.3645 (dp0), so the same design's byte-charged price is visible rather than omitted; the record volume is not realisable at production scale and no deployment of it is claimed. The claim is ABOVE the live gate observed at build time (126.3651), which is why this revision is staged behind a gate-drift trigger rather than submitted; that conditionality is protocol, not a hedge, and a submission outside the unlock window would be a protocol bug. Scope: H1 collision-rate heuristic at pooled mu, twist uniformity, routing uniformity and the instruction ceilings are disclosed hypotheses supported at toy scale only; the drain arm's production ratio (2^81 steps against a 2^126.77 walk) cannot be exercised by the fixture and is disclosed as such. No production execution and no practical break are claimed."
+  }
+ ],
+ "experiments": []
+}
