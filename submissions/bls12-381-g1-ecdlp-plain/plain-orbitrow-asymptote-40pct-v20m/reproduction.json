@@ -1,0 +1,64 @@
+{
+ "census": {
+  "arm": "prod-sweep+escape+real-restart (unconditional)",
+  "classes": 561690001,
+  "cp95_method": "exact one-sided Clopper-Pearson, Decimal bisection (gen_cert_v15k helper body)",
+  "densities": [
+   5,
+   7,
+   9,
+   11
+  ],
+  "design_arm_dp_bits": 5,
+  "drain": "ledger-charged window min(2 spacings, walker budget); B_drain priced in EXTRAS",
+  "escape": "alternate orbit row for one step; armed throughout",
+  "restart": "K_ESC_MAX=8; a breach resamples (a,b) from the shard's coin stream and resets canon, prev and the run counter",
+  "gate_statistic": "success_total = UNCONDITIONAL end-to-end DP-record recovery over B_total = B_walk + B_drain, one-sided CP-95",
+  "walk_only_statistic": "success_walk_only, published as the disclosed sensitivity (drain removed)",
+  "gated_densities": [
+   5,
+   7,
+   9
+  ],
+  "kappa": 1.015,
+  "seeds": [
+   20290,
+   31337
+  ],
+  "trials": {
+   "11": 48000,
+   "5": 96000,
+   "7": 96000,
+   "9": 96000
+  },
+  "walks_per_trial": 64
+ },
+ "absorption": {
+  "method": "exhaustive functional-graph enumeration of the class map, basin mass by reverse BFS, plus a shipped-step walk arm",
+  "sizes": "10921 and 43692 classes, 16 x values each, 873808 starts"
+ },
+ "restart_count": {
+  "symbol": "qwalk.fresh_state",
+  "method": "itemised rows in ledger units plus an executed kcap-breach arm",
+  "price": "689.790 ref = 1379581 instructions per fresh start"
+ },
+ "dependencies": [],
+ "expects": "167 rows, price 1.083500, log2 W 126.26594362, claim 126.266, success gated 0.436557 (CP95_total 0.436893 at B_total), success walk-only 0.361024 (CP95 0.361360, disclosed), P(absorbed) 0.453702 -> 0.308533 (ratio 0.680036), fresh start 689.790 ref, RESTART_REF 4.975e31, RESTART_LANE_REF 7.034e60 (NOT charged), restart success loss 7.640e-10, MARKOV_LOSS_BOUND 1.641e-08 at A 0.046557, METER_CAP 8.002e31 (deterministic work cap), B_total 9.4391e37 steps",
+ "regenerate": [
+  "python3 ledger.py",
+  "python3 scripts/budget2.py",
+  "python3 scripts/absorb_direct.py",
+  "python3 scripts/restart_count.py",
+  "python3 scripts/cycle3_exhaust.py",
+  "python3 scripts/kcap_run.py",
+  "python3 scripts/medium_fixture.py",
+  "python3 scripts/selfaudit.py --inject-typo"
+ ],
+ "results": {
+  "escape_run": "2400 fast-path trials, 392 fires, longest natural run 1, 0 natural restarts, 16/16 restarted lanes match the coin-replayed fresh state, counter-only control 0/16",
+  "co_record": "510 of 91569 class-meeting groups co-recorded in budget",
+  "absorption": "P(absorbed | uniform start) 0.453702 (q=65521) -> 0.308533 (q=262147), non-increasing, ratio 0.680036",
+  "restart_executed": "7000 restarts through the kcap breach path, 2 coin draws each"
+ },
+ "sanity": "no production-size execution is claimed; the instruction count is analytic and the fixtures transfer the mechanism, not the width"
+}

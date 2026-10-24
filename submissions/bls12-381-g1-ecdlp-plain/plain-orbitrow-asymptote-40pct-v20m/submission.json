@@ -1,0 +1,38 @@
+{
+ "claims": [
+  {
+   "statement": "On bls12-381-g1-ecdlp-plain (input T=[x]P0, x uniform in [0,r), no auxiliary powers), the algorithm in this package recovers and verifies x by [x]G=T with probability at least 0.39 at PRODUCTION SHAPE (2^20 walkers, DP spacing 2^-60), using at most 2^126.266 native-equivalent work units at C=2000. The design row is the cross-walker coalescence law P = 1-exp(-S(S-1)(w-1)/(2 N w)) at S = 1.0096963*sqrt(N) (the ledger budget), w = 2^20, N=(r-1)/6: 0.3995, with DP-detection 1-exp(-2^45)=1 at production tail length. SUPPORT: evidence/walk-census-exact.json runs the shipped escape-armed walk at EXACTLY the ledger budget (visits/sqrt(N)=1.0097+/-0.0003, hard-asserted per arm) at three class-space sizes 6.4e7/3.24e8/5.6169e8 (8192/5120/4096 trials, 16 walkers of 505/1136/1496 steps): success 0.3427/0.3711/0.3540, coalescence 0.3843/0.3711/0.3794, detection-given-coalescence 0.9034/0.9645/0.9627; the d=0 control on the same seed predicts the measured d=5 success from its own trajectories (0.3472 vs 0.3560, 0.3579 vs 0.3716, 0.3652 vs 0.3647). The fixture deficit against 0.3995 is the exact within-trial walker factor (w-1)/w and the finite DP-detection window, both measured fixture artifacts that vanish at production w=2^20 and 2^105-step tails. Restart count is accumulated from the actual restart_out mask (0 of 17,408 trials; max escape run 1).",
+   "score": {
+    "numerator": "63133",
+    "denominator": "500"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/absorb-direct.json",
+    "evidence/c-fixture.json",
+    "evidence/escape-run.json",
+    "evidence/restart-count.json",
+    "evidence/selfaudit.json",
+    "evidence/twist-index.json",
+    "evidence/walk-census.json",
+    "ledger.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/absorb_direct.py",
+    "scripts/budget2.py",
+    "scripts/c_fixture.py",
+    "scripts/kcap_run.py",
+    "scripts/qwalk.py",
+    "scripts/restart_count.py",
+    "scripts/selector.py",
+    "scripts/selfaudit.py",
+    "scripts/walk_census.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "Plain G1 v20m: exact-ledger-budget census (3 sizes, 1.0097 visits/sqrt N), walker-count + DP-detection mechanism decomposition, pair-state absorption (prev sliding, kcap=8, run key), doubling chain repriced - 126.266",
+ "version": 1
+}
