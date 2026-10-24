@@ -1,0 +1,723 @@
+{
+ "C": 2000,
+ "c": "1119/1000",
+ "d": 1048576,
+ "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+ "N": 65196422678611466571411401699906505,
+ "K": "4250573530088163557770784323879058040938100834624574671996125741315025/8334457902133654034844675144860897992084908882860761932151104402532352",
+ "K_charged": "51/100",
+ "order_structure": {
+  "r_minus_1_factor_2": 32,
+  "m_is_composite": true,
+  "v2_m": 12,
+  "six_divides_m": true,
+  "d_times_m_is_r_minus_1": true,
+  "gcd_d_m": 4096,
+  "d_invertible_mod_m": false,
+  "two_sylow": 32,
+  "u_odd": true,
+  "statement": "H = {x : x^m = 1} = the d-th powers is cyclic of COMPOSITE order m; no primality of m and no inverse of d modulo m is used anywhere"
+ },
+ "per_record": {
+  "addition": 2000,
+  "itemised": 198,
+  "charged_overhead": 238,
+  "total": 2238,
+  "stress": "6/5"
+ },
+ "itemised_rows": {
+  "walk_cursor_and_bound": 4,
+  "gap_load_2limb": 4,
+  "gap_index": 2,
+  "table_point_load": 6,
+  "point_store_into_record": 3,
+  "walk_loop_control": 3,
+  "p_minus_y": 12,
+  "even_rep_select": 7,
+  "key_pack_168_bits": 4,
+  "route_4hops_x_21bits": 68,
+  "sort_3_passes_x_25": 75,
+  "group_scan": 10
+ },
+ "itemised_detail": {
+  "walk_cursor_and_bound": "index load, compare, advance",
+  "gap_load_2limb": "2 LDP from the gap array",
+  "gap_index": "shift/scale to byte offset",
+  "table_point_load": "6 LDP (12 limbs)",
+  "point_store_into_record": "3 STP",
+  "walk_loop_control": "counter, pointer, branch",
+  "p_minus_y": "6 sub + 6 sbc",
+  "even_rep_select": "parity test, branch, 6 csel",
+  "key_pack_168_bits": "3 word stores + mask register setup",
+  "route_4hops_x_21bits": "3 hops x 20 (digit 2, bucket base 1, address 2, guard 3, 48-B copy 12) + final hop 8 (store IS the placement)",
+  "sort_3_passes_x_25": "21-bit digits: digit 2, counting-key-load 1, counter read 1, add 1, counter store 1, scatter counter read 1, decrement 1, store 1, address 2, 48-B copy 12, loop 2 = 25 per record per pass",
+  "group_scan": "3 key word loads, 3 compare/OR-reduce, side load, branch, emit, loop"
+ },
+ "rows": {
+  "records": 291819187909464924373637434008781516380,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292260041580783599616
+ },
+ "row_log2": {
+  "records": 127.778342,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571
+ },
+ "total_instructions": 291862070837007054215953867365622329968,
+ "W_num": 18241379427312940888497116710351395623,
+ "W_den": 125,
+ "raw_log2": 116.81277,
+ "claim": {
+  "numerator": "292033",
+  "denominator": "2500"
+ },
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "claim_text": "116.8132",
+ "headroom_over_W": "0.00043",
+ "gate_margin": "0.0139",
+ "key_census": {
+  "key_bits": 168,
+  "image_log2": 167,
+  "rule": "even member of {y,p-y} truncated to 168 bits (keymod.key_scalar)",
+  "widths": [
+   10,
+   12,
+   14,
+   16,
+   18,
+   20,
+   22
+  ],
+  "a_band": [
+   151115727451828646838272,
+   302231454903657293676544
+  ],
+  "walk_band": [
+   75557863725914323419136,
+   151115727451828646838272
+  ],
+  "sizes": [
+   {
+    "records_per_side": 4096,
+    "pairs": 16777216,
+    "equal_products": 0,
+    "complement_pairs": 0,
+    "distinct_products": 8192,
+    "max_scalar_bits": 154,
+    "rows": [
+     {
+      "charged_factor": 1.009403,
+      "image_log2": 9,
+      "observed": 32535,
+      "pairs": 16777216,
+      "predicted": 32768.0,
+      "ratio": 0.992889,
+      "width": 10
+     },
+     {
+      "charged_factor": 1.006216,
+      "image_log2": 11,
+      "observed": 7975,
+      "pairs": 16777216,
+      "predicted": 8192.0,
+      "ratio": 0.973511,
+      "width": 12
+     },
+     {
+      "charged_factor": 1.006248,
+      "image_log2": 13,
+      "observed": 1929,
+      "pairs": 16777216,
+      "predicted": 2048.0,
+      "ratio": 0.941895,
+      "width": 14
+     },
+     {
+      "charged_factor": 1.03469,
+      "image_log2": 15,
+      "observed": 465,
+      "pairs": 16777216,
+      "predicted": 512.0,
+      "ratio": 0.908203,
+      "width": 16
+     },
+     {
+      "charged_factor": 1.070564,
+      "image_log2": 17,
+      "observed": 106,
+      "pairs": 16777216,
+      "predicted": 128.0,
+      "ratio": 0.828125,
+      "width": 18
+     },
+     {
+      "charged_factor": 1.339828,
+      "image_log2": 19,
+      "observed": 27,
+      "pairs": 16777216,
+      "predicted": 32.0,
+      "ratio": 0.84375,
+      "width": 20
+     },
+     {
+      "charged_factor": 1.742157,
+      "image_log2": 21,
+      "observed": 6,
+      "pairs": 16777216,
+      "predicted": 8.0,
+      "ratio": 0.75,
+      "width": 22
+     }
+    ]
+   },
+   {
+    "records_per_side": 2048,
+    "pairs": 4194304,
+    "equal_products": 0,
+    "complement_pairs": 0,
+    "distinct_products": 4096,
+    "max_scalar_bits": 154,
+    "rows": [
+     {
+      "charged_factor": 1.010437,
+      "image_log2": 9,
+      "observed": 8009,
+      "pairs": 4194304,
+      "predicted": 8192.0,
+      "ratio": 0.977661,
+      "width": 10
+     },
+     {
+      "charged_factor": 1.049658,
+      "image_log2": 11,
+      "observed": 2015,
+      "pairs": 4194304,
+      "predicted": 2048.0,
+      "ratio": 0.983887,
+      "width": 12
+     },
+     {
+      "charged_factor": 1.097291,
+      "image_log2": 13,
+      "observed": 495,
+      "pairs": 4194304,
+      "predicted": 512.0,
+      "ratio": 0.966797,
+      "width": 14
+     },
+     {
+      "charged_factor": 1.133057,
+      "image_log2": 15,
+      "observed": 113,
+      "pairs": 4194304,
+      "predicted": 128.0,
+      "ratio": 0.882812,
+      "width": 16
+     },
+     {
+      "charged_factor": 1.538553,
+      "image_log2": 17,
+      "observed": 32,
+      "pairs": 4194304,
+      "predicted": 32.0,
+      "ratio": 1.0,
+      "width": 18
+     },
+     {
+      "charged_factor": 2.493734,
+      "image_log2": 19,
+      "observed": 10,
+      "pairs": 4194304,
+      "predicted": 8.0,
+      "ratio": 1.25,
+      "width": 20
+     },
+     {
+      "charged_factor": 3.598076,
+      "image_log2": 21,
+      "observed": 2,
+      "pairs": 4194304,
+      "predicted": 2.0,
+      "ratio": 1.0,
+      "width": 22
+     }
+    ]
+   }
+  ],
+  "max_ratio": 1.0,
+  "min_ratio": 0.828125,
+  "cells_used": 11,
+  "kappa_num": 193,
+  "kappa_den": 125,
+  "kappa_float": 1.544,
+  "premise": "H3key (DECLARED): the truncated even-representative key occupies its 2^167 image like a uniform hash on distinct points.  It is TESTED, not assumed, by exact prefix-collision counts at two list sizes and seven key widths on the production curve; the zero-event confidence bound of v17 is deleted."
+ },
+ "debit": {
+  "P_all": "4250573530088163557770784323879058040938100834624574671996125741315025",
+  "P_all_log2": 231.3007,
+  "image_log2": 167,
+  "kappa": 1.544,
+  "E_bad": "32814427652280622665990454980346328076042138443301716467810090722951993/935361047891777867650358292938421132579796827504640",
+  "E_bad_log2": 64.9274,
+  "cap_bad_log2": 84,
+  "per_candidate_instr": 1048576,
+  "cap_work": 20282409603651670423947251286016,
+  "cap_work_log2": 104.0,
+  "E_work_log2": 84.9274,
+  "markov_num": 32814427652280622665990454980346328076042138443301716467810090722951993,
+  "markov_den": 18092513943330655534932966407607485602073435104006338131165247501236426506240,
+  "markov_log2": -19.0726,
+  "method": "E[#bad] = kappa * N^2 / 2^167 is an expectation over the FIXED lists; Markov's inequality P(work > cap) <= E[work]/cap is applied to that expectation.  Records and factors are reused across comparisons, so no Bernoulli or independence model is asserted anywhere.",
+  "route_pairs_log2": 147.3,
+  "prefix_pairs_log2": 84.3,
+  "run_cap_pairs_log2": 95,
+  "run_cap_margin_bits": 10.7
+ },
+ "layout": {
+  "rows": [
+   {
+    "bits": 56,
+    "byte": 0,
+    "field": "key_limb0",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[0,56)",
+    "word": 0
+   },
+   {
+    "bits": 56,
+    "byte": 8,
+    "field": "key_limb1",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[56,112)",
+    "word": 1
+   },
+   {
+    "bits": 56,
+    "byte": 16,
+    "field": "key_limb2",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[112,168)",
+    "word": 2
+   },
+   {
+    "bits": 1,
+    "byte": 24,
+    "field": "side",
+    "note": "0 = baby/X side, 1 = giant/Y side; 63 bits reserved",
+    "span": "bit 0",
+    "word": 3
+   },
+   {
+    "bits": 64,
+    "byte": 32,
+    "field": "index_hi",
+    "note": "position index high word",
+    "span": "[64,128)",
+    "word": 4
+   },
+   {
+    "bits": 64,
+    "byte": 40,
+    "field": "index_lo",
+    "note": "position index low word; position < 2^116",
+    "span": "[0,64)",
+    "word": 5
+   }
+  ],
+  "words": 6,
+  "bytes": 48,
+  "bits": 297,
+  "index_bits": 128,
+  "index_bound_log2": 116,
+  "layout_ok": true,
+  "recon_items": [
+   {
+    "detail": "2 LDP of the two index words, AND/shift",
+    "instr": 3,
+    "name": "index_load_and_mask"
+   },
+   {
+    "detail": "2 LDP from the stored 97-bit pool entry, addressing 2",
+    "instr": 4,
+    "name": "pool_load_2words"
+   },
+   {
+    "detail": "shift to checkpoint byte offset",
+    "instr": 2,
+    "name": "gap_index_shift"
+   },
+   {
+    "detail": "2 LDP of the prefix sum at the checkpoint",
+    "instr": 4,
+    "name": "checkpoint_load_2words"
+   },
+   {
+    "detail": "2^12 gap adds: 2 loads, add, carry, store, loop = 6 each",
+    "instr": 24576,
+    "name": "local_gap_walk"
+   },
+   {
+    "detail": "9 fp_mul (383 Ir each, COST_MODEL.md) + 24 accumulate/addressing for a*w",
+    "instr": 3471,
+    "name": "scalar_product_3x3"
+   },
+   {
+    "detail": "6 candidate multipliers: one fp_mul + compare/select each, 796 per u",
+    "instr": 4776,
+    "name": "ratio_and_six_test"
+   }
+  ],
+  "recon_itemised": 32836,
+  "recon_charged": 39404,
+  "recon_detail": "index -> (pool slot, walk offset); the 97-bit a is read from the stored pool array, the 76-bit w is rebuilt from a 2^12-gap checkpoint plus at most 2^12 gap adds; the 174-bit scalar a*w is formed with 9 fp_mul.  The scalar is NOT stored.",
+  "evidence": {
+   "inputs": 100,
+   "key_agreement": 100,
+   "records": 48,
+   "reconstructed": 48,
+   "roundtrip_all": true
+  }
+ },
+ "memory": {
+  "rows": [
+   {
+    "name": "records",
+    "bytes_": 6258856577146700790855494563191024480,
+    "detail": "2N records x 48 B"
+   },
+   {
+    "name": "sort_scratch",
+    "bytes_": 6258856577146700790855494563191024480,
+    "detail": "one counting-sort copy of the record array"
+   },
+   {
+    "name": "base_pool",
+    "bytes_": 1180591620717411303424,
+    "detail": "a-pool entries, 2 words each"
+   },
+   {
+    "name": "gap_checkpoints",
+    "bytes_": 4398046511104,
+    "detail": "2^50 walk gaps / 2^12 per checkpoint, 2 words"
+   },
+   {
+    "name": "routing_nodes",
+    "bytes_": 1237940039285380274899124224,
+    "detail": "per-node bucket descriptors"
+   }
+  ],
+  "total": 12517713155531342801587994516738987712,
+  "log2": 123.235
+ },
+ "coverage_grid": {
+  "cells": [
+   {
+    "r": 8391553,
+    "d": 8,
+    "m": 1048944,
+    "distinct_covered": 422778,
+    "predicted_distinct": 422076,
+    "predicted_distinct_eff": 417816,
+    "diagonal_repetitions": 7104,
+    "candidate_occurrences": 540000,
+    "K_float": 0.514803,
+    "rowA_num": -1301,
+    "rowA_den": 174824,
+    "rowB_num": -827,
+    "rowB_den": 174824,
+    "rowA_frac": "-1301/174824",
+    "rowB_frac": "-827/174824",
+    "absB_times_sqrt_m": 4.8449
+   },
+   {
+    "r": 8391553,
+    "d": 16,
+    "m": 524472,
+    "distinct_covered": 204996,
+    "predicted_distinct": 210837,
+    "predicted_distinct_eff": 207838,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514163,
+    "rowA_num": 283,
+    "rowA_den": 174824,
+    "rowB_num": 1421,
+    "rowB_den": 262236,
+    "rowA_frac": "283/174824",
+    "rowB_frac": "1421/262236",
+    "absB_times_sqrt_m": 3.9243
+   },
+   {
+    "r": 8391553,
+    "d": 64,
+    "m": 131118,
+    "distinct_covered": 49272,
+    "predicted_distinct": 51188,
+    "predicted_distinct_eff": 49711,
+    "diagonal_repetitions": 2400,
+    "candidate_occurrences": 64896,
+    "K_float": 0.494943,
+    "rowA_num": -242,
+    "rowA_den": 65559,
+    "rowB_num": 439,
+    "rowB_den": 131118,
+    "rowA_frac": "-242/65559",
+    "rowB_frac": "439/131118",
+    "absB_times_sqrt_m": 1.2124
+   },
+   {
+    "r": 33555073,
+    "d": 8,
+    "m": 4194384,
+    "distinct_covered": 1665594,
+    "predicted_distinct": 1670963,
+    "predicted_distinct_eff": 1662400,
+    "diagonal_repetitions": 14208,
+    "candidate_occurrences": 2131296,
+    "K_float": 0.508131,
+    "rowA_num": -8839,
+    "rowA_den": 4194384,
+    "rowB_num": -1597,
+    "rowB_den": 2097192,
+    "rowA_frac": "-8839/4194384",
+    "rowB_frac": "-1597/2097192",
+    "absB_times_sqrt_m": 1.5596
+   },
+   {
+    "r": 33555073,
+    "d": 16,
+    "m": 2097192,
+    "distinct_covered": 838698,
+    "predicted_distinct": 843283,
+    "predicted_distinct_eff": 837242,
+    "diagonal_repetitions": 10080,
+    "candidate_occurrences": 1078656,
+    "K_float": 0.514333,
+    "rowA_num": -5495,
+    "rowA_den": 2097192,
+    "rowB_num": -182,
+    "rowB_den": 262149,
+    "rowA_frac": "-5495/2097192",
+    "rowB_frac": "-182/262149",
+    "absB_times_sqrt_m": 1.0054
+   },
+   {
+    "r": 33555073,
+    "d": 64,
+    "m": 524298,
+    "distinct_covered": 206220,
+    "predicted_distinct": 210821,
+    "predicted_distinct_eff": 207822,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514333,
+    "rowA_num": -391,
+    "rowA_den": 524298,
+    "rowB_num": 267,
+    "rowB_den": 87383,
+    "rowA_frac": "-391/524298",
+    "rowB_frac": "267/87383",
+    "absB_times_sqrt_m": 2.2124
+   }
+  ],
+  "maxA": {
+   "num": 283,
+   "den": 174824,
+   "dec": "0.00161878"
+  },
+  "maxB": {
+   "num": 1421,
+   "den": 262236,
+   "dec": "0.00541879"
+  },
+  "allowance": {
+   "num": 3691,
+   "den": 524472,
+   "dec": "0.00703757"
+  },
+  "trend": [
+   {
+    "axis": "field",
+    "d": 8,
+    "small_r": 8391553,
+    "large_r": 33555073,
+    "small": 0.0047304717887704205,
+    "large": 0.0007614944172970333,
+    "shrinks": true
+   },
+   {
+    "axis": "field",
+    "d": 16,
+    "small_r": 8391553,
+    "large_r": 33555073,
+    "small": 0.00541878308088897,
+    "large": 0.0006942616603534632,
+    "shrinks": true
+   },
+   {
+    "axis": "field",
+    "d": 64,
+    "small_r": 8391553,
+    "large_r": 33555073,
+    "small": 0.003348129166094663,
+    "large": 0.003055514230456725,
+    "shrinks": true
+   }
+  ],
+  "scale_row": {
+   "max_absB_times_sqrt_m": 4.8449,
+   "m_production_log2": 234,
+   "extrapolated_excess_log2": -115.152,
+   "status": "H3occ-scale (declared): |rowB|*sqrt(m) is the measured trend statistic; it falls in 3/3 matched field pairs, and the charge is the toy maximum, 100+ bits above the extrapolation.  No Chernoff or independence claim is made."
+  },
+  "expectation": {
+   "e_neg_K_upper_num": 2412500280218577205699037672771513972564971679121199997032187479658131897,
+   "e_neg_K_upper_den": 4017515474452480000000000000000000000000000000000000000000000000000000000,
+   "e_neg_K_upper_dec": "0.60049558",
+   "design_lo_dec": "0.39950442",
+   "method": "E[#missing]/m = exp(-K) with K = 6N^2/m >= 51/100, exact rational upper bound by the alternating series; linearity of expectation over the candidate occurrences, so no independence is used."
+  }
+ },
+ "gap": {
+  "n": 1199,
+  "mean": 545.8616,
+  "max": 3950,
+  "mu_prod_float": 70573979.056,
+  "mu_prod_log2": 26.0726,
+  "G_charged": 8589934592,
+  "G_charged_log2": 33,
+  "tail_bound_log2": -125.598,
+  "premise": "H3gap: the FIXED production list's consecutive gaps follow the geometric law with mean mu = d*ln q; the 2^-40 charge is a modelling allowance against this premise, not a probability over algorithm coins.",
+  "fit": [
+   {
+    "d": 8,
+    "n": 1200,
+    "mean_over_law": 1.0292,
+    "chi2": 3.6028,
+    "dof": 10,
+    "chi2_over_dof": 0.3603,
+    "ks": 0.030308,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 16,
+    "n": 1200,
+    "mean_over_law": 0.9645,
+    "chi2": 10.0834,
+    "dof": 10,
+    "chi2_over_dof": 1.0083,
+    "ks": 0.022552,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 64,
+    "n": 1200,
+    "mean_over_law": 0.9846,
+    "chi2": 4.206,
+    "dof": 10,
+    "chi2_over_dof": 0.4206,
+    "ks": 0.020047,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 15,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   }
+  ],
+  "toy_mean_over_predicted": 0.9651
+ },
+ "order_audit": {
+  "p": 10009,
+  "field_order": 10192,
+  "prime_order": 7,
+  "n_divides_NE": true,
+  "nP_is_O": true,
+  "scope": "small j=0 fixture; no toy point order is claimed to equal its scalar modulus"
+ },
+ "success": {
+  "design_lo": 0.399504,
+  "debits": {
+   "census_rowA": 0.00161878,
+   "census_rowB": 0.00541879,
+   "candidate_markov": 1.8137019407619042e-06,
+   "gap_model": 9.094947017729282e-13,
+   "diagonal": 8.881784197001252e-16
+  },
+  "debit_sum": 0.00703938,
+  "after": 0.392465,
+  "claim_floor": 0.39,
+  "premise": "all of the above is conditional on H3occ (coverage), H3occ-scale, H3key and H3gap, each with measured fit and a disclosed transfer limit"
+ },
+ "cert_scope": "This certificate recomputes the submitted ledger and the declared model formulas from raw evidence; it establishes arithmetic consistency of the declared premises and does NOT independently establish production resource bounds, run the production attack, or verify the premises themselves.",
+ "checks": {
+  "m_is_composite_v2_12_six_divides": "PASS",
+  "d_times_m_equals_r_minus_1": "PASS",
+  "d_not_invertible_mod_m": "PASS",
+  "two_sylow_split_u_odd": "PASS",
+  "K_at_or_above_design_point": "PASS",
+  "per_record_rows_sum_to_itemised": "PASS",
+  "charged_overhead_is_ceiling_of_6_5": "PASS",
+  "ledger_rows_itemised": "PASS",
+  "claim_above_W": "PASS",
+  "claim_headroom_over_W_ge_2e5": "PASS",
+  "claim_below_gate_by_6e3": "PASS",
+  "key_rule_is_even_member": "PASS",
+  "key_shared_module_100_inputs": "PASS",
+  "record_roundtrip_all_positions": "PASS",
+  "record_layout_6_words_48_bytes": "PASS",
+  "record_layout_payload_bits_297": "PASS",
+  "record_layout_words_384_bits": "PASS",
+  "record_layout_ok": "PASS",
+  "recon_price_itemised_and_stressed": "PASS",
+  "algebraic_equal_products_zero": "PASS",
+  "algebraic_complements_zero": "PASS",
+  "key_census_two_sizes": "PASS",
+  "key_census_seven_widths": "PASS",
+  "key_census_max_ratio_at_most_1_25": "PASS",
+  "kappa_covers_measured_cells": "PASS",
+  "E_bad_is_expectation_not_ucl": "PASS",
+  "markov_below_2_18": "PASS",
+  "cap_dominates_expectation_16bits": "PASS",
+  "prefix_pairs_2_10_below_run_cap": "PASS",
+  "no_ucl_or_independence_claim": "PASS",
+  "census_maxA_is_exact_cell_fraction": "PASS",
+  "census_maxB_is_exact_cell_fraction": "PASS",
+  "census_printed_decimals_are_ceilings": "PASS",
+  "census_grid_three_d_two_fields": "PASS",
+  "census_cells_at_production_K": "PASS",
+  "census_trend_shrinks_3_of_3": "PASS",
+  "census_scale_row_bounded": "PASS",
+  "census_scale_extrapolation_below_charge": "PASS",
+  "coverage_expectation_is_rational_upper": "PASS",
+  "gap_tail_bound_below_2_40": "PASS",
+  "gap_histogram_sums_to_n": "PASS",
+  "gap_fit_three_sizes": "PASS",
+  "gap_fit_means_match_density_law": "PASS",
+  "gap_premise_declared": "PASS",
+  "order_audit_prime_divides_field_order": "PASS",
+  "order_audit_nP_is_O": "PASS",
+  "memory_total_at_declared_log2": "PASS",
+  "success_after_debits_meets_39pct": "PASS",
+  "cert_scope_declared": "PASS"
+ }
+}

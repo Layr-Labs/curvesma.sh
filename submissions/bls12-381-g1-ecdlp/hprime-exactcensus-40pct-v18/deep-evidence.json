@@ -1,0 +1,801 @@
+{
+ "census": {
+  "cells": [
+   {
+    "r": 8391553,
+    "d": 8,
+    "m": 1048944,
+    "distinct_covered": 422778,
+    "predicted_distinct": 422076,
+    "predicted_distinct_eff": 417816,
+    "diagonal_repetitions": 7104,
+    "candidate_occurrences": 540000,
+    "K_float": 0.514803,
+    "rowA_num": -1301,
+    "rowA_den": 174824,
+    "rowB_num": -827,
+    "rowB_den": 174824,
+    "rowA_frac": "-1301/174824",
+    "rowB_frac": "-827/174824",
+    "absB_times_sqrt_m": 4.8449
+   },
+   {
+    "r": 8391553,
+    "d": 16,
+    "m": 524472,
+    "distinct_covered": 204996,
+    "predicted_distinct": 210837,
+    "predicted_distinct_eff": 207838,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514163,
+    "rowA_num": 283,
+    "rowA_den": 174824,
+    "rowB_num": 1421,
+    "rowB_den": 262236,
+    "rowA_frac": "283/174824",
+    "rowB_frac": "1421/262236",
+    "absB_times_sqrt_m": 3.9243
+   },
+   {
+    "r": 8391553,
+    "d": 64,
+    "m": 131118,
+    "distinct_covered": 49272,
+    "predicted_distinct": 51188,
+    "predicted_distinct_eff": 49711,
+    "diagonal_repetitions": 2400,
+    "candidate_occurrences": 64896,
+    "K_float": 0.494943,
+    "rowA_num": -242,
+    "rowA_den": 65559,
+    "rowB_num": 439,
+    "rowB_den": 131118,
+    "rowA_frac": "-242/65559",
+    "rowB_frac": "439/131118",
+    "absB_times_sqrt_m": 1.2124
+   },
+   {
+    "r": 33555073,
+    "d": 8,
+    "m": 4194384,
+    "distinct_covered": 1665594,
+    "predicted_distinct": 1670963,
+    "predicted_distinct_eff": 1662400,
+    "diagonal_repetitions": 14208,
+    "candidate_occurrences": 2131296,
+    "K_float": 0.508131,
+    "rowA_num": -8839,
+    "rowA_den": 4194384,
+    "rowB_num": -1597,
+    "rowB_den": 2097192,
+    "rowA_frac": "-8839/4194384",
+    "rowB_frac": "-1597/2097192",
+    "absB_times_sqrt_m": 1.5596
+   },
+   {
+    "r": 33555073,
+    "d": 16,
+    "m": 2097192,
+    "distinct_covered": 838698,
+    "predicted_distinct": 843283,
+    "predicted_distinct_eff": 837242,
+    "diagonal_repetitions": 10080,
+    "candidate_occurrences": 1078656,
+    "K_float": 0.514333,
+    "rowA_num": -5495,
+    "rowA_den": 2097192,
+    "rowB_num": -182,
+    "rowB_den": 262149,
+    "rowA_frac": "-5495/2097192",
+    "rowB_frac": "-182/262149",
+    "absB_times_sqrt_m": 1.0054
+   },
+   {
+    "r": 33555073,
+    "d": 64,
+    "m": 524298,
+    "distinct_covered": 206220,
+    "predicted_distinct": 210821,
+    "predicted_distinct_eff": 207822,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514333,
+    "rowA_num": -391,
+    "rowA_den": 524298,
+    "rowB_num": 267,
+    "rowB_den": 87383,
+    "rowA_frac": "-391/524298",
+    "rowB_frac": "267/87383",
+    "absB_times_sqrt_m": 2.2124
+   }
+  ]
+ },
+ "scale_row": {
+  "max_absB_times_sqrt_m": 4.8449,
+  "m_production_log2": 234,
+  "extrapolated_excess_log2": -115.152,
+  "status": "H3occ-scale (declared): |rowB|*sqrt(m) is the measured trend statistic; it falls in 3/3 matched field pairs, and the charge is the toy maximum, 100+ bits above the extrapolation.  No Chernoff or independence claim is made."
+ },
+ "expectation": {
+  "e_neg_K_upper_num": 2412500280218577205699037672771513972564971679121199997032187479658131897,
+  "e_neg_K_upper_den": 4017515474452480000000000000000000000000000000000000000000000000000000000,
+  "e_neg_K_upper_dec": "0.60049558",
+  "design_lo_dec": "0.39950442",
+  "method": "E[#missing]/m = exp(-K) with K = 6N^2/m >= 51/100, exact rational upper bound by the alternating series; linearity of expectation over the candidate occurrences, so no independence is used."
+ },
+ "key_census": {
+  "key_bits": 168,
+  "image_log2": 167,
+  "rule": "even member of {y,p-y} truncated to 168 bits (keymod.key_scalar)",
+  "widths": [
+   10,
+   12,
+   14,
+   16,
+   18,
+   20,
+   22
+  ],
+  "a_band": [
+   151115727451828646838272,
+   302231454903657293676544
+  ],
+  "walk_band": [
+   75557863725914323419136,
+   151115727451828646838272
+  ],
+  "sizes": [
+   {
+    "records_per_side": 4096,
+    "pairs": 16777216,
+    "equal_products": 0,
+    "complement_pairs": 0,
+    "distinct_products": 8192,
+    "max_scalar_bits": 154,
+    "rows": [
+     {
+      "charged_factor": 1.009403,
+      "image_log2": 9,
+      "observed": 32535,
+      "pairs": 16777216,
+      "predicted": 32768.0,
+      "ratio": 0.992889,
+      "width": 10
+     },
+     {
+      "charged_factor": 1.006216,
+      "image_log2": 11,
+      "observed": 7975,
+      "pairs": 16777216,
+      "predicted": 8192.0,
+      "ratio": 0.973511,
+      "width": 12
+     },
+     {
+      "charged_factor": 1.006248,
+      "image_log2": 13,
+      "observed": 1929,
+      "pairs": 16777216,
+      "predicted": 2048.0,
+      "ratio": 0.941895,
+      "width": 14
+     },
+     {
+      "charged_factor": 1.03469,
+      "image_log2": 15,
+      "observed": 465,
+      "pairs": 16777216,
+      "predicted": 512.0,
+      "ratio": 0.908203,
+      "width": 16
+     },
+     {
+      "charged_factor": 1.070564,
+      "image_log2": 17,
+      "observed": 106,
+      "pairs": 16777216,
+      "predicted": 128.0,
+      "ratio": 0.828125,
+      "width": 18
+     },
+     {
+      "charged_factor": 1.339828,
+      "image_log2": 19,
+      "observed": 27,
+      "pairs": 16777216,
+      "predicted": 32.0,
+      "ratio": 0.84375,
+      "width": 20
+     },
+     {
+      "charged_factor": 1.742157,
+      "image_log2": 21,
+      "observed": 6,
+      "pairs": 16777216,
+      "predicted": 8.0,
+      "ratio": 0.75,
+      "width": 22
+     }
+    ]
+   },
+   {
+    "records_per_side": 2048,
+    "pairs": 4194304,
+    "equal_products": 0,
+    "complement_pairs": 0,
+    "distinct_products": 4096,
+    "max_scalar_bits": 154,
+    "rows": [
+     {
+      "charged_factor": 1.010437,
+      "image_log2": 9,
+      "observed": 8009,
+      "pairs": 4194304,
+      "predicted": 8192.0,
+      "ratio": 0.977661,
+      "width": 10
+     },
+     {
+      "charged_factor": 1.049658,
+      "image_log2": 11,
+      "observed": 2015,
+      "pairs": 4194304,
+      "predicted": 2048.0,
+      "ratio": 0.983887,
+      "width": 12
+     },
+     {
+      "charged_factor": 1.097291,
+      "image_log2": 13,
+      "observed": 495,
+      "pairs": 4194304,
+      "predicted": 512.0,
+      "ratio": 0.966797,
+      "width": 14
+     },
+     {
+      "charged_factor": 1.133057,
+      "image_log2": 15,
+      "observed": 113,
+      "pairs": 4194304,
+      "predicted": 128.0,
+      "ratio": 0.882812,
+      "width": 16
+     },
+     {
+      "charged_factor": 1.538553,
+      "image_log2": 17,
+      "observed": 32,
+      "pairs": 4194304,
+      "predicted": 32.0,
+      "ratio": 1.0,
+      "width": 18
+     },
+     {
+      "charged_factor": 2.493734,
+      "image_log2": 19,
+      "observed": 10,
+      "pairs": 4194304,
+      "predicted": 8.0,
+      "ratio": 1.25,
+      "width": 20
+     },
+     {
+      "charged_factor": 3.598076,
+      "image_log2": 21,
+      "observed": 2,
+      "pairs": 4194304,
+      "predicted": 2.0,
+      "ratio": 1.0,
+      "width": 22
+     }
+    ]
+   }
+  ],
+  "max_ratio": 1.0,
+  "min_ratio": 0.828125,
+  "cells_used": 11,
+  "kappa_num": 193,
+  "kappa_den": 125,
+  "kappa_float": 1.544,
+  "premise": "H3key (DECLARED): the truncated even-representative key occupies its 2^167 image like a uniform hash on distinct points.  It is TESTED, not assumed, by exact prefix-collision counts at two list sizes and seven key widths on the production curve; the zero-event confidence bound of v17 is deleted."
+ },
+ "debit": {
+  "P_all": "4250573530088163557770784323879058040938100834624574671996125741315025",
+  "P_all_log2": 231.3007,
+  "image_log2": 167,
+  "kappa": 1.544,
+  "E_bad": "32814427652280622665990454980346328076042138443301716467810090722951993/935361047891777867650358292938421132579796827504640",
+  "E_bad_log2": 64.9274,
+  "cap_bad_log2": 84,
+  "per_candidate_instr": 1048576,
+  "cap_work": 20282409603651670423947251286016,
+  "cap_work_log2": 104.0,
+  "E_work_log2": 84.9274,
+  "markov_num": 32814427652280622665990454980346328076042138443301716467810090722951993,
+  "markov_den": 18092513943330655534932966407607485602073435104006338131165247501236426506240,
+  "markov_log2": -19.0726,
+  "method": "E[#bad] = kappa * N^2 / 2^167 is an expectation over the FIXED lists; Markov's inequality P(work > cap) <= E[work]/cap is applied to that expectation.  Records and factors are reused across comparisons, so no Bernoulli or independence model is asserted anywhere.",
+  "route_pairs_log2": 147.3,
+  "prefix_pairs_log2": 84.3,
+  "run_cap_pairs_log2": 95,
+  "run_cap_margin_bits": 10.7
+ },
+ "layout": {
+  "rows": [
+   {
+    "bits": 56,
+    "byte": 0,
+    "field": "key_limb0",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[0,56)",
+    "word": 0
+   },
+   {
+    "bits": 56,
+    "byte": 8,
+    "field": "key_limb1",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[56,112)",
+    "word": 1
+   },
+   {
+    "bits": 56,
+    "byte": 16,
+    "field": "key_limb2",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[112,168)",
+    "word": 2
+   },
+   {
+    "bits": 1,
+    "byte": 24,
+    "field": "side",
+    "note": "0 = baby/X side, 1 = giant/Y side; 63 bits reserved",
+    "span": "bit 0",
+    "word": 3
+   },
+   {
+    "bits": 64,
+    "byte": 32,
+    "field": "index_hi",
+    "note": "position index high word",
+    "span": "[64,128)",
+    "word": 4
+   },
+   {
+    "bits": 64,
+    "byte": 40,
+    "field": "index_lo",
+    "note": "position index low word; position < 2^116",
+    "span": "[0,64)",
+    "word": 5
+   }
+  ],
+  "words": 6,
+  "bytes": 48,
+  "bits": 297,
+  "index_bits": 128,
+  "index_bound_log2": 116,
+  "layout_ok": true,
+  "recon_items": [
+   {
+    "detail": "2 LDP of the two index words, AND/shift",
+    "instr": 3,
+    "name": "index_load_and_mask"
+   },
+   {
+    "detail": "2 LDP from the stored 97-bit pool entry, addressing 2",
+    "instr": 4,
+    "name": "pool_load_2words"
+   },
+   {
+    "detail": "shift to checkpoint byte offset",
+    "instr": 2,
+    "name": "gap_index_shift"
+   },
+   {
+    "detail": "2 LDP of the prefix sum at the checkpoint",
+    "instr": 4,
+    "name": "checkpoint_load_2words"
+   },
+   {
+    "detail": "2^12 gap adds: 2 loads, add, carry, store, loop = 6 each",
+    "instr": 24576,
+    "name": "local_gap_walk"
+   },
+   {
+    "detail": "9 fp_mul (383 Ir each, COST_MODEL.md) + 24 accumulate/addressing for a*w",
+    "instr": 3471,
+    "name": "scalar_product_3x3"
+   },
+   {
+    "detail": "6 candidate multipliers: one fp_mul + compare/select each, 796 per u",
+    "instr": 4776,
+    "name": "ratio_and_six_test"
+   }
+  ],
+  "recon_itemised": 32836,
+  "recon_charged": 39404,
+  "recon_detail": "index -> (pool slot, walk offset); the 97-bit a is read from the stored pool array, the 76-bit w is rebuilt from a 2^12-gap checkpoint plus at most 2^12 gap adds; the 174-bit scalar a*w is formed with 9 fp_mul.  The scalar is NOT stored.",
+  "evidence": {
+   "inputs": 100,
+   "key_agreement": 100,
+   "records": 48,
+   "reconstructed": 48,
+   "roundtrip_all": true
+  }
+ },
+ "gap": {
+  "n": 1199,
+  "mean": 545.8616,
+  "max": 3950,
+  "mu_prod_float": 70573979.056,
+  "mu_prod_log2": 26.0726,
+  "G_charged": 8589934592,
+  "G_charged_log2": 33,
+  "tail_bound_log2": -125.598,
+  "premise": "H3gap: the FIXED production list's consecutive gaps follow the geometric law with mean mu = d*ln q; the 2^-40 charge is a modelling allowance against this premise, not a probability over algorithm coins.",
+  "fit": [
+   {
+    "d": 8,
+    "n": 1200,
+    "mean_over_law": 1.0292,
+    "chi2": 3.6028,
+    "dof": 10,
+    "chi2_over_dof": 0.3603,
+    "ks": 0.030308,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 16,
+    "n": 1200,
+    "mean_over_law": 0.9645,
+    "chi2": 10.0834,
+    "dof": 10,
+    "chi2_over_dof": 1.0083,
+    "ks": 0.022552,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 64,
+    "n": 1200,
+    "mean_over_law": 0.9846,
+    "chi2": 4.206,
+    "dof": 10,
+    "chi2_over_dof": 0.4206,
+    "ks": 0.020047,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 15,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   }
+  ],
+  "toy_mean_over_predicted": 0.9651
+ },
+ "order_audit": {
+  "p": 10009,
+  "field_order": 10192,
+  "prime_order": 7,
+  "n_divides_NE": true,
+  "nP_is_O": true,
+  "scope": "small j=0 fixture; no toy point order is claimed to equal its scalar modulus"
+ },
+ "order_structure": {
+  "r_minus_1_factor_2": 32,
+  "m_is_composite": true,
+  "v2_m": 12,
+  "six_divides_m": true,
+  "d_times_m_is_r_minus_1": true,
+  "gcd_d_m": 4096,
+  "d_invertible_mod_m": false,
+  "two_sylow": 32,
+  "u_odd": true,
+  "statement": "H = {x : x^m = 1} = the d-th powers is cyclic of COMPOSITE order m; no primality of m and no inverse of d modulo m is used anywhere"
+ },
+ "tail": [
+  {
+   "empirical": 0.40700584,
+   "geometric_model": 0.39142288,
+   "n": 1199,
+   "observed": 488,
+   "threshold": "2^9"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.00055102,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^12"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^15"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^18"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^21"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^24"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^27"
+  }
+ ],
+ "histogram": [
+  {
+   "bucket": "2^1",
+   "count": 2
+  },
+  {
+   "bucket": "2^2",
+   "count": 6
+  },
+  {
+   "bucket": "2^3",
+   "count": 8
+  },
+  {
+   "bucket": "2^4",
+   "count": 36
+  },
+  {
+   "bucket": "2^5",
+   "count": 68
+  },
+  {
+   "bucket": "2^6",
+   "count": 109
+  },
+  {
+   "bucket": "2^7",
+   "count": 207
+  },
+  {
+   "bucket": "2^8",
+   "count": 274
+  },
+  {
+   "bucket": "2^9",
+   "count": 310
+  },
+  {
+   "bucket": "2^10",
+   "count": 151
+  },
+  {
+   "bucket": "2^11",
+   "count": 28
+  }
+ ],
+ "gapFit": [
+  {
+   "chi2": 3.6028,
+   "chi2_over_dof": 0.3603,
+   "d": 8,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.030308,
+   "ks_95_cut": 0.03926,
+   "m_bits": 125,
+   "max_gap": 2324,
+   "max_gap_bits": 12,
+   "mean": 291.075,
+   "mean_law": 282.804,
+   "mean_over_law": 1.0292,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.17416667,
+     "geometric_model": 0.16358201,
+     "n": 1200,
+     "observed": 209,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 5.1e-07,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  },
+  {
+   "chi2": 10.0834,
+   "chi2_over_dof": 1.0083,
+   "d": 16,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.022552,
+   "ks_95_cut": 0.03926,
+   "m_bits": 124,
+   "max_gap": 3950,
+   "max_gap_bits": 12,
+   "mean": 545.5117,
+   "mean_law": 565.6081,
+   "mean_over_law": 0.9645,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.40666667,
+     "geometric_model": 0.40445273,
+     "n": 1200,
+     "observed": 488,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.00071605,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  },
+  {
+   "chi2": 4.206,
+   "chi2_over_dof": 0.4206,
+   "d": 64,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.020047,
+   "ks_95_cut": 0.03926,
+   "m_bits": 122,
+   "max_gap": 21290,
+   "max_gap_bits": 15,
+   "mean": 2227.5967,
+   "mean_law": 2262.4324,
+   "mean_over_law": 0.9846,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.79916667,
+     "geometric_model": 0.79747475,
+     "n": 1200,
+     "observed": 959,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.15583333,
+     "geometric_model": 0.16358201,
+     "n": 1200,
+     "observed": 187,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 5.1e-07,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  }
+ ],
+ "n_gap": 1199,
+ "mean_gap": 545.8616,
+ "max_gap": 3950,
+ "memory": {
+  "rows": [
+   {
+    "name": "records",
+    "bytes_": 6258856577146700790855494563191024480,
+    "detail": "2N records x 48 B"
+   },
+   {
+    "name": "sort_scratch",
+    "bytes_": 6258856577146700790855494563191024480,
+    "detail": "one counting-sort copy of the record array"
+   },
+   {
+    "name": "base_pool",
+    "bytes_": 1180591620717411303424,
+    "detail": "a-pool entries, 2 words each"
+   },
+   {
+    "name": "gap_checkpoints",
+    "bytes_": 4398046511104,
+    "detail": "2^50 walk gaps / 2^12 per checkpoint, 2 words"
+   },
+   {
+    "name": "routing_nodes",
+    "bytes_": 1237940039285380274899124224,
+    "detail": "per-node bucket descriptors"
+   }
+  ],
+  "total": 12517713155531342801587994516738987712,
+  "log2": 123.235
+ }
+}
