@@ -1,0 +1,796 @@
+.equ REC_SIZE,   88
+.equ OFF_IDX,    64
+.equ OFF_LEN,    72
+.equ OFF_ESC,    80
+	.file	"step_secp_v15c.c"
+	.text
+	.globl	step_asm                        // -- Begin function step_asm
+	.p2align	2
+	.type	step_asm,@function
+step_asm:                               // @step_asm
+	cmp	w0, #1
+	b.lt	.Lret
+	sub	sp, sp, #96
+	stp	x19, x20, [sp, #0]
+	stp	x21, x22, [sp, #16]
+	stp	x23, x24, [sp, #32]
+	stp	x25, x26, [sp, #48]
+	stp	x27, x28, [sp, #64]
+	stp	x29, x30, [sp, #80]
+	mov	w23, w0                         // count = n (zero-extended)
+	adrp	x28, :got:A
+	ldr	x28, [x28, :got_lo12:A]         // &A[0].x
+	adrp	x27, :got:PROD
+	ldr	x27, [x27, :got_lo12:PROD]
+	adrp	x26, :got:SUF
+	ldr	x26, [x26, :got_lo12:SUF]
+	adrp	x25, :got:TBL
+	ldr	x25, [x25, :got_lo12:TBL]
+	mov	x24, #977                       // C = 2^32+977, once per call
+	movk	x24, #1, lsl #32
+	neg	x29, x24                        // p limb0 = -C (p = 2^256-C)
+	b	.Lhead
+.Ltail:
+	stp	x0, x1, [x28, #32]              // A[i].y = y3 (even rep)
+	stp	x2, x3, [x28, #48]
+	add	x28, x28, #REC_SIZE
+	add	x27, x27, #32
+	add	x26, x26, #32
+	subs	x23, x23, #1
+	b.eq	.Ldone
+.Lhead:
+	ldp	x0, x1, [x28]                   // x1 = A[i].x
+	ldp	x2, x3, [x28, #16]
+	ldr	x22, [x28, #OFF_IDX]            // class-derived row (v15o_align)
+	add	x22, x25, x22, lsl #6           // &TBL[idx]
+	ldp	x4, x5, [x22]                   // TBL[j].x
+	ldp	x6, x7, [x22, #16]
+	subs	x4, x4, x0
+	sbcs	x5, x5, x1
+	sbcs	x6, x6, x2
+	sbcs	x7, x7, x3
+	csel	x8, x24, xzr, cc
+	subs	x4, x4, x8
+	sbcs	x5, x5, xzr
+	sbcs	x6, x6, xzr
+	sbcs	x7, x7, xzr
+	ldr	x0, [x27]
+	mul	x8, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x9, x20, x16
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x10, x20, x17
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x11, x20, x19
+	adc	x12, x21, xzr
+	ldr	x0, [x27, #8]
+	mul	x1, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x9, x9, x1
+	adcs	x10, x10, x16
+	adcs	x11, x11, x17
+	adcs	x12, x12, x19
+	adc	x13, x21, xzr
+	ldr	x0, [x27, #16]
+	mul	x1, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x10, x10, x1
+	adcs	x11, x11, x16
+	adcs	x12, x12, x17
+	adcs	x13, x13, x19
+	adc	x14, x21, xzr
+	ldr	x0, [x27, #24]
+	mul	x1, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x11, x11, x1
+	adcs	x12, x12, x16
+	adcs	x13, x13, x17
+	adcs	x14, x14, x19
+	adc	x15, x21, xzr
+	mul	x1, x12, x24
+	umulh	x16, x12, x24
+	mul	x20, x13, x24
+	umulh	x21, x13, x24
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x14, x24
+	umulh	x21, x14, x24
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x15, x24
+	umulh	x21, x15, x24
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x8, x8, x1
+	adcs	x9, x9, x16
+	adcs	x10, x10, x17
+	adcs	x11, x11, x19
+	adc	x12, x21, xzr
+	mul	x1, x12, x24
+	umulh	x16, x12, x24
+	adds	x8, x8, x1
+	adcs	x9, x9, x16
+	adcs	x10, x10, xzr
+	adcs	x11, x11, xzr
+	adc	x17, xzr, xzr
+	adds	x1, x8, x24
+	adcs	x16, x9, xzr
+	adcs	x19, x10, xzr
+	adcs	x20, x11, xzr
+	adc	x21, xzr, xzr
+	adds	x17, x17, x21
+	csel	x8, x1, x8, ne
+	csel	x9, x16, x9, ne
+	csel	x10, x19, x10, ne
+	csel	x11, x20, x11, ne
+	stp	x8, x9, [x27]                   // PROD[i] *= d
+	stp	x10, x11, [x27, #16]
+	ldr	x0, [x26]
+	mul	x8, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x9, x20, x16
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x10, x20, x17
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x11, x20, x19
+	adc	x12, x21, xzr
+	ldr	x0, [x26, #8]
+	mul	x1, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x9, x9, x1
+	adcs	x10, x10, x16
+	adcs	x11, x11, x17
+	adcs	x12, x12, x19
+	adc	x13, x21, xzr
+	ldr	x0, [x26, #16]
+	mul	x1, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x10, x10, x1
+	adcs	x11, x11, x16
+	adcs	x12, x12, x17
+	adcs	x13, x13, x19
+	adc	x14, x21, xzr
+	ldr	x0, [x26, #24]
+	mul	x1, x4, x0
+	umulh	x16, x4, x0
+	mul	x20, x5, x0
+	umulh	x21, x5, x0
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x6, x0
+	umulh	x21, x6, x0
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x7, x0
+	umulh	x21, x7, x0
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x11, x11, x1
+	adcs	x12, x12, x16
+	adcs	x13, x13, x17
+	adcs	x14, x14, x19
+	adc	x15, x21, xzr
+	mul	x1, x12, x24
+	umulh	x16, x12, x24
+	mul	x20, x13, x24
+	umulh	x21, x13, x24
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x14, x24
+	umulh	x21, x14, x24
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x15, x24
+	umulh	x21, x15, x24
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x8, x8, x1
+	adcs	x9, x9, x16
+	adcs	x10, x10, x17
+	adcs	x11, x11, x19
+	adc	x12, x21, xzr
+	mul	x1, x12, x24
+	umulh	x16, x12, x24
+	adds	x8, x8, x1
+	adcs	x9, x9, x16
+	adcs	x10, x10, xzr
+	adcs	x11, x11, xzr
+	adc	x17, xzr, xzr
+	adds	x1, x8, x24
+	adcs	x16, x9, xzr
+	adcs	x19, x10, xzr
+	adcs	x20, x11, xzr
+	adc	x21, xzr, xzr
+	adds	x17, x17, x21
+	csel	x8, x1, x8, ne
+	csel	x9, x16, x9, ne
+	csel	x10, x19, x10, ne
+	csel	x11, x20, x11, ne
+	stp	x8, x9, [x26]                   // SUF[i] *= d
+	stp	x10, x11, [x26, #16]
+	ldp	x0, x1, [x27]                   // PROD[i] (updated)
+	ldp	x2, x3, [x27, #16]
+	mul	x4, x0, x8
+	umulh	x16, x0, x8
+	mul	x20, x1, x8
+	umulh	x21, x1, x8
+	adds	x5, x20, x16
+	adc	x17, x21, xzr
+	mul	x20, x2, x8
+	umulh	x21, x2, x8
+	adds	x6, x20, x17
+	adc	x19, x21, xzr
+	mul	x20, x3, x8
+	umulh	x21, x3, x8
+	adds	x7, x20, x19
+	adc	x12, x21, xzr
+	mul	x8, x0, x9
+	umulh	x16, x0, x9
+	mul	x20, x1, x9
+	umulh	x21, x1, x9
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x2, x9
+	umulh	x21, x2, x9
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x3, x9
+	umulh	x21, x3, x9
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x5, x5, x8
+	adcs	x6, x6, x16
+	adcs	x7, x7, x17
+	adcs	x12, x12, x19
+	adc	x13, x21, xzr
+	mul	x8, x0, x10
+	umulh	x16, x0, x10
+	mul	x20, x1, x10
+	umulh	x21, x1, x10
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x2, x10
+	umulh	x21, x2, x10
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x3, x10
+	umulh	x21, x3, x10
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x6, x6, x8
+	adcs	x7, x7, x16
+	adcs	x12, x12, x17
+	adcs	x13, x13, x19
+	adc	x14, x21, xzr
+	mul	x8, x0, x11
+	umulh	x16, x0, x11
+	mul	x20, x1, x11
+	umulh	x21, x1, x11
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x2, x11
+	umulh	x21, x2, x11
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x3, x11
+	umulh	x21, x3, x11
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x7, x7, x8
+	adcs	x12, x12, x16
+	adcs	x13, x13, x17
+	adcs	x14, x14, x19
+	adc	x15, x21, xzr
+	mul	x8, x12, x24
+	umulh	x16, x12, x24
+	mul	x20, x13, x24
+	umulh	x21, x13, x24
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x14, x24
+	umulh	x21, x14, x24
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x15, x24
+	umulh	x21, x15, x24
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x4, x4, x8
+	adcs	x5, x5, x16
+	adcs	x6, x6, x17
+	adcs	x7, x7, x19
+	adc	x12, x21, xzr
+	mul	x8, x12, x24
+	umulh	x16, x12, x24
+	adds	x4, x4, x8
+	adcs	x5, x5, x16
+	adcs	x6, x6, xzr
+	adcs	x7, x7, xzr
+	adc	x17, xzr, xzr
+	adds	x8, x4, x24
+	adcs	x16, x5, xzr
+	adcs	x19, x6, xzr
+	adcs	x20, x7, xzr
+	adc	x21, xzr, xzr
+	adds	x17, x17, x21
+	csel	x4, x8, x4, ne
+	csel	x5, x16, x5, ne
+	csel	x6, x19, x6, ne
+	csel	x7, x20, x7, ne
+	ldp	x0, x1, [x22, #32]              // TBL[j].y
+	ldp	x2, x3, [x22, #48]
+	ldp	x8, x9, [x28, #32]              // y1 = A[i].y
+	ldp	x10, x11, [x28, #48]
+	subs	x0, x0, x8
+	sbcs	x1, x1, x9
+	sbcs	x2, x2, x10
+	sbcs	x3, x3, x11
+	csel	x12, x24, xzr, cc
+	subs	x0, x0, x12
+	sbcs	x1, x1, xzr
+	sbcs	x2, x2, xzr
+	sbcs	x3, x3, xzr
+	mul	x8, x0, x4
+	umulh	x16, x0, x4
+	mul	x20, x1, x4
+	umulh	x21, x1, x4
+	adds	x9, x20, x16
+	adc	x17, x21, xzr
+	mul	x20, x2, x4
+	umulh	x21, x2, x4
+	adds	x10, x20, x17
+	adc	x19, x21, xzr
+	mul	x20, x3, x4
+	umulh	x21, x3, x4
+	adds	x11, x20, x19
+	adc	x12, x21, xzr
+	mul	x4, x0, x5
+	umulh	x16, x0, x5
+	mul	x20, x1, x5
+	umulh	x21, x1, x5
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x2, x5
+	umulh	x21, x2, x5
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x3, x5
+	umulh	x21, x3, x5
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x9, x9, x4
+	adcs	x10, x10, x16
+	adcs	x11, x11, x17
+	adcs	x12, x12, x19
+	adc	x13, x21, xzr
+	mul	x4, x0, x6
+	umulh	x16, x0, x6
+	mul	x20, x1, x6
+	umulh	x21, x1, x6
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x2, x6
+	umulh	x21, x2, x6
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x3, x6
+	umulh	x21, x3, x6
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x10, x10, x4
+	adcs	x11, x11, x16
+	adcs	x12, x12, x17
+	adcs	x13, x13, x19
+	adc	x14, x21, xzr
+	mul	x4, x0, x7
+	umulh	x16, x0, x7
+	mul	x20, x1, x7
+	umulh	x21, x1, x7
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x2, x7
+	umulh	x21, x2, x7
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x3, x7
+	umulh	x21, x3, x7
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x11, x11, x4
+	adcs	x12, x12, x16
+	adcs	x13, x13, x17
+	adcs	x14, x14, x19
+	adc	x15, x21, xzr
+	mul	x4, x12, x24
+	umulh	x16, x12, x24
+	mul	x20, x13, x24
+	umulh	x21, x13, x24
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x14, x24
+	umulh	x21, x14, x24
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x15, x24
+	umulh	x21, x15, x24
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x8, x8, x4
+	adcs	x9, x9, x16
+	adcs	x10, x10, x17
+	adcs	x11, x11, x19
+	adc	x12, x21, xzr
+	mul	x4, x12, x24
+	umulh	x16, x12, x24
+	adds	x8, x8, x4
+	adcs	x9, x9, x16
+	adcs	x10, x10, xzr
+	adcs	x11, x11, xzr
+	adc	x17, xzr, xzr
+	adds	x4, x8, x24
+	adcs	x16, x9, xzr
+	adcs	x19, x10, xzr
+	adcs	x20, x11, xzr
+	adc	x21, xzr, xzr
+	adds	x17, x17, x21
+	csel	x8, x4, x8, ne
+	csel	x9, x16, x9, ne
+	csel	x10, x19, x10, ne
+	csel	x11, x20, x11, ne
+	mul	x0, x8, x8
+	umulh	x5, x8, x8
+	mul	x16, x9, x8
+	umulh	x17, x9, x8
+	adds	x1, x16, x5
+	adc	x6, x17, xzr
+	mul	x16, x10, x8
+	umulh	x17, x10, x8
+	adds	x2, x16, x6
+	adc	x7, x17, xzr
+	mul	x16, x11, x8
+	umulh	x17, x11, x8
+	adds	x3, x16, x7
+	adc	x12, x17, xzr
+	mul	x4, x8, x9
+	umulh	x5, x8, x9
+	mul	x16, x9, x9
+	umulh	x17, x9, x9
+	adds	x5, x5, x16
+	adc	x6, x17, xzr
+	mul	x16, x10, x9
+	umulh	x17, x10, x9
+	adds	x6, x6, x16
+	adc	x7, x17, xzr
+	mul	x16, x11, x9
+	umulh	x17, x11, x9
+	adds	x7, x7, x16
+	adc	x17, x17, xzr
+	adds	x1, x1, x4
+	adcs	x2, x2, x5
+	adcs	x3, x3, x6
+	adcs	x12, x12, x7
+	adc	x13, x17, xzr
+	mul	x4, x8, x10
+	umulh	x5, x8, x10
+	mul	x16, x9, x10
+	umulh	x17, x9, x10
+	adds	x5, x5, x16
+	adc	x6, x17, xzr
+	mul	x16, x10, x10
+	umulh	x17, x10, x10
+	adds	x6, x6, x16
+	adc	x7, x17, xzr
+	mul	x16, x11, x10
+	umulh	x17, x11, x10
+	adds	x7, x7, x16
+	adc	x17, x17, xzr
+	adds	x2, x2, x4
+	adcs	x3, x3, x5
+	adcs	x12, x12, x6
+	adcs	x13, x13, x7
+	adc	x14, x17, xzr
+	mul	x4, x8, x11
+	umulh	x5, x8, x11
+	mul	x16, x9, x11
+	umulh	x17, x9, x11
+	adds	x5, x5, x16
+	adc	x6, x17, xzr
+	mul	x16, x10, x11
+	umulh	x17, x10, x11
+	adds	x6, x6, x16
+	adc	x7, x17, xzr
+	mul	x16, x11, x11
+	umulh	x17, x11, x11
+	adds	x7, x7, x16
+	adc	x17, x17, xzr
+	adds	x3, x3, x4
+	adcs	x12, x12, x5
+	adcs	x13, x13, x6
+	adcs	x14, x14, x7
+	adc	x15, x17, xzr
+	mul	x4, x12, x24
+	umulh	x5, x12, x24
+	mul	x16, x13, x24
+	umulh	x17, x13, x24
+	adds	x5, x5, x16
+	adc	x6, x17, xzr
+	mul	x16, x14, x24
+	umulh	x17, x14, x24
+	adds	x6, x6, x16
+	adc	x7, x17, xzr
+	mul	x16, x15, x24
+	umulh	x17, x15, x24
+	adds	x7, x7, x16
+	adc	x17, x17, xzr
+	adds	x0, x0, x4
+	adcs	x1, x1, x5
+	adcs	x2, x2, x6
+	adcs	x3, x3, x7
+	adc	x12, x17, xzr
+	mul	x4, x12, x24
+	umulh	x5, x12, x24
+	adds	x0, x0, x4
+	adcs	x1, x1, x5
+	adcs	x2, x2, xzr
+	adcs	x3, x3, xzr
+	adc	x6, xzr, xzr
+	adds	x4, x0, x24
+	adcs	x5, x1, xzr
+	adcs	x7, x2, xzr
+	adcs	x16, x3, xzr
+	adc	x17, xzr, xzr
+	adds	x6, x6, x17
+	csel	x0, x4, x0, ne
+	csel	x1, x5, x1, ne
+	csel	x2, x7, x2, ne
+	csel	x3, x16, x3, ne
+	ldp	x16, x17, [x28]                 // x1 again
+	ldp	x19, x20, [x28, #16]
+	ldp	x4, x5, [x22]                   // TBL[j].x again
+	ldp	x6, x7, [x22, #16]
+	subs	x12, x0, x16
+	sbcs	x13, x1, x17
+	sbcs	x14, x2, x19
+	sbcs	x15, x3, x20
+	csel	x21, x24, xzr, cc
+	subs	x12, x12, x21
+	sbcs	x13, x13, xzr
+	sbcs	x14, x14, xzr
+	sbcs	x15, x15, xzr
+	subs	x12, x12, x4
+	sbcs	x13, x13, x5
+	sbcs	x14, x14, x6
+	sbcs	x15, x15, x7
+	csel	x21, x24, xzr, cc
+	subs	x12, x12, x21
+	sbcs	x13, x13, xzr
+	sbcs	x14, x14, xzr
+	sbcs	x15, x15, xzr
+	stp	x12, x13, [x28]                 // A[i].x = x3
+	stp	x14, x15, [x28, #16]
+	cmp	w12, #0                         // dp: x3[0] & 0xffffffff == 0
+	cset	x2, eq
+	ldr	x0, [x28, #OFF_LEN]             // A[i].len  (NOT the idx field)
+	ldr	x1, [x28, #OFF_ESC]             // A[i].esc
+	add	x0, x0, #1                      // len+1
+	orr	x1, x1, x2                      // esc |= (dp==0)
+	str	x0, [x28, #OFF_LEN]
+	str	x1, [x28, #OFF_ESC]
+	subs	x4, x16, x12
+	sbcs	x5, x17, x13
+	sbcs	x6, x19, x14
+	sbcs	x7, x20, x15
+	csel	x21, x24, xzr, cc
+	subs	x4, x4, x21
+	sbcs	x5, x5, xzr
+	sbcs	x6, x6, xzr
+	sbcs	x7, x7, xzr
+	mul	x0, x8, x4
+	umulh	x16, x8, x4
+	mul	x20, x9, x4
+	umulh	x21, x9, x4
+	adds	x1, x20, x16
+	adc	x17, x21, xzr
+	mul	x20, x10, x4
+	umulh	x21, x10, x4
+	adds	x2, x20, x17
+	adc	x19, x21, xzr
+	mul	x20, x11, x4
+	umulh	x21, x11, x4
+	adds	x3, x20, x19
+	adc	x12, x21, xzr
+	mul	x4, x8, x5
+	umulh	x16, x8, x5
+	mul	x20, x9, x5
+	umulh	x21, x9, x5
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x10, x5
+	umulh	x21, x10, x5
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x11, x5
+	umulh	x21, x11, x5
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x1, x1, x4
+	adcs	x2, x2, x16
+	adcs	x3, x3, x17
+	adcs	x12, x12, x19
+	adc	x13, x21, xzr
+	mul	x4, x8, x6
+	umulh	x16, x8, x6
+	mul	x20, x9, x6
+	umulh	x21, x9, x6
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x10, x6
+	umulh	x21, x10, x6
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x11, x6
+	umulh	x21, x11, x6
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x2, x2, x4
+	adcs	x3, x3, x16
+	adcs	x12, x12, x17
+	adcs	x13, x13, x19
+	adc	x14, x21, xzr
+	mul	x4, x8, x7
+	umulh	x16, x8, x7
+	mul	x20, x9, x7
+	umulh	x21, x9, x7
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x10, x7
+	umulh	x21, x10, x7
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x11, x7
+	umulh	x21, x11, x7
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x3, x3, x4
+	adcs	x12, x12, x16
+	adcs	x13, x13, x17
+	adcs	x14, x14, x19
+	adc	x15, x21, xzr
+	mul	x4, x12, x24
+	umulh	x16, x12, x24
+	mul	x20, x13, x24
+	umulh	x21, x13, x24
+	adds	x16, x16, x20
+	adc	x17, x21, xzr
+	mul	x20, x14, x24
+	umulh	x21, x14, x24
+	adds	x17, x17, x20
+	adc	x19, x21, xzr
+	mul	x20, x15, x24
+	umulh	x21, x15, x24
+	adds	x19, x19, x20
+	adc	x21, x21, xzr
+	adds	x0, x0, x4
+	adcs	x1, x1, x16
+	adcs	x2, x2, x17
+	adcs	x3, x3, x19
+	adc	x12, x21, xzr
+	mul	x4, x12, x24
+	umulh	x16, x12, x24
+	adds	x0, x0, x4
+	adcs	x1, x1, x16
+	adcs	x2, x2, xzr
+	adcs	x3, x3, xzr
+	adc	x17, xzr, xzr
+	adds	x4, x0, x24
+	adcs	x16, x1, xzr
+	adcs	x19, x2, xzr
+	adcs	x20, x3, xzr
+	adc	x21, xzr, xzr
+	adds	x17, x17, x21
+	csel	x0, x4, x0, ne
+	csel	x1, x16, x1, ne
+	csel	x2, x19, x2, ne
+	csel	x3, x20, x3, ne
+	ldp	x4, x5, [x28, #32]              // y1 again
+	ldp	x6, x7, [x28, #48]
+	subs	x0, x0, x4
+	sbcs	x1, x1, x5
+	sbcs	x2, x2, x6
+	sbcs	x3, x3, x7
+	csel	x8, x24, xzr, cc
+	subs	x0, x0, x8
+	sbcs	x1, x1, xzr
+	sbcs	x2, x2, xzr
+	sbcs	x3, x3, xzr
+	b	.Ltail                           // raw y: even-y is align's job, and
+                                        // its sign is returned to the label
+.Ldone:
+	ldp	x19, x20, [sp, #0]
+	ldp	x21, x22, [sp, #16]
+	ldp	x23, x24, [sp, #32]
+	ldp	x25, x26, [sp, #48]
+	ldp	x27, x28, [sp, #64]
+	ldp	x29, x30, [sp, #80]
+	add	sp, sp, #96
+	ret
+.Lret:
+	ret
+.Lfunc_end0:
+	.size	step_asm, .Lfunc_end0-step_asm
+                                        // -- End function
+	.ident	"secp v15g hand-allocated step"
+	.section	".note.GNU-stack","","",@progbits
+	.addrsig

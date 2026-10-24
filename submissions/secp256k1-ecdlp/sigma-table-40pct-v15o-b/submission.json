@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15p: asserted 88-byte layout, repaired label bookkeeping, class-family table index, and an invariant harness that reports two unrepaired arithmetic defects",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census-v15m-counts.json",
+    "evidence/census-v15m-dp1-rows.json",
+    "evidence/label-invariant-v15p.json",
+    "evidence/layout-check-v15p.json",
+    "evidence/ledger-v15p.json",
+    "evidence/step_secp_v15g.s",
+    "evidence/verdict-v15o.md",
+    "public-note.md",
+    "scripts/census_reduce_v15m.py",
+    "scripts/census_v15n.py",
+    "scripts/check_layout.py",
+    "scripts/count_symbols.py",
+    "scripts/gen_cert_v15o.py",
+    "scripts/gen_cert_v15p.py",
+    "scripts/label_invariant.py",
+    "scripts/layout_assert.c",
+    "scripts/ledger_v15o.py",
+    "scripts/rec_layout.h",
+    "scripts/run_experiments.sh",
+    "scripts/toy_core.py",
+    "scripts/walk_v15o.c",
+    "scripts/walk_v15o.s"
+   ],
+   "score": {
+    "numerator": "79802",
+    "denominator": "625"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim at success >= 0.39: six-class (negation and GLV) parallel rho walk priced from counted aarch64 symbols at the protected C=1000. The step is 1789.5 Ir, every component a separate symbol of the shipped object counted once (static instruction count x the walk's own call count): 737 point listing (evidence/step_secp_v15g.s:step_asm) + 515 alignment (_v15o_align + 2 x _fmul) + 398 label (_v15o_label + 2 x _rmont) + 77 detector + 62.5 report share. One record layout of 88 bytes is defined once in scripts/rec_layout.h with _Static_assert on sizeof and every field offset, and scripts/check_layout.py proves the listing's .equ stride and offsets (88, idx 64, len 72, esc 80) equal the compiler's, so the listing and the struct are one object. The label adds the selected jump's exponent pair, uses R mod r as Montgomery one, negates its unit multiplier unconditionally, and consumes the sign returned by the alignment. The table address is 3*(mix(key)&2047)+slot over rows generated as phi^-u J_k, so an input and its phi^j image select jumps differing by phi^j and land in the same class. The ledger sums the rows as exact rationals, gives W_time = 2^127.68310620328697, and the claim is the smallest 1e-4 decimal covering W + 2e-5, proved in both directions. Success is the fixture statistic 2643/6400 unconditional verified recoveries within the charged budget at toy curve q25, R = 2048, 16 trails, dp1, under the disclosed random-map premise at pooled mu = 1.107; it is a fixture statement about a different program and no production certification is claimed. DISCLOSED: the shipped invariant harness (evidence/label-invariant-v15p.json) reports 1509 violations in 2000 steps and 3000/3000 orbit-partner class mismatches, and direct big-integer probes show the shipped fmul (mod p) and rmont (mod r) bodies are still incorrect; the mechanism is therefore unverified and this revision does not claim otherwise."
+  }
+ ],
+ "experiments": []
+}
