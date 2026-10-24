@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: STNFS in F_{p^12} with a measured 12-dim ARCH-D sieve, priced in Fp12-mul units",
+  "claims": [
+    {
+      "statement": "For every production instance (uniform nonidentity Q in G2, uniform z in GT, including z=1), the algorithm in proof.md returns P in G1 with e(P,Q)=z (P=infinity exactly for z=1) with success probability at least 0.39 over the uniform challenge and the algorithm's coins (>= 0.98 under the stated heuristics). The attack solves the GT discrete logarithm of z base g=e(P0,Q), a route the track rules explicitly admit, with a Special Tower Number Field Sieve in F_{p^12}: Special Joux-Pierrot polynomials with tower h = y^6+y^3+y^2-y-1, f = x^12-2y x^10+2y^3 x^6+y^5 x^2+(-y^3-y^2+y+1), g = x^2+|u|y; relation collection over the 12-dimensional (a,b) space restricted to a yield-weighted covariance ellipsoid of volume fraction 1/32, whose yield is measured on a held-out exact-norm pool, with every sieved point of the ellipsoid charged and yield credited only from its in-box part; exact B-smoothness with no large primes; aut = 2 (x -> -x); filtering FLT = 45 with excess 1.1 and a required 0.25-bit yield margin; block-Wiedemann linear algebra over F_r at 35 instructions per matrix entry (shipped sign-split kernel: 33 retired per entry plus per-row reduction, tested exact against big integers); Schirokauer maps as block-Wiedemann right-hand sides; two individual-log descents (z and g) modelled at 2^98.43 units per log and metered at a 2^106-unit cap (Markov abort <= 0.0105); final pairing verification charged. Relation collection uses the ARCH-D architecture: small ideals sieved per slab (3-dim slices of the ellipsoid; the true slab count is computed from the ellipsoid, mean slice 1.409 A^3), large ideals walked once over the whole 12-dim ellipsoid with each hit canonicalised to its orbit representative and routed to the node owning its slab. The dominant constant C_HIT = 150 instructions per large-ideal hit is a retired-instruction count (140.1 measured for walk + ambient state + canonicalisation + slab descriptor + send + apply, plus one routing hop) of the correctness-checked kernel archd_hit.c; the smaller sieve constants are static counts padded by 1.25 (C_UPD 17.5, C_SET 176, C_SCAN 12.5, C_REP 7.5). Operating point A = 2^9.55, B = 2^67.5. Total work W <= 2^114.486359 target-group-operation equivalents (1 unit = one dense Fp12 multiplication = 20,000 AArch64 instructions), the full-ledger logarithm rounded up at 6 decimals: relcol 2^113.812 + LA 2^113.054 + descent cap 2^106 + Schirokauer maps 2^87 + factor-base construction 2^72 + filtering/storage/fit/misc 2^60 + verification 2^11; evidence.py prints total_log2W_full_ledger = 114.486358. There is no preprocessing or advice beyond the charged attack work. Peak memory about 2^121.6 bytes over ~2^57.5 nodes (reported, not scored). For comparison: the orbit-12 Pollard-rho step floor is 2^125.96 group operations and the best public claim on this track is 125.73. All heuristics are disclosed in proof.md with support, sensitivity and limitations: H1 Murphy/Dickman smoothness with GS21 alpha values; H1' yield margin; H2 measured region capture on a held-out pool; H3 record-calibrated filtering (FLT = 20 costs +0.70 bit); H4 kernel constants (dominant ones measured as retired instructions on a benchmark lattice of the production profile; full-size orchestration never executed, as for every NFS claim at this size); H5 modelled descent under a metered cap; H6 pairing transfer. This is an analytic cost claim supported by exact-norm simulation and measured kernels, not a full-size execution.",
+      "score": {
+        "numerator": "114486359",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One stdlib-only run. (0) Exact check that Res_y(h, Res_x(f,g)) = 0 mod p. (1) Dickman rho from Marsaglia's exact piecewise series, self-tested. (2) Held-out verification: recomputes the exact norms of the first `samples` candidates of the 400000-candidate held-out pool from their seeds and confirms the embedded inside-ellipsoid set (eval_inside_*.txt) matches. (3) Slab geometry from the ellipsoid matrix: volume fraction and mean 3-dim slice volume. (4) Joint (A, B) optimizer under the ARCH-D model (whole ellipsoid charged, true slab count, optimised small/large threshold): box baseline, ellipsoid optimum, relcol/LA split, C_HIT and FLT sensitivities. (5) Toy exact-factorisation check of the rho model (toy scale only). (6) Exact small-prime ideal statistics of (h, f, g). (7) Individual-log descent estimate (booting + special-q tree) at the sieve's own per-point cost, and the Markov bound under the 2^106 meter. (8) Instruction count of the shipped LA inner loop re-derived from la_mac.s. Prints the full ledger total_log2W_full_ledger. Larger `samples` re-verifies more of the held-out pool exactly (about 0.35 ms per sample).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 2000,
+            "maximum": 20000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 4000,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
