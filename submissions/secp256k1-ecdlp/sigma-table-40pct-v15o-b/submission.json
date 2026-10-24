@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15p: asserted 88-byte layout, executed-count pricing, repaired Montgomery kernels, exact label direction, passing invariant gate",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/census-v15m-counts.json",
+    "evidence/census-v15m-dp1-rows.json",
+    "evidence/check-executed-v15p.json",
+    "evidence/label-invariant-v15p.json",
+    "evidence/layout-check-v15p.json",
+    "evidence/ledger-v15p.json",
+    "evidence/step_secp_v15g.s",
+    "evidence/verdict-v15o-judged.md",
+    "evidence/verdict-v15o2-judged.md",
+    "public-note.md",
+    "scripts/census_reduce_v15m.py",
+    "scripts/census_v15n.py",
+    "scripts/check_executed.py",
+    "scripts/check_layout.py",
+    "scripts/count_symbols.py",
+    "scripts/gen_cert_v15p.py",
+    "scripts/label_invariant.py",
+    "scripts/layout_assert.c",
+    "scripts/ledger_v15o.py",
+    "scripts/rec_layout.h",
+    "scripts/run_experiments.sh",
+    "scripts/toy_core.py",
+    "scripts/walk_v15o.c",
+    "scripts/walk_v15o.s"
+   ],
+   "score": {
+    "numerator": "1277371",
+    "denominator": "10000"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim at success >= 0.39: six-class (negation and GLV) parallel rho walk priced from EXECUTED aarch64 instructions at the protected C=1000. The step is 1860.0 Ir: 744 point listing (head+tail per iteration) + 435 alignment (_v15o_align + 2 x _fmul) + 604 label (_v15o_label + 2 x _rmont) + 77 detector; the 125 Ir report routine is a SEPARATE row charged per delivered record and is not part of the step. Every counted symbol except the point-step loop is compiled fully unrolled, verified by scripts/check_executed.py to contain zero backward branches, so static length equals executed length; the point-step loop is counted over its head and tail blocks. One 88-byte record layout is defined once in scripts/rec_layout.h with _Static_assert on sizeof and every field offset, and scripts/check_layout.py proves the listing's stride and idx/len/esc offsets equal the compiler's. The label adds the selected jump's exponent pair, uses R mod r as Montgomery one, negates its unit multiplier unconditionally, and multiplies by (-1)^sgn * lambda^slot, the exact direction implied by align writing x' = beta^slot * x; the jump coefficients carry lambda^-slot separately. rmont is textbook CIOS with a 5-limb final subtraction and fmul folds limbwise from the top; both are exact on 20,000+ big-integer comparisons. The walk is a class function: idx depends only on the canonical key modulo the orbit-generated row family, measured at 0/2000 class mismatches between orbit partners with a 400/400 index-from-raw-x control. The ledger sums the rows as exact rationals, gives W_time = 2^127.73700286581716, and the claim is the smallest 1e-4 decimal covering W + 2e-5, proved in both directions. Success is 2643/6400 unconditional verified recoveries and 2612/6400 strictly inside S_ops at the q25 fixture (one-sided lowers 0.402798 and 0.397974), R = 2048, 16 trails, dp1, under the named random-map premise on the (r-1)/6 classes at pooled mu = 1.107, with success at rate p over w retained comparisons being 1-(1-p)^w. No production execution is claimed."
+  }
+ ],
+ "experiments": []
+}

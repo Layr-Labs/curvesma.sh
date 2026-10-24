@@ -1,0 +1,105 @@
+{
+ "kind": "certificate-v15p",
+ "claim": "1277371/10000",
+ "claim_value": 127.7371,
+ "W_time_log2": 127.73700286581716,
+ "W_exact": "127297250741206304261874546022996643487388201/448900",
+ "ir_per_step_exact": "1860/1",
+ "ir_per_step": 1860.0,
+ "composition": [
+  {
+   "row": "step_core",
+   "ir": 744,
+   "source": "evidence/step_secp_v15g.s:step_asm (head+tail per iteration)",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "744"
+  },
+  {
+   "row": "align",
+   "ir": 435,
+   "source": "scripts/walk_v15o.s:_v15o_align+2*_fmul",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "435"
+  },
+  {
+   "row": "label",
+   "ir": 604,
+   "source": "scripts/walk_v15o.s:_v15o_label+2*_rmont",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "604"
+  },
+  {
+   "row": "detect",
+   "ir": 77,
+   "source": "scripts/walk_v15o.s:_v15o_detect",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "77"
+  }
+ ],
+ "report_row": {
+  "ir": 125,
+  "calls": "1/2",
+  "source": "scripts/walk_v15o.s:_v15o_report",
+  "note": "separate row, NOT part of ir_per_step"
+ },
+ "checks": [
+  {
+   "check": "layout_single_definition",
+   "pass": true,
+   "evidence": "evidence/layout-check-v15p.json:verdict",
+   "detail": "sizeof(rec_t)=88; idx/len/esc = 64/72/80 in both the struct and the listing .equ constants"
+  },
+  {
+   "check": "executed_count_premise",
+   "pass": true,
+   "evidence": "evidence/check-executed-v15p.json:unrolled_failures",
+   "detail": "every counted symbol except the point-step loop has zero backward branches (fully unrolled); step_asm body counted head+tail"
+  },
+  {
+   "check": "composition_rows_from_shipped_listing",
+   "pass": true,
+   "evidence": "evidence/ledger-v15p.json:composition",
+   "detail": "four step symbols + report as its own row"
+  },
+  {
+   "check": "report_not_double_charged",
+   "pass": true,
+   "evidence": "evidence/ledger-v15p.json:report_row",
+   "detail": "report row 125 Ir x 1/2 per delivered record, excluded from ir_per_step"
+  },
+  {
+   "check": "sum_rows_equals_W_exact_rational",
+   "pass": true,
+   "evidence": "evidence/ledger-v15p.json:W",
+   "detail": "1860/1 Ir/step; planted +1 control fails"
+  },
+  {
+   "check": "claim_covers_W_plus_2e-5",
+   "pass": true,
+   "evidence": "evidence/ledger-v15p.json:claim",
+   "detail": "1277371/10000"
+  },
+  {
+   "check": "label_invariant_baseline",
+   "pass": true,
+   "evidence": "evidence/label-invariant-v15p.json:rows",
+   "detail": "2000 steps, 0 violations, endpoint A=[a]G+[c]Q true, labels initialised for the start point"
+  },
+  {
+   "check": "mutation_controls_fire",
+   "pass": true,
+   "evidence": "evidence/label-invariant-v15p.json:rows",
+   "detail": "four label mutations FAIL the invariant"
+  },
+  {
+   "check": "partner_equivariance",
+   "pass": true,
+   "evidence": "evidence/label-invariant-v15p.json:partner_rows",
+   "detail": "0/2000 class mismatches; index-from-raw-x control 400/400"
+  }
+ ]
+}

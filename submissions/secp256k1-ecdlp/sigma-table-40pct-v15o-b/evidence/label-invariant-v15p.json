@@ -1,0 +1,67 @@
+{
+ "kind": "label-invariant-v15p",
+ "curve": "secp256k1",
+ "steps": 2000,
+ "partner_points": 1000,
+ "rows": [
+  {
+   "row": "fixed_shipped",
+   "invariant_violations": 0,
+   "end_point_equals_aG_plus_cQ": true,
+   "verdict": "PASS"
+  },
+  {
+   "row": "control_mont_one_is_integer",
+   "kind": "invariant",
+   "invariant_violations": 0,
+   "end_point_equals_aG_plus_cQ": false,
+   "steps": 300,
+   "verdict": "FAIL"
+  },
+  {
+   "row": "control_negate_on_borrow",
+   "kind": "invariant",
+   "invariant_violations": 0,
+   "end_point_equals_aG_plus_cQ": false,
+   "steps": 300,
+   "verdict": "FAIL"
+  },
+  {
+   "row": "control_jump_not_added",
+   "kind": "invariant",
+   "invariant_violations": 0,
+   "end_point_equals_aG_plus_cQ": false,
+   "steps": 300,
+   "verdict": "FAIL"
+  },
+  {
+   "row": "control_sign_not_consumed",
+   "kind": "invariant",
+   "invariant_violations": 0,
+   "end_point_equals_aG_plus_cQ": false,
+   "steps": 300,
+   "verdict": "FAIL"
+  }
+ ],
+ "partner_rows": [
+  {
+   "row": "fixed_shipped",
+   "comparisons": 2000,
+   "class_mismatches": 0,
+   "verdict": "PASS"
+  },
+  {
+   "row": "control_index_from_raw_x",
+   "comparisons": 400,
+   "class_mismatches": 400,
+   "verdict": "FAIL"
+  },
+  {
+   "row": "control_index_v15o_slot_only",
+   "comparisons": 400,
+   "class_mismatches": 0,
+   "verdict": "PASS"
+  }
+ ],
+ "verdict": "PASS"
+}

@@ -1,0 +1,43 @@
+{
+ "kind": "executed-count-check-v15p",
+ "rule": "a counted symbol with zero backward branches executes static == executed instructions per call",
+ "symbols": {
+  "_v15o_align": {
+   "static": 102,
+   "backward_branches": 0,
+   "executed_equals_static": true
+  },
+  "_fmul": {
+   "static": 165,
+   "backward_branches": 0,
+   "executed_equals_static": true
+  },
+  "_v15o_label": {
+   "static": 147,
+   "backward_branches": 0,
+   "executed_equals_static": true
+  },
+  "_rmont": {
+   "static": 227,
+   "backward_branches": 0,
+   "executed_equals_static": true
+  },
+  "_v15o_detect": {
+   "static": 76,
+   "backward_branches": 0,
+   "executed_equals_static": true
+  },
+  "_v15o_report": {
+   "static": 123,
+   "backward_branches": 0,
+   "executed_equals_static": true
+  },
+  "step_asm": {
+   "static": 773,
+   "backward_branches": 1,
+   "executed_equals_static": false
+  }
+ },
+ "unrolled_failures": [],
+ "verdict": "PASS"
+}

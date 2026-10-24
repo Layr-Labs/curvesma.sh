@@ -1,0 +1,70 @@
+{
+ "kind": "ledger-v15p",
+ "method": "static instruction count per shipped symbol x the walk execution count of that symbol; one method for every row",
+ "composition": [
+  {
+   "row": "step_core",
+   "ir": 744,
+   "source": "evidence/step_secp_v15g.s:step_asm (head+tail per iteration)",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "744"
+  },
+  {
+   "row": "align",
+   "ir": 435,
+   "source": "scripts/walk_v15o.s:_v15o_align+2*_fmul",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "435"
+  },
+  {
+   "row": "label",
+   "ir": 604,
+   "source": "scripts/walk_v15o.s:_v15o_label+2*_rmont",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "604"
+  },
+  {
+   "row": "detect",
+   "ir": 77,
+   "source": "scripts/walk_v15o.s:_v15o_detect",
+   "calls": "1",
+   "formula": "1/step",
+   "ir_per_step": "77"
+  }
+ ],
+ "ir_per_step_exact": "1860/1",
+ "ir_per_step": 1860.0,
+ "ir_per_report_share": "125/2",
+ "report_row": {
+  "ir": 125,
+  "calls": "1/2",
+  "source": "scripts/walk_v15o.s:_v15o_report",
+  "note": "separate row, NOT part of ir_per_step"
+ },
+ "composition_sum_equals_step": true,
+ "S_ops": "145327072308294472639794924382168891106",
+ "S_ops_log2": 126.77257108671402,
+ "arrivals": "145327072308294472640947845886775738082",
+ "reports": "72663536154147236320473922943387869042",
+ "drain_steps": "4194304",
+ "rows": {
+  "walk": "6757708862335692977804074833735071820813/25",
+  "drain": "195035136/25",
+  "report": "36331768077073618160236961471693934521/4",
+  "escape": "469624434164253588339222963983115797611983/112225",
+  "table": "201326592",
+  "nodes": "68719476736",
+  "meter": "2305843009213693952",
+  "output": "1099511627776",
+  "fresh": "16777216"
+ },
+ "W": "127297250741206304261874546022996643487388201/448900",
+ "W_log2": 127.73700286581716,
+ "claim": "1277371/10000",
+ "claim_value": 127.7371,
+ "mu": "1107/1000",
+ "floor": "39/100"
+}
