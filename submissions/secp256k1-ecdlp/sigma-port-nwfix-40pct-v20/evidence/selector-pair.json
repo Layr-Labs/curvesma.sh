@@ -1,0 +1,70 @@
+{
+ "R": 64,
+ "W": 16,
+ "arms": {
+  "ci95_paired": [
+   -0.002952135085912635,
+   0.0062854684192459685
+  ],
+  "delta_ec_minus_hash": 0.0016666666666666666,
+  "discordant": 8,
+  "ec": 0.004166666666666667,
+  "ec_only": 5,
+  "hash": 0.0025,
+  "hash_only": 3,
+  "se_paired": 0.002356531506418011,
+  "z": 0.7072541411508828
+ },
+ "birthday": {
+  "p_dp_records": 0.01574481206383893,
+  "p_raw_visits": 0.3982074551760776,
+  "ratio_dp_ec": 0.26463743420832814,
+  "ratio_dp_hash": 0.1587824605249969,
+  "ratio_raw_ec": 0.010463557656961166,
+  "ratio_raw_hash": 0.0062781345941766995
+ },
+ "claim_dependence": "NONE (EC selector transfer is declared OPEN; exploratory row)",
+ "counters": {
+  "ec": {
+   "fires": 0,
+   "records": 154345,
+   "restarts": 0,
+   "rotation_channel": 397,
+   "sign_channel": 5,
+   "verify_fail": 384
+  },
+  "hash": {
+   "fires": 0,
+   "records": 154032,
+   "restarts": 0,
+   "rotation_channel": 415,
+   "sign_channel": 3,
+   "verify_fail": 374
+  }
+ },
+ "cp95": {
+  "ec": 0.0016431822112026068,
+  "hash": 0.0006817455504612866
+ },
+ "curve": {
+  "b": 7,
+  "classes": 16777233,
+  "cm_A": 5645,
+  "j": 0,
+  "order_N": 33560113,
+  "p": 33554467,
+  "p_log2": 25.0
+ },
+ "degeneracy": {
+  "DEGEN_MAX": 10.0,
+  "flag": false
+ },
+ "design": "one challenge per set; two arms share challenge, walker offsets and step budget; arms differ ONLY in the column map; selector input is the WALK's current point at every jump (continuation); success = recovered scalar verified on the curve",
+ "dp_bits": 5,
+ "elapsed_s": 103.6,
+ "per_walker_steps": 258,
+ "sets": 1200,
+ "test": "selector_pair_continuation_v21",
+ "visits_over_sqrtN": 1.0078119894027866,
+ "visits_per_set": 4128
+}

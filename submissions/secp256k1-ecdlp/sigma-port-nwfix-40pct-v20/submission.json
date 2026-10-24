@@ -1,0 +1,35 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers) this package claims the COMPUTATION BOUND W = 2^127.92945732 (claim 127.930, integer-tight both directions) for the shipped DP-walk configuration, and it states the success premise at exactly the scope its own measurements support. THE FOUR FINDINGS OF TICKET de30502c, EACH ANSWERED BY CHANGING THE PACKAGE, NOT THE READING. (1) TRANSFER POSTURE: production success at DP density d=60 is NOT claimed. The floor row is a MEASURED-REGIME statement: the design arm is the largest measured order of the transfer ladder at d=5 (q=2^36, N=2^33.42 classes, 1200 sets), CP-95 lower 0.475029, minus debits 2.211e-3 and restart loss 2.344e-4 = 0.474459, above 0.39 THERE. This package's own density arm measures -0.4108 in the logit per bit of DP density (CI [-0.4460,-0.3759]) and production d=60 is 55 bits of density away, so the gap is named, not bridged and not priced; the walker arm measures -0.1739/log2W (CI [-0.1911,-0.1564]) and is likewise reported, not extrapolated. What is claimed is the work bound; the production success event is an OPEN premise disclosed as such. (2) NW-REDESIGN WITHDRAWN AS AN ARITHMETIC ERROR: v20e said 'workers 2^20 -> 2^6, trails x16 at the same total work'. 2^20/2^6 = 2^14, not 16, so that sentence described 1/1024 of the visits; it also described a configuration ledger.py never implemented. BOTH are fixed by withdrawal, not by re-labelling: the priced design is the unchanged v18/v19 one -- workers 2^20 lanes, inversion BATCH 2^18, d=60, trails_per_walker = ceil((S_OPS+2^60)/2^20) = 2^106.7214 steps -- and ledger.py now ASSERTS that product (workers*(trails-1) < visits <= workers*trails) and prints the config. S_OPS is a TOTAL VISIT count, so the step term prices visits and no trail multiplier is claimed anywhere. (3) CENSUS RECONCILIATION, ONE ROW, BOTH LITERALS READ FROM THE JSON: evidence/census-v20n.json arms.escaped_lag3.successes = 1033 is the arm's VERIFIED recovery count of 3200 trials; arms.escaped_lag3.coalesced_d0 = 1070 (== cap_loss.escaped_lag3.cap_1687.would_solve_meet) is the d0 / gate-off COALESCENCE count of the same arm; the second census block reads 1061 and 1098. delta = 37 per block, 74 over both. v20e's assertion that 1033 occurs in neither census was FALSE and its sum(would_solve_meet - lost) 'success row' (2168 where recoveries are 2094) is WITHDRAWN. ledger.py now reads both counters, asserts 1070==1070 and 1033 on the arm, and asserts the 74 delta, so the literals cannot drift again. (4) EC-SELECTOR ARM REBUILT (scripts/selector_pair.py, evidence/selector-pair.json): the selector input is now the WALK'S CURRENT POINT at every jump (continuation, never resampled), one challenge per set, two arms that share the challenge, the walker offsets and the step budget and differ ONLY in the column map (EC y-coordinate vs the hash surrogate), and success is a RECOVERED AND VERIFIED scalar ([k]G == +-C), not a repeated key. 1600 sets at a 2^25 prime (order N=33560113 by CM, trails 258, R=64, d=5): EC 5/1600, hash 4/1600, paired delta +6.25e-4, 95% CI [-3.05e-3,+4.30e-3], z=0.33, discordant 9. The arm is INCONCLUSIVE at this budget and is shipped as EXPLORATORY with NO claim dependence: 1101 of 1106 class collisions fall in the lambda-rotation channel (counted, not solved) and only 5 are sign-recoverable, so the CI is ~6x the effect it would need to resolve; the v20e rate of 0.978 does not reproduce under continuation (0.0031 measured, birthday ratio 0.008 of raw, 0.20 of the DP-record birthday -- no inflation), consistent with the reviewer's ruling that the old row measured nothing about the selector. WORK, UNCHANGED AND RE-AUDITED: W = (1+155/1000)*(S_OPS+2^60)+EXTRAS, S_OPS = ceil(1.015*S0) = 2^126.72144016, C=1000, log2 W = 126.92945732, W2 = 2*W exactly +1.000 bit, 155 instruction rows itemised with sum(ROWS)==STEP_INSN asserted. The kappa budget product 2.344852037 <= 2^(claim-log2 S0) 2.345734234 is asserted in-package. NOT RANKING: frontier 126.338, this claim is 1.59 bits away; the goal of this round is a package whose claim is exactly as large as its evidence.",
+   "score": {
+    "numerator": "12793",
+    "denominator": "100"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "ledger.py",
+    "evidence/walker-arms.json",
+    "evidence/selector-pair.json",
+    "evidence/selector-swap.json",
+    "evidence/cap-recount.json",
+    "evidence/transfer-ladder.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "scripts/walker_slope.py",
+    "scripts/selector_pair.py",
+    "scripts/selector_arms.py",
+    "scripts/cap_recount.py",
+    "scripts/transfer_arm.py",
+    "scripts/census_v20n.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v21: nw-redesign WITHDRAWN (2^20/2^6 = 2^14, not x16; ledger prices 2^20 workers / 2^18 batch), census reconciled (1033 recoveries vs 1070 coalesced_d0, delta 74), EC arm rebuilt as paired continuation (delta +6.25e-4, CI [-3.05e-3,+4.30e-3]), d=60 success OPEN not claimed; claim 127.930",
+ "version": 1
+}

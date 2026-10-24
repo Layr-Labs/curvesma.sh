@@ -1,0 +1,285 @@
+{
+ "cap_1687_cells": {
+  "control_noescape": [
+   {
+    "file": "evidence/census-v20n.json",
+    "lost": 0,
+    "would_solve_meet": 18,
+    "meets_minus_lost": 18
+   },
+   {
+    "file": "evidence/census-seed11.json",
+    "lost": 0,
+    "would_solve_meet": 15,
+    "meets_minus_lost": 15
+   }
+  ],
+  "escaped_lag1": [
+   {
+    "file": "evidence/census-v20n.json",
+    "lost": 0,
+    "would_solve_meet": 941,
+    "meets_minus_lost": 941
+   },
+   {
+    "file": "evidence/census-seed11.json",
+    "lost": 0,
+    "would_solve_meet": 962,
+    "meets_minus_lost": 962
+   }
+  ],
+  "escaped_lag3": [
+   {
+    "file": "evidence/census-v20n.json",
+    "lost": 0,
+    "would_solve_meet": 1070,
+    "meets_minus_lost": 1070
+   },
+   {
+    "file": "evidence/census-seed11.json",
+    "lost": 0,
+    "would_solve_meet": 1098,
+    "meets_minus_lost": 1098
+   }
+  ]
+ },
+ "cells": [
+  {
+   "arm": "control_noescape",
+   "cap": 1687,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 18,
+   "meets_minus_lost": 18
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 421,
+   "file": "evidence/census-v20n.json",
+   "lost": 6,
+   "p_loss": 0.3333333333333333,
+   "trials": 3200,
+   "would_solve_meet": 18,
+   "meets_minus_lost": 12
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 843,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 18,
+   "meets_minus_lost": 18
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 1687,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 941,
+   "meets_minus_lost": 941
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 421,
+   "file": "evidence/census-v20n.json",
+   "lost": 853,
+   "p_loss": 0.9064824654622742,
+   "trials": 3200,
+   "would_solve_meet": 941,
+   "meets_minus_lost": 88
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 843,
+   "file": "evidence/census-v20n.json",
+   "lost": 617,
+   "p_loss": 0.6556854410201913,
+   "trials": 3200,
+   "would_solve_meet": 941,
+   "meets_minus_lost": 324
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 1687,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 1070,
+   "meets_minus_lost": 1070
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 421,
+   "file": "evidence/census-v20n.json",
+   "lost": 973,
+   "p_loss": 0.9093457943925234,
+   "trials": 3200,
+   "would_solve_meet": 1070,
+   "meets_minus_lost": 97
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 843,
+   "file": "evidence/census-v20n.json",
+   "lost": 717,
+   "p_loss": 0.6700934579439253,
+   "trials": 3200,
+   "would_solve_meet": 1070,
+   "meets_minus_lost": 353
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 1687,
+   "file": "evidence/census-seed11.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 15,
+   "meets_minus_lost": 15
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 421,
+   "file": "evidence/census-seed11.json",
+   "lost": 4,
+   "p_loss": 0.26666666666666666,
+   "trials": 3200,
+   "would_solve_meet": 15,
+   "meets_minus_lost": 11
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 843,
+   "file": "evidence/census-seed11.json",
+   "lost": 1,
+   "p_loss": 0.06666666666666667,
+   "trials": 3200,
+   "would_solve_meet": 15,
+   "meets_minus_lost": 14
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 1687,
+   "file": "evidence/census-seed11.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 962,
+   "meets_minus_lost": 962
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 421,
+   "file": "evidence/census-seed11.json",
+   "lost": 873,
+   "p_loss": 0.9074844074844075,
+   "trials": 3200,
+   "would_solve_meet": 962,
+   "meets_minus_lost": 89
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 843,
+   "file": "evidence/census-seed11.json",
+   "lost": 667,
+   "p_loss": 0.6933471933471933,
+   "trials": 3200,
+   "would_solve_meet": 962,
+   "meets_minus_lost": 295
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 1687,
+   "file": "evidence/census-seed11.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "trials": 3200,
+   "would_solve_meet": 1098,
+   "meets_minus_lost": 1098
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 421,
+   "file": "evidence/census-seed11.json",
+   "lost": 1006,
+   "p_loss": 0.9162112932604736,
+   "trials": 3200,
+   "would_solve_meet": 1098,
+   "meets_minus_lost": 92
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 843,
+   "file": "evidence/census-seed11.json",
+   "lost": 784,
+   "p_loss": 0.7140255009107468,
+   "trials": 3200,
+   "would_solve_meet": 1098,
+   "meets_minus_lost": 314
+  }
+ ],
+ "mismatch_note": "RESOLVED in v21 (verdict de30502c point 3). The two literals are DIFFERENT counters of the same arm: arms.escaped_lag3.successes = 1033 (census-v20n) and 1061 (census-seed11) is the VERIFIED recovery count of 3200 trials; arms.escaped_lag3.coalesced_d0 = 1070 / 1098 (== cap_loss.escaped_lag3.cap_1687.would_solve_meet) is the d0 / gate-off COALESCENCE count. 1070 is NOT a success count and this file no longer carries a key named 'successes'; the column is meets_minus_lost, which for cap_1687 equals the coalescence count and is a MEETING count, never a recovery count. delta = 37 per block, 74 over both blocks. ledger.py reads both counters and asserts them.",
+ "per_arm_pooled": {
+  "control_noescape": {
+   "cells": 6,
+   "kills_per_1e6_meets": 111111.11111111111,
+   "lost": 11,
+   "meets": 99,
+   "p_loss_pooled": 0.1111111111111111,
+   "p_loss_upper_cp95": 0.17720833683752132,
+   "successes": 88,
+   "trials": 19200
+  },
+  "escaped_lag1": {
+   "cells": 6,
+   "kills_per_1e6_meets": 527237.6948677527,
+   "lost": 3010,
+   "meets": 5709,
+   "p_loss_pooled": 0.5272376948677526,
+   "p_loss_upper_cp95": 0.538181741901998,
+   "successes": 2699,
+   "trials": 19200
+  },
+  "escaped_lag3": {
+   "cells": 6,
+   "kills_per_1e6_meets": 535055.3505535056,
+   "lost": 3480,
+   "meets": 6504,
+   "p_loss_pooled": 0.5350553505535055,
+   "p_loss_upper_cp95": 0.5452918473557677,
+   "successes": 3024,
+   "trials": 19200
+  }
+ },
+ "sources": [
+  "evidence/census-v20n.json",
+  "evidence/census-seed11.json"
+ ],
+ "success_literals_present_in_raw": {
+  "what_it_was": "v20e's scan of the cap_loss CELL keys only -- which is why it reported that 1033 was absent",
+  "error": "the arm-level counter arms.<arm>.successes was never scanned, and 1033 is exactly there",
+  "arms_successes": {
+   "evidence/census-v20n.json": 1033,
+   "evidence/census-seed11.json": 1061
+  },
+  "arms_coalesced_d0": {
+   "evidence/census-v20n.json": 1070,
+   "evidence/census-seed11.json": 1098
+  },
+  "verdict": "1033 and 1061 ARE present in the raw JSON as arms.escaped_lag3.successes; 1070 and 1098 are coalesced_d0"
+ },
+ "test": "cap_rows_recounted_from_raw_census",
+ "definitions": {
+  "successes": "arms.<arm>.successes: verified scalar recovery in the census protocol (per-arm independent denominator = trials)",
+  "coalesced_d0": "arms.<arm>.coalesced_d0: coalescences at d=0 (gate off) for the same arm; equals would_solve_meet at cap_1687",
+  "meets_minus_lost": "would_solve_meet - lost at a cap; a MEETING count, not a recovery count; only valid for the arm that owns it",
+  "claim_use": "NONE: no row of the work bound W reads any of these; the design success is the pair-census CP-95 of the transfer ladder"
+ }
+}
