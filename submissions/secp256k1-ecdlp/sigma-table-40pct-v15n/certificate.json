@@ -1,0 +1,103 @@
+{
+ "kind": "certificate-v15n",
+ "claim": "636201/5000",
+ "claim_k": 1272402,
+ "W_time_log2": 127.24015820337331,
+ "step_ir": 1190,
+ "report_ir": 348,
+ "checks": [
+  {
+   "check": "step_identity",
+   "pass": true,
+   "detail": "748 base listing + 442 counted alignment"
+  },
+  {
+   "check": "report_identity",
+   "pass": true,
+   "detail": "report_proc body + two fmul calls"
+  },
+  {
+   "check": "rows_sha256",
+   "pass": true,
+   "detail": "53778e0f0139c560b768df5e33df8fc3cfeee31c001fdc73d2b33e6ef8b1db4c"
+  },
+  {
+   "check": "rows_count",
+   "pass": true,
+   "detail": "6400 rows"
+  },
+  {
+   "check": "verified_resum",
+   "pass": true,
+   "detail": "2643"
+  },
+  {
+   "check": "audit_resum",
+   "pass": true,
+   "detail": "2696"
+  },
+  {
+   "check": "cp95_verified_recompute",
+   "pass": true,
+   "detail": "CP-95 lower 0.402798027539926612719750431303635786980634392166396886282954 >= 0.39"
+  },
+  {
+   "check": "cp95_audit_recompute",
+   "pass": true,
+   "detail": "CP-95 lower 0.411047869673078442757358847926114334403053322903936634804314"
+  },
+  {
+   "check": "probe_arith",
+   "pass": true,
+   "detail": "{'cases': 400, 'mismatches': 0}"
+  },
+  {
+   "check": "probe_class",
+   "pass": true,
+   "detail": "{'cases': 600, 'mismatches': 0}"
+  },
+  {
+   "check": "probe_orbit_zero_splits",
+   "pass": true,
+   "detail": "0 splits over 3000 shipped-object comparisons"
+  },
+  {
+   "check": "probe_mutation_control_splits",
+   "pass": true,
+   "detail": "2400/3000 (expected 4 of 5 partner pairs)"
+  },
+  {
+   "check": "report_row_present",
+   "pass": true,
+   "detail": "report row = 348/1000 x 72663536154147236320473922943389966193 reports"
+  },
+  {
+   "check": "ledger_positive_and_finite",
+   "pass": true,
+   "detail": "W_time 2^127.240158"
+  },
+  {
+   "check": "claim_covers_W",
+   "pass": true,
+   "detail": "2^636201/5000 >= W + 2e-5"
+  },
+  {
+   "check": "claim_minimal",
+   "pass": true,
+   "detail": "claim - 1e-4 does not cover W"
+  },
+  {
+   "check": "scope_wording",
+   "pass": true,
+   "detail": "success claim scoped to fixture CP-95 + disclosed random-map premise"
+  }
+ ],
+ "checks_total": 17,
+ "checks_pass": 17,
+ "cp95_verified": "0.402798027539926612719750431303635786980634392166396886282954",
+ "cp95_audit": "0.411047869673078442757358847926114334403053322903936634804314",
+ "trials": 6400,
+ "verified": 2643,
+ "audit_merge": 2696,
+ "probe_object_sha256": "60aa83935a5bf3e24516e2f90913dec0b17a3d0f5a71320d02da740face56cc0"
+}

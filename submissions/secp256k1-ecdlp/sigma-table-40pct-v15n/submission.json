@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15n: report processing charged (348 Ir/report), alignment priced as a shipped function (1190 Ir step), probe executed on the counted object, claim 636201/5000",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "certificate.json",
+    "scripts/ledger_v15m.py",
+    "scripts/gen_v15n.py",
+    "scripts/census_reduce_v15m.py",
+    "scripts/census_v15n.py",
+    "scripts/align_step_v15n.c",
+    "scripts/driver_align_v15n.c",
+    "scripts/probe_v15n.py",
+    "scripts/count_iter.py",
+    "evidence/counts-step-v15n.json",
+    "evidence/align_step_v15n.s",
+    "evidence/step_secp_v15g.s",
+    "evidence/census-v15m-counts.json",
+    "evidence/census-v15m-dp1-rows.json",
+    "evidence/equivariance-v15n.json",
+    "evidence/attribution-selftest-v15m.json",
+    "evidence/trap-v15m.json",
+    "evidence/verdict-v15m.md"
+   ],
+   "score": {
+    "numerator": "636201",
+    "denominator": "5000"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim at success >= 0.39: six-class (negation and GLV) parallel rho walk with a 2^16 report partition, priced from counted aarch64 listings at the protected C=1000. The step is 1190 Ir = 748 (unchanged point listing) + 442 (the alignment routine class_slot+even_y+row store, called unconditionally on the output x of every step, so no output is left unaligned). The report processor is 348 Ir per report (hash/route/compare/store) and is charged at 72663536154147236320473922943389966193 reports, the dp1 count ceil(arrivals/2); report work is NOT netted against the escape surcharge. W_time = 2^127.240158 and the claim is the smallest 1e-4 decimal covering W + 2e-5, proved in both directions in integer arithmetic. Success: 2643/6400 unconditional verified recoveries within the charged budget, CP-95 lower 0.402798 >= 0.39; scope is this fixture at CP-95 plus the disclosed random-map premise (pooled mu = 1.107), not a production certification. Equivariance is executed on the counted object (ctypes on the clang -O2 arm64 .dylib): 0 splits over 3000 orbit-partner comparisons, with a control arm splitting 2400/3000. Claim 636201/5000 is above the live frontier observed at build time (126.3469); this revision is a correctness repair, not a competitive bid. No production execution and no practical break are claimed."
+  }
+ ],
+ "experiments": [
+  {
+   "name": "census",
+   "script": "scripts/census_v15n.py",
+   "reducer": "scripts/census_reduce_v15m.py",
+   "trials": 6400
+  },
+  {
+   "name": "probe",
+   "script": "scripts/probe_v15n.py"
+  },
+  {
+   "name": "counts",
+   "script": "scripts/count_iter.py"
+  }
+ ]
+}

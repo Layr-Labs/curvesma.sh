@@ -1,0 +1,23 @@
+{
+ "kind": "counts-step-v15n",
+ "method": "instruction count per routine of the emitted aarch64 listing; every callee reached by bl is priced in (class_slot prices 2 fmul calls), stack-protector fail stubs are not on the executed path",
+ "base_listing": "evidence/step_secp_v15g.s",
+ "base_ir": 748,
+ "align_source": "scripts/align_step_v15n.c",
+ "align_listing": "evidence/align_step_v15n.s",
+ "align_ir": 442,
+ "align_breakdown": {
+  "align_sweep_body": 69,
+  "class_slot_body": 87,
+  "fmul_x2": 286,
+  "even_y_inlined": 22
+ },
+ "step_ir": 1190,
+ "step_identity": "748 + 442 = 1190",
+ "report_source": "scripts/align_step_v15n.c",
+ "report_ir": 348,
+ "report_breakdown": "report_proc body 62 + 2 fmul 286",
+ "step_identity_holds": true,
+ "report_identity_holds": true,
+ "tables": "extern (defined in driver_align_v15n.c) so clang cannot fold them"
+}

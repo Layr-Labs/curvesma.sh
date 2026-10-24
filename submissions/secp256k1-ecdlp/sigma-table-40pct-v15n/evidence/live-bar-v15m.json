@@ -1,0 +1,28 @@
+{
+ "kind": "live-bar-v15m",
+ "computed_utc": "2026-10-24T04:15:37Z",
+ "lowest_live_non_gordoar": 126.3651,
+ "holder": "pepedesigner",
+ "submission": "dddcbeb3",
+ "status": "review",
+ "created": "2026-10-24T02:48:20.266Z",
+ "tie_cap": 0.004,
+ "margin": 0.0015,
+ "bar": 126.3596,
+ "next_lowest": [
+  [
+   126.367,
+   "jungjipdo"
+  ],
+  [
+   126.403,
+   "jungjipdo"
+  ],
+  [
+   126.423,
+   "jungjipdo"
+  ]
+ ],
+ "total_submissions": 159,
+ "scored": 28
+}
