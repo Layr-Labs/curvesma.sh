@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: odd-lift BSGS with x-only Montgomery batches",
+  "claims": [
+    {
+      "statement": "For uniform x in [0, r) and input Q=[x]P on NIST P-256, the deterministic odd-lift baby-step/giant-step procedure in proof.md recovers x with probability 1. Total classical work, including preprocessing and verification, is at most 2^134 target-group-operation equivalents under the track rule C=1000: every P-256 field operation is charged as the AArch64 instruction bound in proof.md and divided by 1000, with no extra reference-addition unit. Peak memory is at most 2^134 bytes. Preprocessing is at most 2^133 target-group-operation equivalents and is included in the total. Nonuniform advice is 0 bytes and is included in memory. No heuristic, abort, restart, quantum step or uncharged table is used. The exponential table is required by this algorithm. This is an analytic accounting bound, not a timed break.",
+      "score": {
+        "numerator": "134",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-odd-lift",
+      "source": "experiment.py",
+      "purpose": "Exhaustive odd-lift recovery on one prime-order curve over a 17-element field, the odd partition at widths 3..5, four-limb CIOS against integer multiplication modulo the P-256 prime, and the integer comparison of the instruction coefficients in proof.md against 2^134. Toy recovery is not a production cost measurement.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 4
+          }
+        },
+        "required": [
+          "width"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "width": 4
+        }
+      ]
+    }
+  ]
+}
