@@ -1,0 +1,124 @@
+{
+ "package": "gt-capacity-40pct-v30",
+ "claim": "127.6293",
+ "checks": [
+  {
+   "name": "row_sum_equals_W_exactly",
+   "verdict": "PASS"
+  },
+  {
+   "name": "planted_typo_every_row_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_covers_W",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_minimal_ceil",
+   "verdict": "PASS"
+  },
+  {
+   "name": "manifest_every_cited_file_exists",
+   "verdict": "PASS"
+  },
+  {
+   "name": "manifest_has_sha256",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_at_depth_6",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_through_shipped_object",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_evicting_arm_has_evictions",
+   "verdict": "PASS"
+  },
+  {
+   "name": "eviction_contrast_measured",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_draws_not_quantile_product",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_p5_ge_floor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "no_assumed_divisor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "mul_charge_static_span_used",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_symbols_charged_with_loop_bound",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_route_labelled",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_rule_of_three_deleted",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_observer_period_le_12",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_steps_ge_7_6M",
+   "verdict": "PASS"
+  },
+  {
+   "name": "addressing_slot_ref_127",
+   "verdict": "PASS"
+  },
+  {
+   "name": "addressing_twelve_word_nodes",
+   "verdict": "PASS"
+  },
+  {
+   "name": "store_capacity_covers_records",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_runs_wide_store",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_zero_depth_loss",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_zero_mismatches",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_wide_path_load_bearing",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_mutation_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "all_kernels_pass",
+   "verdict": "PASS"
+  },
+  {
+   "name": "kernel_count_ge_10",
+   "verdict": "PASS"
+  }
+ ],
+ "all_pass": true,
+ "verdict": "PASS"
+}

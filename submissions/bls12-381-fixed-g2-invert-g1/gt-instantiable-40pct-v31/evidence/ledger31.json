@@ -1,0 +1,201 @@
+{
+ "mode": "ledger31-instantiable-spec-censused-symbols",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers declared, depth 6, evicting dict",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "95803668470929860550224427498997735090",
+  "steps_log2": 126.1714,
+  "abort": "K_STALL=32 consecutive squarings, armed by a guard admission",
+  "census_fidelity": {
+   "depth": 6,
+   "dict": "shipped dict28.o (evicting), twelve-word nodes, 128-bit slot-keyed, 4-probe chains",
+   "workers_measured": [
+    8,
+    64,
+    128
+   ],
+   "workers_declared": 1024,
+   "production_1024_not_reachable": true,
+   "why": "trail >= guard ring (6) is required for guard stationarity; only the partition series at fixed S carries the W-dependence"
+  }
+ },
+ "capacity_spec": {
+  "rule": "buckets = next_pow2(2 x records to retain); capacity = 4 x buckets",
+  "sizing_basis": "MEASURED peak live occupancy of the shipped store (evidence/probe31.json), scaled from 8 measured workers to 1024 declared workers; the store is an evicting structure, so it holds the working set, not the arrivals",
+  "measured_live_max_records": 1164,
+  "measured_workers": 8,
+  "declared_workers": 1024,
+  "worker_scale": 128,
+  "records_to_retain": 148992,
+  "buckets": 524288,
+  "buckets_log2": 19,
+  "capacity_records": 2097152,
+  "load_factor_max": 0.5,
+  "bucket_array_bytes": 4194304,
+  "node_bytes_per_record": 96,
+  "node_pool_bytes": 201326592,
+  "storage_bytes_total": 205520896,
+  "store_init_ir_once": 524288,
+  "instantiable": "buckets = 2^19 and capacity = 2^21 are both held in uint64_t; the 2^128 figure in v30 was the ADDRESS SPACE (127-bit slot labels), not the bucket count, and the ledger no longer conflates them",
+  "v30_flaw": "buckets = 2^128 with dict28_ws_init(u64) and d28_ws.nb u64: the declared table could not exist. The address width (127-bit labels in a two-word ref) is unchanged and is exercised by the wide-access counters.",
+  "loss_interaction": "retrieval loss and eviction loss are the SAME counter: a record is unreachable exactly when its chain position exceeds PROBES, and the shipped insert evicts the chain tail at that point (d28_ws_deep = 0 in every fixture)"
+ },
+ "type_table": [
+  {
+   "quantity": "bucket count nb",
+   "spec_bits": 19,
+   "code_type": "uint64_t (d28_ws.nb, dict28_ws_init)",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 45
+  },
+  {
+   "quantity": "bucket index",
+   "spec_bits": 64,
+   "code_type": "uint64_t, mix64(...) & (nb-1)",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "slot label / record reference",
+   "spec_bits": 127,
+   "code_type": "unsigned __int128 slot; u64 ref[2] (two-word)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 1
+  },
+  {
+   "quantity": "live records (measured peak)",
+   "spec_bits": 11,
+   "code_type": "uint64_t d28_ws_live / d28_ws_live_max",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 53
+  },
+  {
+   "quantity": "capacity = 4 x nb",
+   "spec_bits": 21,
+   "code_type": "uint64_t (chain length <= PROBES enforced by eviction)",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 43
+  }
+ ],
+ "rows_ir": {
+  "walk_steps": "4589366535341018653672405076334909779903864",
+  "per_step_key_lookup_probe": "417416583527841402417327830613133131787130",
+  "per_step_slot_export": "65242298228703235034702835126817457596290",
+  "record_writes_and_insert": "229833000661760735459988401570095566480910",
+  "scalar_coefficient_update": "4598576086604633306410772519951891284320",
+  "guard_and_meter_eval": "2490895380244176374305835114973941112340",
+  "collision_processing": "8192",
+  "trap_waste_bound": "524499032610402251118400838159741799628",
+  "index_slots_widened_refs": "1149644021651158326602693129987972821080",
+  "store_bucket_init_and_zeroing": "524288",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "W_total_ir": "5310622032280434396842861845248037385733418",
+ "claim": {
+  "value": 127.6422,
+  "numerator": "1276422",
+  "denominator": "10000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W; checked EXACTLY as 20000^10000 * 2^n >= W^10000",
+  "n_minus_1_fails": true,
+  "row_sum_equals_W": true
+ },
+ "rounding": {
+  "rule": "every row is an exact integer CEIL of its rational product: ceil(n*num/den) = -((-n*num)//den). The claim rounds UP (smallest n that covers W), so both the per-row cost and the score err on the safe side; v30 used steps*int(STEP), which truncated 0.8706 Ir/step.",
+  "STEP_exact": "3065847717/64000",
+  "STEP_float": 47903.870578125,
+  "v30_effect": "steps*int(STEP) = steps*47903 under-charged by 0.8706 x 9.58e34 = 8.34e34 Ir"
+ },
+ "prices": {
+  "source": "evidence/exec31.json (gcov executed counts on the shipped scripts/ir28/dict28.c)",
+  "censused_symbols": {
+   "state_key48w": 3398,
+   "dict28_wide_lookup": 959,
+   "dict28_wide_insert": 1711,
+   "dict28_slot_export": 681
+  },
+  "dense_comparison": {
+   "dict28_lookup": 1327,
+   "dict28_insert": 1605
+  },
+  "why": "protocol28.py calls state_key48w, dict28_slot_export, dict28_wide_lookup and dict28_wide_insert on the success path; the ledger prices exactly those symbols. The dense dict28_lookup/dict28_insert are retained as a comparison row only.",
+  "delta_vs_dense": {
+   "wide_lookup_minus_dense": -368,
+   "wide_insert_minus_dense": 106,
+   "slot_export_was_unpriced": 681
+  },
+  "derived_rows": {
+   "scalar_coefficient_update_per_step": 48,
+   "guard_and_meter_per_step": 26,
+   "basis": "explicit upper-bound derivations stated as such (12 lanes x 4 Ir; 6 ring compares x 3 Ir + one fits() test); they are charged, not omitted"
+  }
+ },
+ "trap": {
+  "ring_words": 6,
+  "windows_tested": [
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22
+  ],
+  "relation": "window length >= family length + 2 (the two slots the ring-6 guard lets repeat at the window boundary), so the >=14-multiplication families the verdict names are inside the tested windows instead of being structurally excluded",
+  "admissions_total": 0,
+  "per_length": {
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "22": 0
+  },
+  "windows_ge14": 360000,
+  "one_sided_95_per_window": 8.333333333333334e-06,
+  "expected_fraction": 3.5714285714285718e-06,
+  "expected_windows_at_S": "342155958824749579770729909452800",
+  "charge_windows_x_32_x_STEP": "524499032610402251118400838159741799628",
+  "short_families": "lengths <= 6 contribute exactly zero (W(1)=0, no slot repeats inside ring 6)",
+  "v30_flaw": "observer windows of length 2..12 with the ring-6 guard force >=7 distinct slots and a singleton, so zero admissions was structural; v31 tests lengths 14..22 and reports the counts it actually sees"
+ },
+ "success": {
+  "route": "nonparametric percentile bootstrap of the recorded fixture outcomes",
+  "draws": 10000,
+  "seed": 20261024,
+  "factors": {
+   "census_A": [
+    225,
+    320
+   ],
+   "census_B": [
+    200,
+    320
+   ],
+   "retention": [
+    398,
+    400
+   ]
+  },
+  "p5": 0.5766796875,
+  "p1": 0.556875,
+  "median": 0.621875,
+  "p95": 0.664875,
+  "floor": 0.39,
+  "floor_met": true,
+  "v30_flaw": "0.5762 was the 5th percentile of Beta(k+1,n-k+1) draws -- a MODEL quantile. v31 resamples the fixture indicators themselves (the empirical distribution of the 320 recorded outcomes); the Beta row is kept only as a labelled comparison.",
+  "beta_model_comparison": 0.5762070551210613,
+  "independence": "deleted as a claim: no 2^-256 pair-collision statement is made. The walk's collision argument is the per-walk Markov bound plus the union-existence form already accepted; disjoint RNG streams between windows are stated in the protocol (seed0 + worker id), not converted into an independence probability."
+ },
+ "manifest": {
+  "file": "evidence/manifest31.json"
+ }
+}

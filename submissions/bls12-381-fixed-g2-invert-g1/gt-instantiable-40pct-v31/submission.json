@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "title": "Claim 127.6422: instantiable 524288-bucket store sized from measured occupancy, ledger prices the censused wide symbols with ceil rounding, 14..22-slot trap windows, p5 by bootstrap",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W, exact integer check (W^10000 <= 20000^10000*2^n), n-1 asserted to fail; W is the exact sum of twelve rows, every row a CEIL of its rational product. INSTANTIABLE STORE. The shipped wide store is a 524288-bucket (2^19) uint64-indexed table with 4-probe chains, capacity 2097152 records, node 96 B: 4194304 B bucket array + 201326592 B node pool = 205520896 B total, sized from the MEASURED peak live occupancy (1164 records on 8 workers, scaled x128 to the 1024 declared workers) because the store evicts and therefore holds a working set, not the arrivals. The 2^128 in v30 was the 127-bit ADDRESS WIDTH (slot labels held as a two-word ref, exercised above 2^64), not the bucket count; the type table in ledger31.json lists every quantity with its spec bits, C type, max value and headroom. CENSUSED SYMBOLS. The ledger prices exactly the symbols protocol28.py calls on the success path, each by gcov executed count on the shipped dict28.c: state_key48w 3398, dict28_slot_export 681, dict28_wide_lookup 959, dict28_wide_insert 1711; dense dict28_lookup 1327 / dict28_insert 1605 appear only as a comparison row (v30 priced them and called the wide ones). Per-step scalar coefficient update (48 Ir) and guard/meter evaluation (26 Ir) are charged as labelled upper-bound derivations, not omitted. ROUNDING. Every term is an exact integer ceil; v30 used steps*int(STEP) and truncated 0.8706 Ir/step. TRAP. Ring 6; short families (<=6) contribute exactly zero; the observer now tests windows of length 14..22 (window >= family+2, so the >=14-multiplication families the verdict names fit inside a window instead of being structurally excluded) over 5040000 steps: 0 admissions, 360000 windows, one-sided 95% Poisson limit 8.333e-06 per window, charged 342155958824749579770729909452800 windows x 32 x STEP = 524499032610402251118400838159741799628 Ir. SUCCESS. 5th percentile of a nonparametric bootstrap resampling the recorded fixture outcomes (225/320, 200/320, retention 398/400, 10000 draws, seed 20261024) = 0.5767, median 0.6219, floor 0.39 met; the Beta(1,1) quantile 0.5762 is retained only as a labelled MODEL comparison. Independence is not claimed: no 2^-256 pair-collision statement is made; the collision argument is the per-walk Markov bound plus the union-existence form already accepted.",
+   "score": {
+    "numerator": "1276422",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/manifest31.json",
+    "evidence/ledger31.json",
+    "evidence/exec31.json",
+    "evidence/probe31.json",
+    "evidence/trap31.json",
+    "evidence/census28.json",
+    "evidence/exec28.json",
+    "evidence/prices28.json",
+    "evidence/survival25.json",
+    "evidence/kernel_verify25.json",
+    "evidence/tie25.json",
+    "public-note.md",
+    "scripts/gen31.py",
+    "scripts/exec31.py",
+    "scripts/probe31.py",
+    "scripts/protocol28.py",
+    "scripts/census28.py",
+    "scripts/trap31.py",
+    "scripts/toy28.py",
+    "scripts/ir28/dict28.c"
+   ]
+  }
+ ],
+ "experiments": []
+}
