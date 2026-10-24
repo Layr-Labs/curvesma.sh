@@ -1,0 +1,22 @@
+{
+ "append_instr": 201,
+ "claim_effect_bits": 1.1587201880239701e-19,
+ "expected_probes_insert": 9.951795841209831,
+ "hit_path_old_1008_2": "retired: it priced a successful search plus a constant shift allowance",
+ "index": {
+  "address_bits": "32 shard + 34 ordinal = 66",
+  "addressable_records_log2": 66.0,
+  "cap": 73.0,
+  "entry_bytes": 8,
+  "fits": true,
+  "index_bytes_log2": 69.00858685182882,
+  "slots_log2": 66.00858685182882,
+  "total_store_log2": 72.46936858205578
+ },
+ "insert_instr_per_record": 439.84310018903597,
+ "insert_share_per_walker_step": 9.537576895554244e-17,
+ "load_factor": 0.77,
+ "probe_cost_instr": 24,
+ "records_log2": 65.631517202749,
+ "slots_log2": 66.00858685182882
+}

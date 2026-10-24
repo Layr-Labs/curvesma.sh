@@ -1,0 +1,52 @@
+{
+ "batch_inv": {
+  "instructions": 700,
+  "load": 28,
+  "longest_iteration": 274,
+  "mul": 57,
+  "next_symbol": "W",
+  "start": "0x0",
+  "store": 16,
+  "umulh": 73
+ },
+ "fe_mul_probe": {
+  "instructions": 147,
+  "load": 4,
+  "longest_iteration": 147,
+  "mul": 16,
+  "next_symbol": "recproc_round",
+  "start": "0x1d04",
+  "store": 2,
+  "umulh": 20
+ },
+ "recproc_round": {
+  "instructions": 21,
+  "load": 4,
+  "longest_iteration": 21,
+  "mul": 0,
+  "next_symbol": "rec_addr",
+  "start": "0x1f54",
+  "store": 2,
+  "umulh": 0
+ },
+ "step_close": {
+  "instructions": 695,
+  "load": 42,
+  "longest_iteration": 660,
+  "mul": 44,
+  "next_symbol": "fe_mul_probe",
+  "start": "0x1220",
+  "store": 24,
+  "umulh": 54
+ },
+ "step_forward": {
+  "instructions": 273,
+  "load": 24,
+  "longest_iteration": 238,
+  "mul": 18,
+  "next_symbol": "step_close",
+  "start": "0xdd8",
+  "store": 16,
+  "umulh": 20
+ }
+}

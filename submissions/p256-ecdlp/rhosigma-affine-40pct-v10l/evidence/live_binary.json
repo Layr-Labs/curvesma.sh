@@ -1,0 +1,23 @@
+{
+ "counters_after": {
+  "batch_inv_calls": 64,
+  "batch_inv_denominators": 512
+ },
+ "counters_before": {
+  "batch_inv_calls": 0,
+  "batch_inv_denominators": 0
+ },
+ "denominators_expected": 512,
+ "object": "p256_recproc_v10l.dylib (linked from p256_recproc_v10l.o)",
+ "reports": 0,
+ "rounds": 64,
+ "symbol_size_bytes": {
+  "_batch_inv": null,
+  "_recproc_init": null,
+  "_recproc_round": null,
+  "_step_close": null,
+  "_step_forward": null
+ },
+ "walker_steps": 512,
+ "walkers_per_round": 8
+}
