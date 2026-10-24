@@ -1,0 +1,27 @@
+{
+ "kind": "attribution-selftest-v15m",
+ "generator": "census_v15m.py --selftest",
+ "checks": "audit_key is the single derivation of a trial index; 40 planted records are labelled through it and must come back with the planted trial id and two distinct slots",
+ "planted": 40,
+ "bad": 0,
+ "end_to_end": {
+  "trials": 3,
+  "trial_ids": [
+   0,
+   1,
+   2
+  ],
+  "verified": [
+   0,
+   1,
+   1
+  ],
+  "audit_merge": [
+   0,
+   1,
+   0
+  ],
+  "note": "rows come from a real 3-trial chunk at dp1; a verified recovery without an audit merge is legitimate (a same-walker self-collision across an epoch restart)"
+ },
+ "verdict": "PASS"
+}
