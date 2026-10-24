@@ -1,0 +1,204 @@
+{
+ "kind": "v30 semantics repair: g^k pool arm, key-collision kappa, cap/abort bound, independent audit",
+ "construction": {
+  "nb": 73786976294838206464,
+  "ell": 883576288830423,
+  "records_per_side": 65196422678611538243727153558454272,
+  "records_total": 130392845357223076487454307116908544,
+  "step_charge": {
+   "per_record": 2238,
+   "itemised_sum": 198
+  }
+ },
+ "gap_cap": {
+  "kind": "v30 CAP/ABORT policy (replaces v29's expected-maximum tail)",
+  "law": "consecutive H-primes near q are spaced mu(q) = d*ln q because an integer near q lies in the index-d subgroup (d = 2^20) with density 1/d and is prime with density 1/ln q; at the production walk band q_w ~ 2^76 this gives mu = 2^20*ln(2^76) = 2^25.719",
+  "k_max": 2147483648,
+  "k_max_log2": 31,
+  "mu_log2": 25.719161,
+  "mu": 55238129.848214716,
+  "support_entries_per_base": 1073741824,
+  "support_bound": "support <= K_max/2 = 2^30 even-gap entries per base, DETERMINISTIC: the table is truncated at K_max, so the row is a function of the cap and not of any expectation",
+  "policy": "cap + bounded fallback + abort: (a) at most K_max/2 entries per base are ever built; (b) a realised gap above K_max is served by the priced fallback (a 32-doubling small-scalar multiple of a_iP0, 62 group ops), and at most M_max = 4 such entries are charged per trail; (c) a trail needing a (M_max+1)-th aborts and contributes nothing (success 0, work charged)",
+  "lam_above_cap_per_trail": 0.011541153875625435,
+  "m_max": 4,
+  "p_abort": 1.6900073850595164e-12,
+  "p_abort_log2": -39.106107587782624,
+  "p_one_gap_above_cap": 1.3061864630729614e-17,
+  "p_one_log2": -56.08741675130901,
+  "success_debit": "P(abort) = P(Poisson(0.01154) > 4) = 1.690e-12 = 2^-39.11; the crown CP-lo 0.396298 x (1 - 2^-39.11) = 0.396298, i.e. the debit is 2^-39.11, far below the 0.0063 margin over the 0.39 floor",
+  "cap_demo": {
+   "fixture_ell": 6944,
+   "fixture_mu": 118.7566,
+   "gap_cap": 1044,
+   "cap_over_mu": 8.791,
+   "measured_abort_rate": 0.038542,
+   "predicted_abort_rate": 0.652176,
+   "tail_suppression": 16.92,
+   "measured_q_conditional_on_no_abort": 0.395752979,
+   "measured_trail_maxgap_p99": 1172,
+   "measured_gap_mean_over_mu": 0.973546,
+   "note": "the cap is IMPLEMENTED and it FIRES. With the cap set at the fixture's own p99 trail-max gap (8.79 mu_fixture) the census aborts 3.8542% of trails, against 65.2% predicted by the UNSUPPRESSED exponential gap law: the measured tail is 16.9x LIGHTER than the law we charge, so charging the unsuppressed law at the production cap is conservative. The abort counter is therefore a measurement, not a story"
+  }
+ },
+ "pool_arm": {
+  "role": "CONFIRMATORY arm (not the load-bearing one: the crown distribution arm and the structured ladder clear the 0.39 floor; this arm tests that the PRODUCTION BASE LAW does not move q)",
+  "design": "SAME binary, SAME walk object, SAME counters as the crown arm; the only difference is draw_base: a = g^k with k uniform in [1,2^18), so log_g(a) = k is small BY CONSTRUCTION (the production pool law: a 97-bit integer exponent inside a 2^38.000-order group), and span+walk_band = 40 < 41 keeps a_i*w_k an exact no-wrap product",
+  "span_bits": 18,
+  "wrap_free": true,
+  "trials": 24000,
+  "hits": 9515,
+  "q": 0.396458333,
+  "cp95_lower": 0.391253296962665,
+  "cp95_upper": 0.4016819016736377,
+  "K": 0.509420246,
+  "floor": 0.39,
+  "floor_met": true,
+  "delta_q_vs_control": -4.2e-05
+ },
+ "control": {
+  "span_bits": 0,
+  "trials": 24000,
+  "hits": 9516,
+  "q": 0.3965,
+  "cp95_lower": 0.3912948662846516,
+  "cp95_upper": 0.40172365822574374,
+  "K": 0.509420246,
+  "note": "identical geometry/seed family with full-support bases: the base law is the only difference from the pool arm"
+ },
+ "kappa": {
+  "statistic": "census object counts EXACT colliding PAIRS sum_b C(m_b,2) on the TRUNCATED KEY (the key the store indexes), per walk; v29 counted N - #distinct full residues, which is a multiplicity-1 statistic and not what the store compares",
+  "key_bits": 20,
+  "key_bits_note": "production keys are the 168-bit truncated even-y key over |H| = 2^234.857, i.e. 71.5% of the residue bits survive; the fixture's density-matched truncation is 20 of 38 bits = 52.6%",
+  "rung": "nb=22, ell=6944, N=152768, m=2^38.000",
+  "n_walks": 24000,
+  "key_pair_expect_per_walk": 11128.382233,
+  "key_pairs_mean": 11129.557,
+  "mean": 1.000106,
+  "p50": 0.989991,
+  "p95": 1.064126,
+  "p99": 1.165938,
+  "max": 4.254437,
+  "key_pairs_max": 47345,
+  "res_stat_for_continuity": {
+   "mean": 0.886307,
+   "max": 47.112688,
+   "max_dup_records": 2
+  },
+  "measured_max": 4.254437,
+  "charged": 4.254437,
+  "charged_rule": "charged = max(carried envelope 1.231, measured per-walk KEY-collision max 4.254437): the carried envelope is RETAINED when the measurement is below it, so no carried row is re-priced downward on the strength of a fixture run",
+  "provenance_key_path": "charged",
+  "pool_arm": {
+   "key_bits": 20,
+   "n_walks": 24000,
+   "mean": 0.999236,
+   "p99": 1.155783,
+   "max": 2.223054
+  },
+  "price": {
+   "E_bad_log2": 66.389637,
+   "cap_bad_log2": 84,
+   "headroom": 17.610363,
+   "work_row_bits_moved": 0.0
+  }
+ },
+ "success": {
+  "crown": {
+   "rung": "nb=22, ell=6944 (108.5x the fixture walk length)",
+   "trials": 120000,
+   "hits": 47835,
+   "q": 0.398625,
+   "cp95_lower": 0.39629782828873783,
+   "q_kind": "empirical hit rate",
+   "cp_kind": "CP-95 lower (Wilson-normal, direct_v25.py)"
+  },
+  "fixture_nw1": {
+   "q_recomputed": 0.39907074,
+   "q_declared": 0.3968436977037991,
+   "trials": 131072,
+   "solves": 52307,
+   "note": "q = 52307/131072 = 0.399071 is the POINT estimate; 0.396844 is the CP-95 LOWER ENDPOINT of the same run. v29 printed the CP-lo under the label q; both are printed here, separately, from the integer counts"
+  },
+  "abort_debit": {
+   "p_abort": 1.6900073850595164e-12,
+   "log2": -39.106,
+   "applied_to": "no row: 2^-39.1 is below the claim's resolution"
+  },
+  "after_debit": 0.39629799999933024,
+  "floor": 0.39
+ },
+ "ledger": {
+  "C_instructions_per_unit": 2000,
+  "rows": {
+   "records": 291819187909465245178922739327641321472,
+   "chain_tables": 994818461282523598820751704064000,
+   "fixed_per_node": 41538374868278621028243970633760768,
+   "hprime_supply": 11626940766239494561217535541248,
+   "run_pair_cap": 79228162514264337593543950336,
+   "candidate_scan_cap": 20282409603651670423947251286016,
+   "root_and_io": 421315604,
+   "root_scan_T": 4294967296000,
+   "walk_list": 317745634036292242930980832149504,
+   "gap_self_check": 25924182448222977157188550656,
+   "gap_retry_worst": 3877290542265193293613612662784,
+   "base_entry_nw50": 35712896526701691928576000,
+   "gap_point_tables": 4753689750855860255612637020160000,
+   "gap_tail_fallback": 18594318026299228028928000,
+   "walker_state_nw50": 590295810358705651712
+  },
+  "row_log2": {
+   "records": 127.778342,
+   "chain_tables": 109.616132,
+   "fixed_per_node": 115.0,
+   "hprime_supply": 103.197242,
+   "run_pair_cap": 96.0,
+   "candidate_scan_cap": 104.0,
+   "root_and_io": 28.650326,
+   "root_scan_T": 41.965784,
+   "walk_list": 107.969571,
+   "gap_self_check": 94.388285,
+   "gap_retry_worst": 101.612892,
+   "base_entry_nw50": 84.884648,
+   "gap_point_tables": 111.872675,
+   "gap_tail_fallback": 83.943064,
+   "walker_state_nw50": 69.0
+  },
+  "total_instructions": 291866828430027263399742756771015214100,
+  "W": "2918668284300272633997427567710152141/20",
+  "W_log2": 116.81279357445041,
+  "claim": {
+   "numerator": "116813",
+   "denominator": "1000"
+  },
+  "claim_minus_W": 0.00020642554959238169,
+  "gate": {
+   "numerator": "1168271",
+   "denominator": "10000"
+  },
+  "gate_margin": 0.014099999999999113,
+  "integer_assert": "total == sum(rows); every row a Python int; regenerated from rows",
+  "typo_control": {
+   "planted": "+1% on records",
+   "detected": true,
+   "typo_W_log2": 116.827147
+  },
+  "secondary_rate_percent": 0.0163,
+  "kappa_charged": 4.254437,
+  "kappa_provenance": "census-kappa-v30.json:charged",
+  "kappa_measured": 4.254437,
+  "gap_cap": {
+   "k_max": 2147483648,
+   "support": 1073741824,
+   "row_log2": 111.872675,
+   "deterministic": true
+  },
+  "complete_W": "W(n) = [2*rps*2238 + 2nb*121*2000 + 2nb*2^30*15*2000 + 2nb*62*2000 + 2nb*4 + S]/2000, nb = 2^66, ell = 883576288830423, S = 42886830756854555715593527690576916",
+  "S_written": 42886830756854555715593527690576916,
+  "applicability": [
+   "nw=2^50 geometry: nb=2^66 bases/side, ell=2^49.65 steps",
+   "no advice; preprocessing includes pool, gap tables, charged fallback and H-prime supply",
+   "secondary rows 0.0163% of W"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "kind": "v30 census: per-walk KEY-collision kappa (charged row) + residual continuity",
+ "schema": {
+  "kappa_key": "per-walk exact colliding pairs / uniform key expectation",
+  "kappa_res": "per-walk exact colliding pairs / uniform residue expectation"
+ },
+ "rung": "nb=22, ell=6944, N=152768, m=2^38.000",
+ "key_bits": 20,
+ "m": 274877906952,
+ "log2_m": 38.0,
+ "nb": 22,
+ "ell": 6944,
+ "N": 152768,
+ "trials": 24000,
+ "kappa_key": {
+  "mean": 1.000106,
+  "p50": 0.989991,
+  "p95": 1.064126,
+  "p99": 1.165938,
+  "max": 4.254437,
+  "key_pairs_max": 47345,
+  "key_pair_expect_per_walk": 11128.382233
+ },
+ "charged": 4.254437,
+ "kappa_res": {
+  "mean": 0.886307,
+  "max": 47.112688,
+  "max_dup_records": 2
+ },
+ "E_bad_log2": 66.389637,
+ "cap_bad_log2": 84
+}

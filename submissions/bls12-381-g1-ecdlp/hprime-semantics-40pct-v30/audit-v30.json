@@ -1,0 +1,41 @@
+{
+ "kind": "v30 independent audit: package literals vs recomputation from raw evidence",
+ "root": "submissions/bls12-381-g1-ecdlp/hprime-semantics-40pct-v30",
+ "n_numeric_pairs": 61,
+ "n_checks": 61,
+ "failures": [],
+ "controls": [
+  {
+   "planted": "records +1% (ledger)",
+   "caught": true,
+   "fired_on": [
+    "row_log2[records]",
+    "total==sum(rows)",
+    "W_log2"
+   ]
+  },
+  {
+   "planted": "pool-arm q x0.98",
+   "caught": true,
+   "fired_on": [
+    "arm_pool q"
+   ]
+  },
+  {
+   "planted": "census kappa_key.max x1.01",
+   "caught": true,
+   "fired_on": [
+    "charged >= measured (charge is an envelope)"
+   ]
+  },
+  {
+   "planted": "ledger row_log2[walk_list] +0.5",
+   "caught": true,
+   "fired_on": [
+    "row_log2[walk_list]"
+   ]
+  }
+ ],
+ "controls_caught": "4/4",
+ "verdict": "PASS"
+}
