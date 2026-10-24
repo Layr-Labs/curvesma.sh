@@ -1,0 +1,146 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp-plain: six-class GLV rho, 148-instruction object regenerated with its manifest and claim, fallback charged as a measured coverage debit (union bound over 2^20 trails; emitted 0.29706, p_in=0 design 0.36624), true-multiplicity allowances, 126.2433",
+ "claims": [
+  {
+   "statement": "Claim (time_log2 = 126.2433): for a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm of proof.md recovers x. Its total work is at most 2^126.2433 batched-incomplete-affine-G1-addition equivalents (one unit = C = 2,000 scalar AArch64 instructions; the organizer's fixed 6M normalization, unchanged), enforced by a global meter that charges every action at an upper-bound price before executing it and halts with failure at the claim. The shipped span is one single-entry function of 148 object instructions: 132 charged literal rows in emit order plus 16 synthetic lines (one standalone return and 5 three-instruction exit stubs: 1 + 15 = 16, both counted from emit_asm() output), 1:1 with the object in order, __text = 0x250 = 4 x 148 bytes ending at the last instruction, zero unattributed instructions (completeness.py; three planted enumeration defects each detected). The charge is 131 per non-refresh element (129 literal + 2 amortised per-batch rows: meter and Fermat share) and 134 on the 1-in-64 refresh step (131 + 3 refresh stores); the 64-cycle mean is 131.046875 and the level price is 1.0655234375. Every record field is read before its own first write: offsets 0, 16, 32, 48, 64, 80, 96, 104, 120, 136 are loaded, in emitted order, before the first store to each (10/10, extraction in regen-report.txt); the property is per-field, not the false v32 claim that coordinates are read before the checkpoint/length fields. The canonicalisation fallback is an exit stub whose body is ldur x30, [sp, #8]; add sp, sp, #16; ret - it RETURNS, so the trail leaves the pool. The fast truncated-product index falls back with structural probability at most 2^-59 per canonicalisation (the 32-value near-tie window 32/2^64, plus the 33/2^125 wrap window). That bound is an EXPECTED-COUNT bound only: over S_ops = 2^126.15 steps the expected number of falls is 2^-59 * 2^126.15 = 2^67.15, which bounds the probability of at least one fall from above and says nothing about the probability of none - v34's conversion to exp(-2^67.15) = 0 is retracted, since along dependent walk states no Poisson or independence model is available. v35 charges the attack-level consequence instead, with the arithmetic shown. (i) Attack-level abandonment from the MEASURED per-input rate: Part A reports 0/30,000 random and 2,172/10,000 adversarial near-tie inputs falling back; p_in = 0.2172 is the upper of the two populations (the mixed 2,172/40,000 = 5.43% stays withdrawn - the populations are not pooled), and the union bound over the 2^20 open trails gives P(>=1 abandoned trail) = 1-(1-0.2172)^2^20 = 1-2^-370445.5 = 1.000000. (ii) Consequence: an abandoned trail leaves the 2^20-trail pool, so the same H1 random-mapping law is applied to the surviving fraction 0.7828: success_live = 1-exp(-0.494788*0.7828) = 0.321126, a debit of 0.390300 - 0.321126 = 0.069174. (iii) Emitted success term = 0.321126 minus the remaining attack-level charges below = 0.29706. With the per-element exact-index fallback path (proof.md 9.5) no trail is lost, p_in = 0, and the design term is 0.36624; that path is NOT in the shipped object. Success-side charges, each line shown: more than 8 processed matches 0.62^8 = 0.021834 (charged, not 2^-18); length cap e^-20 = 2.0612e-9 per trail x 2^20 open trails = 0.00216128 (union bound, no independence assumed); report table 2^-18; recovery 2^-30; meter 0.000059. The floor consequence is arithmetic and monotone, not probabilistic: the emitted term rises only if p_in falls, and even at p_in = 0 it is 0.36624 < 0.39, because those charges already exceed the 0.3903 - 0.39 = 0.0003 slack. So no supported lower bound reaches 0.39: the 0.39 floor is a disclosed miss for the shipped object, not a refutation of the true production probability, and no exact zero is claimed. Work side: phase 1 = 1.0655234375*(S_ops+2^60) = 2^126.241548, headroom 2^116.55, meter early-halt 0.000059. Allowances carry their true multiplicities and executed prices: fresh trail [a]P0+[b]T at the executed scalar-mult chain (1045.75 units) x S_ops/theta = 2^62.15 trials; report lookup + sort share + transfer at 768 instructions per report x 2^62.15 reports; completion of one capped trail (20*2^64*1.0655234375) x the 2^20 open trails; 8 matches x 2 trails x the cap for re-walks; verification and output. Total 4.122e+26 units = 2^88.41, i.e. 2^-37.8 of the phase-1 base, charged inside the claim; the claim covers base + allowances. The score is 1262433/10000 in lowest terms (gcd 1). Peak memory is below 2^72 bytes. H1 (disclosed heuristic): within S_ops class arrivals of all trails the first inter-trail collision has occurred with probability at least 1-exp(-(S_ops/1.015)^2/(2N')) = 0.3903 (random-mapping law, 1.5% slowdown allowance); the toy pipeline at n=600 gives 0.4067, Wilson 95% [0.3681, 0.4464] in 6 sub-batches with a per-batch dump and a 120 s declared budget (measured wall time per sub-batch is recorded in regen-report.txt; exact-canonicalisation toy pipeline, so it does not exercise the fast-index fallback path), toy scope only. No production-size run. The v33 `esc2_events` statistic is deleted: its counter was initialised and never incremented, so its zero count was not evidence of anything.",
+   "score": {
+    "numerator": "1262433",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "proof.md",
+    "span-disasm.txt",
+    "schedule.py",
+    "span_asm.py",
+    "experiment.py",
+    "dynamic_trace.py",
+    "dynamic-trace.txt",
+    "public-note.md",
+    "completeness.py",
+    "completeness.txt",
+    "regen.py",
+    "regen-report.txt"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "glv-class-rho-fastcanon-checks",
+   "source": "experiment.py",
+   "purpose": "Part A: production algebra on BLS12-381 G1 (GLV pair, orbit size 6, |y| key, canonical member, section-1.1 truncated-product index against the exact rule on 30,000 random + 10,000 adversarial near-tie inputs, twisted step, doubling class map, coefficient tracking, forced-merge recovery), reporting the random and adversarial fallback populations separately. Part B: the scaled pipeline on a toy curve at n=600, run in 6 sub-batches of 100 with a per-batch dump and a 120 s declared budget, so a slow runner still returns a parsed partial result (per-batch wall time is recorded in regen-report.txt). The cost block recomputes the attack-level success terms, the measured-rate abandonment coverage debit and the true-multiplicity allowances.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q26",
+       "q30",
+       "q34"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048,
+       16384
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 600
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q26",
+     "trials": 600,
+     "R": 2048,
+     "dp_bits": 3,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 120,
+     "pipeline": true,
+     "batch": 100
+    }
+   ]
+  }
+ ]
+}
