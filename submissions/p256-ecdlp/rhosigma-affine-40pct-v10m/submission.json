@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk v10m-r4: text-symbol span fix, exported 256-bit table seeding, integration-tested trap escape, packed 66-bit addressing, claim 128.9437 with the guarded-success premise declared open",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1289437",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table affine sigma walk of argument.md is claimed at total classical work at most 2^128.9437 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, with per-instance success 0.24212 and w=2 amplification success 0.4256 >= 0.39.\n\nCOUNTED BINARY (55652457 item 3, c0376361 item 1, cbc03d46 item 5, 1770e2b1 item 2). One build, one artifact: p256_recproc_v10l.c -> p256_recproc_v10l.o (clang -O2 -fPIC, 32864 bytes, sha256 96b736ef6dd55cc7cee4be9dac2216b48f7fb56cd40cd4d99d16139451c2990f); intake is UTF-8 only so the object ships gzip+base64 (evidence/p256_recproc_v10l.o.gz.b64) with nm/size rows in evidence/nm_symbols.txt. Spans are bounded by TEXT symbols ONLY: a common or data symbol (_W, type C/S) carries a size in the nm value column, not a code address, and including it truncated the span it fell inside -- the defect the judge found in the previous manifest. With that fixed the measured spans are step_forward 239, step_close 694 (44 mul, 54 umulh), batch_inv longest iteration 293, fe_mul probe 147. batch_inv has external linkage and __attribute__((used)), recproc_round() calls step_forward -> batch_inv -> step_close, and the exported counters read back after the census in the same process give batch_inv_calls 0 -> 64 and denominators 0 -> 512 on 512 walker-steps. Prefix product computed once; batch_inv consumes pre and never writes it. Charge per walker-step: 239 + 694 + 293 + 14 + 0.8636 (385 fe_mul x 147/65536) + 0.6398 + 3.41e-03 = 1241.5067; claim = 4-dp CEILING of log2(W) = 128.943609 -> 128.9437.\n\nTRAP MECHANISM (cbc03d46 item 1, 534d9145 item 1). Four-entry x ring in step_close (slot ridx&3 holds x(i-4); y is canonicalised even so x determines the point, hence x(i)==x(i-4) is exactly the period-4 A,B,A,B return); on a match the step sets do_escape, COMMITS the locals, and only then calls trap_escape(), which adds the fixed escape row T0[1] with the coefficients kept mod n, rewrites the ring slot and re-seeds the guard. Self-test rows in the shipped binary: ring_depth_4_verified 1 and escape_changes_state 1, the latter through the INTEGRATED path (run a step, restore the pre-state, plant its output x in the slot the next comparison reads, rerun, assert the committed point differs). The escape is out of line (682 instructions, 57277 with the fe_inv it calls) and charged at the MODELLED closure rate 2^-24 derived from the measured class lag-2 precursor 0.000536 = 2^-11 and the 1/4 sign condition, giving 3.41e-03 Ir per walker-step. Zero period-4 returns were observed in 22744718 guarded steps; that bounds, and does not measure, the rate.\n\nJUMPS (cbc03d46 item 2, 534d9145 item 3, 1770e2b1 item 3). Table rows are [t]G with t uniform mod n from FOUR independent splitmix64 streams, one limb each, so the seed is 256 bits; recproc_seed(seed[4]) sets one word per stream and is exported, so two instances get two independent tables -- the self-test builds tables from two different seeds and prints both digests, tables_independent 1. Measured widths 243..256 bits over the two 2048-row tables. Uniformity and mixing are splitmix64-level assumptions, stated as such. What the change removes is the concrete confinement |d| < ell*2^64 ~ 2^175.63 that made the full-space collision model false for a 64-bit jump generator.\n\nSUCCESS PROBABILITY, AND WHAT IS STILL OPEN (the surviving objection). p = 0.24212 is evidence/invariant_fit.json's own fit.p_at_production_ltheta, measured on the PRE-guard map. The guaranteed coalescence argument does NOT carry to the guarded transition: equal points with different guard registers select different rows unless the registers also match, which under the submission's own mixing heuristic costs about 2^-11 per matching event before phase alignment, and the nine plateau cells cannot see that. evidence/recovery_census.c does measure the guarded walk against the pre-guard walk at identical curve, classes, DP mask 2^-4, 2000 walkers x 1000 steps: meets per walker 10.66 vs 2.85 (3.75x) and distinct DP points per walker 49.3 vs 5.7, because the pre-guard walk collapses into its short cycle -- but that window is dense (Lambda of order 1e5, not 0.6) and a dense counting of distinct-point meetings does not establish common-tail coalescence at density 2^-62, exactly as the judge said. So the guarded-transition production success, and therefore the amplified 0.4256 against the 0.39 floor, remain UNSUPPORTED in this package: the honest reading is that the work bound 128.9437 is priced, and the success claim needs a guarded plateau refit at the three class scales, which is not supplied here. The trap census stores prev & 0x7f rather than all eleven guard bits, so its repeat-key test is conservative, not exact.\n\nCP, DENSITY, STORE. CP (55652457 item 1): 0.9941660444 for 512/512 (=0.05^(1/512)), 0.8977466 for 95/100 with tail residual 0.05 to 1e-15, empirical coverage 0.94825 over 4000 binomial runs at p=0.3, n=20000; CP is not an input to p. Lambda = S^2/(2N') = 0.600000 (S = 2^127.631517, N' = 2^255.000) in all nine cells; ltheta = 2^49.632; nu = 2^-61.87, a false-positive channel rejected by full-point verification while exact full-point collisions with distinct coefficients are recovery events. 65.6315-bit records x 104 B at load factor 0.77 -> 66.0086-bit slots of 8 B; rec_index() returns the packed (shard<<34|ordinal) as hi:lo with hi*2^64+lo equal to the value, and rec_byte_addr() multiplies in unsigned __int128; index 2^69.01 B + records 2^72.332 B = 2^72.469 B against the 2^73.0 B cap. Inserts priced on the unsuccessful search: 9.952 probes x 24 + 201 = 439.8 Ir/record, 9.54e-17 per walker-step.\n\nW_single = 127.631517 + log2(1241.5067/1000) = 127.943609; w=2 = 128.943609; claim 128.9437. SELF-TEST: 4096 walker-steps through recproc_round, invariant P==[a]G+[b]Q after every step (0 failures), synthetic collision solved and verified (1), 62-bit DP mask, ring/escape integration test, two-seed table independence. NOT CLAIMED: production-length execution; any prior acceptance; a guarded-transition plateau.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/census_v10f41.c",
+    "evidence/invariant_fit.json",
+    "evidence/ledger.json",
+    "evidence/live_binary.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_recproc_v10l.c",
+    "evidence/prod_params.json",
+    "evidence/stepspans_core.json",
+    "evidence/trap_census.json",
+    "evidence/walkmap_census.c",
+    "evidence/walkmap_census.json",
+    "evidence/insert_path.json",
+    "evidence/cp_calib.json",
+    "evidence/recovery_census.c",
+    "evidence/recovery_census.json",
+    "evidence/recovery_census_summary.json",
+    "evidence/object.json",
+    "evidence/nm_symbols.txt",
+    "evidence/jump_width.json"
+   ]
+  }
+ ],
+ "experiments": []
+}

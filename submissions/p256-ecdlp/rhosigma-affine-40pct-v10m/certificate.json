@@ -1,0 +1,108 @@
+{
+ "assert": {
+  "batch_inv_denominators": true,
+  "batch_inv_live": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "claim_is_ceiling": true,
+  "escape_changes_state": true,
+  "ring_depth_4_verified": true,
+  "storage_fits": true,
+  "success_ge_floor": true,
+  "tables_independent": true
+ },
+ "binds": {
+  "census_v10f41.c": {
+   "bytes": 20334,
+   "sha256": "91e0399ef2e5ff2aad9f7799bf9428075f3b8a0769eb94c8fb6444732551b923"
+  },
+  "cp_calib.json": {
+   "bytes": 896,
+   "sha256": "d2c4dc0e68dd03da061990e54c5fa6b42b45fe56b9ade54e50147edbe98832a9"
+  },
+  "insert_path.json": {
+   "bytes": 700,
+   "sha256": "42608991bc35435ac8f070dc5561e3b812475d4cd0c3f704adc5680f36e8a25b"
+  },
+  "invariant_fit.json": {
+   "bytes": 5457,
+   "sha256": "517027931acd1ff19ab9abea2eb7ced71123402ba0b4403ff930df0f87f3fcbf"
+  },
+  "jump_width.json": {
+   "bytes": 834,
+   "sha256": "10afff91a3ae5264f9271d6164feb097bf3e11fa55dbdf216037d5d161dd7f8d"
+  },
+  "ledger.json": {
+   "bytes": 3227,
+   "sha256": "e7146f2ace8c97917ccbebee25f163d5712f466ce215382f9b5ca4cdfaae6427"
+  },
+  "live_binary.json": {
+   "bytes": 492,
+   "sha256": "bbb874cf55b145aa26945719975f4c337b6ffbb8cdc19491d7c6747a1b03acb3"
+  },
+  "nm_symbols.txt": {
+   "bytes": 1785,
+   "sha256": "7b8f84690a211e0b1e9990b6958d81967d024f9698a772931d4cb95d9d9700a1"
+  },
+  "object.json": {
+   "bytes": 105,
+   "sha256": "0a96794e412116c8e43e52d0d5b00b770e667b325cbb3cdd9ac397cbe1dd1103"
+  },
+  "p256_fe_cc.h": {
+   "bytes": 7254,
+   "sha256": "9383f8e6423af14deeb3699ffcd5ab250b42d675f5bb8b57a80dae882ebb51ab"
+  },
+  "p256_point_walk_test.c": {
+   "bytes": 11674,
+   "sha256": "f9dcabcdc96105ee5567bc96c6320dda1f30c3d1e56a0dcdaaf0b29589db007e"
+  },
+  "p256_recproc_v10l.c": {
+   "bytes": 32305,
+   "sha256": "73a9d6a1bcacb727531e2e46df560999a2f03d12873284d90f3aa24b56d916d9"
+  },
+  "p256_recproc_v10l.o.gz.b64": {
+   "bytes": 24828,
+   "sha256": "575f62829bcb26d7e429b8d649af3981cc793f2274ee725a0ac883af746c3271"
+  },
+  "prod_params.json": {
+   "bytes": 1098,
+   "sha256": "13ba5f8c15a18d00934f07f68c2b09d1b3986b5d76c89c73420a5565bb5de3a3"
+  },
+  "recovery_census.c": {
+   "bytes": 7451,
+   "sha256": "b228c5bf87e822c146ec3f0ccad37739b9e67b6de535e93b5757aab95e4176f8"
+  },
+  "recovery_census.json": {
+   "bytes": 349,
+   "sha256": "544b403e2622b373d63e09f8717464bcf8904b934ad1ff06fa9767a2f6db613d"
+  },
+  "recovery_census_summary.json": {
+   "bytes": 879,
+   "sha256": "d126ab4f1b2f5cafcc90758e9be3ea73d8035a70e2b40ac44507478e4479e8e6"
+  },
+  "stepspans_core.json": {
+   "bytes": 729,
+   "sha256": "2728513bb0caf12189cbaa865b5198899be7a4857c56f78be6240a02e7210cf6"
+  },
+  "trap_census.json": {
+   "bytes": 2317,
+   "sha256": "8f31dfdf201df4ba618123cf10d35a2d7d24be11e5f25041cdfd70c7afc04640"
+  },
+  "walkmap_census.c": {
+   "bytes": 10651,
+   "sha256": "ce6cfd578ab3f011969ac6290b45d926a3e46f019ea9e5876f03cc8396f2ef70"
+  },
+  "walkmap_census.json": {
+   "bytes": 598,
+   "sha256": "7588ac0f9e3bf28618fbb721d02deb690144e23f5f2023c1c54e7b9b4c7e4bd7"
+  }
+ },
+ "claim": 128.9437,
+ "guarded_success": "OPEN -- see claims[0] SUCCESS PROBABILITY paragraph",
+ "object": {
+  "bytes": 32864,
+  "flags": "-O2 -fPIC",
+  "sha256": "96b736ef6dd55cc7cee4be9dac2216b48f7fb56cd40cd4d99d16139451c2990f"
+ },
+ "version": 2
+}

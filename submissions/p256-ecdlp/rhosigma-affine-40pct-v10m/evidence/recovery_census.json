@@ -1,0 +1,1 @@
+{"field_prime":33554393,"rows":2048,"walkers":2000,"steps":1000,"dp_bits":4,"base":[1,4447284],"arms":{"unguarded":{"dp_records":11353,"meets":5690,"self_hits":181,"walker_steps":2000000,"coalescence_per_record":5.011891e-01},"guarded":{"dp_records":98659,"meets":21319,"self_hits":16,"walker_steps":2000000,"coalescence_per_record":2.160877e-01}}}
