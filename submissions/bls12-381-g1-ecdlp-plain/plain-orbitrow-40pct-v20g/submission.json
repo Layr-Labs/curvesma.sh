@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "title": "Plain G1 v20g: every v20e measurement executed with mutation controls, pair-state coverage measured, 126.266",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "ledger.py",
+    "certificate.json",
+    "scripts/gen_cert_v20g.py",
+    "scripts/prod_sweep.py",
+    "scripts/qwalk.py",
+    "scripts/medium_fixture.py",
+    "scripts/c_fixture.py",
+    "scripts/selector.py",
+    "scripts/probe.py",
+    "evidence/prod-sweep.json",
+    "evidence/medium-fixture.json",
+    "evidence/c-fixture.json",
+    "evidence/note-tables.md"
+   ],
+   "score": {
+    "numerator": "63133",
+    "denominator": "500"
+   },
+   "statement": "On bls12-381-g1-ecdlp-plain (input T=[x]P0, x uniform in [0,r), no auxiliary powers), the algorithm specified in this package recovers and verifies x by [x]G=T with probability at least 0.39, using at most 2^126.266 native-equivalent work units at C=2000. The step is the 448-bit-window twist index h=argmin over x, beta*x, beta^2*x from the low 448-bit window of x*floor(2^448 beta/p) with 12 partial products (i+j in {5,6}), K=min(y,p-y), m=cell(K,R,p)=(K*R)>>(bitlen(p)-1), S<-S+Tab[h][m], (a,c)<-(a+r[h][m],c+s[h][m]), followed on the same step by a two-step-return escape: if the successor class of the current class is the class of the previous step, the walk applies the alternate orbit row Tab[(m+1) mod R][2h+b] for that one step and continues, never aborting. The cost is 167 itemised instructions on top of one reference addition, log2 W 126.26594263, claim 126.266, kappa product 1.099949635 <= 2^(claim-log2 S0) 1.099993376, gate 126.274. This revision executes every measurement v20e claimed, each with a mutation control. (E1) medium_fixture.run(arm, force_every) now passes the parameter: the forced arm fires 150,123 substitutions in 1,048,576 lane-steps, and the mutation arm that substitutes the alternate row but forgets the coefficient update produces 149,797 violations of a+c*x==canon, so the test can fail; with the same fixture and the escape disabled 79.66% of steps sit inside a two-cycle, and 0.00% with it armed. (E2) equivariance is tested on PRE-canonical states with a per-comparison counter: 0 mismatches in 12,000 comparisons, while a representative-dependent selector (the v19d defect) produces 14,988 mismatches in the same 12,000. (E3) fires are per-lane, the reported K is the longest run of consecutive substitutions along ONE walk (K_obs=1 natural, 3 in the 1-in-7 forced stress arm; the ledger charges 3), escape success is computed as fires_left_two_cycle/fires = 2581/2581, and the residual counter is 0. (E4) the memory point is measured, not argued: the escape is deterministic in (class, prev-class), so the coverage law is measured on the PAIRED state over the same 336,000 census trials by a second implementation whose class set is asserted equal to the audit's merge set in every one of 3,360 shards. Pair coverage reads 0.3920/0.3939/0.3926/0.3894 against class coverage 0.4135/0.4003/0.3953/0.3913 (94.8-99.5% of the class rate) and clears 0.39 in the gated band on its own; 93.3-99.1% of class meetings share the predecessor because the class map is deterministic in the class alone, and the residual first-generation crossings are bounded by 0.067*2^-21.6 per meeting. Recovery needs no shared future: the pool is keyed by class and two records of one class solve x=(a1-a2)/(c2-c1), measured end to end at 7644/7644 groups with a per-record coefficient corruption converting 0/7644, and at scale as success_raw 0.4395/0.5108/0.4482. (E5) the column selector is the ledger's own module: qwalk.col calls selector.cell_vec, the function ledger.py prices, on a uniform class-function K (production K=min(y,p-y) is uniform on [0,p/2]); K<=P/2 means only half the R buckets are reachable, so the trap channel is 1/(6*R_eff) = 2^-21.6 at R=2^20 and the ledger is corrected to R_eff=524289. A C fixture at 2^26.0 classes, R=2^10, each walker running one full 2^20-step reporting spacing (d=20, 50,331,648 lane-steps) measures 340.7 trap opportunities per spacing (10.6x the 32x pre-capture floor), 18,971 fires all leaving the two-cycle, 0 residual, K_obs=1, 0 invariant violations in 518,928 sampled lane-steps, trap rate 3.769e-4 against 3.249e-4 (ratio 1.160), 82,341 class and 82,341 pair collisions across walkers, and 24,000/24,000 sampled groups converting to a verified x; the DP-gated record count in one spacing at 2^26 classes is 0 because a walker's cycle is ~sqrt(N)=2^13 steps while the spacing is 2^20 (production sqrt(N)=2^187.5 >> DP=2^60), and that negative is disclosed. (E6) d=11 is reported, not asserted: 22.01 in-budget records per trial over 64 walkers is 0.344 restarts per walker and 22.01 restarts per trial at 0.182 DP spacings per walker, so d=11 is out of protocol and is shown with its own CP-95 0.3876 and never gated. The gated band d=5,7,9 has 96,000 trials each (48,000 at d=11), 64 walkers per trial, N=561,690,001 classes, kappa=1.015, seeds 20290 and 31337, and unconditional coverage 0.4135/0.4003/0.3953 with exact Decimal Clopper-Pearson lower bounds 0.4109/0.3977/0.3927, alongside the unfiltered pool-detection rate success_raw 0.4395/0.5108/0.4482; drain-only pairs are counted, never excluded; the merge audit uses one division trial=lane//w and plant_check() proves the attribution on planted reports. Every number in the note's tables is emitted by scripts/gen_cert_v20g.py and byte-compared with the note (63/63 certificate checks pass). Scope: a mechanistic census at a 2^29.07 class universe with the production algebra, selector, reporting rule, priced pool and priced escape, plus a trap fixture at 2^25.4 classes and a C fixture at 2^26.0 classes; the instruction count is analytic and this is not a production-size execution."
+  }
+ ],
+ "experiments": []
+}

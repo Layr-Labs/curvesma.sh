@@ -1,0 +1,342 @@
+{
+ "checks": [
+  {
+   "detail": "run(arm, force_every=7) fired 150123 substitutions; the parameter reaches the step",
+   "name": "E1_force_every_passed_by_run",
+   "ok": true
+  },
+  {
+   "detail": "150123 fires vs 149796 scheduled lane-steps (1.002)",
+   "name": "E1_forced_arm_is_a_real_measurement",
+   "ok": true
+  },
+  {
+   "detail": "forced_broken (substitutes the row, FORGETS the coefficient update): 149797 invariant violations of 150016 samples -- the forced test can fail",
+   "name": "E1_mutation_breaks_invariant",
+   "ok": true
+  },
+  {
+   "detail": "a + c*x == canon on 1198592 sampled lane-steps with the escape armed, bad 0",
+   "name": "E1_escape_arm_keeps_invariant",
+   "ok": true
+  },
+  {
+   "detail": "the SAME fixture with the escape DISABLED spends 79.66% of its steps inside a two-cycle; with the escape armed 0.00%",
+   "name": "E1_control_trap_persists",
+   "ok": true
+  },
+  {
+   "detail": "9000 comparisons on PRE-canonical states (column, escape decision, substituted successor), mismatches {'alt_successor': 0, 'column': 0, 'decision': 0}",
+   "name": "E2_equivariance_zero_mismatch",
+   "ok": true
+  },
+  {
+   "detail": "the representative-dependent selector (the v19d defect) fails the SAME test with 14988 mismatches in 9000 comparisons -- the counter is wired",
+   "name": "E2_mismatch_counter_increments",
+   "ok": true
+  },
+  {
+   "detail": "fixed arm 0 vs control 14988",
+   "name": "E2_mutation_is_asymmetric_by_orders_of_magnitude",
+   "ok": true
+  },
+  {
+   "detail": "longest run of consecutive substitutions along ONE walk: 1 (natural arm); forced stress arm 3; ledger charges K_ESC = 3",
+   "name": "E3_k_is_per_walk",
+   "ok": true
+  },
+  {
+   "detail": "K_ESC 3 >= measured natural max 1",
+   "name": "E3_k_charged_covers_measurement",
+   "ok": true
+  },
+  {
+   "detail": "2581 of 2581 fires left the two-cycle (computed, not 1-1/fires)",
+   "name": "E3_escape_success_computed_from_outcomes",
+   "ok": true
+  },
+  {
+   "detail": "residual counter 0 over 2581 fires",
+   "name": "E3_residual_trap_zero",
+   "ok": true
+  },
+  {
+   "detail": "measured 3.077e-04 vs 1/(6*R_eff) 3.249e-04, ratio 0.947",
+   "name": "E3_trap_law_holds",
+   "ok": true
+  },
+  {
+   "detail": "7644 of 7644 class groups solve x from two records (1.0)",
+   "name": "E3_conversion_end_to_end",
+   "ok": true
+  },
+  {
+   "detail": "the per-record coefficient corruption converts 0 of 7644 groups",
+   "name": "E3_conversion_mutation_zero",
+   "ok": true
+  },
+  {
+   "detail": "class coverage 0.4135, PAIR coverage 0.3920, predecessor-matched 0.9326 of class groups, pair/class 0.948",
+   "name": "E4_pair_census_rows_d5",
+   "ok": true
+  },
+  {
+   "detail": "pair_census class trials 0.4135 == audit merge 0.4135 in every shard",
+   "name": "E4_class_set_equals_audit_d5",
+   "ok": true
+  },
+  {
+   "detail": "class coverage 0.4003, PAIR coverage 0.3939, predecessor-matched 0.9779 of class groups, pair/class 0.984",
+   "name": "E4_pair_census_rows_d7",
+   "ok": true
+  },
+  {
+   "detail": "pair_census class trials 0.4003 == audit merge 0.4003 in every shard",
+   "name": "E4_class_set_equals_audit_d7",
+   "ok": true
+  },
+  {
+   "detail": "class coverage 0.3953, PAIR coverage 0.3926, predecessor-matched 0.9886 of class groups, pair/class 0.993",
+   "name": "E4_pair_census_rows_d9",
+   "ok": true
+  },
+  {
+   "detail": "pair_census class trials 0.3953 == audit merge 0.3953 in every shard",
+   "name": "E4_class_set_equals_audit_d9",
+   "ok": true
+  },
+  {
+   "detail": "class coverage 0.3913, PAIR coverage 0.3894, predecessor-matched 0.9912 of class groups, pair/class 0.995",
+   "name": "E4_pair_census_rows_d11",
+   "ok": true
+  },
+  {
+   "detail": "pair_census class trials 0.3913 == audit merge 0.3913 in every shard",
+   "name": "E4_class_set_equals_audit_d11",
+   "ok": true
+  },
+  {
+   "detail": "d5 0.3920; d7 0.3939; d9 0.3926; d11 0.3894",
+   "name": "E4_pair_coverage_measured_everywhere",
+   "ok": true
+  },
+  {
+   "detail": "d5 0.948 of class; d7 0.984 of class; d9 0.993 of class; d11 0.995 of class",
+   "name": "E4_pair_coverage_tracks_class_coverage",
+   "ok": true
+  },
+  {
+   "detail": "qwalk.col calls selector.cell_vec, the function ledger.py prices; the scalar cell is the same body plus the range guard",
+   "name": "E5_selector_is_the_ledger_module",
+   "ok": true
+  },
+  {
+   "detail": "the toy's column is uniform on the reachable buckets: the two-step return lands on 1/(6*R_eff) to 0.947",
+   "name": "E5_toy_column_law_uniform",
+   "ok": true
+  },
+  {
+   "detail": "67108871 classes (2^26.00), q = 402653221",
+   "name": "E5_c_fixture_classes_2_pow_26",
+   "ok": true
+  },
+  {
+   "detail": "each walker runs 1048576 steps = one full 2^20-step reporting spacing (d = 20)",
+   "name": "E5_c_fixture_full_spacing",
+   "ok": true
+  },
+  {
+   "detail": "340.7 two-step-return opportunities per spacing (margin 10.65x over the 32x floor); production 2^37.4 is the same quantity at production R and DP",
+   "name": "E5_pre_capture_margin_32x",
+   "ok": true
+  },
+  {
+   "detail": "measured 3.769e-04 vs 1/(6*R_eff) 3.249e-04, ratio 1.160 over 50331648 lane-steps",
+   "name": "E5_c_fixture_trap_law",
+   "ok": true
+  },
+  {
+   "detail": "0 violations in 518928 sampled lane-steps",
+   "name": "E5_c_fixture_invariant",
+   "ok": true
+  },
+  {
+   "detail": "18971 fires, 18971 left the two-cycle, 0 residual",
+   "name": "E5_c_fixture_escape_and_residual",
+   "ok": true
+  },
+  {
+   "detail": "2^26 classes, one spacing: 82341 class collisions, 82341 pair collisions across walkers",
+   "name": "E5_c_fixture_pair_and_class_coverage",
+   "ok": true
+  },
+  {
+   "detail": "DP-gated records inside one spacing at 2^26 classes: 0 (the walker's cycle is ~sqrt(N) = 2^13 steps, below the 2^20 spacing, so a d=20 gate rarely fires here; production has sqrt(N) = 2^187.5 >> DP = 2^60) -- disclosed, not extrapolated",
+   "name": "E5_c_fixture_dp_records_disclosed",
+   "ok": true
+  },
+  {
+   "detail": "d=11: 22.0 in-budget records per trial at 64.0 walkers, i.e. 0.182 DP spacings and 0.18 restarts per walker, 22.0 restarts per trial -- every such record restarts its walker, so d=11 is out of protocol and is REPORTED, not gated",
+   "name": "E6_d11_restarts_counted_not_denied",
+   "ok": true
+  },
+  {
+   "detail": "gated [5, 7, 9]; d=11 has 0.18 spacings per walker",
+   "name": "E6_out_of_protocol_disclosed",
+   "ok": true
+  },
+  {
+   "detail": "planted pairs -> trials [3, 5] at levels [4, 4]; single walker -> no merge True; v20d floor(t/64) attribution differs True",
+   "name": "audit_plant_check_passed",
+   "ok": true
+  },
+  {
+   "detail": "success_raw has no merge filter; merge is a separate, independent row",
+   "name": "statistic_unconditional",
+   "ok": true
+  },
+  {
+   "detail": "d5 42195=34936+7259 pairs 50787=43085+7702; d7 49035=23163+25872 pairs 58031=26404+31627; d9 43025=9615+33410 pairs 51822=10085+41737; d11 9099=1311+7788 pairs 9804=1332+8472",
+   "name": "sums_reconcile_exactly",
+   "ok": true
+  },
+  {
+   "detail": "sum 0",
+   "name": "solve_mismatch_zero",
+   "ok": true
+  },
+  {
+   "detail": "sum 0",
+   "name": "denominator_dead_zero",
+   "ok": true
+  },
+  {
+   "detail": "d5 3123 pairs on 3123 trials; d7 12058 pairs on 12058 trials; d9 14530 pairs on 14530 trials; d11 2914 pairs on 2914 trials",
+   "name": "drain_only_pairs_reported_not_filtered",
+   "ok": true
+  },
+  {
+   "detail": "trials/density [96000, 96000, 96000, 48000]",
+   "name": "census_trials_per_density",
+   "ok": true
+  },
+  {
+   "detail": "raw 0.4368925280537965, merge 0.4108719921818817 (exact Clopper-Pearson, Decimal)",
+   "name": "cp95_recomputed_d5",
+   "ok": true
+  },
+  {
+   "detail": "0.4108719921818817 >= 0.39",
+   "name": "cp95_merge_ge_floor_d5",
+   "ok": true
+  },
+  {
+   "detail": "raw 0.5081220728010720, merge 0.3977084609815548 (exact Clopper-Pearson, Decimal)",
+   "name": "cp95_recomputed_d7",
+   "ok": true
+  },
+  {
+   "detail": "0.3977084609815548 >= 0.39",
+   "name": "cp95_merge_ge_floor_d7",
+   "ok": true
+  },
+  {
+   "detail": "raw 0.4455329815236197, merge 0.3926829006078378 (exact Clopper-Pearson, Decimal)",
+   "name": "cp95_recomputed_d9",
+   "ok": true
+  },
+  {
+   "detail": "0.3926829006078378 >= 0.39",
+   "name": "cp95_merge_ge_floor_d9",
+   "ok": true
+  },
+  {
+   "detail": "raw 0.1866233260218734, merge 0.3876013273496710 (exact Clopper-Pearson, Decimal)",
+   "name": "cp95_recomputed_d11",
+   "ok": true
+  },
+  {
+   "detail": "167 itemised instructions",
+   "name": "step_rows_167",
+   "ok": true
+  },
+  {
+   "detail": "log2 W 126.26594263 -> claim 126.266",
+   "name": "claim_is_ceil_of_W",
+   "ok": true
+  },
+  {
+   "detail": "126.266 <= 126.26850",
+   "name": "claim_below_gate_bar",
+   "ok": true
+  },
+  {
+   "detail": "gate 126.274 - claim 126.266 = 0.0080",
+   "name": "margin_vs_gate",
+   "ok": true
+  },
+  {
+   "detail": "model 0.399014 >= 0.39",
+   "name": "ledger_success_model_ge_floor",
+   "ok": true
+  },
+  {
+   "detail": "1.099949635 <= 1.099993376",
+   "name": "kappa_budget_product",
+   "ok": true
+  },
+  {
+   "detail": "TRAP_RATE = 1/(6*R_EFF) = 1.956e-07 with R_EFF = 852105 (the selector reaches half of R = 2^20 buckets)",
+   "name": "trap_rate_uses_reachable_columns",
+   "ok": true
+  },
+  {
+   "detail": "note block 1670 B vs emitted 1670 B, equal True",
+   "name": "note_tables_byte_equal_to_certificate",
+   "ok": true
+  },
+  {
+   "detail": "Model/Harness header appears once",
+   "name": "note_single_header",
+   "ok": true
+  },
+  {
+   "detail": "note 14254 B",
+   "name": "note_size_in_band",
+   "ok": true
+  },
+  {
+   "detail": "the d=11 protocol claim is gone: the note states the measured restart count",
+   "name": "note_no_never_restart_claim",
+   "ok": true
+  },
+  {
+   "detail": "the note's escape paragraph carries the measured consecutive-substitution count",
+   "name": "note_cites_measured_k",
+   "ok": true
+  }
+ ],
+ "claim": 126.266,
+ "class_coverage": {
+  "5": 0.41348958333333335,
+  "7": 0.4003125,
+  "9": 0.39528125,
+  "11": 0.39127083333333335
+ },
+ "cp95_merge_min_gated": 0.39268290060783784,
+ "cp95_raw_min": 0.18662332602187348,
+ "gate": 126.274,
+ "log2_W": 126.26594263129675,
+ "n_checks": 63,
+ "n_ok": 63,
+ "package": "plain-orbitrow-40pct-v20g",
+ "pair_coverage": {
+  "5": 0.3920208333333333,
+  "7": 0.39388541666666665,
+  "9": 0.39260416666666664,
+  "11": 0.38935416666666667
+ },
+ "passed": true,
+ "step_instructions": 167,
+ "success_model": 0.39901420661817655
+}
