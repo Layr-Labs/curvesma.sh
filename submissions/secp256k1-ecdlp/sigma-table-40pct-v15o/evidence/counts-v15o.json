@@ -1,0 +1,13 @@
+{
+ "kind": "counts-v15o",
+ "listing": "scripts/walk_v15o.s",
+ "method": "instruction lines per labelled symbol",
+ "symbols": {
+  "_v15o_align": 101,
+  "_fmul": 150,
+  "_v15o_label": 118,
+  "_rmont": 216,
+  "_v15o_detect": 34,
+  "_v15o_report": 80
+ }
+}
