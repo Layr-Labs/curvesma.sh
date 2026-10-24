@@ -1,0 +1,28 @@
+{
+ "event": "br OR guard -- exactly the predicate on which the census stall counter increments",
+ "derivation": {
+  "union": "P(br OR guard) <= P(br) + P(guard)",
+  "p_guard_bound": "C(12,2)/2^384 = 66/2^384",
+  "p_br_bound": "p_s^32 over the K_STALL=32 squaring window",
+  "role": "derivation primary; the measured union rate is corroboration BELOW it, not its source"
+ },
+ "measured_n": 4497,
+ "measured_d": 5040000,
+ "measured_rate": 0.0008922619047619048,
+ "trap_at_S": "85481963713049917240944295726784289",
+ "sub_events": {
+  "guard_closed_orbit": {
+   "squarings": 32,
+   "ir_per_squaring": 48,
+   "charge_ir": "131300296263244672882090438236340667904",
+   "note": "squaring-only-on-guard is this sub-event, priced separately, not a description of the whole abort"
+  },
+  "br_only": {
+   "squarings": 0,
+   "note": "br steps multiply; a br abort abandons the trail and is charged a trail restart inside trap_at_S, no 32-squaring window"
+  }
+ },
+ "charge_ir": "131300296263244672882090438236340667904",
+ "no_float": "trap_at_S and charge_ir are Python ints; 48 Ir/squaring is the tree's block cost",
+ "p_guard_bound": "66/2^384"
+}

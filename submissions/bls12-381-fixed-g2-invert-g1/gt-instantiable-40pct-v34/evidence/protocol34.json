@@ -1,0 +1,8 @@
+{
+ "smoke": "import protocol28 -> from toy28 import Tower, reduce_counts",
+ "toy28_present": true,
+ "tower_present": true,
+ "tower_keys12_present": true,
+ "reduce_counts_present": true,
+ "keys12_signature": "(self, a)"
+}

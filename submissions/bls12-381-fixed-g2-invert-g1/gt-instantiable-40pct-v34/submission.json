@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "title": "Claim 127.7230: ledger prices the shipped four-probe u64-bucket store (2^128 directory, 2^135.75 B and 1.490e39 Ir init rows deleted), withdrawn 179-Ir mulmod re-priced from the measured Fp span, abort event = br OR guard with union bound, lambda-matched transfer arm at 0.2815416777",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT on 1024 workers, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W, exact integer check (W^10000 <= 20000^10000*2^n), n-1 asserted to fail; W = 5616608965314120933304243253989908740895226 is the exact sum of THIRTEEN ceil rows in evidence/ledger34.json. STORE = THE SHIPPED CODE. dict28.c is a bucket array of u64 nb pointers with a u64 bucket index and chains capped at four by FIFO eviction, capacity 4*nb; the v33 2^128-entry directory, the 2^135.75 B footprint and the 1.490e39 Ir initialisation charge were not implemented by that file and are DELETED, not restated. The run's success does not depend on store retention: collisions are found by per-worker trail comparison, and a record the chain evicts costs nothing the walk needs. Store retention is reported, not relied on: derived 1-P(Poisson(lambda)>=5) = 0.9999883322852278 at the production lambda 0.2815416777 = S/2^128, measured 0.99995911704498 at that same lambda over 1485 trials on the shipped four-probe FIFO policy (se 4.840872807401776e-06), delta -2.9215240247792984e-05 explained by within-bucket eviction during fill, which the terminal-size limit does not count; the arm at lambda 0.2417 gives 0.9999795939189878 and does NOT match, so the v33 lower-occupancy arm correctly fails as a control. The v33 0.998435 number is withdrawn as a store-retention figure: it was the success-resample fraction 1276/1278, a different quantity, and the prose value 0.998653 matched neither arm. MODULAR MULTIPLICATION. The v33 179-Ir row is WITHDRAWN as VOID: the object it disassembled declared t[6] and wrote t[5..8]. No row in this ledger prices that object. The coefficient update is re-priced from the tree's own measured Fp span, 888 Ir per Fp multiply (ceil of MUL_CHARGE/54), so two 255-bit mulmods plus a 12-lane load cost 1788 Ir/step. TRAP. The abort event is the census predicate, br OR guard, and is bounded as an event: P(br OR guard) <= P(br) + P(guard) with P(guard) <= C(12,2)/2^384 = 66/2^384 (class-membership birthday) and P(br) <= p_s^32 over the 32-step stall window; the measured union rate 4497/5040000 steps corroborates BELOW that derivation. Squaring-only-on-guard is a separate priced sub-event (the closed-orbit window, 32 squarings) rather than a description of the whole abort event. Charge = 131300296263244672882090438236340667904 Ir, exact integer. NO FLOAT. Every charged term is a Python int ceil; retention and success are reported values, not charged terms, and are labelled as such.",
+   "score": {
+    "numerator": "1277230",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger34.json",
+    "evidence/arm34.json",
+    "evidence/trap34.json",
+    "evidence/sort32.json",
+    "evidence/exec31.json",
+    "evidence/prices28.json",
+    "evidence/census28.json",
+    "evidence/protocol34.json",
+    "public-note.md",
+    "scripts/make34.py",
+    "scripts/exec31.py",
+    "scripts/cert34.py",
+    "scripts/protocol28.py",
+    "scripts/census28.py",
+    "scripts/toy28.py",
+    "scripts/ir28/dict28.c"
+   ]
+  }
+ ],
+ "experiments": []
+}
