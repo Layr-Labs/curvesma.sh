@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "exploratory-attack",
+  "algorithm": "six-class-rho-t0-budget-v2d",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.427532,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 136.528099,
+    "preprocessing_log2": 16.328837,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Until the first repeated canonical orbit, the 16-branch adding walk on sextuples {±R, ±ψ(R), ±ψ²(R)} is modelled as a random mapping. The charged length T is the least multiple of 4096 that is at least the birthday quantile t0 at which a random mapping on the N=(r-1)/6+1 orbits already has collision probability at least 1/2. No 5/4 length factor is applied. The submitted success lower bound is 0.39, leaving absolute slack 0.11 under that model. Support: Teske adding walks, the negation-map canonicalisation that removes 2-cycles, and the exhaustive toy at order 1009, which recovered 788/1009 secrets at budget t0.",
+    "Canonical x-coordinates are treated as uniform in the chained hash table of 4*T slots. Each lookup scans at most 64 slots and the attack aborts if a chain would be longer. Under independent uniform hashes the abort probability is below 2^-254 by a Chernoff union bound, which does not consume the 0.11 slack.",
+    "A linear relation with denominator 0 is a failed detection, not a wrong scalar. The toy records these events; at order 1009 they did not pull exhaustive recovery below 0.39. At production size a vanishing denominator is one condition in a prime-order group and is charged inside the same slack rather than as a second full run."
+  ],
+  "limitations": [
+    "Analytic instruction bound plus a toy collision check. No production-size execution.",
+    "The random-mapping and hash-uniformity statements are heuristics. The 0.39 bound is the supported floor, not an estimate of the true success rate.",
+    "Field multiplication uses the pinned 179-instruction measurement plus 16 instructions of call overhead. The Z[λ] and chain-scan kernels are analytical upper bounds, not measured binaries.",
+    "Memory is larger than the deterministic baby-step control and is not a second objective. Beating that control is not a practical break."
+  ],
+  "lane": "exploratory"
+}

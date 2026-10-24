@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "exploratory-attack",
+  "algorithm": "six-class-rho-dp-frame-v2e",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 127.631096,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 115.943136,
+    "preprocessing_log2": 16.328837,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Until the first repeated canonical orbit, the 16-branch adding walk on sextuples {+-R, +-psi(R), +-psi^2(R)} is modelled as a random mapping. The charged length T is the least multiple of 4096 that is at least the birthday quantile t0 at which a random mapping on the N=(r-1)/6+1 orbits already has collision probability at least 1/2. No 5/4 length factor is applied. The submitted success lower bound is 0.39, leaving absolute slack 0.11 under that model. Support: Teske adding walks, the negation-map canonicalisation that removes 2-cycles, and the exhaustive toy at order 1009, which recovered 400/1009 secrets at budget t0 and 866/1009 at 2*t0 through distinguished-point hits.",
+    "Canonical x-coordinates are treated as uniform for two purposes: the low 20 bits give the distinguished-point rate 2^-20, and the hash into the M=4*ceil(T*2^-20)-slot table is uniform. The detection-delay failure is bounded at 2^-80 by a uniform-over-meeting-time calculation; the chain-overflow abort is below 2^-274 by the same Chernoff-union form as earlier revisions. Both fit inside the 0.11 slack.",
+    "A linear relation with denominator 0 is a failed detection, not a wrong scalar. The toy records these events; at order 1009 they numbered 1-2 across both sweeps and did not pull recovery below the floor. At production size a vanishing denominator is one condition in a prime-order group and is charged inside the same slack rather than as a second full run."
+  ],
+  "limitations": [
+    "Analytic instruction bound plus a toy collision check. No production-size execution.",
+    "The random-mapping, distinguished-point uniformity and hash-uniformity statements are heuristics. The 0.39 bound is the supported floor, not an estimate of the true success rate.",
+    "Field multiplication uses the pinned 179-instruction measurement plus 16 instructions of call overhead; the second canonical candidate uses beta^2 = -beta - 1, a subtraction, not a multiply. The unit-table and frame-update rows are analytical upper bounds, not measured binaries.",
+    "Distinguished-point detection adds an expected 2^20-step tail after the first orbit meeting; it is bounded probabilistically at 2^-80 total failure, not eliminated.",
+    "Memory is 2^115.94 bytes, far below the deterministic control, and is not a second objective. Beating that control is not a practical break."
+  ],
+  "lane": "exploratory"
+}

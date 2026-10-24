@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "exploratory-attack",
+  "algorithm": "teske-distinguished-point-rho-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.931657,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 123.584963,
+    "preprocessing_log2": 111.034216,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Until the first repeated point, the 16-branch Teske adding walk on the full subgroup is modelled as a random mapping of a set of size r. The charged length T is 3/2 of the birthday quantile t0 at which uniform samples already collide with probability at least 1/2, rounded up to a multiple of 4096. The submitted success floor is 0.39. The gap under the longer budget is the allowance for the walk not being a uniform random function and for a vanishing coefficient denominator. Support: Teske adding walks, and the exhaustive toys at orders 1009 (926/1009) and 5003 (4073/5003).",
+    "Points with x ≡ 0 (mod 2^16) are distinguished. After the walk has passed t0, a random-mapping cycle on a set of size r is long compared with 2^16, so it contains a distinguished point, and the 3/2 pad covers the mean wait 2^16 to the next one. Low 16 bits are treated as fair for the Chernoff bound that sizes the table at twice the mean number of hits.",
+    "The open-addressed table has M = 2^116 slots, at least 4 D_max, and probe cap 80. Under independent occupancy at load at most 1/4 the union bound on an aborted insert is below 2^-46. Linear-probe dependence is not proved away; it is carried by the same 0.39 floor rather than by a second run."
+  ],
+  "limitations": [
+    "Analytic instruction bound plus exhaustive toys on Z/n. No production-size execution.",
+    "The random-mapping, distinguished-bit and probe-occupancy statements are heuristics. The 0.39 floor is the supported claim, not an estimate of the true success rate.",
+    "Per-step and per-probe costs are analytical AArch64 upper bounds. They are not measured binaries. The reference operation is the organiser's batched 6-multiplication addition at C=1000, not a fresh timing.",
+    "The collision table dominates memory. Memory is not a second objective. Beating the generic baby-step control is not a practical break."
+  ],
+  "lane": "exploratory"
+}
