@@ -1,0 +1,12 @@
+{
+ "routine": "mulmod_r(a, cs) = REDC(a * (p^k 2^256 mod r)) = a * p^k mod r",
+ "source": "mulmod_r.c",
+ "compiler": "clang -O2 -arch arm64",
+ "instructions_O2": 143,
+ "instructions_O0": 362,
+ "differential_cases": 255,
+ "differential_mismatches": 0,
+ "covers": "twelve k values 0..11 x 20 random labels, plus a in {0,1,2,r-1,r-2}",
+ "renorm_row_per_step": 286,
+ "note": "labelled row = 2 x this count, one multiply per label (a and b)"
+}

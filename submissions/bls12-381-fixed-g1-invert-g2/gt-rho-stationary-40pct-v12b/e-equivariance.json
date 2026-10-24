@@ -1,0 +1,156 @@
+{
+ "tree": "mu_12 = <sigma>, p^6 = -1 so sigma^6 is inversion",
+ "note": "splits counts class differences; the v12b design must read 0",
+ "per_fixture": [
+  {
+   "density_bits": 5,
+   "prime_r": 9421,
+   "p6_is_minus_one": true,
+   "generators": [
+    {
+     "j": 1,
+     "order": 12,
+     "desc": "sigma: p^6 = -1 mod r, so sigma^6 is inversion",
+     "order_verified": true
+    },
+    {
+     "j": 2,
+     "order": 6,
+     "desc": "sigma^2: the mu_6 subgroup",
+     "order_verified": true
+    },
+    {
+     "j": 3,
+     "order": 4,
+     "desc": "sigma^3",
+     "order_verified": true
+    },
+    {
+     "j": 4,
+     "order": 3,
+     "desc": "sigma^4",
+     "order_verified": true
+    },
+    {
+     "j": 6,
+     "order": 2,
+     "desc": "sigma^6: the inversion generator",
+     "order_verified": true
+    }
+   ],
+   "checks": 120,
+   "splits": 0,
+   "d1_checks": 15,
+   "d1_inverse_closure_hits": 0,
+   "control_v10f_checks": 120,
+   "control_v10f_splits": 0,
+   "control_v10f_d1_checks": 75,
+   "control_v10f_d1_inverse_closure_hits": 75,
+   "scope": "E1: successor class through the shipped canonicalising path from each of the twelve sigma^j images vs from the canonical representative, for every generator of every subgroup of mu_12. E2: whether sigma^j of a table entry is itself a table entry (the (m,m^-1) two-cycle test). E3: the same two tests on the v10f sigma-ladder and held-offset rule, where a nonzero count is the detection control."
+  },
+  {
+   "density_bits": 7,
+   "prime_r": 37633,
+   "p6_is_minus_one": true,
+   "generators": [
+    {
+     "j": 1,
+     "order": 12,
+     "desc": "sigma: p^6 = -1 mod r, so sigma^6 is inversion",
+     "order_verified": true
+    },
+    {
+     "j": 2,
+     "order": 6,
+     "desc": "sigma^2: the mu_6 subgroup",
+     "order_verified": true
+    },
+    {
+     "j": 3,
+     "order": 4,
+     "desc": "sigma^3",
+     "order_verified": true
+    },
+    {
+     "j": 4,
+     "order": 3,
+     "desc": "sigma^4",
+     "order_verified": true
+    },
+    {
+     "j": 6,
+     "order": 2,
+     "desc": "sigma^6: the inversion generator",
+     "order_verified": true
+    }
+   ],
+   "checks": 120,
+   "splits": 0,
+   "d1_checks": 20,
+   "d1_inverse_closure_hits": 0,
+   "control_v10f_checks": 120,
+   "control_v10f_splits": 0,
+   "control_v10f_d1_checks": 100,
+   "control_v10f_d1_inverse_closure_hits": 100,
+   "scope": "E1: successor class through the shipped canonicalising path from each of the twelve sigma^j images vs from the canonical representative, for every generator of every subgroup of mu_12. E2: whether sigma^j of a table entry is itself a table entry (the (m,m^-1) two-cycle test). E3: the same two tests on the v10f sigma-ladder and held-offset rule, where a nonzero count is the detection control."
+  },
+  {
+   "density_bits": 9,
+   "prime_r": 150589,
+   "p6_is_minus_one": true,
+   "generators": [
+    {
+     "j": 1,
+     "order": 12,
+     "desc": "sigma: p^6 = -1 mod r, so sigma^6 is inversion",
+     "order_verified": true
+    },
+    {
+     "j": 2,
+     "order": 6,
+     "desc": "sigma^2: the mu_6 subgroup",
+     "order_verified": true
+    },
+    {
+     "j": 3,
+     "order": 4,
+     "desc": "sigma^3",
+     "order_verified": true
+    },
+    {
+     "j": 4,
+     "order": 3,
+     "desc": "sigma^4",
+     "order_verified": true
+    },
+    {
+     "j": 6,
+     "order": 2,
+     "desc": "sigma^6: the inversion generator",
+     "order_verified": true
+    }
+   ],
+   "checks": 120,
+   "splits": 0,
+   "d1_checks": 13,
+   "d1_inverse_closure_hits": 0,
+   "control_v10f_checks": 120,
+   "control_v10f_splits": 0,
+   "control_v10f_d1_checks": 65,
+   "control_v10f_d1_inverse_closure_hits": 65,
+   "scope": "E1: successor class through the shipped canonicalising path from each of the twelve sigma^j images vs from the canonical representative, for every generator of every subgroup of mu_12. E2: whether sigma^j of a table entry is itself a table entry (the (m,m^-1) two-cycle test). E3: the same two tests on the v10f sigma-ladder and held-offset rule, where a nonzero count is the detection control."
+  }
+ ],
+ "totals": {
+  "checks": 360,
+  "splits": 0,
+  "d1_checks": 48,
+  "d1_hits": 0,
+  "control_checks": 360,
+  "control_splits": 0,
+  "control_d1_hits": 240
+ },
+ "all_fixtures_p6_is_minus_one": true,
+ "splits": 0,
+ "checks": 360
+}

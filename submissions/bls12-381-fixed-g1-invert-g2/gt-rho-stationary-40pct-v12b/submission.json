@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 into G2 at 2^125.78: canonicalising Frobenius-class walk, inverse-free table, counted 286-instruction label renormalisation",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "constants.py",
+        "ledger.py",
+        "classwalk.py",
+        "routing.py",
+        "tower.py",
+        "pairing.py",
+        "part_a.py",
+        "part_a-out.json",
+        "routing-out.json",
+        "toy12d.py",
+        "equivariance.py",
+        "run_evidence.py",
+        "a-5.json",
+        "a-7.json",
+        "a-9.json",
+        "a-11.json",
+        "d-5.json",
+        "d-7.json",
+        "d-9.json",
+        "d-11.json",
+        "e-equivariance.json",
+        "modmul-count.json",
+        "mulmod_r.c",
+        "count_modmul.py",
+        "verify_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "6289",
+        "denominator": "50"
+      },
+      "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.39, and its complete classical work is at most 2^(6289/50) dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The algorithm solves a = log_g z in GT with g = e(P,Q0) on the twelve-element Frobenius classes of GT, N = (r-1)/12 = 2^251.2721269 classes, using a stationary walk whose state is held at the canonical Frobenius representative of its class every step. A step is one dense Fp12 multiply by a tabulated multiplier (2^14 rows x 12 independent columns) on five of every eight classes, or one Granger-Scott cyclotomic squaring charged at its itemised 11632 instructions on three of every eight, followed by a class fold charged at 1813 itemised instructions in nine rows and by a label renormalisation charged at a counted 286 instructions. The fold uses the three-multiplication selector d = gamma0*a + gamma1*b = g0*(a-b), so the twelve class keys cost three base-field multiplies. The renormalisation is (a,b) <- ((a+delta) p^k, b p^k) mod r, two 255-bit modular multiplications, k = kappa of the product; the counted routine is a 4-limb CIOS Montgomery multiply of 143 instructions per label with 0/255 differential mismatches, and the twelve p^k are pre-scaled once at table build. The table exponents are independent and drawn from the lower half, 1 <= u <= (r-1)/2, so the inverse of every entry has exponent r-u in [(r+1)/2, r-1] and no entry's inverse is an entry: the (m, m^-1) two-cycle available to the previous revision through p^6 = -1 is unreachable by this range identity, not merely improbable, and the code checks the zero overlap on the actual table. There is no look-back window, no checkpoint field and no escape: every branch input is a function of the class key alone, so two trails at a common class take identical steps for ever. The walk runs at a 2^-80 distinguished-point density into one shared store of 96-byte records (32-byte class key plus two full 32-byte exponent limbs) with a fixed report cap and refusal on overflow. Because every record is canonical, a repeat solves by one cancellation x = (a1-a2)/(b2-b1) mod r with no Frobenius k-search, and the recovered x is verified against z. The step budget S is the least integer with S^2(1-f^2) >= 2 mu N ln(1/(1-0.392)) at f = 3/8 and mu = 11/10, giving log2 S = 125.810636; the work bound is the itemised S-step total, W_raw = 2^125.733671, repriced with every judgement-bounded fold row at 13/10 as W_stress = 2^125.774473, and claimed at 6289/50 = 125.78, which is 0.005527 above the stress ledger and 0.040802 above the raw ledger. Included in the bound: table construction 2^17.585, all trail starts, all report writes (2^38.693), the exponent solve and the verification, each below 2^-60 of the total. Peak memory is below 2^53 bytes with 96-byte records; memory is unscored and stated. Success is derived, not asserted: orbit coalescence at production is Lambda = 8w^2/N = S^2/(2N) = 0.6369029082 with w = S/4, the distinguished point is detected on the shared suffix at 1-2^-42.2 because E[L] = w/3 = 2^122.226 steps at theta = 2^-80, and the solve succeeds whenever the labels differ, so 1-exp(-Lambda) >= Lambda - Lambda^2/2 = 0.4340802 and P(success) = 0.4710720 at w/sqrt(N) = 0.2821575; the claimed 0.39 is a declared 17.2 per cent reserve under that model. The shipped evidence is a real-tower toy with a decision-only cache that executes the same canonicalising step with the same involution-free table: verified recovery at four densities, every merged candidate solved by the shipped cancellation and checked by exponentiation against the planted secret, per-step invariant g^a z^b = y with zero failures, an orbit census reporting zero exact state repeats shorter than 8 steps, class-id invariance 528/528 per fixture, successor-class equivariance from all twelve members 528/528 per fixture, and the test that no applied multiplier's inverse is a table entry 528/528 per fixture. An explicit control runs the same equivariance and inverse-closure tests on the previous revision's sigma-ladder table and held-offset rule and splits on every fixture, so the test is shown to detect the defect it is meant to detect. Toy cycle lengths are disclosed as fixture-limited: at r about 2^15 the identity sum_{i<12} p^i = 0 (mod r) closes short laps that are negligible at production, so toy cycle statistics are not used to price the production two-cycle rate; that statement is the algebraic range identity above. Success is conditional on three disclosed hypotheses: the class walk behaves as a random map to within the 10 per cent inefficiency allowance already carried in the step budget, the routing fields derived from the class key are pseudorandom, and the algorithm's coins are ideal. No production run, no unconditional success theorem, no novelty claim and no practical break is claimed."
+    }
+  ],
+  "experiments": []
+}

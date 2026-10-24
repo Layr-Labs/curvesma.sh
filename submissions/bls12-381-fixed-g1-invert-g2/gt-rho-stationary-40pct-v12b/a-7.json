@@ -1,0 +1,25 @@
+{
+ "density_bits": 7,
+ "prime_r": 37633,
+ "audit_A_key_invariance_checks": 528,
+ "audit_A_pass": 528,
+ "audit_A_fail": 0,
+ "audit_B_equivariance_checks": 528,
+ "audit_B_pass": 528,
+ "audit_B_fail": 0,
+ "audit_E_inverse_free_checks": 528,
+ "audit_E_pass": 528,
+ "audit_E_fail": 0,
+ "control_C_old_rule_checks": 319,
+ "control_C_old_rule_splits": 294,
+ "kappa_degenerate": 0,
+ "table_entries": 768,
+ "table_inverse_free": true,
+ "table_all_lower_half": true,
+ "frob_pow_differential": {
+  "checks": 288,
+  "pass_": 288,
+  "fail": 0
+ },
+ "scope": "A: class id vs the eleven conjugates. B1: canon(sigma^j r) == r. B2: successor class and step type from each member through the shipped canonicalising path vs from the canonical rep. E: sigma^6(entry), the inverse under p^6 = -1, is never a table entry. C: the v10f (tw-k) rule on the new table, as a control."
+}
