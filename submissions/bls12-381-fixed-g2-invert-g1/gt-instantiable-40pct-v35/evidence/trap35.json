@@ -1,0 +1,30 @@
+{
+ "ledger_row": "trap_abort_waste",
+ "census_counter": "aborts",
+ "census_counter_quote": {
+  "file": "scripts/protocol28.py",
+  "line": 353,
+  "verbatim": "            m.charge(\"lookup\", LOOKUP)\n            if br or guard:\n                stall += 1\n                if guard:\n                    armed = True\n                if armed and stall >= K_STALL:\n                    aborts += 1; aborted = abandoned = True",
+  "rule": "this is the ONLY place the abort counter increments; the ledger row, the census counter and the Markov event are the same event, not three paraphrases"
+ },
+ "markov_witness": "guard_conversions",
+ "markov_event": "#{aborts at S} <= #{guard_conversions} = 4497 (each abort needs an ARMED counter, armed is set only on a guard step and cleared on restart, so distinct aborts consume distinct arming guards)",
+ "markov_witness_quote": {
+  "file": "evidence/trap31.json",
+  "key": "measured.guard_conversions",
+  "verbatim": "{\"steps\": 5040000, \"guard_conversions\": 4497, \"branch_sqr\": 1813539, \"multiply\": 3221964}"
+ },
+ "why_the_union_is_not_the_event": "br OR guard is the STALL predicate; 4497 is the guard count and 1813539 the br count, and neither is the abort count.  The abort needs armed AND 32 consecutive union steps, so the union rate cannot be charged as aborts and p_s^32 cannot bound a single-step event.  The counting bound above needs neither independence nor p_s.",
+ "counts": {
+  "steps_observed": 5040000,
+  "guard_conversions": 4497,
+  "branch_sqr": 1813539,
+  "union_steps": 1818036,
+  "union_rate": 0.3607214285714286,
+  "guard_rate": 0.0008922619047619048
+ },
+ "aborts_bound_at_S": "85481963713049917240944295726784289",
+ "raw_aborts_observed_in_census_arms": 0,
+ "charge_ir": "159946670014907108948206726843117711696524",
+ "charge_rule": "aborts x (32 x STEP_IR + RESTART): the aborted 32-step window is wasted work at the ledger's own per-step price, and the trail restarts at START_IR; STEP_IR = 58233 Ir"
+}

@@ -1,0 +1,26 @@
+{
+ "section": "HISTORICAL CONTRADICTION DISCLOSURE",
+ "rule": "This file is the ONLY place the package may name the withdrawn store numbers. The literal sweep (scripts/bounds35.py) exempts this one path by name and fails on any stale token anywhere else; a planted control token is added on every run and must be flagged.",
+ "withdrawn": [
+  {
+   "item": "v34 bucket heads",
+   "value": "2^128",
+   "why": "dict28_ws_init takes a u64 nb and rejects nb & (nb-1); ws_bucket masks a 64-bit mix, so one level of the shipped type addresses at most 2^63 buckets. The v34 layout was not representable by the shipped field and its lambda 0.2815416777 is withdrawn; v35 prices two u64 levels (heads_log2 126) and measures at lambda_bucket = S/2^126."
+  },
+  {
+   "item": "v34 node capacity",
+   "value": "2^130",
+   "why": "capacity is PROBES x heads = 4 x 2^126."
+  },
+  {
+   "item": "v34 peak footprint",
+   "value": "2^135.75 B",
+   "why": "that footprint was attached to the unrepresentable bucket count; v35's peak is the sum of the regenerated bounds_table rows."
+  },
+  {
+   "item": "v34 initialisation",
+   "value": "1.490e39 Ir",
+   "why": "deleted in v34 as free; v35 charges initialisation explicitly (store_init_bucket_array) instead of hiding it."
+  }
+ ]
+}

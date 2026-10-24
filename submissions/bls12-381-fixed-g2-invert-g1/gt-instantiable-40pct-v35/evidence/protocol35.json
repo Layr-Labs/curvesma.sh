@@ -1,0 +1,32 @@
+{
+ "mode": "protocol35-smoke",
+ "code": "scripts/protocol28.py with the v35 TRAIL COMPARISON in run_one",
+ "fixtures": 4,
+ "solved": 4,
+ "steps": 1444,
+ "records": 1440,
+ "matches_cross_trail": 55,
+ "same_trail_hits": 103,
+ "aborts": 0,
+ "dict_calls": {
+  "d28_lookups": 1444,
+  "d28_inserts": 1440,
+  "d28_evictions": 0,
+  "d28_drops": 0,
+  "d28_probes": 838,
+  "d28_wide_slots": 0,
+  "d28_wide_reads": 421,
+  "d28_wide_writes": 1703,
+  "d28_ws_deep": 0
+ },
+ "gate": {
+  "lookup_hit": 1,
+  "same_trail_rejected": true,
+  "cross_trail_accepted": true,
+  "returned_ref": [
+   7,
+   1
+  ]
+ },
+ "gate_rule": "the shipped lookup returns the same reference for a same-trail replay; the protocol's trail comparison is what discards it (recover() would divide by zero there).  Both directions are asserted above."
+}

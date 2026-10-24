@@ -1,0 +1,38 @@
+{
+ "policy": "shipped dict28.c four-probe FIFO chains (evict tail when chain reaches PROBES=4)",
+ "lambda_rule": "lambda_b = S / nb_total, nb_total = 2^63 shards x 2^63 buckets = 2^126 is the LARGEST power-of-two bucket count the shipped u64 field can hold (dict28_ws_init takes u64 nb and rejects non-powers-of-two; ws_bucket masks a 64-bit mix, so one level addresses <= 2^63 buckets).  v34's 2^128 is NOT representable and its lambda 0.2815 is withdrawn.",
+ "lambda_num": "95803668470929860550224427498997735090",
+ "lambda_den": "85070591730234615865843651857942052864",
+ "lambda": 1.1261667107562936,
+ "nb_total_log2": 126,
+ "fixture_nb": 4096,
+ "arrivals": 4613,
+ "trials": 900,
+ "lambda_hat": 1.126220703125,
+ "retention": {
+  "resident": 4124825,
+  "denominator": 4151700,
+  "p_hat": 0.9935267480791001,
+  "se": 3.935845611366671e-05,
+  "p_derived": 0.9940148036155075,
+  "delta": -0.00048805553640740573,
+  "delta_explanation": "1-P(Poisson(lambda)>=5) is the terminal-size limit for an insertion-only bucket; the shipped chain evicts during fill as well, so the measured loss is larger. Both are reported; the LOWER of the two is used."
+ },
+ "kappa_detect": {
+  "hits": 215647,
+  "probes": 215858,
+  "k_hat": 0.9990225055360469,
+  "se": 6.72605965353965e-05,
+  "definition": "P(true cross-trail key collision is DETECTED) = P(the earlier record is resident and the shipped dict28_wide_lookup returns its reference at the later arrival). Injected-collision control: uniformly chosen earlier key replayed through the shipped lookup.",
+  "control_wrong_ref_rejected": true
+ },
+ "success_debit": {
+  "rule": "p_used = p5 * min(kappa_lower, retention_lower)",
+  "kappa_lower_3se": 0.9988207237464407,
+  "retention_lower_3se": 0.9934086727107592
+ },
+ "wrong_lambda_control": {
+  "lambda": 0.2815416777,
+  "note": "the v34 lambda is not instantiable by the shipped u64 store (2^128 heads); the arm is not run there because no bucket count of that size can be initialised"
+ }
+}

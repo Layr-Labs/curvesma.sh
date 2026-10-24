@@ -1,0 +1,294 @@
+{
+ "mode": "ledger35-spec-to-code",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers declared, depth 6, store priced as shipped",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "95803668470929860550224427498997735090",
+  "abort": {
+   "ledger_row": "trap_abort_waste",
+   "census_counter": "aborts",
+   "quote_file": "scripts/protocol28.py",
+   "quote_line": 353,
+   "event": "#{aborts at S} <= #{guard_conversions} = 4497 (each abort needs an ARMED counter, armed is set only on a guard step and cleared on restart, so distinct aborts consume distinct arming guards)"
+  },
+  "detection": {
+   "mechanism": "the shipped dict28_wide_lookup hit, followed by THE TRAIL COMPARISON now in the protocol (scripts/protocol28.py, run_one): a hit counts as a collision only when the stored trail id differs from the arriving worker's; same-trail hits are counted and discarded because G.recover() has den = (D2 - q^k D1) = 0 there",
+   "store_shared_across_workers": true,
+   "store_load_bearing": true,
+   "kappa_detect": 0.9990225055360469,
+   "kappa_source": "evidence/arm35.json, injected-collision arm at the production lambda"
+  },
+  "census_fidelity": {
+   "depth": 6,
+   "dict": "shipped dict28.c (evicting), 9-word entries, 4-probe chains",
+   "workers_measured": [
+    8,
+    64,
+    128
+   ],
+   "workers_declared": 1024,
+   "production_1024_not_reachable": true,
+   "why": "trail >= guard ring (6) for guard stationarity; only the partition series at fixed S carries the W-dependence"
+  }
+ },
+ "store_spec_to_code": {
+  "shipped_structure": "2 levels of the shipped type: nb = 2^63 per level, all fields u64",
+  "parsed_constants": {
+   "PROBES": 4,
+   "ENTRY": 9,
+   "NODE_BYTES": 96,
+   "BUCKET_HEAD_BYTES": 8,
+   "HEADER_BYTES": 16,
+   "NB_FIELD_BITS": 64,
+   "NB_MAX_LOG2": 63,
+   "PROBE_MASK_BITS": 64
+  },
+  "production_layout": {
+   "rule": "2 levels of the shipped type: nb = 2^63 per level, all fields u64",
+   "heads_log2": 126,
+   "heads": "85070591730234615865843651857942052864",
+   "capacity": "PROBES x heads = 4 x 2^126",
+   "capacity_log2": 128,
+   "load_factor_ok": true,
+   "lambda_bucket": 1.1261667107562936,
+   "lambda_definition": "lambda_bucket = arrivals / heads (occupancy per bucket head)",
+   "v34_withdrawn": "2^128 bucket heads / 2^130 node capacity: dict28_ws_init takes u64 nb and ws_bucket masks 64 bits, so neither is representable or addressable"
+  },
+  "lambda_bucket": 1.1261667107562936,
+  "lambda_rule": "lambda = arrivals / heads = S / 2^126; the v34 heads value (lambda 0.2815) is withdrawn because the shipped field is u64 and ws_bucket masks 64 bits (evidence/historical-disclosure.json)",
+  "v34_withdrawn": "2^128 bucket heads / 2^130 node capacity: dict28_ws_init takes u64 nb and ws_bucket masks 64 bits, so neither is representable or addressable",
+  "measured_retention_at_production_lambda": {
+   "resident": 4124825,
+   "denominator": 4151700,
+   "p_hat": 0.9935267480791001,
+   "se": 3.935845611366671e-05,
+   "p_derived": 0.9940148036155075,
+   "delta": -0.00048805553640740573,
+   "delta_explanation": "1-P(Poisson(lambda)>=5) is the terminal-size limit for an insertion-only bucket; the shipped chain evicts during fill as well, so the measured loss is larger. Both are reported; the LOWER of the two is used."
+  },
+  "measured_kappa_detect": {
+   "hits": 215647,
+   "probes": 215858,
+   "k_hat": 0.9990225055360469,
+   "se": 6.72605965353965e-05,
+   "definition": "P(true cross-trail key collision is DETECTED) = P(the earlier record is resident and the shipped dict28_wide_lookup returns its reference at the later arrival). Injected-collision control: uniformly chosen earlier key replayed through the shipped lookup.",
+   "control_wrong_ref_rejected": true
+  },
+  "retention_lower_3se": 0.9934086727107592,
+  "kappa_lower_3se": 0.9988207237464407
+ },
+ "arithmetic": {
+  "fp12_tower": {
+   "f6mul_calls_in_f12mul": 4,
+   "f2mul_per_f6mul": 6,
+   "fpmul_per_f2mul": 3,
+   "fpmul_per_f12mul": 72,
+   "source": "scripts/ir25/kernels.c f12mul, parsed",
+   "v34_54_withdrawn": true
+  },
+  "fp_mul_ir": 666,
+  "mul_charge_ir": 47924,
+  "sqr_charge_ir": 25372,
+  "coefficient_row_per_step": 1344,
+  "row_anchors": {
+   "fp12_dense_mulmod": "executed f12mul span x the number of non-guard steps; the 6-limb Montgomery CIOS chain is inside this measured span",
+   "fp12_guard_cyclo_sqr": "executed cyclotomic-square span x the guard-step count",
+   "scalar_coefficient_update": "2 x ceil(MUL_CHARGE/72) + 12, the same anchor discipline as the walk row"
+  }
+ },
+ "trap": {
+  "ledger_row": "trap_abort_waste",
+  "census_counter": "aborts",
+  "markov_witness": "guard_conversions",
+  "aborts_bound_at_S": "85481963713049917240944295726784289",
+  "charge_ir": "159946670014907108948206726843117711696524",
+  "quote_line": 353,
+  "evidence": "evidence/trap35.json"
+ },
+ "bounds_table": [
+  {
+   "array": "records[] (A,D,y) per insert",
+   "source_constant": "one entry per executed step",
+   "bound_formula": "min(arrivals, capacity) = S",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 640,
+   "bytes": "61314347821395110752143633599358550457600"
+  },
+  {
+   "array": "alive[] / matched[] / trail_ids[]",
+   "source_constant": "protocol28.run_one lists",
+   "bound_formula": "one flag per record + the 8-byte trail id the v35 gate reads",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 10,
+   "bytes": "958036684709298605502244274989977350900"
+  },
+  {
+   "array": "guard ring hist[]",
+   "source_constant": "depth = 6 (protocol config)",
+   "bound_formula": "<= depth = 6",
+   "value": "6",
+   "bytes_per_entry": 8,
+   "bytes": "48"
+  },
+  {
+   "array": "probe chain per bucket",
+   "source_constant": "#define PROBES 4",
+   "bound_formula": "<= PROBES = 4 (chain full triggers the shipped FIFO eviction)",
+   "value": "4",
+   "bytes_per_entry": 96,
+   "bytes": "384"
+  },
+  {
+   "array": "slot_export buffers (keys_buf, ref, ev)",
+   "source_constant": "6 key words + 2 ref words + 2 evicted words",
+   "bound_formula": "fixed scratch: 6 + 2 + 2 words",
+   "value": "10",
+   "bytes_per_entry": 8,
+   "bytes": "80"
+  },
+  {
+   "array": "sort work array",
+   "source_constant": "N = 12 (Fp12 degree), 6 limbs each",
+   "bound_formula": "N = 12, 6 words each",
+   "value": "12",
+   "bytes_per_entry": 48,
+   "bytes": "576"
+  },
+  {
+   "array": "shard headers (level 1)",
+   "source_constant": "{ u64 nb; ws_node **b; } = 16 B",
+   "bound_formula": "2^63 shards x 16 B",
+   "value": "9223372036854775808",
+   "bytes_per_entry": 16,
+   "bytes": "147573952589676412928"
+  },
+  {
+   "array": "bucket array (level 2, the shipped ws_node **)",
+   "source_constant": "calloc(nb, sizeof(ws_node *)); nb a u64 power of two, ws_bucket masks 64 bits",
+   "bound_formula": "2^63 x 2^63 heads = 2^126 heads x 8 B",
+   "value": "85070591730234615865843651857942052864",
+   "bytes_per_entry": 8,
+   "bytes": "680564733841876926926749214863536422912"
+  },
+  {
+   "array": "node pool",
+   "source_constant": "sizeof(ws_node) = 96 B, one per live record",
+   "bound_formula": "min(arrivals, capacity) = S nodes x 96 B",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 96,
+   "bytes": "9197152173209266612821545039903782568640"
+  },
+  {
+   "array": "meter rows / counters",
+   "source_constant": "6 meter rows + 16 exported C counters",
+   "bound_formula": "22 x 8 B",
+   "value": "22",
+   "bytes_per_entry": 8,
+   "bytes": "176"
+  }
+ ],
+ "peak_bytes": "72150101413155552897541746081705523214244",
+ "type_table": [
+  {
+   "quantity": "bucket count nb (per level)",
+   "spec_bits": 63,
+   "code_type": "u64 (dict28_ws.nb; dict28_ws_init rejects nb & (nb-1))",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "bucket index (per level)",
+   "spec_bits": 62,
+   "code_type": "u64 (ws_bucket: mix64(slot_lo ^ mix64(slot_hi)) & (nb-1))",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "slot label / record reference",
+   "spec_bits": 128,
+   "code_type": "u128 slot; u64 ref[2] (two-word)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "live records (capacity)",
+   "spec_bits": 128,
+   "code_type": "u64 d28_ws_live (fixture); capacity = PROBES x heads",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 64
+  },
+  {
+   "quantity": "arrivals (records written)",
+   "spec_bits": 127,
+   "code_type": "Python int (ledger) / u64 counter in the fixture",
+   "max_value": "95803668470929860550224427498997735090",
+   "headroom_bits": 0
+  }
+ ],
+ "rows_ir": {
+  "fp12_dense_mulmod": "4587198370171858432775100449033557046187124",
+  "fp12_guard_cyclo_sqr": "2168848383327502500237238671179970980508",
+  "per_step_key_lookup_probe": "417416583527841402417327830613133131787130",
+  "per_step_slot_export": "65242298228703235034702835126817457596290",
+  "record_writes_and_insert": "229833000661760735459988401570095566480910",
+  "state_key_full_width_sort_structural": "142747466021685492219834396973506625284100",
+  "scalar_coefficient_update": "128760130424929732579501630558652955960960",
+  "guard_and_meter_eval": "2490895380244176374305835114973941112340",
+  "index_slots_widened_refs": "1149644021651158326602693129987972821080",
+  "cross_trail_compare": "8",
+  "trap_abort_waste": "159946670014907108948206726843117711696524",
+  "store_init_bucket_array": "85070591730234615875067023894796828672",
+  "worker_starts_1024": "7843840",
+  "collision_processing": "8192",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "step_ir": 58233,
+ "W_total_ir": "5737038977428639211251683104658917243163054",
+ "claim": {
+  "value": 127.7536,
+  "numerator": "1277536",
+  "denominator": "10000",
+  "reduced": "79846/625",
+  "rule": "minimal n with 20000*2^(n/10000) >= W; exact integer test",
+  "n_minus_1_fails": true,
+  "row_sum_equals_W": true
+ },
+ "bound": {
+  "log2_W": 142.04128630495893,
+  "step_ir": 58233,
+  "coeff_per_step": 1344,
+  "fp_mul_ir": 666
+ },
+ "success": {
+  "route_a_p5": 0.578125,
+  "route_a_median": 0.625,
+  "kappa_detect": 0.9990225055360469,
+  "kappa_lower_3se": 0.9988207237464407,
+  "p_used": 0.577443230915911,
+  "floor": 0.39,
+  "rule": "p_used = p5 x kappa_lower_3se, the detection debit charged explicitly"
+ },
+ "prices": {
+  "source": "evidence/exec31.json + evidence/sort32.json, executed counts",
+  "censused_symbols": {
+   "state_key48w": 3398,
+   "dict28_wide_lookup": 959,
+   "dict28_wide_insert": 1711,
+   "dict28_slot_export": 681
+  },
+  "per_step_rows": {
+   "fp12_dense_mulmod": 47924,
+   "fp12_guard_cyclo_sqr": 25372,
+   "per_step_key_lookup_probe": 4357,
+   "per_step_slot_export": 681,
+   "record_writes_and_insert": 2399,
+   "state_key_full_width_sort_structural": 1490,
+   "scalar_coefficient_update": 1344,
+   "guard_and_meter_eval": 26,
+   "index_slots_widened_refs": 12
+  }
+ }
+}

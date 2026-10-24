@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "Claim 127.7536: trail comparison in the code + measured kappa_detect, bounds_table regenerated from dict28.c (2^63 x 2^63 u64 levels, lambda 1.1262), Fp12 tower counted from kernels.c (72 Fp/Fp12), trap predicate three-way identical with a verbatim quote",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT on 1024 workers, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W (exact integer test, n-1 asserted to fail); W = 5737038977428639211251683104658917243163054 is the exact sum of SIXTEEN ceil rows in evidence/ledger35.json, recomputed by scripts/cert35.py. DETECTION (verdict ea688603 flaw 1). Detection is THE STORE HIT FOLLOWED BY A TRAIL COMPARISON THAT IS NOW IN THE CODE (scripts/protocol28.py run_one): a lookup hit counts as a collision only when the stored trail id differs from the arriving worker's, and same-trail hits are counted and discarded because G.recover() has den=(D2-q^k D1)=0 there. The v34 manifest's 'per-worker trail comparison' prose is withdrawn: one d28_ws is shared by all 1024 workers, so cross-worker collisions are cross-trail hits and are not lost, but detection IS store-load-bearing. It is therefore measured, not assumed: the injected-collision arm (evidence/arm35.json) replays a uniformly chosen earlier key through the shipped dict28_wide_lookup at the production lambda and returns the planted reference in 215647 of 215858 probes, kappa_detect = 0.999023 (se 6.73e-05, 3-sigma lower 0.998821). Success carries the debit explicitly: p_used = 0.578125 x 0.998821 = 0.577443, above the 0.39 floor. STORE (flaw 2). bounds_table is REGENERATED FROM scripts/ir28/dict28.c, not transcribed: PROBES=4, ENTRY=9, sizeof(ws_node)=96 B, and the bucket count is a u64 power of two (dict28_ws_init rejects nb & (nb-1)) whose index is a 64-bit mix, so one level addresses at most 2^63 buckets. Production is priced as TWO levels of that type: 2^63 shards x 2^63 buckets = 2^126 heads, capacity 4x2^126, lambda = S/2^126 = 1.126167 (the v34 heads value and its lambda 0.2815 are NOT representable and are withdrawn: evidence/historical-disclosure.json); peak storage 72150101413155552897541746081705523214244 B, initialisation charged 85070591730234615875067023894796828672 Ir (no row is free). Measured retention at that lambda on the shipped four-probe FIFO chains: 0.993527 over 900 trials, against the Poisson terminal limit 0.994015. ARITHMETIC (flaw 3). The Fp12 tower is counted from scripts/ir25/kernels.c: f12mul calls f6mul FOUR times, each f6mul is 6 f2mul, each f2mul is 3 fpmul, so one Fp12 multiply is 72 Fp multiplies and the v34 '54' is withdrawn. MUL_CHARGE 47924 Ir is the executed f12mul span and is charged as its own row (fp12_dense_mulmod) against the executed non-guard step count; the coefficient row is 2 x ceil(47924/72) + 12 = 1344 Ir/step, the same anchor discipline. TRAP (flaw 4). The charged event, the census counter and the Markov event are ONE predicate, quoted verbatim in evidence/trap35.json from the line that increments it (scripts/protocol28.py:353: 'aborts += 1; aborted = abandoned = True' under 'if armed and stall >= K_STALL'). br OR guard is the STALL predicate, not the abort predicate; 4497 guard conversions and 1813539 branch events in 5040000 observed steps are reported as the step mix, not charged as aborts. The bound is a counting bound needing no independence: an abort requires an ARMED counter, armed is set only on a guard step and cleared on restart, so distinct aborts consume distinct arming guards and #aborts <= #guard_conversions; at S that is 85481963713049917240944295726784289 aborts, each charged its 32-step wasted window at the ledger's own per-step price plus one fresh trail start = 159946670014907108948206726843117711696524 Ir. NO FLOAT: every charged term is a Python int; retention, kappa and the success rate are reported values and are labelled as such.",
+   "score": {
+    "numerator": "1277536",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger35.json",
+    "evidence/arm35.json",
+    "evidence/bounds35.json",
+    "evidence/trap35.json",
+    "evidence/trap31.json",
+    "evidence/census28.json",
+    "evidence/prices28.json",
+    "evidence/exec31.json",
+    "evidence/sort32.json",
+    "evidence/protocol35.json",
+    "public-note.md",
+    "scripts/regen35.py",
+    "scripts/cert35.py",
+    "scripts/arm35.py",
+    "scripts/bounds35.py",
+    "scripts/smoke35.py",
+    "scripts/protocol28.py",
+    "scripts/census28.py",
+    "scripts/toy28.py",
+    "scripts/ir28/dict28.c",
+    "scripts/ir25/kernels.c"
+   ]
+  }
+ ],
+ "experiments": []
+}
