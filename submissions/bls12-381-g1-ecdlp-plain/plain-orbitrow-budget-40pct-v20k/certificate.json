@@ -1,0 +1,119 @@
+{
+ "checks": [
+  {
+   "detail": "log2 W 126.26594362 -> claim 126.266",
+   "name": "claim_is_ceil_of_W",
+   "ok": true
+  },
+  {
+   "detail": "167 itemised rows",
+   "name": "step_rows_167",
+   "ok": true
+  },
+  {
+   "detail": "1.099950386 <= 1.099993376",
+   "name": "kappa_budget",
+   "ok": true
+  },
+  {
+   "detail": "B_total 9.4391e37 = B_walk 9.4391e37 + B_drain 2.4179e24 steps; drain price 2.62e24 ref inside EXTRAS",
+   "name": "two_phase_budget_priced_as_one",
+   "ok": true
+  },
+  {
+   "detail": "design row success_total, CP-95 0.436893 (evidence/budget2.json:cp95_total_design)",
+   "name": "gated_row_is_measured_over_B_total",
+   "ok": true
+  },
+  {
+   "detail": "CP-95 0.361360 (evidence/budget2.json:cp95_walk_only_design) \u2014 published, not gated",
+   "name": "walk_only_disclosed",
+   "ok": true
+  },
+  {
+   "detail": "Decimal Clopper-Pearson bisection copied from gen_cert_v15k.py; bracket widened and clipping asserted",
+   "name": "cp95_helper_is_the_secp_v15k_bisection",
+   "ok": true
+  },
+  {
+   "detail": "0.436557 >= 0.39",
+   "name": "success_floor",
+   "ok": true
+  },
+  {
+   "detail": "P(absorbed) 0.453702 (10921 classes) -> 0.308533 (43692), ratio 0.680036, non-increasing; 873808 starts (evidence/absorb-direct.json)",
+   "name": "absorption_direct_count",
+   "ok": true
+  },
+  {
+   "detail": "no ln(N)/N row, no basin-per-vertex ratio, no H3 tolerance remains in ledger.py or the note",
+   "name": "random_map_premise_deleted",
+   "ok": true
+  },
+  {
+   "detail": "success statistic measured on the same map with the escape armed; debit is 0 by construction",
+   "name": "absorption_not_double_counted",
+   "ok": true
+  },
+  {
+   "detail": "qwalk.fresh_state: 689.790 ref = 1379581 insn per fresh start (evidence/restart-count.json:fresh_ref)",
+   "name": "restart_priced_on_symbol",
+   "ok": true
+  },
+  {
+   "detail": "step rows charge no scalar multiplication; fresh_state calls no _apply; dispatch only on esc_run > K_ESC_MAX",
+   "name": "restart_symbol_disjoint_from_step",
+   "ok": true
+  },
+  {
+   "detail": "7000 restarts through the kcap breach path, 2 coin draws each (evidence/restart-count.json:executed)",
+   "name": "restart_executed",
+   "ok": true
+  },
+  {
+   "detail": "coin-replay detector: 16 of 16 fixed arm, 0 of 16 counter-only control",
+   "name": "restart_resamples_state",
+   "ok": true
+  },
+  {
+   "detail": "P(loss > A) <= E[loss]/A = 1.641e-08 at A = 0.046557; E[loss] 7.640e-10 from the charged escape/restart rows",
+   "name": "markov_single_inequality",
+   "ok": true
+  },
+  {
+   "detail": "meter 8.002e31 ref is a deterministic work cap; no binomial/Chernoff row exists",
+   "name": "no_trip_probability_claimed",
+   "ok": true
+  },
+  {
+   "detail": "0 fires on every simple cycle of length >= 3, fires on every 2-cycle (evidence/cycle3-exhaust.json:cycle_fire)",
+   "name": "escape_repairs_two_cycles_only",
+   "ok": true
+  },
+  {
+   "detail": "4000 of 4000 exact argmin on the production prime, 0 near-ties; mutation 358 of 1000",
+   "name": "selector_fidelity",
+   "ok": true
+  },
+  {
+   "detail": "0 orphans, planted typo caught (evidence/selfaudit.json)",
+   "name": "selfaudit_passes",
+   "ok": true
+  }
+ ],
+ "claim": {
+  "log2_work": "126.26594362",
+  "score": "126.266",
+  "success_probability": "0.436557",
+  "success_walk_only_disclosed": "0.361024"
+ },
+ "cost_model": {
+  "C": 2000,
+  "N_classes": "(r-1)/6",
+  "R_eff": 852105,
+  "dp_bits": 60,
+  "kappa": "1.015"
+ },
+ "revision": "plain-orbitrow-budget-40pct-v20k",
+ "supersedes": "bb309448 (v20j)"
+}
