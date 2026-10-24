@@ -1,0 +1,32 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v22: enumerated population N(k), coverage debit deleted with a feasibility proof, 1/(1-q) retries for gap and route separately, counted gap self-check",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "certificate.json",
+    "verify_certificate.py",
+    "build_certificate_v22.py",
+    "population_v22.py",
+    "population-v22.json",
+    "gapcheck.py",
+    "gapscan.c",
+    "retry-v22.json",
+    "coverage-v21.json",
+    "census_v20.py",
+    "census-key-v20.json",
+    "census-rest-v20.json",
+    "keymod.py",
+    "toy.py"
+   ],
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, uniform nonzero s, and every integer n>=2^20. ORDER STRUCTURE (carried): r-1=2^32*u, m=(r-1)/2^20, v2(m)=12, 6|m, H the d-th-power subgroup of order m, v=s^d uniform on H, recovery by one 2-Sylow d-th root plus the charged 2^20-candidate scan. EXACT COLLISION IDENTITY: with B(k) the multiplicity of key k in the FIXED baby list and N(k)=|{h in H:key_w([h]P0)=k}|, E_v[C]=(|Y|/m)*sum_k B(k)N(k); B(k) enters linearly and no baby-marginal condition is assumed. POPULATION ENUMERATED, NOT SAMPLED: nine fixtures over m=2^11,2^13,2^15 list ALL m elements of H, compute [h]P0 for each, and assert sum_k N_w(k)==m per width (36 scored cells); the exact mean is compared with the realized count of independent challenges v in H, ratio E/C in 0.9026..1.2687 (mean 1.0361). THE UNIFORM-WEIGHTS LIMIT IS MEASURED: weight_ratio=[sum_{k:B(k)>0}N(k)/m]/[|occupied|/2^(w-1)] = 1.111, 1.0226, 1.0043, 1.0007, 1.000000 at density m/D = 2^3,2^5,2^7,2^9,2^11, a monotone approach to the uniform value which production (m/D=2^67.86) extrapolates 57 bits along; the sparsity shortcut is nowhere assumed where measurement contradicts it. CHARGE: kappa=1.337, the one-sided UCB of the exact estimator over cells with baseline>=256, so E[#bad]=2^64.721 and Markov gives P(candidate work>2^104)<=2^-19.279, each surviving candidate charged 2^20 instructions under the unchanged 2^84 candidate cap. COVERAGE: NO residual is charged (certificate.json:coverage.debit=0). A design-K cover census has N=nb*nw and K=6N^2/m, hence m=(6/K)*(nb/nw)^2*nw^4; at the production shape nb/nw=2^15.65 and K=0.51 this forces m=2^34.86 at the smallest possible walk nw=1 and m=2^234.86 at production nw=2^50, so a shape-matched cover census must materialise a 34-bit residue set before any walk exists: it is infeasible at any budget (shortfall 8.9 bits at the bitmap frontier 2^26, 19.86 bits at the enumerated scale 2^15). The frontier ladder (max |rowB| 0.00270272 over base-heavy cells) is reported as an observation, not transferred. SUCCESS IS COLLISION-ONLY: 0.399504421-0.000001446=0.399502975>=39/100, with the 0.009504421 reserve to the floor disclosed as the unpriced coverage risk (3.52x the largest frontier residual). RETRIES: 192 independent seed draws give q_gap=0/192 and q_route=0/192 as SEPARATE events, Clopper-Pearson 95% upper 0.0154817 each, and the row is the correct law (1/(1-q_hi)-1)*(cost of one discarded draw): gap_retry_worst=2^102.031 (discarded draw = H-prime harvest + drawn walk list + self-check = 2^108.022) and route_retry_worst=2^90.009 (an aborted run discards its 2^96 pair-cap work); the retry precedes the record build so the build is not multiplied. SELF-CHECK IMPLEMENTED AND COUNTED: gapcheck.scan_max_gap maintains (prev index, running max) with one compare and one conditional store per step and aborts early, mutation-tested (clean accepted, injected violation rejected, widened limit accepted); its per-step price is read from the disassembly of gapscan.c compiled clang -O2 -arch arm64 (9 instructions: ldr,sub,cmp,csel,cmp,b.hi,mov,subs,b.ne), charged 11 at the 6/5 stress convention times the walk-record count, giving the ledger row gap_self_check=2^94.388. WORK: 12 rows, W=2^116.812770 in 2000-instruction units, claim 116.8130 above W and below the 116.8271 gate; peak memory 2^123.235 B, no advice, preprocessing inside the total. CERTIFICATE SCOPE: recomputes the ledger, the population rows, the retry rows and the claim from raw evidence; it does not run the production attack or establish production resource bounds."
+  }
+ ],
+ "experiments": []
+}
