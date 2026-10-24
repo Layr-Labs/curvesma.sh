@@ -1,0 +1,39 @@
+# classfold-rho-sel3min
+
+Fixed-argument pairing inversion into G2 for BLS12-381 by solving `z = e(P,Q0)^a` with a distinguished-point rho
+walk on the 12-element Frobenius classes of GT (`x ~ x^p`, which acts as `x -> x^lambda`, `lambda` of order 12).
+One dense Fp12 multiplication plus a 3-multiplication Frobenius-covariant class selector per step, a look-back
+window that removes fruitless short cycles, trails that end at distinguished points (density 2^-80), and recovery by
+replaying the two colliding trails.
+
+* Claim: `time_log2 = 125.838` (125838/1000), success probability at least 0.39 under disclosed heuristics H1-H3.
+* `proof.md`: the algorithm, the exact work ledger, the success argument, the trap lemma, memory, scope of the experiments.
+* `experiment.py`: standard library only; modes `ledger`, `algebra`, `toy`, `sim` (see `submission.json`).
+* Selected through `tracks/bls12-381-fixed-g1-invert-g2/selected-submission.txt`.
+
+The walk and its parameters are unchanged from the class-folded rho design this accounting describes: the same
+`2^14` twisted-multiplier table, the same 24-class look-back window on the same keys with the same escape rule and the
+same five-step binary search and byte rotation inside it, the same `2^-80` distinguished-point rule, the same
+`2^47`-record store of full 48-byte class keys, the same replay-based recovery, and the same walk-quality allowance
+`mu = 11/10` with its simulation evidence. Two lines of the selector's accounting change, and both are exact.
+
+1. The selector needs 3 Fp multiplications rather than 4: in this tower the Frobenius constant is `gamma = g0*(1-u)`
+   (so `g1 = -g0`, and equivalently `g0^6 = -1/8` and `zeta = 2 g0^2`), hence the selector's second seed
+   `d = Re(gamma*conj(c1)) = g0*a + g1*b` is `g0*(a-b)`, one multiplication of the difference `a-b` instead of two.
+   With `zeta*a` and `zeta*d` the twelve keys `{zeta^j a}` and `{zeta^j d}` therefore cost 3 x 383 = 1,149
+   instructions.
+2. The minimum over those twelve keys is the smaller of the minimum of the six stored values and the negation of their
+   maximum, so the six materialised negations are not performed: the modular add/sub/negation row is `a - b`, the two
+   `zeta^2 = zeta - 1` subtractions and one negation, 4 x 40 = 160 instructions instead of 9 x 40 = 360. The identity
+   is checked exhaustively on 117,649 six-tuples (`ledger`) and against the direct twelve-value scan on real GT
+   elements and their conjugates (`algebra`), and the comparison row stays 11 x 25 = 275 as a worst case, because a
+   top-limb-first compare cannot be given a better hard bound.
+
+The per-slot itemisation is therefore 2,041 instructions, and this revision charges it exactly — the parent
+`classfold-rho-sel3min` (kaankolcu, submission `a9c2301`, 125.84) charged 2,053, i.e. the same listing plus an
+explicit 12-instruction (0.588%) margin — so each multiplication slot costs `22041/20000` units; charging the six
+materialised negations and the fourth base-field product instead would make it 2,253 instructions and `22253/20000`.
+The success target, the accepted-step budget `S_max`, the memory ledger and every other row of the ledger are
+unchanged; only the total work moves, from the parent's `2^125.83841` to `2^125.837623`, and the claim from 125.84 to
+**125.838** (the least thousandth at or above the total, proved by exact integer comparison). The margin was not
+load-bearing for the parent: its own note observes that any per-slot charge up to 2,077 still lands below 125.84.
