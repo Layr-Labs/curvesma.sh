@@ -1,0 +1,995 @@
+{
+ "census": {
+  "cells": [
+   {
+    "r": 8391553,
+    "d": 8,
+    "m": 1048944,
+    "distinct_covered": 422778,
+    "predicted_distinct": 422076,
+    "predicted_distinct_eff": 417816,
+    "diagonal_repetitions": 7104,
+    "candidate_occurrences": 540000,
+    "K_float": 0.514803,
+    "rowA_num": -1301,
+    "rowA_den": 174824,
+    "rowB_num": -827,
+    "rowB_den": 174824,
+    "rowA_frac": "-1301/174824",
+    "rowB_frac": "-827/174824",
+    "absB_times_sqrt_m": 4.8449
+   },
+   {
+    "r": 8391553,
+    "d": 16,
+    "m": 524472,
+    "distinct_covered": 204996,
+    "predicted_distinct": 210837,
+    "predicted_distinct_eff": 207838,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514163,
+    "rowA_num": 283,
+    "rowA_den": 174824,
+    "rowB_num": 1421,
+    "rowB_den": 262236,
+    "rowA_frac": "283/174824",
+    "rowB_frac": "1421/262236",
+    "absB_times_sqrt_m": 3.9243
+   },
+   {
+    "r": 8391553,
+    "d": 64,
+    "m": 131118,
+    "distinct_covered": 49272,
+    "predicted_distinct": 51188,
+    "predicted_distinct_eff": 49711,
+    "diagonal_repetitions": 2400,
+    "candidate_occurrences": 64896,
+    "K_float": 0.494943,
+    "rowA_num": -242,
+    "rowA_den": 65559,
+    "rowB_num": 439,
+    "rowB_den": 131118,
+    "rowA_frac": "-242/65559",
+    "rowB_frac": "439/131118",
+    "absB_times_sqrt_m": 1.2124
+   },
+   {
+    "r": 33555073,
+    "d": 8,
+    "m": 4194384,
+    "distinct_covered": 1665594,
+    "predicted_distinct": 1670963,
+    "predicted_distinct_eff": 1662400,
+    "diagonal_repetitions": 14208,
+    "candidate_occurrences": 2131296,
+    "K_float": 0.508131,
+    "rowA_num": -8839,
+    "rowA_den": 4194384,
+    "rowB_num": -1597,
+    "rowB_den": 2097192,
+    "rowA_frac": "-8839/4194384",
+    "rowB_frac": "-1597/2097192",
+    "absB_times_sqrt_m": 1.5596
+   },
+   {
+    "r": 33555073,
+    "d": 16,
+    "m": 2097192,
+    "distinct_covered": 838698,
+    "predicted_distinct": 843283,
+    "predicted_distinct_eff": 837242,
+    "diagonal_repetitions": 10080,
+    "candidate_occurrences": 1078656,
+    "K_float": 0.514333,
+    "rowA_num": -5495,
+    "rowA_den": 2097192,
+    "rowB_num": -182,
+    "rowB_den": 262149,
+    "rowA_frac": "-5495/2097192",
+    "rowB_frac": "-182/262149",
+    "absB_times_sqrt_m": 1.0054
+   },
+   {
+    "r": 33555073,
+    "d": 64,
+    "m": 524298,
+    "distinct_covered": 206220,
+    "predicted_distinct": 210821,
+    "predicted_distinct_eff": 207822,
+    "diagonal_repetitions": 4992,
+    "candidate_occurrences": 269664,
+    "K_float": 0.514333,
+    "rowA_num": -391,
+    "rowA_den": 524298,
+    "rowB_num": 267,
+    "rowB_den": 87383,
+    "rowA_frac": "-391/524298",
+    "rowB_frac": "267/87383",
+    "absB_times_sqrt_m": 2.2124
+   }
+  ]
+ },
+ "declared_statistic": {
+  "name": "abs_rowB = |(predicted_distinct_eff - D)/m|",
+  "why": "The quantity the success claim charges is a FRACTION of H, so the transfer statistic is that fraction itself, dimensionless in m.  A birthday-style normalisation |rowB|*sqrt(m) is reported below as a diagnostic only and is NOT the transferred quantity: the pair-collision bias of a fixed ratio set is not a 1/sqrt(m) effect, and v18's use of that normalisation is withdrawn.",
+  "direction": "falls in 3/3 matched field pairs on |rowB| (see trend)",
+  "charge": "the toy maximum, charged as an exact Fraction; no extrapolation in m is used"
+ },
+ "diagnostic": {
+  "max_absB_times_sqrt_m": 4.8449,
+  "m_production_log2": 234,
+  "status": "NOT USED in the charge and NOT extrapolated; kept so the v18 number is visible next to the declared statistic."
+ },
+ "expectation": {
+  "e_neg_K_upper_num": 2412500280218577205699037672771513972564971679121199997032187479658131897,
+  "e_neg_K_upper_den": 4017515474452480000000000000000000000000000000000000000000000000000000000,
+  "e_neg_K_upper_dec": "0.60049558",
+  "design_lo_dec": "0.39950442",
+  "method": "E[#missing]/m = exp(-K) with K = 6N^2/m >= 51/100, exact rational upper bound by the alternating series; linearity of expectation over the candidate occurrences, so no independence is used."
+ },
+ "key_census": {
+  "key_bits": 168,
+  "image_log2": 167,
+  "rule": "even member of {y,p-y} truncated to 168 bits (keymod.key_scalar)",
+  "widths": [
+   10,
+   12,
+   14,
+   16,
+   18,
+   20,
+   22
+  ],
+  "d": 1048576,
+  "m_equals_cert": true,
+  "n_walk": 64,
+  "n_challenges": 6,
+  "faithful": [
+   {
+    "records_per_side": 4096,
+    "pairs": 16777216,
+    "walk": 64,
+    "h_members": true,
+    "scaled": true,
+    "rows": [
+     {
+      "width": 10,
+      "image_log2": 9,
+      "pairs": 16777216,
+      "observed_mean": 32813.167,
+      "observed_min": 32665,
+      "observed_max": 33038,
+      "predicted": 32768.0,
+      "ratio_mean": 1.001378,
+      "charged_factor": 1.024881
+     },
+     {
+      "width": 12,
+      "image_log2": 11,
+      "pairs": 16777216,
+      "observed_mean": 8183.833,
+      "observed_min": 8106,
+      "observed_max": 8319,
+      "predicted": 8192.0,
+      "ratio_mean": 0.999003,
+      "charged_factor": 1.048907
+     },
+     {
+      "width": 14,
+      "image_log2": 13,
+      "pairs": 16777216,
+      "observed_mean": 2062.0,
+      "observed_min": 1953,
+      "observed_max": 2112,
+      "predicted": 2048.0,
+      "ratio_mean": 1.006836,
+      "charged_factor": 1.098585
+     },
+     {
+      "width": 16,
+      "image_log2": 15,
+      "pairs": 16777216,
+      "observed_mean": 510.0,
+      "observed_min": 473,
+      "observed_max": 536,
+      "predicted": 512.0,
+      "ratio_mean": 0.996094,
+      "charged_factor": 1.182656
+     },
+     {
+      "width": 18,
+      "image_log2": 17,
+      "pairs": 16777216,
+      "observed_mean": 124.667,
+      "observed_min": 116,
+      "observed_max": 137,
+      "predicted": 128.0,
+      "ratio_mean": 0.973958,
+      "charged_factor": 1.345641
+     },
+     {
+      "width": 20,
+      "image_log2": 19,
+      "pairs": 16777216,
+      "observed_mean": 36.0,
+      "observed_min": 32,
+      "observed_max": 42,
+      "predicted": 32.0,
+      "ratio_mean": 1.125,
+      "charged_factor": 1.92726
+     },
+     {
+      "width": 22,
+      "image_log2": 21,
+      "pairs": 16777216,
+      "observed_mean": 9.333,
+      "observed_min": 7,
+      "observed_max": 13,
+      "predicted": 8.0,
+      "ratio_mean": 1.166667,
+      "charged_factor": 3.028122
+     }
+    ]
+   },
+   {
+    "records_per_side": 2048,
+    "pairs": 4194304,
+    "walk": 64,
+    "h_members": true,
+    "scaled": true,
+    "rows": [
+     {
+      "width": 10,
+      "image_log2": 9,
+      "pairs": 4194304,
+      "observed_mean": 8211.167,
+      "observed_min": 8088,
+      "observed_max": 8346,
+      "predicted": 8192.0,
+      "ratio_mean": 1.00234,
+      "charged_factor": 1.052257
+     },
+     {
+      "width": 12,
+      "image_log2": 11,
+      "pairs": 4194304,
+      "observed_mean": 2073.667,
+      "observed_min": 2008,
+      "observed_max": 2139,
+      "predicted": 2048.0,
+      "ratio_mean": 1.012533,
+      "charged_factor": 1.112197
+     },
+     {
+      "width": 14,
+      "image_log2": 13,
+      "pairs": 4194304,
+      "observed_mean": 516.0,
+      "observed_min": 502,
+      "observed_max": 536,
+      "predicted": 512.0,
+      "ratio_mean": 1.007812,
+      "charged_factor": 1.182656
+     },
+     {
+      "width": 16,
+      "image_log2": 15,
+      "pairs": 4194304,
+      "observed_mean": 128.667,
+      "observed_min": 110,
+      "observed_max": 150,
+      "predicted": 128.0,
+      "ratio_mean": 1.005208,
+      "charged_factor": 1.45988
+     },
+     {
+      "width": 18,
+      "image_log2": 17,
+      "pairs": 4194304,
+      "observed_mean": 35.0,
+      "observed_min": 28,
+      "observed_max": 42,
+      "predicted": 32.0,
+      "ratio_mean": 1.09375,
+      "charged_factor": 1.92726
+     },
+     {
+      "width": 20,
+      "image_log2": 19,
+      "pairs": 4194304,
+      "observed_mean": 8.167,
+      "observed_min": 5,
+      "observed_max": 11,
+      "predicted": 8.0,
+      "ratio_mean": 1.020833,
+      "charged_factor": 2.674038
+     },
+     {
+      "width": 22,
+      "image_log2": 21,
+      "pairs": 4194304,
+      "observed_mean": 2.333,
+      "observed_min": 1,
+      "observed_max": 4,
+      "predicted": 2.0,
+      "ratio_mean": 1.166667,
+      "charged_factor": 5.354102
+     }
+    ]
+   }
+  ],
+  "control": [
+   {
+    "records_per_side": 4096,
+    "pairs": 16777216,
+    "walk": 64,
+    "h_members": false,
+    "scaled": false,
+    "rows": [
+     {
+      "width": 10,
+      "image_log2": 9,
+      "pairs": 16777216,
+      "observed": 32535,
+      "predicted": 32768.0,
+      "ratio": 0.992889,
+      "charged_factor": 1.009403
+     },
+     {
+      "width": 12,
+      "image_log2": 11,
+      "pairs": 16777216,
+      "observed": 7975,
+      "predicted": 8192.0,
+      "ratio": 0.973511,
+      "charged_factor": 1.006216
+     },
+     {
+      "width": 14,
+      "image_log2": 13,
+      "pairs": 16777216,
+      "observed": 1929,
+      "predicted": 2048.0,
+      "ratio": 0.941895,
+      "charged_factor": 1.006248
+     },
+     {
+      "width": 16,
+      "image_log2": 15,
+      "pairs": 16777216,
+      "observed": 465,
+      "predicted": 512.0,
+      "ratio": 0.908203,
+      "charged_factor": 1.03469
+     },
+     {
+      "width": 18,
+      "image_log2": 17,
+      "pairs": 16777216,
+      "observed": 106,
+      "predicted": 128.0,
+      "ratio": 0.828125,
+      "charged_factor": 1.070564
+     },
+     {
+      "width": 20,
+      "image_log2": 19,
+      "pairs": 16777216,
+      "observed": 27,
+      "predicted": 32.0,
+      "ratio": 0.84375,
+      "charged_factor": 1.339828
+     },
+     {
+      "width": 22,
+      "image_log2": 21,
+      "pairs": 16777216,
+      "observed": 6,
+      "predicted": 8.0,
+      "ratio": 0.75,
+      "charged_factor": 1.742157
+     }
+    ]
+   },
+   {
+    "records_per_side": 2048,
+    "pairs": 4194304,
+    "walk": 64,
+    "h_members": false,
+    "scaled": false,
+    "rows": [
+     {
+      "width": 10,
+      "image_log2": 9,
+      "pairs": 4194304,
+      "observed": 8009,
+      "predicted": 8192.0,
+      "ratio": 0.977661,
+      "charged_factor": 1.010437
+     },
+     {
+      "width": 12,
+      "image_log2": 11,
+      "pairs": 4194304,
+      "observed": 2015,
+      "predicted": 2048.0,
+      "ratio": 0.983887,
+      "charged_factor": 1.049658
+     },
+     {
+      "width": 14,
+      "image_log2": 13,
+      "pairs": 4194304,
+      "observed": 495,
+      "predicted": 512.0,
+      "ratio": 0.966797,
+      "charged_factor": 1.097291
+     },
+     {
+      "width": 16,
+      "image_log2": 15,
+      "pairs": 4194304,
+      "observed": 113,
+      "predicted": 128.0,
+      "ratio": 0.882812,
+      "charged_factor": 1.133057
+     },
+     {
+      "width": 18,
+      "image_log2": 17,
+      "pairs": 4194304,
+      "observed": 32,
+      "predicted": 32.0,
+      "ratio": 1.0,
+      "charged_factor": 1.538553
+     },
+     {
+      "width": 20,
+      "image_log2": 19,
+      "pairs": 4194304,
+      "observed": 10,
+      "predicted": 8.0,
+      "ratio": 1.25,
+      "charged_factor": 2.493734
+     },
+     {
+      "width": 22,
+      "image_log2": 21,
+      "pairs": 4194304,
+      "observed": 2,
+      "predicted": 2.0,
+      "ratio": 1.0,
+      "charged_factor": 3.598076
+     }
+    ]
+   }
+  ],
+  "membership": {
+   "band": [
+    151115727451828646838272,
+    302231454903657293676544
+   ],
+   "samples": 1048576,
+   "accepted": 2,
+   "rejected_fraction": 0.99999809,
+   "expected_density_log2": -20,
+   "note": "H has index d=2^20 in Z_r^*, so a uniform band element lies in H with probability 1/d; prod_primes applies no such filter, which is the v18 flaw"
+  },
+  "faithful_ratio_max": 1.125,
+  "faithful_ratio_min": 0.973958,
+  "control_ratio_max": 1.0,
+  "control_ratio_min": 0.828125,
+  "max_abs_delta_faithful_vs_control": 0.416667,
+  "kappa_num": 483,
+  "kappa_den": 250,
+  "kappa_float": 1.932,
+  "kappa_control_num": 193,
+  "kappa_control_den": 125,
+  "kappa_control_float": 1.544,
+  "transfer": {
+   "stat": "per-pair collision probability against 2^-167 (the measured ratio)",
+   "argument": "conditional on the challenge, v*y_j is uniform over H because v is uniform over H and H is a group; hence for every pair (i,j) Pr[key_i == key(v*y_j)] = 2^-167 in the measured sense and E_v[#collisions] = pairs/2^167 by linearity over pairs. Markov on the challenge-random variable then applies at the list level. Residual dependence declared: pairs sharing the same j are correlated through the common factor v; the census averages over challenges instead of assuming independence.",
+   "s_to_d_regularity": "x -> x^d on Z_r^* has kernel size gcd(d,r-1)=d=2^20, so it is exactly d-to-1 onto H and s uniform => v=s^d uniform on H"
+  },
+  "premise": "H3key (DECLARED, measured on the CHALLENGE-FAITHFUL object): both lists are H-members (H = d-th powers, |H| = m, index d), the giant list is multiplied by v = s^d with s uniform in Z_r^*, and the collision counts are exact integers at two list sizes and seven key widths.  The v18 object (ordinary primes, no H filter, no challenge multiplier) is retained ONLY as the control row."
+ },
+ "debit": {
+  "P_all": "4250573530088163557770784323879058040938100834624574671996125741315025",
+  "P_all_log2": 231.3007,
+  "image_log2": 167,
+  "kappa": 1.932,
+  "E_bad": "82121080601303319936131553137343401350924108124946782662965149322206283/1870722095783555735300716585876842265159593655009280",
+  "E_bad_log2": 65.2508,
+  "cap_bad_log2": 84,
+  "per_candidate_instr": 1048576,
+  "cap_work": 20282409603651670423947251286016,
+  "cap_work_log2": 104.0,
+  "E_work_log2": 85.2508,
+  "markov_num": 82121080601303319936131553137343401350924108124946782662965149322206283,
+  "markov_den": 36185027886661311069865932815214971204146870208012676262330495002472853012480,
+  "markov_log2": -18.7492,
+  "method": "E[#bad] = kappa * N^2 / 2^167 is an expectation over the CHALLENGE SPACE: v = s^d with s uniform in Z_r^* is uniform on H (the map is exactly d-to-1), so for each pair (i,j) the giant element v*y_j is uniform on H and the pair collides with probability 2^-167; linearity over the N^2 pairs gives the expectation without any independence assumption.  Markov's inequality P(work > cap) <= E[work]/cap then applies to the challenge-random variable. kappa is measured on the challenge-faithful census, not transferred from the unscaled object.",
+  "route_pairs_log2": 147.3,
+  "prefix_pairs_log2": 84.3,
+  "run_cap_pairs_log2": 95,
+  "run_cap_margin_bits": 10.7
+ },
+ "layout": {
+  "rows": [
+   {
+    "bits": 56,
+    "byte": 0,
+    "field": "key_limb0",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[0,56)",
+    "word": 0
+   },
+   {
+    "bits": 56,
+    "byte": 8,
+    "field": "key_limb1",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[56,112)",
+    "word": 1
+   },
+   {
+    "bits": 56,
+    "byte": 16,
+    "field": "key_limb2",
+    "note": "even-rep y bits; limb 0 carries the always-zero low bit",
+    "span": "[112,168)",
+    "word": 2
+   },
+   {
+    "bits": 1,
+    "byte": 24,
+    "field": "side",
+    "note": "0 = baby/X side, 1 = giant/Y side; 63 bits reserved",
+    "span": "bit 0",
+    "word": 3
+   },
+   {
+    "bits": 64,
+    "byte": 32,
+    "field": "index_hi",
+    "note": "position index high word",
+    "span": "[64,128)",
+    "word": 4
+   },
+   {
+    "bits": 64,
+    "byte": 40,
+    "field": "index_lo",
+    "note": "position index low word; position < 2^116",
+    "span": "[0,64)",
+    "word": 5
+   }
+  ],
+  "words": 6,
+  "bytes": 48,
+  "bits": 297,
+  "index_bits": 128,
+  "index_bound_log2": 116,
+  "layout_ok": true,
+  "recon_items": [
+   {
+    "detail": "2 LDP of the two index words, AND/shift",
+    "instr": 3,
+    "name": "index_load_and_mask"
+   },
+   {
+    "detail": "2 LDP from the stored 97-bit pool entry, addressing 2",
+    "instr": 4,
+    "name": "pool_load_2words"
+   },
+   {
+    "detail": "shift to checkpoint byte offset",
+    "instr": 2,
+    "name": "gap_index_shift"
+   },
+   {
+    "detail": "2 LDP of the prefix sum at the checkpoint",
+    "instr": 4,
+    "name": "checkpoint_load_2words"
+   },
+   {
+    "detail": "2^12 gap adds: 2 loads, add, carry, store, loop = 6 each",
+    "instr": 24576,
+    "name": "local_gap_walk"
+   },
+   {
+    "detail": "9 fp_mul (383 Ir each, COST_MODEL.md) + 24 accumulate/addressing for a*w",
+    "instr": 3471,
+    "name": "scalar_product_3x3"
+   },
+   {
+    "detail": "6 candidate multipliers: one fp_mul + compare/select each, 796 per u",
+    "instr": 4776,
+    "name": "ratio_and_six_test"
+   }
+  ],
+  "recon_itemised": 32836,
+  "recon_charged": 39404,
+  "recon_detail": "index -> (pool slot, walk offset); the 97-bit a is read from the stored pool array, the 76-bit w is rebuilt from a 2^12-gap checkpoint plus at most 2^12 gap adds; the 174-bit scalar a*w is formed with 9 fp_mul.  The scalar is NOT stored.",
+  "evidence": {
+   "inputs": 100,
+   "key_agreement": 100,
+   "records": 48,
+   "reconstructed": 48,
+   "roundtrip_all": true
+  }
+ },
+ "gap": {
+  "n": 1199,
+  "mean": 545.8616,
+  "max": 3950,
+  "mu_prod_float": 70573979.056,
+  "mu_prod_log2": 26.0726,
+  "G_charged": 8589934592,
+  "G_charged_log2": 33,
+  "tail_bound_log2": -125.598,
+  "premise": "H3gap: the FIXED production list's consecutive gaps follow the geometric law with mean mu = d*ln q; the 2^-40 charge is a modelling allowance against this premise, not a probability over algorithm coins.",
+  "fit": [
+   {
+    "d": 8,
+    "n": 1200,
+    "mean_over_law": 1.0292,
+    "chi2": 3.6028,
+    "dof": 10,
+    "chi2_over_dof": 0.3603,
+    "ks": 0.030308,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 16,
+    "n": 1200,
+    "mean_over_law": 0.9645,
+    "chi2": 10.0834,
+    "dof": 10,
+    "chi2_over_dof": 1.0083,
+    "ks": 0.022552,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 12,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   },
+   {
+    "d": 64,
+    "n": 1200,
+    "mean_over_law": 0.9846,
+    "chi2": 4.206,
+    "dof": 10,
+    "chi2_over_dof": 0.4206,
+    "ks": 0.020047,
+    "ks_95_cut": 0.03926,
+    "max_gap_bits": 15,
+    "tail_above_model": 1,
+    "tail_cells": 5
+   }
+  ],
+  "toy_mean_over_predicted": 0.9651
+ },
+ "order_audit": {
+  "p": 10009,
+  "field_order": 10192,
+  "prime_order": 7,
+  "n_divides_NE": true,
+  "nP_is_O": true,
+  "scope": "small j=0 fixture; no toy point order is claimed to equal its scalar modulus"
+ },
+ "order_structure": {
+  "r_minus_1_factor_2": 32,
+  "m_is_composite": true,
+  "v2_m": 12,
+  "six_divides_m": true,
+  "d_times_m_is_r_minus_1": true,
+  "gcd_d_m": 4096,
+  "d_invertible_mod_m": false,
+  "two_sylow": 32,
+  "u_odd": true,
+  "statement": "H = {x : x^m = 1} = the d-th powers is cyclic of COMPOSITE order m; no primality of m and no inverse of d modulo m is used anywhere"
+ },
+ "tail": [
+  {
+   "empirical": 0.40700584,
+   "geometric_model": 0.39142288,
+   "n": 1199,
+   "observed": 488,
+   "threshold": "2^9"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.00055102,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^12"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^15"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^18"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^21"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^24"
+  },
+  {
+   "empirical": 0.0,
+   "geometric_model": 0.0,
+   "n": 1199,
+   "observed": 0,
+   "threshold": "2^27"
+  }
+ ],
+ "histogram": [
+  {
+   "bucket": "2^1",
+   "count": 2
+  },
+  {
+   "bucket": "2^2",
+   "count": 6
+  },
+  {
+   "bucket": "2^3",
+   "count": 8
+  },
+  {
+   "bucket": "2^4",
+   "count": 36
+  },
+  {
+   "bucket": "2^5",
+   "count": 68
+  },
+  {
+   "bucket": "2^6",
+   "count": 109
+  },
+  {
+   "bucket": "2^7",
+   "count": 207
+  },
+  {
+   "bucket": "2^8",
+   "count": 274
+  },
+  {
+   "bucket": "2^9",
+   "count": 310
+  },
+  {
+   "bucket": "2^10",
+   "count": 151
+  },
+  {
+   "bucket": "2^11",
+   "count": 28
+  }
+ ],
+ "gapFit": [
+  {
+   "chi2": 3.6028,
+   "chi2_over_dof": 0.3603,
+   "d": 8,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.030308,
+   "ks_95_cut": 0.03926,
+   "m_bits": 125,
+   "max_gap": 2324,
+   "max_gap_bits": 12,
+   "mean": 291.075,
+   "mean_law": 282.804,
+   "mean_over_law": 1.0292,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.17416667,
+     "geometric_model": 0.16358201,
+     "n": 1200,
+     "observed": 209,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 5.1e-07,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  },
+  {
+   "chi2": 10.0834,
+   "chi2_over_dof": 1.0083,
+   "d": 16,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.022552,
+   "ks_95_cut": 0.03926,
+   "m_bits": 124,
+   "max_gap": 3950,
+   "max_gap_bits": 12,
+   "mean": 545.5117,
+   "mean_law": 565.6081,
+   "mean_over_law": 0.9645,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.40666667,
+     "geometric_model": 0.40445273,
+     "n": 1200,
+     "observed": 488,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.00071605,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  },
+  {
+   "chi2": 4.206,
+   "chi2_over_dof": 0.4206,
+   "d": 64,
+   "dof": 10,
+   "field_bits": 128,
+   "ks": 0.020047,
+   "ks_95_cut": 0.03926,
+   "m_bits": 122,
+   "max_gap": 21290,
+   "max_gap_bits": 15,
+   "mean": 2227.5967,
+   "mean_law": 2262.4324,
+   "mean_over_law": 0.9846,
+   "n": 1200,
+   "tail": [
+    {
+     "empirical": 0.79916667,
+     "geometric_model": 0.79747475,
+     "n": 1200,
+     "observed": 959,
+     "threshold": "2^9"
+    },
+    {
+     "empirical": 0.15583333,
+     "geometric_model": 0.16358201,
+     "n": 1200,
+     "observed": 187,
+     "threshold": "2^12"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 5.1e-07,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^15"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^18"
+    },
+    {
+     "empirical": 0.0,
+     "geometric_model": 0.0,
+     "n": 1200,
+     "observed": 0,
+     "threshold": "2^21"
+    }
+   ],
+   "tail_above_model": 1,
+   "tail_cells": 5
+  }
+ ],
+ "n_gap": 1199,
+ "mean_gap": 545.8616,
+ "max_gap": 3950,
+ "memory": {
+  "rows": [
+   {
+    "name": "records",
+    "bytes_": 6258856577146700790855494563191024480,
+    "detail": "2N records x 48 B"
+   },
+   {
+    "name": "sort_scratch",
+    "bytes_": 6258856577146700790855494563191024480,
+    "detail": "one counting-sort copy of the record array"
+   },
+   {
+    "name": "base_pool",
+    "bytes_": 1180591620717411303424,
+    "detail": "a-pool entries, 2 words each"
+   },
+   {
+    "name": "gap_checkpoints",
+    "bytes_": 4398046511104,
+    "detail": "2^50 walk gaps / 2^12 per checkpoint, 2 words"
+   },
+   {
+    "name": "routing_nodes",
+    "bytes_": 1237940039285380274899124224,
+    "detail": "per-node bucket descriptors"
+   }
+  ],
+  "total": 12517713155531342801587994516738987712,
+  "log2": 123.235
+ }
+}
