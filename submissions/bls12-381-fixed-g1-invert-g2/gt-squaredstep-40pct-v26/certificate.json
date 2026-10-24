@@ -1,0 +1,115 @@
+{
+ "N_classes_log2": 251.27212691232603,
+ "S_log2": 125.82122460991792,
+ "S_steps": "75155834044258079300444605238535429486",
+ "all_checks_pass": true,
+ "aux_rows": {
+  "gt_exp_starts": "64124107126506532736/625",
+  "report_cap_drain": "326379106418736/125",
+  "report_writes": "108793035472912/625",
+  "restart_bookkeeping": "62167448841664/625",
+  "solve": "323447/625",
+  "store_lookup": "326379106418736/125",
+  "table_build": "982738944/625",
+  "verify": "512"
+ },
+ "census": {
+  "cap": 8,
+  "cp95_lower": 0.471342335003843,
+  "cp95_upper": 0.48086108500187885,
+  "invariant_fail": 0,
+  "method": "Clopper-Pearson (exact)",
+  "model_success": 0.47911672329484,
+  "mul_steps": 510194,
+  "p_agree_given_repeat": 0.9999299915989919,
+  "p_recover": 0.4761,
+  "p_repeat": 0.47613333333333335,
+  "s_len": 32,
+  "scope": "production ratio S/sqrt(N); fixture N=785; supports the merge->solve->verify mechanism, not a production rate",
+  "sq_steps": 281800,
+  "sqr_fraction": 0.3558107763442652,
+  "trials": 30000,
+  "workers": 12,
+  "zeroden": 0
+ },
+ "checks": {
+  "claim_covers_disclosed_aux_2_114_812": true,
+  "claim_covers_total": true,
+  "components_sum_exactly": true,
+  "cp_lower_clears_floor": true,
+  "instrumented_equals_plain": true,
+  "invariants_hold": true,
+  "model_calibrated": true,
+  "no_history_in_step": true,
+  "planted_mutation_flagged": true
+ },
+ "claim_float": 126.2508,
+ "claim_log2": "126.2508",
+ "cycle_census": {
+  "note": "one two-cycle = random-map expectation; the v13 control did NOT reproduce the family as a 2-cycle at this size and is reported as a failed control",
+  "v13_control_failed": true,
+  "v13_two_cycles": 0,
+  "v26_cycle_lengths": {
+   "2": 1,
+   "36": 1,
+   "5": 1
+  },
+  "v26_two_cycles": 1
+ },
+ "delta_vs_v24_bits": 0.4824,
+ "family_free_by": "evidence/impossibility-theorem.md (sigma^6 = inversion => m(k+6) = m(k)^-1 in all 384 columns; y^3 has one solution per multiplier pair)",
+ "history_free": true,
+ "instrumented": {
+  "counts_match": true,
+  "mul_calls": 7289,
+  "per_trial_equal": true,
+  "sqr_calls": 11298
+ },
+ "ledger_components": {
+  "aux_overflow_bound": "1",
+  "aux_sum": "64127541879038417063/625",
+  "trap_charge": "36760102960233234565146832169715365048064534747999730976766011245122813952/12717373507894369560004692298676907336555341923310488788072363895465625",
+  "w_stress": "1336108645341709192284149689238385209070236457189/13199900000"
+ },
+ "ledger_log2": {
+  "aux_overflow_bound": 0.0,
+  "aux_sum": 56.509865530519065,
+  "trap_charge": 11.497124347447047,
+  "w_stress": 126.25077793065508
+ },
+ "no_reserve_row": true,
+ "package": "bls12-381-fixed-g1-invert-g2 / gt-squaredstep-40pct-v26",
+ "price": {
+  "c_mul_stress": "340877/200000",
+  "c_sqr_stress": "139889/200000",
+  "c_stress": "35555686723/26399800000",
+  "f_declared": "3/8",
+  "f_measured": 0.3558107763442652,
+  "f_priced": "140900/395997"
+ },
+ "reports": 124334897683328,
+ "rows": {
+  "cyclo_sqr": 11632,
+  "mul_step": 33521,
+  "mul_step_base": 21889,
+  "sqr_step": 13445
+ },
+ "step": "classkey.step_v26: y -> (y * TBL[t][kappa])^2, a -> 2(a+U), b -> 2b",
+ "success_claimed": "0.39",
+ "theorem": {
+  "clean_inverse_pair_columns": 384,
+  "clean_total": 384,
+  "orbit_columns": 768,
+  "planted_column_flags": [
+   [
+    7,
+    3,
+    9
+   ]
+  ],
+  "planted_flagged": true,
+  "sigma6_is_inversion": true
+ },
+ "total_log2": 126.25077793065508,
+ "trap_rate_log2": -78.27212691232603
+}
