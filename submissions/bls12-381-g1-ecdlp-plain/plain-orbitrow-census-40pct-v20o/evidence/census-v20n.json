@@ -1,0 +1,273 @@
+{
+ "R_eff_toy": 33,
+ "R_toy": 64,
+ "arms": {
+  "control": {
+   "coalesced_d0": 18,
+   "coalescence_rate": 0.005625,
+   "cp95_coalescence_f": 0.0036387745835790176,
+   "cp95_success": "0.0031386735464488282332240487448871135711669921875",
+   "cp95_success_f": 0.0031386735464488283,
+   "d0_implied_success": 0.005,
+   "detected_given_coalescence": 0.8888888888888888,
+   "escape_fires": 0,
+   "restarts": 0,
+   "solve_step_max": 792,
+   "solve_step_median": 364,
+   "success_rate": 0.005,
+   "successes": 16,
+   "trials": 3200,
+   "trials_with_escape_fire": 0
+  },
+  "lag1": {
+   "coalesced_d0": 941,
+   "coalescence_rate": 0.2940625,
+   "cp95_coalescence_f": 0.2808011251264499,
+   "cp95_success": "0.26940354315404609764073029509745538234710693359375",
+   "cp95_success_f": 0.2694035431540461,
+   "d0_implied_success": 0.284375,
+   "detected_given_coalescence": 0.9670563230605739,
+   "escape_fires": 426912,
+   "restarts": 0,
+   "solve_step_max": 1685,
+   "solve_step_median": 1064,
+   "success_rate": 0.2825,
+   "successes": 904,
+   "trials": 3200,
+   "trials_with_escape_fire": 3200
+  },
+  "lag3": {
+   "coalesced_d0": 1162,
+   "coalescence_rate": 0.363125,
+   "cp95_coalescence_f": 0.3490821534105691,
+   "cp95_success": "0.270019359920823518450561095960438251495361328125",
+   "cp95_success_f": 0.27001935992082354,
+   "d0_implied_success": 0.3521875,
+   "detected_given_coalescence": 0.9698795180722891,
+   "escape_fires": 460661,
+   "restarts": 0,
+   "solve_step_max": 1685,
+   "solve_step_median": 1063,
+   "success_rate": 0.283125,
+   "successes": 906,
+   "trials": 3200,
+   "trials_with_escape_fire": 3200
+  }
+ },
+ "cap_loss": {
+  "control": {
+   "cap_1687": {
+    "cap": 1687,
+    "cp95_upper_loss": "0.00093572826849362801570796406727369781480709128687714258891279862893612484468036",
+    "cp95_upper_loss_f": 0.000935728268493628,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve": 18
+   },
+   "cap_421": {
+    "cap": 421,
+    "cp95_upper_loss": "0.003697370975424117744978502742014825344085693359375",
+    "cp95_upper_loss_f": 0.003697370975424118,
+    "lost": 6,
+    "p_loss_given_would_solve": 0.001875,
+    "trials": 3200,
+    "would_solve": 18
+   },
+   "cap_843": {
+    "cap": 843,
+    "cp95_upper_loss": "0.00093572826849362801570796406727369781480709128687714258891279862893612484468036",
+    "cp95_upper_loss_f": 0.000935728268493628,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve": 18
+   }
+  },
+  "lag1": {
+   "cap_1687": {
+    "cap": 1687,
+    "cp95_upper_loss": "0.00093572826849362801570796406727369781480709128687714258891279862893612484468036",
+    "cp95_upper_loss_f": 0.000935728268493628,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve": 941
+   },
+   "cap_421": {
+    "cap": 421,
+    "cp95_upper_loss": "0.279730552249142501608503152965568006038665771484375",
+    "cp95_upper_loss_f": 0.2797305522491425,
+    "lost": 853,
+    "p_loss_given_would_solve": 0.2665625,
+    "trials": 3200,
+    "would_solve": 941
+   },
+   "cap_843": {
+    "cap": 843,
+    "cp95_upper_loss": "0.204646210939782537963083086651749908924102783203125",
+    "cp95_upper_loss_f": 0.20464621093978252,
+    "lost": 617,
+    "p_loss_given_would_solve": 0.1928125,
+    "trials": 3200,
+    "would_solve": 941
+   }
+  },
+  "lag3": {
+   "cap_1687": {
+    "cap": 1687,
+    "cp95_upper_loss": "0.00093572826849362801570796406727369781480709128687714258891279862893612484468036",
+    "cp95_upper_loss_f": 0.000935728268493628,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve": 1162
+   },
+   "cap_421": {
+    "cap": 421,
+    "cp95_upper_loss": "0.34583336928846291158379244734533131122589111328125",
+    "cp95_upper_loss_f": 0.3458333692884629,
+    "lost": 1062,
+    "p_loss_given_would_solve": 0.331875,
+    "trials": 3200,
+    "would_solve": 1162
+   },
+   "cap_843": {
+    "cap": 843,
+    "cp95_upper_loss": "0.257831883905836310333370420266874134540557861328125",
+    "cp95_upper_loss_f": 0.25783188390583633,
+    "lost": 784,
+    "p_loss_given_would_solve": 0.245,
+    "trials": 3200,
+    "would_solve": 1162
+   }
+  }
+ },
+ "classes": 715000012,
+ "cycle_length": {
+  "control": {
+   "len2": 0,
+   "len3": 0,
+   "len_ge4": 3200,
+   "no_repeat_within_budget": 0,
+   "p_absorbed": 1.0,
+   "p_ge4": 1.0,
+   "p_len2": 0.0,
+   "p_len3": 0.0,
+   "three_cycle_share_of_residual": 0.0,
+   "trials": 3200
+  },
+  "lag1": {
+   "len2": 0,
+   "len3": 0,
+   "len_ge4": 3160,
+   "no_repeat_within_budget": 40,
+   "p_absorbed": 0.9875,
+   "p_ge4": 0.9875,
+   "p_len2": 0.0,
+   "p_len3": 0.0,
+   "three_cycle_share_of_residual": 0.0,
+   "trials": 3200
+  },
+  "lag3": {
+   "len2": 0,
+   "len3": 0,
+   "len_ge4": 1386,
+   "no_repeat_within_budget": 1814,
+   "p_absorbed": 0.433125,
+   "p_ge4": 0.433125,
+   "p_len2": 0.0,
+   "p_len3": 0.0,
+   "three_cycle_share_of_residual": 0.0,
+   "trials": 3200
+  }
+ },
+ "decomposition": {
+  "measured_coalescence": 0.2940625,
+  "measured_detection": 0.9670563230605739,
+  "model_fixture_at_walkers": 0.3991856371252319,
+  "model_fixture_walker_corrected": 0.3797467663942383,
+  "note": "walker factor is measured (16 walkers, same trace), DP factor is measured at 2^-5 and floored at 0.9 for the CP row; the propagated number is BELOW the 0.39 floor and is reported as such",
+  "production_model": 0.3995,
+  "propagated_cp_lower": 0.2658667656287564,
+  "propagated_point": 0.2991672939804754,
+  "ratio_measured_over_walker_model": 0.7743647241349141
+ },
+ "dp_bits": 5,
+ "elapsed_s": 38.8,
+ "ledger_shape": 1.009696311282301,
+ "matched_pairs": {
+  "d0_treat": 0.284375,
+  "d5_treat": 0.2825,
+  "delta_cp95_pessimistic": 0.2644035431540461,
+  "delta_d0_d5": -0.0018750000000000155,
+  "delta_escape_matched": 0.27749999999999997,
+  "lag3_cp95": 0.27001935992082354,
+  "lag3_minus_lag1": 0.0006250000000000422,
+  "lag3_success": 0.283125,
+  "pairs_prefix_equal": 3200,
+  "pairs_with_trigger": 3200,
+  "rows": [
+   {
+    "branch_step": 3,
+    "equal": true,
+    "prefix_lanes": 48,
+    "prefix_sha256_control": "6fd16f07f7c16237",
+    "prefix_sha256_treat": "6fd16f07f7c16237",
+    "trial": 0
+   },
+   {
+    "branch_step": 1,
+    "equal": true,
+    "prefix_lanes": 16,
+    "prefix_sha256_control": "8186d9e3c5a907d0",
+    "prefix_sha256_treat": "8186d9e3c5a907d0",
+    "trial": 1
+   },
+   {
+    "branch_step": 12,
+    "equal": true,
+    "prefix_lanes": 192,
+    "prefix_sha256_control": "a71abe46e46ff374",
+    "prefix_sha256_treat": "a71abe46e46ff374",
+    "trial": 2
+   },
+   {
+    "branch_step": 11,
+    "equal": true,
+    "prefix_lanes": 176,
+    "prefix_sha256_control": "3726f740b60e81f8",
+    "prefix_sha256_treat": "3726f740b60e81f8",
+    "trial": 3
+   },
+   {
+    "branch_step": 1,
+    "equal": true,
+    "prefix_lanes": 16,
+    "prefix_sha256_control": "806ebc3cc5193cdc",
+    "prefix_sha256_treat": "806ebc3cc5193cdc",
+    "trial": 4
+   },
+   {
+    "branch_step": 12,
+    "equal": true,
+    "prefix_lanes": 192,
+    "prefix_sha256_control": "4e37e1f12fc8ed8b",
+    "prefix_sha256_treat": "4e37e1f12fc8ed8b",
+    "trial": 5
+   }
+  ],
+  "starts_shared_by_every_arm": true,
+  "success_control": 0.005,
+  "success_treat": 0.2825
+ },
+ "per_walker_steps": 1687,
+ "q": 4290000067,
+ "shape_assert_dev": 0.00025275358082499366,
+ "test": "census_v20n_matched_pairs",
+ "trials": 3200,
+ "visits_over_sqrtN": 1.009443557701476,
+ "visits_per_trial": 26992,
+ "walk_downsampling": "toy column count R_toy=64 (R_eff=32) exercises the two-step channel at 1/(6*32)/step; production is 1/(6*852105)/step, so the fixture is a DISCLOSED stress rate ~2.7e4x production for the escape arm",
+ "walks_per_trial": 16
+}

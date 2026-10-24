@@ -1,0 +1,31 @@
+{
+ "checks": [
+  {"detail": "log2 W 126.26594404 -> claim 126.266", "name": "claim_is_ceil_of_W", "ok": true},
+  {"detail": "167 itemised rows", "name": "step_rows_167", "ok": true},
+  {"detail": "1.099950711 <= 1.099993376", "name": "kappa_budget", "ok": true},
+  {"detail": "visits/sqrtN 1.009444 vs ledger 1.0096963, dev 2.5e-4 <= 1e-3 (evidence/census-v20n.json:visits_over_sqrtN)", "name": "census_at_exact_budget", "ok": true},
+  {"detail": "3,200 of 3,200 matched pairs have byte-identical prefix traces up to the branch step (evidence/census-v20n.json:matched_pairs.pairs_prefix_equal)", "name": "trajectories_matched_before_branch", "ok": true},
+  {"detail": "escape 0.2825 vs no-escape control 0.0050 on the same starts, delta +0.2775 (evidence/census-v20n.json:matched_pairs.delta_escape_matched)", "name": "escape_delta_matched_pairs", "ok": true},
+  {"detail": "d=0 coalescence 0.29406 and detection 0.96706 read from the SAME trace, delta d0-d5 -0.001875 (evidence/census-v20n.json:matched_pairs.delta_d0_d5)", "name": "d0_row_from_same_trace", "ok": true},
+  {"detail": "2-cycles 0, 3-cycles 0, >=4-cycles 3,160 of 3,200 (evidence/census-v20n.json:cycle_length.lag1)", "name": "cycle_length_census", "ok": true},
+  {"detail": "lag-1+2+3 arm 0.28313 vs lag-1 0.2825, delta +0.000625 (evidence/census-v20n.json:matched_pairs.lag3_minus_lag1)", "name": "lag3_extension_measured", "ok": true},
+  {"detail": "cap 1,687 steps: 0 of 941 lost, CP-95 upper 9.357e-4; tighter caps lose 0.1928/0.2666 (evidence/census-v20n.json:cap_loss.lag1)", "name": "cap_loss_direct_row", "ok": true},
+  {"detail": "0.3995 model x 0.774365 measured ratio x 0.96706 detection = 0.2992 point, 0.26587 CP-lower, stated below the floor", "name": "decomposition_propagated_below_floor", "ok": true},
+  {"detail": "P(absorbed) 1.0 at 10,921 and 43,692 classes, period_2 = 0, three-cycle share 0.0263 -> 0.0007, 16,384 starts each (evidence/absorb-direct.json:fixtures)", "name": "absorption_measured_on_shipped_process", "ok": true},
+  {"detail": "re-pin control moves ge3 mass by 0.7810 and 0.4626 (evidence/absorb-direct.json:mutation)", "name": "absorption_mutation_control_moves", "ok": true},
+  {"detail": "476.644 ref per scalar action, 1,485.1600 ref per fresh start, written by scripts/restart_count.py (evidence/restart-count.json:chain.chain_ref)", "name": "restart_chain_repriced_by_script", "ok": true},
+  {"detail": "ledger.FRESH_REF == evidence/restart-count.json:fresh_ref and ledger.RESTART_REF == METER_CAP", "name": "ledger_consumes_restart_json", "ok": true},
+  {"detail": "every cited path exists, every cited field resolves, 0 orphans, planted wrong path caught (evidence/selfaudit.json)", "name": "citation_path_audit_with_planted_control", "ok": true}
+ ],
+ "claim": {
+  "log2_work": "126.26594404",
+  "score": "126.266",
+  "success_measured": "0.2825",
+  "success_final_after_cap": "0.26915",
+  "success_model_row": "0.3995",
+  "success_propagated_cp_lower": "0.26587"
+ },
+ "cost_model": {"C": 2000, "N_classes": "(r-1)/6", "R_eff": 852105, "dp_bits": 60, "kappa": "1.015"},
+ "revision": "plain-orbitrow-census-40pct-v20o",
+ "supersedes": "54681c8b (v20n)"
+}
