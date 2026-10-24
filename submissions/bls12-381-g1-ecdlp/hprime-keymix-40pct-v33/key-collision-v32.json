@@ -1,0 +1,101 @@
+{
+ "kind": "v32 key proof: adversarial 2^64-differ class, birthday regen, call-site, shipped==charged",
+ "shipped_equals_charged": {
+  "built": true,
+  "vectors": 64,
+  "equal": 64,
+  "verdict": "compiled C kernel reproduces the Python key on 64/64 random 381-bit residues"
+ },
+ "adversarial": {
+  "trials": 1000000,
+  "pair_class": "residues differing by 2^64*delta, delta in [1,2^30)",
+  "v32": {
+   "mean_hd": 84.0005,
+   "p01": 69,
+   "p50": 84,
+   "p99": 99,
+   "max": 113,
+   "expected_hd_under_ideal": 84.0,
+   "verdict": "mean Hamming distance 84.00 of 168 bits (ideal 84): every limb reaches every output bit"
+  },
+  "v31_control": {
+   "mean_hd": 0.0,
+   "collisions": 1000000,
+   "verdict": "PLANTED CONTROL FIRES: v31's mix64 key is identical on 1000000/1000000 adversarial pairs -- the 64-bit mask, reproduced exactly"
+  },
+  "sample": [
+   {
+    "delta": 824633524,
+    "hd_v32": 77,
+    "hd_v31": 0
+   },
+   {
+    "delta": 699298395,
+    "hd_v32": 77,
+    "hd_v31": 0
+   },
+   {
+    "delta": 466815058,
+    "hd_v32": 81,
+    "hd_v31": 0
+   },
+   {
+    "delta": 82307059,
+    "hd_v32": 86,
+    "hd_v31": 0
+   },
+   {
+    "delta": 539508327,
+    "hd_v32": 85,
+    "hd_v31": 0
+   }
+  ]
+ },
+ "birthday": {
+  "form": "expected cross-side matching pairs = N^2 / 2^KEY_IMAGE_BITS; charged pairs = kappa * that",
+  "N_log2": 115.650348,
+  "key_image_bits": 168,
+  "pairs_log2": 63.300696,
+  "pairs": "N^2/2^168",
+  "kappa_charged": 1.458074,
+  "charged_pairs_log2": 63.84476,
+  "cap_log2": 84,
+  "cap": true,
+  "headroom_bits": 20.1552,
+  "v31_64bit_form_log2": 167.300696,
+  "v31_64bit_verdict": "the reviewer's 64-bit arithmetic reproduces: N^2/2^64 = 2^167.3 pairs, far above the 2^84 cap. With the genuine 168-bit key the same form gives 2^63.8, i.e. 20.2 bits UNDER the cap"
+ },
+ "callsite": {
+  "records": 4096,
+  "counters": {
+   "key_mixed_final": 4096,
+   "key_scalar": 0,
+   "key_mixed_v31": 0
+  },
+  "stored_limb_mismatches": 0,
+  "key_scalar_calls_in_hot_path": 0,
+  "verdict": "record_of() calls key_mixed_final (4096 calls over 4096 records) and key_scalar 0 times: the charged key IS the key in the hot path"
+ },
+ "selftest": [
+  [
+   0,
+   0
+  ],
+  [
+   1,
+   296060413728062119500924610042446859196472598627281
+  ],
+  [
+   4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559786,
+   201642752957073698149783524800235654938784430946813
+  ],
+  [
+   18446744073709551616,
+   101529218415519167074952214908615079529756666386197
+  ]
+ ],
+ "key_bits": 168,
+ "key_image_bits": 168,
+ "kernel_instructions": 70,
+ "net_delta_per_record": 63
+}
