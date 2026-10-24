@@ -1,0 +1,71 @@
+{
+ "bounds": {
+  "claim": 127.957,
+  "note": "v14 declared 133.25 as the storage bound; the honest 48-byte value is 133.2549625, so storage does not bind",
+  "storage_bytes_log2_exact": 133.25496250072115,
+  "storage_log2": 133.255,
+  "work_log2": 127.957
+ },
+ "claim_reduced_rational": {
+  "denominator": 1000,
+  "numerator": 127957
+ },
+ "claim_time_log2": 127.957,
+ "instructions_per_visit": 1220.0543403625488,
+ "price_sources": {
+  "fe_add_ir": {
+   "owner": "evidence/insn_price.json",
+   "value": 27
+  },
+  "fe_mul_ir": {
+   "basis": "objdump span of fe_mul_obj in the shipped build",
+   "owner": "evidence/insn_price.json",
+   "value": 148
+  },
+  "fe_sub_ir": {
+   "owner": "evidence/insn_price.json",
+   "value": 27
+  },
+  "inversion": {
+   "chain_muls": 385,
+   "formula": "256 squarings + popcount(p-2)=128 muls + 1 fixup",
+   "owner": "evidence/insn_price.json (dynamic trace 388 = 3 + 385)"
+  }
+ },
+ "record": {
+  "address_basis": "radix sort on the full 256-bit key",
+  "bytes": 48,
+  "layout": "32B class key || 16B identity (20-bit trail || 108-bit step)",
+  "store_bytes_log2": 133.25496250072115
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "radix_sort_detect": 128,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "success": {
+  "basis": "birthday over the full store keyed on x-classes: lambda = V^2/r, V = 2^127.67, r = 2^256; detector verified at fixture scope",
+  "birthday_lower": 0.468938952330089,
+  "floor": 0.39,
+  "lambda": 0.6328782969851414,
+  "meets_floor": true,
+  "walk_census_cp95_lower": 0.2603608733700413,
+  "walk_census_measured": 0.2966666666666667,
+  "walk_census_scope": "toy group order 1000839; the toy walk recurs at ~sqrt(n)/7 steps, so the fixture CANNOT reach the production birthday regime (2^256 group, 2^107.67 steps per walker); the measured row is disclosed as a lower-scope observation, not the production value"
+ },
+ "units_per_visit": 1.2200543403625488,
+ "work": {
+  "claim_time_log2": 127.957,
+  "log2_rows": 127.95694540584199,
+  "log2_visits": 127.67,
+  "log2_work_final": 127.95694815756276,
+  "replay_relative_loss": 1.9073486328125e-06,
+  "restart_relative_loss": 6.815797926051914e-13,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}

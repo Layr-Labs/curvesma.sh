@@ -1,0 +1,21 @@
+{
+ "ci_contains_zero": true,
+ "delta_ci95": [
+  -0.0011363636363636363,
+  0.0014772727272727272
+ ],
+ "delta_per_step": 0.00017045454545454547,
+ "design": {
+  "cluster": "walk",
+  "escape": "enabled",
+  "history_depth": "successor vs S_{t-1} (two-step return); v14 compared with the current state",
+  "reps": 2000,
+  "steps": 220,
+  "walks": 160
+ },
+ "observed": {
+  "ec_traps": 303,
+  "hash_traps": 297
+ },
+ "verdict": "exploratory; selector transfer stays OPEN and no claim row depends on it"
+}

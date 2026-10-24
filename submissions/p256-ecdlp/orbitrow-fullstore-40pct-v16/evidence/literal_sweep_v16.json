@@ -1,0 +1,12 @@
+{
+ "literals_checked": 43,
+ "method": "5+ digit integer literals in prose must appear in an evidence JSON or the named constant list",
+ "misses": [],
+ "pass": true,
+ "planted_control_caught": true,
+ "prose_files": [
+  "argument.md",
+  "public-note.md",
+  "submission.json"
+ ]
+}
