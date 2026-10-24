@@ -1,0 +1,47 @@
+{
+ "package": "plain-orbitrow-40pct-v20d",
+ "track": "bls12-381-g1-ecdlp-plain",
+ "self_contained": true,
+ "dependencies": [],
+ "reproduce": [
+  {
+   "command": "python3 ledger.py",
+   "writes": "stdout",
+   "expects": "161 rows, price 1.080500, log2 W 126.26195600, claim 126.262, success 0.399004, kappa product 1.096914315 <= 1.096947771"
+  },
+  {
+   "command": "python3 scripts/gen_cert_v20d.py",
+   "writes": "certificate.json",
+   "expects": "verdict PASS, 30/30 checks, cp95_lower 0.3980425799824445"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/prod_sweep.py --trials 48000 --chunk 100 --dens 5,7,9,11 --workers 8",
+   "writes": "evidence/raw/*.json, evidence/prod-sweep.json",
+   "expects": "4 densities, 48000 trials each; success 0.4023/0.4026/0.4017/0.4042; CP-95 lower 0.3986/0.3990/0.3980/0.4006; success<=merge; swm 0 (2m35s on 8 workers)"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/prod_sweep.py --trials 8000 --chunk 100 --dens 5,7,9,11 --workers 8 --raw evidence/raw8000 --out evidence/prod-sweep-8000.json",
+   "writes": "evidence/raw8000/*.json, evidence/prod-sweep-8000.json",
+   "expects": "low-n disclosure: CP-95 0.3921/0.3938/0.3872/0.3908, d=9 short of 0.39 at n=8000"
+  },
+  {
+   "command": "nice -n 10 python3 scripts/probe.py",
+   "writes": "stdout",
+   "expects": "100 trials at d=5 W=64: 38 duplicate groups from two walkers, 38/38 solve to the trial x, 0 wrong, 0 zero-denominator"
+  }
+ ],
+ "census": {
+  "arm": "prod-sweep+drain",
+  "classes": 561690001,
+  "walks_per_trial": 64,
+  "kappa": 1.015,
+  "budget_steps": 23930,
+  "per_walker": 373,
+  "seed": 20270,
+  "densities": [5, 7, 9, 11],
+  "trials_per_density": 48000,
+  "drain": "after the budget, pending walkers are flushed to their next DP, cap 8 spacings; charged drain is 2*DP per walker (workers*2*DP total)",
+  "cp95_method": "exact one-sided Clopper-Pearson, Decimal, gen_cert_v15k.py function, bracket [0,1]"
+ },
+ "scope": "mechanism and census at the rival class scale with the production algebra, reporting rule, priced pool and charged drain; not a production-size execution, not a certification of the instruction counts (analytic)"
+}

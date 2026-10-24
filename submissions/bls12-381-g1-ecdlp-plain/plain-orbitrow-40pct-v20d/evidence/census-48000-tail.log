@@ -1,0 +1,16 @@
+  d=11 n= 100 succ 0.3600 (b 0.0200 d 0.3400) merge 0.3600 rec   1198/ 2154 fl   34 ex   0 swm 0 143.4s
+  d=11 n= 100 succ 0.3700 (b 0.0300 d 0.3400) merge 0.3700 rec   1144/ 2137 fl   34 ex   0 swm 0 143.6s
+  d=11 n= 100 succ 0.3600 (b 0.0000 d 0.3600) merge 0.3600 rec   1222/ 2254 fl   36 ex   0 swm 0 143.8s
+{
+ "rule": "CP-95 lower >= 0.39 at every density",
+ "min_cp95_lower": 0.3980425799824445,
+ "min_at_dp_bits": 9,
+ "coherence_all": true,
+ "success_le_merge_all": true,
+ "passed": true
+}
+d= 5 n= 48000 succ 0.4023 CP95 0.3986 (b 0.3641 + d 0.0475) merge 0.4130 rec 749 ex 451 swm 0
+d= 7 n= 48000 succ 0.4026 CP95 0.3990 (b 0.2422 + d 0.1629) merge 0.4108 rec 197 ex 118 swm 0
+d= 9 n= 48000 succ 0.4017 CP95 0.3980 (b 0.0968 + d 0.3054) merge 0.4032 rec 66 ex 21 swm 0
+d=11 n= 48000 succ 0.4042 CP95 0.4006 (b 0.0296 + d 0.3748) merge 0.4042 rec 35 ex 5 swm 0
+wrote evidence/prod-sweep.json 155.3s

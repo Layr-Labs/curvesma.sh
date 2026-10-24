@@ -1,0 +1,163 @@
+{
+ "package": "plain-orbitrow-40pct-v20d",
+ "claim": 126.262,
+ "log2_W": 126.2619559991825,
+ "success_model": 0.39900403409213486,
+ "success_census_min": 0.4017291666666667,
+ "cp95_lower": 0.3980425799824445,
+ "checks": [
+  {
+   "name": "census_densities_5_7_9_11",
+   "ok": true,
+   "detail": "densities [5, 7, 9, 11]"
+  },
+  {
+   "name": "census_48000_trials_each",
+   "ok": true,
+   "detail": "trials/density [48000, 48000, 48000, 48000], total 192000"
+  },
+  {
+   "name": "cp95_recomputed_d5",
+   "ok": true,
+   "detail": "Decimal 0.398625012120191968 vs stored 0.398625012120"
+  },
+  {
+   "name": "cp95_ge_0p39_d5",
+   "ok": true,
+   "detail": "CP-95 lower 0.3986250121201919 >= 0.39 (k=19311 n=48000)"
+  },
+  {
+   "name": "cp95_recomputed_d7",
+   "ok": true,
+   "detail": "Decimal 0.398957832916721599 vs stored 0.398957832917"
+  },
+  {
+   "name": "cp95_ge_0p39_d7",
+   "ok": true,
+   "detail": "CP-95 lower 0.3989578329167215 >= 0.39 (k=19327 n=48000)"
+  },
+  {
+   "name": "cp95_recomputed_d9",
+   "ok": true,
+   "detail": "Decimal 0.398042579982444522 vs stored 0.398042579982"
+  },
+  {
+   "name": "cp95_ge_0p39_d9",
+   "ok": true,
+   "detail": "CP-95 lower 0.3980425799824445 >= 0.39 (k=19283 n=48000)"
+  },
+  {
+   "name": "cp95_recomputed_d11",
+   "ok": true,
+   "detail": "Decimal 0.400559557713826563 vs stored 0.400559557714"
+  },
+  {
+   "name": "cp95_ge_0p39_d11",
+   "ok": true,
+   "detail": "CP-95 lower 0.4005595577138265 >= 0.39 (k=19404 n=48000)"
+  },
+  {
+   "name": "cp95_floor_all_densities",
+   "ok": true,
+   "detail": "min CP-95 0.3980425799824445 at d=9"
+  },
+  {
+   "name": "success_le_merge_all",
+   "ok": true,
+   "detail": "d5 19311<=19824; d7 19327<=19719; d9 19283<=19352; d11 19404<=19404"
+  },
+  {
+   "name": "success_without_merge_zero",
+   "ok": true,
+   "detail": "sum 0"
+  },
+  {
+   "name": "solve_mismatch_zero",
+   "ok": true,
+   "detail": "sum 0"
+  },
+  {
+   "name": "denominator_dead_zero",
+   "ok": true,
+   "detail": "sum 0"
+  },
+  {
+   "name": "recoveries_verified_cover_successes",
+   "ok": true,
+   "detail": "d5 23689>=19311; d7 24783>=19327; d9 50702>=19283; d11 176624>=19404"
+  },
+  {
+   "name": "records_match_budget_over_dp",
+   "ok": true,
+   "detail": "d5 745.7 vs 746.0; d7 186.4 vs 186.5; d9 46.6 vs 46.6; d11 11.6 vs 11.7"
+  },
+  {
+   "name": "drain_reports_le_one_per_walker",
+   "ok": true,
+   "detail": "d5 3.7 <= 64; d7 10.9 <= 64; d9 19.6 <= 64; d11 23.6 <= 64"
+  },
+  {
+   "name": "drain_only_collisions_excluded_and_small",
+   "ok": true,
+   "detail": "595 excluded duplicate pairs vs 78299 merged trials (0.760%)"
+  },
+  {
+   "name": "drain_delivers_reports",
+   "ok": true,
+   "detail": "d5 3.7; d7 10.9; d9 19.6; d11 23.6"
+  },
+  {
+   "name": "in_budget_success_reported_separately",
+   "ok": true,
+   "detail": "d5 0.3641 b + 0.0475 d; d7 0.2422 b + 0.1629 d; d9 0.0968 b + 0.3054 d; d11 0.0296 b + 0.3748 d"
+  },
+  {
+   "name": "low_n_8000_disclosed",
+   "ok": true,
+   "detail": "8000/density census min CP-95 0.3872, disclosed as the precision shortfall"
+  },
+  {
+   "name": "low_n_8000_same_arm",
+   "ok": true,
+   "detail": "same four densities, 8000 trials each"
+  },
+  {
+   "name": "step_rows_161",
+   "ok": true,
+   "detail": "161 itemised instructions"
+  },
+  {
+   "name": "claim_is_ceil_of_W_plus_2e5",
+   "ok": true,
+   "detail": "log2 W 126.26195600 -> claim 126.262"
+  },
+  {
+   "name": "claim_126p262",
+   "ok": true,
+   "detail": "claim 126.262"
+  },
+  {
+   "name": "claim_below_ship_line",
+   "ok": true,
+   "detail": "126.262 <= 126.266"
+  },
+  {
+   "name": "margin_vs_gate_at_least_0p008",
+   "ok": true,
+   "detail": "gate 126.274 - claim 126.262 = 0.0120 >= 0.008"
+  },
+  {
+   "name": "ledger_success_model_ge_floor",
+   "ok": true,
+   "detail": "model 0.399004 >= 0.39"
+  },
+  {
+   "name": "kappa_budget_product",
+   "ok": true,
+   "detail": "1.096914315 <= 1.096947771"
+  }
+ ],
+ "passed": 30,
+ "total": 30,
+ "verdict": "PASS"
+}
