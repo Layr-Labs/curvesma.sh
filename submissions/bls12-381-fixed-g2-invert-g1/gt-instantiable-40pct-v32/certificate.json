@@ -1,0 +1,144 @@
+{
+ "package": "gt-instantiable-40pct-v32",
+ "claim": "127.7213",
+ "W_total_ir": "5609753329069010204074198746176511927714646",
+ "checks": [
+  {
+   "name": "row_sum_equals_W_exactly",
+   "verdict": "PASS",
+   "detail": "sum(rows) == W_total_ir"
+  },
+  {
+   "name": "claim_covers_W",
+   "verdict": "PASS",
+   "detail": "20000^10000 * 2^n >= W^10000"
+  },
+  {
+   "name": "claim_minimal_ceil",
+   "verdict": "PASS",
+   "detail": "n-1 fails the same exact test"
+  },
+  {
+   "name": "claim_matches_submission_json",
+   "verdict": "PASS",
+   "detail": "submission.json score == ledger numerator/10000"
+  },
+  {
+   "name": "every_row_is_a_python_int",
+   "verdict": "PASS",
+   "detail": "no float appears in any arithmetic quantity"
+  },
+  {
+   "name": "trap_at_S_is_exact_int",
+   "verdict": "PASS",
+   "detail": "trap_at_S = 85481963713049917240944295726784289"
+  },
+  {
+   "name": "trap_waste_is_exact_int",
+   "verdict": "PASS",
+   "detail": "integer ceil, no floor division"
+  },
+  {
+   "name": "trap_route_has_no_overlap_multiplier",
+   "verdict": "PASS",
+   "detail": "MARKOV union over the measured guard-admission precondition; no x6 factor, no Poisson limit"
+  },
+  {
+   "name": "trap_markov_bound_present",
+   "verdict": "PASS",
+   "detail": "the bound is a count of a necessary precondition, not a rate over zero events"
+  },
+  {
+   "name": "capacity_uses_steady_state_law",
+   "verdict": "PASS",
+   "detail": "occupancy/residence derivation is stated, not transferred from the fixture"
+  },
+  {
+   "name": "capacity_route_a_matches_arrivals",
+   "verdict": "PASS",
+   "detail": "occupancy == arrivals < capacity: no eviction, retention = 1 by construction"
+  },
+  {
+   "name": "capacity_route_b_rejected_with_value",
+   "verdict": "PASS",
+   "detail": "route B retention 2.189e-32 -> success 1.262e-32"
+  },
+  {
+   "name": "bounds_table_every_array_has_a_bound",
+   "verdict": "PASS",
+   "detail": "9 arrays bounded"
+  },
+  {
+   "name": "bounds_table_no_growth_with_arrivals",
+   "verdict": "PASS",
+   "detail": "each formula is a design-parameter expression"
+  },
+  {
+   "name": "state_key_full_width_row_charged",
+   "verdict": "PASS",
+   "detail": "row == steps x executed MAX (1458 Ir/step)"
+  },
+  {
+   "name": "sort_charge_is_max_over_calls",
+   "verdict": "PASS",
+   "detail": "MAX, not aggregate/calls"
+  },
+  {
+   "name": "coefficient_row_is_an_implementation_bound",
+   "verdict": "PASS",
+   "detail": "two 255-bit mulmods at 64 Ir each"
+  },
+  {
+   "name": "executed_mean_is_labelled_not_charged",
+   "verdict": "PASS",
+   "detail": "the aggregate-divided-by-calls figure is retained as a mean only"
+  },
+  {
+   "name": "success_floor_met",
+   "verdict": "PASS",
+   "detail": "p5 = 0.578125 >= 0.39 with retention = 1 (route A)"
+  },
+  {
+   "name": "success_matches_submission_range",
+   "verdict": "PASS",
+   "detail": "the statement quotes the same p5 the ledger computes"
+  },
+  {
+   "name": "manifest_lists_every_cited_evidence",
+   "verdict": "PASS",
+   "detail": "every evidence path in submission.json is in the manifest"
+  },
+  {
+   "name": "manifest_covers_every_package_file",
+   "verdict": "PASS",
+   "detail": "manifest is the whole tree except itself"
+  },
+  {
+   "name": "manifest_has_sha256",
+   "verdict": "PASS",
+   "detail": "sha256 + byte count verified on disk"
+  },
+  {
+   "name": "file_count_within_intake",
+   "verdict": "PASS",
+   "detail": "30 files"
+  },
+  {
+   "name": "total_bytes_within_intake",
+   "verdict": "PASS",
+   "detail": "229831 B"
+  },
+  {
+   "name": "no_file_over_65536",
+   "verdict": "PASS",
+   "detail": "per-file cap"
+  },
+  {
+   "name": "no_stale_literal_asserted_as_current",
+   "verdict": "PASS",
+   "detail": "every superseded literal is inside a supersession sentence"
+  }
+ ],
+ "all_pass": true,
+ "verdict": "PASS"
+}

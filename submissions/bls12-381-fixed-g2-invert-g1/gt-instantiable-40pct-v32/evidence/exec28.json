@@ -1,0 +1,215 @@
+{
+ "mode": "exec28",
+ "toolchain": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+ "disassembler": "otool -tvV",
+ "opt": "-O2 -arch arm64",
+ "rule": "charge = static span + worst-case loop repetition (body span x maximum iterations from the code's own bounds); the claim is an UPPER bound on the attack's instruction count (objective direction '-'), so an upper bound on each call is the safe direction",
+ "symbols": {
+  "f12mul": {
+   "first_ir_addr": "0x0",
+   "last_ir_addr": "0x2eccc",
+   "ir_count": 47924,
+   "backward_branches": 0,
+   "loop_bodies": [],
+   "loop_free": true,
+   "charge": 47924,
+   "static_span_ir": 47924,
+   "executed_equals_static": true,
+   "basis": "loop-free (no backward branch in the span): the executed count equals the static span for every call; the field is the STATIC span, not a coverage-harness reading (verdict 2331c62 flaw 2)"
+  },
+  "cyclotomic_sqr": {
+   "first_ir_addr": "0x34c24",
+   "last_ir_addr": "0x4d890",
+   "ir_count": 25372,
+   "backward_branches": 0,
+   "loop_bodies": [],
+   "loop_free": true,
+   "charge": 25372,
+   "static_span_ir": 25372,
+   "executed_equals_static": true,
+   "basis": "loop-free: executed == static"
+  },
+  "state_key48w": {
+   "first_ir_addr": "0x0",
+   "last_ir_addr": "0x2bc",
+   "ir_count": 176,
+   "backward_branches": 5,
+   "loop_bodies": [
+    34,
+    36,
+    34,
+    52,
+    32
+   ],
+   "loop_free": false,
+   "charge": 3398,
+   "loop_repetition_ir": 3222,
+   "max_lane_comparisons": 66,
+   "max_outer": 12,
+   "basis": "insertion sort: 66 comparisons x inner body + 12 x outer body, added to the span"
+  },
+  "dict28_lookup": {
+   "first_ir_addr": "0x2c0",
+   "last_ir_addr": "0x628",
+   "ir_count": 219,
+   "backward_branches": 2,
+   "loop_bodies": [
+    135,
+    142
+   ],
+   "loop_free": false,
+   "charge": 1327,
+   "loop_repetition_ir": 1108,
+   "max_probes": 4,
+   "basis": "4 probes x probe body added to the span"
+  },
+  "dict28_insert": {
+   "first_ir_addr": "0x62c",
+   "last_ir_addr": "0xc34",
+   "ir_count": 387,
+   "backward_branches": 3,
+   "loop_bodies": [
+    117,
+    123,
+    86
+   ],
+   "loop_free": false,
+   "charge": 1605,
+   "loop_repetition_ir": 1218,
+   "max_probes": 4,
+   "max_evict_scan": 3,
+   "basis": "4 probes + 3-comparison eviction scan"
+  }
+ },
+ "derivation": {
+  "MUL_CHARGE": 47924,
+  "SQR_CHARGE": 25372,
+  "f12mul_fq_muls": 72,
+  "per_fq_mul_row": 665.611,
+  "arithmetic": "MUL_CHARGE = executed(f12mul) = 47924 Ir for ONE dense Fp12 multiplication.  The shipped f12mul makes FOUR Fp6 multiplications, hence 72 base-field multiplications with these kernels (v28 printed 54 and 887.48 Ir/Fp mul, verdict flaw 4); per Fp mul = 665.61 Ir.  v27 charged 22409 = 47924 - 25515 with no derivation; that discount is withdrawn.",
+  "STEP": "f_mul x MUL_CHARGE + (1 - f_mul) x SQR_CHARGE, f_mul measured in trap28.json",
+  "LOOKUP_ROW": 4725,
+  "REC_WRITE_ROW": 2293,
+  "executed_iteration_counts": {
+   "calls": 20000,
+   "lane_cmp": 667413,
+   "lane_move": 667413,
+   "outer": 220000,
+   "per_call": {
+    "lane_cmp": 33.37065,
+    "lane_move": 33.37065,
+    "outer": 11.0
+   },
+   "analytic_max_per_call": {
+    "lane_cmp": 66,
+    "lane_move": 66,
+    "outer": 11
+   },
+   "within_bounds": true
+  },
+  "loop_bounds_checked": true,
+  "branch_map": {
+   "state_key48w": {
+    "bodies_listed": 5,
+    "bodies_charged": 5,
+    "per_body": [
+     {
+      "body_index": 0,
+      "body_ir": 34,
+      "max_iters": 11,
+      "charged_ir": 374,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 1,
+      "body_ir": 36,
+      "max_iters": 66,
+      "charged_ir": 2376,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 2,
+      "body_ir": 34,
+      "max_iters": 4,
+      "charged_ir": 136,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 3,
+      "body_ir": 52,
+      "max_iters": 4,
+      "charged_ir": 208,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 4,
+      "body_ir": 32,
+      "max_iters": 4,
+      "charged_ir": 128,
+      "in_disassembly": true
+     }
+    ]
+   },
+   "dict28_lookup": {
+    "bodies_listed": 2,
+    "bodies_charged": 2,
+    "per_body": [
+     {
+      "body_index": 0,
+      "body_ir": 135,
+      "max_iters": 4,
+      "charged_ir": 540,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 1,
+      "body_ir": 142,
+      "max_iters": 4,
+      "charged_ir": 568,
+      "in_disassembly": true
+     }
+    ]
+   },
+   "dict28_insert": {
+    "bodies_listed": 3,
+    "bodies_charged": 3,
+    "per_body": [
+     {
+      "body_index": 0,
+      "body_ir": 117,
+      "max_iters": 4,
+      "charged_ir": 468,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 1,
+      "body_ir": 123,
+      "max_iters": 4,
+      "charged_ir": 492,
+      "in_disassembly": true
+     },
+     {
+      "body_index": 2,
+      "body_ir": 86,
+      "max_iters": 3,
+      "charged_ir": 258,
+      "in_disassembly": true
+     }
+    ]
+   }
+  },
+  "wide_access": {
+   "cap_hi": 64,
+   "inserted": 4096,
+   "round_trip": 4096,
+   "misses": 0,
+   "false_hits": 0,
+   "slots_above_2_64": 8062,
+   "reads": 4096,
+   "writes": 6100,
+   "lookups": 14260,
+   "inserts": 13932
+  },
+  "declared_gap": "the gcov basic-block executed-count harness for the three looped dict symbols was attempted and is NOT shipped: its per-line attribution did not reconcile on this toolchain, so v28 bounds those calls from the code's iteration bounds instead of claiming a measurement it does not have"
+ }
+}

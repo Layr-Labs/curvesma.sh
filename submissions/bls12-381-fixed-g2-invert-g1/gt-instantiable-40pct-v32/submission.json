@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "title": "Claim 127.7213: capacity derived from production steady state (route A: 2^128 buckets, no eviction, retention 1; route B computed and shown to fall below the floor), every auxiliary array bounded, full-width state-key sort priced at its executed maximum, Markov trap union, exact-integer trap counts",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT on 1024 workers, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W, exact integer check (W^10000 <= 20000^10000*2^n), n-1 asserted to fail; W is the exact sum of fourteen rows, every row a CEIL of its rational product. CAPACITY AT PRODUCTION STEADY STATE (route A). occupancy = min(capacity, arrival_rate*mean_residence); arrivals are 95803668470929860550224427498997735090 inserts at one insert per step, so capacity is taken from production arrivals: buckets = next_pow2(2S) = 340282366920938463463374607431768211456, capacity = 4*buckets = 1361129467683753853853498429727072845824 records, occupancy = S = 95803668470929860550224427498997735090 < capacity, no record is ever evicted and the retention factor is 1 BY CONSTRUCTION rather than transferred from a fixture. Peak store demand is 194705035654402988429786479712611689348352 B (log2 = 137.16): bucket array 2722258935367507707706996859454145691648 B + node pool 130668428897640369969935849253798993199104 B + record array 61314347821395110752143633599358550457600 B, stated at the same scale as the claim (the claimed run is 142.01 bits of computation) and reported, not scored. ROUTE B computed and rejected: the v31 2^21-record cap saturates (occupancy = capacity), residence falls to 2097152 steps, the match gap is uniform on [1,S] so retention is 2.189e-32 = 2^-105.17 and success would be 1.262e-32, far below the 0.39 floor. BOUNDS. Every auxiliary array has a bound formula from design parameters (records/alive/matched = S; guard ring = depth 6; probe chain = 4; export buffers = 10 words; sort work = 12*6 words; node pool = 2^130; bucket array = 2^128); none grows with arrivals beyond S. FULL-WIDTH STATE KEY. The pre-state_key48w work the v31 ledger priced as zero is charged: twelve canonical 381-bit residues, min/argmin, insertion sort over twelve full-width values and 48-word lane packing = 1458 Ir/step, the EXECUTED MAXIMUM over 20000 calls (p50 1095, p95 1263), plus state_key48w 3398. The coefficient row is now an implementation bound: two 255-bit mulmods at 64 Ir each + 12-lane load = 176 Ir/step. TRAP (MARKOV). A trapping window requires a guard admission, the census counts that precondition exactly (4497 admissions in 5040000 steps), so E[trapping steps at S] <= ceil(4497*S/5040000) = 85481963713049917240944295726784289 and P(any) <= that count: no independence premise, no Poisson limit, no overlap multiplier, no rule of three. Charge = 85481963713049917240944295726784289 windows x 32 x STEP = 131037341647165465940094003989067234091060 Ir. ROUNDING. Every term is an exact integer ceil; trap_at_S and trap_waste are Python ints and no float appears in any arithmetic quantity. SUCCESS. Nonparametric bootstrap of the recorded fixture outcomes (225/320, 200/320) with the retention factor REMOVED because route A never evicts: p5 = 0.578125, median 0.625, floor 0.39 met; the retention-resampled v31 figure 0.5767 and the Beta quantile 0.5762 are retained only as labelled comparisons. No independence statement is made anywhere: the collision argument is the per-walk Markov bound plus the union-existence form.",
+   "score": {
+    "numerator": "1277213",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/manifest32.json",
+    "evidence/ledger32.json",
+    "evidence/sort32.json",
+    "evidence/exec31.json",
+    "evidence/probe31.json",
+    "evidence/trap31.json",
+    "evidence/census28.json",
+    "evidence/prices28.json",
+    "evidence/survival25.json",
+    "evidence/kernel_verify25.json",
+    "public-note.md",
+    "scripts/gen32.py",
+    "scripts/sort32.py",
+    "scripts/cert32.py",
+    "scripts/make32.py",
+    "scripts/exec31.py",
+    "scripts/probe31.py",
+    "scripts/protocol28.py",
+    "scripts/census28.py",
+    "scripts/trap31.py",
+    "scripts/toy28.py",
+    "scripts/ir28/dict28.c"
+   ]
+  }
+ ],
+ "experiments": []
+}
