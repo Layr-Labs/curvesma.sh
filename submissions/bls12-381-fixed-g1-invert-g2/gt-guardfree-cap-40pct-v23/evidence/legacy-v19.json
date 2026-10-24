@@ -1,0 +1,478 @@
+{
+ "density_v19": {
+  "chebyshev": "P(R >= k*mean) <= var/((k-1)*mean)^2 with the measured variance; the cap is charged at the measured worst window, not at the mean",
+  "fixture": {
+   "dp_bits": 5,
+   "guard_depth": 12,
+   "r": 9421,
+   "table_rows": 64,
+   "theta_steps": 32
+  },
+  "walks_row": {
+   "mean_hits_per_walk": 107.69166666666666,
+   "over_dispersion_var_over_mean": 0.2999963699203579,
+   "var_hits_per_walk": 32.30710907067321,
+   "walks": 600,
+   "worst_walk_hits": 205
+  },
+  "windows": {
+   "mean_hits_per_window": 3.365364583333333,
+   "measured_over_model": 0.8413411458333333,
+   "model_hits_per_window": 4.0,
+   "over_dispersion_var_over_mean": 0.12440433512124476,
+   "sd": 0.6470440042455908,
+   "steps_per_walk": 4096,
+   "var_hits_per_window": 0.4186659434301682,
+   "walks": 600,
+   "window_steps": 128,
+   "windows": 19200,
+   "worst_over_mean": 2.0800123810260778,
+   "worst_window_hits": 7
+  }
+ },
+ "ladder_v19": {
+  "controls": {
+   "nonzero_increment_candidates": 12,
+   "nonzero_increment_solvable": true,
+   "nonzero_increment_verified": 1,
+   "wrong_secret_rejected": true,
+   "zero_increment_candidates": 11,
+   "zero_increment_is_trap": true,
+   "zero_increment_verified": 0
+  },
+  "failed": [],
+  "fixture": {
+   "N_classes": 785,
+   "dp_bits": 5,
+   "guard_depth": 12,
+   "ord_r_p": 12,
+   "p": 1152921504607943563,
+   "p_bits": 61,
+   "r": 9421,
+   "seed": 20261024,
+   "table_rows": 64,
+   "theta_steps": 32,
+   "trail_cap_steps": 2048,
+   "trails_per_trial": 8,
+   "trials": 24
+  },
+  "note": "the ladder measures the MERGE -> SOLVE -> VERIFY mechanics at fixture scale, which is supercritical (S/sqrt(N) ~ 2.3 here against 0.28 at production); it is a correctness ladder, not a production recovery rate",
+  "passed": 24,
+  "protocol": "plant x; z = g^x; y = g^a z^b; shipped guarded step; trail ends at its first DP (width 2^-5); one shared store keyed by the 48-byte class key; on a key collision solve all twelve shifts and VERIFY g^x == z",
+  "rows": [
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 10,
+    "steps": 152,
+    "trails_used": 3,
+    "trial": 0
+   },
+   {
+    "collisions": 1,
+    "dp_records": 5,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 11,
+    "steps": 134,
+    "trails_used": 5,
+    "trial": 1
+   },
+   {
+    "collisions": 1,
+    "dp_records": 5,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 11,
+    "steps": 160,
+    "trails_used": 5,
+    "trial": 2
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 8,
+    "steps": 86,
+    "trails_used": 3,
+    "trial": 3
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 0,
+    "steps": 169,
+    "trails_used": 4,
+    "trial": 4
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 7,
+    "steps": 194,
+    "trails_used": 4,
+    "trial": 5
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 3,
+    "steps": 84,
+    "trails_used": 3,
+    "trial": 6
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 9,
+    "steps": 195,
+    "trails_used": 3,
+    "trial": 7
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 4,
+    "steps": 95,
+    "trails_used": 3,
+    "trial": 8
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 3,
+    "steps": 100,
+    "trails_used": 4,
+    "trial": 9
+   },
+   {
+    "collisions": 1,
+    "dp_records": 7,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 5,
+    "steps": 145,
+    "trails_used": 7,
+    "trial": 10
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 10,
+    "steps": 77,
+    "trails_used": 3,
+    "trial": 11
+   },
+   {
+    "collisions": 1,
+    "dp_records": 2,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 11,
+    "steps": 30,
+    "trails_used": 2,
+    "trial": 12
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 2,
+    "steps": 88,
+    "trails_used": 3,
+    "trial": 13
+   },
+   {
+    "collisions": 1,
+    "dp_records": 5,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 4,
+    "steps": 137,
+    "trails_used": 5,
+    "trial": 14
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 11,
+    "steps": 148,
+    "trails_used": 4,
+    "trial": 15
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 5,
+    "steps": 116,
+    "trails_used": 4,
+    "trial": 16
+   },
+   {
+    "collisions": 1,
+    "dp_records": 6,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 0,
+    "steps": 194,
+    "trails_used": 6,
+    "trial": 17
+   },
+   {
+    "collisions": 1,
+    "dp_records": 5,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 7,
+    "steps": 30,
+    "trails_used": 5,
+    "trial": 18
+   },
+   {
+    "collisions": 1,
+    "dp_records": 8,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 2,
+    "steps": 179,
+    "trails_used": 8,
+    "trial": 19
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 4,
+    "steps": 131,
+    "trails_used": 4,
+    "trial": 20
+   },
+   {
+    "collisions": 1,
+    "dp_records": 2,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 7,
+    "steps": 57,
+    "trails_used": 2,
+    "trial": 21
+   },
+   {
+    "collisions": 1,
+    "dp_records": 3,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 10,
+    "steps": 111,
+    "trails_used": 3,
+    "trial": 22
+   },
+   {
+    "collisions": 1,
+    "dp_records": 4,
+    "invariant_ok": true,
+    "pass": true,
+    "planted_x_bits": 14,
+    "recovered": true,
+    "solved_shift": 9,
+    "steps": 197,
+    "trails_used": 4,
+    "trial": 23
+   }
+  ]
+ },
+ "repeat_classes_v19": {
+  "census": {
+   "joint_repeat_events": 1744,
+   "lag_histogram": {
+    "100": 220,
+    "120": 220,
+    "140": 220,
+    "160": 204,
+    "20": 220,
+    "40": 220,
+    "60": 220,
+    "80": 220
+   },
+   "nonzero_increment_events": 1744,
+   "nonzero_increment_lag_histogram": {
+    "100": 220,
+    "120": 220,
+    "140": 220,
+    "160": 204,
+    "20": 220,
+    "40": 220,
+    "60": 220,
+    "80": 220
+   },
+   "p_pair_all": 0.001744,
+   "step_pairs": 1000000,
+   "steps_per_walk": 200,
+   "walks": 5000,
+   "zero_increment_events": 0,
+   "zero_increment_fraction": 0.0,
+   "zero_increment_lag_histogram": {}
+  },
+  "fixture_elements": 9420,
+  "fixture_r": 9421,
+  "reading": "A repeat of (element, guard) is a cycle. The shipped attack stores DP records only and has no self-collision detector, so a cycle whose 20-odd elements contain no DP (probability 1 - 20*2^-80) never reports and the trail is PENDING at every cutoff. The increment is irrelevant to the trap; it only decides whether a solve WOULD have existed had both records been kept. Both classes are charged as traps in v19.",
+  "step_source": "classkey.step (shipped, imported), guard depth 12",
+  "table_rows": 64,
+  "window": {
+   "first_joint_repeat_lag_hist": {
+    "228": 164
+   },
+   "joint_repeat_events": 13546,
+   "nonzero_increment_events": 13546,
+   "walk_repeat_fraction": 0.640625,
+   "walks": 256,
+   "walks_with_joint_repeat": 164,
+   "window_steps": 400,
+   "zero_increment_events": 0
+  }
+ },
+ "retention_v19": {
+  "retention": {
+   "charged_excess_over_mu": 1.014787,
+   "curve": {
+    "1": {
+     "detected": 213,
+     "lag": 1,
+     "p_detect": 0.8875,
+     "p_usable_cp95_lower": 0.9860339718462972,
+     "pairs": 240,
+     "usable_given_detected": 1.0
+    },
+    "16": {
+     "detected": 29,
+     "lag": 16,
+     "p_detect": 0.12083333333333333,
+     "p_usable_cp95_lower": 0.9018553723226655,
+     "pairs": 240,
+     "usable_given_detected": 1.0
+    },
+    "32": {
+     "detected": 22,
+     "lag": 32,
+     "p_detect": 0.09166666666666666,
+     "p_usable_cp95_lower": 0.8726945683451046,
+     "pairs": 240,
+     "usable_given_detected": 1.0
+    },
+    "56": {
+     "detected": 23,
+     "lag": 56,
+     "p_detect": 0.09583333333333334,
+     "p_usable_cp95_lower": 0.8778766110934402,
+     "pairs": 240,
+     "usable_given_detected": 1.0
+    },
+    "8": {
+     "detected": 65,
+     "lag": 8,
+     "p_detect": 0.2708333333333333,
+     "p_usable_cp95_lower": 0.9549577418769789,
+     "pairs": 240,
+     "usable_given_detected": 1.0
+    }
+   },
+   "known_answer_gate": "240/240",
+   "p_detect": 0.8958333333333334,
+   "p_detect_cp95_lower": 0.8575558748268416,
+   "p_usable_cp95_lower": 0.9861629853644579,
+   "p_usable_given_detected": 1.0
+  },
+  "source": "extract of the v18 census evidence (evidence/bounds-v17.json in the v18 tree); the rows are unchanged",
+  "trap": {
+   "measured": {
+    "element_repeat_events": 5173,
+    "joint_repeat_events": 320,
+    "lags_measured": 64,
+    "max_p_pair": 0.0019270718232044198,
+    "p_zero_increment_cp95_upper": 0.009375,
+    "repeat_lags_observed": "20, 40, 60 (period-20 family; first joint repeat lag 228)",
+    "steps": 1000000,
+    "window_repeat_fraction": 0.640625,
+    "window_walks": "164/256",
+    "zero_label_increment_element": 0,
+    "zero_label_increment_joint": 0
+   },
+   "tau": 0.0005049381183466453,
+   "tau_log2": -10.951605787377558
+  },
+  "usability_raw": {
+   "checked": 215,
+   "detected": 215,
+   "usable": 215
+  }
+ }
+}

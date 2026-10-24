@@ -1,0 +1,574 @@
+{
+ "aux": {
+  "covers": "aux total 64127541879038418313/625 is 2^56.510, below W_stress 2^125.767: inside the claim",
+  "resum_ok": true,
+  "rows": {
+   "gt_exp_starts": "64124107126506532736/625",
+   "report_cap_drain": "326379106418736/125",
+   "report_writes": "108793035472912/625",
+   "restart_bookkeeping": "62167448841664/625",
+   "solve": "323447/625",
+   "store_lookup": "326379106418736/125",
+   "table_build": "982738944/625",
+   "verify": "512"
+  },
+  "total": "64127541879038418313/625",
+  "total_log2": 56.509865530519065
+ },
+ "bound_row": {
+  "applied_to_the_total": "X = sum_w X_w, E[X] <= workers * lambda_rep by linearity alone; Markov on the TOTAL gives P(X > C) <= E[X]/C with C = ceil(4 lambda_rep / 1e-9).  No independence across workers and no history-independence inside a worker is used.",
+  "iid_birthday_log2": -0.6296776924901962,
+  "iid_birthday_value_production": 0.6463207914837059,
+  "measured_E_markov": {
+   "E_measured_per_walk": 0.208955223880597,
+   "E_measured_source": "evidence/bound-v23.json (guard-free class stream, L = 20, N = 785, unsaturated)",
+   "P_X_ge_t_upper": 0.208955223880597,
+   "hypothesis_free": true,
+   "iid_formula_at_the_same_fixture": 0.24203821656050956,
+   "measured_over_formula": 0.8633150039277298,
+   "t": 1.0
+  },
+  "one_line": "with the guard dropped the step is history-free (the successor class is a function of the class alone), so the iid birthday count over the class stream applies exactly as in the accepted pre-guard eras",
+  "route": "guard-off restores the classic birthday hypothesis domain; measured-E Markov shipped beside it (hypothesis-free)",
+  "withdrawn": "the v22 monotonicity route (joint <= element <= unguarded as a stochastic domination argument) is WITHDRAWN, not patched: with the guard gone there is no extra coordinate to dominate over"
+ },
+ "cap_row": {
+  "cap_rows_from_density": {
+   "cap": 129309063287467,
+   "cap_log2": 46.877816725780356,
+   "chebyshev_log2": -46.04332031236682,
+   "chebyshev_stop_loss": 1.3790483278603825e-14,
+   "density_factor": 2.0800123810260778,
+   "mean": 62167448841664,
+   "mean_hits_per_window": 3.365364583333333,
+   "mean_log2": 45.82122460991794,
+   "over_dispersion": 0.12440433512124476,
+   "var_hits_per_window": 0.4186659434301682,
+   "worst_window_hits": 7
+  },
+  "guard_free_cap_evidence": "evidence/cap-v23.json"
+ },
+ "checks": [
+  {
+   "name": "cap_is_the_shipped_constant",
+   "ok": true,
+   "value": 154742504910672534362390528
+  },
+  {
+   "name": "cap_abandon_delay_deterministic",
+   "ok": true,
+   "value": 0.0
+  },
+  {
+   "name": "cap_control_fails_without_it",
+   "ok": true,
+   "value": {
+    "control_fails_without_the_cap": true,
+    "rule": "the SAME state continues WITHOUT the cap for 2 x cap steps",
+    "still_without_dp": 56,
+    "trails_tested": 56
+   }
+  },
+  {
+   "name": "cap_guard_free_trails_trap_and_abandon",
+   "ok": true,
+   "value": "abandons 56 of 256 walks"
+  },
+  {
+   "name": "measured_birthday_below_iid",
+   "ok": true,
+   "value": "measured 0.208955223880597 vs iid 0.24203821656050956"
+  },
+  {
+   "name": "inequality_success.net_>=_0.3964",
+   "ok": true,
+   "value": "0.3964570775 >= 0.3964"
+  },
+  {
+   "name": "inequality_success.net_<=_0.3965",
+   "ok": true,
+   "value": "0.3964570775 <= 0.3965"
+  },
+  {
+   "name": "inequality_success.net_>=_0.3963",
+   "ok": true,
+   "value": "0.3964570775 >= 0.3963"
+  },
+  {
+   "name": "inequality_success.model_>=_0.3964",
+   "ok": true,
+   "value": "0.3964570775 >= 0.3964"
+  },
+  {
+   "name": "inequality_success.product_>=_0.3964",
+   "ok": true,
+   "value": "0.3964570775 >= 0.3964"
+  },
+  {
+   "name": "inequality_success.product_cp95_lower_>=_0.3964",
+   "ok": true,
+   "value": "0.3964570775 >= 0.3964"
+  },
+  {
+   "name": "inequality_success.net_cp95_lower_>=_0.39",
+   "ok": true,
+   "value": "0.3964570775 >= 0.39"
+  },
+  {
+   "name": "inequality_success.net_cp95_lower_<=_0.3965",
+   "ok": true,
+   "value": "0.3964570775 <= 0.3965"
+  },
+  {
+   "name": "inequality_success.trap_tau_<=_1e-12",
+   "ok": true,
+   "value": "1.039645029e-14 <= 1e-12"
+  },
+  {
+   "name": "inequality_success.retention_eff_<=_1.0",
+   "ok": true,
+   "value": "1 <= 1.0"
+  },
+  {
+   "name": "inequality_claim.value_<=_125.82",
+   "ok": true,
+   "value": "125.7675 <= 125.82"
+  },
+  {
+   "name": "inequality_claim.value_<=_125.8345",
+   "ok": true,
+   "value": "125.7675 <= 125.8345"
+  },
+  {
+   "name": "inequality_claim.value_<=_125.84",
+   "ok": true,
+   "value": "125.7675 <= 125.84"
+  },
+  {
+   "name": "inequality_claim.value_>=_125.7675",
+   "ok": true,
+   "value": "125.7675 >= 125.7675"
+  },
+  {
+   "name": "inequality_trap.repeat_probability_<=_0.7000",
+   "ok": true,
+   "value": "0.6463207915 <= 0.7000"
+  },
+  {
+   "name": "inequality_density.density_factor_<=_2.10",
+   "ok": true,
+   "value": "2.080012381 <= 2.10"
+  },
+  {
+   "name": "inequality_ladder.passed_>=_24",
+   "ok": true,
+   "value": "24 >= 24"
+  },
+  {
+   "name": "planted_flip_rejected",
+   "ok": true,
+   "value": "flip control: claim.value >= 125.7675"
+  },
+  {
+   "name": "old_round_up_claim_is_rejected_by_the_rule",
+   "ok": true,
+   "value": "0.3962569 >= 0.3963 is False"
+  }
+ ],
+ "claim_integer": {
+  "denominator": "10000",
+  "exact": "125.7675",
+  "numerator": "1257675"
+ },
+ "claim_log2": 125.7675,
+ "inequality_audit": [
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3965",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3963",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.model",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.product",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.product_cp95_lower",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.39",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net_cp95_lower",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "literal": "0.3965",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net_cp95_lower",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 1.0396450289119281e-14,
+   "literal": "1e-12",
+   "ok": true,
+   "op": "<=",
+   "row": "success.trap_tau",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 1.0,
+   "literal": "1.0",
+   "ok": true,
+   "op": "<=",
+   "row": "success.retention_eff",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.82",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.8345",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.84",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7675,
+   "literal": "125.7675",
+   "ok": true,
+   "op": ">=",
+   "row": "claim.value",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.6463207914837059,
+   "literal": "0.7000",
+   "ok": true,
+   "op": "<=",
+   "row": "trap.repeat_probability",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 2.0800123810260778,
+   "literal": "2.10",
+   "ok": true,
+   "op": "<=",
+   "row": "density.density_factor",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 24.0,
+   "literal": "24",
+   "ok": true,
+   "op": ">=",
+   "row": "ladder.passed",
+   "rule": "literal is a FLOOR: value >= literal"
+  }
+ ],
+ "note_literal_audit": [
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.net"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3965",
+   "op": "<=",
+   "row": "success.net"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3963",
+   "op": ">=",
+   "row": "success.net"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.model"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.product"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "in_note": false,
+   "literal": "0.3964",
+   "op": ">=",
+   "row": "success.product_cp95_lower"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.39",
+   "op": ">=",
+   "row": "success.net_cp95_lower"
+  },
+  {
+   "cert_value": 0.3964570774946015,
+   "in_note": false,
+   "literal": "0.3965",
+   "op": "<=",
+   "row": "success.net_cp95_lower"
+  },
+  {
+   "cert_value": 1.0396450289119281e-14,
+   "in_note": false,
+   "literal": "1e-12",
+   "op": "<=",
+   "row": "success.trap_tau"
+  },
+  {
+   "cert_value": 1.0,
+   "in_note": false,
+   "literal": "1.0",
+   "op": "<=",
+   "row": "success.retention_eff"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.82",
+   "op": "<=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.8345",
+   "op": "<=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.84",
+   "op": "<=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 125.7675,
+   "in_note": false,
+   "literal": "125.7675",
+   "op": ">=",
+   "row": "claim.value"
+  },
+  {
+   "cert_value": 0.6463207914837059,
+   "in_note": false,
+   "literal": "0.7000",
+   "op": "<=",
+   "row": "trap.repeat_probability"
+  },
+  {
+   "cert_value": 2.0800123810260778,
+   "in_note": false,
+   "literal": "2.10",
+   "op": "<=",
+   "row": "density.density_factor"
+  },
+  {
+   "cert_value": 24.0,
+   "in_note": true,
+   "literal": "24",
+   "op": ">=",
+   "row": "ladder.passed"
+  }
+ ],
+ "per_step_resum": {
+  "fold_mul_is_the_sum_of_its_rows": true,
+  "guard_row_is_zero_because_the_guard_is_dropped": true,
+  "mul_step_equals_C_REF_plus_fold_mul": true
+ },
+ "per_step_rows": {
+  "column_addr": 16,
+  "cyclo_sqr": 11632,
+  "dp_test": 8,
+  "fold_mul": 1873,
+  "fold_sqr": 1813,
+  "guard": 0,
+  "hist_slot": 32,
+  "key_hash": 72,
+  "label_add": 28,
+  "loop": 32,
+  "mul_step": 21873,
+  "selector": 1613,
+  "sqr_step": 13445,
+  "table_fetch": 72
+ },
+ "planted_flip": {
+  "control_rejects_it": true,
+  "old_note_literal": "0.3963",
+  "old_note_passes": false,
+  "old_note_value": 0.3962569,
+  "tightest_row": {
+   "literal": "125.7675",
+   "row": "claim.value",
+   "value": 125.7675
+  }
+ },
+ "storage": {
+  "peak_bytes": 13925508660337152,
+  "rows": {
+   "advice_bytes": 113246208,
+   "code_bytes": 262144,
+   "guard_history_bytes": 0,
+   "label_bytes": 0,
+   "peak_bytes": 13925508660337152,
+   "record_bytes": 112,
+   "records": 124334897683328,
+   "report_cap": 124334897683328,
+   "scratch_bytes": 4608,
+   "store_bytes": 13925508540532736,
+   "u_label_bytes": 6291456
+  }
+ },
+ "success": {
+  "any_step_agree_for_comparison_only": 1.0,
+  "bigN_row": {
+   "cp95_lower": 0.9989256825254366,
+   "dp_pairs": 2787,
+   "p_detect_dp_gated": 1.0,
+   "pairs": 3008,
+   "reading": "the same arm on a 3136-class pool: the fixture trap-before-DP fraction falls from 0.2503 to 0.0735 as N grows, which is the theta^2/(2N) shape of the bound",
+   "trap_before_dp_fixture": 0.07347074468085106
+  },
+  "clears_floor_cp95_lower": true,
+  "clears_floor_point": true,
+  "dp_gated_pairs": 7503,
+  "guarded_comparison": {
+   "cp95_lower_v22": 0.7763524900450569,
+   "lag32_guarded_v22": 0.10625,
+   "p_detect_guarded_v22": 0.8083333333333333,
+   "reading": "the guard is what separated the two trails: dropping it restores retention to 1 and the lag-32 collapse to 0.10625 disappears"
+  },
+  "lag32_row": {
+   "lag": 32,
+   "p_agree_any_step": 1.0,
+   "p_agree_given_dp": null,
+   "reading": "the lag-32 arm the v22 verdict singled out (0.10625 with the guard); guard-free the two trails are the same trail, so agreement at lag 32 is the same event as at lag 1"
+  },
+  "lambda_": 0.5049381183466453,
+  "model": 0.3964570774946057,
+  "net": 0.3964570774946015,
+  "net_cp95_lower": 0.3964570774946015,
+  "p_detect_dp_gated": 1.0,
+  "p_detect_dp_gated_cp95_lower": 0.9996008084368575,
+  "product": 0.3964570774946057,
+  "product_cp95_lower": 0.3964570774946057,
+  "rate_scaled": 0.3964570774946057,
+  "reports_ceil_formula_per_walk": 256,
+  "reports_check_ratio_measured_over_formula": 0.9013671875,
+  "reports_measured_per_walk": 230.75,
+  "reports_restart": "after EVERY DP the reporting trail is replaced by a FRESH trail (fresh coins) and after EVERY abandon at the cap the state is discarded and a fresh trail started; the walk continues until the step budget is consumed (verdict 3eb6d983 item 3: reports_direct never restarted)",
+  "reports_rule": "the report count is CENSUS-DIRECT with the restart implemented (a reporting trail is replaced by a fresh trail); ceil(S/theta) is the CHECK row, and the fixture shortfall is the abandoned work, which vanishes at production (2^-92.3 per segment)",
+  "retention_eff": 1.0,
+  "retention_eff_cp95_lower": 1.0,
+  "retention_eff_raw_mu_times_p_detect": 1.1,
+  "retention_source": "evidence/retention-v23.json (guard-free walk + cap, DP-gated, 10008 pairs, 7503 with a DP hit, 7503 agree)",
+  "stop_loss": 0.0,
+  "trap_tau": 1.0396450289119281e-14,
+  "which_statistic_feeds_success": "dp_gated_agree (DP-HIT event with the mask applied); any_step_agree is shipped for comparison and feeds nothing"
+ },
+ "the_redesign": "the routing guard is DROPPED and the v22 128*theta abandon cap is KEPT: traps become capped, priced work instead of lost witnesses",
+ "track": "bls12-381-fixed-g1-invert-g2",
+ "trap_row": {
+  "abandon_cap": {
+   "cap_log2": 87.0,
+   "cap_steps": "154742504910672534362390528",
+   "deterministic": true,
+   "measured_delay_mean_steps": 4096.0,
+   "measured_delay_var": 0.0,
+   "measured_fixture_cap_steps": 4096,
+   "multiplier": 128,
+   "shipped_in_code": "v22.trap_charge prices it; measure_v22_ext.cap_abandon meters it (counter, abandon path, label discard, fresh start)",
+   "theta_bits": 80
+  },
+  "bound_note": "P(at least one trap) <= Lambda = 0.0539 < 1 (Markov on the per-walk birthday count), and Markov on the TOTAL gives P(X > C) <= E[X]/C with C = ceil(4 Lambda / 1e-9); linearity only, no independence across workers",
+  "events_charged": 215440264,
+  "method": "birthday count over the whole walk: Lambda = S^2 / (2 (r-1)); every repeat is a cycle with no DP, so every repeat is a trap (the increment decides only whether a solve would exist if both records were kept, and the shipped attack keeps neither)",
+  "repeat_probability_over_the_walk": 0.0538600659569755,
+  "total_log2": 114.81186376929548,
+  "total_reference_units": 3.6459847906175895e+34,
+  "waste_fraction_of_W_stress": 0.0005035625230461608
+ },
+ "version": "v23 guard-free + cap",
+ "work": {
+  "S": "75155834044258079300444605238535429486",
+  "S_log2": 125.82122460991792,
+  "c_mul": 1.09365,
+  "c_raw": 0.935625,
+  "c_sqr": 0.67225,
+  "c_stress": 0.9633825,
+  "delta_stress_over_raw": 0.02966733466933868,
+  "w_raw": "56254141782127172356382787021043768970271/800",
+  "w_raw_log2": 125.72522692620161,
+  "w_stress": "14480763058228491816332114981242671679359279/200000",
+  "w_stress_log2": 125.7674052324031
+ }
+}

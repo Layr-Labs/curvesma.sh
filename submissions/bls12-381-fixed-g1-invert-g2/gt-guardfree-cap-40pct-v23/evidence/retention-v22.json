@@ -1,0 +1,105 @@
+{
+ "curve_guarded": {
+  "1": {
+   "detected": 383,
+   "lag": 1,
+   "p_detect": 0.7979166666666667,
+   "pairs": 480
+  },
+  "16": {
+   "detected": 56,
+   "lag": 16,
+   "p_detect": 0.11666666666666667,
+   "pairs": 480
+  },
+  "2": {
+   "detected": 316,
+   "lag": 2,
+   "p_detect": 0.6583333333333333,
+   "pairs": 480
+  },
+  "32": {
+   "detected": 51,
+   "lag": 32,
+   "p_detect": 0.10625,
+   "pairs": 480
+  },
+  "4": {
+   "detected": 214,
+   "lag": 4,
+   "p_detect": 0.44583333333333336,
+   "pairs": 480
+  },
+  "56": {
+   "detected": 50,
+   "lag": 56,
+   "p_detect": 0.10416666666666667,
+   "pairs": 480
+  },
+  "8": {
+   "detected": 116,
+   "lag": 8,
+   "p_detect": 0.24166666666666667,
+   "pairs": 480
+  }
+ },
+ "detected": 388,
+ "guard_depth": 12,
+ "guard_off_control": {
+  "cp95_lower": 0.9937783263633416,
+  "curve": {
+   "1": {
+    "detected": 480,
+    "lag": 1,
+    "p_detect": 1.0,
+    "pairs": 480
+   },
+   "16": {
+    "detected": 480,
+    "lag": 16,
+    "p_detect": 1.0,
+    "pairs": 480
+   },
+   "2": {
+    "detected": 480,
+    "lag": 2,
+    "p_detect": 1.0,
+    "pairs": 480
+   },
+   "32": {
+    "detected": 480,
+    "lag": 32,
+    "p_detect": 1.0,
+    "pairs": 480
+   },
+   "4": {
+    "detected": 480,
+    "lag": 4,
+    "p_detect": 1.0,
+    "pairs": 480
+   },
+   "56": {
+    "detected": 480,
+    "lag": 56,
+    "p_detect": 1.0,
+    "pairs": 480
+   },
+   "8": {
+    "detected": 480,
+    "lag": 8,
+    "p_detect": 1.0,
+    "pairs": 480
+   }
+  },
+  "detected": 480,
+  "p_detect": 1.0
+ },
+ "known_answer_gate_pass": 480,
+ "known_answer_gate_required": 480,
+ "p_detect_guarded": 0.8083333333333333,
+ "p_detect_guarded_cp95_lower": 0.7763524900450569,
+ "pairs": 480,
+ "reading": "SAME arm as the v18-era row, re-run through the shipped guarded step with the ring and prev-row active; the guard-off control is classkey.step_v13.  The product uses the collision-instant value (lag 1 family); the k-curve is the production-horizon risk and is disclosed as a named failed gate.",
+ "step_source": "classkey.step (shipped, imported) -- not a reimplementation",
+ "steps": 64
+}

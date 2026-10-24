@@ -1,0 +1,40 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "classkey.py",
+    "constants.py",
+    "cp95.py",
+    "audit_v23.py",
+    "evidence/inequality-audit.json",
+    "factor_r.py",
+    "ledger.py",
+    "measure_v23.py",
+    "public-note.md",
+    "routing.py",
+    "tower.py",
+    "toy_census.py",
+    "v23.py",
+    "evidence/cap-v23.json",
+    "evidence/bound-v23.json",
+    "evidence/retention-v23.json",
+    "evidence/retention-bigN-v23.json",
+    "evidence/retention-lag-v23.json",
+    "evidence/reports-v23.json",
+    "evidence/legacy-v19.json"
+   ],
+   "score": {
+    "denominator": "10000",
+    "numerator": "1257675"
+   },
+   "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z with success 0.3965 (CP-95 lower 0.3965, above the 0.39 floor), and its complete classical work is at most 2^125.7675 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The claim covers W_stress 2^125.767405 plus the whole auxiliary total 2^114.812, the cap waste row included. It clears the live board minimum 125.82 by 0.0525 bits and the 125.8345 legality line by 0.067 bits.\n\nTHE REDESIGN OVER v22 (rejected 3eb6d983). v22 measured the fatal trade-off: the routing guard that removes the absorbing cycle family also separates two trails that share a start point, so guarded retention was 0.808333 (CP-95 0.776352) and success 0.3523384, sub-floor. v23 DROPS the guard and KEEPS the 128*theta abandon cap. The step is now history-free (classkey.step_v13: col = kappa, no ring), so the successor class is a function of the class alone and two trails sharing a start point are the same trail: they report at the same distinguished point with two different label pairs, which is the solvable event. Traps become capped priced work instead of lost witnesses.\n\nDP-GATED DETECTION (verdict item 1). Detection is a DP-HIT event: at the first step whose class key satisfies the DP mask, both trails must be in the same class key. Both statistics ship labelled and only the DP-gated one feeds success: DP-gated 7503/7503 (CP-95 0.999601) over 10008 pairs at N=785, 2787/2787 (CP-95 0.998926) at N=3136, any-step 10008/10008 for comparison only, known-answer gate 10008/10008, and the lag-32 arm the verdict cited (0.10625 under the guard) is 1.0000 over the 370 pairs reaching lag 32.\n\nBOUND ROUTE (verdict item 2). The v22 monotonicity/domination route is WITHDRAWN, not patched: with the guard gone there is no extra coordinate to dominate over. Guard-off restores the hypothesis domain of the classic birthday count (history-free step, fixed map on N classes, mu=11/10 disclosed), and beside it the hypothesis-free row is the census-measured E: 0.2090 repeats per walk against the iid 0.2420 (ratio 0.863) at an unsaturated fixture length, with Markov P(X>=t)<=E_meas/t. The trap row is charged at the iid value regardless.\n\nCAP AND TRAP DEBIT. A trail ends at its first DP or at 128*theta = 2^87 steps; a capped trail is abandoned, its labels discarded, a fresh trail started (metered runner). A class repeat is an exact cycle in the guard-free state, so a repeat before the first DP leaves no report: per segment that loss is bounded by theta^2/(2N) = 2^-92.3 (fixture 0.24 per cent measured against a 1.02 per cent closed form, conservative by 4x) and over 2^45.8 segments the abandon probability is <= 2^-46.5 = 1.04e-14, charged. Fixture: 256 guard-free trails, 56 trap, all 56 abandon at exactly 4096 steps (variance 0), force-admission control 56/56 runaway without the cap, fresh-trail control 3120 DP hits.\n\nSUCCESS. Lambda = S^2(1-f^2)/(2 mu N) = 0.5049381183, 1-exp(-Lambda) = 0.3964571; retention = min(1, mu p_detect p_use) = 1.0 (a probability cannot exceed 1, so the mu allowance cannot inflate it); trap debit 1.04e-14; stopping loss 0. success.net = 0.3964571, CP-95 lower 0.3964571. No w=2 amplification is used.\n\nREPORTS (verdict item 3). measure_v23.reports_restart replaces the reporting trail with a fresh trail after EVERY DP and after every abandon, until the step budget is consumed: 230.75 reports/walk against ceil(S/theta) = 256 (ratio 0.9014), 72 abandons over 29704 starts, mean 7.22 steps per report against theta = 8. The v22 count (53.05 against 64) was the missing restart.\n\nWORK AND ARITHMETIC. Dropping the guard removes the 48-instruction ring row: fold_mul 1873, mul_step 21873, c_stress 0.963383, W_stress 2^125.767405, claim 125.7675 (integer 1257675/10000, exact, least 4-decimal log2 >= log2 W_stress + 2e-5 bits). Aux re-sums to 2^114.812 by Fraction and sits inside the claim; every instruction row re-sums by integer assert; peak storage 13925508660337152 B with the guard history row 0. Every >= and <= literal in the note is a table row checked with its direction and a planted flip is rejected.\n\nGATES. Success is conditional on the disclosed mu=11/10 allowance, pseudorandom routing and table fields, and ideal coins; no production-size run; no novelty claim. The fixture runs theta ~ sqrt(N), the regime where the trap-before-DP loss is visible (25.0 per cent at N=785, 7.35 per cent at N=3136); production is 46 bits below sqrt(N), which is why the closed form is the row used. Unchanged: no inversion-free sigma-stable column table (UNMET), class-marginal uniformity refuted at fixture scale (REFUTED, credit not taken), class-stream census stops at R=1024 (UNMET)."
+  }
+ ],
+ "experiments": [
+  "census runner and follow-up arms, shipped in the experiments directory (file run_v23_census): guard-free DP-gated retention, the cap census, reports-with-restart, and the unsaturated birthday cross-check"
+ ],
+ "title": "Guard dropped, cap kept: retention 1.0000 DP-gated, success 0.3965 (CP-95 0.3965), claim 125.7675 \u2014 traps priced as capped work, reports restart-fixed",
+ "version": 1
+}

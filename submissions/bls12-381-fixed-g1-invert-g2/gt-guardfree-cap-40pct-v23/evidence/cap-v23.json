@@ -1,0 +1,29 @@
+{
+ "abandon_delay_is_deterministic": true,
+ "abandons_at_cap": 56,
+ "cap_fixture_steps": 4096,
+ "cap_multiplier": 128,
+ "control_force_admission": {
+  "control_fails_without_the_cap": true,
+  "rule": "the SAME state continues WITHOUT the cap for 2 x cap steps",
+  "still_without_dp": 56,
+  "trails_tested": 56
+ },
+ "cycle_length_max": 16,
+ "cycle_length_mean": 16.0,
+ "dispersion_var_over_mean": 0.0,
+ "dp_exit_mean_steps": 11.423076923076923,
+ "dp_first_exits": 208,
+ "fresh_trail_control": {
+  "dp_hits": 3120,
+  "horizon_steps": 8192,
+  "reading": "a fresh guard-free trail hits DPs over the same horizon, so the trapped trail zero-hit row is a cycle property, not a width property"
+ },
+ "mean_steps_to_abandon": 4096.0,
+ "no_tail_used": "the cap is hard, so P(a trail runs past it) = 0 by construction: the waste row is cap x rate x price with no geometric tail",
+ "step_source": "classkey.step_v13 (the shipped guard-free step)",
+ "theta_fixture_steps": 32,
+ "trails_trapping_in_cycle": 56,
+ "var_steps_to_abandon": 0.0,
+ "walks": 256
+}

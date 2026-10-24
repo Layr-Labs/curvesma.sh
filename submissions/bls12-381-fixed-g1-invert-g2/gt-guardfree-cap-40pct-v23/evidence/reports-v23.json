@@ -1,0 +1,20 @@
+{
+ "abandon_rate_per_start": 0.0024239159709130084,
+ "abandons_measured": 72,
+ "ceil_formula_reports_per_walk": 256,
+ "check_measured_vs_formula_ratio": 0.9013671875,
+ "dp_bits": 3,
+ "mean_steps_to_dp_measured": 7.216955579631636,
+ "model_reports_per_step": 0.125,
+ "production_projection": "reports per S steps = S / (theta + 128 theta p_trap) with p_trap = theta^2/(2N) = 2^-92.3 at production, i.e. ceil(S/theta) exactly; the fixture projection is the same formula with the fixture p_trap, which is why the census reports the abandon rate beside the report count",
+ "reading": "with the restart the report count converges on the DP rate 1/theta, so ceil(S/theta) is confirmed rather than under-counted by path shadowing (v22 measured 53.05 against 64 because a continuing walk re-hits the same DP classes)",
+ "regime": "theta = 2^3 = 8 steps against a 785-class pool (fixture trap rate ~4% per segment), so the step budget reaches the DP rate instead of being eaten by abandons -- the regime in which the report COUNT is the DP rate.  v22 never restarted, so its continuing walk re-hit the same DP classes and counted 53.05 against 64.",
+ "reports_measured": 29536,
+ "reports_per_step_measured": 0.1126708984375,
+ "reports_per_walk_measured": 230.75,
+ "restart_implemented": "after EVERY DP the reporting trail is replaced by a FRESH trail (fresh coins) and after EVERY abandon at the cap the state is discarded and a fresh trail started; the walk continues until the step budget is consumed (verdict 3eb6d983 item 3: reports_direct never restarted)",
+ "steps_per_walk": 2048,
+ "theta_fixture_steps": 8,
+ "trail_starts_measured": 29704,
+ "walks": 128
+}
