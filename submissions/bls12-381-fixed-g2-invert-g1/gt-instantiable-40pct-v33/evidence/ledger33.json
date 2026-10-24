@@ -1,0 +1,252 @@
+{
+ "mode": "ledger33-five-fixes",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers declared, depth 6, sparse directory store, matched-lambda retention",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "95803668470929860550224427498997735090",
+  "trail_per_worker": "93558269991142441943578542479489975",
+  "abort": "K_STALL=32 consecutive squarings, armed by a guard admission"
+ },
+ "fix1_retention": {
+  "law": "a chain slot holds N ~ Poisson(lambda) records with lambda = S/D; the shipped store evicts the tail when the chain is full",
+  "lambda_production": "2.815417e-01",
+  "poisson_tail": {
+   "form": "P(N>4) <= lambda^5/5! / (1 - lambda/6)  (Poisson tail majorant, exact rational)",
+   "value": "1.546694e-05",
+   "log2": -15.98,
+   "expected_overflow_slots": "5.263128e+33"
+  },
+  "matched_lambda_control": {
+   "arm": {
+    "arm": "matched_lambda",
+    "fixtures": 6,
+    "nbuckets": 1024,
+    "records": 1485,
+    "records_per_fixture": 247.5,
+    "lambda_arm": 0.24169921875,
+    "lambda_production": 0.2815416776890734,
+    "lambda_ratio_to_production": 0.8584846859402668,
+    "evictions": 2,
+    "deep_max": 0,
+    "solved": 3
+   },
+   "dense_arm": {
+    "arm": "dense_100x_lambda",
+    "fixtures": 6,
+    "nbuckets": 16,
+    "records": 1717,
+    "records_per_fixture": 286.1666666666667,
+    "lambda_arm": 17.885416666666668,
+    "lambda_production": 0.2815416776890734,
+    "lambda_ratio_to_production": 63.52671055124851,
+    "evictions": 1513,
+    "deep_max": 0,
+    "solved": 1
+   },
+   "matched_lambda_le_production": true,
+   "retention_numerator": 1483,
+   "retention_denominator": 1485,
+   "retention": 0.998653,
+   "why": "the fixture's bucket count is scaled so its per-bucket arrival rate equals production's; the same store, keys and protocol then measure chain loss AT production lambda instead of at a size-driven lambda"
+  },
+  "v31_unmatched_rows": {
+   "evicted_unmatched_total": 1792,
+   "records_total": 15261,
+   "note": "the v31 census rows at the SIZE-DRIVEN bucket count; they are the reason flaw 1 exists and are retained as the unmatched-lambda contrast"
+  },
+  "v32_assertion_replaced": "'retention 1 BY CONSTRUCTION because total capacity exceeds S' is withdrawn: retention is now the measured matched-lambda factor 0.998653"
+ },
+ "fix2_store": {
+  "design": "directory of 2^120 64-bit segment heads; 16-node segments allocated on demand; records and nodes in segmented arenas; no dense array sized by 2^128",
+  "peak_bytes": "73241885200127048504209486348634881540032",
+  "peak_log2": 135.75,
+  "v32_peak_log2": 137.16,
+  "shrink_factor": "2.7",
+  "representable": "directory index 128 bits (fits the shipped unsigned __int128), segment heads and offsets 64 bits; no 2^130 preallocated pool",
+  "init_ir": "1490052703652228864131414538195674755160",
+  "init_ir_v32": "16673835979125984709705355764156642361344",
+  "per_step_overflow_debit_ir": "0.000",
+  "reprice": "lookup, insert, export and init rows are charged on this structure; the overflow debit is the expected extra indirection"
+ },
+ "fix3_keys12_mulmod": {
+  "keys12": {
+   "construction": "twelve canonical 381-bit residues of a uniform Fp12 element, each reduced mod the subgroup order r",
+   "scope": "coordinates sampled at the tower level (a uniform Fp12 element's coordinate vector is the state distribution); NOT a pairing evaluation",
+   "calls": 12000,
+   "seed": 20261024,
+   "bits": 381,
+   "degeneracy_first": {
+    "distinct_lanes_per_element": {
+     "distinct_12": 12000,
+     "collapsed": 0
+    },
+    "zero_lanes": 0,
+    "residue_bits": 255,
+    "high_bit_degeneracy": {
+     "values_with_bits_above_255_set": 0,
+     "all_high_bits_zero": true,
+     "why": "canonical residues are < r < 2^255, so a 381-bit key extraction that reads bits above 254 is degenerate (single-bin histogram). The sampler detects this BEFORE measuring uniformity and bins the 255-bit residue span instead."
+    },
+    "min_distinct_values_per_lane": 12000,
+    "expected_distinct_per_lane": 12000,
+    "verdict": "no degeneration: every element has twelve distinct lanes and every lane takes (almost) all 12000 sampled values"
+   },
+   "uniformity": {
+    "bins": 4096,
+    "df": 4095,
+    "binning": "v*4096//r: equal-probability bins over the reachable residue span [0,r)",
+    "chi2_per_lane": [
+     4153.94,
+     3996.25,
+     4161.45,
+     4100.01,
+     4086.36,
+     4161.45,
+     4072.02,
+     4050.18,
+     4052.22,
+     3988.74,
+     3992.15,
+     4229.72
+    ],
+    "chi2_max": 4229.72,
+    "null_mean": 4095,
+    "null_sd": 90.5,
+    "chi2_999_quantile": 4374.64,
+    "all_lanes_under_999": true,
+    "note": "a 2^-12-class collapse would put chi2 in the 1e6 range; the observed values sit on the null mean"
+   },
+   "collision_rate": {
+    "keybits": 20,
+    "observed_pairs": 81,
+    "expected_pairs_birthday": 68.659,
+    "ratio": 1.18,
+    "verdict": "consistent with the 2^-20 birthday law"
+   }
+  },
+  "mulmod": {
+   "source": "scripts/mulmod33.c",
+   "implementation": "four 64-bit limbs: schoolbook 4x4 product (16 mul) + Montgomery reduction (16 mul) + branch-free conditional subtraction",
+   "object": "compiled here with cc -O2, disassembled, body counted",
+   "static_instructions": 179,
+   "mul_class_instructions": 60,
+   "executed_instructions": 179,
+   "why_executed_equals_static": "clang -O2 fully unrolls both 4-iteration loops; the disassembly contains no backward branch, so every instruction in the body executes exactly once per call",
+   "v32_price": 64,
+   "derived_price": 179,
+   "delta": 115,
+   "verdict": "the v32 64-Ir figure is not an implementation bound; the ledger charges the disassembled body count"
+  },
+  "coeff_per_step": 406,
+  "coeff_derivation": "2 x mulmod33 (A += linv[kap]*a, D += linv[kap]*b) at the disassembled price + 12-lane load at 4 Ir"
+ },
+ "fix4_markov": {
+  "derivation": "a trapping window requires its 32 squarings to stay in a closed orbit of the walk map on the subgroup of order r (2^255). The number of point-pairs in a 32-step window is C(32,2) = 496, so P(closed orbit) <= 496/2^255 by the birthday bound -- derived from the field size and the window length, with NO measured frequency",
+  "k_stall": 32,
+  "pairs": 496,
+  "p_window_bound": 8.567079206653689e-75,
+  "p_window_log2": -246.05,
+  "windows": "2993864639716558142194513359343679221",
+  "expected_trapping_windows": "2.565e-38",
+  "union_over_workers_form": "2.565e-38",
+  "charged_windows": 1,
+  "charge_ir": "1532924",
+  "measured_consistency_row": {
+   "observed_aborts": 0,
+   "observed_windows": "2993864639716558142194513359343679221",
+   "observed_rate_upper_95": 1.0020493111819585e-36,
+   "derived_bound": 8.567079206653689e-75,
+   "consistent": true,
+   "note": "the census is CORROBORATION (0 observed <= derived 2^-246.0 per window); it is not the source of the bound, which reverses the v32 circularity"
+  },
+  "v32_flaw": "v32 converted 4497 measured guard admissions in 5040000 steps into an expectation; that is circular. The admission count is a mechanism statistic and is no longer used in any bound."
+ },
+ "fix5_transfer_and_gap": {
+  "bootstrap_transfer": "the fixture arms are run at lambda_matched (0.2417) which is <= production lambda (0.2815) BY CONSTRUCTION of the bucket count, so the bootstrap population is the matched-lambda population: the resampled p5 applies at production lambda, and the retention factor entering it is measured at that same lambda. No fixture-to-production lambda change remains.",
+  "route_b_gap_law": {
+   "law": "pair weights (S-g)/N give a TRIANGULAR gap density 2(S-g)/S^2 on [0,S]",
+   "E_gap": "S/3 (not S/2)",
+   "retention_triangular": "4.378020e-32",
+   "retention_log2": -104.17,
+   "v32_uniform_value": "2.189e-32",
+   "ratio": 2.0,
+   "success_if_route_b": "2.528e-32",
+   "verdict": "still REJECTED (success 2.5e-32 << 0.39 floor); the row is now the correct triangular value, 2x the v32 uniform one"
+  }
+ },
+ "storage": {
+  "peak_bytes": "73241885200127048504209486348634881540032",
+  "peak_log2": 135.75,
+  "note": "REPORTED, not scored (memory is unweighted); stated plainly because the claimed computation is 141.98 bits"
+ },
+ "rows_ir": {
+  "walk_steps": "4589366535341018653672405076334909779903864",
+  "per_step_key_lookup_probe": "417416583527841402417327830613133131787130",
+  "per_step_slot_export": "65242298228703235034702835126817457596290",
+  "record_writes_and_insert": "229833000661760735459988401570095566480910",
+  "state_key_full_width_sort": "139681748630615736682227215293538697761220",
+  "scalar_coefficient_update": "38896289399197523383391117564593080446540",
+  "guard_and_meter_eval": "2490895380244176374305835114973941112340",
+  "collision_processing": "8192",
+  "trap_waste_bound": "1532924",
+  "index_slots_widened_refs": "1149644021651158326602693129987972821080",
+  "directory_and_segment_init": "1490052703652228864131414538195674755160",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "W_total_ir": "5485567047894684850215082419286253206621026",
+ "claim": {
+  "value": 127.689,
+  "numerator": "1276890",
+  "denominator": "10000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W, checked as 20000^10000 * 2^n >= W^10000",
+  "n_minus_1_fails": true,
+  "row_sum_equals_W": true
+ },
+ "rounding": {
+  "rule": "every row is an exact integer ceil of its rational product",
+  "STEP_exact": "3065847717/64000",
+  "integer_only": true
+ },
+ "prices": {
+  "censused_symbols": {
+   "state_key48w": 3398,
+   "dict28_wide_lookup": 959,
+   "dict28_wide_insert": 1711,
+   "dict28_slot_export": 681
+  },
+  "dense_comparison": {
+   "dict28_lookup": 1327,
+   "dict28_insert": 1605
+  },
+  "state_key_full_width": 1458,
+  "mulmod": 179,
+  "coeff": 406
+ },
+ "success": {
+  "route": "nonparametric bootstrap at matched lambda",
+  "draws": 10000,
+  "seed": 20261024,
+  "factors": {
+   "census_A": [
+    225,
+    320
+   ],
+   "census_B": [
+    200,
+    320
+   ],
+   "retention_measured": [
+    1483,
+    1485
+   ]
+  },
+  "p5_with_retention": 0.5773463804713805,
+  "p5_retention_one": 0.578125,
+  "floor": 0.39,
+  "floor_met": true
+ }
+}

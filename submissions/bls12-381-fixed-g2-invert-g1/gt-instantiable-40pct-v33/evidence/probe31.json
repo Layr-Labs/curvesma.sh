@@ -1,0 +1,48 @@
+{
+ "mode": "probe31-occupancy",
+ "what": "peak live records (d28_ws_live_max) and end occupancy of the SHIPPED wide store on the census fixtures, per scale",
+ "scales": [
+  {
+   "scale": "A",
+   "fixtures": 8,
+   "solved": 4,
+   "tab_slots": 1024,
+   "records_per_fixture": 38,
+   "live_max": 298,
+   "live_max_all": [
+    192,
+    290,
+    290,
+    199,
+    173,
+    288,
+    219,
+    298
+   ],
+   "live_end": 298,
+   "deep": 0,
+   "evictions_last": 2
+  },
+  {
+   "scale": "B",
+   "fixtures": 8,
+   "solved": 5,
+   "tab_slots": 4096,
+   "records_per_fixture": 152,
+   "live_max": 1164,
+   "live_max_all": [
+    1162,
+    883,
+    536,
+    1164,
+    357,
+    1136,
+    1153,
+    1049
+   ],
+   "live_end": 1164,
+   "deep": 0,
+   "evictions_last": 17
+  }
+ ]
+}

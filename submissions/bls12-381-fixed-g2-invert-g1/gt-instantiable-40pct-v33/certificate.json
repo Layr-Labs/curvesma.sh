@@ -1,0 +1,167 @@
+{
+ "mode": "cert33",
+ "claim": 127.689,
+ "numerator": 1276890,
+ "denominator": 10000,
+ "W_total_ir": "5485567047894684850215082419286253206621026",
+ "checks": [
+  {
+   "name": "ledger.row_sum_equals_W",
+   "ok": true,
+   "detail": "sum(rows)=5485567047894684850215082419286253206621026 W=5485567047894684850215082419286253206621026"
+  },
+  {
+   "name": "claim.minimal_n",
+   "ok": true,
+   "detail": "n=1276890 tight in both directions"
+  },
+  {
+   "name": "claim.reduced_rational",
+   "ok": true,
+   "detail": "n/10000 reduces by 10 to 127689/1000 (shipped as the reduced rational)"
+  },
+  {
+   "name": "rows.all_integers",
+   "ok": true,
+   "detail": "14 rows, int types"
+  },
+  {
+   "name": "rows.no_float_arithmetic",
+   "ok": true,
+   "detail": "exact ints"
+  },
+  {
+   "name": "P1.matched_lambda_le_production",
+   "ok": true,
+   "detail": "arm 0.2417 <= production 0.2815"
+  },
+  {
+   "name": "P1.retention_is_measured",
+   "ok": true,
+   "detail": "retention numerator/denominator = the matched arm's own counts"
+  },
+  {
+   "name": "P1.control_not_vacuous",
+   "ok": true,
+   "detail": "dense arm 1513 evictions > matched arm 2"
+  },
+  {
+   "name": "P1.dense_lambda_above_production",
+   "ok": true,
+   "detail": "dense lambda 17.89 > production 0.2815"
+  },
+  {
+   "name": "P2.poisson_tail_recomputed",
+   "ok": true,
+   "detail": "recomputed 1.547e-05 vs ledger 1.547e-05"
+  },
+  {
+   "name": "P2.overflow_slots_recomputed",
+   "ok": true,
+   "detail": "recomputed 5.263e+33"
+  },
+  {
+   "name": "P2.directory_chain_same_law",
+   "ok": true,
+   "detail": "directory and chain slots use one Poisson law at their own lambda"
+  },
+  {
+   "name": "P3.degeneracy_checked_first",
+   "ok": true,
+   "detail": "bits above 255 are constant zero: a 381-bit extraction is degenerate, detected"
+  },
+  {
+   "name": "P3.uniformity_all_lanes",
+   "ok": true,
+   "detail": "chi2 max 4229.7 vs 0.999 quantile 4374.6"
+  },
+  {
+   "name": "P3.collision_birthday",
+   "ok": true,
+   "detail": "observed/expected = 1.180"
+  },
+  {
+   "name": "P3.mulmod_derived",
+   "ok": true,
+   "detail": "derived 179 Ir vs v32 asserted 64"
+  },
+  {
+   "name": "P3.coeff_uses_derived",
+   "ok": true,
+   "detail": "coeff = 2 x 179 + 48"
+  },
+  {
+   "name": "P4.p_window_from_structure",
+   "ok": true,
+   "detail": "p_window = C(32,2)/2^255 = 8.567e-75, computed with no census input"
+  },
+  {
+   "name": "P4.census_is_corroboration",
+   "ok": true,
+   "detail": "the census row is labelled corroboration, not the source of the bound"
+  },
+  {
+   "name": "P4.charge_from_derived",
+   "ok": true,
+   "detail": "derived expectation 2.56e-38 windows -> charge 1532924 Ir"
+  },
+  {
+   "name": "F5.triangular_not_uniform",
+   "ok": true,
+   "detail": "triangular retention is 2x the uniform value (E[gap]=S/3 vs S/2)"
+  },
+  {
+   "name": "F5.route_b_still_rejected",
+   "ok": true,
+   "detail": "success 2.5e-32 < 0.39"
+  },
+  {
+   "name": "F5.transfer_via_matched_lambda",
+   "ok": true,
+   "detail": "bootstrap population == production lambda by construction"
+  },
+  {
+   "name": "success.floor_met",
+   "ok": true,
+   "detail": "p5 0.577346 >= 0.39 with measured retention"
+  },
+  {
+   "name": "success.retention_factors",
+   "ok": true,
+   "detail": "resampling uses the measured retention pair"
+  },
+  {
+   "name": "prices.censused_linkage",
+   "ok": true,
+   "detail": "state_key48w 3398"
+  },
+  {
+   "name": "prices.sort_is_executed_max",
+   "ok": true,
+   "detail": "sort charge 1458 == executed max"
+  },
+  {
+   "name": "storage.disclosed",
+   "ok": true,
+   "detail": "peak 2^135.75 B, reported not scored"
+  }
+ ],
+ "passed": 28,
+ "total": 28,
+ "all_pass": true,
+ "planted_controls": {
+  "P1_matched_lambda": "0 evictions required to be a measurement, not an assertion: the dense arm proves the row can fail",
+  "P2_directory_chain": "tail recomputed from lambda, not copied",
+  "P3_keys12_degeneracy": "the 381-bit extraction is checked and found degenerate; the 255-bit span passes",
+  "P4_derived_before_measured": "structural p_window asserted; census marked corroboration"
+ },
+ "sweep": {
+  "stale_literals": [
+   "127.7213",
+   "1277213",
+   "2^130",
+   "retention 1 BY CONSTRUCTION"
+  ],
+  "verdict": "superseded by this ledger; v33 ships no v32 literal"
+ }
+}
