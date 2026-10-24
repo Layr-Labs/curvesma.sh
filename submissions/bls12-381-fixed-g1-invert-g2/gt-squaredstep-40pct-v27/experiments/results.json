@@ -1,0 +1,75 @@
+{
+ "claim_log2": 126.2672,
+ "claim_rational": "78917/625",
+ "cycle": {
+  "collapse": 12.0,
+  "distinct_class": 785,
+  "distinct_exact": 9420,
+  "two_cycles": 0
+ },
+ "dp_census": {
+  "1": {
+   "cp95_lower": 0.583465366659173,
+   "dp_hits": 735725,
+   "p": 0.5867833333333333,
+   "reports_per_trial": 12.262083333333333,
+   "stored_all": 1417698,
+   "trials": 60000
+  },
+  "2": {
+   "cp95_lower": 0.3861379367021976,
+   "dp_hits": 374647,
+   "p": 0.3894166666666667,
+   "reports_per_trial": 6.244116666666667,
+   "stored_all": 1467921,
+   "trials": 60000
+  },
+  "3": {
+   "cp95_lower": 0.24419868717478785,
+   "dp_hits": 97261,
+   "p": 0.2483,
+   "reports_per_trial": 3.2420333333333335,
+   "stored_all": 763032,
+   "trials": 30000
+  },
+  "4": {
+   "cp95_lower": 0.14671657812044342,
+   "dp_hits": 54508,
+   "p": 0.1501,
+   "reports_per_trial": 1.8169333333333333,
+   "stored_all": 774248,
+   "trials": 30000
+  }
+ },
+ "ledger": {
+  "S_steps": 75539229181652502135937951864761092169,
+  "aux_sum": "51563742396936204067/500",
+  "f": "14566/41929",
+  "trap_charge": "49784829613758482405302259296519757305531180297542931310444255553590154395385856/1156124864354033596364062936243355212414121993028226253461123990496875",
+  "w_stress": "34340256035069730929703355273140365277757805949/335432000"
+ },
+ "model": {
+  "judge": 0.399,
+  "v26_code": 0.47911672329484,
+  "v27": 0.3992366246100233
+ },
+ "production_like_arm": {
+  "S_over_theta": 16.0,
+  "cp95_lower": 0.583465366659173,
+  "depth": 1,
+  "note": "largest realizable S/theta in the fixture; production S/theta = 2^45.8",
+  "p_recover": 0.5867833333333333,
+  "recovered": 35207,
+  "trials": 60000
+ },
+ "recovery": {
+  "gcd_fail": 0,
+  "j0_regression_kept": true,
+  "misses": 0,
+  "old_formula_hits_jne0": 0,
+  "samples": 40000
+ },
+ "runner": "v27_measure.py / run_census_v27.py / ledger27.py / audit_v27.py / build_v27.py",
+ "total_log2": 126.26714807392781,
+ "trap_population": "62484585866263"
+}

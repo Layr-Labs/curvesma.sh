@@ -1,0 +1,64 @@
+{
+ "algebra": {
+  "j0_regression_kept": true,
+  "jne0_total": 6000,
+  "misses": 0,
+  "old_hits_j0": 2000,
+  "old_hits_jne0": 0,
+  "pass_control": true,
+  "samples": 8000
+ },
+ "all_pass": true,
+ "collapse": {
+  "collapse_factor": 12.0,
+  "collapsed_cycle_lengths": {
+   "2": 1,
+   "36": 1,
+   "5": 1
+  },
+  "collapsed_nodes": 785,
+  "collapsed_two_cycles": 1,
+  "exact_states": 9420,
+  "exact_two_cycles": 0,
+  "pass_control": true
+ },
+ "cp": {
+  "pass_control": true,
+  "rows": [
+   {
+    "delta": 1.6685798111093497e-05,
+    "depth": 1,
+    "independent": 0.5834820524572841,
+    "k": 35207,
+    "n": 60000,
+    "shipped": 0.583465366659173
+   },
+   {
+    "delta": 1.6640690381597434e-05,
+    "depth": 2,
+    "independent": 0.3861545773925792,
+    "k": 23365,
+    "n": 60000,
+    "shipped": 0.3861379367021976
+   }
+  ]
+ },
+ "dp": {
+  "dp_bits": 2,
+  "non_dp_credited": 0,
+  "non_dp_offered": 0,
+  "pass_control": true,
+  "planted_key_credited": 0,
+  "reports": 12165,
+  "store_violations": 0,
+  "trials": 1500
+ },
+ "trap": {
+  "pass_control": true,
+  "true_trail_starts": 62484585866263,
+  "understated_bits": 43.82856557311882,
+  "v26_charge_log2": 10.894954782883776,
+  "v26_trails": 4,
+  "v27_charge_log2": 34.723520356002595
+ }
+}
