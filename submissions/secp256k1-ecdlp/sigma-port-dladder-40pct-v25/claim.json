@@ -1,0 +1,31 @@
+{
+ "statement": "On secp256k1-ecdlp this package claims the COMPUTATION BOUND W = 2^128.533 (reduced rational 128533/1000, submitted 128.533) for the shipped DP-walk configuration (2^20 lanes, inversion BATCH 2^18, production DP density d=60, step 754 itemised instructions at C=1000). FIVE FIXES, in the verdict da40eb9c's own order. (1) HISTORY-DEPENDENT COALESCENCE IS NO LONGER CROSS-POOLED. Every ladder cell is estimated on its own trials -- no cell's rate is carried into another -- and each cell is additionally split by its own escape history (esc_run fired vs clean). Design cell 2^20: exact-sum success 0.618018 on escape-fired trails (n=2351) and 0.555437 on clean trails (n=49); re-ladder cells (L=16,R=32,d=4), (L=32,R=64,d=0) and (L=64,R=32,d=0) give 0.628506-0.612541-0.611330 on their own data, so moving L, R and d one at a time does not separate the rate from the floor. Nothing below pools cells. (2) THE EXACT SUM REPLACES exp-of-mean, AND IT WAS RUN. miss = E[(1-2^-60)^T] is summed over the RAW per-trail lengths T recorded for every run: success_exact = 1 - (1/n) sum_j (1-p)^{T_j} at the design point p = 1/E[T]. f(T)=(1-p)^T is convex, so the exp-of-mean value v24 shipped is an UPPER bound on success; measured on the design cell exact 0.615276813 vs exp-of-mean 0.632332281, ratio R = 0.973027680, i.e. the substitution over-credited success by 0.017055 and 'trail/2' is DELETED. (3) THE DETECTOR IS KEY-LEVEL AND THE ADVERSARIAL SET IS NOT TRUNCATED. The comparison is now between two INDEPENDENT implementations (the production selector arithmetic twist_index_production_secp + cell, against klass) over the WHOLE adversarial set -- 36 pairs, no out[:20] slice -- and the class key (K,b,column) is equal on 36/36. Two distinct keys in one column are reported NOT a collision (audit A3), which a class-level comparison would have called a collision. DISCLOSED: the twist index h, a canonicalisation label and not the class key, agrees 20/36 between the window selector and the exact argmin; that window-vs-argmin gap is measured and not repaired here. (4) THE FLOOR RIDES ON A CP-BINOMIAL LOWER BOUND ONLY. The bootstrap interval is deleted. SUCCESS = CP95(789/1200) = 6342808570519753/10000000000000000 x exact-sum ratio 0.973027680 - debits 0.000336000 - restart loss 0.000234375 = 0.616602456 >= 0.390. The floor is MET with the exact sum, so the claim-class is kept; margin 0.226602456. (5) THE TWO UNPRICED ROWS ARE PRICED. sigma's beta^h application was priced only as the selector's partial-product WINDOW, not its result: charged a full F_p multiply (97) plus a 512->256 reduction mod p (97). The 97 of the mu6 row counted 16 schoolbook mul-adds and one conditional subtract, not the reduction of the full 512-bit product mod r: charged a second row of 2 x 97. Step 754 -> 754 instructions, price 1.754000000, which moves the claim from 128.172 to 128.533 (+0.361000 bits). The claim got WORSE and it is the tested algorithm's own price. LADDER (n=1200 per cell, production key, lag-3, d=0): 1480/3600 pooled = 0.411111111, CP-95 lower 0.397540378; slope -0.010979663452 per doubling over 5.996600 doublings; 233.415737 doublings to production class count. NOT RANKING: the claim is 2.1950 bits above the live bar 126.338; submitted as validity depth with the floor measured, not as a rank claim.",
+ "score": {
+  "numerator": "128533",
+  "denominator": "1000"
+ },
+ "evidence": [
+  "public-note.md",
+  "dependencies.json",
+  "ledger.py",
+  "evidence/ledger-v25.json",
+  "evidence/trail-hist-v25.json",
+  "evidence/audit-v25.json",
+  "evidence/dladder-v24.json",
+  "evidence/pair-census.json",
+  "evidence/selector-pair.json",
+  "evidence/cap-recount.json",
+  "evidence/census-v20n.json",
+  "evidence/restart-count.json",
+  "evidence/selector-swap.json",
+  "evidence/absorb-direct.json",
+  "scripts/dladder.py",
+  "scripts/trails_v25.py",
+  "scripts/audit_v25.py",
+  "scripts/regen_v25.py",
+  "scripts/run_ladder_v24.py",
+  "scripts/selector.py",
+  "scripts/qwalk.py",
+  "scripts/census_v20n.py"
+ ]
+}
