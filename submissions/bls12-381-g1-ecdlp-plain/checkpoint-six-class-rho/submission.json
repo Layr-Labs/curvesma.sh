@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: six-class checkpoint rho with a 2^20 jump table",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input T=[x]P0 for the fixed standard BLS12-381 G1 generator P0, recover x. The six-class checkpoint rho in proof.md walks on canonical orbits under negation and the GLV endomorphism lambda, where lambda=0xac45a4010001a40200000000ffffffff and lambda^2+lambda+1=r. Jumps are a table of 2^20 affine points. A point is a checkpoint when bits [20,117) of its canonical x vanish. A repeated checkpoint with independent coefficient pairs solves for x; a dependent repeat abandons the trail and keeps checkpoints already stored. One run always pays S=117165183892697767700873488638206726535 steps, each a batched incomplete affine G1 addition plus 1406 scalar instructions, together with table construction, 64 starting points, verification and a 2^30-slot lookup charge. With C=2000 the total is the exact fraction W=24941538521158037299323443894005998632344/125 target-group-operation equivalents. The submitted score is log2(W) rounded upward at six decimal places. Peak storage is 275046737920 bytes. Preprocessing, included in W, is 26863967764/25. Nonuniform advice is 0 bytes. Success probability is at least 39/100 under the three heuristics named in proof.md. The identity x=0 is the point at infinity and is covered.",
+      "score": {
+        "numerator": "127229890",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-checkpoint-recovery-and-generator-endomorphism",
+      "source": "experiment.py",
+      "purpose": "On a prime-order toy group of bit length bits, with an order-6 multiplication action, check that orbits have size 6 and that a checkpoint collision returns the planted scalar inside the scaled step budget. Then, on the production generator only, check phi(P0)=[lambda]P0. The toy check is not a production cost bound and not a measurement of the asymptotic repeat-time constant. The generator check is one finite identity; proof.md extends it to G1 by the endomorphism homomorphism property.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 16
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "bits",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 12,
+          "trials": 8
+        },
+        {
+          "bits": 16,
+          "trials": 8
+        }
+      ]
+    }
+  ]
+}
