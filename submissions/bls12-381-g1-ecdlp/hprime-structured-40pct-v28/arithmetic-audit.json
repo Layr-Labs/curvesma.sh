@@ -1,0 +1,90 @@
+{
+ "kind": "v28 arithmetic audit (regex extraction, exact Decimal recomputation)",
+ "files": [
+  "public-note.md",
+  "argument.md"
+ ],
+ "patterns_checked": 8,
+ "failures": 0,
+ "rule": "every 'a op b = c' in the public text must recompute to its printed precision; every '2^e = v' must agree within 5e-4 relative",
+ "rows": [
+  {
+   "file": "public-note.md",
+   "expr": "0.399504 - 0.003955 = 0.395549",
+   "a": "0.399504",
+   "op": "-",
+   "b": "0.003955",
+   "printed": "0.395549",
+   "computed": "0.395549",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "1.011312 + 0.023314 = 1.034626",
+   "a": "1.011312",
+   "op": "+",
+   "b": "0.023314",
+   "printed": "1.034626",
+   "computed": "1.034626",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "0.399504 - 0.003955 = 0.395549",
+   "a": "0.399504",
+   "op": "-",
+   "b": "0.003955",
+   "printed": "0.395549",
+   "computed": "0.395549",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "1.011312 + 0.023314 = 1.034626",
+   "a": "1.011312",
+   "op": "+",
+   "b": "0.023314",
+   "printed": "1.034626",
+   "computed": "1.034626",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "116.8271 - 116.8130 = 0.0141",
+   "a": "116.8271",
+   "op": "-",
+   "b": "116.8130",
+   "printed": "0.0141",
+   "computed": "0.0141",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "116.8130 - 116.812770 = 0.000230",
+   "a": "116.8130",
+   "op": "-",
+   "b": "116.812770",
+   "printed": "0.000230",
+   "computed": "0.000230",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "0.399504 - 0.003955 = 0.395549",
+   "a": "0.399504",
+   "op": "-",
+   "b": "0.003955",
+   "printed": "0.395549",
+   "computed": "0.395549",
+   "ok": true
+  },
+  {
+   "file": "argument.md",
+   "expr": "2^66 = 73,786,976,294,838,206,464",
+   "kind": "pow2",
+   "computed": "7.3787e+19",
+   "printed": "73,786,976,294,838,206,464",
+   "ok": true
+  }
+ ]
+}

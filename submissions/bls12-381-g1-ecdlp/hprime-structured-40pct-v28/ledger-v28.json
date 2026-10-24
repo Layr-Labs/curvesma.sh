@@ -1,0 +1,64 @@
+{
+ "C_instructions_per_unit": 2000,
+ "rows": {
+  "records": 291819187909465245178922739327641321472,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292242930980832149504,
+  "gap_self_check": 25924182448222977157188550656,
+  "gap_retry_worst": 3877290542265193293613612662784,
+  "base_entry_nw50": 35712896526701691928576000,
+  "gap_point_tables": 9066943647109718810296320000,
+  "walker_state_nw50": 590295810358705651712
+ },
+ "row_log2": {
+  "records": 127.778342,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "gap_self_check": 94.388285,
+  "gap_retry_worst": 101.612892,
+  "base_entry_nw50": 84.884648,
+  "gap_point_tables": 92.872675,
+  "walker_state_nw50": 69.0
+ },
+ "total_instructions": 291862074749324756868570563716262446100,
+ "W": "2918620747493247568685705637162624461/20",
+ "W_log2": 116.81277007685918,
+ "claim": {
+  "numerator": "116813",
+  "denominator": "1000"
+ },
+ "claim_minus_W": 0.00022992314082159737,
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": 0.014099999999999113,
+ "integer_assert": "total == sum(rows); every row a Python int; regenerated from rows",
+ "typo_control": {
+  "planted": "+1% on records",
+  "detected": true,
+  "typo_W_log2": 116.827123
+ },
+ "complete_W": "W(n) = [2*nb*ell*2238 + 2nb*121*2000 + 2nb*2^11*15*2000 + 2nb*4 + S]/2000 with nb = 2^66, ell = 883576288830423, S = 42886830756854555715593527690576916 (exact integer sum of the nine secondary rows; secondary/dominant = 0.000147)",
+ "applicability": [
+  "nw=2^50 geometry: nb=2^66 bases/side, ell=2^49.65 steps",
+  "no advice; preprocessing includes pool, gap tables and H-prime supply",
+  "peak storage 2^123.235 B",
+  "secondary rows <= 0.0147% of W"
+ ],
+ "S_written": 42886830756854555715593527690576916,
+ "S_v27_argument_written": 1450712880673688235702377589354,
+ "S_note": "the v27 argument printed a stale S; the ledger carried the correct integer sum. Both now regenerate from the rows (verdict flaw 4b)"
+}

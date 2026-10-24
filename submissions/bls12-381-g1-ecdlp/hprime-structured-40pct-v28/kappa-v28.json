@@ -1,0 +1,26 @@
+{
+ "method": "kappa_charge = MEASURED MAX over walks at fixture + 2x the measured max-minus-mean spread (correlation tail); no expectation is used as a bound",
+ "table": {
+  "n_walks": 16,
+  "mean": 0.999654,
+  "median": 0.999567,
+  "p95": 1.011312,
+  "max": 1.011312,
+  "bin_ratio_max": 1.016602,
+  "spread": 0.011657
+ },
+ "kappa_measured_max": 1.011312,
+ "kappa_charge": 1.034626,
+ "withdrawn": [
+  "1.231 hand slack (v26)",
+  "1 + D/m + envelope_top as a BOUND (v27): an expectation under random assignment does not upper-bound the deterministic key map with shared mu6 keys"
+ ],
+ "shared_mu6_note": "production walkers share the mu6 multiplier structure, so walk collisions are correlated and the realised max is the right charge",
+ "price": {
+  "E_bad_v27_log2": 64.6005,
+  "E_bad_v28_log2": 64.349779,
+  "cap_bad_log2": 84,
+  "headroom": 19.650221,
+  "work_row_bits_moved": 0.0
+ }
+}

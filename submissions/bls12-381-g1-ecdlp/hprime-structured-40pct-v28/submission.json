@@ -1,0 +1,43 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v28: structured-walk success arm at production density (ell-ladder, primary q=0.3986 CP-95 lower 0.3963 >= 0.39), measured-max kappa 1.0346, charged gap-point/97-bit-pool rows, full arithmetic audit, W=2^116.81277",
+ "claims": [
+  {
+   "statement": "BLS12-381 G1 auxiliary powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0, d=2^20, recover s. Claimed W=2^116.81277 in 2000-instruction units over 14 integer-asserted ledger rows; claim 116.8130; gate 116.8271; claim-W=0.000229923. CONSTRUCTION (v27 flaw 4a fixed): nb=2^66 bases per side, ell=ceil(N/nb)=883576288830423 steps, and records/side = nb*ell = 65196422678611538243727153558454272 is an INTEGER identity; N=65196422678611466571411401699906505 is odd, so the v27 equality N=nb*ell is withdrawn and only nb*(ell-1)<N<=nb*ell plus records/side=nb*ell are asserted; the records row is regenerated from that integer (overshoot 71672315751858547767 < nb). SUCCESS, STRUCTURED DISTRIBUTION (v27 flaw 1 fixed): the 20k ratio arm measured independent-residue ratio collisions, not the production walk, and its own set-law 0.38638 vs measured 0.39985 showed two laws mixed; the ratio arm is now SECONDARY evidence. v28 measures the production object directly: records are a_i*w_k over ONE shared H-prime walk list W (base x walk products, shared mu6 keys), hit iff v*u*b_j*w_l==a_i*w_k mod p, at production density K=6N^2/m=0.509420 (production 0.5094), sweeping only the nb x ell split. Ladder ell=6944 (108x the fixture's 64) q=0.395300 CP-95 lower 0.389600; ell=682 q=0.399550 CP[0.393839]; ell=112 q=0.392900; ell=64 q=0.397300; ell=16 q=0.371800 (short-walk rung, DISCLOSED sub-floor: the list must be long enough for ratios to densify). PRIMARY arm at ell=6944, 120000 trials: 47835 hits, q=0.398625, CP-95 [0.396298, 0.400956], lower CLEARS 0.39. Pooled over the five rungs with ell>=64 (80000 trials): 31701 hits, q=0.396263, CP-95 lower 0.393415. Production ell=2^49.65 is 2^45 times the largest rung. KAPPA (v27 flaw 2 fixed): an occupancy expectation is not a bound because walkers share the mu6 structure; charged kappa=1.034626 = measured max 1.011312 + 2x the measured max-mean spread 0.011657, with the mean 0.999654/median 0.999567/p95 1.011312/max 1.011312 table in kappa-v28.json; E_bad 2^64.600500 -> 2^64.349779 against the 2^84 cap (19.650 bits headroom), no ledger row moves. GAP POINTS AND 97-BIT POOL (v27 flaw 3 fixed): the ledger loaded gap points but never built them and charged nb entries for a 2nb object. New positive rows: base_entry=2nb*121*2000=2^84.884648 (121 group ops for a 97-BIT pool scalar: 97 doublings + 24 window additions, derived from the scalar size, not the pool-slot count); gap_point_tables=2nb*2^11 even gaps*15 ops*2000=2^92.872675 (the base-dependent one-addition gap points and their challenge-side counterparts); walker_state=2nb*4=2^69.000000. W is unchanged at six decimals because both new rows are 23+ bits below the records row. ARITHMETIC (v27 flaw 4 fixed): N odd so N=nb*ell is false; the printed S was stale (now S=42886830756854555715593527690576916, regenerated from the rows); 0.399504-0.003955=0.395549 (not 0.393405, which used a different subtraction), so the production-law row is 0.395549>=0.39. audit_arith.py extracts every 'a op b=c' and '2^e=v' from the note and argument and recomputes them exactly: 8 patterns, 0 failures. SCOPE: no production run; production counts are the ledger's declared unit costs; the arm runs at a 2^41 field, so density K, the shared-walk product structure and the mu6 test are matched while the absolute split nb/ell=2^16.35 is bracketed and disclosed, absolute-scale transfer being the law's job; kappa is a measured maximum plus a doubled max-mean spread, not a theorem for the 168-bit production key map.",
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "argument.md",
+    "arithmetic-audit.json",
+    "audit_arith.py",
+    "build_submission_v28.py",
+    "census-key-v20.json",
+    "certificate.json",
+    "derive-v28.json",
+    "derive_v28.py",
+    "direct-v25.json",
+    "direct_v25.py",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v26.json",
+    "kappa-v28.json",
+    "keymod.py",
+    "ladder_cp.py",
+    "ledger-v28.json",
+    "public-note.md",
+    "ratios-v26.json",
+    "ratios_v26.py",
+    "selfaudit_v28.py",
+    "structured-ladder.json",
+    "structured_walk_v28.c",
+    "toy.py",
+    "transfer-v27.json",
+    "transfer_v27.py",
+    "verify_v26.py"
+   ]
+  }
+ ],
+ "experiments": []
+}
