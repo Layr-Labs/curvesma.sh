@@ -1,0 +1,106 @@
+{
+ "checks": {
+  "all_edge_values_exercised": "PASS",
+  "control_emitted_same_records": "PASS",
+  "fixed_kernel_matches_bigint": "PASS",
+  "mutation_control_fails": "PASS",
+  "vector_count_ge_10000": "PASS"
+ },
+ "compile_control": "clang -O2 -w -I /var/folders/t8/w_bkm7hs7f71vb9jlb1kgzp40000gn/T/p256kt_3vmjp8ue/ctl /var/folders/t8/w_bkm7hs7f71vb9jlb1kgzp40000gn/T/p256kt_3vmjp8ue/ctl/p256_kernel_test.c -o /var/folders/t8/w_bkm7hs7f71vb9jlb1kgzp40000gn/T/p256kt_3vmjp8ue/kt_control",
+ "compile_fixed": "clang -O2 -w -I /Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/p256-ecdlp/rhosigma-affine-40pct-v10g/evidence /Users/andrewgordon/Documents/ChatGPT/curvesma.sh/curvesmash/submissions/p256-ecdlp/rhosigma-affine-40pct-v10g/evidence/p256_kernel_test.c -o /var/folders/t8/w_bkm7hs7f71vb9jlb1kgzp40000gn/T/p256kt_3vmjp8ue/kt_fixed",
+ "control": {
+  "distinct_a_values": 10015,
+  "edge_values_seen": 15,
+  "first_mismatch": {
+   "add": {
+    "a": "0xce6336ec93771f1dc366ae2c2076475386ad14d4430c32b6856d9c28a9741a02",
+    "b": "0xba96d597e9fdde9c9e66e2665154e05c3ca10c145535098f1a79312058b39663",
+    "got": "0x88fa0c857d74fdb961cd909171cb27b0c34e20e898413c449fe6cd490227b066",
+    "want": "0x88fa0c857d74fdb961cd909271cb27afc34e20e798413c459fe6cd490227b066"
+   },
+   "canon": {
+    "got": "0x46a5ce15ec96bef44d9e9f7c7c89cb9a9eaa141791189d1faaf5868b960d4ab4",
+    "want": "0x46a5ce15ec96bef44d9e9f7b7c89cb9b9eaa141891189d1eaaf5868b960d4ab4",
+    "y": "0xb95a31e91369410cb2616084837634646155ebe86ee762e1550a797469f2b54b"
+   },
+   "inv": {
+    "a": "0x5cbb14a1b81843d69ed8a72db63ae2d31e48042efc6e4cca60d70151a7050785",
+    "got": "0xec5b250dca5e9b9e484669138d0c5d09db2bca6ee7ed99a693684938abf0b9f2",
+    "want_law": "MontMul(a,inv)==R",
+    "want_mont_inverse": "0x6075692c032ce59b6e1d30009dcfd79893d6d9980d246a0ace8a4220725eacce"
+   },
+   "mul": {
+    "a": "0xce6336ec93771f1dc366ae2c2076475386ad14d4430c32b6856d9c28a9741a02",
+    "b": "0xba96d597e9fdde9c9e66e2665154e05c3ca10c145535098f1a79312058b39663",
+    "got": "0x634c0585674bab7e24b3519521ce6917cde5d2ecd389fc3a5ae5f2e0052bfee2",
+    "want": "0x6d4ab5b0edcbf51f6ab6b6f3b22266445898cbf07dae7ce43421a62cdf9b4285"
+   },
+   "sub_ab": {
+    "a": "0x335e4148cb4cd20a5c9a817bab5734a3dc9c50c2ec0d44aa3cd6abcb71871fd5",
+    "b": "0xdd251ab0f9e49b9d3c0f74a6265995772ef6453c5b4fe5bc97a391ce01f3892e",
+    "got": "0x56392696d168366e208b0cd684fd9f2bada60b8690bd5eeea53319fd6f9396a6",
+    "want": "0x56392696d168366e208b0cd584fd9f2cada60b8790bd5eeda53319fd6f9396a6"
+   },
+   "sub_ba": {
+    "a": "0xce6336ec93771f1dc366ae2c2076475386ad14d4430c32b6856d9c28a9741a02",
+    "b": "0xba96d597e9fdde9c9e66e2665154e05c3ca10c145535098f1a79312058b39663",
+    "got": "0xec339eaa5686bf7fdb00343b30de9907b5f3f7401228d6d9950b94f7af3f7c60",
+    "want": "0xec339eaa5686bf7fdb00343a30de9908b5f3f7411228d6d8950b94f7af3f7c60"
+   }
+  },
+  "mismatches": {
+   "add": 5027,
+   "canon": 162,
+   "inv": 213,
+   "mul": 10160,
+   "sub_ab": 5207,
+   "sub_ba": 5003
+  },
+  "noncanonical_outputs": 58,
+  "records": 10770,
+  "total_mismatches": 25772,
+  "vectors": 10240
+ },
+ "edge_values": [
+  "0x0",
+  "0x1",
+  "0x2",
+  "0xffffffff00000001000000000000000000000000fffffffffffffffffffffffe",
+  "0xffffffff00000001000000000000000000000000fffffffffffffffffffffffd",
+  "0x7fffffff800000008000000000000000000000007fffffffffffffffffffffff",
+  "0x8000000000000000",
+  "0x10000000000000000",
+  "0x100000000000000000000000000000000",
+  "0x1000000000000000000000000000000000000000000000000",
+  "0x100000000000000000000000000000000000000000000000000000000",
+  "0x8000000000000000000000000000000000000000000000000000000000000000",
+  "0x8000000000000000000000000000000000000000000000000000000000000001",
+  "0xffffffff00000000000000000000000000000000000000000000000000000000",
+  "0xffffffff00000000fffffffffffffffffffffffffffffffffffffffffffffffe"
+ ],
+ "fixed": {
+  "distinct_a_values": 10015,
+  "edge_values_seen": 15,
+  "first_mismatch": {},
+  "mismatches": {
+   "add": 0,
+   "canon": 0,
+   "inv": 0,
+   "mul": 0,
+   "sub_ab": 0,
+   "sub_ba": 0
+  },
+  "noncanonical_outputs": 0,
+  "records": 10770,
+  "total_mismatches": 0,
+  "vectors": 10240
+ },
+ "inv_law": "fe_inv(a) = R^2*a^-1 mod p; fe_mul(a, fe_inv(a)) = R",
+ "modulus": "0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff",
+ "mont_radix": "0x10000000000000000000000000000000000000000000000000000000000000000",
+ "mul_law": "fe_mul(a,b) = a*b*R^-1 mod p (CIOS Montgomery product)",
+ "random_vectors": 10000,
+ "sha256_header_broken": "59e4e3d4df1cb79704f901a137e9b37717b8a19292958ad201bc33a6762cc314",
+ "sha256_header_fixed": "9383f8e6423af14deeb3699ffcd5ab250b42d675f5bb8b57a80dae882ebb51ab",
+ "verdict": "PASS"
+}
