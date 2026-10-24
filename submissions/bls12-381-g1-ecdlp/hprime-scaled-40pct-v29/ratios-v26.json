@@ -1,0 +1,76 @@
+{
+ "kind": "v26 distinct-ratio recount: set cardinality, diagonal excluded",
+ "trials_per_shape": 64,
+ "shapes": {
+  "nw1": {
+   "nw": 1,
+   "nb": 172,
+   "ordered_pairs": 29584,
+   "distinct_mean": 28357.406,
+   "distinct_min": 28158,
+   "distinct_max": 28458,
+   "distinct_fraction": 0.958539,
+   "diagonal_excluded_mean": 0.0,
+   "diagonal_excluded_fraction": 0.0,
+   "per_base_pair_set": [
+    1
+   ],
+   "per_base_pair_set_mean": 1.0,
+   "duplicate_labels": 1226.594000000001,
+   "p_law_ordered_pairs": 0.398477,
+   "p_law_set_cardinality": 0.385665,
+   "m": 349218
+  },
+  "nw2": {
+   "nw": 2,
+   "nb": 86,
+   "ordered_pairs": 29584,
+   "distinct_mean": 21512.109,
+   "distinct_min": 21258,
+   "distinct_max": 21596,
+   "distinct_fraction": 0.727154,
+   "diagonal_excluded_mean": 14486.453,
+   "diagonal_excluded_fraction": 0.489672,
+   "per_base_pair_set": [
+    3
+   ],
+   "per_base_pair_set_mean": 3.0,
+   "duplicate_labels": 8071.891,
+   "p_law_ordered_pairs": 0.398477,
+   "p_law_set_cardinality": 0.308993,
+   "m": 349218
+  },
+  "nw4": {
+   "nw": 4,
+   "nb": 43,
+   "ordered_pairs": 29584,
+   "distinct_mean": 23229.781,
+   "distinct_min": 22880,
+   "distinct_max": 23419,
+   "distinct_fraction": 0.785214,
+   "diagonal_excluded_mean": 21502.156,
+   "diagonal_excluded_fraction": 0.726817,
+   "per_base_pair_set": [
+    13
+   ],
+   "per_base_pair_set_mean": 13.0,
+   "duplicate_labels": 6354.219000000001,
+   "p_law_ordered_pairs": 0.398477,
+   "p_law_set_cardinality": 0.329088,
+   "m": 349218
+  }
+ },
+ "note": "r=698437, d=2, m=349218 (the same cell the v25 nw series used)",
+ "nw1_floor_check": {
+  "measured_q": 0.39907073974609375,
+  "cp95_lower": 0.3968437,
+  "law_ordered_pairs": 0.398477,
+  "law_set_cardinality": 0.385665,
+  "verdict": "the ORDERED-PAIR birthday value matches the measured q; the set-cardinality Poisson value (smaller, because |S|<N^2) UNDER-predicts it. Neither exceeds the CP-95 upper; the nw4 over-shoot is gone once the law is evaluated on the set count.",
+  "nw4_measured_q": 0.33437347412109375,
+  "nw4_cp95_upper": 0.33652338,
+  "nw4_law_ordered_pairs": 0.338328179,
+  "nw4_law_set_cardinality": 0.329088,
+  "nw4_set_law_within_cp": true
+ }
+}
