@@ -1,8 +1,0 @@
-{
-  "version": 1,
-  "title": "p256-ecdlp: submission template",
-  "claims": [
-    "Incomplete template: supply an attack, its success argument and a justified total computation bound. No score is claimed."
-  ],
-  "experiments": []
-}

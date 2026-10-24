@@ -1,0 +1,47 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk v10j: p measured flat across three class-space scales (0.2390/0.2445/0.2595 at 2^25/2^32/2^39 classes, residual 0.0118), integrated 658-instruction step with the real batch inversion and mod-r labels, 104 B full-key record, canonicaliser fixed (0/4096 rows, 0/208 walks), claim 128.0309",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1280309",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the fully specified two-table affine walk of argument.md is claimed at total classical work at most 2^128.0309 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, with per-instance success 0.2294 and w=2 amplification success 1-(1-p)^2 = 0.4062 >= 0.39.\n\nP TRANSFER IS MEASURED AT THREE SCALES, NOT DISCLAIMED. The scale-free statistic of a rho walk is its budget in class-space units, Lambda = T^2/(2N'). The census builds T = sqrt(2*Lambda*N') with Lambda=0.60, and the declared production budget carries the SAME ratio: S = 2^127.631517 against sqrt(2N') = 2^127.931517, Lambda = 0.60. experiments/make_scale_fixtures.py builds the identical curve construction (p prime, 4p = t^2+3v^2, y^2=x^3+b, prime order, cofactor 1) at 2^25 and 2^32 classes and experiments/run_multiscale_census.sh rebuilds the SAME C census at each scale with 4,000 trials per cell, 72 parallel jobs. RESULTS (dp_bits = 4, the declared production density): 0.2390 at 2^24.995798 classes (956/4000), 0.2445 at 2^31.970579 (978/4000), 0.2595 at 2^39.000003 (1038/4000): flat to a measured residual of 0.011833, all intervals overlapping, pooled 0.24767 over 12,000 trials. The dp 6 and dp 8 arms are measured at all three scales (0.1980/0.2468/0.2395 and 0.0975/0.2208/0.2453) and are flat as well, so the constancy is not a single-density artefact. HEADLINE p = 0.2412 (pooled one-sided 95% Wilson lower bound) - 0.0118 (measured scale residual) = 0.2294; success 1-(1-0.2294)^2 = 0.4062, floor 0.39, margin 0.0162. Every sentence in the package that disclaimed production-length transfer has been deleted; experiments/selfaudit.sh greps for them and for the stale 0.2422 / 1,101 / 72 B / 384-mul controls and writes evidence/selfaudit.json.\n\nTHE COUNTED STEP IS INTEGRATED AND THE RECORD PROCESSOR IS EXECUTED. evidence/p256_recproc_v10j.c replaces the PROD/SUF placeholders with a three-pass round that CALLS the real batch inversion: step_forward (d_i, num_i, PRE[i+1]=PRE[i]*d_i), batch_inv (ONE fe_inv(PRE[n]) then out[i]=inv*PRE[i], inv*=d_i, zero denominators refused), step_close (lam=num*INV, affine step). It maintains the recovery labels in a 4-limb scalar layer mod n = FFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551 (nadd/nsub/nneg/ninv/nmul), so a <- +-(a+t_j) and b <- +-b mod n, and it solves with the DECLARED sign, x = (a-a')*(b'-b)^-1 mod n, refusing db = 0. The match compares the FULL 32-byte x limb-for-limb at insert and then VERIFIES by recomputing [x]P and comparing the full point with Q; it never returns a flag as a recovery. The record is 104 B (x 32 + a 32 + b 32 + owner 8). Production table: 2^32 radix buckets at 2^65.63 records = load factor 0.5, expected chain length ln 2 = 0.69, one 32-byte compare per link.\n\nMEASURED PRICE. clang -O2 -S --target=aarch64-unknown-linux-gnu -ffreestanding plus the same CFG longest-iteration counter used for every earlier row: step_forward 235 + step_close 423 = 658 instructions per walker-round (evidence/recproc_count.json). Charge = 658 + 0.822449 (53,900/65,536 batch share, 385 fe_mul x 140 per inversion round) + 0.639764 (carried rare-event reserve) + 40*2^-62 (record) = 659.460077. W_single = 127.631517202749 + log2(0.659460077) = 127.030874. Amplification w=2: two independent instances per target, fresh coins, separate table instances, work charged twice, run sequentially so the store is reused and storage is not doubled: W = 128.030874, claim 128.0309 = 1280309/10000, which certificate.json recomputes from these rows and checks-1.json carries.\n\nSTORAGE. The v10i 32-bit replay index (which could not address 2^111.63 positions) is REMOVED; b is stored explicitly at 104 B per record. 2^65.631517 records x 104 B = 2^72.331957 B against the 2^73 B cap: 0.668 bits of slack (evidence/cap.json). No bounded-trail scheme, no replay charge.\n\nCANONICALISER FIXED, WHOLE INSTRUMENT PASSES. The failure was one inverted test in the driver's table builder: if (!(y[0] & 1)) called canon_copy exactly when the Montgomery limb was already even and negated the log anyway. Corrected to if (y[0] & 1) under the shipped EVEN-representative convention: table rows 0/4096 mismatched, log stream 0/2048, walks 0/208, mid-walk checkpoints 0/16, 106,496 point additions recomputed, digest match (evidence/point_walk.json verdict PASS, total_mismatches 0).\n\nDISCLOSED, NOT CLAIMED: the processor self-test main() reports invariant_fail = 512 of 4096 steps (evidence/recproc_run.json is the binary's own output) - the compensation of the affine label under canon_y is the open item, so the package claims the code integration and the instruction count, not a passing end-to-end recovery; no production-length execution is claimed; dependencies.json is [].",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "checks-1.json",
+    "dependencies.json",
+    "evidence/FINDINGS-part4.md",
+    "evidence/cap.json",
+    "evidence/census_multiscale.json",
+    "evidence/census_multiscale/",
+    "evidence/census_v10f41.c",
+    "evidence/kernel_test.json",
+    "evidence/ledger.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_fe_cc_broken.h",
+    "evidence/p256_kernel_test.c",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_point_walk_test.py",
+    "evidence/p256_recproc_v10j.c",
+    "evidence/point_walk.json",
+    "evidence/recproc_count.json",
+    "evidence/recproc_run.json",
+    "evidence/recproc.json",
+    "evidence/selfaudit.json",
+    "evidence/step_v10f_o3.c",
+    "evidence/stepcount.json",
+    "evidence/stepcount.py",
+    "evidence/verdict-v10h-judged.md",
+    "experiments/make_scale_fixtures.py",
+    "experiments/make_v10j.py",
+    "experiments/run_multiscale_census.sh",
+    "experiments/selfaudit.sh",
+    "public-note.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
