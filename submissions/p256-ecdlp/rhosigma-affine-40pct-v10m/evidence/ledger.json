@@ -1,0 +1,84 @@
+{
+ "W": {
+  "A_log2_Tprod": 127.631517202749,
+  "W_amplified": 128.9377873172512,
+  "W_single_instance": 127.93778731725122,
+  "amplification_w": 2,
+  "charge_terms": {
+   "batch_backsub_instr_per_walker": 293,
+   "batch_inversion_muls": 385,
+   "batch_walkers": 65536,
+   "batch_zero_scan_instr_per_walker": 14,
+   "denominator_scan": 14,
+   "escape_rate": "modelled 2^-24 from the measured 2^-11 precursor, not measured",
+   "fe_mul_instr_measured": 147,
+   "inversion_share_per_walker_step": 0.8635711669921875,
+   "measured_from": "evidence/stepspans_core.json, decimals from otool -tV on p256_recproc_v10l.o, the SAME object p256_recproc_v10l.dylib was linked from",
+   "prefix_product_note": "computed ONCE in step_forward (1 fe_mul, inside its 238); batch_inv consumes PRE and never writes it (judge 55652457 item 3 / c0376361 item 1)",
+   "rare_event_reserve": 0.63976416015625,
+   "record_processor_share": 9.537576895554244e-17,
+   "step_close_instr_per_walker": 694,
+   "step_forward_instr_per_walker": 234,
+   "step_instructions_integrated": 898,
+   "trap_escape_cost_ir": 57277,
+   "trap_escape_instr": 682,
+   "trap_escape_share_per_walker_step": 0.003413975238800049
+  },
+  "charge_total": 1236.5067493023873,
+  "claim": 128.9378
+ },
+ "amplification": {
+  "floor": 0.39,
+  "margin": 0.0356179056,
+  "p_per_instance": 0.24212,
+  "success": 0.4256179056,
+  "w": 2
+ },
+ "assert": {
+  "batch_inv_denominators": true,
+  "batch_inv_live": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "cp_calibrated": true,
+  "rounding": "claim is the 4-dp CEILING of W, so at-most holds (judge cbc03d46 item 5)",
+  "storage_fits": true,
+  "success_ge_floor": true
+ },
+ "object": {
+  "bytes": 31800,
+  "sha256": "e86d5c5ebee9d9ff64b29b3078d90686cdffd2abc21b2c376e0ca8040bafcb3a"
+ },
+ "p_transfer": {
+  "cp95_lower_correct": 0.24208569124954976,
+  "cp_note": "CP is used only as a reported check now; the shipped p is the fitted-bridge value, so the v10k CP-minus-residual construction is retired (judge c0376361 item 2)",
+  "headline": 0.24212,
+  "source": "evidence/invariant_fit.json: fitted saturation law p_at_production_ltheta = 0.24212 (A=0.24212, tau=3.35); v10k's 0.2297 was not the fit's value, and the CP-minus-residual construction is retired"
+ },
+ "record_store": {
+  "address": "66-bit composite: 32-bit shard id + 34-bit in-shard ordinal, mechanised in rec_addr()",
+  "append_instr": 201,
+  "cap_bytes_log2": 73.0,
+  "cmp_instr": 24,
+  "index_bytes_log2": 69.00858685182882,
+  "index_entry_bytes": 8,
+  "insert_instr_per_record": 439.84310018903597,
+  "insert_share_per_walker_step": 9.537576895554244e-17,
+  "load_factor": 0.77,
+  "probe_path": "INSERT = unsuccessful search (probe to first free slot, then append), not the hit path",
+  "probes_per_insert": 9.951795841209831,
+  "record_bytes": 104,
+  "record_bytes_log2": 72.332,
+  "records_log2": 65.631517202749,
+  "slots_log2": 66.00858685182882,
+  "total_bytes_log2": 72.46936858205578
+ },
+ "selfcheck": {
+  "batch_inv_calls": 64,
+  "batch_inv_denominators": 512,
+  "escape_changes_state": 1,
+  "jump_bits_max": 256,
+  "jump_bits_min": 243,
+  "ring_depth_4_verified": 1
+ },
+ "version": "v10m-r2"
+}

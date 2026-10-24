@@ -1,0 +1,26 @@
+{
+ "escape_cost_ir": 57277,
+ "escape_rate": 5.960464477539063e-08,
+ "escape_share": 0.003413975238800049,
+ "flags": "-O2 -fPIC",
+ "live_counters": {
+  "batch_inv_calls": 64,
+  "batch_inv_denominators": 512
+ },
+ "object_bytes": 31800,
+ "object_sha256": "e86d5c5ebee9d9ff64b29b3078d90686cdffd2abc21b2c376e0ca8040bafcb3a",
+ "selfcheck": {
+  "batch_inv_calls": 64,
+  "escape_changes_state": 1,
+  "jump_bits_max": 256,
+  "jump_bits_min": 246,
+  "ring_depth_4_verified": 1
+ },
+ "spans": {
+  "batch_inv_iter": 293,
+  "fe_mul": 147,
+  "step_close": 694,
+  "step_forward": 234,
+  "trap_escape_span": 682
+ }
+}
