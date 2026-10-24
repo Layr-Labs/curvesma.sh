@@ -1,0 +1,190 @@
+{
+ "W": {
+  "A_log2_Tprod": 127.631517202749,
+  "W_amplified_w2": 128.03087443004077,
+  "W_single_instance": 127.03087443004077,
+  "charge_terms": {
+   "amplification": "w=2 independent instances per target, fresh coins, separate table instances, charged 2x work (+1 bit); sequential, so the store is reused and storage is not doubled",
+   "batch_inversion_share": 0.8203125,
+   "rare_event_reserve": 0.63976416015625,
+   "record_processor_share": 8.673617379884035e-18,
+   "source": "evidence/recproc_count.json (aarch64 -O2 CFG longest-iteration of the INTEGRATED step_forward/step_close), evidence/census_multiscale.json",
+   "step_close": 423,
+   "step_forward": 235,
+   "step_instructions_integrated": 658
+  },
+  "claim": [
+   1280309,
+   10000
+  ],
+  "claim_f": 128.0309,
+  "formula": "W = log2 T_prod + log2(charge/1000) + 1 (w=2)"
+ },
+ "amplification": {
+  "floor": 0.39,
+  "independent": "two independent table instances and fresh algorithm coins per target",
+  "p_per_instance": 0.22940919242524357,
+  "success": 0.40618980728128473,
+  "w": 2
+ },
+ "assert": {
+  "charge_equals_sum": true,
+  "claim_equals_single_plus_amp": true,
+  "storage_fits": true,
+  "success_ge_floor": true
+ },
+ "fixture": {
+  "classes": 549756820252,
+  "classes_log2": 39.00000264094528,
+  "order": 1099513640503,
+  "p": 1099511629627
+ },
+ "kernel": {
+  "control_mismatches": 25772,
+  "fixed_mismatches": 0,
+  "records": 10770
+ },
+ "p_transfer": {
+  "cp95_method": "one-sided 95% Wilson lower bound",
+  "floor": 0.39,
+  "note": "dp4 (the declared production density) measures 0.2390 / 0.2445 / 0.2595 over a 14,000x class-space range; the pooled 95% Wilson lower bound less the measured scale residual is the headline p",
+  "p_headline": 0.22940919242524357,
+  "p_pooled_cp95": 0.2412425257585769,
+  "p_pooled_dp4": 0.24766666666666667,
+  "scale_residual": 0.011833333333333335,
+  "scales": {
+   "2p25_dp4": {
+    "check_fail": 0,
+    "classes_log2": 24.995798,
+    "cp95": 0.22808730765614604,
+    "dc0": 0,
+    "dp_bits": 4,
+    "merges": 8974,
+    "p_hat": 0.239,
+    "records": 1572568,
+    "successes": 956,
+    "trials": 4000
+   },
+   "2p25_dp6": {
+    "check_fail": 0,
+    "classes_log2": 24.995798,
+    "cp95": 0.18784187013170528,
+    "dc0": 0,
+    "dp_bits": 6,
+    "merges": 2465,
+    "p_hat": 0.198,
+    "records": 392321,
+    "successes": 792,
+    "trials": 4000
+   },
+   "2p25_dp8": {
+    "check_fail": 0,
+    "classes_log2": 24.995798,
+    "cp95": 0.09005509840555584,
+    "dc0": 0,
+    "dp_bits": 8,
+    "merges": 560,
+    "p_hat": 0.0975,
+    "records": 96503,
+    "successes": 390,
+    "trials": 4000
+   },
+   "2p32_dp4": {
+    "check_fail": 0,
+    "classes_log2": 31.970579,
+    "cp95": 0.23349740554933363,
+    "dc0": 0,
+    "dp_bits": 4,
+    "merges": 98114,
+    "p_hat": 0.2445,
+    "records": 17737321,
+    "successes": 978,
+    "trials": 4000
+   },
+   "2p32_dp6": {
+    "check_fail": 0,
+    "classes_log2": 31.970579,
+    "cp95": 0.23571134373817132,
+    "dc0": 0,
+    "dp_bits": 6,
+    "merges": 27102,
+    "p_hat": 0.24675,
+    "records": 4427609,
+    "successes": 987,
+    "trials": 4000
+   },
+   "2p32_dp8": {
+    "check_fail": 0,
+    "classes_log2": 31.970579,
+    "cp95": 0.21015411130925687,
+    "dc0": 0,
+    "dp_bits": 8,
+    "merges": 6146,
+    "p_hat": 0.22075,
+    "records": 1108987,
+    "successes": 883,
+    "trials": 4000
+   },
+   "2p39_dp4": {
+    "check_fail": 0,
+    "classes_log2": 39.000003,
+    "cp95": 0.2482646351043314,
+    "dc0": 0,
+    "dp_bits": 4,
+    "merges": 1256014,
+    "p_hat": 0.2595,
+    "records": 202868552,
+    "successes": 1038,
+    "trials": 4000
+   },
+   "2p39_dp6": {
+    "check_fail": 0,
+    "classes_log2": 39.000003,
+    "cp95": 0.22857903099104784,
+    "dc0": 0,
+    "dp_bits": 6,
+    "merges": 281212,
+    "p_hat": 0.2395,
+    "records": 50632555,
+    "successes": 958,
+    "trials": 4000
+   },
+   "2p39_dp8": {
+    "check_fail": 0,
+    "classes_log2": 39.000003,
+    "cp95": 0.2342353391312802,
+    "dc0": 0,
+    "dp_bits": 8,
+    "merges": 73476,
+    "p_hat": 0.24525,
+    "records": 12630892,
+    "successes": 981,
+    "trials": 4000
+   }
+  },
+  "shape_law": "Lambda = T^2/(2N') held at 0.60 at every scale (census builds T = sqrt(2*Lambda*N')); production is the SAME ratio: S = 2^127.631517 vs sqrt(2N') = 2^127.931517",
+  "success_margin": 0.016189807281284718,
+  "success_w2": 0.40618980728128473,
+  "table_rows": 2048,
+  "tables": 2,
+  "walker_count": 16
+ },
+ "point_walk": {
+  "checkpoints_mismatched": 0,
+  "log_stream_mismatched": 0,
+  "rows_mismatched": 0,
+  "source": "evidence/point_walk.json",
+  "verdict": "PASS",
+  "walks_mismatched": 0
+ },
+ "storage": {
+  "bytes_log2": 72.3319569208901,
+  "cap_log2": 73.0,
+  "fits": true,
+  "layout": "x 32 B + a 32 B + b 32 B + owner 8 B (full-coordinate key, both scalars mod n, NO replay index)",
+  "log2_records": 65.631517202749,
+  "record_bytes": 104,
+  "replay_index": "REMOVED. v10i's 32-bit step-index could not address 2^111.63 positions; v10j stores b explicitly, which costs 0.415 bits of density headroom and no recovery-path work",
+  "slack_bits": 0.668043079109907
+ }
+}
