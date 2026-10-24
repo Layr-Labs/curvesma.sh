@@ -1,0 +1,19 @@
+claim -> extraction table (regen.py; every row Y)
+
+claim element                      | extraction                                           | value                                        | status
+-----------------------------------+------------------------------------------------------+----------------------------------------------+-------
+object instructions                | completeness.py, clang+otool on schedule.build()     | 148                                          | Y
+charged literal rows               | schedule.build() in emit_asm() order                 | 132                                          | Y
+scaffolding                        | emit_asm() synthetic lines                           | 16                                           | Y
+__text                             | otool -l size field = 4 x object                     | 0x250                                        | Y
+charge non-refresh / refresh       | experiment.py LEDGER sum / +REFRESH_INSTR            | 131 / 134                                    | Y
+record fields read before own write | schedule rows, [x19,#off], emitted order             | 10/10 offsets 0, 16, 32, 48, 64, 80, 96, 104, 120, 136 | Y
+fallback semantics                 | emit_asm() L_fallback body                           | ldur x30, [sp, #8]; add sp, sp, #16; ret     | Y
+failure terms (attack level)       | experiment.py cost block                             | emitted 0.00000; design 0.36624              | Y
+allowances (true multiplicities)   | experiment.py cost block                             | log2 total 88.41                             | Y
+score (reduced rational)           | experiment.py CLAIM, gcd(1262433,10000)=1            | 1262433/10000                                | Y
+esc2_events                        | grep experiment.py                                   | absent (deleted, never incremented)          | Y
+
+regenerated from the shipped tree by regen.py --write; --check compares this
+manifest byte-for-byte; --control deletes one emitter instruction and requires every
+derived count to move (148->147, 0x250->0x24c).
