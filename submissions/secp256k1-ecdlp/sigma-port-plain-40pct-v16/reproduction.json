@@ -1,0 +1,24 @@
+{
+ "commands": [
+  "python3 scripts/census_v20n.py   # 3 arms x 3200 trials -> evidence/census-v20n.json (48 s this host)",
+  "python3 ledger.py                # ROWS, exact Fractions, log2 W, claim, floor decision",
+  "python3 scripts/selfaudit.py     # cited-path audit + planted wrong-path control -> evidence/selfaudit.json"
+ ],
+ "environment": {
+  "python": "3.14 (numpy 2.4.4)",
+  "cost_model": "tracks/docs/COST_MODEL.md, C = 2000",
+  "disasm": "clang -O2 -arch arm64 + objdump on a 4x64-bit reference"
+ },
+ "entrypoint": "ledger.py",
+ "expected": {
+  "claim": "126.822",
+  "log2_work": "126.822",
+  "step_insn": 144,
+  "mont_mul_insn": 92,
+  "success_measured": 0.2825,
+  "success_cp95": 0.2694035431540461,
+  "lag3_success": 0.283125,
+  "three_cycle_lag1": 2872
+ },
+ "test": "reproduction"
+}

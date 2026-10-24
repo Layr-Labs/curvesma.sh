@@ -1,0 +1,24 @@
+{
+ "cited_files": 17,
+ "evidence_files": 6,
+ "field_citations": 0,
+ "missing_files": [],
+ "numbers_checked": 222,
+ "orphans": [],
+ "passed": true,
+ "planted_wrong_path": {
+  "caught": true,
+  "injected": "evidence/__planted_missing__.json",
+  "missing": [
+   "evidence/__planted_missing__.json"
+  ]
+ },
+ "row_binding": {
+  "json_chain_ref_neq_v20l_319": true,
+  "ledger_fresh_ref_eq_json": true,
+  "ledger_restart_ref_eq_json_fresh": true
+ },
+ "test": "selfaudit_v20n",
+ "uncited_evidence": [],
+ "unresolved_fields": []
+}

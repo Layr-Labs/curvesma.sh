@@ -1,0 +1,32 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers), this package is a PORT of the judge-validated plain-track mu6 orbit-row walk (bls12-381-g1-ecdlp-plain ticket 5ecbf15, 126.2364) to the secp256k1 curve: the same step transition (canonical mu6 class, one seeded row per column, invariant a + c*x == canon), the same refresh-store periodicity versus record-coalescence distinction, and a metered ledger whose rows were re-priced for a 256-bit field on this host (measured 92-instruction 4-limb Montgomery CIOS multiply, not a scaled 381-bit number). Class count N=(n-1)/6 at secp256k1 n, R_eff from p (bitlen 256), so S0 and every budget term are secp values. Claim log2 W = 126.8220 with the escape row and the 2^60 lag reserve priced as in the template; the claim is ABOVE the live secp frontier 126.338 by 0.484 bits, so this port does not lead and says so. Census: 3,200 trials x 16 walkers at the exact ledger budget (visits/sqrt(N) 1.009444 vs 1.009696, dev 2.5e-4), three arms on identical fixed starts: no-escape control succeeds 0.0050 (CP-95 0.00314) and is absorbed in a 2-cycle in 3,200 of 3,200 trials; escape lag-1 succeeds 0.2825 (CP-95 0.26940) and leaves 2,872 of 3,200 trials in a 3-cycle (share of residual 0.9170); escape lag-1+2+3 removes the 3-cycle channel entirely (0 of 3,200) and succeeds 0.28313 (CP-95 0.27002). All 3,200 matched pairs have byte-identical prefix traces up to the branch step. Fruitless-cycle rate at production shape is therefore 0.97875 absorbed under lag-1 and 0.10625 under lag-3 (residual 0.096875 >=4-cycle, 0.009375 2-cycle). Cap loss on the would-solve denominator at the 1,687-step cap is 0 of 941, CP-95 upper 0.000936. The port has NO sigma pool and no unpriced per-candidate structure: the only state is the class table plus one record per class, so the secp verdict's retention-at-production-load flaw class does not apply by construction. Success is measured BELOW the 0.39 floor (0.373911 production-shape, 0.26940 walk-only CP-95) and is reported as below, not asserted to meet it.",
+   "score": {
+    "numerator": "126822",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census-v20n.json",
+    "evidence/ledger-out.json",
+    "evidence/absorb-direct.json",
+    "evidence/restart-count.json",
+    "evidence/selfaudit.json",
+    "ledger.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/census_v20n.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "scripts/selfaudit.py",
+    "scripts/restart_count.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v16 port: plain-track orbitrow/periodicity lineage transplanted (mu6 quotient walk, metered ledger, 92-insn 4-limb mul re-disasm) - census 3200x3 arms, lag-3 removes the 3-cycle channel (2872/3200 -> 0), claim 126.822",
+ "version": 1
+}

@@ -1,0 +1,22 @@
+{
+ "test": "ledger_out",
+ "source": "python3 ledger.py on this tree",
+ "claim": 126.822,
+ "log2_W": 126.822,
+ "log2_S0": 126.69996043,
+ "A_H1": 1.015,
+ "step_insn": 144,
+ "step_price": 1.072,
+ "mont_mul_insn": 92,
+ "kappa_product": 1.088128582,
+ "kappa_ceiling": 1.088272289,
+ "frontier_secp256k1": 126.338,
+ "template_ticket": "5ecbf15",
+ "template_score": 126.2364,
+ "floor": 0.39,
+ "floor_met": false,
+ "decision": "HOLD",
+ "N_classes": "19298681539552699237261830834781317975472927379845817397100860523586360249056",
+ "p": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+ "n": "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141"
+}

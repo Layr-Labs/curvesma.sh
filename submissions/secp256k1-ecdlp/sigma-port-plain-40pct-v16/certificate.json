@@ -1,0 +1,60 @@
+{
+ "checks": [
+  {
+   "name": "claim_is_ceil_of_W",
+   "ok": true,
+   "detail": "log2 W 126.822 -> claim 126.822"
+  },
+  {
+   "name": "step_rows_144",
+   "ok": true,
+   "detail": "144 itemised rows; 4-limb disasm: mont mul 92, mul_raw 89, add 22, cmp 30, cneg 42"
+  },
+  {
+   "name": "kappa_budget",
+   "ok": true,
+   "detail": "1.088128582 <= 1.088272289"
+  },
+  {
+   "name": "census_at_exact_budget",
+   "ok": true,
+   "detail": "visits/sqrtN 1.009444 vs ledger 1.0096963, dev 2.5e-04 <= 1e-3"
+  },
+  {
+   "name": "trajectories_matched_before_branch",
+   "ok": true,
+   "detail": "3200 of 3200 matched pairs byte-identical up to the branch step"
+  },
+  {
+   "name": "escape_delta_matched_pairs",
+   "ok": true,
+   "detail": "escape 0.2825 vs control 0.005 on identical starts, delta +0.2775"
+  },
+  {
+   "name": "lag3_removes_three_cycle_channel",
+   "ok": true,
+   "detail": "lag1 2872/3200 in 3-cycles -> lag3 0/3200"
+  },
+  {
+   "name": "cap_loss_would_solve_denominator",
+   "ok": true,
+   "detail": "0 of 941 lost, CP95 upper 0.000936"
+  },
+  {
+   "name": "floor_reported_not_asserted",
+   "ok": true,
+   "detail": "measured production-shape success 0.373911 < 0.39; FLOOR_MET=False, DECISION HOLD stated"
+  },
+  {
+   "name": "no_sigma_pool",
+   "ok": true,
+   "detail": "state = static orbit table + one record per visited class; no per-candidate pool, so retention-at-load cannot arise"
+  },
+  {
+   "name": "frontier_position",
+   "ok": true,
+   "detail": "claim 126.822 vs frontier 126.338: +0.484 bits above, states it does not lead"
+  }
+ ],
+ "test": "certificate_v16"
+}
