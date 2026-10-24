@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "title": "Claim 127.5900: census at the shipped config (depth 6, evicting dict28.o), executed-count prices, Markov trap census, success p5=0.5762",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W, exact integer check, n-1 asserted to fail; W is the exact sum of nine rows. CENSUS AT THE SHIPPED CONFIG. Depth 6 (not 5), the shipped evicting dictionary dict28.o called through ctypes with call counters asserted nonzero (not a Python dict), the shipped key routine state_key48w on twelve 4-word field lanes; 320 and 320 fixtures at the two scales, 225/320 and 200/320 successes; eviction loss MEASURED against dict28_nolru.o at the same config: 15261 evictions, 1792 records evicted before match, 2400 matches at report, control 15483 drops. Worker count: measured at 8,64,128 (trail 7-170); production declares 1024 and its trail is 9.36e34, which no fixture reaches - the partition series at fixed S is reported instead of asserting 1024. SUCCESS. 5th percentile of 10000 bootstrap draws of min(census A, census B) x retention = 0.5762 (median 0.6194), above the 0.39 floor; the v27 independently-uniform residual divisor is deleted. ADDRESSING. Nine-word slots, 128-bit ref field, 127-bit slot refs; slot = mulhi128(hash, cap) from four 64x64 products with a carry chain, so cap above 2^64 routes; the sparse store is keyed by the FULL 128-bit slot and a fixture round-trips 4096/4096 references at cap 2^70+12345 (8062 slots above 2^64, 0 false hits): storage access above 2^64 is exercised. KEY WIDTH: state_key48w emits two independent 128-bit accumulators, so the six-word key carries 256 bits (2^-256 collision per pair, not 2^-64) and lookup precedes insert, so a reference is overwritten only after an equal key was already reported. EXECUTED WORK. MUL_CHARGE 47924 = executed f12mul (loop-free, gcov executed per call equals the static span), 887.48 Ir per Fp multiply; state_key48w 2926, dict28_lookup 759, dict28_insert 1224 are MAX executed counts over census traffic and the worst path; the v27 'or True' is replaced by equality asserts. STEP 47851.725 Ir. TRAP. Ring 6. Short families (length <= 6) contribute EXACTLY zero: under ring 6 no slot repeats inside a window and a single occurrence cannot have a vanishing kappa sum (W(1)=0). Long families (7..12) are bounded from the extended observer at depth 6: period<=12 windows over 7680000 steps with 0 admissions, rate <= 6 x 2.996/N (one-sided 95% Poisson limit, ring overlap 6 as the stated hypothesis), charged 3.49e+32 windows x 32 x STEP. The 3/N literal is deleted: the charge is the explicit 2.996/N limit. Survival is claimed at one scale only (rp=521041, 400 pairs, gap-1 0.995).",
+   "score": {
+    "numerator": "1275900",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/manifest28.json",
+    "evidence/ledger28.json",
+    "evidence/census28.json",
+    "evidence/dict28.json",
+    "evidence/exec28.json",
+    "evidence/trap28.json",
+    "evidence/survival25.json",
+    "evidence/kernel_verify25.json",
+    "evidence/tie25.json",
+    "public-note.md",
+    "scripts/gen28.py",
+    "scripts/protocol28.py",
+    "scripts/census28.py",
+    "scripts/trap28.py",
+    "scripts/exec28.py",
+    "scripts/toy28.py",
+    "scripts/dict28_model.py",
+    "scripts/ir28/dict28.c"
+   ]
+  }
+ ],
+ "experiments": []
+}

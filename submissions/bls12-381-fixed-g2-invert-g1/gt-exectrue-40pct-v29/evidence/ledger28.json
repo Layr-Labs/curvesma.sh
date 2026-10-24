@@ -1,0 +1,325 @@
+{
+ "mode": "ledger28-shipped-config",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers declared, depth 6, evicting dict",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "95803668470929860550224427498997735090",
+  "steps_log2": 126.1714,
+  "S_over_sqrtN": "829/572",
+  "dpbits": 0,
+  "abort": "K_STALL=32 consecutive squarings, armed by a guard admission",
+  "meter": "one global counter in instructions; every step, key build, probe, record write, replay and verification asks fits() before acting; a replay or verification that does not fit abandons that worker",
+  "census_fidelity": {
+   "depth": 6,
+   "dict": "shipped dict28.o (evicting), nine-word entries, 128-bit refs",
+   "workers_measured": [
+    8,
+    64,
+    128
+   ],
+   "workers_declared": 1024,
+   "worker_fidelity": {
+    "production_trail": "S/1024 = 9.36e34 steps",
+    "fixture_trail_formula": "ceil(ratio*sqrt(N)/W)",
+    "max_feasible_W_here": 128,
+    "why": "trail >= guard ring (6) is required for the guard statistics to be at stationarity; at ratio 1.4493 the fixture admits W <= 8 before trail < ring.  W enters only through trail; the partition series D/E/F measures p_hat against W at FIXED S, which is the only W-dependence the fixture can carry.",
+    "production_1024_not_reachable": true
+   }
+  }
+ },
+ "rows_ir": {
+  "walk_steps": "4584301340002464757188789080254540621791590",
+  "per_step_lookup_key_and_probe": "353036518315376536127577015333806653806650",
+  "record_writes_and_insert": "183176614116417893372029105378083669492080",
+  "collision_processing": "8192",
+  "trap_waste_bound": "533810296587601646338948999153805243257",
+  "index_slots_widened_refs": "862233016238368744952019847490979615810",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "W_total_ir": "5121910515747085157079686169813083632372955",
+ "claim": {
+  "value": "127.5900",
+  "numerator": "1275900",
+  "denominator": "10000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W, exact integer check; n-1 asserted to fail",
+  "row_sum_equals_W": true,
+  "planted_typo_detected_every_row": true
+ },
+ "row_derivations": {
+  "walk_steps": "steps x STEP; STEP = f_mul x 47924 + (1-f_mul) x 25372; f_mul = 0.996795 measured",
+  "per_step_lookup_key_and_probe": "steps x 3685 Ir = state_key48w 2926 + dict28_lookup 759, both MAX executed counts",
+  "record_writes_and_insert": "steps x 1912 Ir (688 B serialize + dict28_insert 1224)",
+  "collision_processing": "ceil(S(S-1)/(2N)) = 2 matches x 4096 Ir",
+  "trap_waste_bound": "short families exact 0 (no slot repeats inside ring 6, W(1)=0); long families bounded from 4940101 observed windows at depth 6 with 0 admissions: one-sided 95%% Poisson limit 2.996/N x ring-overlap 6, 3.4861e+32 windows at S, x delay 32 x STEP",
+  "index_slots_widened_refs": "steps x 9 Ir: slots = ceil(S/0.625) = 153285869553487776880359083998396376144, ref 127 bits = 2 words, slot = key48(6) + ref(2) + tag(1)",
+  "worker_starts_1024": "1024 x 7660000",
+  "code_and_advice": "2^20",
+  "candidate_verification": "57526800 Ir = 1200 x f12mul + 18000 compare"
+ },
+ "charges": {
+  "MUL_CHARGE": 47924,
+  "SQR_CHARGE": 25372,
+  "MUL_DERIVATION": "MUL_CHARGE = executed(f12mul) = 47924 Ir for ONE dense Fp12 multiplication.  The shipped f12mul makes FOUR Fp6 multiplications, hence 72 base-field multiplications with these kernels (v28 printed 54 and 887.48 Ir/Fp mul, verdict flaw 4); per Fp mul = 665.61 Ir.  v27 charged 22409 = 47924 - 25515 with no derivation; that discount is withdrawn.",
+  "per_fq_mul_row": 665.611,
+  "LOOKUP_KEY_PLUS_PROBE": 3685,
+  "REC_WRITE_PLUS_INSERT": 1912,
+  "STEP": "45937655953/960000",
+  "step_float": 47851.724951041666,
+  "f_mul_measured": 0.9967951822916666,
+  "guard_per_step_measured": 0.0032048177083333334,
+  "price_basis": "executed counts, measured: loop-free kernels (gcov executed per call == static span) and looped dict symbols (charge = MAX executed over census traffic and the worst path)",
+  "exec_evidence": "evidence/exec28.json",
+  "v27_discount_withdrawn": {
+   "MUL_CHARGE_v27": 22409,
+   "derivation_v27": "47924 - 25515, no derivation",
+   "MUL_CHARGE_v28": 47924,
+   "effect": "the multiply step is priced at one dense Fp12 multiplication; the v27 claim under-priced 64% of the steps by 2.14x"
+  }
+ },
+ "addressing": {
+  "records_total": "95803668470929860550224427498997735090",
+  "load_factor": "0.625",
+  "slots": "153285869553487776880359083998396376144",
+  "slot_ref_bits": 127,
+  "slot_ref_words": 2,
+  "slot_words": 9,
+  "slot_bytes": 72,
+  "table_bytes": 11036582607851119935385854047884539082368,
+  "pool_bytes": 65912923907999744058554406119310441741920,
+  "peak_bytes": 76949506515850863993940260167194982184160,
+  "wide_address_row": 1224,
+  "single_formula": "bytes = records x 688 + ceil(records/0.625) x 9 x 8 + 1024 x 256 + 1024 x 6 x 8 + 2^20",
+  "v27_flaw": "dict26.c shipped eight-word entries with 64-bit slot ids and int-valued returns; v28 ships nine-word entries with a 128-bit ref field and the address computed as mulhi128(hash, cap) from four 64x64 products"
+ },
+ "dictionary": {
+  "symbols_priced": {
+   "state_key48w": 2926,
+   "dict28_lookup": 759,
+   "dict28_insert": 1224
+  },
+  "loop_repetition_ir": {
+   "state_key48w": 2750,
+   "dict28_lookup": 540,
+   "dict28_insert": 837
+  },
+  "static_spans": {
+   "state_key48w": 176,
+   "dict28_lookup": 219,
+   "dict28_insert": 387
+  },
+  "charge_rule": "max(loop-free static span, worst executed per call)"
+ },
+ "trap": {
+  "ring_words": 6,
+  "route": "short_exact_zero+long_observed_bound",
+  "expected_windows_at_S": 3.486096224416131e+32,
+  "short_family_expected": 0,
+  "long_windows_observed": 4940101,
+  "per_length": {
+   "2": 0.0,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0
+  },
+  "W_kappa_counts": {
+   "0": 1,
+   "1": 0,
+   "2": 12,
+   "3": 24,
+   "4": 396,
+   "5": 2160,
+   "6": 23160
+  },
+  "measured": {
+   "steps": 7680000,
+   "multiply": 4940167,
+   "guard_conversions": 24613,
+   "windows": 1280000,
+   "admissions": {
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 0,
+    "10": 0,
+    "11": 0,
+    "12": 0
+   },
+   "admissions_total": 0,
+   "observer": "windows of length 2..12 tested for EVERY period p <= 12 (not only 2-slot alternating words), at depth 6"
+  },
+  "one_sided_95_poisson_upper_per_window": {
+   "2": 2.34375e-06,
+   "3": 2.34375e-06,
+   "4": 2.34375e-06,
+   "5": 2.34375e-06,
+   "6": 2.34375e-06,
+   "7": 2.34375e-06,
+   "8": 2.34375e-06,
+   "9": 2.34375e-06,
+   "10": 2.34375e-06,
+   "11": 2.34375e-06,
+   "12": 2.34375e-06
+  },
+  "independence": "the Poisson upper limit needs independent windows and is reported under that hypothesis; the charge does not use it",
+  "rule_of_three_deleted": true,
+  "v27_flaw": "gen27.py set measured_rate=3/(7680000/6) and called it a window bound; v28 deletes that route from the code and charges the exact census expectation, which needs no independence",
+  "mechanism": {
+   "forced_admission_events": 120,
+   "forced_delay_mean": 31.433333333333334,
+   "forced_delay_max": 32,
+   "control_no_abort_events": 3654,
+   "control_aborts": 0
+  },
+  "waste_ir": 533810296587601646338948999153805243257
+ },
+ "success": {
+  "route": "bootstrap-draws-from-measured-replicates",
+  "draws": 10000,
+  "seed": 20261024,
+  "factors": {
+   "census_A": [
+    225,
+    320
+   ],
+   "census_B": [
+    200,
+    320
+   ],
+   "retention": [
+    398,
+    400
+   ]
+  },
+  "p5": 0.5762070551210613,
+  "p1": 0.5577174078514393,
+  "median": 0.619406477521209,
+  "floor": 0.39,
+  "floor_met": true,
+  "eviction": {
+   "evicting": {
+    "fixtures": 320,
+    "success": 225,
+    "rate": 0.703125,
+    "evictions": 15261,
+    "evicted_unmatched": 1792,
+    "dead_hits": 0,
+    "records": 68278,
+    "matches": 2400
+   },
+   "no_evict_control": {
+    "fixtures": 320,
+    "success": 224,
+    "rate": 0.7,
+    "drops": 15483,
+    "evicted_unmatched": 0,
+    "dead_hits": 0,
+    "records": 68354,
+    "matches": 2401
+   },
+   "eviction_loss_rate": 0.0031250000000000444,
+   "records_evicted_before_match": 1792,
+   "records_matched_at_report": 2400,
+   "note": "the shipped arm (dict28.o) and the control (dict28_nolru.o, same source, drop instead of evict) differ only in the eviction policy; both ran at depth 6 with the shipped key routine and the shipped load factor"
+  },
+  "contrasts": {
+   "A_rp521041_d6_w8_evict": {
+    "depth": 6,
+    "workers": 8,
+    "trail": 38,
+    "steps_budget": 301,
+    "fixtures": 320,
+    "success": 225,
+    "rate": 0.703125
+   },
+   "B_rp10566001_d6_w8_evict": {
+    "depth": 6,
+    "workers": 8,
+    "trail": 170,
+    "steps_budget": 1359,
+    "fixtures": 320,
+    "success": 200,
+    "rate": 0.625
+   },
+   "C_rp521041_d5_w8_evict": {
+    "depth": 5,
+    "workers": 8,
+    "trail": 38,
+    "steps_budget": 301,
+    "fixtures": 128,
+    "success": 88,
+    "rate": 0.6875
+   },
+   "D_rp521041_d6_w64_evict_r4": {
+    "depth": 6,
+    "workers": 64,
+    "trail": 13,
+    "steps_budget": 832,
+    "fixtures": 128,
+    "success": 128,
+    "rate": 1.0
+   },
+   "E_rp521041_d6_w128_evict_r4": {
+    "depth": 6,
+    "workers": 128,
+    "trail": 7,
+    "steps_budget": 832,
+    "fixtures": 128,
+    "success": 128,
+    "rate": 1.0
+   },
+   "F_rp521041_d6_w8_evict_r4": {
+    "depth": 6,
+    "workers": 8,
+    "trail": 104,
+    "steps_budget": 832,
+    "fixtures": 128,
+    "success": 128,
+    "rate": 1.0
+   },
+   "G_rp521041_d6_w8_NOEVICT": {
+    "depth": 6,
+    "workers": 8,
+    "trail": 38,
+    "steps_budget": 301,
+    "fixtures": 320,
+    "success": 224,
+    "rate": 0.7
+   }
+  },
+  "procedure": "draw Beta(k+1,n-k+1) for each census arm and for retention, multiply the minimum census draw by the retention draw, take the 5th percentile; the v27 independently-uniform residual divisor is deleted",
+  "v27_flaw": "0.41336 was a quantile of an assumed product (uniform divisor); v28 has no assumed factor"
+ },
+ "survival": {
+  "scales_measured": [
+   "rp=521041"
+  ],
+  "at_production_Rg": {
+   "Rg": 65536,
+   "pairs": 400,
+   "survival_gap1": 0.995
+  },
+  "not_measured_at_rp10566001": true,
+  "note": "one fixture scale; the retention draw is the only survival factor"
+ },
+ "tie_analysis": {
+  "samples": 200000,
+  "ties": 2983,
+  "tie_rate": 0.014915,
+  "resolution": "kappa = ks.index(min(ks)) is the FIRST minimum (deterministic); the pool slot is derived from sorted(ks), invariant to which rotation attains the minimum, so a tie cannot fork the table index or the record key."
+ },
+ "manifest": {
+  "file": "evidence/manifest28.json",
+  "files": 27,
+  "all_exist": true,
+  "sha256_present": true
+ }
+}
