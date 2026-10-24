@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "title": "Fixed-G1 into G2 at 125.7570: equivariant Frobenius-class walk with the quotient in the report filter, no canonicalisation and no state inversion",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "constants.py",
+        "ledger.py",
+        "classkey.py",
+        "routing.py",
+        "tower.py",
+        "pairing.py",
+        "part_a.py",
+        "part_a-out.json",
+        "routing-out.json",
+        "toy_census.py",
+        "gen_cert.py",
+        "cp95.py",
+        "evidence/toy-census.json",
+        "evidence/t4-dp5.json",
+        "evidence/t4-dp7.json",
+        "verify_certificate.py",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "125757",
+        "denominator": "1000"
+      },
+      "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z for that exact supplied P with probability at least 0.39, and its complete classical work is at most 2^125.7570 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. The algorithm solves a = log_g z in GT with g = e(P,Q0) on the twelve-element Frobenius classes of GT, N = (r-1)/12 = 2^251.27 classes, with ord_r(p) = 12 and p^6 = -1 (mod r). The walk is stationary on classes and NEVER canonicalises, never inverts and never applies a Frobenius power to its state: the state y is carried as whatever representative the walk reached, and the representative is absorbed by the multiplier. One step computes the twelve class keys of y (min{keys12(y)} is the sigma-invariant class key used by the distinguished-point predicate and the table index, and the index of that minimum is kappa), and then either squares y and doubles the labels (three of every eight classes) or multiplies y by the pre-expanded table entry TBL[t][kappa] = sigma^{-kappa}(M_t) = g^{u_t p^{-kappa}} and adds U[t][kappa] = u_t p^{-kappa} mod r to the first label (five of every eight). Merge-safety is an identity, not a measurement: keys12(sigma^j y) is the same set, so the table index and channel are unchanged, kappa(sigma^j y) = kappa(y) - j, hence m_j = sigma^j m and y_j*m_j = sigma^j(y*m); the successor class is therefore a function of the class for every representative. Because no branch applies sigma^6 (the inversion) to a state, the absorbing canonicaliser cycle of the canonicalising revisions cannot be built here; the only state two-cycle available is m*m' = 1 inside one class, and the exhaustive fixture census over all r-1 states reports zero two-cycles at state level and zero at class level while the canonicalising control rule reproduces its 28. Per-step cost in counted instructions: a 21873-instruction multiply step and a 13445-instruction squaring step, made of the dense Fp12 multiply 20000, a 1613-instruction twelve-key selector on every step, a 16-instruction twelve-column address, a 72-byte-fetch, a 28-instruction label add, a 72-instruction key mix, and the Granger-Scott cyclotomic squaring at its itemised 11632 (24 Fp muls + 122 adds); the sigma-on-state row, the label renormalisation row and the escape row are all zero by construction, and the twelve pre-expanded table columns are charged once at 2^20.585 reference units, 2^-105.17 of the claim. The squaring share is the routing density, declared 3/8 and measured 287/785 over all fixture states, and the smaller measured value is carried because squaring is the cheaper branch. With f = 287/785, c_raw = 0.939584 and c_stress = 0.967349968 (every judgement-bounded fold row repriced at 13/10), the step budget S is the least integer with S^2(1-f^2) >= 2*mu*N*ln(1/(1-0.392)) at mu = 11/10, giving log2 S = 125.804819, W_raw = 2^125.714913 and W_stress = 2^125.756929; the claim 125.7570 is the least four-decimal log2 value above log2(W_stress) + 2e-5, which is 0.000071 bits above the stress ledger and 0.042087 bits above the raw ledger. Success is the analytic birthday expression Lambda = S^2(1-f^2)/(2*mu*N) = 0.4975803970, giving 1-exp(-Lambda) = 0.3920000 against the 0.39 floor; detection needs no distributional assumption because the distinguished-point predicate is a function of the class, so two trails at a common class evaluate it identically and report the same class in the same step. Records are 96 bytes (48-byte class key plus two full 32-byte exponent limbs) in one shared store with a fixed report cap and refusal on overflow, and a repeated class key solves by trying x = (p^j a2 - a1)/(b1 - p^j b2) for j = 0..11 and VERIFYING each candidate by exponentiation against z, so a wrong shift costs a verification and never a wrong answer; j = 6 is the involution case, x = -(a1+a2)/(b1+b2). Identifiability of the involution with a shift is not used to reduce the class count: sigma^6 = -1 lies in the subgroup generated by sigma, so the mu6 quotient IS the sigma quotient and no DP-density doubling is claimed. The shipped evidence is a real-tower toy executing the same step: 768/768 element-level equivariance checks with zero splits against 462/768 and 704/768 for the two control rules, 0/384 coalescence splits from independent same-class starts against 349/384 for the control, 256/256 exact inverse pairs with 32/32 label-bit solves verified and 0/32 for the sign-flipped control, 144/144 end-to-end solves from (a,b) records across all twelve shifts with exactly one verified candidate each and zero zero-denominators, an exhaustive cycle census with mutation controls, and 24/24 checks on BLS12-381 itself including a real pairing evaluation of a planted instance. The census at 6400 trials per density recovers 0.5692 at 2^-5 (CP-95 lower 0.558937) and 0.2792 at 2^-7 (CP-95 lower 0.269992) with every collision solved and verified, zero invariant failures, zero zero-denominators and zero attribution failures; those fixture rates are BELOW the 0.39 floor and are disclosed as such, because the fixture is cycle-dominated (S/sqrt(N) about 2.3 against 0.282 at production) and therefore measures the merge-solve-verify mechanism and its density trend rather than a production recovery rate. Success is conditional on three disclosed hypotheses: the class walk behaves as a random map to within the carried 10 per cent inefficiency allowance, the routing fields derived from the class key are pseudorandom, and the algorithm's coins are ideal. No production run, no unconditional success theorem, no novelty claim and no practical break is claimed."
+    }
+  ],
+  "experiments": []
+}
