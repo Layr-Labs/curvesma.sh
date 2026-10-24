@@ -1,0 +1,18 @@
+{
+ "W": 127.77224361522359,
+ "batch_inv": 982,
+ "batch_walkers": 65536,
+ "charge": 1102.4600766601563,
+ "inv_ir": 53760,
+ "inv_ir_per_step": 0.8203125,
+ "inv_ladder": {
+  "muls": 128,
+  "popcount_E": 128,
+  "squarings": 256
+ },
+ "listing": "clang -O2 -S --target=aarch64-unknown-linux-gnu -ffreestanding -I<evidence>",
+ "mul_once": 140,
+ "rec_share_per_step": 8.673617379884035e-18,
+ "recproc": 40,
+ "source": "evidence/p256_recproc.c (recproc, batch_inv), evidence/p256_fe_cc.h (fe_mul, fe_inv)"
+}
