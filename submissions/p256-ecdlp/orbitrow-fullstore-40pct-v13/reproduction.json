@@ -1,0 +1,32 @@
+{
+ "package": "p256-ecdlp/orbitrow-fullstore-40pct-v13",
+ "python": "3.11+ (stdlib only; the census additionally needs numpy, which the track's bounded runner provides)",
+ "steps": [
+  {
+   "cmd": "python3 scripts/fullstore_census.py",
+   "writes": "evidence/fullstore-census.json",
+   "time": "~17 s",
+   "what": "full-store census at the charged budget, two class orders, plus the matched gate ablation"
+  },
+  {
+   "cmd": "python3 ledger_v13.py",
+   "writes": "evidence/ledger-out.json",
+   "what": "step rows, S_OPS, W, claim, success, memory and cap rows"
+  },
+  {
+   "cmd": "RCOLS=256 SETS=800 STEPS=400 python3 scripts/selector_swap.py",
+   "writes": "evidence/selector-swap.json",
+   "what": "range-matched selector swap with CIs"
+  },
+  {
+   "cmd": "python3 selfaudit.py",
+   "writes": "evidence/selfaudit.json",
+   "what": "independent re-derivation + planted-error controls"
+  },
+  {
+   "cmd": "python3 preflight.py",
+   "what": "intake preflight: file count, expanded bytes, note floor, evidence existence"
+  }
+ ],
+ "claim_check": "evidence/ledger-out.json claim_at_1ref_access must equal submission.json claims[0].score/1000"
+}
