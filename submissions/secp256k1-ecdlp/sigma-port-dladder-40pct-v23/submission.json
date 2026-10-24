@@ -1,0 +1,38 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp this package claims the COMPUTATION BOUND W = 2^127.92945732 (submitted 127.930) for the shipped DP-walk configuration: workers 2^20 lanes, inversion BATCH 2^18, DP density d=60, trails_per_walker = ceil((S_OPS+2^60)/2^20) = 2^106.7214, step 155 itemised instructions at C=1000, w=2 exactly +1.000 bit, kappa product 2.344852037 <= 2.345734234. FIVE FIXES, in the verdict's own order. (1) THE SUCCESS EVENT IS NOW SUPPORTED BY A LADDER ON THE REAL MECHANISM. scripts/dladder.py is the shipped step, not a surrogate: affine ELLIPTIC-CURVE point addition over F_p on real curves, orbit-generated table rows J0(m)=[alpha_m]G+[d_m]Q with six mu6 slots per column, the mu6 canonicalisation carried by both the point and the coefficient pair (invariant P=[a]G+[c]Q asserted), lag-1 AND lag-3 escape with the K_ESC_MAX=8 lane restart counted, the SplitMix class gate, and BATCHED inversion (one field inversion per step for the whole lane fleet). ONLY THE CLASS SPACE SHRINKS: N_CLASSES=(N-1)/6 lands at 16415, 131253 and 1048057 against production (r-1)/6 = 2^253.415. 300 trials per cell at the LEDGER'S OWN dimensionless shape x=V/sqrt(N_CLASSES)=1.009696 (1.0069/1.0102/1.0100): success is two records in one class with ALL SIX mu6 channels solved and [x]G==Q verified. MEASURED: p_hat = 0.4667 (140/300), 0.3867 (116/300), 0.4000 (120/300); pooled 376/900 = 0.4178. RATE CONSTANCY: slope -0.01112 per doubling of class space, s.e. 0.00898, 95% CI [-0.02873,+0.00649] - no measurable decay over 5.997 doublings, and the ledger's model row 0.3903 lies inside every cell's CI. The pooled CP-95 lower bound is 0.3904, i.e. the ledger's own S/sqrt(N) row to three decimals. This is the supported reasoning the ruling asked for: the mechanism exercised end to end at the priced shape, the law measured, and the single remaining extrapolation disclosed as H-ladder-extrapolation (constancy of the law over the 127.4 doublings between the top cell and production - not measured, priced only by the measured drift bound). SUCCESS ROW: the submitted statistic is the w=2 set (two sequential runs, both charged, independent by fresh challenge block and fresh coins). Design cell (largest class space, nearest production) per-run CP-95 lower 0.3527 -> two-run set 1-(1-0.3527)^2 = 0.581007; ledger probability debits 5.700e-4 (seven named terms incl. restart loss 2.344e-4) -> SUCCESS = 0.580437 >= 0.39. Sensitivities: pooled CP-95 composition 0.6284; weakest cell 0.5641; every reading clears the floor. (2) ONE CANONICAL CLASS SPACE. N_CLASSES=(r-1)//6 is defined once in ledger.py and every literal is regenerated from it: log2 N_CLASSES=253.415037, log2 S_OPS=126.721440, records/run=S_OPS/2^60=2^66.721440, log2 W2=127.92945732. The v22 pilot's 2^127.014 visits / 2^67.014 records came from 2^254 and are WITHDRAWN; scripts/audit_v23.py C1 is the planted control showing the 2^254 variant lands 0.292481 bits away (log2 S_OPS=127.013921), so the two quantities are provably different and only one is shipped. The claim value does not move because the ledger was already canonical. (3) THE FAKE PILOT IS DELETED, not relabelled: scripts/pilot_prod_d60.py and evidence/prod-pilot-d60.json are removed from the package. qwalk.Universe(4290000000,64) with the known scalar, esc=False and no restart counter was not this algorithm, and no row of it is cited anywhere in v23. (4) PROBABILITY LANGUAGE. 2^60 visits is the EXPECTED waiting time at density 2^-60, not a minimum: the realised count is geometric, so '0-success by construction' is WITHDRAWN and no finite-pilot zero is used as evidence in either direction. exp(-2^46.72) is no longer a bare formula: the post-merge gate-observation law P(observe)=1-exp(-tail*2^-d) is measured on seed-matched ladder arms at two densities - d=4 ratio 0.216 (implied tail 3.88 visits), d=8 ratio 0.017 (implied tail 4.45) - two densities, one tail, so production's charged post-merge trail 2^106.72 at d=60 gives the stated exp(-2^46.72). Repeated classes and residual cycles are inside the measured statistic, not assumed away: the matched esc=False control fires 0 escapes and reads 0.3633 vs 0.3867 armed (+0.0233, same 300 seeds, 1221 substitutions), so the repair is load-bearing in the measurement. (5) mu6 ORBIT COUNT: the toy selector fixture's normalization row is 5593352 = (N-1)/6 for N=33560113 (5593353 including infinity), NOT 16777233 = (p-1)/2; audit C2 shows the two numbers differ and that the withdrawn row is exactly the quadratic-residue half of the field. The accepted parity fix is unchanged and re-verified under the corrected count: C4 recomputes the 20-row inverse identity (x*2*inv2==x mod N, 2*inv2==1) and the six-channel solver recovers the planted channels. AUDITS: evidence/audit-v23.json, 12 controls, all-Y - wrong-constants control (2^254 must mismatch), orbit-count control, escape control (armed fires, control silent, rate moves), 20-row parity recompute, ladder integrity (each cell N_CLASSES==(N-1)/6, shape within 1% of 1.009696), and a literal sweep. NOT RANKING: live frontier 125.8-126.3; 127.930 is 1.6 bits above it and is submitted with the floor met, not as a rank claim.",
+   "score": {
+    "numerator": "12793",
+    "denominator": "100"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "ledger.py",
+    "evidence/dladder.json",
+    "evidence/audit-v23.json",
+    "evidence/selector-pair.json",
+    "evidence/cap-recount.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "evidence/restart-count.json",
+    "evidence/selector-swap.json",
+    "evidence/absorb-direct.json",
+    "scripts/dladder.py",
+    "scripts/audit_v23.py",
+    "scripts/selector_pair.py",
+    "scripts/selector.py",
+    "scripts/cap_recount.py",
+    "scripts/census_v20n.py",
+    "scripts/lag3_fixture.py",
+    "scripts/qwalk.py",
+    "scripts/absorb_v20n.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v23: class-space ladder on the REAL mechanism (EC arithmetic, orbit table, lag-1/lag-3 escape, restarts, batched inversion; only N_CLASSES shrinks); p_hat .4667/.3867/.4000 at 2^14/2^17/2^20, slope -.011+/-.009/bit, pooled CP95 .3904; one class space; mu6 5593352; success .580437",
+ "version": 1
+}

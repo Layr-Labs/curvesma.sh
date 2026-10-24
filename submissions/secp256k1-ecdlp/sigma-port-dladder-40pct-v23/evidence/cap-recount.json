@@ -1,0 +1,285 @@
+{
+ "cap_1687_cells": {
+  "control_noescape": [
+   {
+    "file": "evidence/census-v20n.json",
+    "lost": 0,
+    "successes": 18,
+    "would_solve_meet": 18
+   },
+   {
+    "file": "evidence/census-seed11.json",
+    "lost": 0,
+    "successes": 15,
+    "would_solve_meet": 15
+   }
+  ],
+  "escaped_lag1": [
+   {
+    "file": "evidence/census-v20n.json",
+    "lost": 0,
+    "successes": 941,
+    "would_solve_meet": 941
+   },
+   {
+    "file": "evidence/census-seed11.json",
+    "lost": 0,
+    "successes": 962,
+    "would_solve_meet": 962
+   }
+  ],
+  "escaped_lag3": [
+   {
+    "file": "evidence/census-v20n.json",
+    "lost": 0,
+    "successes": 1070,
+    "would_solve_meet": 1070
+   },
+   {
+    "file": "evidence/census-seed11.json",
+    "lost": 0,
+    "successes": 1098,
+    "would_solve_meet": 1098
+   }
+  ]
+ },
+ "cells": [
+  {
+   "arm": "control_noescape",
+   "cap": 1687,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 18,
+   "trials": 3200,
+   "would_solve_meet": 18
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 421,
+   "file": "evidence/census-v20n.json",
+   "lost": 6,
+   "p_loss": 0.3333333333333333,
+   "successes": 12,
+   "trials": 3200,
+   "would_solve_meet": 18
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 843,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 18,
+   "trials": 3200,
+   "would_solve_meet": 18
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 1687,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 941,
+   "trials": 3200,
+   "would_solve_meet": 941
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 421,
+   "file": "evidence/census-v20n.json",
+   "lost": 853,
+   "p_loss": 0.9064824654622742,
+   "successes": 88,
+   "trials": 3200,
+   "would_solve_meet": 941
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 843,
+   "file": "evidence/census-v20n.json",
+   "lost": 617,
+   "p_loss": 0.6556854410201913,
+   "successes": 324,
+   "trials": 3200,
+   "would_solve_meet": 941
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 1687,
+   "file": "evidence/census-v20n.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 1070,
+   "trials": 3200,
+   "would_solve_meet": 1070
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 421,
+   "file": "evidence/census-v20n.json",
+   "lost": 973,
+   "p_loss": 0.9093457943925234,
+   "successes": 97,
+   "trials": 3200,
+   "would_solve_meet": 1070
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 843,
+   "file": "evidence/census-v20n.json",
+   "lost": 717,
+   "p_loss": 0.6700934579439253,
+   "successes": 353,
+   "trials": 3200,
+   "would_solve_meet": 1070
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 1687,
+   "file": "evidence/census-seed11.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 15,
+   "trials": 3200,
+   "would_solve_meet": 15
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 421,
+   "file": "evidence/census-seed11.json",
+   "lost": 4,
+   "p_loss": 0.26666666666666666,
+   "successes": 11,
+   "trials": 3200,
+   "would_solve_meet": 15
+  },
+  {
+   "arm": "control_noescape",
+   "cap": 843,
+   "file": "evidence/census-seed11.json",
+   "lost": 1,
+   "p_loss": 0.06666666666666667,
+   "successes": 14,
+   "trials": 3200,
+   "would_solve_meet": 15
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 1687,
+   "file": "evidence/census-seed11.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 962,
+   "trials": 3200,
+   "would_solve_meet": 962
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 421,
+   "file": "evidence/census-seed11.json",
+   "lost": 873,
+   "p_loss": 0.9074844074844075,
+   "successes": 89,
+   "trials": 3200,
+   "would_solve_meet": 962
+  },
+  {
+   "arm": "escaped_lag1",
+   "cap": 843,
+   "file": "evidence/census-seed11.json",
+   "lost": 667,
+   "p_loss": 0.6933471933471933,
+   "successes": 295,
+   "trials": 3200,
+   "would_solve_meet": 962
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 1687,
+   "file": "evidence/census-seed11.json",
+   "lost": 0,
+   "p_loss": 0.0,
+   "successes": 1098,
+   "trials": 3200,
+   "would_solve_meet": 1098
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 421,
+   "file": "evidence/census-seed11.json",
+   "lost": 1006,
+   "p_loss": 0.9162112932604736,
+   "successes": 92,
+   "trials": 3200,
+   "would_solve_meet": 1098
+  },
+  {
+   "arm": "escaped_lag3",
+   "cap": 843,
+   "file": "evidence/census-seed11.json",
+   "lost": 784,
+   "p_loss": 0.7140255009107468,
+   "successes": 314,
+   "trials": 3200,
+   "would_solve_meet": 1098
+  }
+ ],
+ "mismatch_note": "1033 is NOT a cap_1687 success count in either census file; the raw escaped_lag3 cap_1687 cells give 1070 (seed 20250) and 1098 (seed 11). 1033 is the escaped_lag1 successes-at-cap row of census-v20n, i.e. a DIFFERENT arm. The success row is rebuilt as sum(would_solve_meet - lost) over the cells of the arm it belongs to.",
+ "per_arm_pooled": {
+  "control_noescape": {
+   "cells": 6,
+   "kills_per_1e6_meets": 111111.11111111111,
+   "lost": 11,
+   "meets": 99,
+   "p_loss_pooled": 0.1111111111111111,
+   "p_loss_upper_cp95": 0.17720833683752132,
+   "successes": 88,
+   "trials": 19200
+  },
+  "escaped_lag1": {
+   "cells": 6,
+   "kills_per_1e6_meets": 527237.6948677527,
+   "lost": 3010,
+   "meets": 5709,
+   "p_loss_pooled": 0.5272376948677526,
+   "p_loss_upper_cp95": 0.538181741901998,
+   "successes": 2699,
+   "trials": 19200
+  },
+  "escaped_lag3": {
+   "cells": 6,
+   "kills_per_1e6_meets": 535055.3505535056,
+   "lost": 3480,
+   "meets": 6504,
+   "p_loss_pooled": 0.5350553505535055,
+   "p_loss_upper_cp95": 0.5452918473557677,
+   "successes": 3024,
+   "trials": 19200
+  }
+ },
+ "sources": [
+  "evidence/census-v20n.json",
+  "evidence/census-seed11.json"
+ ],
+ "success_literals_present_in_raw": [
+  11,
+  12,
+  14,
+  15,
+  18,
+  88,
+  89,
+  92,
+  97,
+  295,
+  314,
+  324,
+  353,
+  941,
+  962,
+  1070,
+  1098
+ ],
+ "test": "cap_rows_recounted_from_raw_census"
+}
