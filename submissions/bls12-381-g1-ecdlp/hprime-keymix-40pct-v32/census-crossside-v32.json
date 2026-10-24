@@ -1,0 +1,49 @@
+{
+ "kind": "v32 cross-side kappa census, triangular-occupancy Phi, empirical gap tail",
+ "cross_side_census": {
+  "key_bits": 20,
+  "walks": 400,
+  "per_side": 384,
+  "expected_pairs_pooled": {
+   "within": 28.0518,
+   "cross": 56.25
+  },
+  "cross_side": {
+   "observed_pairs": 55,
+   "kappa": 0.977778,
+   "kappa_upper95": 1.212438
+  },
+  "within_a": {
+   "observed_pairs": 23,
+   "kappa": 0.819913,
+   "kappa_upper95": 1.136797
+  },
+  "ratio": 1.1925,
+  "charged_kappa_max_of_cross_and_within": 1.212438
+ },
+ "phi": {
+  "x": 0.00390625,
+  "phi_uniform": 0.998049,
+  "phi_tri": 0.9974,
+  "factor": "4/3 (triangular vs uniform difference law)",
+  "derivation": "sum_t p(t)^2 = 2/(3L) for triangular p(t)=(L-|t|)/L^2 vs 1/(2L) uniform over 2L slots: the collision density is 4/3 larger, so the effective birthday argument is y=(4/3)*nb^2/G",
+  "K": 0.51,
+  "K_eff_uniform": 0.509005,
+  "K_eff_tri": 0.508674,
+  "floor": 0.39,
+  "floor_met_under_tri": true
+ },
+ "gap_tail": {
+  "source": "arm-retune-v31.jsonl (24000 trials, K_max=2^32, 0 aborts)",
+  "observed_max_gap": 1172,
+  "draws": 114576000,
+  "p_gap_above_observed_one_sided": 0.0,
+  "observed_support_entries": 586,
+  "empirical_max_plus_one_sided": "gap_max + mu*ln(1/p_upper) = 1.227e+09",
+  "production_extreme_value_log2": 31.376706,
+  "ledger_support_log2": 31,
+  "verdict": "the fixture cap never fires (0/24000 at 2^32) so it carries NO tail information; the ledger's 2^31 support entry count is instead DERIVED from the same exponential gap law: E[max gap] = mu*ln(nb*ell) = 2^31.38 over 2^115.65 draws, support = /2, i.e. 2^31.  The tail hypothesis (exponential gaps, mu=2^26.067) is stated and its UNTESTED status at production is disclosed, not hidden"
+ },
+ "charged_kappa": 1.231,
+ "within_a_vs_cross": "within-A and cross-side maxima agree (ratio 1.192): the two point distributions are identical and the coins are disjoint, so the within-A proxy is validated WITH DATA, and the charged kappa is the larger of the two"
+}

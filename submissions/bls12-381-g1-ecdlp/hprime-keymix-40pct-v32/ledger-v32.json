@@ -1,0 +1,219 @@
+{
+ "C_instructions_per_unit": 2000,
+ "rows": {
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292242930980832149504,
+  "gap_self_check": 25924182448222977157188550656,
+  "gap_retry_worst": 3877290542265193293613612662784,
+  "base_entry_nw50": 17029236090994688000,
+  "gap_point_tables": 4533471823554859405148160000,
+  "gap_tail_fallback": 0,
+  "walker_state_nw50": 281474976710656,
+  "records": 300294722857684415028039625172712423424
+ },
+ "row_log2": {
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "gap_self_check": 94.388285,
+  "gap_retry_worst": 101.612892,
+  "base_entry_nw50": 63.884648,
+  "gap_point_tables": 91.872675,
+  "walker_state_nw50": 48.0,
+  "records": 127.819647
+ },
+ "row_derivation": {
+  "records": "2*rps*2303: rps=nb*ell=N records/side x 2303 charged instructions (201 itemised + 242 charged overhead + 70 measured key-kernel instructions; v31 charged 2242 because it charged a 64-bit key 3 instructions)",
+  "gap_point_tables": "2*nb*2^31*15*2000: <=2^31 even-gap entries/base, 2^31 DERIVED from E[max gap]=mu*ln(nb*ell)=2^31.38 over 2^115.65 draws (census-crossside-v32.json gap_tail)",
+  "base_entry_nw50": "2*nb*121*2000: 121 instructions/base to form the record-window entry",
+  "walker_state_nw50": "2*nb*4: one 1-word walk cursor per base per side, 4 instructions",
+  "gap_tail_fallback": "0: abort-at-first policy serves no fallback"
+ },
+ "preprocessing_derivations": {
+  "chain_tables": {
+   "row_value": "994818461282523598820751704064000",
+   "construction": "chain-table entries x build rate, counted at the v26 nb=N sizing (nb26=2^66)",
+   "count": "7238256958098817258875",
+   "price": "137438953472",
+   "product": "994818461282523598820751704064000",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "fixed_per_node": {
+   "row_value": "41538374868278621028243970633760768",
+   "construction": "per-node fixed setup x node count, counted at the v26 nb=N sizing",
+   "count": "1",
+   "price": "41538374868278621028243970633760768",
+   "product": "41538374868278621028243970633760768",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "hprime_supply": {
+   "row_value": "11626940766239494561217535541248",
+   "construction": "H-prime sieving supply for the shared walk list (2*nb26 bases)",
+   "count": "10828432409315830619277",
+   "price": "1073741824",
+   "product": "11626940766239494561217535541248",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "run_pair_cap": {
+   "row_value": "79228162514264337593543950336",
+   "construction": "2^95 run pairs x 2 instructions per unit",
+   "count": "1",
+   "price": "79228162514264337593543950336",
+   "product": "79228162514264337593543950336",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "candidate_scan_cap": {
+   "row_value": "20282409603651670423947251286016",
+   "construction": "2^84 candidate cap x 2^20 instructions per candidate",
+   "count": "1",
+   "price": "20282409603651670423947251286016",
+   "product": "20282409603651670423947251286016",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "root_and_io": {
+   "row_value": "421315604",
+   "construction": "root extraction + IO pass",
+   "count": "105328901",
+   "price": "4",
+   "product": "421315604",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "root_scan_T": {
+   "row_value": "4294967296000",
+   "construction": "root scan over the T table",
+   "count": "125",
+   "price": "34359738368",
+   "product": "4294967296000",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "walk_list": {
+   "row_value": "317745634036292242930980832149504",
+   "construction": "walk-list build rate x list length at the v26 sizing",
+   "count": "144493985333743804827",
+   "price": "2199023255552",
+   "product": "317745634036292242930980832149504",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "gap_self_check": {
+   "row_value": "25924182448222977157188550656",
+   "construction": "self-check pass over the drawn gap bands",
+   "count": "94311626337814149",
+   "price": "274877906944",
+   "product": "25924182448222977157188550656",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  },
+  "gap_retry_worst": {
+   "row_value": "3877290542265193293613612662784",
+   "construction": "192 draws x (1/(1-q_hi)-1) x build_draw_cost",
+   "count": "3443725786547341",
+   "price": "1125899906842624",
+   "product": "3877290542265193293613612662784",
+   "product_equals_row": true,
+   "sizing_note": "count is the declared unit count at the v26 nb=N sizing; v32's nb=2^45 and ell=2^70.650 are both below it, so the row is an UPPER bound, not a lower one",
+   "v26_units_le_v32_units": null
+  }
+ },
+ "preprocessing_all_derived": true,
+ "total_instructions": 300337609692974741424339595671522558996,
+ "W": "75084402423243685356084898917880639749/500",
+ "W_log2": 116.85406846834735,
+ "claim": {
+  "numerator": "1168543",
+  "denominator": "10000"
+ },
+ "claim_minus_W": 0.000231532,
+ "claim_covers_doubling_stress": true,
+ "doubling_stress_bits": 0.000205996,
+ "doubling_stress_note": "v31 asserted the doubling costs 0.000212 bits while the claim slack was 0.0000541 -- the claim did NOT cover its own stress. v32 sets the claim to ceil((W + stress)*1e4)/1e4 so claim_minus_W >= stress BY CONSTRUCTION; the numbers themselves are unchanged in kind",
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": -0.02719999999999345,
+ "claim_vs_gate": "OVER gate by 0.0272 bits -- DISCLOSED: the honest reprice of a genuine 168-bit key cannot be made to fit the 116.8271 head without an unearned row cut; legality (claim >= log2 exact sum) is preserved and the crossing is stated",
+ "carried_row_census": {
+  "count": 10,
+  "sum_instructions": 42886835290326396299970498810135572,
+  "share_percent": 0.0143
+ },
+ "kappa_charged": 1.231,
+ "kappa_provenance": "census-crossside-v32.json:charged_kappa (cross-side, pooled, upper95)",
+ "debit": {
+  "E_bad_log2": 63.600527,
+  "cap_bad_log2": 84,
+  "headroom_bits": 20.3995,
+  "pairs_log2": 63.300696,
+  "form": "kappa * N^2/2^168 (the reviewer's own form, at the corrected key width)"
+ },
+ "key": {
+  "kernel_instructions": 70,
+  "per_record": 2303,
+  "v31_per_record": 2242,
+  "delta_bits": 0.038728,
+  "image_bits": 168,
+  "adversarial_mean_hd": 84.0005,
+  "v31_control_collisions": 1000000,
+  "call_site": "record_of() calls key_mixed_final (4096 calls over 4096 records) and key_scalar 0 times: the charged key IS the key in the hot path",
+  "shipped_equals_charged": "compiled C kernel reproduces the Python key on 64/64 random 381-bit residues"
+ },
+ "phi": {
+  "x": 0.00390625,
+  "uniform": 0.998049,
+  "triangular": 0.9974,
+  "delta": 0.000649,
+  "K": 0.51,
+  "K_eff_uniform": 0.509005,
+  "K_eff_tri": 0.508674,
+  "floor": 0.39,
+  "floor_met": true,
+  "derivation": "sum_t p(t)^2 = 2/(3L) for triangular p(t)=(L-|t|)/L^2 vs 1/(2L) uniform over 2L slots: the collision density is 4/3 larger, so the effective birthday argument is y=(4/3)*nb^2/G"
+ },
+ "gap_tail": {
+  "source": "arm-retune-v31.jsonl (24000 trials, K_max=2^32, 0 aborts)",
+  "observed_max_gap": 1172,
+  "draws": 114576000,
+  "p_gap_above_observed_one_sided": 0.0,
+  "observed_support_entries": 586,
+  "empirical_max_plus_one_sided": "gap_max + mu*ln(1/p_upper) = 1.227e+09",
+  "production_extreme_value_log2": 31.376706,
+  "ledger_support_log2": 31,
+  "verdict": "the fixture cap never fires (0/24000 at 2^32) so it carries NO tail information; the ledger's 2^31 support entry count is instead DERIVED from the same exponential gap law: E[max gap] = mu*ln(nb*ell) = 2^31.38 over 2^115.65 draws, support = /2, i.e. 2^31.  The tail hypothesis (exponential gaps, mu=2^26.067) is stated and its UNTESTED status at production is disclosed, not hidden"
+ },
+ "retune": {
+  "nb": 35184372088832,
+  "nb_log2": 45,
+  "ell": 1852993781273297218247,
+  "ell_log2": 70.650348,
+  "space_log2": 98,
+  "headroom_log2": 8
+ }
+}

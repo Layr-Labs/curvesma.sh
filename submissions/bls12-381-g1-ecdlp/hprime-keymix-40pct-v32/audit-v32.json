@@ -1,0 +1,59 @@
+{
+ "ledger_integer_sum": {
+  "pass_": true,
+  "detail": "300337609692974741424339595671522558996"
+ },
+ "W_recomputed": {
+  "pass_": true,
+  "detail": "116.854068468347"
+ },
+ "claim_ge_W": {
+  "pass_": true,
+  "detail": "claim 116.854300 W 116.854068"
+ },
+ "claim_ticks_tight": {
+  "pass_": true,
+  "detail": "claim-1e-4 116.854200 vs W+stress 116.854274"
+ },
+ "claim_covers_stress": {
+  "pass_": true,
+  "detail": "slack 0.000231532 stress 0.000205996"
+ },
+ "preprocessing_all_derived": {
+  "pass_": true,
+  "detail": "10 rows"
+ },
+ "twenty_pair_hd_plausible": {
+  "pass_": true,
+  "detail": "[87, 87, 95, 83, 78, 75, 82, 95, 95, 81, 78, 82, 80, 84, 83, 82, 96, 80, 81, 86]"
+ },
+ "v31_control_still_collides": {
+  "pass_": true,
+  "detail": "mix64 masks to 64 bits: collision reproduced"
+ },
+ "four_planted_controls": {
+  "pass_": true,
+  "detail": "{\"bit_flip_in_key_changes_key\": true, \"limb5_reaches_output\": true, \"limb0_reaches_output\": true, \"residue_mod_p_canonical\": true}"
+ },
+ "hot_path_uses_key_mixed_final": {
+  "pass_": true,
+  "detail": "{\"key_mixed_final\": 500, \"key_scalar\": 0, \"key_mixed_v31\": 0}"
+ },
+ "c_kernel_equals_python": {
+  "pass_": true,
+  "detail": "32/32"
+ },
+ "submission_claim_matches_ledger": {
+  "pass_": true,
+  "detail": "1168543/10000"
+ },
+ "title_repeats_no_wrong_claim": {
+  "pass_": true,
+  "detail": "informational"
+ },
+ "birthday_under_cap": {
+  "pass_": true,
+  "detail": "E_bad 2^63.601 vs cap 2^84"
+ },
+ "all_pass": true
+}

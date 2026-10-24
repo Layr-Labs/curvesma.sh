@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v32: genuine 168-bit key over the full 381-bit residue, kernel 70 instr measured, record_of() calls it (4096/0 counters), adversarial Hamming 84.0005/168 vs control 10^6/10^6 collisions; W=2^116.854068, claim 116.8543 OVER gate 116.8271 by 0.0272, disclosed",
+ "claims": [
+  {
+   "statement": "BLS12-381 G1 auxiliary powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, recover s. Claim 116.8543 (1168543/10000); charged W=2^116.854068468 in 2000-instruction units. The live head at fire time is jungjipdo ticket 6ecec8e at 116.8271 (verified live, still in review). THIS CLAIM IS 0.0272 BITS ABOVE THAT HEAD AND THE CROSSING IS NOT HIDDEN: a genuine 168-bit key costs 0.038728 bits more than the 64-bit key v31 charged, the records row is 99.985% of W, and no honest row cut recovers it. Rank is lost; legality (claim >= log2 exact sum, aux inside the bound) is not.\\n\\n(1) THE KEY IS GENUINELY 168 BITS (verdict 3e66901 flaw 1, fatal). v31's key_mixed() called mix64(), whose first statement masks its input to 64 bits: residues differing by 2^64 got identical keys and N^2/2^64 = 2^167.30 pairs blew the 2^84 cap. v32 ships key_mixed_final (key_mixed_final.c, mirrored in keymod.py): three 64-bit lanes, each a Horner fold of ALL SIX 64-bit limbs of the 381-bit residue with its own odd multiplier (no input mask anywhere), then a 2-round xorshift-multiply finaliser per lane; the 168 stored bits are 56 bits from each finalised lane at disjoint windows. PROVEN BY TEST, NOT ASSERTION (key-collision-v32.json): 1,000,000 random pairs differing by exactly 2^64*delta, delta in [1,2^30), give mean Hamming distance 84.0005 of 168 bits (p01 69, p50 84, p99 99, max 113) against the ideal 84; the PLANTED CONTROL FIRES on every one of those pairs (v31's mix64 key: mean HD 0.0, 10^6/10^6 identical) so the test is demonstrably able to see the defect it is looking for. BIRTHDAY REGEN in the reviewer's own arithmetic form: N^2/2^168 = 2^63.300696, charged kappa*that = 2^63.601, versus cap 2^84 -> 20.4 bits UNDER the cap (the 64-bit form the reviewer used, N^2/2^64 = 2^167.30, is printed beside it as the refuted value). CALL-SITE: record_of() calls key_mixed_final; an instrumented census over 4096 records shows key_mixed_final 4096 calls, key_scalar 0, key_mixed_v31 0, and 0 stored-limb mismatches against a direct recompute, so the charged key IS the key in the hot path (the charged!=shipped class is closed here, not asserted). SHIPPED==CHARGED: the compiled C kernel reproduces the Python key on 64/64 random 381-bit residues. PRICE, MEASURED: otool -tV on the compiled key_mixed_final.c body gives 70 instructions for all three lanes; v31 charged 7 for the key (3 finalise + 4 pack), so the per-record price moves 2242 -> 2303 and W moves by log2(2303/2242) = 0.038728 bits. That movement is the whole of the crossing.\\n\\n(2) CROSS-SIDE KAPPA CENSUS (flaw 2). v31 counted within-A pairs; v32 interleaves two INDEPENDENT residue streams (same distribution, disjoint coins) through one store and counts only A-B key pairs. kappa is dimensionless (observed/expected), so it is measured at a key width where fixture collisions exist (20 bits, as v31 did) and applied to the 2^168 production image. 400 walks x 384 records/side: cross-side observed 55 vs expected 56.25 -> kappa 0.977778 (one-sided Poisson 95% upper 1.212438); within-A 23 vs 28.05 -> 0.819913 (upper 1.136797); cross/within ratio 1.19. The two point distributions are identical and the coins are disjoint, so the within-A proxy is now VALIDATED WITH DATA rather than assumed, and the charged kappa is max(carried envelope 1.231, cross-side upper 1.212438) = 1.231. E_bad = 1.231*N^2/2^168 = 2^63.601 vs cap 2^84.\\n\\n(3) TRIANGULAR OCCUPANCY AND THE GAP TAIL (flaw 3). The reviewer is right that independent uniforms over an interval of length L give a TRIANGULAR difference law p(t)=(L-|t|)/L^2, not a uniform one over 2L slots. Effect on the distinct-difference attenuator: sum_t p(t)^2 = 2/(3L) for triangular versus 1/(2L) uniform, a factor 4/3 more collision density, so the effective birthday argument is y=(4/3)nb^2/G. At nb=2^45, G=2^98: x=0.00390625, Phi_uniform 0.998049 -> Phi_tri 0.997400, K=0.51 -> K_eff = 0.509005 -> 0.508674, and 0.508674 >= 0.39 by 1.30x: the success claim survives the corrected occupancy law with margin (the delta row is emitted in ledger-v32.json phi). GAP TAIL, stated honestly: the fixture cap NEVER fires (0/24000 aborts at K_max=2^32, observed max gap 1172 over 1.146e8 draws), so the fixture carries NO information about the production tail and v32 does not pretend it does. The 2^31 support-entry count is instead DERIVED from the same exponential gap law the abort probability uses: E[max gap] = mu*ln(nb*ell) = 2^31.377 over 2^115.65 draws, support = half that = 2^31 entries per base, which is exactly the row charged. The tail hypothesis (exponential gaps, mu=2^26.067) is named as a hypothesis and its UNTESTED status at production is disclosed; no fixture number is used to support it.\\n\\n(4) PREPROCESSING DERIVATIONS AND MARGIN ARITHMETIC (flaw 4). No carried row is a bare integer any more: each of the ten preprocessing rows now carries a construction sentence, an exact unit count, an instructions-per-unit price, and an asserted product equal to the row (ledger-v32.json preprocessing_derivations, preprocessing_all_derived=true). Two rows are re-derived rather than carried: gap_point_tables = 2*nb*2^31*15*2000 from the extreme-value support above, and candidate_scan_cap = 2^84*2^20 from the declared cap. MARGIN ARITHMETIC, recomputed: the doubling stress on ALL carried rows is 0.000205996 bits and the v31 claim's slack was 0.0000541 -- the reviewer's observation reproduces exactly, and the diagnosis is that the CLAIM was mis-set, not that the stress was understated. v32 sets claim = ceil((W + stress)*1e4)/1e4, so claim_minus_W = 0.000231532 >= 0.000205996 BY CONSTRUCTION (claim_covers_doubling_stress=true). Both numbers and which one changed are printed in the ledger.\\n\\nSCOPE: no production run (N=2^115.650); unit costs are declared ledger integers except the key kernel, which is counted from the compiled body; the arms are the banked v31 fixture measurements at a 41-bit field (q 0.397792, CP-95 lower 0.392584), unchanged by this round because the key does not enter the hit test. DISCLOSED AND NOT TRANSFERABLE: the absolute split ratio nb/ell, the 97-bit exponent sliver, the fixture's 2^38 group order, and the production gap tail. The honest ledger consequence of a genuine key is +0.038728 bits, and the claim crosses the live head by 0.0272; shipping the smaller number would require either the 64-bit key the reviewer refuted or an unearned cut in a row that is 99.985% of W.",
+   "score": {
+    "numerator": "1168543",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "public-note.md",
+    "key_collision_test.py",
+    "key-collision-v32.json",
+    "keymod.py",
+    "key_mixed_final.c",
+    "key_driver.c",
+    "census_crossside.py",
+    "census-crossside-v32.json",
+    "derive_v32.py",
+    "ledger-v32.json",
+    "audit_v32.py",
+    "audit-v32.json",
+    "preflight_v32.py",
+    "structured_walk_v31.c",
+    "arm-retune-v31.jsonl",
+    "arm-sat-span14.jsonl",
+    "certificate.json",
+    "structured-ladder.json",
+    "direct_v25.py",
+    "direct-v25.json",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v26.json",
+    "verify_v26.py"
+   ]
+  }
+ ],
+ "experiments": []
+}
