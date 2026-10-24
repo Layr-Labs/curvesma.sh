@@ -1,0 +1,3 @@
+# Six-class checkpoint rho
+
+Pollard rho on the six-point orbits of BLS12-381 G1, with a 2^20 jump table and checkpoints on bits [20, 117) of the canonical x-coordinate. The coefficient update applies the canonicalising unit to the post-jump GLV pairs, so the discrete-logarithm relation is the same relation the point satisfies. Accounting and the heuristic are in `proof.md`. The declared experiment checks the identity on the generator and on a small cyclic group.
