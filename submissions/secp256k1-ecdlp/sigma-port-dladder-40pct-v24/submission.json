@@ -1,0 +1,38 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp this package claims the COMPUTATION BOUND W = 2^128.17150304 (submitted 128.172) for the shipped DP-walk configuration (workers 2^20 lanes, inversion BATCH 2^18, production DP density d=60, trails_per_walker 2^106.7214, step 366 itemised instructions at C=1000, w=2 exactly +1.000 bit). FIVE FIXES, in the verdict's own order. (1) CLASS KEY NOW BYTE-MATCHES PRODUCTION. v23's klass minimised over the six x-residues +-beta^h*x, so P and -P shared a key but sigma negates y and sent them to OPPOSITE purported canonical points; its column also carried the min-of-six x distribution, not production's. v24 uses the production key K = min(y,p-y) (uniform on [0,p/2]) with h = argmin_h beta^h x and b = [y>p-y], and the canonical representative (beta^h x, K) is a SECTION of the mu6 action: klass(canon(P))==klass(P) and canon(canon(P))==canon(P). The ladder key is compared against the production key function on 20 adversarial pairs INCLUDING P vs -P, the minimum-K point and the p/2 boundary: 20/20 equal, and P/-P now canonicalise to the SAME point (evidence/audit-v24.json C1a-C1d). (2) LAG-3 IS REAL. v23 tested k==prev1 or k==prev2 only (periods 1,2). v24 keeps prev1/prev2/prev3 and attributes each fire to the lag that caught it. Planted period-3 control: 0 hits under the depth-2 detector, 33 under depth-3. On matched seeds at 2^17 the depth-3 detector fires 2517 escapes against v23's 2357 (+160, of which lag3 = 156). (3) THE GATE REGIME IS MEASURED, NOT ASSUMED. Law cells run d=0 because the success event is cross-lane coalescence detected at the next distinguished point; the gate law itself is measured in RECORDS at d=0,4,8,12,16: p = 0.4200 / 0.1733 / 0.0033 / 0 / 0. That REFUTES the reading in which a success needs two DP records in one class (it would give p~0 at d=60) and leaves one reading standing: two lanes reaching the same class follow the same trajectory forever, so they emit IDENTICAL DPs and the match is exact DP identity, not a birthday over records. Under that reading the gate costs a TAIL, and the tail is corrected from v23's full lane budget to the expected remaining post-merge trail, trail/2 = 2^105.72, i.e. 2^45.72 DP opportunities and miss probability exp(-2^45.72) (v23 declared exp(-2^46.72) from the full budget; the verdict is right that the full budget is not a guaranteed post-merge tail). The self-collision channel at d=60 stays DP-alignment-limited and is DISCLOSED as unmeasured, not priced. (4) w2 IS COMPOSED PER CHALLENGE. 1200 SAME-CHALLENGE PAIRS (two runs, fresh coins) at 2^20: measured E[2p_Q-p_Q^2] = 0.6575, bootstrap CI over the paired challenge rows [0.6325,0.6850]; the from-means formula 2E[p]-E[p]^2 gives 0.6470, so the composed-from-means reading was CONSERVATIVE by 0.0105, not optimistic. SUCCESS = 0.6325 (bootstrap lower) - 5.7e-4 debits - 2.344e-4 restart loss = 0.631930 >= 0.39. (5) EXTRAPOLATION ARITHMETIC. log2((r-1)/6) = 253.415037, top cell 19.999300, so 253.415037 - 19.999300 = 233.415737 doublings: the verdict's 233.416 is CORRECT, v23's 127.4 was wrong, and the corrected figure is shipped (audit C6a/C6b). (6) WORK BOUND RECONCILED (verdict point 4). The v23 ledger priced ONE coefficient update for jumps described as multiples of Q, while the step that solves for x is [al]G+[dl]Q and must carry BOTH coefficients, and after the mu6 canonicalisation both are rescaled by eps = omega^h*(-1)^b mod r (a 256-bit multiply each, 97 insn at 16 mul-adds x 5.5 + 9). v24 charges the tested step: 155 -> 366 instructions, step price 1.366, which moves the claim from 127.930 to 128.172 (+0.242 bits). The claim got WORSE and it is the tested algorithm's own price. LADDER (n=1200 per cell, production key, lag-3, d=0): p_hat = 0.4550 (546/1200) / 0.3892 (467/1200) / 0.3892 (467/1200) at 2^14/2^17/2^20, slope -0.010980 per doubling (s.e. 0.006336, CI [-0.023399,+0.001440]), pooled 1480/3600 = 0.411111 with CP-95 lower 0.397540. NOT RANKING: the claim is 1.84 bits above the live bar and is submitted with the floor met, as validity depth, not as a rank claim.",
+   "score": {
+    "numerator": "32043",
+    "denominator": "250"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "ledger.py",
+    "evidence/dladder-v24.json",
+    "evidence/audit-v24.json",
+    "evidence/selector-pair.json",
+    "evidence/cap-recount.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "evidence/restart-count.json",
+    "evidence/selector-swap.json",
+    "evidence/absorb-direct.json",
+    "scripts/dladder.py",
+    "scripts/run_ladder_v24.py",
+    "scripts/audit_v24.py",
+    "scripts/selector_pair.py",
+    "scripts/selector.py",
+    "scripts/cap_recount.py",
+    "scripts/census_v20n.py",
+    "scripts/qwalk.py",
+    "scripts/absorb_v20n.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v24: ladder key byte-matches production (20/20, P/-P one point), real lag-3 detector (+160 fires, planted period-3 caught), gate law measured, w2 per same-challenge pair 0.6575 boot [0.6325,0.6850] -> success 0.631930; step repriced 155->366 insn -> claim 128.172; 233.415737 doublings",
+ "version": 1
+}

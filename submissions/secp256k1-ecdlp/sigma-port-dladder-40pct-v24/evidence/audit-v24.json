@@ -1,0 +1,121 @@
+{
+ "test": "audit_v24",
+ "rows": [
+  {
+   "id": "C1a",
+   "control": "ladder key == production key on 20 adversarial pairs",
+   "result": "Y",
+   "detail": "20/20"
+  },
+  {
+   "id": "C1b",
+   "control": "P and -P: same key AND same canonical point",
+   "result": "Y",
+   "detail": "pairs 10"
+  },
+  {
+   "id": "C1c",
+   "control": "canonicalisation is idempotent on every pair",
+   "result": "Y",
+   "detail": ""
+  },
+  {
+   "id": "C1d",
+   "control": "v23 x-key would have split P/-P (planted regression check)",
+   "result": "Y",
+   "detail": "v24 reps identical: True"
+  },
+  {
+   "id": "C2a",
+   "control": "period-3 cycle MISSED by the v23 depth-2 detector",
+   "result": "Y",
+   "detail": "hits 0"
+  },
+  {
+   "id": "C2b",
+   "control": "period-3 cycle CAUGHT by the v24 depth-3 detector",
+   "result": "Y",
+   "detail": "hits 33"
+  },
+  {
+   "id": "C2c",
+   "control": "period-1 cycle still caught by both",
+   "result": "Y",
+   "detail": ""
+  },
+  {
+   "id": "C3a",
+   "control": "a cell at d=8 is distinguishable from d=0 (wrong-d is detectable)",
+   "result": "Y",
+   "detail": "p0 0.4200 p8 0.0033 sep 20.5 sigma"
+  },
+  {
+   "id": "C3b",
+   "control": "every law cell declares d=0 and every gate arm its own d",
+   "result": "Y",
+   "detail": "gate depths [0, 4, 8, 12, 16]"
+  },
+  {
+   "id": "C4a",
+   "control": "per-challenge composition differs from the from-means formula",
+   "result": "Y",
+   "detail": "0.657500 vs 0.646966"
+  },
+  {
+   "id": "C4b",
+   "control": "bootstrap interval over challenges is non-degenerate and brackets the point",
+   "result": "Y",
+   "detail": "[0.6325,0.6850]"
+  },
+  {
+   "id": "C4c",
+   "control": "perturbing one paired challenge moves the bootstrap lower bound",
+   "result": "Y",
+   "detail": "0.63167 -> 0.63250"
+  },
+  {
+   "id": "C5a",
+   "control": "v24 detector fires more escapes than v23 on the same seeds",
+   "result": "Y",
+   "detail": "2357 -> 2517"
+  },
+  {
+   "id": "C5b",
+   "control": "the extra fires are lag-3 fires",
+   "result": "Y",
+   "detail": "lag3 1, lag1 2360, lag2 156"
+  },
+  {
+   "id": "C6a",
+   "control": "233.416 doublings recomputed from the canonical class count",
+   "result": "Y",
+   "detail": "233.415737"
+  },
+  {
+   "id": "C6b",
+   "control": "the v23 declared 127.4 is reproduced by neither path",
+   "result": "Y",
+   "detail": "prod 253.415 top 19.999"
+  },
+  {
+   "id": "C7a",
+   "control": "ROWS sums to the declared STEP_INSN",
+   "result": "Y",
+   "detail": "366"
+  },
+  {
+   "id": "C7b",
+   "control": "step price is the itemised sum, not a carried constant",
+   "result": "Y",
+   "detail": "1.3660"
+  },
+  {
+   "id": "C7c",
+   "control": "the two-coefficient + mu6 rescale rows are present",
+   "result": "Y",
+   "detail": ""
+  }
+ ],
+ "all_Y": true,
+ "n": 19
+}
