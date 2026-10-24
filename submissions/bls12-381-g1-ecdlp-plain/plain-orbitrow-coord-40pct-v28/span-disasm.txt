@@ -1,0 +1,322 @@
+object-disassembly reconciliation -- plain BLS12-381 G1 rho span (v28)
+============================================================================================
+source   : schedule.py build()  (130 rows, 128 costed)
+toolchain: clang -arch arm64 -c span.s -o span.o ; otool -t -v span.o
+
+charged per iteration          : 128  (125 non-refresh, 3 refresh-only)
+literal machine instructions   : 126  (leaf body 122, prefix loop 4)
+amortised per-batch charges    : 2  (rows 11, 12: never per-element instructions)
+leaf-body back-edges           : 1
+prefix-loop back-edges         : 1
+exit stubs                     : 5 distinct targets, in-degree [1, 1, 1, 1, 3]
+
+RECONCILIATION: EXACT -- every charged literal row is one machine instruction, in order, with the same registers
+
+row 6 segmented per coordinate (object instructions)
+--------------------------------------------------------------------------------------------
+| coordinate | path | executed insns | charged | inside C (instr.) | traffic weight |
+|---|---|---:|---:|---:|---:|
+| entry | entry-address fetch | 1 | 1 | 0.0 | 1.00 |
+| x | table+state transfers | 9 | 9 | 574.5 | 1.00 |
+| y | table+state transfers | 9 | 9 | 574.5 | 1.00 |
+
+branch -> target edges in the object
+--------------------------------------------------------------------------------------------
+| branch PC | instruction | target | target region | back-edge | stub body (insn) |
+|---|---|---|---|---|---:|
+| 0xc | b.ne | 0x0 | prefix loop | yes | - |
+| 0xc8 | b.hs | 0x200 | exit stub | no | 3 |
+| 0xf4 | b.ls | 0x200 | exit stub | no | 3 |
+| 0x130 | b.ls | 0x200 | exit stub | no | 3 |
+| 0x188 | cbz | 0x204 | exit stub | no | 1 |
+| 0x1ac | b.hs | 0x20c | exit stub | no | 1 |
+| 0x1c8 | b.eq | 0x208 | exit stub | no | 1 |
+| 0x1d0 | b.ne | 0x1e0 | in-body continuation | no | - |
+| 0x1f4 | b.ne | 0x14 | in-body continuation | yes | - |
+| 0x1f8 | cbz | 0x210 | exit stub | no | 1 |
+
+store -> reload pairs, eligibility-filtered (same record only)
+--------------------------------------------------------------------------------------------
+| record offset | field | producer | consumer | distance |
+|---:|---|---:|---:|---:|
+| 48 | y limb 0/1 | 16 | 72 | 56 |
+| 64 | y limb 2/3 | 17 | 73 | 56 |
+| 80 | y limb 4/5 | 18 | 74 | 56 |
+| 0 | x limb 0/1 | 10 | 19 | 9 |
+| 16 | x limb 2/3 | 11 | 20 | 9 |
+| 32 | x limb 4/5 | 12 | 21 | 9 |
+
+6 eligible pairs, max distance 56, bound 128; 10 candidates excluded (different record or carried state); 0 stack/frame operands.
+
+row-by-row (source row | source text | object instruction | encoding)
+--------------------------------------------------------------------------------------------
+126 | row 13 | ldr x2,[x0,#96]                                | ldr x2, [x0, #0x60]              | 
+127 | row 13 | add x0,x0,#512                                 | add x0, x0, #0x200               | 
+128 | row 13 | subs x1,x1,#1                                  | subs x1, x1, #0x1                | 
+129 | row 13 | b.ne prefix                                    | b.ne _batch_prefix               | 
+  0 | row 6  | ldr x5,[x19,#96]                               | ldr x5, [x19, #0x60]             | 
+  1 | row 6  | ldp x0,x1,[x5,#0]                              | ldp x0, x1, [x5]                 | 
+  2 | row 6  | ldp x2,x3,[x5,#16]                             | ldp x2, x3, [x5, #0x10]          | 
+  3 | row 6  | ldp x4,x6,[x5,#32]                             | ldp x4, x6, [x5, #0x20]          | 
+  4 | row 6  | ldp x7,x8,[x5,#48]                             | ldp x7, x8, [x5, #0x30]          | 
+  5 | row 6  | ldp x9,x23,[x5,#64]                            | ldp x9, x23, [x5, #0x40]         | 
+  6 | row 6  | ldp x24,x25,[x5,#80]                           | ldp x24, x25, [x5, #0x50]        | 
+  7 | row 6  | ldp x5,x26,[x19,#0]                            | ldp x5, x26, [x19]               | 
+  8 | row 6  | ldp x27,x28,[x19,#16]                          | ldp x27, x28, [x19, #0x10]       | 
+  9 | row 6  | ldp x29,x30,[x19,#32]                          | ldp x29, x30, [x19, #0x20]       | 
+ 11 | row 6  | stp x5,x26,[x19,#0]                            | stp x5, x26, [x19]               | 
+ 12 | row 6  | stp x27,x28,[x19,#16]                          | stp x27, x28, [x19, #0x10]       | 
+ 13 | row 6  | stp x29,x30,[x19,#32]                          | stp x29, x30, [x19, #0x20]       | 
+ 14 | row 6  | ldp x0,x1,[x19,#48]                            | ldp x0, x1, [x19, #0x30]         | 
+ 15 | row 6  | ldp x2,x3,[x19,#64]                            | ldp x2, x3, [x19, #0x40]         | 
+ 16 | row 6  | ldp x4,x6,[x19,#80]                            | ldp x4, x6, [x19, #0x50]         | 
+ 18 | row 6  | stp x0,x1,[x19,#48]                            | stp x0, x1, [x19, #0x30]         | 
+ 19 | row 6  | stp x2,x3,[x19,#64]                            | stp x2, x3, [x19, #0x40]         | 
+ 20 | row 6  | stp x4,x6,[x19,#80]                            | stp x4, x6, [x19, #0x50]         | 
+ 21 | row 1  | ldp x0,x1,[x19,#0]                             | ldp x0, x1, [x19]                | 
+ 22 | row 1  | ldp x2,x3,[x19,#16]                            | ldp x2, x3, [x19, #0x10]         | 
+ 23 | row 1  | ldp x4,x5,[x19,#32]                            | ldp x4, x5, [x19, #0x20]         | 
+ 24 | row 1  | ldp x6,x7,[x22,#0]                             | ldp x6, x7, [x22]                | 
+ 25 | row 1  | umulh x8,x5,x6                                 | umulh x8, x5, x6                 | 
+ 26 | row 1  | umulh x9,x4,x7                                 | umulh x9, x4, x7                 | 
+ 27 | row 1  | add x8,x8,x9                                   | add x8, x8, x9                   | 
+ 28 | row 1  | madd x8,x5,x7,x8                               | madd x8, x5, x7, x8              | 
+ 29 | row 1  | ldp x6,x7,[x22,#16]                            | ldp x6, x7, [x22, #0x10]         | 
+ 30 | row 1  | umulh x9,x3,x6                                 | umulh x9, x3, x6                 | 
+ 31 | row 1  | add x8,x8,x9                                   | add x8, x8, x9                   | 
+ 32 | row 1  | madd x8,x4,x6,x8                               | madd x8, x4, x6, x8              | 
+ 33 | row 1  | umulh x9,x2,x7                                 | umulh x9, x2, x7                 | 
+ 34 | row 1  | add x8,x8,x9                                   | add x8, x8, x9                   | 
+ 35 | row 1  | madd x8,x3,x7,x8                               | madd x8, x3, x7, x8              | 
+ 36 | row 1  | ldp x6,x7,[x22,#32]                            | ldp x6, x7, [x22, #0x20]         | 
+ 37 | row 1  | umulh x9,x1,x6                                 | umulh x9, x1, x6                 | 
+ 38 | row 1  | add x8,x8,x9                                   | add x8, x8, x9                   | 
+ 39 | row 1  | madd x8,x2,x6,x8                               | madd x8, x2, x6, x8              | 
+ 40 | row 1  | umulh x9,x0,x7                                 | umulh x9, x0, x7                 | 
+ 41 | row 1  | add x8,x8,x9                                   | add x8, x8, x9                   | 
+ 42 | row 1  | madd x8,x1,x7,x8                               | madd x8, x1, x7, x8              | 
+ 43 | row 1  | ldr x6,[x22,#48]                               | ldr x6, [x22, #0x30]             | 
+ 44 | row 1  | madd x9,x0,x6,x8                               | madd x9, x0, x6, x8              | 
+ 45 | row 2  | sub x7,x9,#16                                  | sub x7, x9, #0x10                | 
+ 46 | row 2  | cmn x7,#31                                     | cmn x7, #0x1f                    | 
+ 47 | row 2  | b.hs fallback                                  | b.hs 0x200                       | 
+ 48 | row 2  | umulh x0,x16,x9                                | umulh x0, x16, x9                | 
+ 49 | row 2  | mul x1,x17,x9                                  | mul x1, x17, x9                  | 
+ 50 | row 2  | umulh x2,x17,x9                                | umulh x2, x17, x9                | 
+ 51 | row 2  | cmn x1,x0                                      | cmn x1, x0                       | 
+ 52 | row 2  | adc x1,x2,xzr                                  | adc x1, x2, xzr                  | 
+ 53 | row 2  | add x2,x5,x1                                   | add x2, x5, x1                   | 
+ 54 | row 2  | subs x3,x2,x17                                 | subs x3, x2, x17                 | 
+ 55 | row 2  | csel x4,x17,xzr,hs                             | csel x4, x17, xzr, hs            | 
+ 56 | row 2  | add x6,x3,#16                                  | add x6, x3, #0x10                | 
+ 57 | row 2  | cmp x6,#32                                     | cmp x6, #0x20                    | 
+ 58 | row 2  | b.ls fallback                                  | b.ls 0x200                       | 
+ 59 | row 2  | sub x2,x4,x3                                   | sub x2, x4, x3                   | 
+ 60 | row 3  | cmp x1,x5                                      | cmp x1, x5                       | 
+ 61 | row 3  | csel x3,x1,x5,lo                               | csel x3, x1, x5, lo              | 
+ 62 | row 3  | csel x4,x5,x1,lo                               | csel x4, x5, x1, lo              | 
+ 63 | row 3  | cset x6,lo                                     | cset x6, lo                      | 
+ 64 | row 3  | cmp x2,x4                                      | cmp x2, x4                       | 
+ 65 | row 3  | csel x7,x2,x4,lo                               | csel x7, x2, x4, lo              | 
+ 66 | row 3  | cmp x2,x3                                      | cmp x2, x3                       | 
+ 67 | row 3  | csel x7,x3,x7,lo                               | csel x7, x3, x7, lo              | 
+ 68 | row 3  | csel x3,x2,x3,lo                               | csel x3, x2, x3, lo              | 
+ 69 | row 3  | mov x8,#2                                      | mov x8, #0x2                     | 
+ 70 | row 3  | csel x8,x8,x6,lo                               | csel x8, x8, x6, lo              | 
+ 71 | row 3  | sub x7,x7,x3                                   | sub x7, x7, x3                   | 
+ 72 | row 3  | cmp x7,#16                                     | cmp x7, #0x10                    | 
+ 73 | row 3  | b.ls fallback                                  | b.ls 0x200                       | 
+ 74 | row 4  | ldp x23,x24,[x19,#48]                          | ldp x23, x24, [x19, #0x30]       | 
+ 75 | row 4  | ldp x25,x26,[x19,#64]                          | ldp x25, x26, [x19, #0x40]       | 
+ 76 | row 4  | ldp x27,x28,[x19,#80]                          | ldp x27, x28, [x19, #0x50]       | 
+ 77 | row 4  | subs x6,x10,x23                                | subs x6, x10, x23                | 
+ 78 | row 4  | sbcs x7,x11,x24                                | sbcs x7, x11, x24                | 
+ 79 | row 4  | sbcs x9,x12,x25                                | sbcs x9, x12, x25                | 
+ 80 | row 4  | sbcs x29,x13,x26                               | sbcs x29, x13, x26               | 
+ 81 | row 4  | sbcs x30,x14,x27                               | sbcs x30, x14, x27               | 
+ 82 | row 4  | sbc x5,x15,x28                                 | sbc x5, x15, x28                 | 
+ 83 | row 4  | cmp x6,x23                                     | cmp x6, x23                      | 
+ 84 | row 4  | sbcs xzr,x7,x24                                | sbcs xzr, x7, x24                | 
+ 85 | row 4  | sbcs xzr,x9,x25                                | sbcs xzr, x9, x25                | 
+ 86 | row 4  | sbcs xzr,x29,x26                               | sbcs xzr, x29, x26               | 
+ 87 | row 4  | sbcs xzr,x30,x27                               | sbcs xzr, x30, x27               | 
+ 88 | row 4  | sbcs xzr,x5,x28                                | sbcs xzr, x5, x28                | 
+ 89 | row 4  | cset x4,lo                                     | cset x4, lo                      | 
+ 90 | row 4  | csel x0,x6,x23,lo                              | csel x0, x6, x23, lo             | 
+ 91 | row 4  | csel x1,x7,x24,lo                              | csel x1, x7, x24, lo             | 
+ 92 | row 4  | csel x2,x9,x25,lo                              | csel x2, x9, x25, lo             | 
+ 93 | row 4  | csel x3,x29,x26,lo                             | csel x3, x29, x26, lo            | 
+ 94 | row 5  | and x5,x0,#0xfffff                             | and x5, x0, #0xfffff             | 
+ 95 | row 5  | cbz x1,report                                  | cbz x1, 0x204                    | 
+ 96 | row 5  | add x6,x4,x5,lsl #1                            | add x6, x4, x5, lsl #1           | 
+ 97 | row 5  | add x6,x6,x6,lsl #1                            | add x6, x6, x6, lsl #1           | 
+ 98 | row 5  | add x6,x6,x8                                   | add x6, x6, x8                   | 
+ 99 | row 5  | add x6,x6,x6,lsl #2                            | add x6, x6, x6, lsl #2           | 
+100 | row 5  | add x6,x21,x6,lsl #5                           | add x6, x21, x6, lsl #5          | 
+101 | row 5  | str x6,[x19,#96]                               | str x6, [x19, #0x60]             | 
+102 | row 8  | ldp x27,x28,[x19,#136]                         | ldp x27, x28, [x19, #0x88]       | 
+103 | row 8  | cmp x28,#20                                    | cmp x28, #0x14                   | 
+104 | row 8  | b.hs abandon                                   | b.hs 0x20c                       | 
+105 | row 7  | ldp x7,x8,[x19,#104]                           | ldp x7, x8, [x19, #0x68]         | 
+106 | row 7  | ldp x9,x29,[x19,#120]                          | ldp x9, x29, [x19, #0x78]        | 
+107 | row 7  | cmp x0,x7                                      | cmp x0, x7                       | 
+108 | row 7  | ccmp x2,x8,#0,eq                               | ccmp x2, x8, #0x0, eq            | 
+109 | row 7  | ccmp x3,x9,#0,eq                               | ccmp x3, x9, #0x0, eq            | 
+110 | row 7  | ccmp x29,#1,#0,eq                              | ccmp x29, #0x1, #0x0, eq         | 
+111 | row 7  | b.eq traversal                                 | b.eq 0x208                       | 
+112 | row 7  | tst x27,#63                                    | tst x27, #0x3f                   | 
+113 | row 7  | b.ne norefresh                                 | b.ne 0x1e0                       | 
+114 | row 7  | stp x0,x2,[x19,#104]                           | stp x0, x2, [x19, #0x68]         | 
+115 | row 7  | mov x26,#1                                     | mov x26, #0x1                    | 
+116 | row 7  | stp x3,x26,[x19,#120]                          | stp x3, x26, [x19, #0x78]        | 
+117 | row 8  | adds x27,x27,#1                                | adds x27, x27, #0x1              | 
+118 | row 8  | adc x28,x28,xzr                                | adc x28, x28, xzr                | 
+119 | row 8  | stp x27,x28,[x19,#136]                         | stp x27, x28, [x19, #0x88]       | 
+120 | row 8  | add x19,x19,#512                               | add x19, x19, #0x200             | 
+121 | row 8  | cmp x19,x20                                    | cmp x19, x20                     | 
+122 | row 8  | b.ne loop                                      | b.ne _leaf_span                  | 
+123 | row 10 | cbz x1,zero-recover                            | cbz x1, 0x210                    | 
+
+not machine instructions (charged, per-batch amortised):
+  row 11  add meter.lo,meter.lo,batch-size
+  row 12  share of the one Fermat inversion (232,864/N, N >= 2^18)
+
+full disassembly (otool -t -v):
+--------------------------------------------------------------------------------------------
+/Users/andrewgordon/cs-bls12-381-g1-ecdlp-plain/submissions/bls12-381-g1-ecdlp-plain/plain-orbitrow-coord-40pct-v28/span.o:
+(__TEXT,__text) section
+_batch_prefix:
+0000000000000000	ldr	x2, [x0, #0x60]
+0000000000000004	add	x0, x0, #0x200
+0000000000000008	subs	x1, x1, #0x1
+000000000000000c	b.ne	_batch_prefix
+0000000000000010	ret
+_leaf_span:
+0000000000000014	ldr	x5, [x19, #0x60]
+0000000000000018	ldp	x0, x1, [x5]
+000000000000001c	ldp	x2, x3, [x5, #0x10]
+0000000000000020	ldp	x4, x6, [x5, #0x20]
+0000000000000024	ldp	x7, x8, [x5, #0x30]
+0000000000000028	ldp	x9, x23, [x5, #0x40]
+000000000000002c	ldp	x24, x25, [x5, #0x50]
+0000000000000030	ldp	x5, x26, [x19]
+0000000000000034	ldp	x27, x28, [x19, #0x10]
+0000000000000038	ldp	x29, x30, [x19, #0x20]
+000000000000003c	stp	x5, x26, [x19]
+0000000000000040	stp	x27, x28, [x19, #0x10]
+0000000000000044	stp	x29, x30, [x19, #0x20]
+0000000000000048	ldp	x0, x1, [x19, #0x30]
+000000000000004c	ldp	x2, x3, [x19, #0x40]
+0000000000000050	ldp	x4, x6, [x19, #0x50]
+0000000000000054	stp	x0, x1, [x19, #0x30]
+0000000000000058	stp	x2, x3, [x19, #0x40]
+000000000000005c	stp	x4, x6, [x19, #0x50]
+0000000000000060	ldp	x0, x1, [x19]
+0000000000000064	ldp	x2, x3, [x19, #0x10]
+0000000000000068	ldp	x4, x5, [x19, #0x20]
+000000000000006c	ldp	x6, x7, [x22]
+0000000000000070	umulh	x8, x5, x6
+0000000000000074	umulh	x9, x4, x7
+0000000000000078	add	x8, x8, x9
+000000000000007c	madd	x8, x5, x7, x8
+0000000000000080	ldp	x6, x7, [x22, #0x10]
+0000000000000084	umulh	x9, x3, x6
+0000000000000088	add	x8, x8, x9
+000000000000008c	madd	x8, x4, x6, x8
+0000000000000090	umulh	x9, x2, x7
+0000000000000094	add	x8, x8, x9
+0000000000000098	madd	x8, x3, x7, x8
+000000000000009c	ldp	x6, x7, [x22, #0x20]
+00000000000000a0	umulh	x9, x1, x6
+00000000000000a4	add	x8, x8, x9
+00000000000000a8	madd	x8, x2, x6, x8
+00000000000000ac	umulh	x9, x0, x7
+00000000000000b0	add	x8, x8, x9
+00000000000000b4	madd	x8, x1, x7, x8
+00000000000000b8	ldr	x6, [x22, #0x30]
+00000000000000bc	madd	x9, x0, x6, x8
+00000000000000c0	sub	x7, x9, #0x10
+00000000000000c4	cmn	x7, #0x1f
+00000000000000c8	b.hs	0x200
+00000000000000cc	umulh	x0, x16, x9
+00000000000000d0	mul	x1, x17, x9
+00000000000000d4	umulh	x2, x17, x9
+00000000000000d8	cmn	x1, x0
+00000000000000dc	adc	x1, x2, xzr
+00000000000000e0	add	x2, x5, x1
+00000000000000e4	subs	x3, x2, x17
+00000000000000e8	csel	x4, x17, xzr, hs
+00000000000000ec	add	x6, x3, #0x10
+00000000000000f0	cmp	x6, #0x20
+00000000000000f4	b.ls	0x200
+00000000000000f8	sub	x2, x4, x3
+00000000000000fc	cmp	x1, x5
+0000000000000100	csel	x3, x1, x5, lo
+0000000000000104	csel	x4, x5, x1, lo
+0000000000000108	cset	x6, lo
+000000000000010c	cmp	x2, x4
+0000000000000110	csel	x7, x2, x4, lo
+0000000000000114	cmp	x2, x3
+0000000000000118	csel	x7, x3, x7, lo
+000000000000011c	csel	x3, x2, x3, lo
+0000000000000120	mov	x8, #0x2
+0000000000000124	csel	x8, x8, x6, lo
+0000000000000128	sub	x7, x7, x3
+000000000000012c	cmp	x7, #0x10
+0000000000000130	b.ls	0x200
+0000000000000134	ldp	x23, x24, [x19, #0x30]
+0000000000000138	ldp	x25, x26, [x19, #0x40]
+000000000000013c	ldp	x27, x28, [x19, #0x50]
+0000000000000140	subs	x6, x10, x23
+0000000000000144	sbcs	x7, x11, x24
+0000000000000148	sbcs	x9, x12, x25
+000000000000014c	sbcs	x29, x13, x26
+0000000000000150	sbcs	x30, x14, x27
+0000000000000154	sbc	x5, x15, x28
+0000000000000158	cmp	x6, x23
+000000000000015c	sbcs	xzr, x7, x24
+0000000000000160	sbcs	xzr, x9, x25
+0000000000000164	sbcs	xzr, x29, x26
+0000000000000168	sbcs	xzr, x30, x27
+000000000000016c	sbcs	xzr, x5, x28
+0000000000000170	cset	x4, lo
+0000000000000174	csel	x0, x6, x23, lo
+0000000000000178	csel	x1, x7, x24, lo
+000000000000017c	csel	x2, x9, x25, lo
+0000000000000180	csel	x3, x29, x26, lo
+0000000000000184	and	x5, x0, #0xfffff
+0000000000000188	cbz	x1, 0x204
+000000000000018c	add	x6, x4, x5, lsl #1
+0000000000000190	add	x6, x6, x6, lsl #1
+0000000000000194	add	x6, x6, x8
+0000000000000198	add	x6, x6, x6, lsl #2
+000000000000019c	add	x6, x21, x6, lsl #5
+00000000000001a0	str	x6, [x19, #0x60]
+00000000000001a4	ldp	x27, x28, [x19, #0x88]
+00000000000001a8	cmp	x28, #0x14
+00000000000001ac	b.hs	0x20c
+00000000000001b0	ldp	x7, x8, [x19, #0x68]
+00000000000001b4	ldp	x9, x29, [x19, #0x78]
+00000000000001b8	cmp	x0, x7
+00000000000001bc	ccmp	x2, x8, #0x0, eq
+00000000000001c0	ccmp	x3, x9, #0x0, eq
+00000000000001c4	ccmp	x29, #0x1, #0x0, eq
+00000000000001c8	b.eq	0x208
+00000000000001cc	tst	x27, #0x3f
+00000000000001d0	b.ne	0x1e0
+00000000000001d4	stp	x0, x2, [x19, #0x68]
+00000000000001d8	mov	x26, #0x1
+00000000000001dc	stp	x3, x26, [x19, #0x78]
+00000000000001e0	adds	x27, x27, #0x1
+00000000000001e4	adc	x28, x28, xzr
+00000000000001e8	stp	x27, x28, [x19, #0x88]
+00000000000001ec	add	x19, x19, #0x200
+00000000000001f0	cmp	x19, x20
+00000000000001f4	b.ne	_leaf_span
+00000000000001f8	cbz	x1, 0x210
+00000000000001fc	ret
+0000000000000200	ret
+0000000000000204	ret
+0000000000000208	ret
+000000000000020c	ret
+0000000000000210	ret
