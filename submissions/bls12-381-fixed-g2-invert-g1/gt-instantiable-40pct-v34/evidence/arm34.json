@@ -1,0 +1,17 @@
+{
+ "policy": "shipped dict28.c four-probe FIFO chains (evict tail when chain length reaches PROBES=4)",
+ "lambda_num": "47901834235464930275112213749498867545",
+ "lambda_den": "170141183460469231731687303715884105728",
+ "lambda_hat": 0.281494140625,
+ "arrivals": 1153,
+ "nb": 4096,
+ "trials": 1485,
+ "p_hat": 0.99995911704498,
+ "se": 4.840872807401776e-06,
+ "p_derived": 0.9999883322852278,
+ "delta": -2.9215240247792984e-05,
+ "delta_explanation": "the Poisson terminal-size limit counts only buckets whose FINAL size is >=5; the shipped store also evicts during fill, so the measured loss exceeds 1-P(size>=5). The sign and size of the delta are what the transient predicts; both are reported, neither is charged.",
+ "control_2417": 0.9999795939189878,
+ "control_matches": false,
+ "lambda_integerisation": "arrivals = round(lambda*4096) = 1153, so lambda_hat = 1153/4096 = 0.281494141 against exact 0.281541678 (relative error 1.69e-04); nb is a power of two, as dict28_ws_init requires"
+}

@@ -1,0 +1,29 @@
+{
+ "version": 1,
+ "claim": "1277230",
+ "ok": true,
+ "checks": {
+  "row_sum_equals_W": true,
+  "claim_exact": true,
+  "claim_minimal": true,
+  "reduced": true,
+  "sub_score_matches": true,
+  "no_route_a_init_row": true,
+  "no_2_135_footprint": true,
+  "no_1490e39": true,
+  "no_2_120_token": true,
+  "coeff_row_ceiled": true,
+  "no_179_row": true,
+  "trap_count": true,
+  "trap_charge": true,
+  "trap_event_is_union": true,
+  "retention_derived_matches": true,
+  "measured_arm_trials": true,
+  "lambda_int_error_small": true,
+  "wrong_lambda_control_does_not_match": true,
+  "evidence_present": true
+ },
+ "W_log2": 142.01067934961713,
+ "coeff_per_step": 1788,
+ "method": "scripts/cert34.py: row sum, exact claim inequality (n and n-1), reduced rational, deleted-row absence, ceiled coefficient row, trap count/charge/event, derived-vs-measured retention pair, evidence-file presence"
+}

@@ -1,0 +1,37 @@
+{
+ "mode": "sort32-full-width-state-key-executed",
+ "what": "pre-state_key48w work at production width (12 canonical 381-bit residues): canonical extraction, min/argmin, insertion sort over 12 full-width values, 48-word lane packing",
+ "calls": 20000,
+ "seed": 20261024,
+ "words_per_residue": 6,
+ "counted_quantities": "compare instructions and value moves, executed; not wall time",
+ "comparisons_per_call": {
+  "p50": 53,
+  "p95": 64,
+  "max": 75,
+  "min": 27,
+  "mean": 52.891,
+  "structural_max": 77
+ },
+ "executed_ir_per_call": {
+  "p50": 1095,
+  "p95": 1263,
+  "max": 1458,
+  "min": 741
+ },
+ "unit_costs": {
+  "compare_word": 3,
+  "move_word": 2,
+  "mask_word": 2,
+  "pack_word": 2
+ },
+ "charge_per_step": 1458,
+ "charge_basis": "MAX over the 20000 executed calls (verdict: 'a measured maximum over individual calls', not an aggregate divided by call count); p95 and p50 reported for the sensitivity row",
+ "sensitivity": {
+  "at_p50": 1095,
+  "at_p95": 1263,
+  "at_max": 1458,
+  "note": "the ledger charges at_max; the claim is recomputed at p50 in the note"
+ },
+ "excluded": "state_key48w itself is priced separately (3398 Ir, exec31.json); this row is the full-width work BEFORE that call, which v31 priced as zero"
+}

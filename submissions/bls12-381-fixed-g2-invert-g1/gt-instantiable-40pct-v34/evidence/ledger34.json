@@ -1,0 +1,284 @@
+{
+ "mode": "ledger34-spec-to-code",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers declared, depth 6, store priced as shipped",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "95803668470929860550224427498997735090",
+  "abort": "br OR guard (the census predicate, unchanged from the counter that increments on either)",
+  "detection": "per-worker trail comparison; the record store is NOT load-bearing for success",
+  "census_fidelity": {
+   "depth": 6,
+   "dict": "shipped dict28.o (evicting), twelve-word nodes, 128-bit slot-keyed, 4-probe chains",
+   "workers_measured": [
+    8,
+    64,
+    128
+   ],
+   "workers_declared": 1024,
+   "production_1024_not_reachable": true,
+   "why": "trail >= guard ring (6) is required for guard stationarity; only the partition series at fixed S carries the W-dependence"
+  }
+ },
+ "store_spec_to_code": {
+  "shipped_structure": "dict28.c: ws_node chains in a bucket array of `u64 nb` pointers; bucket index ws_bucket() returns u64; chain capped at PROBES=4 with FIFO eviction of the tail; capacity = 4*nb by construction",
+  "deleted_rows": [
+   "store_init_route_a (2^128-entry directory, 2^135.75 B footprint, 1.490e39 Ir init) -- not implemented by dict28.c, DELETED not restated"
+  ],
+  "production_lambda": {
+   "numerator": "47901834235464930275112213749498867545",
+   "denominator": "170141183460469231731687303715884105728",
+   "decimal": "0.2815416777"
+  },
+  "derived_retention": {
+   "value": 0.9999883322852278,
+   "rule": "1 - P(Poisson(lambda) bucket size >= 5), lambda = S/2^128"
+  },
+  "measured_retention": {
+   "value": 0.99995911704498,
+   "trials": 1485,
+   "nb": 4096,
+   "arrivals": 1153,
+   "lambda_hat": "0.281494141",
+   "se": 4.840872807401776e-06,
+   "delta_vs_derived": -2.9215240247792984e-05,
+   "delta_explanation": "the Poisson terminal-size limit counts only buckets whose FINAL size is >=5; the shipped store also evicts during fill, so the measured loss exceeds 1-P(size>=5). The sign and size of the delta are what the transient predicts; both are reported, neither is charged."
+  },
+  "wrong_lambda_control": {
+   "lambda": 0.2417,
+   "p_hat": 0.9999795939189878,
+   "matches": false
+  },
+  "retention_not_load_bearing": true,
+  "note": "the v33 0.998435 figure is withdrawn as a STORE-retention number: it was the arm's success-resample fraction 1276/1278, a different quantity"
+ },
+ "trap": {
+  "event": "br OR guard -- exactly the predicate on which the census stall counter increments",
+  "derivation": {
+   "union": "P(br OR guard) <= P(br) + P(guard)",
+   "p_guard_bound": "C(12,2)/2^384 = 66/2^384",
+   "p_br_bound": "p_s^32 over the K_STALL=32 squaring window",
+   "role": "derivation primary; the measured union rate is corroboration BELOW it, not its source"
+  },
+  "measured_n": 4497,
+  "measured_d": 5040000,
+  "measured_rate": 0.0008922619047619048,
+  "trap_at_S": "85481963713049917240944295726784289",
+  "sub_events": {
+   "guard_closed_orbit": {
+    "squarings": 32,
+    "ir_per_squaring": 48,
+    "charge_ir": "131300296263244672882090438236340667904",
+    "note": "squaring-only-on-guard is this sub-event, priced separately, not a description of the whole abort"
+   },
+   "br_only": {
+    "squarings": 0,
+    "note": "br steps multiply; a br abort abandons the trail and is charged a trail restart inside trap_at_S, no 32-squaring window"
+   }
+  },
+  "charge_ir": "131300296263244672882090438236340667904",
+  "no_float": "trap_at_S and charge_ir are Python ints; 48 Ir/squaring is the tree's block cost",
+  "p_guard_bound": "66/2^384"
+ },
+ "rows_ir": {
+  "walk_steps": "4589366535341018653672405076334909779903864",
+  "per_step_key_lookup_probe": "417416583527841402417327830613133131787130",
+  "per_step_slot_export": "65242298228703235034702835126817457596290",
+  "record_writes_and_insert": "229833000661760735459988401570095566480910",
+  "state_key_full_width_sort": "139681748630615736682227215293538697761220",
+  "scalar_coefficient_update": "171296959226022590663801276368207950340920",
+  "guard_and_meter_eval": "2490895380244176374305835114973941112340",
+  "collision_processing": "8192",
+  "trap_waste_bound": "131300296263244672882090438236340667904",
+  "index_slots_widened_refs": "1149644021651158326602693129987972821080",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "W_total_ir": "5616608965314120933304243253989908740895226",
+ "claim": {
+  "value": 127.723,
+  "numerator": "1277230",
+  "denominator": "10000",
+  "reduced": "127723/1000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W; exact integer test",
+  "n_minus_1_fails": true,
+  "row_sum_equals_W": true
+ },
+ "bound": {
+  "log2_W": 142.01067934961713,
+  "coefficient_row_per_step": 1788,
+  "fp_mul_charge": 888,
+  "mulmod_179_withdrawn": true
+ },
+ "success": {
+  "route_a_p5": 0.578125,
+  "route_a_median": 0.625,
+  "floor": 0.39,
+  "store_retention_pair": [
+   0.9999883322852278,
+   0.99995911704498
+  ]
+ },
+ "prices": {
+  "source": "evidence/exec31.json (gcov executed counts on the shipped scripts/ir28/dict28.c) + evidence/sort32.json (executed count of the full-width pre-key path)",
+  "censused_symbols": {
+   "state_key48w": 3398,
+   "dict28_wide_lookup": 959,
+   "dict28_wide_insert": 1711,
+   "dict28_slot_export": 681
+  },
+  "dense_comparison": {
+   "dict28_lookup": 1327,
+   "dict28_insert": 1605
+  },
+  "state_key_full_width": {
+   "charge_per_step": 1458,
+   "basis": "MAX over 20000 executed calls of the full-width path (canonical extraction of twelve 381-bit residues + min/argmin + insertion sort over twelve full-width values + 48-word lane packing); verdict b30ddc21 flaw 3",
+   "p50": 1095,
+   "p95": 1263,
+   "max": 1458,
+   "comparisons_p50_p95_max": [
+    53,
+    64,
+    75
+   ],
+   "static_span_vs_executed_vs_charged": {
+    "static_span": "not defined for a data-dependent loop; the structural maximum is 77 comparisons (n(n-1)/2 + n-1 over twelve)",
+    "executed": 75,
+    "charged": "1458 Ir at the executed maximum, which is the structural worst case evaluated at the measured maximum"
+   }
+  },
+  "wide_symbol_charge_rule": "charge = static span + sum(loop structural max x body span) for every loop in the disassembly. That sum bounds EVERY single call, so it bounds the maximum over calls a fortiori; v31's aggregate-divided-by-calls figure is retained only as a labelled mean.",
+  "executed_mean_not_used": {
+   "state_key48w": 2972.511,
+   "dict28_wide_lookup": 256.802,
+   "dict28_wide_insert": 298.417,
+   "dict28_slot_export": 680.0
+  },
+  "derived_rows": {
+   "scalar_coefficient_update_per_step": 176,
+   "guard_and_meter_per_step": 26,
+   "basis": "two 255-bit modular products (A += linv[kap]*a, D += linv[kap]*b) at 64 Ir each plus a 12-lane load at 4 Ir; verdict b30ddc21: the v31 48-Ir row was not an implementation bound for those products. Guard row unchanged."
+  }
+ },
+ "bounds_table": [
+  {
+   "array": "records[] (A,D,y) per insert",
+   "quantity": "one entry per step",
+   "bound_formula": "<= min(arrivals, capacity) = S",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 640,
+   "bytes": "61314347821395110752143633599358550457600"
+  },
+  {
+   "array": "alive[] / matched[] flags",
+   "quantity": "one flag per record",
+   "bound_formula": "<= min(arrivals, capacity) = S, same index set as records[]",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 1,
+   "bytes": "95803668470929860550224427498997735090"
+  },
+  {
+   "array": "guard ring hist[]",
+   "quantity": "slots since last guard",
+   "bound_formula": "<= depth = 6",
+   "value": "6",
+   "bytes_per_entry": 8,
+   "bytes": "48"
+  },
+  {
+   "array": "probe chain per bucket",
+   "quantity": "records reachable per bucket",
+   "bound_formula": "<= PROBES = 4 (chain full triggers the shipped eviction)",
+   "value": "4",
+   "bytes_per_entry": 96,
+   "bytes": "384"
+  },
+  {
+   "array": "slot_export buffers (keys_buf, ref, ev)",
+   "quantity": "fixed scratch",
+   "bound_formula": "fixed scratch: 6 + 2 + 2 words",
+   "value": "10",
+   "bytes_per_entry": 8,
+   "bytes": "80"
+  },
+  {
+   "array": "sort work array",
+   "quantity": "12 full-width residues",
+   "bound_formula": "N = 12 (Fp12 degree), 6 words each",
+   "value": "12",
+   "bytes_per_entry": 48,
+   "bytes": "576"
+  },
+  {
+   "array": "node pool",
+   "quantity": "records the dictionary can hold",
+   "bound_formula": "capacity = 4 x next_pow2(2S) = 2^130",
+   "value": "1361129467683753853853498429727072845824",
+   "bytes_per_entry": 96,
+   "bytes": "130668428897640369969935849253798993199104"
+  },
+  {
+   "array": "bucket array",
+   "quantity": "bucket heads",
+   "bound_formula": "next_pow2(2S) = 2^128",
+   "value": "340282366920938463463374607431768211456",
+   "bytes_per_entry": 8,
+   "bytes": "2722258935367507707706996859454145691648"
+  },
+  {
+   "array": "meter rows / counters",
+   "quantity": "fixed counter set",
+   "bound_formula": "6 rows + 14 C counters",
+   "value": "20",
+   "bytes_per_entry": 8,
+   "bytes": "160"
+  }
+ ],
+ "type_table": [
+  {
+   "quantity": "bucket count nb",
+   "spec_bits": 128,
+   "code_type": "unsigned __int128 (production store); the shipped fixture store uses uint64",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "bucket index",
+   "spec_bits": 128,
+   "code_type": "unsigned __int128, hash(key) & (nb-1)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "slot label / record reference",
+   "spec_bits": 127,
+   "code_type": "unsigned __int128 slot; u64 ref[2] (two-word)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 1
+  },
+  {
+   "quantity": "live records (capacity)",
+   "spec_bits": 130,
+   "code_type": "unsigned __int128 record count",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": -2
+  },
+  {
+   "quantity": "arrivals (records written)",
+   "spec_bits": 126,
+   "code_type": "unsigned __int128",
+   "max_value": "95803668470929860550224427498997735090",
+   "headroom_bits": 4
+  },
+  {
+   "quantity": "measured fixture peak (route-B rule)",
+   "spec_bits": 11,
+   "code_type": "uint64 d28_ws_live / d28_ws_live_max",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 53
+  }
+ ]
+}
