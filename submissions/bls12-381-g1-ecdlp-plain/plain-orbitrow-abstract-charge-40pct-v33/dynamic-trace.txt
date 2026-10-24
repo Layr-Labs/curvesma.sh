@@ -1,0 +1,63 @@
+== S0 no-injection smoke (x8 never assigned by the harness) ==
+elements                 : 8
+cbz observations         : 1, x8 == slot == stored: 1
+boundary x8 values       : 0x5b05b04, 0x1715609f8224c76d, 0x2e2ac13efe9933d6
+  -> the span computes no product: the value at the predicate is whatever the emitted
+     instructions left in x8, carried through the frame slot by the emitted store/load.
+== T1 slot round-trip ==
+commits                  : 1000
+observations at the cbz  : 1000, cbz val == slot == stored == boundary: 1000
+distinct transferred vals : 1000, all non-zero: True
+== T1a anti-vacuity ==
+unattributed x8 writes   : 0
+== T2 per-field read-before-write, ALL 10 record fields ==
+elements checked         : 8000, violations: 0
+  off  field                 reads    writes  read-before-own-write
+    0  x limbs 0,1            8000     8000   yes
+   16  x limbs 2,3            8000     8000   yes
+   32  x limbs 4,5            8000     8000   yes
+   48  y limbs 0,1            8000     8000   yes
+   64  y limbs 2,3            8000     8000   yes
+   80  y limbs 4,5            8000     8000   yes
+   96  entry pointer          8000     8000   yes
+  104  K_cp limbs 0,2         8000     4000   yes
+  120  K_cp limb 3,valid      8000     4000   yes
+  136  length (2 limbs)       8000     8000   yes
+  non-field x19 writes   : 0
+== T3 link preservation ==
+restore observations     : 1000, loaded == caller link: 1000
+== T4 operand map at the C boundary (24 limbs of the two points) ==
+boundaries observed      : 8000, all 24 limbs mapped: 8000
+  state x (6) in registers : 8000/8000
+  state y (6) in registers : 8000/8000
+  table y (6) in registers : 8000/8000
+  table x (6) at [x19,#96]->0..40, entry block unmodified: 8000/8000
+== C2 zero boundary value ==
+zero-recover fires      : 1
+== C5 product load retargeted to [sp,#8] ==
+detections              : 1
+== C6 product store retargeted to [sp,#16] ==
+detections              : 1
+== C7 product store deleted ==
+detections              : 1
+== C8 result store @0 hoisted above the state-x read @0 ==
+detections              : 8
+== C3 v29 moving-slot link save ==
+detections              : 1
+== C4 missing hoisted link save ==
+detections              : 1
+== C13 checkpoint store @104 hoisted above the @104 load ==
+detections              : 8
+== C14 table-y block retargeted one field down ==
+detections              : 8
+== C9 v30 pattern: x8 injected at the cbz ==
+unattributed writes      : 1
+== C10 shifted-add faithfulness (`lsl #5` -> `lsl #4`, table address) ==
+stored table addresses that change, fixed interpreter : 8/8
+same comparison, shift-blind shadow (v32 parser)      : 0
+== C11 return address corrupted at the leaf epilogue ==
+bad returns             : 1
+== C12 write to record field 136 before any read of it ==
+field-136 violations    : 8
+
+DYNAMIC TRACE OK
