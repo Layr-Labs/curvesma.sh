@@ -1,0 +1,138 @@
+{
+ "all_pass": true,
+ "checks": [
+  {
+   "check": "insn_rows_sum_to_charge",
+   "detail": "290",
+   "pass": true
+  },
+  {
+   "check": "claim_ge_recomputed_log2W",
+   "detail": "(128.57613645175982, 128.577)",
+   "pass": true
+  },
+  {
+   "check": "phase1_matches_price_times_S_OPS",
+   "detail": "(128.5671054159191, 128.5671054159191)",
+   "pass": true
+  },
+  {
+   "check": "claim_at_1ref_rederived",
+   "detail": "(129.4041129844335, 129.405)",
+   "pass": true
+  },
+  {
+   "check": "submitted_claim_is_conservative_row",
+   "detail": "{'numerator': '129405', 'denominator': '1000'}",
+   "pass": true
+  },
+  {
+   "check": "success_rederived",
+   "detail": "(0.670879296510539, 0.670879296510539)",
+   "pass": true
+  },
+  {
+   "check": "floor_met_direction",
+   "detail": "0.670879296510539",
+   "pass": true
+  },
+  {
+   "check": "cp95_below_rate",
+   "detail": "(0.6712152965114485, 0.685)",
+   "pass": true
+  },
+  {
+   "check": "no_dp_gate",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "cells_are_fullstore",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "scale_flat_across_orders",
+   "detail": "(0.705, 0.69)",
+   "pass": true
+  },
+  {
+   "check": "gate_ablation_monotone",
+   "detail": "{'d11': 0.051875, 'd5': 0.614375, 'd8': 0.288125}",
+   "pass": true
+  },
+  {
+   "check": "fullstore_beats_gated_at_d11",
+   "detail": "(0.69, 0.051875)",
+   "pass": true
+  },
+  {
+   "check": "selector_range_matched",
+   "detail": "{'EC_reach': 256, 'HASH_reach': 256, 'R': 256, 'equal_reach': True}",
+   "pass": true
+  },
+  {
+   "check": "selector_delta_ci_contains_zero",
+   "detail": "[-5.138234569877913e-06, 8.41359569877914e-07]",
+   "pass": true
+  },
+  {
+   "check": "support_within_cap",
+   "detail": "(4631, 4632)",
+   "pass": true
+  },
+  {
+   "check": "memory_row_present",
+   "detail": "134.52166244515792",
+   "pass": true
+  },
+  {
+   "check": "exec_row_withdrawn",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "literal_129.405",
+   "detail": "129.405",
+   "pass": true
+  },
+  {
+   "check": "literal_0.6709",
+   "detail": "0.670879296510539",
+   "pass": true
+  },
+  {
+   "check": "literal_128.577",
+   "detail": "128.577",
+   "pass": true
+  },
+  {
+   "check": "literal_table_bytes_2^134.52",
+   "detail": "134.52166244515792",
+   "pass": true
+  },
+  {
+   "check": "planted_claim_off_by_1",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "planted_rows_off_by_1",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "planted_success_below_floor",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "planted_delta_ci_excludes_zero",
+   "detail": "",
+   "pass": true
+  }
+ ],
+ "passed": 26,
+ "test": "selfaudit_v13",
+ "total": 26
+}

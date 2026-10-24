@@ -1,0 +1,49 @@
+{
+ "R": 256,
+ "arms": {
+  "EC": {
+   "arm": "EC",
+   "lane_steps": 5120000,
+   "rate": 7.03125e-06,
+   "rate_ci95": [
+    5.079129392880123e-06,
+    9.733644419235796e-06
+   ],
+   "rate_per_step": 7.03125e-06,
+   "reach": 256,
+   "traps": 36
+  },
+  "HASH": {
+   "arm": "HASH",
+   "lane_steps": 5120000,
+   "rate": 4.8828125e-06,
+   "rate_ci95": [
+    3.3075128914026824e-06,
+    7.2083891445913585e-06
+   ],
+   "rate_per_step": 4.8828125e-06,
+   "reach": 256,
+   "traps": 25
+  }
+ },
+ "both_arms_in_ci_of_law": false,
+ "delta_ci95": [
+  -5.138234569877913e-06,
+  8.41359569877914e-07
+ ],
+ "delta_hash_minus_ec": -2.1484374999999997e-06,
+ "law_1_over_2R": 0.001953125,
+ "q": 4290000047,
+ "range_matched": {
+  "EC_reach": 256,
+  "HASH_reach": 256,
+  "R": 256,
+  "equal_reach": true
+ },
+ "seed": 20250,
+ "sets": 800,
+ "steps": 400,
+ "test": "selector_swap_matched",
+ "verdict": "selector surrogate is FAITHFUL (delta within CI)",
+ "walkers": 16
+}

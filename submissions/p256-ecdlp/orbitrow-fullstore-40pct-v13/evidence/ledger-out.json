@@ -1,0 +1,164 @@
+{
+ "C": 1000,
+ "N_classes_log2": 254.99999999966408,
+ "S_OPS_log2": 128.19973435027055,
+ "abort_bound_one_sided": 0.0009375,
+ "buckets_log2": 129.19973435027055,
+ "claim": 128.577,
+ "claim_at_1ref_access": 129.405,
+ "claim_delta_1ref": 0.828000000000003,
+ "cp95_fullstore": 0.6712152965114485,
+ "cp95_fullstore_cell_1600": 0.6856650874451824,
+ "debits": 0.0003360000009094947,
+ "dp_gate_on_success_path": false,
+ "entry_bytes": 40,
+ "floor": 0.39,
+ "floor_met": true,
+ "floor_slack": 0.280879296510539,
+ "fresh_ref": 492.3,
+ "fullstore_cell_rate": 0.705,
+ "fullstore_census_cells": [
+  {
+   "classes_log2": 30.998330517853123,
+   "cp95": 0.6856650874451824,
+   "model_birthday": 0.7220526733163899,
+   "success_rate": 0.705,
+   "trials": 1600,
+   "x": 1.6002022719673725
+  },
+  {
+   "classes_log2": 23.003977458314456,
+   "cp95": 0.6704206923967578,
+   "model_birthday": 0.7218879306908107,
+   "success_rate": 0.69,
+   "trials": 1600,
+   "x": 1.5998319408699717
+  }
+ ],
+ "fullstore_rate": 0.685,
+ "fullstore_successes": 2192,
+ "fullstore_trials": 3200,
+ "gate": 127.237678,
+ "gate_ablation": {
+  "d11": {
+   "drop_vs_fullstore": 0.274375,
+   "success_rate": 0.430625
+  },
+  "d5": {
+   "drop_vs_fullstore": 0.0025,
+   "success_rate": 0.7025
+  },
+  "d8": {
+   "drop_vs_fullstore": 0.03625,
+   "success_rate": 0.66875
+  }
+ },
+ "gate_ablation_cell_trials": 1600,
+ "gate_ablation_cell_x": 1.6002022719673725,
+ "insert_insn": 27,
+ "insert_rows": [
+  [
+   "64-bit class mix for the bucket index (4)",
+   4
+  ],
+  [
+   "bucket address: base + index*40 wide multiply-add (3)",
+   3
+  ],
+  [
+   "bucket load of the 32-byte stored class and compare (5)",
+   5
+  ],
+  [
+   "probe advance on a miss, average 1.5 probes (6)",
+   6
+  ],
+  [
+   "occupancy store: 32-byte class + 8-byte (trail, step) tag (7)",
+   7
+  ],
+  [
+   "table load-factor counter add and threshold reload (2)",
+   2
+  ]
+ ],
+ "insn_row_sum": 290,
+ "k_max_per_trail": 4632,
+ "log2_S0": 127.49244191075879,
+ "log2_W": 128.57613645175982,
+ "log2_extras": 121.25196410303396,
+ "log2_phase1": 128.5671054159191,
+ "margin_vs_gate": -1.339322,
+ "memory_bytes_log2": 134.52166244515792,
+ "p_abort_support": 0.0,
+ "preprocessing_log2": 121.23395006560845,
+ "ranks": false,
+ "records_log2": 128.19973435027055,
+ "restart_success_loss": 0.0,
+ "shape_measured": 1.6002022719673725,
+ "step_insn": 263,
+ "step_price": 1.29,
+ "step_price_1ref_access": 2.29,
+ "step_rows": [
+  [
+   "class key: 4-limb compare x vs p-x (4), masked 4-limb subtract (8), select (2)",
+   14
+  ],
+  [
+   "column and orbit slot: 64-bit shift by constant (1), table base + index (2)",
+   3
+  ],
+  [
+   "sign bit: y low-limb test and key pack (3)",
+   3
+  ],
+  [
+   "P-256 REDUCTION PREMIUM over the borrowed reference addition: 6 field muls x +30 insn (Solinas: 8 mul-adds + 20 add/carry, vs secp256k1's 4 mul-add fold)",
+   180
+  ],
+  [
+   "loads/stores: 4 limb loads of J, 4 stores of S, 4 coefficient loads (20)",
+   20
+  ],
+  [
+   "coefficient update mod n: 4-limb add plus conditional subtract",
+   9
+  ],
+  [
+   "checkpoint: period-64 compare (4), 4-limb fingerprint compare (3), age (3)",
+   10
+  ],
+  [
+   "trap escape lag-1: class compare vs previous (3), alternate-slot select (2), join (1)",
+   6
+  ],
+  [
+   "trap escape lag-3: class compare vs the class two steps back (3), join (1)",
+   4
+  ],
+  [
+   "DP fingerprint: 64-bit mix (4) and threshold compare (2)",
+   6
+  ],
+  [
+   "counters: 64-bit length add (4), cap test (2), loop counter/branch (1)",
+   7
+  ],
+  [
+   "per-batch meter: 192-bit add share",
+   1
+  ]
+ ],
+ "success": 0.670879296510539,
+ "support_is_design_constant": true,
+ "support_measured_max": 4631,
+ "support_per_trail_production": 372705294583439486876149006467072,
+ "table_bytes": 3.126478615784997e+40,
+ "table_bytes_log2": 134.52166244515792,
+ "table_init_insn": 3126478615784997147125158564841731915776,
+ "table_init_ref_log2": 121.23395006560845,
+ "test": "ledger_p256_v13_fullstore",
+ "total_insn": 290,
+ "trap_rate_log2": -21.0,
+ "worker_count_log2": 20.0
+}
