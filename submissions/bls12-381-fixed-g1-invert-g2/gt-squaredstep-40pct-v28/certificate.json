@@ -1,0 +1,254 @@
+{
+ "S": {
+  "log2": 125.82122460991792,
+  "value": "75155834044258079300444605238535429486"
+ },
+ "age_law": {
+  "1": {
+   "age_max_over_theta": 6.0,
+   "age_mean_over_theta": 1.2719775474956823,
+   "merges": 11580,
+   "p_recover": 0.579,
+   "survival_gt_k_theta": {
+    "1": 4650,
+    "2": 1426,
+    "3": 436,
+    "4": 103
+   },
+   "theta": 2,
+   "trials": 20000
+  },
+  "2": {
+   "age_max_over_theta": 5.0,
+   "age_mean_over_theta": 1.2001995879474634,
+   "merges": 7766,
+   "p_recover": 0.3883,
+   "survival_gt_k_theta": {
+    "1": 3513,
+    "2": 1022,
+    "3": 235,
+    "4": 36
+   },
+   "theta": 4,
+   "trials": 20000
+  },
+  "3": {
+   "age_max_over_theta": 3.625,
+   "age_mean_over_theta": 0.9350946372239748,
+   "merges": 3170,
+   "p_recover": 0.26416666666666666,
+   "survival_gt_k_theta": {
+    "1": 1085,
+    "2": 167,
+    "3": 10,
+    "4": 0
+   },
+   "theta": 8,
+   "trials": 12000
+  },
+  "4": {
+   "age_max_over_theta": 1.8125,
+   "age_mean_over_theta": 0.5506460407776197,
+   "merges": 2109,
+   "p_recover": 0.17575,
+   "survival_gt_k_theta": {
+    "1": 208,
+    "2": 0,
+    "3": 0,
+    "4": 0
+   },
+   "theta": 16,
+   "trials": 12000
+  }
+ },
+ "claim": {
+  "claim_log2": 126.2599,
+  "denominator": 10000,
+  "numerator": 1262599,
+  "total": "268943293821793497913780759296151883305078871016104476098971085631890816602196828018775760025355091077442530638924965480518345189587388696051/2640410994250663145757357520666379837341282071063077846744273042258296520843017329771466508258508800000",
+  "total_log2": 126.25980711073285
+ },
+ "components": {
+  "aux_sum": {
+   "log2": 56.509865530519065,
+   "value": "64127541879038417063/625"
+  },
+  "overflow_row": {
+   "log2": 0.0,
+   "value": "1"
+  },
+  "stop_loss_row": {
+   "log2": 88.43858250080899,
+   "value": "10885546203951637915223417031463346309815221578940112788105279/25952793953598354773122689794048000"
+  },
+  "trap_charge": {
+   "log2": 36.65465436920468,
+   "value": "1375776454399428015527333699736088208080648186493670205916081905123124731344584704/12717373507894369560004692298676907336555341923310488788072363895465625"
+  },
+  "w_stress": {
+   "log2": 126.25980711072691,
+   "value": "17082981992063354296164331781071648955133398403/167716000"
+  }
+ },
+ "delta": {
+  "analytic": 2.407412430484045e-35,
+  "charged": 2.407412430484045e-35,
+  "measured": 1.6133610386597742e-55,
+  "measured_arm": "1",
+  "rule": "max(measured, closed-form)",
+  "uniform_rejected": "1/128"
+ },
+ "delta_measured_log2": {
+  "1": -182.01597589723661,
+  "2": -182.27405258912998,
+  "3": -183.00636164680245,
+  "4": -183.77891618028247
+ },
+ "f_priced": "14566/41929",
+ "moments": {
+  "1": {
+   "n": 246033,
+   "ratio_over_theta": 2.525038546581517,
+   "sum_l": 505165,
+   "sum_l2": 1942455,
+   "sum_l3": 19619095
+  },
+  "2": {
+   "n": 132611,
+   "ratio_over_theta": 1.9536710860460555,
+   "sum_l": 557983,
+   "sum_l2": 4899783,
+   "sum_l3": 76580515
+  },
+  "3": {
+   "n": 45393,
+   "ratio_over_theta": 1.2628802717676089,
+   "sum_l": 353826,
+   "sum_l2": 5091556,
+   "sum_l3": 102880410
+  },
+  "4": {
+   "n": 31107,
+   "ratio_over_theta": 0.7527418826986327,
+   "sum_l": 364659,
+   "sum_l2": 6998077,
+   "sum_l3": 168567861
+  }
+ },
+ "proof": "audit_v28.py recomputes every literal and runs the four controls",
+ "retention_analytic_log2": -171.6649652337873,
+ "retention_uniform_rejected": 0.0078125,
+ "stop_rule": {
+  "loss_bits": 5.940914622662188e-12,
+  "loss_rel_S2": 4.117910655333746e-12,
+  "reserve_over_S": 2.058955327666873e-12,
+  "reserve_steps": "154742504910672534362390528"
+ },
+ "stopping_measured": {
+  "1": {
+   "S_toy": 32,
+   "rec_mean_over_S": 0.6361318005181347,
+   "reserve_experiments": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0951,
+     "lost_trials": 1902
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.0951,
+     "lost_trials": 1902
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.169,
+     "lost_trials": 3380
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.2459,
+     "lost_trials": 4918
+    }
+   }
+  },
+  "2": {
+   "S_toy": 32,
+   "rec_mean_over_S": 0.6699676474375483,
+   "reserve_experiments": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.07695,
+     "lost_trials": 1539
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.07695,
+     "lost_trials": 1539
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.1355,
+     "lost_trials": 2710
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.1919,
+     "lost_trials": 3838
+    }
+   }
+  },
+  "3": {
+   "S_toy": 32,
+   "rec_mean_over_S": 0.7025433753943218,
+   "reserve_experiments": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.0655,
+     "lost_trials": 786
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.0655,
+     "lost_trials": 786
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.106,
+     "lost_trials": 1272
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.14625,
+     "lost_trials": 1755
+    }
+   }
+  },
+  "4": {
+   "S_toy": 32,
+   "rec_mean_over_S": 0.7134157183499289,
+   "reserve_experiments": {
+    "1": {
+     "halt_step": 31,
+     "lost_frac": 0.044,
+     "lost_trials": 528
+    },
+    "2": {
+     "halt_step": 30,
+     "lost_frac": 0.044,
+     "lost_trials": 528
+    },
+    "4": {
+     "halt_step": 28,
+     "lost_frac": 0.07333333333333333,
+     "lost_trials": 880
+    },
+    "8": {
+     "halt_step": 24,
+     "lost_frac": 0.09891666666666667,
+     "lost_trials": 1187
+    }
+   }
+  }
+ },
+ "wasted_theta_mult": 2.525038546581517
+}

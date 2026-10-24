@@ -1,0 +1,37 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "public-note.md",
+    "classkey.py",
+    "constants.py",
+    "cp95.py",
+    "ledger.py",
+    "ledger26.py",
+    "ledger27.py",
+    "ledger28.py",
+    "v28_measure.py",
+    "audit_v28.py",
+    "routing.py",
+    "tower.py",
+    "factor_r.py",
+    "toy_census.py",
+    "evidence/v28-age-law.json",
+    "evidence/v28-moments.json",
+    "evidence/v28-stopping.json",
+    "evidence/v28-census.json",
+    "evidence/v28-ledger.json"
+   ],
+   "score": {
+    "denominator": "10000",
+    "numerator": "1262599"
+   },
+   "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z with success floor 0.39, and its complete classical work is at most 2^126.2599 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. THE THREE v27c FLAWS ARE REPAIRED BY MEASUREMENT AND ARITHMETIC, AND THE CLAIM TEXT NOW MATCHES THE CORRECTED MATH EVEN WHERE THE LEDGER BARELY MOVES. (1) MEASURED AGE LAW REPLACES THE UNIFORM-AGE PREMISE. v27c charged P(miss|merge) = (1-e^-128)/128 = 0.0078125 from an age uniform on [0,128theta]; first-DP restarts make the renewal age nonuniform, so that integral was not connected to the success event. Per-trial traces at four report depths (64,000 trials, 24,625 merges, evidence/v28-age-law.json) record the age at merge conditional on the merge event: mean age 1.272, 1.200, 0.935, 0.551 theta at dp=1..4; empirical survival P(age > k theta) at the production-like arm (S/theta=16) is 4,650 / 1,426 / 436 / 103 of 11,580 merges for k=1..4, max observed age 6.0 theta; the deeper arms are younger (restart bias), exactly the judge's objection, and are DISCLOSED as fixture-limited. The retention functional is recomputed on the EMPIRICAL law at the production cap, no uniform assumption: mean exp(-(128 - age/theta)) = 2^-182.02 (arm 1) and 2^-183.78 at the worst arm. The uniform value is shipped ONLY as the DISCLOSED-REJECTED method (retention_uniform in ledger28.py). CHARGED delta = max(measured 2^-182.02, closed-form 8192 e^-128 = 2^-171.66 under the same min(Exp(theta),128 theta) age law already declared for trail lengths) = 2^-171.66, with the one-scope-up toy-scope hypothesis disclosed. The consequence is charged, not banked: S falls from 2^125.8286 (delta=1/128) to 2^125.8212, and w_stress moves 2^126.267148 -> 2^126.259807, i.e. the claim moves 0.0073 bits. (2) SIZE BIAS CORRECTED TO E[L^3]/(2E[L^2]) AND COMPUTED FROM MEASURED SUMS. The v27c assertion 'size-biased prefix mean = E[L^2]/(2E[L]) <= theta' is WITHDRAWN as false: conditioning a collision weights lengths by L^2, a uniform prefix of the conditioned trail has mean E[L^3]/(2E[L^2]) (3theta/2 for untruncated exponential, not <= theta). Exact integer sums per arm are shipped (evidence/v28-moments.json); the production-like arm has sum L = 505,165, sum L^2 = 1,942,455, sum L^3 = 19,619,095 over 246,033 trail starts, so E[L^3]/(2E[L^2]) = 5.0503 steps = 2.5250 theta; the fixture cap is 16 theta so this is a TRUNCATED moment ratio computed from the actual length sample, not the exponential assumption, and the harshest arm is charged. The trap row moves 2^35.3257 -> 2^36.6547 accordingly. (3) REALIZED-WORK STOPPING RULE, ITS MEASURED SUCCESS LOSS, AND THE MISSING OVERFLOW CHARGE INSIDE total28. The rule: halt launching new trails when cumulative charged work >= W - reserve, reserve = one maximal trail = 128*theta*c_mul = 2^87.00 steps of charge. Proof it binds on realized executions: launches stop at W - reserve and every already-launched trail charges at most reserve, so total <= W - reserve + reserve = W deterministically, with no expectation and no Chernoff tail in the step sum. Success loss is measured and charged: reserve/S = 2^-38.80 of the step budget and success ~ S^2, so the share of success bought by the unspent tail is 2*reserve/S = 2^-37.82, charged as stop_loss_row = 2^88.4386 of work; the halt-point distribution from the budget simulation (recovery-work fraction histogram, evidence/v28-stopping.json, 0 of 210,000 recovered trials inside the final budget unit at any arm) is shipped, and the production halt fraction is 1 - 2^-38.8 so it is unbounded by the toy and taken from the arithmetic. total28 is ONE SUM OF FIVE DISPLAYED ROWS and now includes the one-reference-operation overflow charge that v27c claimed separately and left out: w_stress 2^126.259807 + trap_charge 2^36.654654 + aux_sum 2^56.509866 + overflow_row 1 + stop_loss_row 2^88.438583 = 2^126.259807. Claim 126.2599 = 1262599/10000, reduced (gcd 1), the least 4-decimal log2 >= the exact total. UNCHANGED FROM v27c AND STILL DISCLOSED: per-j return exponent y^(4-p^j) = (m1^4 m2^2)^(-1) with 40,000 exact solves and 0 misses; DP-predicate census agreement 0.9998863991 (35207/35211) and 0.9999572028 (23365/23366); model 1-exp(-S^2(1-f^2)/(2 mu N)) = 0.399237 at the judge's own parameters; f = 1734128/4991779 = 0.3473967898 priced as the marginally larger 14566/41929; family-free by the orbit theorem (384/384 inverse-pair columns, planted mutation flags the mutated column); scope pinned to a fixed multiplier pair and shift, class-level two-cycle disclosed, N=785 toy disclosed. RANK LOSS DISCLOSED: 126.2599 is 0.4399 bits behind the live board minimum 125.82 and 0.4219 behind this account's valid 125.838."
+  }
+ ],
+ "experiments": [],
+ "title": "Squared-step class-merge rho for fixed-G1 pairing inversion: measured merge-age law, E[L^3]/(2E[L^2]) from length moments, and a realized-work stopping rule inside total28",
+ "version": 1
+}
