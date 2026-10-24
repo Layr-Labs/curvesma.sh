@@ -1,0 +1,81 @@
+{
+ "kind": "ledger-v15q",
+ "method": "every row is a CONSERVATIVE PATH UPPER BOUND on executed instructions per call: acyclic symbols are bounded by their static length (no simple path repeats an instruction), loop-bearing symbols by body x trip count plus the remainder. Branch targets are matched for Darwin LBB and ELF .L spellings. No row asserts static == executed.",
+ "composition": [
+  {
+   "row": "step_core",
+   "ir": 744,
+   "source": "evidence/step_secp_v15g.s:step_asm (head+tail)",
+   "calls": "1/step"
+  },
+  {
+   "row": "align",
+   "ir": 430,
+   "source": "scripts/walk_v15q.s:_v15o_align + 2*_fmul",
+   "calls": "1/step"
+  },
+  {
+   "row": "label",
+   "ir": 601,
+   "source": "scripts/walk_v15q.s:_v15o_label + 2*_rmont",
+   "calls": "1/step"
+  },
+  {
+   "row": "detect",
+   "ir": 78,
+   "source": "scripts/walk_v15q.s:_v15o_detect (scalar)",
+   "calls": "1/step"
+  },
+  {
+   "row": "report",
+   "ir": 123,
+   "source": "scripts/walk_v15q.s:_v15o_report (4-probe bound)",
+   "calls": "1/2 per step, separate row"
+  }
+ ],
+ "ir_per_step": 1853,
+ "ir_refill_per_step": "60609/67000",
+ "accounting": {
+  "walk": "671429370108587658715587170492443712498558/1675",
+  "drain": "19373490176/1675",
+  "report_lookup": "4469896759220409288916281769353246191733/500",
+  "init_table": "18382848/1817031202935125727201740556647661053525",
+  "escape_restart": "9143373694417670064308246550673296327779941/2244500",
+  "recovery_solve": "8003649536/125",
+  "verification": "9412018176/25",
+  "output": "1099511627776"
+ },
+ "accounting_log2": {
+  "walk": 128.23634215588794,
+  "drain": 23.46341945061654,
+  "report_lookup": 122.74965292594852,
+  "init_table": -106.28492193443734,
+  "escape_restart": 121.61574390446626,
+  "recovery_solve": 25.932226565185452,
+  "verification": 28.48800077083407,
+  "output": 40.0
+ },
+ "storage_bytes": {
+  "jump_table": 180224,
+  "record_pool": 442721857769029238784,
+  "worker_states": 92274688,
+  "code_bytes": 65536,
+  "advice_bytes": 1048576
+ },
+ "peak_storage_bytes": 442721857769122807808,
+ "peak_storage_log2": 68.58496250072146,
+ "S_ops": "145362496234810058174986323027206037306",
+ "S_ops_log2": 126.77292270527138,
+ "mu": "1107/1000",
+ "reports": "72681248117405029088069622265906442142",
+ "arrivals": "145362496234810058176139244531812884282",
+ "W": "33757681358785866204417382092490952483698738356551407001476438506488323343674942417/81566530699757793894086133587913504692737250",
+ "W_log2": 128.28243422607306,
+ "claim": "51313/400",
+ "claim_value": 128.2825,
+ "selfaudit": {
+  "sum_rows_equals_W": true,
+  "planted_control_rejected": true,
+  "claim_covers_W_plus_2e-5": true
+ }
+}

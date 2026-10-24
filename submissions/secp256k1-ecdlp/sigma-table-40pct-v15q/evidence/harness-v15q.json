@@ -1,0 +1,97 @@
+{
+ "kind": "harness-v15q",
+ "curve": "secp256k1",
+ "rows": [
+  {
+   "row": "shipped",
+   "walks": 24,
+   "steps_per_walk": 500,
+   "step_failures": 0,
+   "key_violations": 0,
+   "even_y_violations": 0,
+   "endpoint_checks": 480,
+   "endpoint_violations": 480,
+   "verdict": "FAIL"
+  },
+  {
+   "row": "control_mont_one_is_integer",
+   "walks": 4,
+   "steps_per_walk": 120,
+   "step_failures": 0,
+   "key_violations": 0,
+   "even_y_violations": 0,
+   "endpoint_checks": 20,
+   "endpoint_violations": 20,
+   "verdict": "FAIL",
+   "kind": "invariant"
+  },
+  {
+   "row": "control_negate_on_borrow",
+   "walks": 4,
+   "steps_per_walk": 120,
+   "step_failures": 0,
+   "key_violations": 0,
+   "even_y_violations": 0,
+   "endpoint_checks": 20,
+   "endpoint_violations": 20,
+   "verdict": "FAIL",
+   "kind": "invariant"
+  },
+  {
+   "row": "control_jump_not_added",
+   "walks": 4,
+   "steps_per_walk": 120,
+   "step_failures": 0,
+   "key_violations": 0,
+   "even_y_violations": 0,
+   "endpoint_checks": 20,
+   "endpoint_violations": 20,
+   "verdict": "FAIL",
+   "kind": "invariant"
+  },
+  {
+   "row": "control_sign_not_consumed",
+   "walks": 4,
+   "steps_per_walk": 120,
+   "step_failures": 0,
+   "key_violations": 0,
+   "even_y_violations": 0,
+   "endpoint_checks": 20,
+   "endpoint_violations": 20,
+   "verdict": "FAIL",
+   "kind": "invariant"
+  }
+ ],
+ "partner_rows": [
+  {
+   "row": "shipped",
+   "classes": 120,
+   "representatives": 6,
+   "stored_point_mismatches": 0,
+   "stored_index_mismatches": 0,
+   "next_key_mismatches": 0,
+   "verdict": "PASS"
+  },
+  {
+   "row": "control_slot_in_index_v15p",
+   "classes": 20,
+   "representatives": 6,
+   "stored_point_mismatches": 0,
+   "stored_index_mismatches": 20,
+   "next_key_mismatches": 60,
+   "verdict": "FAIL"
+  },
+  {
+   "row": "control_index_from_raw_x",
+   "classes": 20,
+   "representatives": 6,
+   "stored_point_mismatches": 0,
+   "stored_index_mismatches": 20,
+   "next_key_mismatches": 60,
+   "verdict": "FAIL"
+  }
+ ],
+ "note": "stored = post-align point; jumps are added to the stored point; the six representatives are P, phi P, phi^2 P and their negatives",
+ "verdict": "FAIL",
+ "wrong_direction_for_oracle_note": "the oracle uses Python big integers for the canonical key and the C scalar multiplication for [a]G+[c]Q; the walk itself is C throughout"
+}

@@ -1,0 +1,36 @@
+{
+ "version": 1,
+ "title": "Sigma-table aligned rho v15q: slot-free index, stored-point partner proof, path-upper-bound pricing, complete accounting (priced HOLD)",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "evidence/census-v15q.json",
+    "evidence/check-executed-v15q.json",
+    "evidence/harness-v15q.json",
+    "evidence/layout-check-v15p.json",
+    "evidence/ledger-v15q.json",
+    "evidence/step_secp_v15g.s",
+    "evidence/verdict-v15p-judged.md",
+    "public-note.md",
+    "scripts/build_evidence_v15q.py",
+    "scripts/census_v15q.py",
+    "scripts/check_layout.py",
+    "scripts/drv_v15q.py",
+    "scripts/harness_v15q.py",
+    "scripts/layout_assert.c",
+    "scripts/rec_layout.h",
+    "scripts/toy_core.py",
+    "scripts/walk_v15o.c",
+    "scripts/walk_v15q.s"
+   ],
+   "score": {
+    "numerator": "51313",
+    "denominator": "400"
+   },
+   "statement": "Analytic secp256k1 ECDLP claim at success >= 0.39, priced as a CONSERVATIVE PATH UPPER BOUND at the protected C=1000: the step is 1853 Ir (744 point listing head+tail per iteration + 429 alignment + 553 label + 127 scalar detector), and the 4-probe report routine is its own row charged per delivered record. Branch targets are matched in both Darwin LBB and ELF .L form, acyclic symbols are bounded by their static length (no simple path repeats an instruction) and loop-bearing symbols by body x trip count with the trip count and its C source line printed, so no row asserts static == executed; the counted translation unit is built with the vectoriser disabled and contains zero SIMD instructions. The address is a function of the canonical key ALONE (the argmin slot is removed from idx and survives only as the label's lambda^slot factor), so the shipped align stores the same point and the same index for all six orbit representatives including the three negatives, measured at 0 stored-point, 0 stored-index and 0 next-key mismatches with the v15p rule failing 20/20 and 60/60 as its control. One accounting table covers every phase: walk, drain, four-probe lookup, table initialisation amortised over arrivals, the prefix/suffix inversion refill (one 256-bit inversion per 67-step window, 905 Ir/step), escape/restart at the priced (1/67)^2 rate, recovery solve, verification, output, and a peak-storage total of 442721857769122807808 bytes. The rows are exact rationals and sum to W_time = 2^128.28243422607306 with a planted control rejected. The success floor is NOT established by this package: the census run through the shipped object (production pool insert/lookup, no dictionary, w=2 sequential independent runs, success measured directly on the 2-run set with no 1-(1-p)^w expression) returned more key matches than the class-collision law predicts and is reported with floor_met=false, and the invariant row's endpoint identity currently fails. This is a priced HOLD: accounting and map structure, not a certified success floor."
+  }
+ ],
+ "experiments": []
+}

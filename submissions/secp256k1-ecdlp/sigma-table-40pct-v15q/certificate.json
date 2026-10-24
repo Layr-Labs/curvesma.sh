@@ -1,0 +1,47 @@
+{
+ "kind": "certificate-v15q",
+ "claim": "51313/400",
+ "claim_value": 128.2825,
+ "W_time_log2": 128.28243422607306,
+ "W_exact": "33757681358785866204417382092490952483698738356551407001476438506488323343674942417/81566530699757793894086133587913504692737250",
+ "ir_per_step": 1853,
+ "claim_derivation": "smallest 1e-4 decimal c with 2^c >= W + 2e-5, checked in both directions",
+ "checks": [
+  {
+   "check": "path_upper_bounds",
+   "pass": true,
+   "evidence": "evidence/check-executed-v15q.json:verdict",
+   "detail": "every counted symbol priced as a conservative path upper bound; LBB and .L targets both matched"
+  },
+  {
+   "check": "scalar_detector",
+   "pass": true,
+   "evidence": "evidence/check-executed-v15q.json:simd_instructions_in_counted_symbols",
+   "detail": "counted TU built with the vectoriser off: zero SIMD instructions, no translation needed"
+  },
+  {
+   "check": "accounting_complete",
+   "pass": true,
+   "evidence": "evidence/ledger-v15q.json:accounting",
+   "detail": "walk, drain, lookup, init, refill, escape/restart, recovery, verification, output rows"
+  },
+  {
+   "check": "selfaudit",
+   "pass": true,
+   "evidence": "evidence/ledger-v15q.json:selfaudit",
+   "detail": "exact-rational sum identity holds; planted +1 control rejected; claim covers W + 2e-5"
+  },
+  {
+   "check": "harness",
+   "pass": false,
+   "evidence": "evidence/harness-v15q.json:verdict",
+   "detail": "stored-point partner test with all six representatives, C step, endpoint identity every 25 steps"
+  },
+  {
+   "check": "census_shipped_object",
+   "pass": false,
+   "evidence": "evidence/census-v15q.json:floor_met",
+   "detail": "the shipped-object w=2 census did NOT reach the floor in its diagnostic run; the success gate is NOT established by this census"
+  }
+ ]
+}

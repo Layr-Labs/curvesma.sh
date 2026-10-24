@@ -1,0 +1,32 @@
+{
+ "kind": "census-v15q",
+ "curve": {
+  "name": "q25",
+  "p_bits": 25,
+  "p": "16780909",
+  "order": "16773217",
+  "beta": "4404088",
+  "lam": "11257748",
+  "R": 2048,
+  "ntrails": 16
+ },
+ "node_bits": 16,
+ "nodes": 65536,
+ "trials": 8,
+ "w": 2,
+ "S_ops": "1750",
+ "S_ops_log2": 10.77313920671969,
+ "method": "w=2 sequential independent runs of the SHIPPED four-probe pool (v15o_report) with the SHIPPED align/label/detect/step; success measured directly on the 2-run set",
+ "success_2run": 0,
+ "success_1run": 0,
+ "p_1run": 0.0,
+ "p_2run": 0.0,
+ "cp95_2run": "0",
+ "cp95_1run": "0",
+ "mu_measured": 2.842278898616927,
+ "mu_measured_exact": "22400/7881",
+ "visits": 224000,
+ "distinct_classes": 78810,
+ "matches": 144596,
+ "floor_met": false
+}

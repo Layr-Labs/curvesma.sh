@@ -1,0 +1,52 @@
+{
+ "kind": "path-upper-bound-check-v15q",
+ "rule": "every row is a CONSERVATIVE PATH UPPER BOUND on executed instructions per call: acyclic symbols are bounded by their static length (no simple path repeats an instruction), loop-bearing symbols by body x trip count plus the remainder. Branch targets are matched for Darwin LBB and ELF .L spellings. No row asserts static == executed.",
+ "listing": "scripts/walk_v15q.s (clang -O2 -S -fno-vectorize -fno-slp-vectorize)",
+ "symbols": {
+  "_v15o_align": {
+   "static": 100,
+   "backward_branches": 12,
+   "loop_trip": 1,
+   "path_upper_bound": 100,
+   "method": "body x trip + remainder"
+  },
+  "_fmul": {
+   "static": 165,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 165,
+   "method": "acyclic: static length is an upper bound on every path"
+  },
+  "_v15o_label": {
+   "static": 147,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 147,
+   "method": "acyclic: static length is an upper bound on every path"
+  },
+  "_rmont": {
+   "static": 227,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 227,
+   "method": "acyclic: static length is an upper bound on every path"
+  },
+  "_v15o_detect": {
+   "static": 78,
+   "backward_branches": 6,
+   "loop_trip": 1,
+   "path_upper_bound": 78,
+   "method": "body x trip + remainder"
+  },
+  "_v15o_report": {
+   "static": 123,
+   "backward_branches": 0,
+   "loop_trip": 1,
+   "path_upper_bound": 123,
+   "method": "acyclic: static length is an upper bound on every path"
+  }
+ },
+ "simd_instructions_in_counted_symbols": 0,
+ "scalar_detector": "the vectoriser is OFF for the counted TU, so _v15o_detect carries no SIMD op and no SIMD-to-scalar translation is needed anywhere",
+ "verdict": "PASS"
+}
