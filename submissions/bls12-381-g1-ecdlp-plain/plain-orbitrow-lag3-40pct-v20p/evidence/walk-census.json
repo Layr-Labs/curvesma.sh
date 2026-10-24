@@ -1,0 +1,58 @@
+{
+ "arms": [
+  {
+   "classes": 114490003,
+   "cp95": "0.3380069344185516939660374191589653491973876953125",
+   "cp95_f": 0.3380069344185517,
+   "drain_over_walk": 0.0,
+   "drain_steps": 0,
+   "escape_restarts": 0,
+   "kcap_max_seen": 1,
+   "per_walker_steps": 190,
+   "q": 686940013,
+   "records_per_trial": 379.34875,
+   "succ_drain_only": 0,
+   "success_rate": 0.36625,
+   "successes": 293,
+   "trials": 800,
+   "visits_over_sqrtN": 1.136448583241568,
+   "visits_per_trial": 12160,
+   "walks": 64
+  },
+  {
+   "classes": 561690001,
+   "cp95": "0.3761218930882202897691968246363103389739990234375",
+   "cp95_f": 0.3761218930882203,
+   "drain_over_walk": 0.0,
+   "drain_steps": 0,
+   "escape_restarts": 0,
+   "kcap_max_seen": 1,
+   "per_walker_steps": 420,
+   "q": 3370140001,
+   "records_per_trial": 840.1875,
+   "succ_drain_only": 0,
+   "success_rate": 0.405,
+   "successes": 324,
+   "trials": 800,
+   "visits_over_sqrtN": 1.134177214180262,
+   "visits_per_trial": 26880,
+   "walks": 64
+  }
+ ],
+ "dp_bits": 5,
+ "protocol": "escape armed, run counter kcap=8, drain_steps=0, success = two DP records of one class from two walkers of one challenge solving x",
+ "stability": {
+  "abs_delta": 0.03811495866966863,
+  "classes_ratio": 4.906017873019009,
+  "cp95_large": 0.3761218930882203,
+  "cp95_small": 0.3380069344185517,
+  "delta": 0.03811495866966863,
+  "min_cp95": 0.3380069344185517,
+  "shape_visits_over_sqrtN": [
+   1.136448583241568,
+   1.134177214180262
+  ],
+  "stable_within_0.02": false
+ },
+ "test": "walk_only_production_shape"
+}

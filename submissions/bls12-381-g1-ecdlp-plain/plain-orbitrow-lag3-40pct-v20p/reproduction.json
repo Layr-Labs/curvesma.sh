@@ -1,0 +1,14 @@
+{
+ "commands": [
+  "python3 scripts/absorb_v20n.py   # -> evidence/absorb-direct.json (16384 starts x 2 sizes, cycle-length split, re-pin control)",
+  "python3 scripts/restart_count.py  # -> evidence/restart-count.json (chain price from itemised 383-insn products)",
+  "python3 ledger.py                # every row, exact Fractions; log2 W and the claim",
+  "python3 scripts/selfaudit.py     # citation-path audit + planted wrong-path control -> evidence/selfaudit.json"
+ ],
+ "environment": {"python": "3.14 (numpy 2.4.4)", "cost_model": "tracks/docs/COST_MODEL.md, C = 2000"},
+ "entrypoint": "ledger.py",
+ "expected": {"absorb_starts_per_size": 16384, "claim": "126.266",
+              "log2_work": "126.26594404", "restart_fresh_ref": 1485.16,
+              "success_measured": 0.373911},
+ "test": "reproduction"
+}
