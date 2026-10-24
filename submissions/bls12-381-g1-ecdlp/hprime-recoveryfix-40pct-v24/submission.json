@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v24: recovery algebra fixed and gated 64/64, success MEASURED over 131072 end-to-end trials (0.313393 at the worst shape, below the 0.39 floor and disclosed), kappa_168 fitted with a residual band, retry priced per regime, 45M on-curve asserts",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "build_certificate_v24.py",
+    "census-key-v20.json",
+    "certificate.json",
+    "coverage-v21.json",
+    "dependencies.json",
+    "direct-v24.json",
+    "direct_v24.py",
+    "fixtures-v24.json",
+    "gate-v24.json",
+    "kappa-v24.json",
+    "kappa_v24.py",
+    "keymod.py",
+    "population-v22.json",
+    "public-note.md",
+    "retry-v24.json",
+    "retry_v24.py",
+    "selfaudit_v23.py",
+    "selfaudit_v24.py",
+    "toy.py",
+    "verify_certificate.py"
+   ],
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20 and uniform nonzero s: the charged work is W=2^116.81277 in 2000-instruction units (11 ledger rows), claimed at time_log2=116.8130, peak memory 2^123.235 B, no advice, preprocessing inside the total. ORDER STRUCTURE (carried): r-1=2^32*u, m=(r-1)/2^20, v2(m)=12, 6|m, H the d-th-power subgroup of order m, v=s^d uniform on H. POPULATION: N(k) is ENUMERATED, not sampled - nine fixtures over m=2^11,2^13,2^15 list every h in H and assert sum_k N_w(k)==m per width (36 cells); E/C in 0.9026..1.2687. Every enumerated point in the v24 census is asserted ON THE CURVE y^2=x^3+4 before its key is used: 45088768 asserts in the census and 1024 in the gate. RECOVERY ALGEBRA (v23 kill 2) FIXED: a key match means x=lambda*v*b*w' with lambda in mu6, so the recovered value is v=x*(b*w')^{-1}*zeta^j using the UNSCALED B-side product (v23 divided by the v-scaled y and only walked the mu6 orbit, which is why it solved 0/1024); verification compares AFFINE points (v23 compared raw projective tuples, which never compare equal); s-extraction is charged (d-th root of v mod r, then [s]P0 must equal the target). KNOWN-ANSWER GATE before any census: 64/64 engineered collisions solved (43 with lambda=1, 21 with lambda!=1), the same 64 fixtures scored with the v23 recovery give 0/64, and 64 unplanted instances give 0 false solves. MEASURED SUCCESS (131072 independent end-to-end trials, 4 cells = 2 primes x 2 shapes, K_f<=K_claim in every cell): independent-record shape (nw=1) q=0.3954/0.4007, CP-95 0.390996/0.396234, reproducing the design value 1-exp(-K)=0.3985; SHARED-WALK shape (nw=2) q=0.3176/0.3194, CP-95 0.313393/0.315187. success_final=0.313393, taken at the WORST shape, which is BELOW the 0.39 floor: success_below_floor=true, shortfall 0.0766, disclosed and not replaced by a model value. The reason is clustering, not budget: for a fixed (i,j) pair x/y=a_i/(v*b_j) is independent of the walk index, so one algebraic collision fires at every walk position and matches pile up on one trial; the production shape nw=2^50 is deeper in that family, so 0.3134 is an UPPER bound on production success. Price to close the gap: +0.1368 bits of records (claim 116.9496, above gate) or 2 sequential runs, success 0.5286 at 2W=117.8128 (also above gate); both are priced, neither is claimed. KAPPA TRANSFER (kill 3): kappa_168 = 1 + 6*2^167/m = 1 + 2^-65.27 is a FITTED extrapolation (labelled not measured, residual band +/-0.349 bits on the excess, refit on the large-count widths w=10..24 of the shipped census); the charged kappa=1.231 sits 0.231 above the fitted upper end, so the charge is conservative and only 2.7e-7 of success is at stake. RETRY (kill 4): each fixture regime has its own 256-draw fresh-start census and its own CP-95 upper bound; the row is priced by the WORST regime q_hi=0.011634 (v23 pooled a mixed 32/36-bit census at 0.015480), giving gap_retry_worst=2^101.613; the pooled rate ships only as a descriptive row. ROUTE ROW: vacuity proved (statistic max 64 < threshold 1478.58), row deleted, no zero-event claim. No success claim is made above what was measured."
+  }
+ ],
+ "experiments": []
+}

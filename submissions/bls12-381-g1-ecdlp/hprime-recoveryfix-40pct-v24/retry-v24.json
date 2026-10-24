@@ -1,0 +1,129 @@
+{
+ "route_vacuity": {
+  "statistic": "within-block pair occupancy of prime residues modulo 64",
+  "max_possible": 64,
+  "threshold": 1478.58,
+  "max_below_threshold": true,
+  "inequality": "64 < 1478.58",
+  "consequence": "rejection is mathematically impossible; no route zero-event rate is claimed and route_retry_worst is absent from the ledger"
+ },
+ "retry": {
+  "rule": "expected draws 1/(1-q); extra work (1/(1-q)-1) x one discarded draw",
+  "pricing_rule": "retry row priced by max over regimes of q_gap_cp95_upper; the pooled rate is NOT used for pricing",
+  "per_regime": [
+   {
+    "regime": "p32_d8",
+    "field_bits": 32,
+    "d": 8,
+    "m": 268435464,
+    "draws": 256,
+    "band": 401,
+    "ratio_cap": 207.9366134671963,
+    "seed_rule": "random.randrange per draw (independent construction coin)",
+    "gap_events": 0,
+    "q_gap": 0.0,
+    "q_gap_cp95_upper": 0.01163388,
+    "max_over_mean_max": 12.68,
+    "rows_summary": {
+     "n": 256,
+     "max_over_mean_max": 12.68,
+     "mean_gap_min": 153.18,
+     "mean_gap_max": 198.425,
+     "sample": [
+      {
+       "draw": 0,
+       "n": 401,
+       "mean_gap": 174.955,
+       "max_over_mean": 5.8186,
+       "gap_event": false
+      },
+      {
+       "draw": 1,
+       "n": 401,
+       "mean_gap": 183.86,
+       "max_over_mean": 5.9937,
+       "gap_event": false
+      },
+      {
+       "draw": 2,
+       "n": 401,
+       "mean_gap": 174.225,
+       "max_over_mean": 5.8201,
+       "gap_event": false
+      },
+      {
+       "draw": 3,
+       "n": 401,
+       "mean_gap": 191.55,
+       "max_over_mean": 4.3853,
+       "gap_event": false
+      }
+     ]
+    }
+   },
+   {
+    "regime": "p36_d8",
+    "field_bits": 36,
+    "d": 8,
+    "m": 4294967352,
+    "draws": 256,
+    "band": 401,
+    "ratio_cap": 207.9366134671963,
+    "seed_rule": "random.randrange per draw (independent construction coin)",
+    "gap_events": 0,
+    "q_gap": 0.0,
+    "q_gap_cp95_upper": 0.01163388,
+    "max_over_mean_max": 10.9125,
+    "rows_summary": {
+     "n": 256,
+     "max_over_mean_max": 10.9125,
+     "mean_gap_min": 169.02,
+     "mean_gap_max": 230.2,
+     "sample": [
+      {
+       "draw": 0,
+       "n": 401,
+       "mean_gap": 178.35,
+       "max_over_mean": 7.4012,
+       "gap_event": false
+      },
+      {
+       "draw": 1,
+       "n": 401,
+       "mean_gap": 202.16,
+       "max_over_mean": 5.8864,
+       "gap_event": false
+      },
+      {
+       "draw": 2,
+       "n": 401,
+       "mean_gap": 184.695,
+       "max_over_mean": 5.1003,
+       "gap_event": false
+      },
+      {
+       "draw": 3,
+       "n": 401,
+       "mean_gap": 216.525,
+       "max_over_mean": 6.5858,
+       "gap_event": false
+      }
+     ]
+    }
+   }
+  ],
+  "worst_regime_used": {
+   "regime": "p32_d8",
+   "q_gap_cp95_upper": 0.01163388,
+   "retry_factor": 0.01177082031099963,
+   "note": "worst of the two regimes prices the retry row; each regime has its own independent fresh-start census"
+  },
+  "pooled_descriptive_only": {
+   "draws": 512,
+   "gap_events": 0,
+   "q_gap": 0.0,
+   "q_gap_cp95": 0.005833955600556218,
+   "note": "descriptive only -- not used for pricing (mixed regimes)"
+  }
+ }
+}
