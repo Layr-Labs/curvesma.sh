@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1: Cheon auxiliary-powers attack with GLV scalar multiplication",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 target T=[s]P0 with the supplied powers A_i=[s^i]P0, i=1..n, at the protected scoring n=2^20, the deterministic two-phase Cheon attack specified in proof.md recovers the uniform secret s in 1..r-1 with success probability 1. It uses only A_1=T and A_d for d=2^20, which divides r-1 and is supplied at the scoring n as the protected rules state. Phase 1 is a baby-step giant-step search for k0 in [0,M) with M=(r-1)/d in the geometric progression [zeta_hat^k0]P0; phase 2 is a length-d baby-step giant-step search for k1; s=zeta^(k0)*zeta_check^(k1) mod r is verified by [s]P0=T. Every scalar multiplication is charged as a GLV scalar multiplication on the production curve, using the verified endomorphism phi(x,y)=(beta*x,y) with [lambda]P0=phi(P0), lambda^2+lambda+1=0 mod r, a 128-bit lambda and a reduced short lattice giving half-scalars below 2^127; the ledger charges 130 doublings and 130 additions per multiplication. Additions are the protected batched incomplete affine G1 reference operation and cost 1 target-group-operation equivalent; doublings cost 7*383/2000 = 1.3405 units; a 16-unit per-multiplication overhead and one unit per table operation are charged. The total is at most 2^126.7561647122 target-group-operation equivalents, i.e. the exact score 25351233/200000 = 126.756165. Peak memory is at most 2^124.2358997 bytes, preprocessing is at most 2^125.7561647 units and is included, and nonuniform advice is zero bytes. No production-size execution and no novelty are claimed; the success probability is exact and unconditional, and the cost is analytic under the protected accounting conventions.",
+      "score": {
+        "numerator": "25351233",
+        "denominator": "200000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cheon-glv-verification",
+      "source": "experiment.py",
+      "purpose": "Recompute the exact production ledger and assert the declared rounded score; verify the r-1 factorisation, the generator 7, the order of zeta_hat, the production GLV endomorphism pair and [r]P0=O on the protected curve, and the 130-bit GLV decomposition bound; run the complete two-phase Cheon algorithm end-to-end on a small elliptic curve and on a small prime-order group. The toy runs are evidence at their actual scope only and do not establish a production success probability or production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261024
+        }
+      ]
+    }
+  ]
+}
