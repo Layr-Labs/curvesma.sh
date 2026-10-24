@@ -1,0 +1,448 @@
+{
+ "package": "gt-guard-safe-40pct-v19b",
+ "claim": "125.8195",
+ "score": {
+  "numerator": "251639",
+  "denominator": "2000"
+ },
+ "cap_units": "75066045798762155095857850821322368670",
+ "w": "125.819..125.820",
+ "w_exact": [
+  "6005123112073628148903846038359316159550343",
+  "80000"
+ ],
+ "claim_derivation": {
+  "rule": "smallest 4-decimal c with 2^c >= W + 2e-5",
+  "w_plus_headroom": "30025615560368140744519230191796580797751723/400000",
+  "claim_4dp": "125.8195",
+  "claim_k_units_of_1e-4": 1258195,
+  "previous_4dp_too_small": "125.8194"
+ },
+ "checks": [
+  {
+   "check": "census_shards_present",
+   "value": 10,
+   "status": "PASS"
+  },
+  {
+   "check": "census_shard_totals_resum_to_aggregate",
+   "value": [
+    48000,
+    16658
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "census_is_one_config",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "census_rule_is_the_guard_rule",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "census_is_large_enough",
+   "value": 48000,
+   "status": "PASS"
+  },
+  {
+   "check": "census_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_has_all_four_densities",
+   "value": [
+    5,
+    7,
+    9,
+    11
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_rule_is_the_guard_rule",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_arm_is_production_shaped",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d5_gate",
+   "value": "0.9918",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d5_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d7_gate",
+   "value": "0.9943",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d7_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d9_gate",
+   "value": "0.9886",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d9_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d11_gate",
+   "value": "0.9765",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d11_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "coalescence_all_checkpoints_1_000",
+   "value": {
+    "0": 1600,
+    "1": 1600,
+    "2": 1600,
+    "3": 1600,
+    "4": 1600,
+    "8": 1600,
+    "16": 1600,
+    "32": 1600,
+    "64": 1600,
+    "100": 1600
+   },
+   "status": "PASS"
+  },
+  {
+   "check": "coalescence_last_step_1_000",
+   "value": 1.0,
+   "status": "PASS"
+  },
+  {
+   "check": "control_rule_tn_is_NOT_a_class_function",
+   "value": 0.091875,
+   "status": "PASS"
+  },
+  {
+   "check": "tn_rule_is_NOT_a_class_function",
+   "value": [
+    1200,
+    13200
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "tn_norm_is_frobenius_invariant",
+   "value": 13200,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_p6_fixture_all_conjugate",
+   "value": 1600.0,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_second_order_zero_under_guard",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_control_v18_reproduces_regrowth",
+   "value": 142.0,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_guard_firings_are_rare",
+   "value": 2229,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_census_regime_is_stricter_than_production",
+   "value": 28.5,
+   "status": "PASS"
+  },
+  {
+   "check": "mul_charge_is_the_v19b_row",
+   "value": 22465,
+   "status": "PASS"
+  },
+  {
+   "check": "multiply_rows_plus_common_resum_to_the_charge",
+   "value": [
+    22465,
+    22465
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "squaring_rows_plus_common_resum_to_the_charge",
+   "value": [
+    15391
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "dense_fp12_multiply_row_is_the_cost_model_reference_op",
+   "value": [
+    "dense_fp12_multiply",
+    20000
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "rows_match_forced_run_on_the_guard_table",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "guard_row_is_present_in_the_forced_rows",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_run_is_the_guard_rule",
+   "value": "v19",
+   "status": "PASS"
+  },
+  {
+   "check": "verify_row_is_ladder_plus_miller_plus_finalexp",
+   "value": 1261584,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_has_a_match",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_recovered_x",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_log_equals_meter_equals_row_formula",
+   "value": [
+    14880712,
+    14880712
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_replay_is_full_length",
+   "value": 74,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_debits_solve_verify_output",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_log_length_is_trail_plus_replay_plus_aux",
+   "value": 691,
+   "status": "PASS"
+  },
+  {
+   "check": "calibration_ratio_is_the_cp_lower_quotient",
+   "value": "905434717/1000000000",
+   "status": "PASS"
+  },
+  {
+   "check": "calibration_ratio_at_most_one",
+   "value": "905434717/1000000000",
+   "status": "PASS"
+  },
+  {
+   "check": "calibration_ratio_is_applied_as_a_discount",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "census_rate_below_design_budget_toy_model",
+   "value": [
+    0.347042,
+    0.379336
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "census_realized_steps_are_trails_times_per_trail",
+   "value": 192,
+   "status": "PASS"
+  },
+  {
+   "check": "census_model_at_realized_budget_is_below_measured",
+   "value": [
+    0.347042,
+    0.295768
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "census_retention_over_realized_model_above_one",
+   "value": 1.1734,
+   "status": "PASS"
+  },
+  {
+   "check": "design_budget_se_gap_is_a_budget_artifact",
+   "value": 14.5818,
+   "status": "PASS"
+  },
+  {
+   "check": "claim_is_the_smallest_4dp_at_or_above_W_plus_2e_5",
+   "value": "251639/2000",
+   "status": "PASS"
+  },
+  {
+   "check": "claim_bounds_the_cap",
+   "value": "75066045798762155095857850821322368670",
+   "status": "PASS"
+  },
+  {
+   "check": "claim_bounds_nominal_work",
+   "value": "6005123112073628148903846038359316159550343/80000",
+   "status": "PASS"
+  },
+  {
+   "check": "nominal_work_inside_cap",
+   "value": "[Fraction(-160551827344258764782027346473334049657, 4)]",
+   "status": "PASS"
+  },
+  {
+   "check": "cap_forces_at_most_S_minus_kmin_multiplies",
+   "value": 28394369643929913861972519946822497117,
+   "status": "PASS"
+  },
+  {
+   "check": "cap_leaves_a_positive_multiply_fraction_margin",
+   "value": "0.00007492",
+   "status": "PASS"
+  },
+  {
+   "check": "abort_debit_is_the_hoeveding_tail_clipped_at_2pow_minus_400",
+   "value": 1226582300389000603466731769372,
+   "status": "PASS"
+  },
+  {
+   "check": "certified_floor_at_least_0_39",
+   "value": "0.390100",
+   "status": "PASS"
+  },
+  {
+   "check": "target_meets_the_certificate_target",
+   "value": "0.430994",
+   "status": "PASS"
+  },
+  {
+   "check": "debits_negligible_against_the_floor",
+   "value": "1.371e-04",
+   "status": "PASS"
+  },
+  {
+   "check": "claim_inside_the_tie_window_of_the_declared_gate",
+   "value": [
+    "251649/2000",
+    "62913/500"
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "declared_gate_is_this_tracks_second_live_head",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "claim_clears_the_declared_gates_own_computed_total",
+   "value": [
+    "251649/2000",
+    "125825569/1000000"
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "claim_does_NOT_clear_the_gate_live_at_build",
+   "value": [
+    "251649/2000",
+    "6287/50"
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "peak_below_2pow32",
+   "value": 3241910520,
+   "status": "PASS"
+  }
+ ],
+ "n_checks": 64,
+ "all_pass": true,
+ "certified_floor": "0.390100",
+ "model_at_S": "0.430994",
+ "calibration": {
+  "census": [
+   16658,
+   48000
+  ],
+  "rate": 0.3470416666666667,
+  "cp95_clopper_pearson_lower": 0.3434642685109741,
+  "toy_model": 0.379336,
+  "ratio_lower": "905434717/1000000000",
+  "discount_applied": true
+ },
+ "meter_identity": {
+  "meter": 14880712,
+  "row_sum": 14880712,
+  "log_sum": 14880712,
+  "log_len": 691,
+  "matches": 1,
+  "replay_steps": 74,
+  "all_equal_exact_integers": true
+ },
+ "trap": {
+  "v19_per_1600": 0.0,
+  "v18_control_per_1600": 142.0
+ },
+ "coalescence": {
+  "v19_all_checkpoints": {
+   "0": 1600,
+   "1": 1600,
+   "2": 1600,
+   "3": 1600,
+   "4": 1600,
+   "8": 1600,
+   "16": 1600,
+   "32": 1600,
+   "64": 1600,
+   "100": 1600
+  },
+  "tn_control_last_step": 147
+ },
+ "conditional": {
+  "declared_gate": "125.826",
+  "tie_cap_line": "125.8245",
+  "unlock_with_margin": "125.8260",
+  "margin_floor": "0.0015",
+  "declared_gate_computed_total": "125.825569",
+  "slack_claimed": "0.0015",
+  "slack_computed": "0.001069",
+  "gate_live_at_build": "125.74",
+  "ships_at_gate_live_at_build": false,
+  "ships_at_declared_gate": true,
+  "live_set_that_ships_it": "kaankolcu 10214b43 125.826 alive and both jungjipdo heads 747ad6c9 125.74 / 6d4e57d1 125.78-125.80 dead"
+ },
+ "verdict": "PASS"
+}

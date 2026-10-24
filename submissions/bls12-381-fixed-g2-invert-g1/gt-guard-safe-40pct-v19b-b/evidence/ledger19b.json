@@ -1,0 +1,696 @@
+{
+ "mode": "ledger-v19b",
+ "config": {
+  "R": 4096,
+  "idx_bits": 12,
+  "dp_shift": 15,
+  "dp_bits": 100,
+  "slot_rule": "s = idx(H(m0)), m0 = min of the minimal cyclic rotation of the twelve Frobenius keys (class function), no kappa",
+  "rotation": "minimal cyclic rotation (Booth), tie-break invariant",
+  "guard": "a multiply step whose slot repeats the previous MULTIPLY slot is replaced by the cyclotomic squaring (class-history guard)"
+ },
+ "charges": {
+  "I_COMMON": 309,
+  "I_MUL": 2465,
+  "I_SQR": 15391,
+  "MUL_CHARGE": 22465,
+  "SQR_CHARGE": 15391,
+  "C": 20000,
+  "MUL_ROWS_SUM": 22156,
+  "MUL_ROWS_PLUS_COMMON": 22465,
+  "SQR_ROWS_SUM": 15082,
+  "SQR_ROWS_PLUS_COMMON": 15391,
+  "C_ROW_NOTE": "reference-unit normalization C per COST_MODEL.md"
+ },
+ "rows": {
+  "common": [
+   [
+    "trace_re_plus_branch_bits",
+    60
+   ],
+   [
+    "exponent_pair_update",
+    100
+   ],
+   [
+    "cycle_compares_loop_margin",
+    140
+   ],
+   [
+    "dp_store_amortised",
+    1
+   ],
+   [
+    "repeat_slot_guard",
+    8
+   ]
+  ],
+  "multiply": [
+   [
+    "dense_fp12_multiply",
+    20000
+   ],
+   [
+    "key_six_plusminus",
+    1802
+   ],
+   [
+    "min_rotation_booth",
+    144
+   ],
+   [
+    "table_address_and_load",
+    150
+   ],
+   [
+    "exponent_pair_add",
+    60
+   ]
+  ],
+  "squaring": [
+   [
+    "cyclotomic_squaring",
+    15042
+   ],
+   [
+    "exponent_pair_double",
+    40
+   ]
+  ],
+  "auxiliary": [
+   [
+    "solve_modular_inverse",
+    2400
+   ],
+   [
+    "verify_ladder_miller_finalexp",
+    1261584
+   ],
+   [
+    "ladder_instr",
+    12240
+   ],
+   [
+    "miller_instr",
+    82944
+   ],
+   [
+    "final_exp_instr",
+    1166400
+   ],
+   [
+    "output_48byte",
+    48
+   ]
+  ],
+  "setup": 41898213376
+ },
+ "s_steps": "75733449747618989859877151235676440719",
+ "s_log2": "125.832",
+ "trail_len_steps": "18489611754789792446259070125897569",
+ "w_exact": [
+  "6005123112073628148903846038359316159550343",
+  "80000"
+ ],
+ "w_units_ceil": "75064038900920351861298075479491451995",
+ "w_lo": "125.819",
+ "w_hi": "125.820",
+ "claim_derivation": {
+  "rule": "smallest 4-decimal c with 2^c >= W + 2e-5",
+  "w_plus_headroom": "30025615560368140744519230191796580797751723/400000",
+  "claim_4dp": "125.8195",
+  "claim_k_units_of_1e-4": 1258195,
+  "previous_4dp_too_small": "125.8194"
+ },
+ "cap_units": "75066045798762155095857850821322368670",
+ "cap_instr": "1501320915975243101917157016426447373400000",
+ "cap_log2": "125.8195..125.8196",
+ "claim": "125.8195",
+ "gate": "125.74",
+ "tie_margin": "0.005",
+ "conditional": {
+  "declared_gate": "125.826",
+  "tie_cap_line": "125.8245",
+  "unlock_with_margin": "125.8260",
+  "margin_floor": "0.0015",
+  "declared_gate_computed_total": "125.825569",
+  "slack_claimed": "0.0015",
+  "slack_computed": "0.001069",
+  "gate_live_at_build": "125.74",
+  "ships_at_gate_live_at_build": false,
+  "ships_at_declared_gate": true,
+  "live_set_that_ships_it": "kaankolcu 10214b43 125.826 alive and both jungjipdo heads 747ad6c9 125.74 / 6d4e57d1 125.78-125.80 dead"
+ },
+ "floor": {
+  "required": "0.39",
+  "certified": "0.390100",
+  "model_at_S": "0.430994",
+  "calibration": {
+   "trials": 48000,
+   "successes": 16658,
+   "rate": 0.347042,
+   "cp95_lower": 0.343464,
+   "interval": "Clopper-Pearson one-sided 95%",
+   "model_at_census": 0.379336,
+   "model_at_census_budget": "S_design=223 steps (not the realized budget)",
+   "realized_steps": 192,
+   "realized_per_trail": 6,
+   "model_at_realized_budget": 0.295768,
+   "measured_over_realized_model": 1.1734,
+   "realized_budget_note": "census walks 32 trails x 6 = 192 realized steps, so the 223-step S_design model is the wrong budget; at 192 steps the model is 0.295768 and the measured rate is ABOVE it (1.1734x), so no model-shortfall discount is due",
+   "model_minus_rate": 0.032295,
+   "model_minus_rate_in_se": 14.5818,
+   "model_minus_rate_is_a_budget_artifact": "the 223-step S_design model over-predicts the 192-step run; against the realized-budget model the measured rate is 1.1734x ABOVE",
+   "ratio_lower": "905434717/1000000000",
+   "applied_as": "S is solved for tail = (0.3901 + debits)/ratio; the ratio is RETAINED as a conservative retention (it is < 1 although the measured rate is > 1x the realized-budget model), so the certified floor is a lower bound, not a model-shortfall debit"
+  },
+  "debits": {
+   "abort": "1/2582249878086908589655919172003011874329705792829223512830659356540647622016841194629645353280137831435903171972747493376",
+   "dp_loss": "10384593717069655257060992658440192/75733449747618989859877151235676440719",
+   "storage": "1/13182040934309431001038897942365913631840191610932727690928034502417569281128344551079752123172122033140940756480716823038446817694240581281731062452512184038544674444386888956328970642771993930036586552924249514488832183389415832375620009284922608946111038578754077913265440918583125586050431647284603636490823850007826811672468900210689104488089485347192152708820119765006125944858397761874669301278745233504796586994514054435217053803732703240283400815926169348364799472716094576894007243168662568886603065832486830606125017643356469732407252874567217733694824236675323341755681839221954693820456072020253884371226826844858636194212875139566587445390068014747975813971748114770439248826688667129237954128555841874460665729630492658600179338272579110020881228767361200603478973120168893997574353727653998969223092798255701666067972698906236921628764772837915526086464389161570534616956703744840502975279094087587298968423516531626090898389351449020056851221079048966718878943309232071978575639877208621237040940126912767610658141079378758043403611425454744180577150855204937163460902512732551260539639221457005977247266676344018155647509515396711351487546062479444592779055555421362722504575706910949376",
+   "sum": "136890139464584725357101411299049391073521074051138686862522251120994406625647978984089427893943999966857148067274983445309858857908540116403121191075662250080246152680516671632238327618815020402206658920524294548333214378128006949471758872987438312633165034501384605783437051882490903611758807491805982987098875762558360070843450765948856903550286097959931335199738659034132845053578878980865003536783838672481249080416116764789267810190844253249836715351296347688153387299922473514560545889670811169567530863099377393109778693420580259318389261245537590685880147189403197959218052321403919154404513252467048605978268078322817314475594700642901408193544586090034474616897796356963660631298540250997934332347537327678078193115598573375249827140325698385375998598779532199078082483077300316907065441016200867881786600691668529434646396211456132675472384774688404463955203899016499987420710428125284609025105338101920925021386664293109972208147134730568081199044070023578421985212227314008998953747857714431033844605200390268383725613289372355428379265049556860110261768767210572617693392134205549046407590824746646166260613332389875956878867802497622653077112143412018554106176739016443702547029493088850933759432844298516204714169334106255/998321434669579770536166348562400859135772136394812508329491459326596234920436310224748798180760669711952063477007655049581670061752830429755275025969752521674481629371525712131309313429998199535833247814585335879735673015272355390423910686805911616888390285500644882351800512953869816910063039725961625114015722833413184538169307232279829655238717753094688686007049024724945301317235402816851794056831112477815623064453930572325466449486589644964857923658364160050849623449391475867908948358094119499481705000404991056414263715504660712000755039444263541505370784094225528322030860116446967294151745060994527738002567726133668888694157703434254329655548950693905460018775106773141047930008197369823323355946312675041288523653424200899436440065979587155339940442481733376651681014299606298400407012518839249952488722725053877874156561783485057600398743987380135448513201403689205313617624295239533028219849254532959164171307859121111436288162549268424419926471034721367707435214649451268752874038733958195562698854022540514105994525000653793722147827360288238004289433389822414616177551459106213110042758789655343831519903069365096658219667780024793397002615236315446989223752692166496536182261359719934420510663574245107936153655224874041344",
+   "k_min": 28394369643929913861972519946822497117
+  }
+ },
+ "census": {
+  "trials": 48000,
+  "success_num": 16658,
+  "success_rate": 0.3470416666666667,
+  "cp95_one_sided_lower": 0.3434642685109741,
+  "shard_count": 10,
+  "degenerate": 0,
+  "config": {
+   "q": 523,
+   "R": 128,
+   "dpbits": 0,
+   "S_design": 223,
+   "trails": 32,
+   "per_trail": 6,
+   "rule": "v19"
+  }
+ },
+ "sweep": [
+  {
+   "dpbits": 5,
+   "trials": 1600,
+   "trails": 4,
+   "per_trail": 256,
+   "budget": 1024,
+   "detected": 1593,
+   "cp95_detect": 0.991798,
+   "pairs": 2034,
+   "events": 1593,
+   "degenerate": 0,
+   "records_per_trial": 32.0,
+   "birthday_pred": 0.011358
+  },
+  {
+   "dpbits": 7,
+   "trials": 1600,
+   "trails": 4,
+   "per_trail": 1024,
+   "budget": 4096,
+   "detected": 1596,
+   "cp95_detect": 0.994288,
+   "pairs": 1626,
+   "events": 1596,
+   "degenerate": 0,
+   "records_per_trial": 32.0,
+   "birthday_pred": 0.011358
+  },
+  {
+   "dpbits": 9,
+   "trials": 800,
+   "trails": 4,
+   "per_trail": 4096,
+   "budget": 16384,
+   "detected": 796,
+   "cp95_detect": 0.988595,
+   "pairs": 805,
+   "events": 796,
+   "degenerate": 0,
+   "records_per_trial": 32.0,
+   "birthday_pred": 0.011358
+  },
+  {
+   "dpbits": 11,
+   "trials": 200,
+   "trails": 4,
+   "per_trail": 16384,
+   "budget": 65536,
+   "detected": 199,
+   "cp95_detect": 0.976502,
+   "pairs": 205,
+   "events": 199,
+   "degenerate": 0,
+   "records_per_trial": 32.0,
+   "birthday_pred": 0.011358
+  }
+ ],
+ "merge_audit": {
+  "v19_same_class_at": {
+   "0": 1600,
+   "1": 1600,
+   "2": 1600,
+   "3": 1600,
+   "4": 1600,
+   "8": 1600,
+   "16": 1600,
+   "32": 1600,
+   "64": 1600,
+   "100": 1600
+  },
+  "v19_pairs": 1600,
+  "v19_steps": 100,
+  "v19_identical_elements_after_1_step": 0,
+  "tn_same_class_at": {
+   "0": 1600,
+   "1": 339,
+   "2": 168,
+   "3": 147,
+   "4": 145,
+   "8": 146,
+   "16": 146,
+   "32": 146,
+   "64": 147,
+   "100": 147
+  },
+  "tn_label_agrees_on_conjugates": [
+   1200,
+   13200
+  ],
+  "tn_norm_frobenius_invariant": [
+   13200,
+   13200
+  ]
+ },
+ "trap": {
+  "v19_p6_per_1600": 1600.0,
+  "v19_second_order_per_1600": 0.0,
+  "v19_traces_with_2cycle": 0,
+  "v19_guard_firings": 2229,
+  "v19_squaring_fraction": 0.419269,
+  "v18_control_second_order_per_1600": 142.0,
+  "v18_control_squaring_fraction": 0.385775,
+  "kappa_shift_hist": {
+   "6": 1600
+  },
+  "census_trap_regime": {
+   "toy_guard_fire_rate": 0.006966,
+   "production_guard_fire_rate": 0.000244,
+   "fixture_exercises_trap_channel_x": 28.5,
+   "toy_effective_slots_estimate": 88,
+   "toy_effective_slots_note": "m0 is a minimum over twelve small-field keys, so the toy behaves like ~88 slots, not 4096",
+   "direction": "the fixture exercises the repeat-slot channel ~28x MORE often than production, so the 0/1600 census is CONSERVATIVE by that factor"
+  }
+ },
+ "meter_identity": {
+  "meter": 14880712,
+  "row_sum": 14880712,
+  "log_sum": 14880712,
+  "log_len": 691,
+  "matches": 1,
+  "replay_steps": 74,
+  "all_equal_exact_integers": true
+ },
+ "storage": {
+  "rec_cap": "60791734",
+  "rec_bytes": 52,
+  "store_bytes": 3161170168,
+  "table_bytes": 28311552,
+  "peak_bytes": 3241910520,
+  "peak_below_2pow32": true
+ },
+ "checks": [
+  {
+   "check": "census_shards_present",
+   "value": 10,
+   "status": "PASS"
+  },
+  {
+   "check": "census_shard_totals_resum_to_aggregate",
+   "value": [
+    48000,
+    16658
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "census_is_one_config",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "census_rule_is_the_guard_rule",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "census_is_large_enough",
+   "value": 48000,
+   "status": "PASS"
+  },
+  {
+   "check": "census_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_has_all_four_densities",
+   "value": [
+    5,
+    7,
+    9,
+    11
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_rule_is_the_guard_rule",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_arm_is_production_shaped",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d5_gate",
+   "value": "0.9918",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d5_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d7_gate",
+   "value": "0.9943",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d7_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d9_gate",
+   "value": "0.9886",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d9_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d11_gate",
+   "value": "0.9765",
+   "status": "PASS"
+  },
+  {
+   "check": "sweep_d11_zero_degenerate",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "coalescence_all_checkpoints_1_000",
+   "value": {
+    "0": 1600,
+    "1": 1600,
+    "2": 1600,
+    "3": 1600,
+    "4": 1600,
+    "8": 1600,
+    "16": 1600,
+    "32": 1600,
+    "64": 1600,
+    "100": 1600
+   },
+   "status": "PASS"
+  },
+  {
+   "check": "coalescence_last_step_1_000",
+   "value": 1.0,
+   "status": "PASS"
+  },
+  {
+   "check": "control_rule_tn_is_NOT_a_class_function",
+   "value": 0.091875,
+   "status": "PASS"
+  },
+  {
+   "check": "tn_rule_is_NOT_a_class_function",
+   "value": [
+    1200,
+    13200
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "tn_norm_is_frobenius_invariant",
+   "value": 13200,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_p6_fixture_all_conjugate",
+   "value": 1600.0,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_second_order_zero_under_guard",
+   "value": 0,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_control_v18_reproduces_regrowth",
+   "value": 142.0,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_guard_firings_are_rare",
+   "value": 2229,
+   "status": "PASS"
+  },
+  {
+   "check": "trap_census_regime_is_stricter_than_production",
+   "value": 28.5,
+   "status": "PASS"
+  },
+  {
+   "check": "mul_charge_is_the_v19b_row",
+   "value": 22465,
+   "status": "PASS"
+  },
+  {
+   "check": "multiply_rows_plus_common_resum_to_the_charge",
+   "value": [
+    22465,
+    22465
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "squaring_rows_plus_common_resum_to_the_charge",
+   "value": [
+    15391
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "dense_fp12_multiply_row_is_the_cost_model_reference_op",
+   "value": [
+    "dense_fp12_multiply",
+    20000
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "rows_match_forced_run_on_the_guard_table",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "guard_row_is_present_in_the_forced_rows",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_run_is_the_guard_rule",
+   "value": "v19",
+   "status": "PASS"
+  },
+  {
+   "check": "verify_row_is_ladder_plus_miller_plus_finalexp",
+   "value": 1261584,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_has_a_match",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_recovered_x",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_log_equals_meter_equals_row_formula",
+   "value": [
+    14880712,
+    14880712
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_replay_is_full_length",
+   "value": 74,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_debits_solve_verify_output",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "forced_match_log_length_is_trail_plus_replay_plus_aux",
+   "value": 691,
+   "status": "PASS"
+  },
+  {
+   "check": "calibration_ratio_is_the_cp_lower_quotient",
+   "value": "905434717/1000000000",
+   "status": "PASS"
+  },
+  {
+   "check": "calibration_ratio_at_most_one",
+   "value": "905434717/1000000000",
+   "status": "PASS"
+  },
+  {
+   "check": "calibration_ratio_is_applied_as_a_discount",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "census_rate_below_design_budget_toy_model",
+   "value": [
+    0.347042,
+    0.379336
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "census_realized_steps_are_trails_times_per_trail",
+   "value": 192,
+   "status": "PASS"
+  },
+  {
+   "check": "census_model_at_realized_budget_is_below_measured",
+   "value": [
+    0.347042,
+    0.295768
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "census_retention_over_realized_model_above_one",
+   "value": 1.1734,
+   "status": "PASS"
+  },
+  {
+   "check": "design_budget_se_gap_is_a_budget_artifact",
+   "value": 14.5818,
+   "status": "PASS"
+  },
+  {
+   "check": "claim_is_the_smallest_4dp_at_or_above_W_plus_2e_5",
+   "value": "251639/2000",
+   "status": "PASS"
+  },
+  {
+   "check": "claim_bounds_the_cap",
+   "value": "75066045798762155095857850821322368670",
+   "status": "PASS"
+  },
+  {
+   "check": "claim_bounds_nominal_work",
+   "value": "6005123112073628148903846038359316159550343/80000",
+   "status": "PASS"
+  },
+  {
+   "check": "nominal_work_inside_cap",
+   "value": "[Fraction(-160551827344258764782027346473334049657, 4)]",
+   "status": "PASS"
+  },
+  {
+   "check": "cap_forces_at_most_S_minus_kmin_multiplies",
+   "value": 28394369643929913861972519946822497117,
+   "status": "PASS"
+  },
+  {
+   "check": "cap_leaves_a_positive_multiply_fraction_margin",
+   "value": "0.00007492",
+   "status": "PASS"
+  },
+  {
+   "check": "abort_debit_is_the_hoeveding_tail_clipped_at_2pow_minus_400",
+   "value": 1226582300389000603466731769372,
+   "status": "PASS"
+  },
+  {
+   "check": "certified_floor_at_least_0_39",
+   "value": "0.390100",
+   "status": "PASS"
+  },
+  {
+   "check": "target_meets_the_certificate_target",
+   "value": "0.430994",
+   "status": "PASS"
+  },
+  {
+   "check": "debits_negligible_against_the_floor",
+   "value": "1.371e-04",
+   "status": "PASS"
+  },
+  {
+   "check": "claim_inside_the_tie_window_of_the_declared_gate",
+   "value": [
+    "251649/2000",
+    "62913/500"
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "declared_gate_is_this_tracks_second_live_head",
+   "value": null,
+   "status": "PASS"
+  },
+  {
+   "check": "claim_clears_the_declared_gates_own_computed_total",
+   "value": [
+    "251649/2000",
+    "125825569/1000000"
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "claim_does_NOT_clear_the_gate_live_at_build",
+   "value": [
+    "251649/2000",
+    "6287/50"
+   ],
+   "status": "PASS"
+  },
+  {
+   "check": "peak_below_2pow32",
+   "value": 3241910520,
+   "status": "PASS"
+  }
+ ],
+ "n_checks": 64,
+ "all_checks_pass": true
+}

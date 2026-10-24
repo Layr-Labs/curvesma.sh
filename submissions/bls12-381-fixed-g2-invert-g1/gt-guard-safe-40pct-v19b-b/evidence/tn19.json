@@ -1,0 +1,14 @@
+{
+ "mode": "tn",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 4096,
+ "samples": 1200,
+ "pairs": 13200,
+ "norm_frobenius_invariant": 13200,
+ "trace_frobenius_invariant": 1200,
+ "tn_label_agrees_on_conjugates": 1200,
+ "tn_slot_agrees_on_conjugates": 1204,
+ "verdict": "(t,n) is a complete invariant of the ORDER-TWO orbit only; it is NOT a class function on the order-twelve Frobenius class, so a slot keyed on it splits conjugates and the map is not equivariant"
+}

@@ -1,0 +1,82 @@
+{
+ "mode": "coalesce",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 4096,
+ "checkpoints": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  8,
+  16,
+  32,
+  64,
+  100
+ ],
+ "idx_bits": 12,
+ "dp_shift": 15,
+ "statistic": "fraction of same-class (conjugate) start pairs still in ONE class at each checkpoint, exact twelve-Frobenius test",
+ "rules": {
+  "v19": {
+   "pairs": 1600,
+   "steps": 100,
+   "R": 4096,
+   "same_class_at": {
+    "0": 1600,
+    "1": 1600,
+    "2": 1600,
+    "3": 1600,
+    "4": 1600,
+    "8": 1600,
+    "16": 1600,
+    "32": 1600,
+    "64": 1600,
+    "100": 1600
+   },
+   "coalesce_within_1_step": 1.0,
+   "coalesce_within_2_steps": 1.0,
+   "same_class_at_last_step": 1.0,
+   "identical_elements_after_1_step": 0,
+   "first_divergence_witness": null
+  },
+  "tn": {
+   "pairs": 1600,
+   "steps": 100,
+   "R": 4096,
+   "same_class_at": {
+    "0": 1600,
+    "1": 339,
+    "2": 168,
+    "3": 147,
+    "4": 145,
+    "8": 146,
+    "16": 146,
+    "32": 146,
+    "64": 147,
+    "100": 147
+   },
+   "coalesce_within_1_step": 0.211875,
+   "coalesce_within_2_steps": 0.105,
+   "same_class_at_last_step": 0.091875,
+   "identical_elements_after_1_step": 0,
+   "first_divergence_witness": {
+    "pair": 0,
+    "j": 4,
+    "step": 1,
+    "m0_equal": false,
+    "slot": [
+     102,
+     440
+    ],
+    "kappa": [
+     8,
+     9
+    ],
+    "why": "same class entering, different class leaving: the step is not a function of the class"
+   }
+  }
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "mode": "trap",
+ "q": 523,
+ "rp": 521041,
+ "N": 43420,
+ "R": 4096,
+ "trials": 1600,
+ "steps": 200,
+ "tables": 8,
+ "rules": {
+  "v18": {
+   "traces": 1600,
+   "steps_per_trace": 200,
+   "traces_with_2cycle": 142,
+   "traces_with_4cycle": 142,
+   "per_1600_2cycle": 142.0,
+   "rate_per_step": 0.00044375,
+   "squaring_fraction": 0.385775,
+   "guard_firings": 0,
+   "p6_slots_checked": 1600,
+   "p6_conjugate_hits": 1600,
+   "p6_per_1600": 1600.0,
+   "kappa_shift_hist": {
+    "6": 1600
+   },
+   "first_2cycle": {
+    "table": 0,
+    "step": 6
+   }
+  },
+  "v19": {
+   "traces": 1600,
+   "steps_per_trace": 200,
+   "traces_with_2cycle": 0,
+   "traces_with_4cycle": 0,
+   "per_1600_2cycle": 0.0,
+   "rate_per_step": 0.0,
+   "squaring_fraction": 0.419269,
+   "guard_firings": 2229,
+   "p6_slots_checked": 1600,
+   "p6_conjugate_hits": 1600,
+   "p6_per_1600": 1600.0,
+   "kappa_shift_hist": {
+    "6": 1600
+   },
+   "first_2cycle": null
+  }
+ },
+ "note": "v17b degenerates were 12/1600; the v18 control reproduces the m^2 regrowth, the v19 guard must return it to 0 at toy scale"
+}
