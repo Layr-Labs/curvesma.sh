@@ -1,0 +1,33 @@
+{
+ "answer": "NO. The recovery solve is CLASS-LEVEL ONLY and the measurement shows augmented coincidence is zero while every class meet still yields a valid witness.",
+ "instrument": "evidence/census_v10o.c + coalescence counters (rec carries prev/ridx/ring at insert; on a cross-owner class meet the two augmented states are compared). Reproduces the shipped arm exactly (150-trial check: 2 successes, 7611020 records, 6 ring hits).",
+ "measured_guarded_dp4": {
+  "arm": "P2 shipped transition, instrumented",
+  "aug_eq": 0,
+  "class_meets": 62,
+  "dp_bits": 4,
+  "ltheta": 3172.75,
+  "p_hat": 0.031,
+  "prev_eq": 0,
+  "ring_eq": 0,
+  "ring_escapes": 83,
+  "ring_hits": 83,
+  "successes": 62,
+  "trials": 2000,
+  "verified": 62,
+  "verified_over_class_meets": 1.0
+ },
+ "question": "with prev-row + ring state in the transition, must collisions coalesce in the AUGMENTED state (class x prev x ring) for the reduction to succeed?",
+ "ratio_row": {
+  "augmented_meets": 0,
+  "class_meets": 62,
+  "prev_equal": 0,
+  "ratio": "62 : 0",
+  "reading": "0 of 62 class coincidences shared a prev register and 0 shared the 4-entry ring state, i.e. augmented coalescence is at most 4.7 pct of class coincides at 95 pct confidence. That is the expected 2^-11 for prev alone.",
+  "ring_equal": 0,
+  "upper_bound_augmented_rate_95": 0.0472
+ },
+ "solve_equality": "x = (a1-a2)/(c2-c1) mod n, then verify [x]P == Q. prev and the ring enter neither the formula nor the check, so a witness never needs augmented agreement.",
+ "why_it_matters": "The verdict objected that 'failure of point-only coalescence does not imply that matching augmented states cannot coalesce'. Conceded as a logical point and answered empirically: augmented states DO fail to coalesce (0/62), and it does not matter, because the solve is defined on class equality. The success EVENT is class-matching; the WALK STATE is augmented. Those are different objects and the package uses the first for recovery and the second only for stepping.",
+ "witness_usable_at_report": "1.000 across all 24 matrix cells (verified == meets exactly, 115..900375 meets per cell) and 62/62 on the instrumented arm. The guarded path does not degrade witness validity; this is not the g1-invert retention failure mode."
+}

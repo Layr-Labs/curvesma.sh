@@ -1,0 +1,54 @@
+# v10m-r4 rows from the ONE shipped object
+build: clang -O2 -fPIC -c p256_recproc_v10l.c -o p256_recproc_v10l.o
+sha256: 96b736ef6dd55cc7cee4be9dac2216b48f7fb56cd40cd4d99d16139451c2990f
+bytes: 32864
+decode: base64 -d p256_recproc_v10l.o.gz.b64 | gunzip > p256_recproc_v10l.o
+## nm -g
+                 U ___stack_chk_fail
+                 U ___stack_chk_guard
+                 U _memcpy
+                 U _printf
+                 U _puts
+0000000000000000 T _batch_inv
+0000000000000dd8 T _step_forward
+0000000000001180 C _W
+0000000000001224 T _trap_escape
+0000000000001cd0 T _step_close
+0000000000002850 T _fe_mul_probe
+0000000000002aa0 T _recproc_round
+0000000000002af8 T _rec_index
+0000000000002b0c T _rec_byte_addr
+0000000000002b5c T _recproc_insert_price
+0000000000002b80 T _recproc_layout
+0000000000002bd8 T _recproc_seed
+0000000000002c04 T _jump_width_check
+0000000000002c20 T _recproc_init
+0000000000005064 T _main
+0000000000006440 S _trap_detected
+0000000000006448 S _trap_escapes
+0000000000006450 S _batch_inv_calls
+0000000000006458 S _batch_inv_denominators
+0000000000010000 C _TLOG
+0000000000010000 C _TLOG2
+0000000000010000 C _TX
+0000000000010000 C _TX2
+0000000000010000 C _TY
+0000000000010000 C _TY2
+
+## size -m
+Segment : 118777288
+	Section (__TEXT, __text): 23852
+	Section (__DATA, __common): 32 (zerofill)
+	Section (__TEXT, __const): 416
+	Section (__DATA, __bss): 118751592 (zerofill)
+	Section (__DATA, __data): 40
+	Section (__TEXT, __cstring): 539
+	Section (__LD, __compact_unwind): 736
+	Section (__TEXT, __eh_frame): 72
+	total 118777279
+total 118777288
+
+## spans (TEXT symbols only as boundaries)
+step_forward 239 | step_close 694 | batch_inv iter 293 | trap_escape 682 | fe_mul 147
+## live counters after census
+batch_inv_calls 64 | denominators 512 | walker_steps 512

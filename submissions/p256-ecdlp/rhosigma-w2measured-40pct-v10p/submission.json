@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "title": "P-256 sigma walk v10p: w=2 pair census MEASURED (6000 sets/arm) - floor met on pre-guard control 0.4166 CP95, UNMET on shipped guard 0.0616; batch_inv re-amortized to shipped width 8 (+2.7436 bits -> 131.6873); kappa derived; a-channel measured",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1316873",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table parity-salt sigma walk of argument.md is claimed at total classical work at most 2^131.6873 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, for the two-run (w=2) algorithm. The claim MOVES UP 2.7436 bits from v10o's 128.9437, and the move is a correction, not a capability: v10o amortized the per-step batch inversion over 65536 walkers while the shipped walker array holds 16 (the reported live census uses eight). One Fermat inversion is 385 fe_mul x 147 Ir = 56595 Ir per STEP per BATCH of B walkers; prefix products and back-substitution are per-walker (the 293-Instr row) and do not scale with B, so the only B-dependent term is 385x147/B: 0.8636 Ir/walker-step at B=65536, 3537.1875 at B=16, 7074.3750 at B=8. The WORSE shipped width (B=8) is charged: charge 1241.5067 -> 8315.0182 Ir per walker-step, W_single 127.9436 -> 130.6872, w=2 -> 131.6873 (4-dp ceiling, so at-most holds). Reproducing v10o's 1241.5067493 and 128.9436 exactly at B=65536 before changing the denominator is the audit that the delta is the amortization and nothing else. The span prices themselves are unchanged: same counted TU, sha256 96b736ef..., same 239/694/293/14 rows.\n\nTHE w=2 ARM IS NOW MEASURED, ON BOTH ARMS, AND IT FAILS ON THE SHIPPED ONE. v10o's fatal gap was a w=2 ticket computed from the birthday formula rather than measured. It is measured here: 6000 sequential two-run SETS per arm at the plateau cell (Lambda=0.6, dp4, 50764 steps per walker, 16 walkers, 2048-row tables, parity salts SA/SB), one uniform challenge fixed across both runs, run 2 only if run 1 failed, fresh walker coins per run, and the shipped number is the one-sided 95 pct Clopper-Pearson LOWER bound of the measured set fraction (helper calibrated on the observed n and p before use, k=n closed form 0.05^(1/n) matched to 1e-12). Result: the SHIPPED guarded walk (prev-xor + ring + escape, the transition actually in the counted TU) scores p1=0.03833, p2=0.07050, CP95 lower 0.06514 - the 0.39 floor is NOT met, and the submission does not claim it. The PRE-GUARD CONTROL (parity salt, guard removed) scores p1=0.26417, p2=0.45583, CP95 lower 0.44519 - the floor IS met on measured data at the production budget shape, with no extrapolation law, because the production-relevant quantity is the quantity measured. Both rows are needed and both are reported: the guard multiplier measured here is x0.145 single-run and x0.155 on the w2 ticket, consistent in size with v10o's x0.134 at a different seed and n, from a statistic that does not share v10o's single-run CP machinery, and the failure of the shipped walk is localised entirely to the carried prev row. A coalescence-preserving guard (prev from a canonical function of the point, not carried history) would put the shipped arm on the control's measured curve. That construction is NOT in this package and is NOT claimed.\n\nKAPPA DERIVED, NOT TRANSFERRED. The closure rate is the only channel carrying the fixture's ring geometry into the production surcharge. Measured 2^-24.03 per walker-step against the 2^-24 prediction is 0.9794 of prediction (the 97.9 pct match the reviewer accepted); that ratio IS the transfer factor, charged in the direction that costs work: kappa = 2^0.03 = 1.021012, escape surcharge 0.00334372 -> 0.00341398 Ir per walker-step, delta 7.03e-5 Ir = 7.0e-8 bits (computed, and shown to be small rather than asserted small). No interval is claimed on the closure count: it is a live counter, not a binomial rate estimate.\n\nTHE a-CHANNEL IS COLD BY MEASUREMENT. For y^2=x^3+ax+b the addition law with x1 != x2 is a-independent; a enters only the doubling numerator 3x^2+a, so P(a=-3) can differ from P(a=0) only on walker-steps that evaluate a doubling (x equal to the selected table x). Counters: 0 doubling events in 9559876480 walker-steps (shipped arm) and 0 in 8459312960 (control), total 0 in 18019189440, witness gate verified==meets exactly on both arms - so the a-dependent numerator is never evaluated in any measured step and |P(a=-3)-P(a=0)| <= 3.138e-10 (95 pct rule of three). At production the same count applies a fortiori: one hit in 2^256 per step, so over 2^127.63 steps the expected doubling count is 2^-128.4 and the a=-3 term is never reached. NEGATIVE RESULT DISCLOSED: substituting the a=-3 numerator alone (320 sets per arm) fails its own validity gate - verified/meets = 0.0057 (8,322 of 1,452,101) vs 1.000 - because the coefficient invariant point=(a+c*x)G needs the addition law to match the curve; those rows are in evidence/a_shift.json and are EXCLUDED from every claim. A true a=-3 fixture needs a prime-order group on a curve with a=-3 (Schoof point counting at 2^40), which is not done here and is disclosed; it is moot at the measured scope for the reason above.\n\nSCORABLE SUBSET. The track scores log2 of total classical work, admitted only with success >= 0.39 over uniform production challenges; there is no separately scorable work-only component and this package does not pretend otherwise. Work side: exact, re-summed, +2.7436 bits WORSE than v10o. Success side: measured and UNMET on the shipped arm (0.06514 CP95 lower vs 0.39), measured and met on the control (0.44519). Claim NOT scoreable, NOT promotable; filed as a corrected record with a constructive localisation of the barrier. Every arithmetic assertion in this package is re-extracted by regex and recomputed (evidence/arith_audit_v10p.json).",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/a_shift.json",
+    "evidence/arith_audit_v10p.json",
+    "evidence/batch_amortization.json",
+    "evidence/census_v10p.c",
+    "evidence/claim.json",
+    "evidence/coalescence.json",
+    "evidence/cp_calib.json",
+    "evidence/guarded_refit_v10o.json",
+    "evidence/kappa_transfer.json",
+    "evidence/ledger.json",
+    "evidence/live_binary.json",
+    "evidence/nm_symbols.txt",
+    "evidence/pair_census_v10p.json",
+    "evidence/prod_params.json",
+    "evidence/ring_engagement.json",
+    "evidence/stepspans_core.json",
+    "evidence/theta2_band.json"
+   ]
+  }
+ ],
+ "experiments": []
+}

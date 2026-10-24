@@ -1,0 +1,34 @@
+{
+ "checks": {
+  "control_arm": {
+   "coverage_one_sided": 0.94925,
+   "k_equals_n_abs_err": 0.0,
+   "k_equals_n_closed_form": 0.9995008359116081,
+   "k_equals_n_helper": 0.9995008359116081,
+   "k_half": 0.48930085104196364,
+   "k_zero": 0.0,
+   "n": 6000,
+   "p": 0.4558333333333333,
+   "sims": 4000
+  },
+  "helper": "CP one-sided 95% lower = Beta^-1(0.05; k, n-k+1) (bisection on I_x(a,b))",
+  "n_sets_shipped": 6000,
+  "shipped_arm": {
+   "coverage_one_sided": 0.94875,
+   "k_equals_n_abs_err": 0.0,
+   "k_equals_n_closed_form": 0.9995008359116081,
+   "k_equals_n_helper": 0.9995008359116081,
+   "k_half": 0.48930085104196364,
+   "k_zero": 0.0,
+   "n": 6000,
+   "p": 0.0705,
+   "sims": 4000
+  }
+ },
+ "coverage_target": 0.95,
+ "helper": "CP one-sided 95 pct lower = Beta^-1(0.05; k, n-k+1), bisection on the regularized incomplete beta",
+ "inversion_bug_note": "an earlier draft solved I_x(a,b)=0.95 and returned bounds ABOVE p_hat; the assertion cp95_lower<=k/n on every row caught it, and the target is 0.05.",
+ "pass": true,
+ "test": "cp95_lower_helper_calibration",
+ "why": "the shipped floor number is a CP lower bound, so the helper is calibrated BEFORE use: if it returned the upper limit (an inversion bug this package actually hit and fixed) every reported bound would be wrong in the unsafe direction"
+}

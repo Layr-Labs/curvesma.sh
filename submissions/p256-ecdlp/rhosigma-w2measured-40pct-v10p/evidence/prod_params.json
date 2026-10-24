@@ -1,0 +1,23 @@
+{
+ "Lambda": 0.6000000000000415,
+ "Lambda_derivation": "Lambda = S^2/(2N') with S=2^127.631517202749, N'=(r-1)/2",
+ "S_log2": 127.631517202749,
+ "S_over_sqrt_2N_log2": -0.3684827970830532,
+ "cap_bytes_log2": 73.0,
+ "classes_log2": 254.99999999966408,
+ "dp_bits": 62,
+ "invariant_note": "a rho collision census is controlled by (Lambda, ltheta) where Lambda=S^2/(2N') is the budget in class-space units and ltheta=ell*theta is the number of distinguished points emitted per trail; nu=R/sqrt(N') enters the success law only through the accidental record-record coincidence rate nu^2/2 and through storage",
+ "nu_records_over_sqrtN_log2": -61.868482797083054,
+ "nu_sq_over_2_log2": -124.73696559416611,
+ "record_bytes": 104,
+ "records_R_log2": 65.631517202749,
+ "records_bytes_log2": 72.3319569208901,
+ "records_per_walker_log2": 49.631517202748995,
+ "sqrt_2N_log2": 127.99999999983204,
+ "sqrt_N_log2": 127.49999999983204,
+ "storage_slack_bits": 0.668043079109907,
+ "theta": 2.168404344971009e-19,
+ "trail_len_log2": 111.631517202749,
+ "trail_over_sqrtN_log2": -15.868482797083052,
+ "walkers": 65536
+}

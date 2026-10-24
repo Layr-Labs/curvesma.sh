@@ -1,0 +1,232 @@
+{
+ "curated_pass": {
+  "n_assertions": 31,
+  "n_fail": 0,
+  "rows": [
+   {
+    "name": "charge B=65536 (v10o reproduction)",
+    "ok": true,
+    "recomputed": 1241.506679043793,
+    "rel_err": 5.6591391424120636e-08,
+    "stated": 1241.5067493023873
+   },
+   {
+    "name": "share 385x147/65536",
+    "ok": true,
+    "recomputed": 0.8635711669921875,
+    "rel_err": 0.0,
+    "stated": 0.8635711669921875
+   },
+   {
+    "name": "base 239+694+293+14",
+    "ok": true,
+    "recomputed": 1240,
+    "rel_err": 0.0,
+    "stated": 1240
+   },
+   {
+    "name": "share B=8 = 385*147/B",
+    "ok": true,
+    "recomputed": 7074.375,
+    "rel_err": 0.0,
+    "stated": 7074.375
+   },
+   {
+    "name": "share B=16 = 385*147/B",
+    "ok": true,
+    "recomputed": 3537.1875,
+    "rel_err": 0.0,
+    "stated": 3537.1875
+   },
+   {
+    "name": "charge B=8",
+    "ok": true,
+    "recomputed": 8315.018178135395,
+    "rel_err": 6.562785665324025e-16,
+    "stated": 8315.0181781354
+   },
+   {
+    "name": "charge B=16",
+    "ok": true,
+    "recomputed": 4777.830678135395,
+    "rel_err": 1.1421434911057187e-15,
+    "stated": 4777.8306781354
+   },
+   {
+    "name": "W_single B=65536",
+    "ok": true,
+    "recomputed": 127.94360930732344,
+    "rel_err": 1.8326753799609632e-13,
+    "stated": 127.9436093073
+   },
+   {
+    "name": "W w=2 B=65536",
+    "ok": true,
+    "recomputed": 128.94360930732344,
+    "rel_err": 1.8184623810399132e-13,
+    "stated": 128.9436093073
+   },
+   {
+    "name": "W w=2 B=16",
+    "ok": true,
+    "recomputed": 130.88787292968203,
+    "rel_err": 1.372359406410632e-13,
+    "stated": 130.8878729297
+   },
+   {
+    "name": "W w=2 B=8",
+    "ok": true,
+    "recomputed": 131.68723662025758,
+    "rel_err": 3.2223025760608833e-13,
+    "stated": 131.6872366203
+   },
+   {
+    "name": "claim ceiling B=8",
+    "ok": true,
+    "recomputed": 131.6873,
+    "rel_err": 0.0,
+    "stated": 131.6873
+   },
+   {
+    "name": "kappa = 2^(24.03-24)",
+    "ok": true,
+    "recomputed": 1.0210121257071934,
+    "rel_err": 6.524249790997368e-16,
+    "stated": 1.021012125707194
+   },
+   {
+    "name": "kappa inverse = 2^-0.03",
+    "ok": true,
+    "recomputed": 0.9794202975869268,
+    "rel_err": 0.0,
+    "stated": 0.9794202975869268
+   },
+   {
+    "name": "escape charged",
+    "ok": true,
+    "recomputed": 0.0034139752388000462,
+    "rel_err": 2.6020852139652106e-18,
+    "stated": 0.003413975238800049
+   },
+   {
+    "name": "w=2 threshold 1-sqrt(0.61)",
+    "ok": true,
+    "recomputed": 0.21897503240933458,
+    "rel_err": 3.240933457715478e-08,
+    "stated": 0.218975
+   },
+   {
+    "name": "1-(1-0.218975)^2",
+    "ok": true,
+    "recomputed": 0.38999994937500004,
+    "rel_err": 5.062499996988379e-08,
+    "stated": 0.39
+   },
+   {
+    "name": "p_floor for 2 runs",
+    "ok": true,
+    "recomputed": 0.21897503240933458,
+    "rel_err": 3.240933457715478e-08,
+    "stated": 0.218975
+   },
+   {
+    "name": "guard factor 0.03333/0.24833",
+    "ok": true,
+    "recomputed": 0.13421656666532436,
+    "rel_err": 0.00021656666532435254,
+    "stated": 0.134
+   },
+   {
+    "name": "guard bits log2(0.134)",
+    "ok": true,
+    "recomputed": -2.8973653371287704,
+    "rel_err": 0.0009085044383549956,
+    "stated": -2.9
+   },
+   {
+    "name": "plateau mean of 4 cells",
+    "ok": true,
+    "recomputed": 0.2409175,
+    "rel_err": 8.249999999998536e-05,
+    "stated": 0.241
+   },
+   {
+    "name": "salt effect 0.26300 vs 0.24833",
+    "ok": true,
+    "recomputed": 1.0590746184512545,
+    "rel_err": 7.046123820071767e-05,
+    "stated": 1.059
+   },
+   {
+    "name": "closures per trail 2^87.60",
+    "ok": true,
+    "recomputed": 2.347925668305244e+26,
+    "rel_err": 0.001052197980104213,
+    "stated": 2.3454577823642208e+26
+   },
+   {
+    "name": "shipped p2 = sets/n",
+    "ok": true,
+    "recomputed": 0.0705,
+    "rel_err": 0.0,
+    "stated": 0.0705
+   },
+   {
+    "name": "control p2 = sets/n",
+    "ok": true,
+    "recomputed": 0.4558333333333333,
+    "rel_err": 0.0,
+    "stated": 0.4558333333333333
+   },
+   {
+    "name": "cp_lower <= p_hat (both arms)",
+    "ok": true,
+    "recomputed": 0.0705,
+    "rel_err": 0.0,
+    "stated": 0.06513621332639644
+   },
+   {
+    "name": "floor: shipped below 0.39 <= control",
+    "ok": true,
+    "recomputed": 0.44519155929682386,
+    "rel_err": 0.0,
+    "stated": 0.39
+   },
+   {
+    "name": "control p2 vs 1-(1-p1)^2",
+    "ok": true,
+    "recomputed": 0.4585493055555555,
+    "rel_err": 0.0,
+    "stated": 0.4585493055555555
+   },
+   {
+    "name": "shipped p2 vs 1-(1-p1)^2",
+    "ok": true,
+    "recomputed": 0.07519722222222225,
+    "rel_err": 0.0,
+    "stated": 0.07519722222222225
+   },
+   {
+    "name": "shipped walker-steps = 16*50764*runs",
+    "ok": true,
+    "recomputed": 9559876480,
+    "rel_err": 0.0,
+    "stated": 9559876480
+   },
+   {
+    "name": "doubling events zero on both a=0 arms",
+    "ok": true,
+    "recomputed": 0,
+    "rel_err": 0.0,
+    "stated": 0
+   }
+  ]
+ },
+ "regex_pass": {
+  "failures": [],
+  "n_expressions": 1,
+  "n_fail": 0
+ },
+ "tolerance": "regex: rel 5e-3 or abs 6e-3 (printed rounding); curated: rel 1e-3 unless noted",
+ "verdict": "PASS"
+}
