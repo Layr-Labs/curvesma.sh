@@ -1,0 +1,29 @@
+{
+ "both_ways": {
+  "cap": "dens_factor x mean, the measured worst window",
+  "charged": "every report row is priced at the cap",
+  "mean": "ceil(S/theta), the trigger output"
+ },
+ "cap": 129309063287467,
+ "cap_density_factor": 2.0800123810260778,
+ "cap_log2": 46.877816725780356,
+ "chebyshev_stop_loss": 1.3790483278603825e-14,
+ "density_measured": {
+  "mean_hits_per_window": 3.365364583333333,
+  "measured_over_model": 0.8413411458333333,
+  "model_hits_per_window": 4.0,
+  "over_dispersion_var_over_mean": 0.12440433512124476,
+  "sd": 0.6470440042455908,
+  "steps_per_walk": 4096,
+  "var_hits_per_window": 0.4186659434301682,
+  "walks": 600,
+  "window_steps": 128,
+  "windows": 19200,
+  "worst_over_mean": 2.0800123810260778,
+  "worst_window_hits": 7
+ },
+ "mean_dp_hits": 62167448841664,
+ "mean_log2": 45.82122460991794,
+ "theta_bits": 80,
+ "trigger": "a report is the trail-terminating distinguished point at width theta = 2^80: the trail ends, a fresh trail starts, so reports = trail starts"
+}

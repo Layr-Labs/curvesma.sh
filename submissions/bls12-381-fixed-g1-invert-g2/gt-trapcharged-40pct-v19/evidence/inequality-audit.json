@@ -1,0 +1,119 @@
+{
+ "control": {
+  "control_rejects_it": true,
+  "old_note_literal": "0.3963",
+  "old_note_passes": false,
+  "old_note_value": 0.3962569,
+  "tightest_row": {
+   "literal": "24",
+   "row": "ladder.passed",
+   "value": 24.0
+  }
+ },
+ "rows": [
+  {
+   "cert_value": 0.3904781448738283,
+   "literal": "0.3904",
+   "ok": true,
+   "op": ">=",
+   "row": "success.net",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3904781448738283,
+   "literal": "0.3910",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 0.3964570774946057,
+   "literal": "0.3964",
+   "ok": true,
+   "op": ">=",
+   "row": "success.model",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.39067541178114273,
+   "literal": "0.3906",
+   "ok": true,
+   "op": ">=",
+   "row": "success.product",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3688077041121581,
+   "literal": "0.3688",
+   "ok": true,
+   "op": ">=",
+   "row": "success.product_cp95_lower",
+   "rule": "literal is a FLOOR: value >= literal"
+  },
+  {
+   "cert_value": 0.3686214790440069,
+   "literal": "0.3690",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net_cp95_lower",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 0.3686214790440069,
+   "literal": "0.39",
+   "ok": true,
+   "op": "<=",
+   "row": "success.net_cp95_lower",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7704,
+   "literal": "125.7704",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7704,
+   "literal": "125.8345",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 125.7704,
+   "literal": "125.84",
+   "ok": true,
+   "op": "<=",
+   "row": "claim.value",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 0.0538600659569755,
+   "literal": "0.0540",
+   "ok": true,
+   "op": "<=",
+   "row": "trap.repeat_probability",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 2.0800123810260778,
+   "literal": "2.10",
+   "ok": true,
+   "op": "<=",
+   "row": "density.density_factor",
+   "rule": "literal is a CEIL: value <= literal"
+  },
+  {
+   "cert_value": 24.0,
+   "literal": "24",
+   "ok": true,
+   "op": ">=",
+   "row": "ladder.passed",
+   "rule": "literal is a FLOOR: value >= literal"
+  }
+ ]
+}

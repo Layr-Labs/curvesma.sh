@@ -1,0 +1,85 @@
+{
+ "planted_flip_control": "passes (negated label fails)",
+ "rows": [
+  {
+   "label": 125.821225,
+   "ok": true,
+   "printed": "125.821225",
+   "recomputed": 125.821225,
+   "rel_err": 3.1002883642867874e-09,
+   "row": "ledger.log2_S"
+  },
+  {
+   "label": 125.727538,
+   "ok": true,
+   "printed": "125.727538",
+   "recomputed": 125.727538,
+   "rel_err": 9.595108784012348e-11,
+   "row": "ledger.log2_W_raw"
+  },
+  {
+   "label": 125.770322,
+   "ok": true,
+   "printed": "125.770322",
+   "recomputed": 125.770322,
+   "rel_err": 3.706732236121196e-09,
+   "row": "ledger.log2_W_stress"
+  },
+  {
+   "label": 125.7704,
+   "ok": true,
+   "printed": "125.7704",
+   "recomputed": 125.7704,
+   "rel_err": 0.0,
+   "row": "claim.log2"
+  },
+  {
+   "label": 46.877817,
+   "ok": true,
+   "printed": "46.877817",
+   "recomputed": 46.877817,
+   "rel_err": 5.849667571532853e-09,
+   "row": "reports.cap_log2"
+  },
+  {
+   "label": 45.821225,
+   "ok": true,
+   "printed": "45.821225",
+   "recomputed": 45.821225,
+   "rel_err": 8.513130337370515e-09,
+   "row": "reports.mean_log2"
+  },
+  {
+   "label": 56.566458,
+   "ok": true,
+   "printed": "56.566",
+   "recomputed": 56.566458,
+   "rel_err": 8.090419653554706e-06,
+   "row": "aux.total_log2"
+  },
+  {
+   "label": 11.806339,
+   "ok": true,
+   "printed": "11.806",
+   "recomputed": 11.806339,
+   "rel_err": 2.8703334065953946e-05,
+   "row": "trap.total_log2"
+  },
+  {
+   "label": -4.21464,
+   "ok": true,
+   "printed": "-4.215",
+   "recomputed": -4.21464,
+   "rel_err": 8.537070121132497e-05,
+   "row": "trap.repeat_log2"
+  },
+  {
+   "label": -46.04332,
+   "ok": true,
+   "printed": "-46.043",
+   "recomputed": -46.04332,
+   "rel_err": 6.9567608211402035e-06,
+   "row": "density.stop_loss_log2"
+  }
+ ]
+}
