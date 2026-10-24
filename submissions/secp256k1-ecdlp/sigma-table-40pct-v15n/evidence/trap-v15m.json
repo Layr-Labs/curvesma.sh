@@ -1,0 +1,34 @@
+{
+ "kind": "trap-v15m",
+ "generator": "trap_v15m.py",
+ "ledger_escape_per_step": 0.00022277,
+ "structural_row": "1/(6R), R=2048",
+ "rows": [
+  {
+   "curve": "q25",
+   "trials": 500,
+   "seed": 3301,
+   "steps_model_two_cycle": 8.138e-05,
+   "frontier_two_cycle": 8.233e-05,
+   "measured_two_cycle_per_step": 0.00011831,
+   "escapes_2cycle": 127,
+   "escapes_checkpoint": 622,
+   "measured_over_structural": 1.4538,
+   "ledger_over_measured": 1.8829,
+   "mean_over_sqrtn": 1.284033
+  },
+  {
+   "curve": "q29",
+   "trials": 300,
+   "seed": 3302,
+   "steps_model_two_cycle": 8.138e-05,
+   "frontier_two_cycle": 8.233e-05,
+   "measured_two_cycle_per_step": 9.363e-05,
+   "escapes_2cycle": 250,
+   "escapes_checkpoint": 858,
+   "measured_over_structural": 1.1505,
+   "ledger_over_measured": 2.3792,
+   "mean_over_sqrtn": 1.330379
+  }
+ ]
+}

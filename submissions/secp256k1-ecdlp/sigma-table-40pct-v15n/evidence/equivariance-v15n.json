@@ -1,0 +1,18 @@
+{
+ "arith": {
+  "cases": 400,
+  "mismatches": 0
+ },
+ "class": {
+  "cases": 600,
+  "mismatches": 0
+ },
+ "orbit_partners": 3600,
+ "orbit_pairs_checked": 3000,
+ "orbit_splits": 0,
+ "raw_control_pairs": 3000,
+ "raw_control_expected_splits": 2400,
+ "raw_control_splits": 2400,
+ "object": "scripts/align_step_v15n.c (clang -O2 -arch arm64) via ctypes",
+ "sha256_lib": "60aa83935a5bf3e24516e2f90913dec0b17a3d0f5a71320d02da740face56cc0"
+}
