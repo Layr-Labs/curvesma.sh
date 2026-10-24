@@ -1,0 +1,97 @@
+{
+ "package": "gt-fullprotocol-40pct-v24",
+ "claim": "126.5009",
+ "n_checks": 22,
+ "checks": [
+  {
+   "name": "sum_rows_equals_W_no_residual",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_covers_W",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cp95_planted_control_exact",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cp95_not_clipped",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_two_groups",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_fixtures_ge_512",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_one_trial_per_fixture",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_budget_normalised",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_metered_all_components",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_at_Rg65536",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_gaps_to_1000",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_pairs_ge_400",
+   "verdict": "PASS"
+  },
+  {
+   "name": "rho_fit_present",
+   "verdict": "PASS"
+  },
+  {
+   "name": "bridge_uses_measured_gap",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_ge_floor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "scan_on_shipped_step",
+   "verdict": "PASS"
+  },
+  {
+   "name": "scan_multiplier_index_full_Rg",
+   "verdict": "PASS"
+  },
+  {
+   "name": "scan_guard_rate_measured",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_waste_uses_delay",
+   "verdict": "PASS"
+  },
+  {
+   "name": "peak_memory_row_present",
+   "verdict": "PASS"
+  },
+  {
+   "name": "f2mul_verified",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dependencies_empty",
+   "verdict": "PASS"
+  }
+ ],
+ "all_pass": true,
+ "verdict": "PASS"
+}

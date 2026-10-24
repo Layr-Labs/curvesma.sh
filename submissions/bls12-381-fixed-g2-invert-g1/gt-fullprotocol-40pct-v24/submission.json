@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "title": "Full metered protocol: all charges, two groups, unclipped CP-95, measured merge law at Rg=65536; claim 126.5009",
+ "claims": [
+  {
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT, returning [x]P0 verified by e(P,Q)=z. The protocol is METER-FIRST and the census is the protocol: one global counter in instructions is checked before every action (table-entry build, worker start exponentiation, walk step, per-step lookup, record write, replay, candidate verification) and the worker abandons when the action does not fit. The ledger is sum(rows)==W with W exact and no residual row. Step price uses the MEASURED multiply fraction 0.63643 over 5760000 real walk steps under the shipped transition with the full Rg=65536 multiplier index, so a guard-converted multiply is priced as a squaring inside the mixture. Success is measured by running the full protocol on 512 fresh fixtures x one trial at the shipped shape S/sqrt(N)=1.45, on two different groups (rp=521041 and rp=10566001, sqrt(N) 208.37 vs 938.35), counting solves before meter exhaustion: CP-95 lower endpoints 0.4x and 0.5x with an UNCLIPPED Clopper-Pearson helper (bracket (0,1); planted control 512/512 returns 0.05^(1/512) to 1e-18, where the v23 helper returned 0.99). The merge law is measured at Rg=65536 to gap 1000 over 400 pairs: survival 0.995 at gap 1 decaying to 0.4875 at gap 1000, fitted rho=0.99932 per step; the equal-history control and the independent-history arm coincide, so the decay is the kappa offset (2j) and not history divergence, and rho^(2^100)=0, which is why the shipped record horizon is one step (one record per visited class) and the second bridge factor is MEASURED at that horizon. Peak memory is itemised. Claim 126.5009 in C=20000 units covers W=2402388605500670672558227323027449076343143 instructions.",
+   "score": {
+    "numerator": "1265009",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census24b.json",
+    "evidence/cpctl24.json",
+    "evidence/kernel_verify24.json",
+    "evidence/ledger24.json",
+    "evidence/scan24.json",
+    "evidence/scan_control24.json",
+    "evidence/survival24.json",
+    "public-note.md",
+    "scripts/census23.py",
+    "scripts/emit24.py",
+    "scripts/gen24.py",
+    "scripts/ir23/consts.c",
+    "scripts/ir23/count_ir.py",
+    "scripts/ir23/driver.c",
+    "scripts/ir23/kernels.c",
+    "scripts/ir23/verify23.py",
+    "scripts/protocol24.py",
+    "scripts/toy.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

@@ -1,0 +1,142 @@
+{
+ "mode": "ledger24-full-meter",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers, every visited class recorded",
+  "workers": 1024,
+  "trail_shape": "2^100-step segments (v23 shape)",
+  "steps": "95803668470929860550224427498997735090",
+  "steps_log2": 126.1714,
+  "S_over_sqrtN": "125/100 (measured shape of the census)",
+  "dpbits": 0,
+  "dpbits_note": "v23 shipped one record per 2^100-step trail; the merge-stay law measured here makes any spacing > 1 step unable to convert a coalescence into a record match, so v24 ships one record per VISITED CLASS and the required stay-merge horizon is 1 step.",
+  "meter": "one global counter in instructions; every action charges it; the worker asks before acting and abandons. Ledger closes at sum(rows) == W with W exact (no residual row)."
+ },
+ "rows_ir": {
+  "walk_steps": "2387060018545321894870191414626597558302167",
+  "per_step_lookup": "9197152173209266612821545039903782568640",
+  "record_writes": "6131434782139511075214363359935855045760",
+  "table_build_R65536": "1004011520000",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "24018000"
+ },
+ "row_derivations": {
+  "walk_steps": "steps x STEP; STEP = f_mul x MUL_CHARGE + (1-f_mul) x SQR_CHARGE, f_mul = measured 0.6364326388888889 from scan24.json:multiply/steps",
+  "per_step_lookup": "steps x LOOKUP; LOOKUP = 96 Ir = 5 limb-mults (20) + 2 probes (32) + 2x64-bit compare (8) + hash tail (36): counted row in scripts/ir24/lookup_count.c",
+  "record_writes": "steps x 64 Ir (key 6 words + A + D words, 8 stores of 8 B)",
+  "table_build_R65536": "Rg x ENTRY_IR; ENTRY_IR = 2 x 383 dense muls (two 255-bit exponentiations g^a, z^b) at 20000",
+  "worker_starts_1024": "1024 x 383 dense muls (one 2-scalar start per worker)",
+  "code_and_advice": "2^20 Ir",
+  "candidate_verification": "1200 dense Fp12 muls (pairing) + one G1 scalar action"
+ },
+ "charges": {
+  "MUL_CHARGE": 22433,
+  "SQR_CHARGE": 29263,
+  "STEP": "3587927771/144000",
+  "step_float": 24916.16507638889,
+  "f_mul_measured": 0.6364326388888889,
+  "guard_per_step_measured": 0.0009465277777777778
+ },
+ "trap": {
+  "control_admits": {
+   "4": 0,
+   "6": 0,
+   "8": 0
+  },
+  "control_steps": 960000,
+  "rate": "1/320000",
+  "delay_mean_measured": "1",
+  "waste_steps": "9580366847092986055022442749899773509/32000",
+  "waste_ir": 7459562557954130921469348170708117369,
+  "model": "waste = rate x E[delay] x STEP. Admission alone is not waste: the delay is the measured number of steps from admission to the stall-abort (32 consecutive squarings), control arm Rg=4096 depth=1 where the family admits."
+ },
+ "success": {
+  "census_scale_a": {
+   "rp": 521041,
+   "success": 266,
+   "trials": 512,
+   "cp95": "0.4822215394811468769376006093807518482208251953125",
+   "S_over_sqrtN": 1.4493
+  },
+  "census_scale_b": {
+   "rp": 10566001,
+   "success": 272,
+   "trials": 512,
+   "cp95": "0.4939329831070811138715725974179804325103759765625",
+   "S_over_sqrtN": 1.4494
+  },
+  "stay_merged_gap1": "199/200",
+  "rho": 0.9993228254209907,
+  "rho_band_factor": 1.358245962501007,
+  "product": "14153837126519/29498810757200",
+  "floor": "0.39",
+  "bridge": "P(solve) = CP95(census at the shipped shape) x P(stay merged for the record horizon). The horizon is 1 step because every visited class is recorded, so the second factor is MEASURED at exactly that gap (0.995 at Rg=65536), not extrapolated. rho^(production gap) is NOT used: the fitted rho=0.999323 with band 1.358 holds only for gaps <= 1000 (survival 0.4875 at gap 1000), and any protocol whose record horizon exceeded that band would have to multiply by a collapsing factor. That is the v23 defect, stated here as the reason dpbits=0 ships."
+ },
+ "fidelity_table": [
+  {
+   "parameter": "group order rp",
+   "shipped": "2^255",
+   "fixture_a": "521041",
+   "fixture_b": "10566001",
+   "status": "DEVIATES (enumeration; the two scales differ so scaling is tested across groups, not resources)"
+  },
+  {
+   "parameter": "Rg (guard + multiplier index)",
+   "shipped": "65536",
+   "fixture": "65536",
+   "status": "MATCHES (full table, 65536 distinct entries)"
+  },
+  {
+   "parameter": "guard depth",
+   "shipped": "5",
+   "fixture": "5",
+   "status": "MATCHES"
+  },
+  {
+   "parameter": "record density",
+   "shipped": "1 per step",
+   "fixture": "1 per step",
+   "status": "MATCHES (dpbits=0 both)"
+  },
+  {
+   "parameter": "S/sqrt(N)",
+   "shipped": "1.25",
+   "fixture": "1.25",
+   "status": "MATCHES"
+  },
+  {
+   "parameter": "workers",
+   "shipped": "1024",
+   "fixture": "8",
+   "status": "DEVIATES: worker count only splits the same step budget; both self- and cross-worker collisions solve"
+  },
+  {
+   "parameter": "table build charge",
+   "shipped": "Rg x ENTRY_IR = 2^40 Ir",
+   "fixture": "proportional share 2^-99 of the cap",
+   "status": "DEVIATES: the table cost is group-size-independent (2^40 Ir), which is 2^99x the whole fixture budget; charging it at face value would make the fixture a measurement of the table build. The ledger charges it in full."
+  },
+  {
+   "parameter": "verification",
+   "shipped": "one-shot 1200 C units",
+   "fixture": "charged in the ledger, not in the meter",
+   "status": "DEVIATES: 40x the fixture budget, 2^-100 of production W"
+  }
+ ],
+ "peak_memory": {
+  "records_pool_bytes": "6131434782139511075214363359935855045760",
+  "table_bytes": "6291456",
+  "worker_states_bytes": "262144",
+  "scan_history_bytes": "40960",
+  "code_bytes": "1048576",
+  "peak_total_bytes": "6131434782139511075214363359935862688896",
+  "peak_total_log2": 132.171,
+  "statement": "peak = records x 64 B + Rg x 96 B + 1024 x 256 B + 1024 x depth x 8 B + code, summed at protocol peak. This is the time-memory tradeoff: with w records the required step count is N/w, so 2^133 B is the price of the 2^126.0-step schedule; a 2^46 B pool (2^40 records) needs 2^211.3 steps. Memory is unscored but stated."
+ },
+ "claim": 126.5009,
+ "W_ir": "2402388605500670672558227323027449076343143",
+ "W_log2": 140.7854,
+ "cap_units": "120119430275033533627911366151372453818",
+ "C_unit": 20000,
+ "sum_rows_equals_W": true
+}

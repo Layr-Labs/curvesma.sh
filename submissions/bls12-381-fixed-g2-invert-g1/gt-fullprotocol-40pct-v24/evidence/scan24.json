@@ -1,0 +1,51 @@
+{
+ "mode": "scan",
+ "Rg": 65536,
+ "depth": 5,
+ "q": 523,
+ "rp": 521041,
+ "segments": 48,
+ "steps_per_segment": 120000,
+ "steps": 5760000,
+ "multiply": 3665852,
+ "multiply_per_step": 0.6364326388888889,
+ "branch_sqr": 2088696,
+ "guard_conversions": 5452,
+ "guard_per_step": 0.0009465277777777778,
+ "guard_per_multiply": 0.0014872395284916031,
+ "word_alternating": {
+  "4": 0,
+  "6": 0,
+  "8": 0
+ },
+ "word_admit": {
+  "4": 0,
+  "6": 0,
+  "8": 0
+ },
+ "admit_per_step": {
+  "4": 0.0,
+  "6": 0.0,
+  "8": 0.0
+ },
+ "abandon_delays": [],
+ "abandon_events": 0,
+ "abandon_delay_mean": null,
+ "abandon_delay_max": null,
+ "distinct_slots_per_segment": 247.0625,
+ "kappa_histogram": [
+  476909,
+  501029,
+  482708,
+  485352,
+  461694,
+  497447,
+  475570,
+  481261,
+  481559,
+  460444,
+  474587,
+  481440
+ ],
+ "kappa_max_rel_dev": 0.043810416666666664
+}

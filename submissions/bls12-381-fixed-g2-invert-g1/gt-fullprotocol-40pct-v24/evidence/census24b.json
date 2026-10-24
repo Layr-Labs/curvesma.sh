@@ -1,0 +1,95 @@
+{
+ "mode": "census",
+ "config": {
+  "groups": [
+   {
+    "q": 523,
+    "rp": 521041,
+    "Rg": 65536,
+    "dpbits": 0,
+    "depth": 5,
+    "workers": 8,
+    "ratio": 1.45
+   },
+   {
+    "q": 547,
+    "rp": 10566001,
+    "Rg": 65536,
+    "dpbits": 0,
+    "depth": 5,
+    "workers": 8,
+    "ratio": 1.45
+   }
+  ],
+  "fixtures": 512,
+  "procs": 24,
+  "depth": 5,
+  "fixed_frac": 1e-09,
+  "out": "census24b.json"
+ },
+ "trials_per_fixture": 1,
+ "independence": "fresh target z, fresh g, fresh table, fresh coins per fixture; one Bernoulli per fixture",
+ "scales": [
+  {
+   "q": 523,
+   "rp": 521041,
+   "N": 43420,
+   "Rg": 65536,
+   "depth": 5,
+   "dpbits": 0,
+   "workers": 8,
+   "trail_cap": 38,
+   "sqrtN": 208.37,
+   "steps_budget": 302,
+   "S_over_sqrtN": 1.4493,
+   "fixtures": 512,
+   "success": 266,
+   "rate": 0.51953125,
+   "cp95_lower": "0.4822215394811468769376006093807518482208251953125",
+   "steps_executed": 112345,
+   "records": 112345,
+   "matches": 3634,
+   "mean_ir_used": 5792835,
+   "exhausted": 219,
+   "rows_ir": {
+    "fixed": 0,
+    "walk": 2800975705,
+    "record": 7190080,
+    "lookup": 10785120,
+    "replay": 146981016,
+    "verify": 0
+   }
+  },
+  {
+   "q": 547,
+   "rp": 10566001,
+   "N": 880500,
+   "Rg": 65536,
+   "depth": 5,
+   "dpbits": 0,
+   "workers": 8,
+   "trail_cap": 170,
+   "sqrtN": 938.35,
+   "steps_budget": 1360,
+   "S_over_sqrtN": 1.4494,
+   "fixtures": 512,
+   "success": 272,
+   "rate": 0.53125,
+   "cp95_lower": "0.4939329831070811138715725974179804325103759765625",
+   "steps_executed": 496639,
+   "records": 496639,
+   "matches": 58644,
+   "mean_ir_used": 25926990,
+   "exhausted": 206,
+   "rows_ir": {
+    "fixed": 0,
+    "walk": 12466129517,
+    "record": 31784896,
+    "lookup": 47677344,
+    "replay": 729027634,
+    "verify": 0
+   }
+  }
+ ],
+ "seconds": 161.7
+}

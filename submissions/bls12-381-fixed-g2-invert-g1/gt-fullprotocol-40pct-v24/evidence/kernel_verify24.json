@@ -1,0 +1,13 @@
+{
+ "kernels": {
+  "f2mul": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "mutation_mismatches": 10000
+  },
+  "cyclotomic_sqr": {
+   "vectors": 10000,
+   "mismatches": 10000
+  }
+ }
+}
