@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: STNFS in F_{p^12}, sigma-symmetric 12-dim ARCH-D sieve, injective radix-4097 slab ids, rectangular block-Wiedemann LA, descent terminating inside the factor base",
+  "claims": [
+    {
+      "statement": "For every production instance (uniform nonidentity Q in G2, uniform z in GT, including z=1), the algorithm in proof.md returns P in G1 with e(P,Q)=z (P=infinity exactly for z=1) with success probability at least 0.39 over the uniform challenge and the algorithm's coins (>= 0.999997 under the stated heuristics). The attack solves the GT discrete logarithm of z base g=e(P0,Q) (a route the track rules explicitly admit) with a Special Tower Number Field Sieve in F_{p^12}: tower h = y^6+y^3+y^2-y-1, f = x^12-2y x^10+2y^3 x^6+y^5 x^2+(-y^3-y^2+y+1), g = x^2+|u|y (resultant identity checked exactly in evidence.py part [0]); automorphism x -> -x (aut = 2). Relation collection over the 12-dimensional (a,b) space restricted to a SIGMA-SYMMETRIC yield-weighted covariance ellipsoid of volume fraction 1/32 (refit on a full-box 500k exact-norm pool with the a/b cross blocks zeroed, so the conjugate-ideal walk credit is exact; bit-exact sigma-invariance verified on every recomputed held-out sample, part [2b]); yield measured on the disjoint 400k held-out pool (in-box mass 0.02813); every sieved point of the ellipsoid charged, yield credited only from the in-box part; exact B-smoothness, no large primes. ARCH-D architecture: small ideals sieved per 3-dim slab (true slab count from the ellipsoid matrix, mean slice 1.4183 A^3), large ideals walked once per conjugate pair with each hit canonicalised and routed to the slab owner. C_HIT = 170 retired instructions per large-ideal hit, measured on archd_hit2.c with full production addressing; the production slab id packs 9 signed coordinates in balanced radix 4097 (digits in [-2048,2048], 108-bit id in two uint64 words), injective on the measured production bound |v_i| <= 1699.1 at A = 2^10.00 (part [2c] reproduces the rejected radix-1497 alias and finds zero collisions at 4097; the kernel ships a packcheck mode), with exact in-slab strides wa = 2B+1, wab = wa^2. Smaller sieve constants are v1 static counts padded 1.25x (C_UPD 17.5, C_SET 176, C_SCAN 12.5, C_REP 7.5). Operating point A = 2^10.00, B = 2^63.75, EXCESS = 2 collected relations per factor-base element (0.25-bit yield margin). Linear algebra charges the RAW COLLECTED RECTANGULAR system with NO filtering credit: m = EXCESS*U = 2U relation rows, N = U + 41 columns (U = Li(B) ideals plus 41 Schirokauer-map columns = 35 f-side + 6 g-side, the unit ranks r1+r2-1 of the two absolute fields), rectangular block Wiedemann at ~3N matrix-vector equivalents, each product touching m rows of w_v ~ 28.6 small valuation entries at 35 instr/entry (shipped sign-split la_mac kernel, 33 retired) plus 41 full-size F_r entries at 147 instr/entry (shipped la_big kernel, 146.9 retired, exact against big integers); w_v is derived from exact per-prime ideal counts times the Dickman conditioning identity (validated at toy scale, part [5]). Zero-column (unrepresented) ideals are ~5.6% of the factor base under the per-ideal Poisson model (part [6b]), deleted from the system; the kernel restricted to represented columns is 1-dimensional under the stated NFS rank heuristic (with the 41 SM columns supplying the unit-rank correction), so every represented log is recovered up to one global additive scalar that cancels in log(z)/log(g); descent terminal candidates avoid the unrepresented ideals (charged +0.35 bit). Individual logarithms: the boot is the subfield-coset lattice L_z = {(a,b) in Z^12 : theta-component of (a-b*theta) z^-1 = 0} (det = p^6 verified exactly from the shipped LLL basis, part [7a]), LLL once per boot (charged 2^25 instructions), candidates sieved at the main sieve's own per-point cost (359 instr) with ECM on survivors; boot g-side norms MEASURED on random targets (mean log2 N_g 2661-2723 by radius; embedded quantiles re-verified in-sandbox, part [7b]); the special-q tree terminates at B0 = 2^63.5, strictly BELOW the collected factor-base bound B = 2^63.75, so every terminal factor is a factor-base column (checked at run time, part [6c]); best chain [180, 150, 110, 80, 70, 64] at 2^90.55 per log, two logs 2^91.55, metered cap 2^110 (Markov abort <= 3e-6). Total work W <= 2^119.649161 target-group-operation equivalents (1 unit = one dense Fp12 multiplication = 20,000 AArch64 instructions), the full-ledger logarithm rounded up at 6 decimals: relation collection 2^119.208 + rectangular linear algebra 2^117.717 (= 2^119.647363 together) + descent cap 2^110 + Schirokauer maps 2^83 + factor-base construction 2^68 + misc 2^60 + verification 2^11; evidence.py prints total_log2W_full_ledger = 119.649161. No preprocessing or advice beyond the charged work. Peak memory about 2^126.94 bytes over ~2^62.94 nodes (reported, not scored), true simultaneous bucket storage. Comparison: orbit-12 rho step floor 2^125.96, best public claim 125.73, best NFS claim 123.98. Record-calibrated merge credit (dgp2021 merge phase; matrix/FB band 0.099-0.138) is reported as an UNCLAIMED sensitivity (118.49-117.76), not taken. All heuristics are disclosed in proof.md section 12 with support, sensitivity and limitations: H1 Murphy/Dickman smoothness with GS21 alphas; H1' yield margin; H2 measured region capture plus bit-exact sigma-invariance plus the injectivity check; H3' rectangular matrix (BW factor 3N, measured w_v identity, per-ideal Poisson zero-column estimate and the standard rank heuristic); H4 kernel constants (dominant ones retired-measured on shipped correctness-checked kernels; full-size orchestration never executed, as for every NFS claim at this size); H5 measured boot lattice plus a modelled tree with a terminal bound inside the factor base and 18.4 bits of cap headroom; H6 pairing transfer. This is an analytic cost claim supported by exact-norm simulation, exact boot-lattice measurements, and retired-instruction kernel counts, not a full-size execution.",
+      "score": {
+        "numerator": "119649161",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One stdlib-only run. (0) Exact check Res_y(h, Res_x(f,g)) = 0 mod p. (1) Dickman rho self-test. (2) Held-out verification: exact norms of the first `samples` candidates recomputed from their seeds, embedded inside-set confirmed, bit-exact sigma-invariance of the region quad form on every sample. (2c) Production slab-id injectivity: coordinate bound from the embedded covariance, reproduction of the rejected radix-1497 alias, random+boundary collision test at radix 4097, exact-stride in-slab test. (3) Slab geometry of the sigma-symmetric ellipsoid. (4) Joint (A,B) optimizer: rectangular-system LA (m = 2U rows x N = U+41 columns, no filtering credit), EXCESS=2, 0.25-bit margin; C_HIT sweep and unclaimed merge sensitivities. (4b) True peak bucket memory. (5) Toy exact-smoothness AND conditional-factor-count validation of the Dickman conditioning identity behind w_v. (6) Exact degree-1 ideal statistics of the real (h, f, g) for p <= 2^12 recomputed from scratch. (6b) Poisson zero-column tail. (6c) Assert descent terminal B0 < factor-base B. (7) Boot lattice: exact subfield-condition membership of every shipped LLL basis vector, |det| = p^6 exact check, ball enumeration with exact norms vs embedded quantiles, count volume law, then the descent chain model and the Markov bound under the 2^110 meter. (8) la_mac inner loop re-counted from la_mac.s; la_big.s instruction census. Prints the full ledger total_log2W_full_ledger.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 2000,
+            "maximum": 20000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 4000,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
