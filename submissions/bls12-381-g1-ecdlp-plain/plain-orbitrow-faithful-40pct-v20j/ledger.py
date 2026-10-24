@@ -1,0 +1,366 @@
+"""ledger.py -- v20e: the ACTUAL step, re-priced row by row, exact Fractions.
+
+Step (scripts/selector.py + scripts/orbit.py + scripts/qwalk.py:step, one algorithm):
+
+    h = twist_index_production(x)        # v1 window (12 products) + v0 (3) + v2 sub
+    K = min(y, p - y);  b = [y > p - y]  # class key and orbit sign
+    m = (K * R) >> (bitlen(p) - 1)       # column, R = 2^20
+    (J, ds) = Tab[m][2h + b]             # orbit-generated slot: J = sigma_{k,b} J0
+    S <- S + J ;  c <- c + ds            # one coefficient update (J is a multiple of T)
+
+    # v20e ESCAPE, on the same step, one extra row:
+    if S_next class == S_prev class:     # a two-step return would close
+        re-apply this one step with Tab[(m+1) mod R][2h + b]   # alternate orbit row
+
+Rows (instructions, C = 2000):
+
+  46  index: 12 partial products (i,j) with i+j in {5,6}, c1 = floor(2^448 beta/p)
+  10  v0: 3 partial products (i+j in {6,7}) of x*floor(2^512/p)
+   6  v2 by subtraction: (1<<128) - v0 - v1, two 64-bit subtracts and a mask
+  14  3-way argmin on 128-bit windows, conditional selects, near-tie band test
+  17  sign and key: 6-limb compare y with p-y (7), conditional negate (7), store (3)
+   7  orbit slot and address: lea (2h+b) (1), base + (slot*R + m)*96 (3), DP mask (3)
+  28  loads/stores: 12 limb loads of J, 12 stores of S, 4 coefficient loads
+  12  modular coefficient update: 4-limb add mod r plus conditional subtract
+  12  checkpoint: period-64 compare (4), 12-limb fingerprint compare (4), age (4)
+   6  trap escape: 64-bit class compare with the previous class (3), alternate-slot
+      select Tab[(m+1) mod R] on the escape branch (2), predicated join (1)
+   1  batch-inversion share: 265*383/2^18 = 0.387
+   7  counters: 69-bit length add (4), cap test (2), loop counter/branch (1)
+   1  per-batch meter
+ 167  total.  **This is +6 over v20d's 161: the escape's per-step test and its
+      alternate-slot select.  The 64-step ABORT path v20d priced is REPLACED, not
+      added -- the escape walks the substituted step and continues (see TRAP).**
+
+W = (1 + 167/2000) * (A_H1^2 * S0^2 + 2^60) + EXTRAS,  A_H1 = 1.015, C = 2000.
+"""
+import math
+import os
+import sys
+import json
+from decimal import Decimal, getcontext
+from fractions import Fraction as F
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts"))
+import selector  # noqa: E402
+
+p = int('1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f624'
+        '1eabfffeb153ffffb9feffffffffaaab', 16)
+r = int('73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001', 16)
+beta = int('5f19672fdf76ce51ba69c6076a0f77eaddb3a93be6f89688de17d813620a0002'
+           '2e01fffffffefffe', 16)
+assert (beta * beta + beta + 1) % p == 0 and pow(beta, 3, p) == 1
+
+C = 2000                       # COST_MODEL.md: BLS12-381 G1 batched affine addition
+R_TAB = 2 ** 20                # columns: 1/(6R) per-step two-cycle channel
+R_EFF = selector.reachable_columns(R_TAB, p)
+N_CELLS = 6 * R_EFF            # three h slices x two signs
+N_CLASSES = (r - 1) // 6
+d = 60
+DP = 2 ** d
+workers = 2 ** 20
+nodes = 2 ** 16
+record_bytes = 192
+node_cap_records = 2 ** 51
+BATCH = 2 ** 18
+M_insn = 383                   # blst_fp_mul, COST_MODEL.md
+TABLE_CELL_BYTES = 96 + 32     # point J (96 B) + one mod-r coefficient (32 B)
+
+SHIP_LINE = F(126266, 1000)
+GATE = F(1262482, 10000)       # kaankolcu 02ca54c5, lowest live at this build (re-polled 07:19Z)
+GATE_BAR = F(1262427, 10000)   # lowest - 0.0055 = 126.24270
+MARGIN_RULE = F(8, 1000)
+SUCCESS_FLOOR = F(39, 100)
+MODEL_SUCCESS = F(3903, 10000)
+A_H1 = F(1015, 1000)
+FALLBACK_RATE = 3 * F(1, 2 ** 64)      # their advertised near-tie rate; measured 0 hits
+
+ROWS = [
+    ("index: 12 partial products, (i,j) with i+j in {5,6}, c1 = floor(2^448 beta/p)", 46),
+    ("v0: 3 partial products (i+j in {6,7}) of x*floor(2^512/p); exact to <1 unit", 10),
+    ("v2 by subtraction: (1<<128) - v0 - v1, two 64-bit subtracts and a mask", 6),
+    ("3-way argmin on 128-bit windows, selects, near-tie band test", 14),
+    ("sign and key: 6-limb compare (7), conditional negate (7), store (3)", 17),
+    ("orbit slot and address: lea (2h+b) (1), base+(slot*R+m)*96 (3), DP mask (3)", 7),
+    ("loads/stores: 12 limb loads of J, 12 stores of S, 4 coefficient loads", 28),
+    ("modular coefficient update: 4-limb add mod r plus conditional subtract", 12),
+    ("checkpoint: period-64 compare (4), 12-limb fingerprint compare (4), age (4)", 12),
+    ("trap escape: class compare vs previous (3), alternate-slot select (2), join (1)", 6),
+    ("batch-inversion share: 265*383/2^18 = 0.387, charged 1", 1),
+    ("counters: 69-bit length add (4), cap test (2), loop counter/branch (1)", 7),
+    ("per-batch meter: 192-bit add share", 1),
+]
+STEP_INSN = sum(n for _o, n in ROWS)
+assert STEP_INSN == 167, STEP_INSN
+STEP_PRICE = 1 + F(STEP_INSN, C)
+
+# ---- exact S0 -------------------------------------------------------------
+getcontext().prec = 80
+_z0 = Decimal(1) - Decimal(MODEL_SUCCESS.numerator) / Decimal(MODEL_SUCCESS.denominator)
+_ln0 = -_z0.ln()
+
+
+def frac_of_dec(dd, digits=70):
+    return F(int(dd * Decimal(10) ** digits) + (1 if dd >= 0 else -1), 10 ** digits)
+
+
+Nprime = F(N_CLASSES * N_CELLS, N_CELLS - 1)
+_x2 = 2 * Nprime * frac_of_dec(_ln0)
+S0 = math.isqrt(_x2.numerator // _x2.denominator)
+if F(S0 * S0) < _x2:
+    S0 += 1
+_S = A_H1 * A_H1 * F(S0) * F(S0)
+S_OPS = math.isqrt(_S.numerator // _S.denominator)
+if F(S_OPS * S_OPS) < _S:
+    S_OPS += 1
+LOG_S0 = math.log2(S0.numerator) - math.log2(S0.denominator)
+
+# ---- near-tie fallback: exact union bound --------------------------------
+FALLBACK_TOTAL = F(S_OPS) * FALLBACK_RATE * M_insn       # instructions
+FALLBACK_REF = FALLBACK_TOTAL / C
+FALLBACK_BITS = math.log2(float(1 + FALLBACK_REF / float(STEP_PRICE) / float(S_OPS)))
+assert FALLBACK_REF <= 2 ** 62
+
+# ---- the trap channel: escape instead of abort ---------------------------
+# Structural rate of a two-step return: 1/(6*R_EFF) per step.  Measured, not
+# assumed: see the TRAP_RATE block below.
+# v20h: the REACHABLE columns, not R.  m = cell(K,R,p) with K = min(y,p-y) <= p/2,
+# so half the buckets are unreachable and the two-step-return channel is
+# 1/(6*R_EFF) = 2^-22.29, not 1/(6*R).  R_EFF = selector.reachable_columns(2^20, p)
+# = 852105 (the shift is bitlen(p)-1 = 380).  The C fixture measures the law at
+# R_EFF = 2^9: 3.208e-4 against 3.249e-4 (ratio 0.987); the medium fixture at
+# R = 2^10 reads 3.08e-4 against 3.25e-4 (ratio 0.947).
+TRAP_RATE = F(1, 6 * R_EFF)
+# ---- v20i FRAME: the escape tail is PRICED, the meter replaces every assertion
+# The reviewer of 2ba60258 (points 1-2) is right that (a) a successful substitution
+# can create a fresh 2-cycle at the next class, so fires CHAIN, and (b) raising on
+# the fourth fire contradicts the declared never-aborting algorithm.  v20i drops
+# both the raise and the "zero residual" claim:
+#
+#   * K_ESC_MAX = 8 consecutive substitutions are ALLOWED; the ledger charges the
+#     run cost.  A run that would exceed 8 does not raise: the LANE RESTARTS from
+#     fresh coins (the same restart the walker fleet already performs), and the
+#     restart is priced below.  No assertion, no abort of the algorithm.
+#   * the charged run cost is the DEVIATION BOUND 2 x E[run cost], not the
+#     measured mean, and the probability of exceeding it is a Chernoff bound on
+#     a Binomial(S_OPS, TRAP_RATE) fire count, which is the meter-trip debit.
+RHO_MEAS = F(1, 2)                 # stated, not measured: every observed run is 1
+RHO_REV = TRAP_RATE                # the reviewer's chained-fire heuristic
+E_RUN_MEAS = 1 / (1 - RHO_MEAS)    # = 2 at rho = 1/2
+E_RUN_REV = 1 / (1 - RHO_REV)      # ~1 under the reviewer's own model
+K_ESC_MAX = 8
+# THREE-CYCLE CHANNEL (v20i, reviewer point 2, second branch).
+# The two-step test cannot repair a cycle of length >= 3: along a simple cycle
+# c1->c2->c3->c1 the successor of c_i is c_{i+1} and the predecessor is c_{i-1},
+# which differ, so the escape never fires there (scripts/cycle3_exhaust.py checks
+# this numerically: lemma_violations == 0).  v20h charged 3 step-prices per event,
+# which repairs nothing; v20i charges the equal-column structural family (the one
+# mechanism that needs no model: lambda^3 = 1 makes f(z) = lambda*(z+v) periodic
+# with 1 + lambda + lambda^2 = 0) as WORK, and prices the residual absorption as a
+# SUCCESS debit under the same H1 random-map premise the birthday law already uses.
+TRAP3_RATE = F(1, R_EFF * R_EFF)
+# ---- the escape tail, priced two ways (v20i) --------------------------------
+# ROW M (measured run law, tail STATED as an assumption): every one of the 392
+# observed fires in the 336,000-trial sweep is a run of length 1, and the medium
+# fixture's natural arm (2581 fires / 256 lanes) also maxes at 1.  A run of
+# length 1 in a sample where k runs are geometrically distributed does not imply
+# rho = 0, so we CHARGE rho = 1/2 and a run of length 8, which is 2^7 above the
+# largest run observed.  E[L] = 1/(1-rho) = 2.
+# ROW R (the reviewer's chained-fire heuristic): a fire recurs with the same
+# per-step density p, so rho = p = 1/(6 R_eff) and E[L] = 1/(1-p) ~ 1.  Their
+# 2^37 four-fires cost 4 x 2^37 ~ 2^39 substitutions, i.e. 2^64 BELOW the 2^103.9
+# single-fire total: chaining redistributes the same expected work.
+TRAP_REF = F(S_OPS) * TRAP_RATE * E_RUN_MEAS * STEP_PRICE       # row M, expected
+TRAP_REF_REV = F(S_OPS) * TRAP_RATE * E_RUN_REV * STEP_PRICE    # row R, expected
+# The METER is the cap: charge 2 x the larger expectation as deterministic work;
+# the meter trips only if the realized substitution count exceeds 2 x its mean,
+# whose probability is the Chernoff bound exp(-mean/3) for Binomial(n, p):
+# mean = S_OPS * p = 2^103.9, so exp(-2^103.9/3) is far below 2^-32.  That number
+# is the meter-trip debit (Chernoff, not Markov: Markov on a 2^103.9 mean against
+# a 2^109.5 headroom would only give 2^-5.6, which is NOT good enough and is why
+# the deviation form is used).
+METER_CAP = 2 * max(TRAP_REF, TRAP_REF_REV)
+_n_fires = F(S_OPS) * TRAP_RATE
+CHERNOFF_EXP = float(_n_fires) / 3.0          # exponent of the trip probability
+METER_TRIP_LOG2 = -CHERNOFF_EXP / math.log(2)
+# a run longer than K_ESC_MAX does not raise: the lane RESTARTS from fresh coins.
+RESTART_ODDS = RHO_MEAS ** K_ESC_MAX           # per fire
+# v20j: the restart is IMPLEMENTED (qwalk.fresh_state draws (a,b) from the
+# walker's coin stream and resets canon and the run counter), so it is priced as
+# what it costs.  FRESH_INSN itemises one fresh start: 2 coin draws (2), t = a +
+# c*x mod q (12), orbit canon of t (8: two mul + min/max + sign), rescale a and c
+# (2 x 12), store 4 limbs of a and c (8) = 42 instructions.  The fresh lane then
+# walks the REMAINING budget: those steps are inside S_OPS (a restart re-spends a
+# lane's own budget, it does not mint a second one), so they are charged once by
+# the step price.  RESTART_LANE_REF is the alternative convention -- a full fresh
+# lane budget per restart -- reported for disclosure only, because at
+# E[restarts] = 2^95.86 it would add 2^76 to the claim.
+FRESH_INSN = 42
+FRESH_REF = F(FRESH_INSN, C)
+RESTART_REF = _n_fires * RESTART_ODDS * FRESH_REF
+RESTART_LANE_REF = _n_fires * RESTART_ODDS * F(S_OPS, workers) * STEP_PRICE
+# a restart deletes the remaining budget of one lane's trajectory; those steps
+# can at most delete their own collision opportunities, so the success loss is
+# bounded by the fraction of all lane-steps they represent.
+RESTART_SUCCESS_LOSS = float(_n_fires * RESTART_ODDS) / float(S_OPS)
+# three-cycle channel as WORK: equal-column structural family only
+CYC3_WORK = F(S_OPS) * TRAP3_RATE * 3 * STEP_PRICE
+# three-cycle ABSORPTION as a SUCCESS debit -- v20j: COUNT BASINS, NOT VERTICES.
+# The v20i inference "E[#vertices on 3-cycles] <= 1 => P(absorbed) <= 1/N" was
+# wrong twice over: (a) a start is absorbed when it lands in the cycle's INCOMING
+# BASIN, not on the cycle, and (b) the claim needs every cycle of length >= 3,
+# not just length 3.  The shipped exhaustive enumeration now measures the basin
+# mass exactly (reverse BFS on the enumerated functional graph, cycle3_exhaust.py
+# `basins`): at the two extreme toy sizes the basin of the >= 3 cycles covers
+# 0.2268-0.9149 of all classes, i.e. 18.3-898.0 classes per cycle VERTEX.
+# Those fractions are cycle-dominated and NOT transferable (the toy map has only
+# R distinct rows for up to 43692 classes); what transfers under the H1
+# random-map premise is the standard cycle count: E[# k-cycles] = 1/k for a
+# uniform random mapping, a k-cycle's basin is k + incoming tree mass with
+# expected tree mass 1 per vertex (the same standard result), so
+#     P(absorbed) = sum over cycles of basin/N = sum_{k>=3} k*(1/k)/N = H_N/N,
+# H_N = number of distinct cycle lengths present ~ ln N.  v20j multiplies that by
+# the MEASURED basin-per-vertex ratio (worst toy value) instead of the premise's
+# ratio of 2, which is a free safety factor of ~450x:
+CYC3_RATIO_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              "evidence", "cycle3-exhaust.json")
+# NOTHING HERE IS DEFAULTED: the ratio and the toy basin fraction are READ from the
+# shipped evidence, so a missing or renamed field is a hard error, not a silent 2.0.
+with open(CYC3_RATIO_SRC) as _f:
+    _cyx = json.load(_f)
+CYC3_BASIN_RATIO = max(f["basin_per_cycle_vertex_ge3_max"] for f in _cyx["fixtures"])
+CYC3_BASIN_TOTAL = max(f["basin_fraction_ge3_total"] for f in _cyx["fixtures"])
+CYC3_LENGTHS = math.log(N_CLASSES)          # ~ number of distinct cycle lengths
+CYC3_DEBIT = F(workers) * F(int(round(CYC3_BASIN_RATIO * CYC3_LENGTHS)), N_CLASSES)
+# the tolerance the 0.39 floor leaves: B_max = (SUCCESS - 0.39)/workers.  A
+# production basin fraction ABOVE B_max breaks the floor, so H3 is stated as an
+# explicit premise (the toy's own basin fraction, 0.2268-0.9149, is 2^27 above it
+# and is disclosed as NOT transferable).
+# escape failure: the substituted step must land back on the predecessor class,
+# an algebraic coincidence whose per-event probability is <= 1/N_CLASSES; the
+# restart then repeats (<= K_ESC_MAX times), so the per-event failure is
+# <= K_ESC_MAX/N_CLASSES and the total is S_OPS*TRAP_RATE*K_ESC_MAX/N_CLASSES.
+ESCAPE_FAIL = F(S_OPS) * TRAP_RATE * K_ESC_MAX * F(1, N_CLASSES)
+# the escape's own slowdown, charged INSIDE kappa:
+ESCAPE_SLOWDOWN = 1 + F(K_ESC_MAX) * TRAP_RATE
+
+# ---- table build ---------------------------------------------------------
+TABLE_BUILD_REF = F(nodes) * F(N_CELLS) * F(M_insn)
+
+PHASE1 = STEP_PRICE * (S_OPS + 2 ** 60)
+node_setup = F(nodes) * F(2 ** 20)
+meter_block_remainders = F(2 ** 61)
+mean_records = S_OPS // DP
+records = mean_records + 4 * math.isqrt(mean_records) + workers
+routing_report_traffic = F(records) * F(2 ** 10)
+verification_output = F(2 ** 40)
+fresh_starts = F(workers) * F(16)
+drain = F(workers) * F(2 * DP)
+report_path = F(records) * F(800)
+INV_INSN = (254 + 11) * M_insn
+n_batches = ((S_OPS + 2 ** 60) + BATCH - 1) // BATCH
+batch_inversion_total = F(INV_INSN * (n_batches + 1), C)
+EXTRAS = (TABLE_BUILD_REF + node_setup + meter_block_remainders +
+          routing_report_traffic + verification_output + fresh_starts + drain +
+          report_path + batch_inversion_total + FALLBACK_REF + METER_CAP +
+          CYC3_WORK + RESTART_REF)
+W = PHASE1 + EXTRAS
+
+transport = F(2 * DP, S_OPS)
+pool_overflow = F(336, 1000000)          # e^-8, Bernstein/Chernoff at 4 sigma
+fingerprint_union = F(records * (records - 1), 2 * 2 ** 384)
+relation_failure = F(1, r)
+detector_abort = F(8 * (40 * DP) * (40 * DP), N_CLASSES)
+_rho = 1 - math.exp(-float(A_H1) ** 2 * float(_ln0))
+SUCCESS = _rho - float(transport + pool_overflow + relation_failure + detector_abort
+                       + ESCAPE_FAIL + CYC3_DEBIT) - RESTART_SUCCESS_LOSS
+# the largest 3-cycle basin fraction the success floor can absorb: the debit is
+# workers*B, so B_max = (SUCCESS - 0.39)/workers.  This is the H3 sensitivity.
+BASIN_TOL = (SUCCESS - float(SUCCESS_FLOOR)) / workers
+
+MEMORY_BYTES = nodes * node_cap_records * record_bytes + nodes * N_CELLS * TABLE_CELL_BYTES + 2 ** 40
+
+
+def log2f(x):
+    x = F(x)
+    return math.log2(x.numerator) - math.log2(x.denominator)
+
+
+LOG_W = log2f(W)
+CLAIM_LOG2 = math.ceil(LOG_W * 1000) / 1000.0
+CLAIM = F(int(round(CLAIM_LOG2 * 1000)), 1000)
+MARGIN_VS_GATE = GATE - CLAIM
+MARGIN_VS_LINE = SHIP_LINE - CLAIM
+
+RATIO = W / S0
+KAPPA_ROWS = [
+    ("step price 1 + 167/2000", STEP_PRICE, "167 itemised rows above"),
+    ("slowdown allowance kappa = A_H1", A_H1,
+     "sweep mean T_c/S_ref <= 1.015; the trap escape consumes %s of it"
+     % ("%.2e" % float(ESCAPE_SLOWDOWN - 1))),
+    ("lag + fallback reserve (1 + 2^60/(kappa*S0))", 1 + F(2 ** 60, 1) / (A_H1 * S0),
+     "fallback total %.3g ref <= 2^60" % float(FALLBACK_REF)),
+    ("extras (1 + EXTRAS/PHASE1)", 1 + EXTRAS / PHASE1,
+     "table build %.3g ref, trap escape %.3g ref" % (float(TABLE_BUILD_REF),
+                                                     float(TRAP_REF))),
+]
+BUDGET = F(1)
+for _n, _v, _why in KAPPA_ROWS:
+    BUDGET *= _v
+CLAIM_RATIO_CEIL = 2 ** (float(CLAIM) - LOG_S0)
+assert BUDGET <= CLAIM_RATIO_CEIL, (float(BUDGET), CLAIM_RATIO_CEIL)
+
+
+def report():
+    print("step rows (insn):")
+    for o, n in ROWS:
+        print(f"  {n:4d}  {o}")
+    print(f"  {STEP_INSN:4d}  TOTAL   price {float(STEP_PRICE):.6f}")
+    print(f"log2 S0            {LOG_S0:.8f}   N' correction with {N_CELLS} cells")
+    print(f"kappa              {float(A_H1):.4f}   log2 S_ops {log2f(S_OPS):.8f}")
+    print(f"fallback total     {float(FALLBACK_TOTAL):.6g} insn = {float(FALLBACK_REF):.6g} ref"
+          f"  (<= 2^60: {FALLBACK_REF <= 2**60})  bits {FALLBACK_BITS:.9f}")
+    print(f"escape run cost M  rho=1/2 E[L]={float(E_RUN_MEAS):.3f}  {float(TRAP_REF):.4g} ref"
+          f"  = 2^{log2f(TRAP_REF):.3f}")
+    print(f"escape run cost R  rho=p    E[L]={float(E_RUN_REV):.9f}  {float(TRAP_REF_REV):.4g} ref"
+          f"  = 2^{log2f(TRAP_REF_REV):.3f}")
+    print(f"meter cap (2x max) {float(METER_CAP):.4g} ref;  trip log2 p = {METER_TRIP_LOG2:.3f}")
+    print(f"restart cost       {float(RESTART_REF):.4g} ref at K_ESC_MAX={K_ESC_MAX}"
+          f" (rho^{K_ESC_MAX} = {float(RESTART_ODDS):.3e}, {FRESH_INSN} insn/fresh start)")
+    print(f"restart alt. price {float(RESTART_LANE_REF):.4g} ref if a restart minted a"
+          f" fresh lane budget (2^{math.log2(float(RESTART_LANE_REF)):.1f}); NOT charged")
+    print(f"restart success loss {RESTART_SUCCESS_LOSS:.3e} (restarts / S_OPS)")
+    print(f"K_ESC_MAX          {K_ESC_MAX} allowed, NO raise: over-long run restarts the lane")
+    print(f"escape failure     {float(ESCAPE_FAIL):.3e}")
+    print(f"escape slowdown    1 + K*rate = {float(ESCAPE_SLOWDOWN):.9f}"
+          f"  (allowed 1.015)")
+    print(f"table build        {float(TABLE_BUILD_REF):.4g} ref over {nodes} nodes")
+    print(f"three-cycle work   {float(TRAP3_RATE):.3e}/step, {float(CYC3_WORK):.4g} ref")
+    print(f"three-cycle debit  {float(CYC3_DEBIT):.3e};  basin tolerance B_max ="
+          f" {BASIN_TOL:.6e} (2^{math.log2(BASIN_TOL):.3f})")
+    print(f"log2 phase1        {log2f(PHASE1):.8f}")
+    print(f"log2 extras        {log2f(EXTRAS):.8f}")
+    print(f"log2 W             {LOG_W:.8f}   claim {CLAIM_LOG2:.3f}")
+    print(f"success            {SUCCESS:.6f}   (floor 0.39)")
+    print(f"ship line {float(SHIP_LINE):.3f}  gate {float(GATE):.3f}  gate bar"
+          f" {float(GATE_BAR):.5f}  margin gate {float(MARGIN_VS_GATE):+.4f}"
+          f"  line {float(MARGIN_VS_LINE):+.4f}")
+    print(f"log2 memory        {log2f(MEMORY_BYTES):.6f}  bytes {MEMORY_BYTES:.4g}")
+    print(f"records            {records:.6g}  cap {nodes * node_cap_records}")
+    print("kappa budget table:")
+    for n, v, why in KAPPA_ROWS:
+        print(f"  {float(v):.9f}  {n:48s} {why}")
+    print(f"  product {float(BUDGET):.9f} <= 2^(claim-log2 S0) {CLAIM_RATIO_CEIL:.9f}")
+    print(f"basin tolerance    B_max = (success - 0.39)/workers = {BASIN_TOL:.4e}")
+    # internal consistency is ASSERTED; the GATE is a DECISION, reported not asserted
+    assert SUCCESS >= float(SUCCESS_FLOOR)
+    assert STEP_INSN == 167
+    assert METER_TRIP_LOG2 <= -32.0, METER_TRIP_LOG2
+    ship = (CLAIM <= GATE_BAR) and (MARGIN_VS_GATE >= MARGIN_RULE)
+    print(f"DECISION           claim {float(CLAIM):.4f} vs bar {float(GATE_BAR):.5f} ->"
+          f" {'SHIP' if ship else 'HOLD'} (delta {float(GATE_BAR - CLAIM):+.5f} bits)")
+    return ship
+
+
+if __name__ == "__main__":
+    report()

@@ -1,0 +1,37 @@
+{
+ "bound": [
+  {
+   "ok": true,
+   "path": "E2.fixed.mismatches",
+   "token": "0",
+   "value": 0,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.fixed.comparisons",
+   "token": "9000",
+   "value": 9000,
+   "why": ""
+  },
+  {
+   "ok": true,
+   "path": "E2.control.mismatches",
+   "token": "14988",
+   "value": 14988,
+   "why": ""
+  }
+ ],
+ "bound_ok": 3,
+ "bound_total": 3,
+ "passed": true,
+ "planted_wrong_row": {
+  "caught": true,
+  "failed_paths": [
+   "E2.fixed.mismatches",
+   "E2.control.mismatches"
+  ],
+  "injected": "fixed<->control mismatches swapped"
+ },
+ "test": "rowbind"
+}
