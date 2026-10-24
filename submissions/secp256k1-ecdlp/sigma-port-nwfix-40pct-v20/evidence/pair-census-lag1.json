@@ -1,0 +1,52 @@
+{
+ "arm": "lag1",
+ "calibration": {
+  "coverage": 0.952,
+  "k_equals_n_abs_err": 0.0,
+  "k_equals_n_closed_form": 0.9990642717315064,
+  "k_equals_n_helper": 0.9990642717315064,
+  "k_zero_helper": 0.0,
+  "n": 3200,
+  "p": 0.5171875,
+  "sims": 2000
+ },
+ "challenge_block_sha256": "64b743b501ea4dee5469dde84dc06fac21fe084bee65a398cdad0f2d7cee2127",
+ "classes": 715000012,
+ "cp95_formula_lower": "0.499993305072318804604947217740118503570556640625",
+ "cp95_run_A_lower": "0.28881640485644124538566757109947502613067626953125",
+ "cp95_set_lower": "0.502493930275185871181520269601605832576751708984375",
+ "cp95_set_lower_f": 0.5024939302751859,
+ "dp_bits": 5,
+ "floor": 0.39,
+ "floor_met_by_cp95": true,
+ "formula_minus_measured": -0.0023852539062499956,
+ "interpreter": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+ "invariant_violations_sampled": 0,
+ "lag3_fires": 0,
+ "numpy": "2.4.4",
+ "p_run": {
+  "A": 0.3021875,
+  "B": 0.3046875,
+  "pooled": 0.3034375
+ },
+ "p_set_formula": 0.51480224609375,
+ "p_set_formula_2p_minus_p2_pooled": 0.51480068359375,
+ "p_set_measured": 0.5171875,
+ "per_walker_steps": 1687,
+ "protocol": "two sequential independent runs per set on the SAME challenge block: walker coins (a,c) and walker coin stream (0xC0FFEE+r) are fresh per run, xt is shared and hashed above; a set is solved when either run solves; escape armed, kcap=8",
+ "runs": {
+  "A_solved": 967,
+  "B_solved": 975,
+  "both": 287,
+  "neither": 1545,
+  "set_solved": 1655,
+  "sets": 3200
+ },
+ "same_challenge_both_runs": true,
+ "seed": 20250,
+ "sets": 3200,
+ "single_run_floor_met": false,
+ "test": "pair_census_w2",
+ "universe_q": 4290000067,
+ "walks_per_set": 16
+}

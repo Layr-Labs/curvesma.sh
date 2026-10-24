@@ -1,0 +1,68 @@
+step rows (insn):
+    35  index: 8 partial products (4 at i+j=3, 4 at i+j=4), 4x5 limb 320-bit window
+    24  v0: 3 partial products (i+j in {4,5}) of x*floor(2^384/p), bits 256..383
+     4  v2 by subtraction: (1<<128) - v0 - v1, four 64-bit subtracts and a mask
+    12  3-way argmin on 128-bit windows, selects, near-tie band test
+    15  sign and key: 4-limb compare (5), conditional negate (8), store (2)
+     7  orbit slot and address: lea (2h+b) (1), base+(slot*R+m)*96 (3), DP mask (3)
+    20  loads/stores: 8 limb loads of J, 8 stores of S, 4 coefficient loads
+     9  modular coefficient update: 4-limb add mod n plus conditional subtract
+    10  checkpoint: period-64 compare (4), 8-limb fingerprint compare (3), age (3)
+     6  trap escape lag-1: class compare vs previous (3), alternate-slot select (2), join (1)
+     4  trap escape lag-3: class compare vs the class two steps back (3), join (1)
+     1  batch-inversion share: 4-limb inverse / batch, charged 1
+     7  counters: 69-bit length add (4), cap test (2), loop counter/branch (1)
+     1  per-batch meter: 192-bit add share
+   155  TOTAL   price 1.155000
+log2 S0            126.69996043   N' correction with 6291456 cells
+kappa              1.0150   log2 S_ops 126.72144016
+fallback total     2.21273e+21 insn = 2.21273e+18 ref  (<= 2^60: False)  bits 0.000000000
+escape run cost M  rho=1/2 E[L]=2.000  5.15e+31 ref  = 2^105.344
+escape run cost R  rho=p    E[L]=1.000000159  2.575e+31 ref  = 2^104.344
+meter cap (2x max) 1.03e+32 ref  [DETERMINISTIC work cap, no trip probability claimed]
+ONE inequality      P(loss > A) <= E[loss]/A  Markov:  E[loss] 2.344e-04, A = 0.084459 -> 2.775e-03
+restart cost       1.03e+32 ref at K_ESC_MAX=8 (rho^8 = 3.906e-03); 752820 insn per fresh start = 752.820 ref (2 scalar mults + normalize)
+restart reprice    v20j 42 insn -> v20k 752820 insn = x17924; row 1.03e+32 ref = 2^106.34
+restart alt. price 1.346e+61 ref if a restart minted a fresh lane budget (2^203.1); NOT charged
+restart success loss 2.344e-04 (restarts / S_OPS)
+K_ESC_MAX          8 allowed, NO raise: over-long run restarts the lane
+escape failure     9.242e-45
+escape slowdown    1 + K*rate = 1.000001272  (allowed 1.015)
+table build        3.999e+13 ref over 65536 nodes
+three-cycle work   9.095e-13/step, 4.42e+26 ref
+absorption DIRECT  p(ge3) 1.000000 -> 1.000000 at 4.0x classes (ratio 1.000000, non-increasing True); 32768 starts enumerated
+absorption debit   NONE (measured inside the success statistic; the random-map ln(N)/N premise is deleted)
+log2 phase1        126.92933301
+log2 extras        113.42686524
+log2 W (1 run)     126.92945732
+w=2 factor         2   (+1.00000000 bits, disclosed)
+log2 W (submitted) 127.92945732   claim 127.930
+success (DESIGN)   0.474459  = CP95_w2 0.475029 - debits (floor 0.39)
+TRANSFER ladder    6 orders, x = visits/sqrt(N) held at 1.009696
+   L24   q=2^24  N=2^21.42 sets= 1600 p_run 0.25719 p_set 0.44375 cp95 0.42310    
+   L28   q=2^28  N=2^25.42 sets= 1200 p_run 0.32208 p_set 0.54000 cp95 0.51586    
+   L32   q=2^31  N=2^29.41 sets=  800 p_run 0.32375 p_set 0.54000 cp95 0.51032    
+   L32T  q=2^31  N=2^29.41 sets= 3200 p_run 0.34219 p_set 0.56781 cp95 0.55321    
+   L36   q=2^36  N=2^33.42 sets=  400 p_run 0.28875 p_set 0.50000 cp95 0.45773 EXT
+   L36B  q=2^36  N=2^33.42 sets= 1200 p_run 0.28292 p_set 0.49917 cp95 0.47503 EXT
+order span        12.00 doublings of class count (4.1e+03x), slope +4.85e-03/doubling
+top-of-ladder     p_set 0.44375..0.56781 (band 0.12406 over 4 arms)
+band vs floor     worst ladder point 0.44375 - debits -> 0.44318  floor met at every measured order: True
+production pred   p_set 0.49917  band [0.44375,0.56781]  design arm L36B at N=2^33.42
+w=2 row            p_run pooled 0.342187  measured p_set 0.567813  formula 1-(1-p)^2 0.567283  diff +0.000529
+CP helper calib    coverage 0.9515 (one-sided 0.95 target)
+success walk-only  0.474459  = CP95_walk_only 0.475029 - debits  (disclosed sensitivity, not the claim)
+two-phase budget   B_walk 1.4027e+38 + B_drain 3.9866e+24 = B_total 1.4027e+38 steps; drain price 4.605e+24 ref (design arm d=5)
+ship line 126.400  gate 126.338  gate bar 126.33250  margin gate -1.5920  line -1.5300
+log2 memory        74.584963  bytes 2.833e+22
+records            1.21662e+20  cap 147573952589676412928
+kappa budget table:
+  1.155000000  step price 1 + 155/1000                          155 itemised rows above
+  2.000000000  w=2 amplification x2                             two sequential runs; exactly +1.000 bit
+  1.015000000  slowdown allowance kappa = A_H1                  sweep mean T_c/S_ref <= 1.015; the trap escape consumes 1.27e-06 of it
+  1.000000000  lag + fallback reserve (1 + 2^60/(kappa*S0))     fallback total 2.21e+18 ref <= 2^60
+  1.000086169  extras (1 + EXTRAS/PHASE1)                       table build 4e+13 ref, trap escape 5.15e+31 ref
+  product 2.344852037 <= 2^(claim-log2 S0) 2.345734234
+basin tolerance    B_max = (success - 0.39)/workers = 8.0546e-08
+floor 0.39         measured production-shape success 0.474459 -> met True
+RANK POSTURE       claim 127.9300 vs bar 126.33250 -> no rank (delta -1.59750 bits); SUBMITTED regardless, floor met True
