@@ -1,0 +1,36 @@
+{
+ "version": 1,
+ "title": "P-256 two-table sigma walk v10k: collision census on the matched invariant (Lambda=0.6000, ltheta=2^49.63 saturating), batch multiplications charged, record store recomputed, 4,096-step self-test, claim 128.5415",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1285415",
+    "denominator": "10000"
+   },
+   "statement": "For the P-256 challenge Q=[x]P, the two-table affine sigma walk of argument.md is claimed at total classical work at most 2^128.5415 target-group-operation equivalents under the C=1000 scalar AArch64 instruction normalization, with per-instance success 0.2397 and w=2 amplification success 0.4220 >= 0.39.\n\nDENSITY: the fixture grid and production are matched on the collision law's own invariant, (Lambda, ltheta), not on recording density. Lambda = S^2/(2N') = 0.600000 with S=2^127.631517 and N'=(r-1)/2=2^255.000 classes -- the same 0.60 the census holds in every one of its nine cells. ltheta = ell*theta = records per trail is 2^49.632 at production against anchors at ltheta 1.55 to 3,172; p is monotone in ltheta and saturated from ltheta~70 (0.2208 at 17.4, 0.2445/0.2468 at 69.4/277.6, 0.2595 at 3,172 on 2^32/2^39 classes). The fitted saturation law p=A(1-exp(-ltheta/tau)) gives A=0.2421, tau=3.35, max |residual| 0.0200 at the nine anchors, and p=0.2421 at the production ltheta, where the law is flat to 2^-(2^38.0). nu=R/sqrt(N') is 2^-61.87 at production and is measured against over 2^4.0 in nu across the 5 plateau cells (chi-square 4.77 on 4 dof, pooled 0.2471); nu enters the success law only through the accidental record-record coincidence rate nu^2/2 = 2^-124.7, which the full-point verification rejects, so it is a false-positive channel and not a success channel.\n\np = pooled CP-95 lower (0.2521, exact Clopper-Pearson over 4942/20000) minus the measured scale residual 0.0124 = 0.2397; success 1-(1-p)^2 = 0.4220, floor 0.39, margin 0.0320.\n\nBATCH MULTIPLICATIONS: the priced round is step_forward 235 (which contains the prefix product, once) + step_close 423 + back-substitution 2 fe_mul x 140 = 280 + inversion share 385 fe_mul x 140/65536 = 0.822449 + rare-event reserve 0.639764 + record 2.186e-16 = 939.462213 per walker-step. Every batch multiplication is priced once; the v10j duplicate prefix product is removed.\n\nRECORD STORE: 2^65.6315 records at 104 B = 2^72.332 B, in 2^32 radix shards on the high key bits, 2^33.6315 records per shard, per-record cost log2(records/shard) x 24 + 201 = 1008.2 instructions (= 2.2e-16 instructions per walker-step at density 2^-62). Total 2^72.332 B against the 2^73.0 B cap, slack 0.668 bits. The v10j load-factor row, which divided 2^65.63 records among 2^32 buckets, is deleted.\n\nMEASURED PRICE: clang -O2 -S --target=aarch64-unknown-linux-gnu plus the CFG longest-iteration counter (evidence/recproc_count.json). W_single = 127.631517 + log2(939.462213/1000) = 127.541424; w=2 = 128.541424; claim 128.5415.\n\nSELF-TEST: 64 rounds x 8 walkers x SPR 8 = 4096 genuine walker-steps, counted and asserted against the spec constant in the binary, invariant P==[a]G+[b]Q checked after every step (0 failures, baseline 0), synthetic collision solved and verified (1). The v10j 512-vs-4,096 mismatch and its Montgomery mix-up in the synthetic arm are fixed.\n\nCARRIED: canonicaliser fixed (table rows 0/4096, log stream 0/2048, walks 0/208), 104 B record, two-table O3 index, replay index deleted. NOT CLAIMED: any production-length execution; any authenticated prior acceptance (dependencies.json is []).",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/bucket.json",
+    "evidence/census_multiscale.json",
+    "evidence/census_v10f41.c",
+    "evidence/invariant_fit.json",
+    "evidence/ledger.json",
+    "evidence/p256_fe_cc.h",
+    "evidence/p256_point_walk_test.c",
+    "evidence/p256_recproc_v10k.c",
+    "evidence/point_walk.json",
+    "evidence/prod_params.json",
+    "evidence/recproc_count.json",
+    "evidence/recproc_run.json",
+    "evidence/selfaudit.json",
+    "experiments/selfaudit.py",
+    "experiments/v10k_params.py",
+    "experiments/make_note_v10k.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

@@ -1,0 +1,56 @@
+{
+ "all_pass": true,
+ "checks": [
+  {
+   "name": "charge_terms_sum_to_charge",
+   "ok": true
+  },
+  {
+   "name": "claim_ge_W_amplified",
+   "ok": true
+  },
+  {
+   "name": "success_ge_floor_0.39",
+   "ok": true
+  },
+  {
+   "name": "storage_under_cap",
+   "ok": true
+  },
+  {
+   "name": "Lambda_production_equals_fixture_0.60",
+   "ok": true
+  },
+  {
+   "name": "batch_backsub_charged",
+   "ok": true
+  },
+  {
+   "name": "bucket_row_recomputed",
+   "ok": true
+  },
+  {
+   "chi2": 4.769363667554121,
+   "dof": 4,
+   "name": "nu_invariance_chi2_dof",
+   "ok": true
+  },
+  {
+   "max_abs_resid": 0.02000306097540394,
+   "name": "saturation_fit_residual_max",
+   "ok": true
+  }
+ ],
+ "claim": [
+  1285415,
+  10000
+ ],
+ "claim_f": 128.5415,
+ "recomputed": {
+  "W_amplified": 128.54142424250148,
+  "W_single": 127.54142424250148,
+  "charge": 939.462212890625,
+  "p": 0.23971835608509146,
+  "success": 0.4219718219260443
+ }
+}
