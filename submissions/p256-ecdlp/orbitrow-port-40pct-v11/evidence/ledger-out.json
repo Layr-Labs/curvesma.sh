@@ -1,0 +1,89 @@
+{
+ "C": 1000,
+ "N_classes_log2": 254.99999999966408,
+ "S_OPS_log2": 128.19973435027055,
+ "claim": 128.537,
+ "claims_ratio_ceiling": 2.062734427299441,
+ "cp95_design": 0.6825924849022984,
+ "cp95_low_order": 0.6091131431006234,
+ "debits": 0.000336,
+ "dp_bits": 5,
+ "fixture_R": 16384,
+ "fixture_trap_rate_log2": -15.0,
+ "floor": 0.39,
+ "floor_met": true,
+ "fresh_insn": 492300,
+ "fresh_ref": 492.3,
+ "gate": 127.237678,
+ "kappa_product": 1.2820494178807331,
+ "log2_S0": 127.49244191075879,
+ "log2_W": 128.53670649601597,
+ "log2_extras": 114.95291102644535,
+ "log2_phase1": 128.53658898939602,
+ "margin_vs_gate": -1.299322,
+ "markov_loss_bound": 0.0016064760232535316,
+ "memory_log2_bytes": 74.58496250167288,
+ "order_span": 255.70325833896595,
+ "pair_cp95_w2": 0.2808011251264499,
+ "pair_sets": 3200,
+ "preprocessing_log2": 43.59991284218713,
+ "ranks": false,
+ "restart_loss": 0.00046875,
+ "restart_ref_log2": 109.53658898939602,
+ "shape_measured": 1.6002022719673725,
+ "step_insn": 263,
+ "step_price": 1.263,
+ "step_rows": [
+  [
+   "class key: 4-limb compare x vs p-x (4), masked 4-limb subtract (8), select (2)",
+   14
+  ],
+  [
+   "column and orbit slot: 64-bit shift by constant (1), table base + index (2)",
+   3
+  ],
+  [
+   "sign bit: y low-limb test and key pack (3)",
+   3
+  ],
+  [
+   "P-256 REDUCTION PREMIUM over the borrowed reference addition: 6 field muls x +30 insn (Solinas: 8 mul-adds + 20 add/carry, vs secp256k1's 4 mul-add fold)",
+   180
+  ],
+  [
+   "loads/stores: 4 limb loads of J, 4 stores of S, 4 coefficient loads (20)",
+   20
+  ],
+  [
+   "coefficient update mod n: 4-limb add plus conditional subtract",
+   9
+  ],
+  [
+   "checkpoint: period-64 compare (4), 4-limb fingerprint compare (3), age (3)",
+   10
+  ],
+  [
+   "trap escape lag-1: class compare vs previous (3), alternate-slot select (2), join (1)",
+   6
+  ],
+  [
+   "trap escape lag-3: class compare vs the class two steps back (3), join (1)",
+   4
+  ],
+  [
+   "DP fingerprint: 64-bit mix (4) and threshold compare (2)",
+   6
+  ],
+  [
+   "counters: 64-bit length add (4), cap test (2), loop counter/branch (1)",
+   7
+  ],
+  [
+   "per-batch meter: 192-bit add share",
+   1
+  ]
+ ],
+ "success": 0.6817877349022984,
+ "test": "ledger_p256_v11",
+ "trap_rate_log2": -21.0
+}

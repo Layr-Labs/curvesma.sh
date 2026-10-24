@@ -1,0 +1,269 @@
+{
+ "arms": {
+  "control_noescape": {
+   "coalesced_d0": 2208,
+   "coalescence_rate": 0.69,
+   "cp95_coalescence": "0.676270676465574251068346711690537631511688232421875",
+   "cp95_success": "0.599363470666624660765364751568995416164398193359375",
+   "cp95_success_f": 0.5993634706666247,
+   "d0_implied_success": 0.6028125,
+   "detected_given_coalescence": 0.873641304347826,
+   "escape_fires": 0,
+   "escape_fires_lag1": 0,
+   "escape_fires_lag3": 0,
+   "invariant_violations_sampled": 0,
+   "restarts": 0,
+   "solve_step_max": 289,
+   "solve_step_median": 192,
+   "success_rate": 0.61375,
+   "successes": 1964,
+   "trials": 3200,
+   "trials_with_escape_fire": 0
+  },
+  "escaped_lag1": {
+   "coalesced_d0": 2232,
+   "coalescence_rate": 0.6975,
+   "cp95_coalescence": "0.68385719495293320591144947684369981288909912109375",
+   "cp95_success": "0.60911314310062339671958397957496345043182373046875",
+   "cp95_success_f": 0.6091131431006234,
+   "d0_implied_success": 0.6128125,
+   "detected_given_coalescence": 0.878584229390681,
+   "escape_fires": 923,
+   "escape_fires_lag1": 923,
+   "escape_fires_lag3": 0,
+   "invariant_violations_sampled": 0,
+   "restarts": 0,
+   "solve_step_max": 289,
+   "solve_step_median": 192,
+   "success_rate": 0.6234375,
+   "successes": 1995,
+   "trials": 3200,
+   "trials_with_escape_fire": 783
+  },
+  "escaped_lag3": {
+   "coalesced_d0": 2232,
+   "coalescence_rate": 0.6975,
+   "cp95_coalescence": "0.68385719495293320591144947684369981288909912109375",
+   "cp95_success": "0.60911314310062339671958397957496345043182373046875",
+   "cp95_success_f": 0.6091131431006234,
+   "d0_implied_success": 0.6128125,
+   "detected_given_coalescence": 0.878584229390681,
+   "escape_fires": 923,
+   "escape_fires_lag1": 923,
+   "escape_fires_lag3": 0,
+   "invariant_violations_sampled": 0,
+   "restarts": 0,
+   "solve_step_max": 289,
+   "solve_step_median": 192,
+   "success_rate": 0.6234375,
+   "successes": 1995,
+   "trials": 3200,
+   "trials_with_escape_fire": 783
+  }
+ },
+ "cap_loss": {
+  "control_noescape": {
+   "cap_145": {
+    "cap": 145,
+    "cp95_upper_loss": "0.669363313879543870399402294424362480640411376953125",
+    "cp95_upper_loss_f": 0.6693633138795438,
+    "lost": 1441,
+    "p_loss_given_would_solve": 0.6526268115942029,
+    "trials": 3200,
+    "would_solve_meet": 2208
+   },
+   "cap_290": {
+    "cap": 290,
+    "cp95_upper_loss": "0.00135584281851191784380442513285514250384518398082099981275539569105777677163483",
+    "cp95_upper_loss_f": 0.0013558428185119179,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve_meet": 2208
+   },
+   "cap_72": {
+    "cap": 72,
+    "cp95_upper_loss": "0.923152004992077660716631726245395839214324951171875",
+    "cp95_upper_loss_f": 0.9231520049920776,
+    "lost": 2017,
+    "p_loss_given_would_solve": 0.9134963768115942,
+    "trials": 3200,
+    "would_solve_meet": 2208
+   }
+  },
+  "escaped_lag1": {
+   "cap_145": {
+    "cap": 145,
+    "cp95_upper_loss": "0.668979302990148678276227656169794499874114990234375",
+    "cp95_upper_loss_f": 0.6689793029901486,
+    "lost": 1456,
+    "p_loss_given_would_solve": 0.6523297491039427,
+    "trials": 3200,
+    "would_solve_meet": 2232
+   },
+   "cap_290": {
+    "cap": 290,
+    "cp95_upper_loss": "0.00134127364505623758405690994222935505624046567705548927568146212656126722361707",
+    "cp95_upper_loss_f": 0.0013412736450562376,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve_meet": 2232
+   },
+   "cap_72": {
+    "cap": 72,
+    "cp95_upper_loss": "0.922708626992587642945409243111498653888702392578125",
+    "cp95_upper_loss_f": 0.9227086269925876,
+    "lost": 2038,
+    "p_loss_given_would_solve": 0.9130824372759857,
+    "trials": 3200,
+    "would_solve_meet": 2232
+   }
+  },
+  "escaped_lag3": {
+   "cap_145": {
+    "cap": 145,
+    "cp95_upper_loss": "0.668979302990148678276227656169794499874114990234375",
+    "cp95_upper_loss_f": 0.6689793029901486,
+    "lost": 1456,
+    "p_loss_given_would_solve": 0.6523297491039427,
+    "trials": 3200,
+    "would_solve_meet": 2232
+   },
+   "cap_290": {
+    "cap": 290,
+    "cp95_upper_loss": "0.00134127364505623758405690994222935505624046567705548927568146212656126722361707",
+    "cp95_upper_loss_f": 0.0013412736450562376,
+    "lost": 0,
+    "p_loss_given_would_solve": 0.0,
+    "trials": 3200,
+    "would_solve_meet": 2232
+   },
+   "cap_72": {
+    "cap": 72,
+    "cp95_upper_loss": "0.922708626992587642945409243111498653888702392578125",
+    "cp95_upper_loss_f": 0.9227086269925876,
+    "lost": 2038,
+    "p_loss_given_would_solve": 0.9130824372759857,
+    "trials": 3200,
+    "would_solve_meet": 2232
+   }
+  }
+ },
+ "classes": 8388630,
+ "cycle_length": {
+  "control_noescape": {
+   "len2": 778,
+   "len3": 0,
+   "len_ge4": 173,
+   "no_repeat_within_budget": 2248,
+   "p_absorbed": 0.2971875,
+   "p_ge4": 0.0540625,
+   "p_len2": 0.243125,
+   "p_len3": 0.0,
+   "three_cycle_share_of_residual": 0.0,
+   "trials": 3200
+  },
+  "escaped_lag1": {
+   "len2": 0,
+   "len3": 0,
+   "len_ge4": 235,
+   "no_repeat_within_budget": 2964,
+   "p_absorbed": 0.0734375,
+   "p_ge4": 0.0734375,
+   "p_len2": 0.0,
+   "p_len3": 0.0,
+   "three_cycle_share_of_residual": 0.0,
+   "trials": 3200
+  },
+  "escaped_lag3": {
+   "len2": 0,
+   "len3": 0,
+   "len_ge4": 235,
+   "no_repeat_within_budget": 2964,
+   "p_absorbed": 0.0734375,
+   "p_ge4": 0.0734375,
+   "p_len2": 0.0,
+   "p_len3": 0.0,
+   "three_cycle_share_of_residual": 0.0,
+   "trials": 3200
+  }
+ },
+ "dp_bits": 5,
+ "ledger_shape": 1.0096964532674242,
+ "matched_pairs": {
+  "d0_treat": 0.6128125,
+  "d5_treat": 0.6234375,
+  "delta_d0_d5": 0.010624999999999996,
+  "delta_escape_matched": 0.00968749999999996,
+  "lag3_cp95": 0.6091131431006234,
+  "lag3_fires": 0,
+  "lag3_minus_lag1": 0.0,
+  "lag3_success": 0.6234375,
+  "note": "treatment/control share the fixed start block; prefix trace equality asserted per pair up to the first escape fire",
+  "pairs_prefix_equal": 783,
+  "pairs_with_trigger": 783,
+  "rows": [
+   {
+    "branch_step": 235,
+    "equal": true,
+    "prefix_lanes": 3760,
+    "prefix_sha256_control": "3c2956211b7ac5ea",
+    "prefix_sha256_treat": "3c2956211b7ac5ea",
+    "trial": 10
+   },
+   {
+    "branch_step": 224,
+    "equal": true,
+    "prefix_lanes": 3584,
+    "prefix_sha256_control": "3d5c020dcab1d966",
+    "prefix_sha256_treat": "3d5c020dcab1d966",
+    "trial": 11
+   },
+   {
+    "branch_step": 17,
+    "equal": true,
+    "prefix_lanes": 272,
+    "prefix_sha256_control": "8d5796977edaa5f2",
+    "prefix_sha256_treat": "8d5796977edaa5f2",
+    "trial": 20
+   },
+   {
+    "branch_step": 175,
+    "equal": true,
+    "prefix_lanes": 2800,
+    "prefix_sha256_control": "caeeed8752c11fd2",
+    "prefix_sha256_treat": "caeeed8752c11fd2",
+    "trial": 23
+   },
+   {
+    "branch_step": 20,
+    "equal": true,
+    "prefix_lanes": 320,
+    "prefix_sha256_control": "dd121615029d685c",
+    "prefix_sha256_treat": "dd121615029d685c",
+    "trial": 27
+   },
+   {
+    "branch_step": 212,
+    "equal": true,
+    "prefix_lanes": 3392,
+    "prefix_sha256_control": "6ffc7db51e6c24e1",
+    "prefix_sha256_treat": "6ffc7db51e6c24e1",
+    "trial": 37
+   }
+  ],
+  "success_control": 0.61375,
+  "success_treat": 0.6234375
+ },
+ "per_walker_steps": 290,
+ "protocol": "shipped qwalk.step; escape armed kcap=8; DP 2^-5; one class universe; FIXED seed block so every arm shares starts; treatment substitutes the alt row at the trigger, control does not; d=0 is the same trace with the gate off",
+ "q": 16777259,
+ "shape_assert_dev": 0.592340247105499,
+ "test": "census_v20n_matched_pairs",
+ "total_elapsed_s": 16.1,
+ "trials": 3200,
+ "visits_over_sqrtN": 1.6020367003729232,
+ "visits_per_trial": 4640,
+ "walks_per_trial": 16
+}

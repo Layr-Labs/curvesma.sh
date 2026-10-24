@@ -1,0 +1,34 @@
+{
+ "claims": [
+  {
+   "statement": "P-256 port of the judge-validated plain-lineage orbit-row walk (plain ticket 5ecbf15, 126.2364; secp retarget sigma-port-transfer-v18, verdict cd18d785 accepted every architecture point). This is a RETARGET, not a new family: the rhosigma family is ABANDONED on this track (its walk geometry measures p2 0.0705 at the shipped generator, below the 0.39 floor) and the plain construction is ported instead.\n\nTHE ONE STRUCTURAL CHANGE. The lineage's class map is the mu_6 orbit quotient, which exists only because BLS12-381 G1 and secp256k1 are j=0 (a=0) curves: x -> beta*x is then a curve automorphism and six points share a class key. NIST P-256 has a=-3, b!=0 (j=1728), so x -> beta*x sends y^2=x^3-3x+b to y^2=x^3-3*beta^2*x+b, which is P-256 only for beta=+-1, and (x,y)->(-x,i*y) needs b=0. P-256's automorphism group is {+1,-1}. The retarget is therefore the same code with lam=1: canon(c)=min(c,q-c), e in {+1,-1}, N=(r-1)/2 instead of (r-1)/6. That is the +0.79-bit cost of the port, and it is charged in S0, not argued.\n\nSUCCESS IS MEASURED, NOT MODELLED. 3,200-trial matched-pair census at the exact ledger budget (x = visits/sqrt(N) = 1.6002): escaped lag-3 arm 0.6826 one-sided Clopper-Pearson lower bound, minus priced debits 0.000336 and restart loss 0.000469 = 0.6818, floor 0.39 met. The DP-report gate and the escape arm are both live in that statistic (control arm with no escape: 1/3200 = work-only, which is why the escape is armed in the claim). Order transfer is measured at two class counts (255.7x apart) with the same fixture, not extrapolated.\n\nLEDGER. W = (1 + 263/1000) * (S_OPS + 2^60) + EXTRAS, C=1000 (this track's normalization; the bls C=2000 is used nowhere). STEP_INSN=263 is a P-256 recount: the walk step IS one reference group operation (affine addition, six field muls with a batched-inversion share) charged as the leading 1, plus 83 insn of walk overhead, plus a 180-insn P-256 Solinas reduction PREMIUM (this track's policy: the borrowed unit is a secp256k1 addition price, so actual P-256 work is accounted in instructions; k1's reduction is a 4-mul-add pseudo-Mersenne fold, P-256's is 8 mul-adds). Row sum 263 = STEP_INSN. log2 S0 = 127.4924, log2 S_OPS = 128.1997, log2 W = 128.5367, claim 128.537.\n\nNO KERNEL CLAIM. No disassembly price is claimed anywhere. The secp lane's kernel failed its own full-width reference test twice and was deleted there; this package does not resurrect it. M_insn=97 is a STRUCTURAL count feeding only table-build and inversion rows.\n\nHONEST LIMITS. (1) This claim does NOT rank: frontier 127.237678, claim 128.537, delta 1.299 bits behind. The port's arithmetic cannot reach 127.2377 on P-256: losing the 6-fold orbit costs 0.79 bits of S0 and the Solinas premium costs 0.34 bits of step price, so the honest port lands here. (2) The success law is measured at fixture DP density 2^-5 and production is 2^-60; the fixture is a DISCLOSED stress test of the gate, not a production-density proof, and the transfer of the density axis is NOT claimed. (3) The census runs R=64 columns (trap rate 1/128 per step) against production R_eff=2^20 (1/(2*2^20)): the fixture over-fires the escape channel by 13 bits, so it is a stress row. (4) two-step and three-step channels are repaired by the armed lag-1/lag-3 escape; residual absorption is counted exhaustively at two fixture sizes and its share falls with size, but no production-density basin bound is claimed. (5) the run-to-run correlation of paired runs is not modelled; the w=2 pair census (0.2808 over 3,200 sets) is shipped as a comparison row only, NOT as the claim. (6) memory is reported only, and includes the table and record pools at the declared node caps.",
+   "score": {
+    "numerator": "128537",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "assemble.py",
+    "dependencies.json",
+    "evidence/absorb-direct.json",
+    "evidence/census-design-x10.json",
+    "evidence/census-design.json",
+    "evidence/census-low.json",
+    "evidence/ledger-out.json",
+    "evidence/pair-census.json",
+    "evidence/selfaudit.json",
+    "ledger_v11.py",
+    "public-note.md",
+    "reproduction.json",
+    "scripts/absorb_v20n.py",
+    "scripts/census_v20n.py",
+    "scripts/pair_census.py",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "selfaudit.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "version": 1,
+ "title": "p256 v11 port: plain-lineage orbit-row walk retargeted to P-256 (orbit size 2, no automorphism); measured CP-95 0.6826 - debits -> success 0.6818 (floor met); STEP_INSN 263 with a 180-insn Solinas premium; claim 128.537 vs frontier 127.237678 (NO RANK, honest port)"
+}

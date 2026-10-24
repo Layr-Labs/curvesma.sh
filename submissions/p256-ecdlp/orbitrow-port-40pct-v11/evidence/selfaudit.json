@@ -1,0 +1,15 @@
+{
+ "checks": {
+  "A1 step rows == STEP_INSN": true,
+  "A2 submission score == ledger claim": true,
+  "A3 claim == ceil(log2 W)": true,
+  "A4 success arithmetic": true,
+  "A5 direction laws": true,
+  "A6 no orphan note numbers": true,
+  "A7 counter coverage": true,
+  "A8 evidence completeness": true
+ },
+ "controls_fired": 4,
+ "controls_total": 4,
+ "pass": true
+}
