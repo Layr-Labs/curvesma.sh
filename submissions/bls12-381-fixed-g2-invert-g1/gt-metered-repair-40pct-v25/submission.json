@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "title": "Metered repair: f6mul + all kernels bigint-verified, guard-aware price, metered verification, implemented 32-squaring abort, 112B+ record, lookup symbol, row-sum audit; claim 126.4981",
+ "claims": [
+  {
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT, returning [x]P0 verified by e(P,Q)=z.  PROTOCOL (meter-first, v25): one global counter in instructions, created before the table; table entry build, code, each worker start, each walk step, each lookup, each record write, each collision replay and each candidate verification ask fits() and a replay/verify that does not fit ABANDONS its worker; the 32-consecutive-squaring abort is implemented and delay-measured.  Step price is guard-aware at charge time: STEP = f_mul x MUL_CHARGE + (1-f_mul) x SQR_CHARGE with f_mul=0.636433 and guard rate 0.0009465277777777778 measured over 5760000 steps, MUL_CHARGE=22409, SQR_CHARGE=27611 from the disassembled CORRECTED cyclotomic_sqr; v24 charged a guard-converted multiply as a multiply.  f6mul is repaired (cross terms a0b2+a2b0 -> c2, a0b1+a1b0 -> c1) and every kernel (f2/f6/f12 mul, sqr, inv, cyclotomic_sqr) is bigint-verified on 10000 vectors each with per-kernel mutation controls; v24's square failed 10000/10000.  The record is the machine-serialized 688 B object (48 B key + 2x32 B labels + 576 B y), and lookup_count.c ships with its disassembled 95 Ir span.  Ledger rows: walk 2328055720978775303200393477359638528396185, lookup 9101348504738336752271320612404784833550, records 65912923907999744058554406119310441741920, collision processing 8192, trap waste bound 38800929329913271562360539428418713916, table 1004011520000, starts 7843840000, code 1048576, verification 57526800; sum(rows)==W exactly with a planted typo control.  Success is MEASURED by the metered protocol on 512 fresh fixtures x one trial in two groups: 292/512 (CP-95 0.533116) at rp=521041, 304/512 (CP-95 0.556735) at rp=10566001, with non-zero verify and replay rows.  The v24 offset-doubling claim is withdrawn (offset stays j); ties are measured at 0.014915 and resolve deterministically.  Claim 126.4981 in C=20000 units is floor(log2(W/C)*1e4)/1e4 (a lower bound, no fudge) and covers W=2403108794320843297282781564631794087629139 instructions.",
+   "score": {
+    "numerator": "1264981",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census25.json",
+    "evidence/cpctl25.json",
+    "evidence/ir25.json",
+    "evidence/kernel_verify25.json",
+    "evidence/ledger25.json",
+    "evidence/prices25.json",
+    "evidence/scan25.json",
+    "evidence/scan_abortctl25.json",
+    "evidence/scan_forced25.json",
+    "evidence/survival25.json",
+    "evidence/tie25.json",
+    "public-note.md",
+    "scripts/census23.py",
+    "scripts/gen25.py",
+    "scripts/ir25/consts.c",
+    "scripts/ir25/count_ir.py",
+    "scripts/ir25/driver.c",
+    "scripts/ir25/kernels.c",
+    "scripts/ir25/lookup_count.c",
+    "scripts/ir25/verify25.py",
+    "scripts/protocol25.py",
+    "scripts/toy.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

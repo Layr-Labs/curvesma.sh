@@ -1,0 +1,166 @@
+{
+ "package": "gt-metered-repair-40pct-v25",
+ "claim": "126.4981",
+ "n_checks": 39,
+ "stale_hits": [],
+ "checks": [
+  {
+   "name": "sum_rows_equals_W_no_residual",
+   "verdict": "PASS"
+  },
+  {
+   "name": "planted_typo_control_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_is_lower_bound",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_no_fudge",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cp95_planted_control_exact",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cp95_not_clipped",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_two_groups",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_fixtures_512",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_one_trial",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_budget_normalised",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_verify_row_nonzero",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_replay_row_nonzero",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_fixed_row_metered",
+   "verdict": "PASS"
+  },
+  {
+   "name": "census_abort_implemented",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_a_ge_floor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_b_ge_floor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_at_Rg65536",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_pairs_400",
+   "verdict": "PASS"
+  },
+  {
+   "name": "rho_fit_present",
+   "verdict": "PASS"
+  },
+  {
+   "name": "scan_on_shipped_step",
+   "verdict": "PASS"
+  },
+  {
+   "name": "scan_guard_rate_measured",
+   "verdict": "PASS"
+  },
+  {
+   "name": "scan_zero_admissions",
+   "verdict": "PASS"
+  },
+  {
+   "name": "abort_mechanism_forced",
+   "verdict": "PASS"
+  },
+  {
+   "name": "abort_control_never_abandons",
+   "verdict": "PASS"
+  },
+  {
+   "name": "tie_rate_measured",
+   "verdict": "PASS"
+  },
+  {
+   "name": "record_bytes_machine_len",
+   "verdict": "PASS"
+  },
+  {
+   "name": "record_write_prices_machine_len",
+   "verdict": "PASS"
+  },
+  {
+   "name": "lookup_symbol_shipped",
+   "verdict": "PASS"
+  },
+  {
+   "name": "lookup_price_from_disasm",
+   "verdict": "PASS"
+  },
+  {
+   "name": "sqr_price_from_disasm",
+   "verdict": "PASS"
+  },
+  {
+   "name": "mul_price_from_disasm_rows",
+   "verdict": "PASS"
+  },
+  {
+   "name": "all_kernels_pass",
+   "verdict": "PASS"
+  },
+  {
+   "name": "kernel_count_ge_10",
+   "verdict": "PASS"
+  },
+  {
+   "name": "all_kernel_mutations_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "f6mul_zero_mismatches",
+   "verdict": "PASS"
+  },
+  {
+   "name": "cyclotomic_sqr_zero_mismatches",
+   "verdict": "PASS"
+  },
+  {
+   "name": "f12mul_vector_count",
+   "verdict": "PASS"
+  },
+  {
+   "name": "no_offset_doubling_claim",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dependencies_empty",
+   "verdict": "PASS"
+  }
+ ],
+ "all_pass": true,
+ "verdict": "PASS"
+}

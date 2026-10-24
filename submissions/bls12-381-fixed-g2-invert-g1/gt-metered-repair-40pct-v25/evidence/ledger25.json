@@ -1,0 +1,180 @@
+{
+ "mode": "ledger25-metered-repair",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers, one record per visited class",
+  "workers": 1024,
+  "steps": "95803668470929860550224427498997735090",
+  "steps_log2": 126.1714,
+  "S_over_sqrtN": "829/572",
+  "dpbits": 0,
+  "meter": "one global counter in instructions; the meter exists before the first table entry, and table, code, each worker start, each walk step (guard-aware price), each lookup, each record write, each collision replay and each candidate verification ask fits() before acting.  A replay or verification that does not fit ABANDONS that worker.  A guard-armed run of 32 squarings aborts the worker.",
+  "abort": "K_STALL=32 consecutive squarings, armed by a guard admission",
+  "census_budget": "steps_budget*(MUL_CHARGE+LOOKUP+REC_WRITE) + 4 replays + one verification reserve, so the fixture executes the claimed S/sqrt(N) steps under the same charges"
+ },
+ "rows_ir": {
+  "walk_steps": "2328055720978775303200393477359638528396185",
+  "per_step_lookup": "9101348504738336752271320612404784833550",
+  "record_writes": "65912923907999744058554406119310441741920",
+  "collision_processing": "8192",
+  "trap_waste_bound": "38800929329913271562360539428418713916",
+  "table_build_R65536": "1004011520000",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "row_derivations": {
+  "walk_steps": "steps x STEP; STEP = (multiply/steps) x MUL_CHARGE + ((branch_sqr+guard_conversions)/steps) x SQR_CHARGE; a guard-converted multiply is charged SQR_CHARGE",
+  "per_step_lookup": "steps x LOOKUP; LOOKUP = 95 Ir, the disassembled span of lookup_probe (hash + two probes + six-word compare) in scripts/ir25/lookup_count.c, evidence/ir25.json",
+  "record_writes": "steps x 688 Ir, 1 Ir per serialized byte; len(serialize_record) = key 48 B + A 32 B + D 32 B + y 576 B = 688 B (>=112 B)",
+  "collision_processing": "ceil(S(S-1)/(2N)) x 4096 Ir; 2 matches expected at 1024 workers and every match, including a failed shift/recovery, is charged",
+  "trap_waste_bound": "S x (3/scan_steps x 32 + (1-f_mul)^32 x 32) x STEP: the rule-of-three admission bound times the measured abort delay 32, plus the normal-run abort bound",
+  "table_build_R65536": "Rg x ENTRY_IR; ENTRY_IR = 2 x 383 dense muls",
+  "worker_starts_1024": "1024 x 383 dense muls",
+  "code_and_advice": "2^20 Ir",
+  "candidate_verification": "57526800 Ir = 1200 x f12mul span (47924) + 18000 compare; f12mul is bigint-verified (evidence/ir25.json)"
+ },
+ "charges": {
+  "MUL_CHARGE": 22409,
+  "SQR_CHARGE": 27611,
+  "STEP": "1944022193/80000",
+  "step_float": 24300.2774125,
+  "f_mul_measured": 0.6364326388888889,
+  "guard_per_step_measured": 0.0009465277777777778,
+  "guard_row_ir_per_step": 26.134578472222223,
+  "base_step_ir": 24274.142834027778,
+  "kernel_spans": {
+   "key_six_plusminus": 1487,
+   "min_rotation_booth": 381,
+   "min_rotation_full": 4233,
+   "cyclotomic_sqr": 25372,
+   "f12mul": 47924,
+   "lookup_probe": 95
+  },
+  "price_source": "scripts/ir25/count_ir.py, otool -tvV of the corrected -O2 kernels; key and booth spans are counted, cyclotomic_sqr is counted, f12mul is counted"
+ },
+ "trap": {
+  "control_admits": {
+   "4": 0,
+   "6": 0,
+   "8": 0
+  },
+  "control_steps": 5760000,
+  "rate_ub": "1/1920000",
+  "delay_mean_measured": 31.26923076923077,
+  "delay_max_measured": 32,
+  "forced_admission_events": 312,
+  "control_abort_events": 0,
+  "control_stall_steps_without_abort": 9744,
+  "waste_steps": "583016256819906299900631277097682972215734635628964570921817914921922118110656343222842614333039259535228979447015601211271477224037927593094313016606694572469566562271636070620172034270590080938781706464814266705601496782172229/365131893008520769325983793397953643571381781425987946549317447188480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "waste_ir": 38800929329913271562360539428418713916,
+  "model": "waste = rate_ub x 32 x STEP x S + normal-run bound.  The mechanism row is the mutant build: admissions forced at a fixed rate, the trap blocks multiplies, and the measured delay-to-abandon is 31.26923076923077 (max 32) over 312 events; the same mutant with the abort disabled never abandons (9744 stalls past 32) and the shipped build has 0 admissions in 5760000 steps."
+ },
+ "tie_analysis": {
+  "samples": 200000,
+  "ties": 2983,
+  "tie_rate": 0.014915,
+  "resolution": "kappa = ks.index(min(ks)) is the FIRST minimum (deterministic); the pool slot is derived from sorted(ks), invariant to which rotation attains the minimum, so a tie cannot fork the table index or the record key.",
+  "statement": "the v24 offset-doubling claim is DELETED: kappa(y^(q^j)) = kappa(y)-j is offset-preserving under the shipped step (F(y^(q^j)) = F(y)^(q^j)), so the offset stays j.  Ties in the argmin are real (measured 1.49e-2) and resolve deterministically: the first minimum fixes kappa and the pool key is the sorted key tuple, invariant to the rotation."
+ },
+ "success": {
+  "census_scale_a": {
+   "rp": 521041,
+   "success": 292,
+   "trials": 512,
+   "cp95": "0.53311622322253260364277593907900154590606689453125",
+   "S_over_sqrtN": 1.4493,
+   "verifies": 292,
+   "aborts": 0,
+   "abandoned": 0
+  },
+  "census_scale_b": {
+   "rp": 10566001,
+   "success": 304,
+   "trials": 512,
+   "cp95": "0.5567350283079637307537268497981131076812744140625",
+   "S_over_sqrtN": 1.4494,
+   "verifies": 304,
+   "aborts": 0,
+   "abandoned": 0
+  },
+  "stay_merged_gap1": "199/200",
+  "rho": 0.9993228254209907,
+  "rho_band_factor": 1.358245962501007,
+  "product": "6876690230287/12963864466220",
+  "product_b": "15325776539341/27666285950450",
+  "floor": "0.39",
+  "witness_collision_verification": "census verify row 207093907 Ir, every solve counted only after a METERED g^x == z",
+  "bridge": "P(solve) = CP95(census at the shipped shape) x P(stay merged at the record horizon).  The horizon is 1 step (one record per visited class), where survival is measured (0.995), not extrapolated.  The v24 kappa explanation is withdrawn; the bridge uses the measured gap-1 value only."
+ },
+ "fidelity_table": [
+  {
+   "parameter": "group order rp",
+   "shipped": "2^255",
+   "fixture_a": "521041",
+   "fixture_b": "10566001",
+   "status": "DEVIATES (enumeration; the two scales differ, so scaling is tested across groups, not resources)"
+  },
+  {
+   "parameter": "Rg (guard + multiplier index)",
+   "shipped": "65536",
+   "fixture": "65536",
+   "status": "MATCHES (full table, 65536 entries)"
+  },
+  {
+   "parameter": "guard depth",
+   "shipped": "5",
+   "fixture": "5",
+   "status": "MATCHES"
+  },
+  {
+   "parameter": "record density",
+   "shipped": "1 per step",
+   "fixture": "1 per step",
+   "status": "MATCHES (dpbits=0 both)"
+  },
+  {
+   "parameter": "S/sqrt(N)",
+   "shipped": "829/572",
+   "fixture": "829/572",
+   "status": "MATCHES (the census shape is the claimed shape)"
+  },
+  {
+   "parameter": "workers",
+   "shipped": "1024",
+   "fixture": "8",
+   "status": "DEVIATES: worker count splits the same step budget.  Collision processing is O(1) per match from the stored record, and the census budget funds four replays plus one verification so the fixture's 128x higher per-step match rate does not truncate the walk; the production replay row is the exact birthday expectation at 1024 workers."
+  },
+  {
+   "parameter": "table build charge",
+   "shipped": "Rg x ENTRY_IR = 2^40 Ir",
+   "fixture": "proportional share (<1 Ir, charged as 1 Ir)",
+   "status": "DEVIATES: the table cost is group-size-independent and 2^99x the whole fixture budget; charging it at face value would make the fixture a measurement of the table build.  The action is metered and fits-checked, the ledger charges it in full."
+  },
+  {
+   "parameter": "verification",
+   "shipped": "57526800 Ir (1200 x f12mul + compare)",
+   "fixture": "metered g^x square-and-multiply, every operation charged",
+   "status": "MATCHES control flow (inside the meter, abandon on failure); the fixture exponent is 19-24 bits because rp is small, so the fixture verification costs ~1e6 Ir vs the production pairing price -- the same one-shot action at the fixture's own arithmetic size."
+  }
+ ],
+ "peak_memory": {
+  "records_pool_bytes": "65912923907999744058554406119310441741920",
+  "table_bytes": "6291456",
+  "worker_states_bytes": "262144",
+  "scan_history_bytes": "40960",
+  "code_bytes": "1048576",
+  "peak_total_bytes": "65912923907999744058554406119310449385056",
+  "peak_total_log2": 135.598,
+  "statement": "peak = records x 688 B + Rg x 96 B + 1024 x 256 B + 1024 x depth x 8 B + code.  The 688 B record is the serialized key+labels+y; it is what buys O(1) collision processing."
+ },
+ "claim": 126.4981,
+ "W_ir": "2403108794320843297282781564631794087629139",
+ "W_log2": 140.7859,
+ "C_unit": 20000,
+ "claim_policy": "floor(log2(W/C)*1e4)/1e4 (a lower bound; no fudge, no round-up)",
+ "sum_rows_equals_W": true,
+ "planted_typo_control": {
+  "detected": true,
+  "typo_sum_minus_W": 1
+ }
+}
