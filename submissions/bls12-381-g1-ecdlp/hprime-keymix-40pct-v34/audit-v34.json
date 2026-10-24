@@ -1,0 +1,174 @@
+{
+ "version": "v34",
+ "checks": {
+  "all_rows_recompute_from_design_and_anchors": {
+   "passed": true,
+   "detail": []
+  },
+  "total_equals_sum_of_rows": {
+   "passed": true,
+   "detail": null
+  },
+  "claim_is_ceiling_of_one_function_cost": {
+   "passed": true,
+   "detail": {
+    "claim": "1168539/10000",
+    "want": "1168539/10000",
+    "covers_stress": true
+   }
+  },
+  "claim_covers_W": {
+   "passed": true,
+   "detail": 3.7459e-05
+  },
+  "score_is_reduced_rational": {
+   "passed": true,
+   "detail": null
+  },
+  "anchor_chain_walks": {
+   "passed": true,
+   "detail": {
+    "price": "P_scan",
+    "declared": 6,
+    "measured": 10
+   }
+  },
+  "every_composite_reconstructs": {
+   "passed": true,
+   "detail": {
+    "P_walk_entry": true,
+    "P_even_form": true,
+    "P_scan": true,
+    "P_store": true,
+    "P_route_sort": true
+   }
+  },
+  "allowance_dominates_compiled_itemised": {
+   "passed": true,
+   "detail": {
+    "compiled": 765,
+    "allowance": 2000
+   }
+  },
+  "hprime_row_prices_the_construction": {
+   "passed": true,
+   "detail": null
+  },
+  "chain_table_row_prices_the_point_construction": {
+   "passed": true,
+   "detail": null
+  },
+  "census_cartesian_cartesian_nochal": {
+   "passed": true,
+   "detail": {
+    "records": 2097152,
+    "per_pool": 8192
+   }
+  },
+  "census_cartesian_chal_shared": {
+   "passed": true,
+   "detail": {
+    "records": 2097152,
+    "per_pool": 8192
+   }
+  },
+  "census_cartesian_chal_bside": {
+   "passed": true,
+   "detail": {
+    "records": 2097152,
+    "per_pool": 8192
+   }
+  },
+  "hist_side_count_matches_expectation": {
+   "passed": true,
+   "detail": {
+    "hist_total": 2097152,
+    "denominator": 2097152
+   }
+  },
+  "planted_side_only_histogram_FIRES": {
+   "passed": true,
+   "detail": {
+    "control": "A-side-only histogram vs both-side expectation",
+    "expectation_denominator": 40000,
+    "planted_hist_total": 20000,
+    "planted_fires": true,
+    "corrected_hist_total": 40000,
+    "corrected_fires": false,
+    "verdict": "the audit check `hist_side_count_matches_expectation` FIRES on the planted v33 histogram and passes on the both-side histogram"
+   }
+  },
+  "challenge_multiplier_in_sampled_function": {
+   "passed": true,
+   "detail": null
+  },
+  "per_pool_cluster_bootstrap_present": {
+   "passed": true,
+   "detail": null
+  },
+  "key_width_ladder_has_four_rungs": {
+   "passed": true,
+   "detail": null
+  },
+  "width_ladder_scope_not_extrapolated": {
+   "passed": true,
+   "detail": null
+  },
+  "success_is_key_path_value": {
+   "passed": true,
+   "detail": null
+  },
+  "pool_level_disclosed": {
+   "passed": true,
+   "detail": null
+  },
+  "heterogeneity_reported": {
+   "passed": true,
+   "detail": null
+  },
+  "tail_labelled_hypothesis": {
+   "passed": true,
+   "detail": null
+  },
+  "markov_row_present": {
+   "passed": true,
+   "detail": null
+  },
+  "claim_does_not_rest_on_tail": {
+   "passed": true,
+   "detail": null
+  },
+  "all_evidence_present": {
+   "passed": true,
+   "detail": []
+  },
+  "stale_certificate_removed": {
+   "passed": true,
+   "detail": null
+  },
+  "experiments_non_empty": {
+   "passed": true,
+   "detail": null
+  },
+  "title_le_300": {
+   "passed": true,
+   "detail": 291
+  },
+  "statement_le_8000": {
+   "passed": true,
+   "detail": 6317
+  },
+  "claims0_le_7965": {
+   "passed": true,
+   "detail": 6317
+  }
+ },
+ "passed": true,
+ "failed": [],
+ "claim": "1168539/10000",
+ "W_log2": 116.853862541,
+ "kappa": 1.231,
+ "success": 0.395879,
+ "hprime_instructions": "12697",
+ "chain_table_instructions": "1048"
+}

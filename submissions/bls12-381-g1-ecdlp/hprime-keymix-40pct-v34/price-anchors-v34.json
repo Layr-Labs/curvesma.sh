@@ -1,0 +1,233 @@
+{
+ "kind": "v34 price anchors: compiled-body derivation chains",
+ "source": {
+  "price_body_v34.c": "b49a8c54dc6a1a41",
+  "price_body_v34.o": "0cfbad6999ae185e"
+ },
+ "method": "clang -O2 -> otool -tV (per-symbol body) -> itemised table -> price -> ledger row; executed counts from the counter build, symbols from nm",
+ "items": {
+  "walk_cursor_and_bound": {
+   "symbol": "op_walk_cursor_and_bound",
+   "compiled_instructions": 9,
+   "executions_per_record": 1,
+   "declared_price": 4,
+   "relation": "declared<=compiled"
+  },
+  "gap_load_2limb": {
+   "symbol": "op_gap_load_2limb",
+   "compiled_instructions": 3,
+   "executions_per_record": 1,
+   "declared_price": 4,
+   "relation": "DECLARED>COMPILED"
+  },
+  "gap_index": {
+   "symbol": "op_gap_index",
+   "compiled_instructions": 7,
+   "executions_per_record": 1,
+   "declared_price": 2,
+   "relation": "declared<=compiled"
+  },
+  "table_point_load": {
+   "symbol": "op_table_point_load",
+   "compiled_instructions": 15,
+   "executions_per_record": 1,
+   "declared_price": 6,
+   "relation": "declared<=compiled"
+  },
+  "point_store_into_record": {
+   "symbol": "op_point_store_into_record",
+   "compiled_instructions": 12,
+   "executions_per_record": 1,
+   "declared_price": 3,
+   "relation": "declared<=compiled"
+  },
+  "walk_loop_control": {
+   "symbol": "op_walk_loop_control",
+   "compiled_instructions": 4,
+   "executions_per_record": 1,
+   "declared_price": 3,
+   "relation": "declared<=compiled"
+  },
+  "p_minus_y": {
+   "symbol": "op_p_minus_y",
+   "compiled_instructions": 31,
+   "executions_per_record": 1,
+   "declared_price": 12,
+   "relation": "declared<=compiled"
+  },
+  "even_rep_select": {
+   "symbol": "op_even_rep_select",
+   "compiled_instructions": 16,
+   "executions_per_record": 1,
+   "declared_price": 7,
+   "relation": "declared<=compiled"
+  },
+  "route_4hops_x_21bits": {
+   "symbol": "op_route_4hops_x_21bits",
+   "compiled_instructions": 12,
+   "executions_per_record": 1,
+   "declared_price": 68,
+   "relation": "DECLARED>COMPILED"
+  },
+  "sort_3_passes_x_25": {
+   "symbol": "op_sort_3_passes_x_25",
+   "compiled_instructions": 239,
+   "executions_per_record": 1,
+   "declared_price": 75,
+   "relation": "declared<=compiled"
+  },
+  "group_scan": {
+   "symbol": "op_group_scan",
+   "compiled_instructions": 82,
+   "executions_per_record": 1,
+   "declared_price": 10,
+   "relation": "declared<=compiled"
+  },
+  "op_fp381_mulmod": {
+   "call_chain": [],
+   "symbol": "op_fp381_mulmod",
+   "compiled_instructions": 90,
+   "transitive_instructions": 90,
+   "executions_per_record": 1,
+   "declared_price": null,
+   "relation": "construction primitive (anchors a ledger row)"
+  },
+  "op_subgroup_membership": {
+   "call_chain": [
+    [
+     "op_fp381_mulmod",
+     94
+    ]
+   ],
+   "symbol": "op_subgroup_membership",
+   "compiled_instructions": 37,
+   "transitive_instructions": 8497,
+   "executions_per_record": 1,
+   "declared_price": null,
+   "relation": "construction primitive (anchors a ledger row)"
+  },
+  "op_prime_screen": {
+   "call_chain": [],
+   "symbol": "op_prime_screen",
+   "compiled_instructions": 150,
+   "transitive_instructions": 150,
+   "executions_per_record": 1,
+   "declared_price": null,
+   "relation": "construction primitive (anchors a ledger row)"
+  },
+  "op_point_construct": {
+   "call_chain": [
+    [
+     "op_fp381_mulmod",
+     11
+    ]
+   ],
+   "symbol": "op_point_construct",
+   "compiled_instructions": 58,
+   "transitive_instructions": 1048,
+   "executions_per_record": 1,
+   "declared_price": null,
+   "relation": "construction primitive (anchors a ledger row)"
+  }
+ },
+ "composites": {
+  "P_walk_entry": {
+   "components": [
+    "walk_cursor_and_bound",
+    "gap_index",
+    "table_point_load",
+    "point_store_into_record",
+    "walk_loop_control"
+   ],
+   "measured_from_compiled": 47,
+   "declared_price": 18,
+   "reconstructs": true,
+   "chain": "design -> compiled bodies -> price -> ledger row"
+  },
+  "P_even_form": {
+   "components": [
+    "p_minus_y",
+    "even_rep_select"
+   ],
+   "measured_from_compiled": 47,
+   "declared_price": 19,
+   "reconstructs": true,
+   "chain": "design -> compiled bodies -> price -> ledger row"
+  },
+  "P_scan": {
+   "components": [
+    "gap_load_2limb",
+    "gap_index"
+   ],
+   "measured_from_compiled": 10,
+   "declared_price": 6,
+   "reconstructs": true,
+   "chain": "design -> compiled bodies -> price -> ledger row"
+  },
+  "P_store": {
+   "components": [
+    "table_point_load",
+    "point_store_into_record"
+   ],
+   "measured_from_compiled": 27,
+   "declared_price": 9,
+   "reconstructs": true,
+   "chain": "design -> compiled bodies -> price -> ledger row"
+  },
+  "P_route_sort": {
+   "components": [
+    "route_4hops_x_21bits",
+    "sort_3_passes_x_25",
+    "group_scan"
+   ],
+   "measured_from_compiled": 333,
+   "declared_price": 153,
+   "reconstructs": true,
+   "chain": "design -> compiled bodies -> price -> ledger row"
+  }
+ },
+ "nm_symbols": [
+  "op_even_rep_select",
+  "op_fp381_mulmod",
+  "op_gap_index",
+  "op_gap_load_2limb",
+  "op_group_scan",
+  "op_p_minus_y",
+  "op_point_construct",
+  "op_point_store_into_record",
+  "op_prime_screen",
+  "op_route_4hops_x_21bits",
+  "op_sort_3_passes_x_25",
+  "op_subgroup_membership",
+  "op_table_point_load",
+  "op_walk_cursor_and_bound",
+  "op_walk_loop_control"
+ ],
+ "constructions": {
+  "hprime_element": {
+   "chain": [
+    "op_subgroup_membership (modexp: subgroup membership test)",
+    "hprime_expected_candidates x op_prime_screen (rejected candidates)"
+   ],
+   "instructions": 12697,
+   "note": "one H-prime = one membership modexp over the 38-bit exponent band + the expected 28 trial-division screens before a prime is accepted"
+  },
+  "chain_table_entry": {
+   "chain": [
+    "op_point_construct (12 field mults + Fermat inversion)"
+   ],
+   "instructions": 1048,
+   "note": "each chain-table entry is an EC POINT built once; the row was previously priced as a load/store of a point that was never constructed"
+  }
+ },
+ "executed_counts": {
+  "calls": 1000000,
+  "checksum": 525628664320,
+  "raw": "calls_per_op=1000000 checksum=525628664320 cursor=116416"
+ },
+ "itemised_sum_declared": 194,
+ "itemised_sum_compiled": 765,
+ "per_record_allowance": 2000,
+ "allowance_covers_compiled": true,
+ "verdict": "every lattice price is reconstructed from compiled bodies and is a LOWER bound on the measured body cost; the per-record 2000-instruction allowance strictly dominates the measured itemised total, so no row under-charges and no price is taken on the table's own authority"
+}

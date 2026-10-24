@@ -1,0 +1,337 @@
+{
+ "version": "v34",
+ "C_instructions_per_unit": 2000,
+ "rows": {
+  "walk_list": 68560769907111997075139,
+  "hprime_supply_construction": 47054924081654109560164318,
+  "chain_table_construction": 36009005809664,
+  "fixed_per_node": 5383208929591296,
+  "base_entry": 1337006139375616,
+  "walker_state": 281474976710656,
+  "gap_point_tables": 18133887294219437620592640000,
+  "gap_self_check": 11117962687639783309476,
+  "gap_retry_worst": 9644414303054693856590986,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "run_pair_cap": 79228162514264337593543950336,
+  "root_and_io": 12582912,
+  "root_scan_T": 160432128,
+  "records": 300294722857684415028039625172712423424
+ },
+ "row_log2": {
+  "walk_list": 75.859801,
+  "hprime_supply_construction": 85.282548,
+  "chain_table_construction": 45.033423,
+  "fixed_per_node": 52.257388,
+  "base_entry": 50.247928,
+  "walker_state": 48.0,
+  "gap_point_tables": 93.872675,
+  "gap_self_check": 73.235311,
+  "gap_retry_worst": 82.995968,
+  "candidate_scan_cap": 104.0,
+  "run_pair_cap": 96.0,
+  "root_and_io": 23.584963,
+  "root_scan_T": 27.257388,
+  "records": 127.819647
+ },
+ "preprocessing_derivations": {
+  "walk_list": {
+   "count_expr": "ell",
+   "price_expr": "P_walk_entry + P_even_form",
+   "count": "1852993781273297218247",
+   "price": "37",
+   "value": "68560769907111997075139",
+   "construction": "shared walk list: ell entries at (cursor+bound, gap index, point load, store, loop tail) + even-representative selection",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "hprime_supply_construction": {
+   "count_expr": "sides * ell",
+   "price_expr": "HPRIME_ELEMENT",
+   "count": "3705987562546594436494",
+   "price": "12697",
+   "value": "47054924081654109560164318",
+   "construction": "H-PRIME SUPPLY, COSTED AS A CONSTRUCTION (verdict flaw 4): sides x ell elements, each = one subgroup-membership modexp (op_subgroup_membership, 94 field mults, anchored to its compiled body) + hprime_expected_candidates trial-division screens (op_prime_screen) for the rejected candidates",
+   "price_anchor": "price-anchors-v34.json:constructions/hprime_element"
+  },
+  "chain_table_construction": {
+   "count_expr": "sides * chain_windows * (2 ** chain_entries_log2)",
+   "price_expr": "CHAIN_ENTRY",
+   "count": "34359738368",
+   "price": "1048",
+   "value": "36009005809664",
+   "construction": "CHAIN-TABLE POINT CONSTRUCTION (verdict flaw 4): sides x 2^d windows x 2^31 entries, each entry an EC POINT built once (op_point_construct = 12 field mults + Fermat inversion over the compiled mulmod body), not a load/store of a point that was never built",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "fixed_per_node": {
+   "count_expr": "nb",
+   "price_expr": "P_route_sort",
+   "count": "35184372088832",
+   "price": "153",
+   "value": "5383208929591296",
+   "construction": "per-base fixed setup: nb bases, one routing + sort + group pass",
+   "price_anchor": "price-anchors-v34.json:P_route_sort"
+  },
+  "base_entry": {
+   "count_expr": "sides * nb",
+   "price_expr": "P_even_form",
+   "count": "70368744177664",
+   "price": "19",
+   "value": "1337006139375616",
+   "construction": "record-window entry per base",
+   "price_anchor": "price-anchors-v34.json:P_even_form"
+  },
+  "walker_state": {
+   "count_expr": "sides * nb",
+   "price_expr": "4",
+   "count": "70368744177664",
+   "price": "4",
+   "value": "281474976710656",
+   "construction": "one walk cursor per base per side",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "gap_point_tables": {
+   "count_expr": "sides * nb * (2 ** gap_support_log2)",
+   "price_expr": "gap_entry_point_ops * C_instructions_per_unit",
+   "count": "604462909807314587353088",
+   "price": "30000",
+   "value": "18133887294219437620592640000",
+   "construction": "gap-band point tables, 15 point operations per entry at the unit price; support DERIVED in gap_support",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "gap_self_check": {
+   "count_expr": "ell - 1",
+   "price_expr": "P_scan",
+   "count": "1852993781273297218246",
+   "price": "6",
+   "value": "11117962687639783309476",
+   "construction": "self-check over ell-1 DISTINCT gaps",
+   "price_anchor": "price-anchors-v34.json:P_scan"
+  },
+  "gap_retry_worst": {
+   "count_expr": "retry_draws * q_gap_cp95_num * ell * per_record_instructions // (q_gap_cp95_den - q_gap_cp95_num) + 1",
+   "price_expr": "1",
+   "count": "9644414303054693856590986",
+   "price": "1",
+   "value": "9644414303054693856590986",
+   "construction": "retry price: retry_draws x q/(1-q) x one discarded walk pass",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "candidate_scan_cap": {
+   "count_expr": "2 ** candidates_log2",
+   "price_expr": "per_candidate_instructions",
+   "count": "19342813113834066795298816",
+   "price": "1048576",
+   "value": "20282409603651670423947251286016",
+   "construction": "declared candidate cap",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "run_pair_cap": {
+   "count_expr": "2 ** run_pairs_log2",
+   "price_expr": "run_pair_instructions",
+   "count": "39614081257132168796771975168",
+   "price": "2",
+   "value": "79228162514264337593543950336",
+   "construction": "declared run-pair cap",
+   "price_anchor": "price-anchors-v34.json:constructions/chain_table_entry"
+  },
+  "root_and_io": {
+   "count_expr": "sides * (2 ** root_tests_log2)",
+   "price_expr": "P_scan",
+   "count": "2097152",
+   "price": "6",
+   "value": "12582912",
+   "construction": "root extraction and IO",
+   "price_anchor": "price-anchors-v34.json:P_scan"
+  },
+  "root_scan_T": {
+   "count_expr": "(2 ** root_tests_log2)",
+   "price_expr": "P_route_sort",
+   "count": "1048576",
+   "price": "153",
+   "value": "160432128",
+   "construction": "final T-table scan",
+   "price_anchor": "price-anchors-v34.json:P_route_sort"
+  },
+  "records": {
+   "count_expr": "sides * nb * ell",
+   "price_expr": "per_record_instructions",
+   "count": "130392845357222933142874348750635008",
+   "price": "2303",
+   "value": "300294722857684415028039625172712423424",
+   "construction": "2*rps charged instructions per record",
+   "price_anchor": "price-anchors-v34.json:composites/P_route_sort + P_scan etc. (itemised sum 194 <= compiled 765)"
+  }
+ },
+ "preprocessing_all_derived": true,
+ "derivation_inputs": "design-v34.json + price-anchors-v34.json (compiled bodies); no row value is an input to any derivation",
+ "total_instructions": 300294743237512847505318165588521941967,
+ "W": "300294743237512847505318165588521941967/2000",
+ "W_log2": 116.85386254130222,
+ "claim": {
+  "numerator": "1168539",
+  "denominator": "10000",
+  "value": 116.8539,
+  "reduced": true
+ },
+ "claim_minus_W": 3.7459e-05,
+ "claim_covers_doubling_stress": true,
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": -0.0268,
+ "claim_vs_gate": "OVER gate by 0.0268 bits -- DISCLOSED",
+ "success": {
+  "claimed_value": 0.395879,
+  "claimed_quantity": "measured production-structure success probability, one-sided CP-95 LOWER endpoint, 200000 trials over the long-walk rungs",
+  "key_path": "structured-ladder.json:pooled_long_walks.cp95_lower",
+  "floor": 0.39,
+  "margin_over_floor": 0.005879,
+  "meets_floor": true,
+  "pool_level": {
+   "claim_population": "long-walk rungs (ell>=64), 5 rungs, 200000 trials",
+   "per_rung": [
+    {
+     "nb": 22,
+     "ell": 6944,
+     "cp95_lower": 0.3896,
+     "floor_met": false
+    },
+    {
+     "nb": 224,
+     "ell": 682,
+     "cp95_lower": 0.393839,
+     "floor_met": true
+    },
+    {
+     "nb": 1364,
+     "ell": 112,
+     "cp95_lower": 0.387206,
+     "floor_met": false
+    },
+    {
+     "nb": 2387,
+     "ell": 64,
+     "cp95_lower": 0.391595,
+     "floor_met": true
+    },
+    {
+     "nb": 9548,
+     "ell": 16,
+     "cp95_lower": 0.366168,
+     "floor_met": false
+    },
+    {
+     "nb": 152768,
+     "ell": 1,
+     "cp95_lower": 0.395585,
+     "floor_met": true
+    },
+    {
+     "nb": 22,
+     "ell": 6944,
+     "cp95_lower": 0.396298,
+     "floor_met": true
+    }
+   ],
+   "rungs_below_floor": 3,
+   "failing": [
+    6944,
+    112,
+    16
+   ],
+   "heterogeneity_Q": 3.132,
+   "heterogeneity_significant": false,
+   "cluster_bootstrap": {
+    "resamples": 2000,
+    "unit": "rung/pool (claim population)",
+    "lo": 0.3922,
+    "hi": 0.397232,
+    "statistic": "Wilson lower of the resampled pool",
+    "role": "cluster-robust lower bound on the common q"
+   },
+   "consumption_unit": "ONE pool: nb=2^45 bases multiplied against ONE shared walk list of ell=2^70.650 positions; the production record set is the Cartesian product, so the arm's per-trial unit IS the production consumption unit",
+   "floor_level": "the 0.39 floor is asserted at the POOL level (the single production pool), and separately reported per rung; it is NOT asserted at the rung level for every rung",
+   "disclosure": "3 of 7 rungs have a per-rung CP-95 lower endpoint below 0.39; those rungs are at -1.53, -0.84, 5.33 SE from the floor, i.e. the misses are sampling noise at 20k trials, and the claim does not rest on them: it rests on the 200k-trial pooled endpoint, whose rung-level heterogeneity is tested above and is not significant"
+  },
+  "residual_disclosure": "the fixture-to-production extrapolation (nb/ell split, 97-bit exponent sliver, 2^38 fixture order) is NOT claimed as transferable"
+ },
+ "gap_support": {
+  "ell_used": "1852993781273297218247",
+  "ell_log2": 70.650348,
+  "distinct_gaps": "1852993781273297218246",
+  "support_log2": 33,
+  "geometric_tail": {
+   "hypothesis": "HYPOTHESIS, NOT A DERIVED FACT: production H-prime gaps decay geometrically with mean mu=2^26.067, i.e. P(gap > t) <= exp(-t/mu). The finite gap observations SUPPORT it but cannot establish it at 2^33; no tail event beyond the observed maximum has ever been seen",
+   "empirical_support": {
+    "samples": "the banked gap observations of the walk arm (structured-ladder.json run set)",
+    "max_observed_gap_log2": null,
+    "max_observed_gap_note": "the banked ladder records the hit test, not the raw gap list; the max observed gap is therefore NOT reported and the geometric row is labelled a hypothesis, not a fit"
+   },
+   "union_bound_log2": -105.635,
+   "status": "CARRIED AS A HYPOTHESIS: the 2^-105.6 abort bound is a consequence of this hypothesis and is not evidence for it"
+  },
+  "markov": {
+   "rule": "P(gap > t) <= E[gap]/t  (Markov, no tail assumption)",
+   "t_log2": 33,
+   "E_gap_log2": 26.067,
+   "single_gap_log2": -6.933,
+   "union_over_distinct_gaps_log2": 63.717,
+   "verdict": "HYPOTHESIS-FREE AND INSUFFICIENT: Markov cannot pay for 2^33 support at production ell. The gap row is therefore reported as a hypothesis-dependent charge, not as a bounded abort probability, and the claim does not rest on the tail"
+  },
+  "charge_disclosure": "gap_point_tables is 2^93.873 of a 2^116.854 total: the tail hypothesis moves the claim by <1e-4 bits either way, so no part of the claim depends on inventing a tail"
+ },
+ "kappa": {
+  "charged": 1.231,
+  "source": "census-prod-v34.json:charged_kappa",
+  "cells": {
+   "cartesian_nochal": {
+    "cross": 1.021973,
+    "within": 1.008791
+   },
+   "chal_shared": {
+    "cross": 0.998047,
+    "within": 0.993162
+   },
+   "chal_bside": {
+    "cross": 1.010986,
+    "within": 1.008303
+   },
+   "diagonal_v33": {
+    "cross": 2.0,
+    "within": 0.0
+   }
+  },
+  "rule": "max upper95 over POWERED cells (expected cross pairs >= 100), with the 1.231 carried envelope as a floor; the low-power diagonal control is reported and does not set the charge",
+  "v33_charged": 2.613761,
+  "census_object": "Cartesian base x walk with the challenge multiplier inside phi, both-side histogram, per-pool cluster bootstrap"
+ },
+ "debit": {
+  "E_bad_log2": 63.600527,
+  "cap_bad_log2": 84,
+  "headroom_bits": 20.3995,
+  "form": "kappa * N^2/2^168",
+  "key_width_bits": 168
+ },
+ "anchors": {
+  "file": "price-anchors-v34.json",
+  "itemised_declared": 194,
+  "itemised_compiled": 765,
+  "allowance_covers_compiled": true,
+  "reconstructions": {
+   "P_walk_entry": true,
+   "P_even_form": true,
+   "P_scan": true,
+   "P_store": true,
+   "P_route_sort": true
+  },
+  "hprime_element_instructions": 12697,
+  "chain_table_entry_instructions": 1048,
+  "chain": "source symbol -> clang -O2 -> otool -tV body -> instruction count -> itemised table -> price -> ledger row"
+ },
+ "retune": {
+  "nb": 35184372088832,
+  "nb_log2": 45,
+  "ell": 1852993781273297218247,
+  "ell_log2": 70.650348
+ }
+}

@@ -1,0 +1,20 @@
+cartesian_nochal {'cross': 1.021973, 'within': 1.008791} {'resamples': 400, 'over_pools': True, 'lo': 0.986328, 'hi': 1.057617, 'note': 'percentile CI resampling POOLS; pools are the production consumption unit'}
+chal_shared {'cross': 0.998047, 'within': 0.993162} {'resamples': 400, 'over_pools': True, 'lo': 0.954346, 'hi': 1.046143, 'note': 'percentile CI resampling POOLS; pools are the production consumption unit'}
+chal_bside {'cross': 1.010986, 'within': 1.008303} {'resamples': 400, 'over_pools': True, 'lo': 0.981201, 'hi': 1.038818, 'note': 'percentile CI resampling POOLS; pools are the production consumption unit'}
+diagonal_v33 {'cross': 2.0, 'within': 0.0} {'resamples': 400, 'over_pools': True, 'lo': 0.0, 'hi': 5.0, 'note': 'percentile CI resampling POOLS; pools are the production consumption unit'}
+ladder 20 1.033936
+ladder 24 1.246094
+ladder 28 5.1875
+ladder 32 65.0
+{
+ "charged_kappa": 1.231,
+ "delta": {
+  "v33_charged": 2.613761,
+  "v34_charged": 1.231,
+  "cause": "v33 paired k_i+s_i (diagonal) and withheld the challenge; the diagonal cell is retained here and reproduces the elevation, which is why the pairing was the defect and not the kernel",
+  "diagonal_cell_kappa": 2.0,
+  "cartesian_cell_kappa": 0.998047
+ },
+ "hist_ok": true,
+ "control_fires": true
+}

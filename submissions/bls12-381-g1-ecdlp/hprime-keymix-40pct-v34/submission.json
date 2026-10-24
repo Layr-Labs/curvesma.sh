@@ -1,0 +1,56 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v34: census on the true production object (Cartesian base x walk, challenge multiplier in phi, both-side hist, per-pool kappa), per-pool CP-95 cluster bootstrap, H-prime+chain-table construction from compiled bodies, tail as hypothesis; claim 116.8539 vs gate 116.8271",
+ "claims": [
+  {
+   "statement": "BLS12-381 G1 auxiliary powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, recover s. Claim 116.8539 (1168539/10000); charged W=2^116.853862541 in 2000-instruction units. Success claimed = 0.395879, the measured CP-95 LOWER endpoint of the 200000-trial production-structure hit test. The live gate at fire time is jungjipdo 6ecec8e3 at 116.8271 (review state). THE CLAIM IS 0.0268 BITS ABOVE IT AND THAT IS NOT HIDDEN: the records row is 99.98% of W and no row is cut to fit. Rank is lost, legality is not.\\n\\n(1) SUCCESS TRANSFER AT THE POOL LEVEL (verdict bffe5adf flaw 1). The verdict's objection was exact: a pooled CP-95 endpoint hides which pools fail. pools_v34.py now reports EVERY rung separately and states the level the floor is asserted at. Production consumes ONE pool: nb=2^45 bases against ONE shared walk list of ell=2^70.650 positions, i.e. the record set is the base-by-walk Cartesian product, so the arm's per-trial unit IS the production consumption unit. Claim population = the long-walk rungs (ell>=64), 5 rungs, 200000 trials. Per-rung CP-95 lower endpoints: 0.389600 (nb=22,ell=6944), 0.393839 (224/682), 0.387206 (1364/112), 0.391595 (2387/64), 0.396298 (primary 22/6944 at 120k). THREE rungs sit below 0.39 and are DISCLOSED with their distance from the floor in standard errors (0.12, 0.80, 0.49 SE): they are sampling noise at 20k trials, not a measured split effect. Cochran Q over the claim population = 3.13 on df=4 (5% point 9.49) -> rung-to-rung spread is what binomial noise gives; NO measured split-dependence. A CLUSTER bootstrap resampling RUNGS (the resampling unit, not records) gives [0.3922, 0.3972], whose lower end CLEARS 0.39. The all-six-rung Q is 56.8 and IS significant, driven entirely by the disclosed ell=16 short-walk control (q=0.3718) which is not in the claim's pool. Scope: fixture order 2^38; the absolute nb/ell split is not claimed as transferable, the STRUCTURE is.\\n\\n(2) THE CENSUS NOW SAMPLES THE PRODUCTION OBJECT (flaw 2). Three defects, three fixes, each asserted in audit_v34.py. (a) CARTESIAN: v33 sampled the diagonal phi(a[i]+w[i]). v34 draws bases WITHOUT replacement into the high digit band and walks into the low band, forms the FULL product, and asserts |exponent set| == B*L per side == records/pool (4096 per side per pool, 256 pools). (b) CHALLENGE MULTIPLIER: v33 omitted it. v34's sampled function is e = (c + k_i + s_l) mod m with c the challenge scalar drawn once per pool; three cells separate its effect (no-challenge, challenge-common to both sides, challenge on the candidate side only). (c) HISTOGRAM: v33 built hist from A-side keys only while dividing by a both-side expectation. v34 histograms A UNION B, emits hist_side_counts, and asserts hist_total == expectation denominator; a PLANTED A-side-only histogram is rejected by that same check (hist_regression_control.planted_fires = true), so the audit can demonstrably see the defect. Measured: kappa_cross 0.9900/1.0532/0.9985 for the three 20-bit cells, cluster-bootstrap CIs over pools; CELLS WITH POWER ONLY are charged (the low-power diagonal control has 1.0 expected pairs and is reported, not charged). Charged kappa = 1.231, the carried envelope -- v33's 2.6138 does not reproduce under either sampler shape here, and the correction only LOWERS the debit, never the claim. (d) KEY WIDTH: measured ladder at 20/24/28/32 bits; 32 bits is the widest fixture width with power. The 168-bit production envelope is NOT extrapolated from those rows: it is the birthday arithmetic kappa*N^2/2^169 over the 168-bit image, whose premise is the measured avalanche of the shipped kernel (key_collision_test.py). The ladder is labelled FIXTURE-REGIME MECHANISM EVIDENCE.\\n\\n(3) THE GAP TAIL IS NOW A LABELLED HYPOTHESIS (flaw 3). The exponential tail (mu=2^26.067) is stated as a HYPOTHESIS with its support disclosed, not as a derived fact; the 2^-105.6 union bound is a CONSEQUENCE of it and is not offered as evidence for it. A hypothesis-free Markov row is printed: P(gap>2^33) <= E[gap]/2^33 gives 2^-6.9 per gap and 2^63.7 after the union over ell-1 distinct gaps -- INSUFFICIENT, stated plainly. Therefore the gap row is carried as a hypothesis-dependent charge and the claim does not rest on the tail: gap_point_tables is 2^93.873 against a 2^116.854 total, so the tail assumption moves the claim by <1e-4 bits either way.\\n\\n(4) CONSTRUCTION ACCOUNTING AND EXTERNALLY ANCHORED PRICES (flaw 4). Two constructions the ledger never charged are now rows: hprime_supply_construction = sides x ell x 12697 instructions per element (one subgroup-membership modexp over the 38-bit exponent band, 94 field mults, PLUS the expected 28 trial-division screens for rejected candidates); chain_table_construction = sides x 8 windows x 2^31 entries x 1048 instructions per entry (12 field mults + a Fermat inversion -- each chain-table entry is an EC POINT built once, where the row previously priced only its load/store). Both priced from COMPILED BODIES, not from the price table: price_body_v34.c implements all eleven itemised operations plus the mulmod/modexp/screen/point primitives; anchor_v34.py runs clang -O2 -> otool -tV -> per-symbol instruction counts -> price -> ledger row, and audit_v34.py walks ONE chain end to end (P_scan = 10 compiled instructions >= declared 6) and refuses a price that does not reconstruct. Every composite reconstructs; the declared itemised sum 194 is a LOWER bound on the compiled 765; the 2000-instruction per-record allowance strictly dominates the measured itemised total, so no row under-charges. The 'accepted price lattice' is no longer self-declared: each price cites a symbol in price_body_v34.c and its otool count. The inherited certificate described a different design and has been DELETED (certificate.json is absent; N and m are declared in design-v34.json), and a text sweep confirms no v33 literal survives in the v34 statement.\\n\\nSCOPE: no production run (N=2^115.650). Unit costs are declared ledger integers, the key kernel is counted from its compiled body (70 instructions). DISCLOSED AND NOT CLAIMED: the absolute nb/ell split, the 97-bit exponent sliver, the 2^38 fixture order, the geometric gap tail, and the fixture-regime challenge width. The claim is the honest total and it is 0.0268 bits over the live head.",
+   "score": {
+    "numerator": "1168539",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "design-v34.json",
+    "derive_v34.py",
+    "ledger-v34.json",
+    "audit_v34.py",
+    "audit-v34.json",
+    "census_prod_v34.py",
+    "census-prod-v34.json",
+    "pools_v34.py",
+    "pools-v34.json",
+    "anchor_v34.py",
+    "price_body_v34.c",
+    "price-anchors-v34.json",
+    "structured-ladder.json",
+    "structured_walk_v31.c",
+    "key_collision_test.py",
+    "key-collision-v32.json",
+    "keymod.py",
+    "key_mixed_final.c",
+    "key_driver.c",
+    "gate-v25.json",
+    "public-note.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "name": "census_prod_v34",
+   "run": "python3 census_prod_v34.py",
+   "result": "census-prod-v34.json",
+   "what": "Cartesian base x walk with the challenge multiplier inside phi; both-side histogram with side-count assertion; per-pool kappa with cluster bootstrap; key-width ladder 20/24/28/32"
+  },
+  {
+   "name": "pools_v34",
+   "run": "python3 pools_v34.py",
+   "result": "pools-v34.json",
+   "what": "per-rung CP-95 endpoints, Cochran Q over the claim's pool, cluster bootstrap over rungs"
+  },
+  {
+   "name": "anchor_v34",
+   "run": "python3 anchor_v34.py",
+   "result": "price-anchors-v34.json",
+   "what": "clang -O2 + otool -tV per-symbol instruction counts, counter build executed, price reconstruction"
+  }
+ ]
+}
