@@ -1,0 +1,28 @@
+{
+ "version": 1,
+ "title": "Restarted-worker protocol (records x trail = S), abelian-valid trap census (exact Z[zeta12] enumeration; v20 walk traps every 2^32.882 steps; depth-5 guard + R=2^16 leaves 2^9.595, priced), 64-instance multi-target census with CP-95-derived reserve, claim 125.7908",
+ "claims": [
+  {
+   "statement": "For the supplied nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q), recover z=g^x by a Frobenius-class rho walk in GT and return [x]P0 verified against e(P,Q)=z.  A multiply step charges 22487 instructions and a cyclotomic squaring 17359 (key+rotation recompute funded).  The walker is RESTARTED: 1024 workers, trail (w,j) starts at g^a z^b for (a,b)=SHAKE256(sigma_w||j), ends at its FIRST DP report, emits one 52 B record (32 B fingerprint, 2 B worker, 2 B restart, 16 B step), and restarts; records = S/2^100 and records x mean trail length = S exactly, so the priced 71551125138390883155967982189214756238 steps are the executed steps (restart row 1226117666371992 instructions, replay row 52135933886186618824756409474149672, both charged).  The trap analysis is exact, not an independence argument: GT is abelian, so a slot word's product is 1 identically iff every per-slot exponent sum vanishes in Z[x]/(x^4-x^2+1) (zeta=p^-1, zeta^6=-1); enumerating every canonical word shows the v20 configuration (R=4096, depth-1 guard) traps every 2^32.882 steps, and the submitted configuration (R=2^16, depth-5 slot-history guard, a class function of the walk's own slot history) leaves 2^9.595 traps, whose wasted trail budget T_MAX=2^104 is priced as 322768205106579783054291000822033907369 instructions.  Success is measured over 64 independent (target, table-seed) instances, 763/768, exact Clopper-Pearson lower end 0.98636023754575717248371802270412445068359375; that CP-95 value, not an assigned reserve, is the retention from which S is solved backwards, giving a certified success floor 0.390100 >= 0.39 after abort, DP-detection, trail-abort and storage debits.  The algorithm meters its work against the exact integer cap 73587488096482845977083256359890789431 work units = 1471749761929656919541665127197815788620000 instructions before each step.",
+   "score": {
+    "numerator": "314477",
+    "denominator": "2500"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/patterns21.json",
+    "evidence/census21-toy.json",
+    "evidence/guard21-toy.json",
+    "evidence/keys20.json",
+    "evidence/ledger21.json",
+    "public-note.md",
+    "scripts/census21.py",
+    "scripts/toy21.py",
+    "scripts/gen21.py"
+   ]
+  }
+ ],
+ "experiments": []
+}
