@@ -1,0 +1,86 @@
+{
+ "about": "Binds the shipped evidence by hash and states which checks pass and which do NOT. It is deliberately not a claim of algorithmic success at fixture scale or otherwise: the shipped arm's measured success probability is below the floor and is recorded as failing.",
+ "assert": {
+  "a_numerator_probe_excluded_as_invalid": true,
+  "batch_inv_amortized_at_shipped_width": true,
+  "batch_inv_worst_of_8_16_charged": true,
+  "charge_equals_sum": true,
+  "claim_covers_W": true,
+  "claim_is_ceiling": true,
+  "control_arm_meets_floor": true,
+  "doubling_branch_never_fires": true,
+  "kappa_derived_and_charged": true,
+  "pair_census_measured_both_arms": true,
+  "pair_census_protocol_two_runs_fresh_coins": true,
+  "success_ge_floor_shipped_arm": false,
+  "theta2_law_withdrawn": true,
+  "witness_gate_verified_equals_meets": true
+ },
+ "assert_notes": {
+  "a_numerator_probe_excluded_as_invalid": "the a=-3 numerator-only probe gives verified/meets=0.0057 and is excluded from every claim; see evidence/a_shift.json.",
+  "batch_inv_worst_of_8_16_charged": "share 385*147/B: 7074.375 at B=8, 3537.1875 at B=16, 0.8636 at B=65536; B=8 charged.",
+  "claim_is_ceiling": "131.6873 is the 4-dp ceiling of 131.6872366, so the at-most direction holds.",
+  "doubling_branch_never_fires": "0 doubling events in 18019189440 measured walker-steps (both a=0 arms), and 2^-128.4 expected at production, so the a=-3 numerator is never evaluated.",
+  "pair_census_protocol_two_runs_fresh_coins": "one challenge per set, run 2 only on run-1 failure, fresh walker coins per run, CP95 lower on the measured set fraction.",
+  "success_ge_floor_shipped_arm": "FALSE, and it is why this package is not promotable. Shipped arm p2=0.07050, CP95 lower 0.06514, against the 0.39 floor. The control arm is 0.45583 / 0.44519 and does meet it; the control is NOT the shipped walk and is not claimed as such.",
+  "witness_gate_verified_equals_meets": "a=0 arms: 503/503 (shipped) and 3162285/3162285 (control)."
+ },
+ "binds": {
+  "argument.md": {
+   "bytes": 12775,
+   "sha256": "e935747964ae4776ac8b01104271082b36d83bef817d2ab702771b7ffaeb6926"
+  },
+  "evidence/a_shift.json": {
+   "bytes": 1997,
+   "sha256": "ed506c6c5713618a2975fd9384a5e3ba39a62ccb69ff21f1d244e6e0cd862e50"
+  },
+  "evidence/arith_audit_v10p.json": {
+   "bytes": 5118,
+   "sha256": "380ad30b16ec99aae55409ae702ed8e4d066d6de037fba3d79e8cdd3aa945d4a"
+  },
+  "evidence/batch_amortization.json": {
+   "bytes": 2239,
+   "sha256": "bacf1306cdbbea0bb43b42316d450d7a8010c83357d60d373c63d9fee14352d4"
+  },
+  "evidence/census_v10p.c": {
+   "bytes": 16265,
+   "sha256": "90a9cab45da2e16b4b522bcd5ceb27fb26f0cd56555ec84e2108e58430cc81e7"
+  },
+  "evidence/claim.json": {
+   "bytes": 160,
+   "sha256": "2eff089e0d4b6b574e7c12501ff49a29d2ef0a992dcbe4e832b31752f7cb3fa6"
+  },
+  "evidence/cp_calib.json": {
+   "bytes": 1315,
+   "sha256": "ab19f24fc8f6451dd8d315ee6e714bb071f291e96cc68213227e78934aba204b"
+  },
+  "evidence/kappa_transfer.json": {
+   "bytes": 1377,
+   "sha256": "67b154694ded1591deefb5f7d5f6f5bf42829cf4fcac70507358ccf84bf04e2c"
+  },
+  "evidence/ledger.json": {
+   "bytes": 1726,
+   "sha256": "cff83ca427bc9c25bd702e978110bb2624b6c658c1aa14e2dac9fed11ecacecc"
+  },
+  "evidence/pair_census_v10p.json": {
+   "bytes": 3969,
+   "sha256": "a3633da589d90e8bd9b565cd9f3a991697d2736b6eecacf5bbfb72793d7a2562"
+  },
+  "public-note.md": {
+   "bytes": 11661,
+   "sha256": "1949667d429221647b697e4a94ce2b97207c1cb080b810dd9e1f61f95b15da66"
+  },
+  "submission.json": {
+   "bytes": 5537,
+   "sha256": "a2192ef63d12a6a7160e70cbb4a1e0705f3f2ceb665bf9efdf08876b15f6e250"
+  }
+ },
+ "not_certified": [
+  "production-length execution",
+  "success at or above 0.39 for the shipped arm",
+  "any extrapolation law beyond the measured cells",
+  "that the guard is repairable without changing the transition",
+  "a prime-order a=-3 fixture (Schoof counting not performed)"
+ ],
+ "version": "v10p"
+}

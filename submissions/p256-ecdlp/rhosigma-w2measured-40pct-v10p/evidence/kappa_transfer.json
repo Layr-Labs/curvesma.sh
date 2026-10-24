@@ -1,0 +1,22 @@
+{
+ "definition": "kappa = (measured closure rate per walker-step) / (predicted rate), charged as max(1, 1/kappa_meas)",
+ "derivation": "the closure rate is the ONLY channel through which the fixture's ring/escape geometry enters the production surcharge. It was measured at 2^-24.03 against a 2^-24 prediction (97.9 pct of prediction): that ratio IS the transfer factor, and it is now charged in the direction that costs work, kappa = 2^0.03 = 1.0210.",
+ "envelope_charge": {
+  "bits_delta": 8.164412215381915e-08,
+  "escape_surcharge_kappa_charged": 0.003413975238800049,
+  "escape_surcharge_unscaled": 0.003343716644339941,
+  "ir_delta": 7.025859446010778e-05
+ },
+ "kappa_charge": 1.021012125707194,
+ "match_fraction": 0.979,
+ "measured_closures_per_step_log2": -24.03,
+ "measured_over_predicted": 0.9794202975869261,
+ "predicted_closures_per_step_log2": -24.0,
+ "residual": {
+  "scope": "the rate is per walker-step, so the cumulative count is ell*rate (2^87.60), already settled",
+  "statistical": "closure count is a live counter, not a rate estimate; no binomial interval is claimed",
+  "unmodelled": "production DP density 2^-62 and 65536 walkers change the collision channel, not the ring-escape channel; the latter is per-step and table-driven"
+ },
+ "test": "kappa_transfer",
+ "verdict_item": "kappa measured at fixture, transferred to production without derivation"
+}

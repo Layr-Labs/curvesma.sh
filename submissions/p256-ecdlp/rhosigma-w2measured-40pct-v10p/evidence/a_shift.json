@@ -1,0 +1,50 @@
+{
+ "disclosure": "a true a=-3 fixture needs a prime-order group on a curve with a=-3, i.e. point counting (Schoof) at 2^40; that is NOT done here. What is measured is the exact code difference a introduces - the doubling numerator is substituted with 3x^2-3 and the census rerun - plus the incidence of the branch it lives in. The group order therefore differs from the a=0 fixture and that residual is disclosed, not measured.",
+ "materially_changes_floor_question": {
+  "control_p2_a0": 0.4558333333333333,
+  "control_p2_a_minus3": 0.025,
+  "difference": -0.4308333333333333,
+  "shipped_difference": -0.06737499999999999,
+  "shipped_p2_a0": 0.0705,
+  "shipped_p2_a_minus3": 0.003125
+ },
+ "measured_a_channel": {
+  "a_channel_bound": "|P(a=-3) - P(a=0)| <= (fraction of walker-steps whose transition is a doubling) since only those transitions differ; measured fraction above",
+  "doubling_events_a0": 0,
+  "doubling_events_a_minus3": 0,
+  "doubling_rate_a0": 0.0,
+  "steps_per_walker": 50764,
+  "walker_steps_shipped_a0": 4873344000.0,
+  "walker_steps_shipped_a_minus3": 259911680.0,
+  "walkers_per_run": 16
+ },
+ "rows": {
+  "control_pre_parity_a0": {
+   "n": 6000,
+   "p1": 0.26416666666666666,
+   "p2": 0.4558333333333333,
+   "p2_cp95_lower": 0.44519155929682386
+  },
+  "control_pre_parity_a_minus3_numerator": {
+   "n": 320,
+   "p1": 0.0125,
+   "p2": 0.025,
+   "p2_cp95_lower": 0.012499340687971663
+  },
+  "shipped_guarded_a0": {
+   "n": 6000,
+   "p1": 0.03833333333333333,
+   "p2": 0.0705,
+   "p2_cp95_lower": 0.06513621332639644
+  },
+  "shipped_guarded_a_minus3_numerator": {
+   "n": 320,
+   "p1": 0.003125,
+   "p2": 0.003125,
+   "p2_cp95_lower": 0.00016027869895777076
+  }
+ },
+ "structural_fact": "for y^2=x^3+ax+b the addition law with x1 != x2 is a-independent; a enters ONLY the doubling numerator, 3x^2+a. The fixture curve has a=0 (numerator 3x^2); production P-256 has a=-3 (numerator 3x^2-3).",
+ "test": "a_shift",
+ "verdict_item": "census uses an a=0 fixture; production is a=-3"
+}
