@@ -1,0 +1,34 @@
+== S0 no-injection smoke (x8 never assigned by the harness) ==
+elements                 : 8
+cbz observations         : 1, x8 == slot == stored: 1
+boundary x8 values       : 0x5b05b04, 0x1715609f8224c76d, 0x2e2ac13efe9933d6
+  -> the span computes no product: the value at the predicate is whatever the emitted
+     instructions left in x8, carried through the frame slot by the emitted store/load.
+== T1 slot round-trip ==
+commits                  : 1000
+observations at the cbz  : 1000, cbz val == slot == stored == boundary: 1000
+distinct transferred vals : 1000, all non-zero: True
+== T1a anti-vacuity ==
+unattributed x8 writes   : 0
+== T2 record ordering (read-before-write, per element) ==
+batches checked          : 1000 (8000 elements), violations: 0
+== T3 link preservation ==
+restore observations     : 1000, loaded == caller link: 1000
+== C2 zero boundary value ==
+zero-recover fires      : 1
+== C5 product load retargeted to [sp,#8] ==
+detections              : 1
+== C6 product store retargeted to [sp,#16] ==
+detections              : 1
+== C7 product store deleted ==
+detections              : 1
+== C8 state store hoisted above the state-y loads ==
+detections              : 8
+== C3 v29 moving-slot link save ==
+detections              : 1
+== C4 missing hoisted link save ==
+detections              : 1
+== C9 v30 pattern: x8 injected at the cbz ==
+unattributed writes      : 1
+
+DYNAMIC TRACE OK

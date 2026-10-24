@@ -1,0 +1,24 @@
+text-to-object sync (v31) -- every claim phrase vs the shipped object
+====================================================================================================
+object: span.o rebuilt from schedule.py build(); otool -t -v; span-disasm.txt
+
+#   claim phrase                                                                                 | source of truth              | extracted                | ok
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1   charged per iteration = 134                                                                  | span_asm/otool               | 134                      | Y
+2   non-refresh step = 131                                                                       | schedule ledger              | 131                      | Y
+3   literal instructions = 132 (126 leaf + 6 prefix)                                             | otool -t -v                  | 132/126/6                | Y
+4   row 6 = 20 (1 entry + 9 x + 9 y + 1 product)                                                 | schedule row 6               | 1                        | Y
+5   frame = 16 bytes                                                                             | disasm row 0                 | 16                       | Y
+6   link saved at [sp,#8]                                                                        | disasm row 1                 | stur x30, [sp, #0x8]     | Y
+7   product store/load [sp,#0]                                                                   | disasm rows                  | stur x8, [sp] / ldur x8, [sp] | Y
+8   exit stubs = 5, in-degree 1,1,1,1,3                                                          | branch table                 | 5 [1, 1, 1, 1, 3]        | Y
+9   eligible pairs = 6, max distance 56, bound 134                                               | traffic_pairs                | 6/56/134                 | Y
+10  64-cycle average = 131.046875                                                                | (63*131+134)/64              | 131.047                  | Y
+11  step price = 1.0655234375                                                                    | 1 + avg/2000                 | 1.0655234375             | Y
+12  ledger subtotal = 131 (15 rows)                                                              | experiment.py LEDGER         | 131                      | Y
+13  experiment CLAIM = (1262433, 10000)                                                          | experiment.py CLAIM          | (1262433, 10000)         | Y
+14  claim = 126.2433, fraction 1262433/10000                                                     | submission.json              | 1262433/10000            | Y
+15  score rational reduced (gcd = 1)                                                             | math.gcd                     | 1                        | Y
+16  no stale token (128/127/130/19-instruction/frameless/[x19,-8]/126.2405/1.0635/1.0725/1.5175) | grep over shipped prose      | 0 hits                   | Y
+
+ALL CHECKS PASS
