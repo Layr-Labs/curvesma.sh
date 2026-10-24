@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: additive Cheon v29 (prime class lists, exact energy decomposition, cutoff-free integer level, one named moment premise)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.391 (at least 0.39 required). The success argument is the exact distinct-index energy decomposition E = 6*sum_{same-class row pairs} s(s-1) + E_{k!=0} (the diagonal belongs to E+N), where the same-root k=0 term is the counted shared-class-prefix swap and the mixed-root k=0 term is proved EMPTY by a cutoff-free certificate: all 15 unordered mixed pairs of the six fixed constants (the polynomials {1, L, L+1, L^2, L^2+1, L(L+1)} with L = x^2 - 1 and L^2 + L + 1 = r exactly) fail the necessary condition Omega(v) = Omega(w) <= 4 \u2014 eight with a reduced coefficient 1 against >1, five with a reduced coefficient divisible by 2^31, two via Omega(L^2+1) >= 5 from 2*5*37*1637 | L^2+1 with quotient > 1. The repeated-coordinate family is bounded at 8*(2Z^2/r + 1)/(K*n) = 2.671e-19 of the birthday baseline N^2/m (Z = X1*X2), and the shared-prime wrapped collisions at rho = +/-1 are excluded under the retained 2*X1^2*X2 = 2^235.00 < r (19.857 bits of slack), whose strength is demonstrably necessary: the explicit class-matched counterexample r = 481,153 (P = (227*167)(347*197), Q = (241*73)(347*151), P - Q = 3470*r, gcd(P,Q) = 347, all four semiprimes in H, disjoint tiers) exists with only 3*X1^2 < r. The swap is bounded by the emitted-mass class second moments under premise P1 (delta_s^w <= 500, measured 0.678-8.49 at three scales with 59-737x headroom) at 501/(K*d) = 8.69e-4 of baseline, with the full-interval form (Delta0 <= T^2 over (X1/2, X1], measured Delta0/T^2 in {0.066, 0.094, 0.505}) at 1.452e-3 and the v28 L2-form at 2^172.6 values as corroborations. The single remaining estimate is named as premise P2 \u2014 the Fourier joint fourth moment sum over the nontrivial characters eta of H with eta|_U = 1 of |B_hat(eta)|^2 |G_hat(eta)|^2 <= m*n^2/6 + 0.05*n^4, equivalent by the exact U-filter identity (E + N = N^2/m + (36/m)*sum) to E_{k!=0} <= 1.05*N^2/m \u2014 with measured support: wrapped excess +2.776% (d = 2^8, X2/d = 16) and -2.491% (the structured-lambda cyclotomic point r = 48^4 - 48^2 + 1, whose six constants are the production polynomials in miniature, every family below null), mixed-root count 0 at both, no family above 1.116x null at any measured scale. P1 and P2 are named, not proved; the claimed success is route A: total-energy P2 alone, via the unconditional union bound |S| >= N - E/2 and the U-filter equivalence E <= (1+eps)*N^2/m, gives |S|/m >= K - (1+eps)*K^2/2 = 0.3911875 at eps = 0.05, floor-stated 0.391 >= 0.39 - no law, no coupling, no separate swap charge; route B (fourth-order Bonferroni on the coverage-preserving pruned multiplicities with the named moment premises F3 >= 0.95*K0^3 and F4 <= 1.20*K0^4, measured 0.959/1.024 and 0.900/0.976, the inequality verified per run) gives 0.41296 at eps = 0.05 and 0.39027 at eps = 0.20; route C (the birthday law with the excess-to-occupancy coupling H-COUPLE, not implied by P1/P2) gives 0.41549 \u2014 routes B and C give 0.41296 and 0.41549 under their additional named premises (P3/P4; H-COUPLE), none proved. The law is tested against its own calibrated null (carried from v28): at d = 2^4, X2/d = 64 (r ~ 2^24.24, n = 338, ka = 74, exact declared block rule, X1*X2 < r asserted) the construction measures 0.4219 inside the range of 8 independent random-set realizations (0.4216-0.4252, mean 0.4235, sd 0.0012, z = -1.4); at d = 2^8, X2/d = 16 (r ~ 2^25.33, n = 124, ka = 140) it measures 0.4242 inside 0.4238-0.4303 (mean 0.4282, sd 0.0023, z = -1.7); the matched integer-list control measures 0.3296 (+22.4%) and the smallest-integers-in-H baseline 0.3952 (-6.9%), both far outside every null range. Score = log2(W(2^20)) = 116.958777 (exact 116958777/1000000, rounded up; the cost ledger is identical to v28's), against the track frontier 116.982765. Preprocessing <= 2^115.968, included in W. Peak memory <= 2^122.9 bytes. No advice. Reads only A_1 and A_{2^20}.",
+   "score": {
+    "numerator": "116958777",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run with six parts. (1) Recomputes the cost ledger at K = 0.55 (canonical y 30, hash 240, bookkeeping 100; every charge asserted above its itemised count), the exact score, the preprocessing output, the PROVEN prime-availability interval lower bound (Rosser-Schoenfeld) and the shared-class-prefix lost-value bound. (2) The production certificates: the constant structure (L = x^2 - 1 with L^2 + L + 1 = r exactly; the six U-representatives as polynomials with their multiplicative orders), the cutoff-free 15-pair mixed-root certificate, D_repeat = 8*(2Z^2/r + 1)/(K*n) = 2.671e-19, the retained 2*X1^2*X2 < r with its 19.857-bit slack, the r = 481,153 class-matched counterexample, the two production swap bounds and the two success floors (0.415 / 0.391). (3) The law's calibrated null test at two scales (carried from v28: ascending prime blocks by the declared rule ka = 2*n*d*LN//X2 + 1 with no fallback, X1*X2 < r asserted in code, exact bitmap counts of U*B*G^-1 converted in 1 MB chunks, 8 + 6 independent random realizations, the matched integer-list control and the smallest-integers-in-H baseline), extended with the exact energy decomposition (E, the 6*sum s(s-1) swap term, the mixed-root count via the Omega(u) = Omega(u') necessary condition, E_{k!=0}, per-order family rates) at d = 2^8 and the class-marginal second moments at both scales. (4) The structured-lambda cyclotomic point r = 48^4 - 48^2 + 1 = 5306113 (L_c = 48^2 - 1 = 2303 with L_c^2 + L_c + 1 = r exactly; the six representatives asserted equal to the production polynomials in miniature): full energy decomposition, per-order family rates, class moments and the exact coverage count at d = 16, X2 = 1024, n = 175, ka = 39. (5) hash_probe: 16,384 structured walk keys, 16 shards at load 1/2. (6) The end-to-end toy attack on a 24-bit j = 0 curve with d = 2^6 under the production block rule, 16 fixed-order and 40 shuffled trials, every recovered scalar asserted correct.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "K": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 6
+     },
+     "cov_bits": {
+      "type": "integer",
+      "minimum": 20,
+      "maximum": 29
+     },
+     "cov_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10
+     },
+     "atk_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 24
+     },
+     "atk_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 6
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "gmax": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 100000
+     }
+    },
+    "required": [
+     "K",
+     "cov_bits",
+     "cov_logd",
+     "atk_bits",
+     "atk_logd",
+     "trials",
+     "gmax",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "K": "0.55",
+     "cov_bits": 29,
+     "cov_logd": 8,
+     "atk_bits": 24,
+     "atk_logd": 6,
+     "trials": 40,
+     "gmax": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
