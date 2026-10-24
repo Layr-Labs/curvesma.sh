@@ -1,0 +1,28 @@
+{
+ "key_comparisons_max_measured": 63,
+ "key_comparisons_bound": 66,
+ "mode": "dict26-differential",
+ "structure": "open addressing, four probes, stride 0x9E3779B97F4A7C15, seven-word entries (six key words + tag), eviction of the smallest leading key word when all four probes are occupied",
+ "ops": 20000,
+ "table_slots": 4096,
+ "load_factor": 0,
+ "lookups": 8711,
+ "inserts": 11289,
+ "hits": 8458,
+ "misses": 253,
+ "evictions": 306,
+ "load_factor_ok": true,
+ "digest_checks": 20,
+ "digest_mismatches": 0,
+ "counter_mismatches": 0,
+ "structure_mismatches": 0,
+ "key_tuples": 32,
+ "key_mismatches": 0,
+ "mutation_control": {
+  "changed": "STRIDE 0x9E3779B97F4A7C15 -> ...C16",
+  "digest_diffs": 20,
+  "counter_diffs": 3,
+  "detected": true
+ },
+ "zero_mismatches": true
+}

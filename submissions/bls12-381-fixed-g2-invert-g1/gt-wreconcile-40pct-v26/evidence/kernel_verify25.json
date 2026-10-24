@@ -1,0 +1,91 @@
+{
+ "mode": "bigint-tower-sweep",
+ "vectors_per_kernel": 10000,
+ "p": "0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab",
+ "montgomery_R": "2^384",
+ "reference": "plain Python integers, schoolbook Fp6/Fp12, no Montgomery and no Karatsuba (no shared code path with the C kernels)",
+ "kernels": {
+  "f2mul": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "fpadd(d0, t0, t1);     fpcopy(r->c[0], cross); fpcopy(r->c[1], d0);",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f2sqr": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "fpcopy(r->c[0], t0); fpcopy(r->c[1], t1);",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f2inv": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "fpmul(t, a->c[1], ni); fpcopy(r->c[1], t);",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f6mul": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "f2mulxi(&k, &t2); f2add(&r->c[1], &u1, &k);     f2add(&r->c[2], &u2, &t1);",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f6sqr": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "AI void f6sqr(fp6 *r, const fp6 *a) { f6mul(r, a, a); fpsub(r->c[2].c[0], r->c[2].c[0], ONE6); }",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f6inv": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "f2sub(&r->c[1], &A, &ni);",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f12mul": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "f6mul(&t3, &a->c[1], &b->c[0]);     f6sub(&s1, &t2, &t3);",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f12sqr": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "AI void f12sqr(fp12 *r, const fp12 *a) { f12mul(r, a, a); f6add(&r->c[0], &r->c[0], &r->c[0]); }",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "f12inv": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "f6mul(&t, &a->c[1], &ni); r->c[1] = t;",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  },
+  "cyclotomic_sqr": {
+   "vectors": 10000,
+   "mismatches": 0,
+   "verdict": "PASS",
+   "mutation": "for (int i = 0; i < 3; i++) one.c[i].c[0][0] = 1;",
+   "mutation_mismatches": 10000,
+   "mutation_control": "PASS"
+  }
+ },
+ "all_pass": true,
+ "mutation_controls_detected": true
+}

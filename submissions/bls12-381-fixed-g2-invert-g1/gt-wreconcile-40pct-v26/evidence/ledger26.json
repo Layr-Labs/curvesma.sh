@@ -1,0 +1,245 @@
+{
+ "mode": "ledger26-wreconcile",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers, one record per visited class",
+  "workers": 1024,
+  "steps": "95803668470929860550224427498997735090",
+  "steps_log2": 126.1714,
+  "S_over_sqrtN": "829/572",
+  "dpbits": 0,
+  "meter": "one global counter in instructions; the meter exists before the first table entry; table, code, each worker start, each walk step (guard-aware), each key build, each dictionary probe, each record serialize+insert, each collision replay and each candidate verification ask fits() before acting; a replay/verify that does not fit ABANDONS that worker; 32 squarings abort.",
+  "abort": "K_STALL=32 consecutive squarings, armed by a guard admission",
+  "census_budget": "steps_budget*(MUL_CHARGE+LOOKUP+REC_WRITE) + 4 replays + one verification reserve"
+ },
+ "rows_ir": {
+  "walk_steps": "2326567790311729259904662356923284227425719",
+  "per_step_lookup_key_and_probe": "61889169832220689915444980164352536868140",
+  "record_writes_and_insert": "89480626351848489753909615284063884574060",
+  "collision_processing": "8192",
+  "trap_waste_bound": "29082097875473205031598916382482736638",
+  "index_slots_one_per_record": "766429347767438884401795419991981880720",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "W_total_ir": "2478733097941441351663450346708083015908845",
+ "claim": {
+  "value": "126.5429",
+  "numerator": "1265429",
+  "denominator": "10000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W, exact integer check (20000^10000 * 2^n >= W^10000); n-1 asserted to fail",
+  "covers_W": true,
+  "floor_rounding_removed": true,
+  "v25_flaw": "v25 published floor(log2(W/C)) and checked 2^claim <= W/C, a LOWER bound presented as an upper bound; v26 inverts the direction",
+  "row_sum_equals_W": true,
+  "planted_typo_detected_every_row": true
+ },
+ "row_derivations": {
+  "walk_steps": "steps x STEP; STEP = f_mul x MUL_CHARGE + (1-f_mul) x SQR_CHARGE, f_mul measured on protocol traffic",
+  "per_step_lookup_key_and_probe": "steps x 646 Ir = state_key48 span (493) + dict_lookup span (153), both disassembled from scripts/ir26/dict26.c",
+  "record_writes_and_insert": "steps x 934 Ir = 688 serialized bytes (48 B key + 32 A + 32 D + 576 y) + dict_insert span (246)",
+  "collision_processing": "ceil(S(S-1)/(2N)) x 4096 Ir; 2 matches expected; every match, including a failed shift, is charged",
+  "trap_waste_bound": "S x (3/7680000 x 32 + (1-f_mul)^32 x 32) x STEP: rule-of-three admission bound on protocol traffic times the EXECUTED abort delay, plus the normal-run bound",
+  "index_slots_one_per_record": "S index slots x 8 words x 1 Ir: the store holds ONE SLOT PER VISITED RECORD (not the fixture's Rg slots), so a hit resolves through the entry's record word into the A,D,y pool; the Rg=65536 table is a fixture-only charge and is not the production store",
+  "worker_starts_1024": "1024 x 383 dense muls",
+  "code_and_advice": "2^20 Ir",
+  "candidate_verification": "57526800 Ir = 1200 x f12mul span (47924) + 18000 compare"
+ },
+ "charges": {
+  "MUL_CHARGE": 22409,
+  "SQR_CHARGE": 27611,
+  "STEP": "7771118839/320000",
+  "step_float": 24284.746371875,
+  "f_mul_measured": 0.6394182291666667,
+  "guard_per_step_measured": 0.0014807291666666667,
+  "LOOKUP_KEY_PLUS_PROBE": 646,
+  "REC_WRITE_PLUS_INSERT": 934,
+  "kernel_spans": {
+   "state_key48": 493,
+   "dict_lookup": 153,
+   "dict_insert": 246,
+   "cyclotomic_sqr": 25372,
+   "f12mul": 47924
+  },
+  "price_source": "scripts/ir26/count via otool -tvV (dict symbols) and scripts/ir25/count_ir.py (kernels); nothing is priced by notation"
+ },
+ "dictionary": {
+  "structure": "open addressing, four probes, stride 0x9E3779B97F4A7C15, seven-word entries (six key words + tag), eviction of the smallest leading key word when all four probes are occupied",
+  "ops": 20000,
+  "inserts": 11289,
+  "lookups": 8711,
+  "hits": 8458,
+  "misses": 253,
+  "evictions": 306,
+  "load_factor_ok": true,
+  "digest_checks": 20,
+  "digest_mismatches": 0,
+  "structure_mismatches": 0,
+  "counter_mismatches": 0,
+  "key_tuples": 32,
+  "key_mismatches": 0,
+  "mutation_control_detected": true,
+  "slots": 65536,
+  "entry_words": 7,
+  "bytes_per_slot": 56,
+  "symbols": {
+   "state_key48": 493,
+   "dict_lookup": 153,
+   "dict_insert": 246
+  },
+  "v25_flaw": "v25 priced lookup_probe (two probes, int return, no insert, no overflow, no load factor) while citing a full-store dictionary and a key builder Group.state did not use"
+ },
+ "trap": {
+  "coverage_source": "protocol-generated traffic only",
+  "protocol_traffic": {
+   "evidence": "evidence/scan25.json + evidence/scan26.json (independent segments)",
+   "steps": 7680000,
+   "scan25_steps": 5760000,
+   "scan25_word_admit": {
+    "4": 0,
+    "6": 0,
+    "8": 0
+   },
+   "scan25_word_family": "4, 6, 8",
+   "scan26_steps": 1920000,
+   "scan26_word_admit": {
+    "4": 0,
+    "6": 0,
+    "8": 0,
+    "10": 0,
+    "12": 0
+   },
+   "scan26_word_family": "4, 6, 8, 10, 12",
+   "word_family": "balanced alternating slot words of lengths 4, 6, 8 (v25) and 4..12 (v26 rerun)",
+   "admissions_total": 0,
+   "abort_events": 0,
+   "rate_ub": "1/2560000",
+   "delay_max_used": 32
+  },
+  "mechanism_existence_proof": {
+   "evidence": "evidence/scan_forced26.json",
+   "label": "MECHANISM EXISTENCE PROOF, not a coverage measurement",
+   "admissions": {
+    "4": 312,
+    "6": 0,
+    "8": 0,
+    "10": 0,
+    "12": 0
+   },
+   "abort_events": 312,
+   "delay_mean": 31.26923076923077,
+   "delay_max": 32,
+   "executes_real_steps": true,
+   "control_no_abort": 2436,
+   "note": "the forced branch now calls Group.step(branch=True), so each stall step really runs cyclo_sqr on y and doubles A,D; the delay is the number of EXECUTED steps to the 32-squaring abort"
+  },
+  "waste_steps": "4352928161303975348588201869654247371328606622033367526880527425775289182198662993175874272074423362353445215994496021254265197566874533840675790237167025200984240568712028936442406583222179929054011124121006897777061085252576778949/3634873825983889394085157389583538838581848337657067298903975614983700480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "waste_ir": 29082097875473205031598916382482736638
+ },
+ "survival": {
+  "route": "band",
+  "scales_measured": [
+   "rp=521041"
+  ],
+  "not_measured_at_rp10566001": true,
+  "at_production_Rg": {
+   "Rg": 65536,
+   "pairs": 400,
+   "survival_gap1": 0.995,
+   "arm": "true_merge",
+   "measured_not_extrapolated": true
+  },
+  "fit_rho_gap1": 0.9993228254209907,
+  "band_factor": 1.3582459625010832,
+  "max_abs_residual_log": 0.30619413387081407,
+  "worst_band_survival": 0.732562457368031,
+  "note": "the Rg=65536 arm is MEASURED at rp=521041 only (400 pairs); it is not claimed for the second fixture scale, and the residual envelope of the gap fit (band_factor) is charged into success rather than assumed"
+ },
+ "success": {
+  "census_scale_a": {
+   "rp": 521041,
+   "success": 292,
+   "trials": 512,
+   "cp95": "0.53311622322253260364277593907900154590606689453125",
+   "S_over_sqrtN": 1.4493,
+   "verifies": 292,
+   "aborts": 0
+  },
+  "census_scale_b": {
+   "rp": 10566001,
+   "success": 304,
+   "trials": 512,
+   "cp95": "0.5567350283079637307537268497981131076812744140625",
+   "S_over_sqrtN": 1.4494,
+   "verifies": 304,
+   "aborts": 0
+  },
+  "point_estimate": 0.5304506421064199,
+  "point_with_measured_survival": 0.5304506421064199,
+  "worst_band_charged": 0.3905409305466623,
+  "floor": 0.39,
+  "floor_met": true,
+  "statement": "success_final is the CP-95 lower endpoint of the protocol census (512 fixtures per group, one Bernoulli each) times the measured gap-1 survival at production Rg, divided by the fit residual envelope; no extrapolated point estimate is used uncharged"
+ },
+ "tie_analysis": {
+  "samples": 200000,
+  "ties": 2983,
+  "tie_rate": 0.014915,
+  "resolution": "kappa = ks.index(min(ks)) is the FIRST minimum (deterministic); the pool slot is derived from sorted(ks), invariant to which rotation attains the minimum, so a tie cannot fork the table index or the record key."
+ },
+ "symbol_audit": [
+  {
+   "symbol": "state_key48",
+   "ir_count": 493,
+   "priced_in": "evidence/ir26.json",
+   "exists": true
+  },
+  {
+   "symbol": "dict_lookup",
+   "ir_count": 153,
+   "priced_in": "evidence/ir26.json",
+   "exists": true
+  },
+  {
+   "symbol": "dict_insert",
+   "ir_count": 246,
+   "priced_in": "evidence/ir26.json",
+   "exists": true
+  },
+  {
+   "symbol": "dict_record",
+   "ir_count": 4,
+   "priced_in": "evidence/ir26.json",
+   "exists": true
+  },
+  {
+   "symbol": "cyclotomic_sqr",
+   "ir_count": 25372,
+   "priced_in": "evidence/ir25.json",
+   "exists": true
+  },
+  {
+   "symbol": "f12mul",
+   "ir_count": 47924,
+   "priced_in": "evidence/ir25.json",
+   "exists": true
+  },
+  {
+   "symbol": "min_rotation_booth",
+   "ir_count": 381,
+   "priced_in": "evidence/ir25.json",
+   "exists": true
+  },
+  {
+   "symbol": "key_six_plusminus",
+   "ir_count": 1487,
+   "priced_in": "evidence/ir25.json",
+   "exists": true
+  }
+ ],
+ "memory": {
+  "pool_bytes": 65912923907999744058554406119310441741920,
+  "table_bytes": 3670016,
+  "peak_ir_units_charged": 65912923907999744058554406119310446763616
+ }
+}

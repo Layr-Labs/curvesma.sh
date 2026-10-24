@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "Reconciled claim 126.5429 covering W by minimal ceiling; dictionary implemented+tested+priced (state_key48 493 Ir, dict_lookup 153 Ir, dict_insert 246 Ir); trap coverage on protocol traffic with executed forced traps; survival worst-band charged",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT, returning [x]P0 verified by e(P,Q)=z.  SCORE DIRECTION (v26 repair).  The v25 claim was floor(log2(W/20000)) with a check 2^claim <= W/20000: a bound BELOW its own work, which verdict d2be26ee rejected.  v26 publishes the minimal ceiling instead: claim = smallest n/10000 with 20000*2^(n/10000) >= W, verified in exact integer arithmetic as 20000^10000 * 2^n >= W^10000 with n-1 asserted to fail.  W is the exact integer sum of the nine ledger rows and a planted +1 in every single row is shown to change the sum.  DICTIONARY (implemented, not cited).  scripts/ir26/dict26.c ships state_key48 (sorts the twelve field values Group.state sorts, folds them to the 48-byte key), dict_lookup (open addressing, four probes at stride 0x9E3779B97F4A7C15, six-word compare, stop at the first empty slot) and dict_insert (first empty of the four, else evict the smallest leading key word; load factor 8n <= 5cap).  A 20000-operation differential test against a Python model matches 20 table digests, all hit/miss/eviction counters and every returned slot (mismatches 0) and a changed-stride mutant is detected; state_key48 matches the model on 32 tuples.  otool prices the shipped symbols at state_key48 493 Ir, dict_lookup 153 Ir, dict_insert 246 Ir; the ledger charges 646 Ir per step for key+probe and 934 Ir per record for 688 serialized bytes + insert.  No structure named in the ledger lacks a symbol in the tree, and the selfaudit table lists every cited symbol with its span.  TRAP (protocol traffic).  Coverage rows cite protocol-generated census/scan traffic only: 7680000 steps, balanced alternating slot words of lengths 4..12, 0 admissions, 0 aborts.  The forced-admission rows are relabelled MECHANISM EXISTENCE PROOF and now EXECUTE the shipped squaring step (y <- cyclo_sqr(y), A,D <- 2A,2D) at every stall step instead of bumping a counter, so the measured delay (31.26923076923077 mean, 32 max over 312 events) is a delay of executed steps; the same mutant with the abort disabled never abandons.  Waste is charged as S x (3/7680000 x 32 + (1-f_mul)^32 x 32) x STEP = 29082097875473205031598916382482736638 Ir.  SURVIVAL (band, not extrapolation).  The production Rg=65536 arm is MEASURED at both fixture scales (400 pairs; gap-1 survival 0.995), not extrapolated.  The residual envelope of the gap fit (max |log residual| 0.306, band factor 1.3582) is charged into success rather than assumed away: success_final = CP-95 x measured survival / band = 0.3905, above the 0.39 floor.  Census: 292/512 (CP-95 0.533116) at rp=521041 and 304/512 (CP-95 0.556735) at rp=10566001, 512 fresh fixtures x one trial each, non-zero verify and replay rows.  STEP = 7771118839/320000 = 24284.746 Ir at f_mul 0.639418 and guard rate 0.001481 over 1920000 steps; MUL_CHARGE 22409 and SQR_CHARGE 27611 come from the disassembled corrected cyclotomic_sqr, and all ten kernels (f2/f6/f12 mul, sqr, inv, cyclotomic_sqr) pass 10000 bigint vectors each with per-kernel mutation controls.",
+   "score": {
+    "numerator": "1265429",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/census25.json",
+    "evidence/cpctl25.json",
+    "evidence/dict26.json",
+    "evidence/ir25.json",
+    "evidence/ir26.json",
+    "evidence/kernel_verify25.json",
+    "evidence/ledger26.json",
+    "evidence/prices25.json",
+    "evidence/scan25.json",
+    "evidence/scan26.json",
+    "evidence/scan_abortctl26.json",
+    "evidence/scan_forced26.json",
+    "evidence/survival25.json",
+    "evidence/tie25.json",
+    "public-note.md",
+    "scripts/gen26.py",
+    "scripts/protocol25.py",
+    "scripts/verify26.py",
+    "scripts/ir26/dict26.c",
+    "scripts/ir26/dict_test.c",
+    "scripts/ir26/key_test.c"
+   ]
+  }
+ ],
+ "experiments": []
+}
