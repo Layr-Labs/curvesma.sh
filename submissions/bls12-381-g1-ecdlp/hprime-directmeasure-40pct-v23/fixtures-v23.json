@@ -1,0 +1,1 @@
+{"note":"two fixture curves, different primes, same d=2 and same shape (nw=2); found by brute-force point counting (count_points in direct_v23.py) with r prime, 6|m, d | (r-1)/6","groups":[{"p":2097523,"order":2095311,"r":698437,"d":2,"nw":2,"wkey":20,"trials":16384},{"p":2098351,"order":2100711,"r":700237,"d":2,"nw":2,"wkey":20,"trials":16384}]}
