@@ -1,0 +1,273 @@
+{
+ "kind": "v27 construction + keymod + kappa + ledger derivation",
+ "verdict": "01ac9e37-a951-4554-a5a5-16b53b80777d",
+ "construction": {
+  "design": "nb = 2^66 A-pool bases per side, nw = ceil(N/nb) = 883576288830423 walk steps each",
+  "nb": 73786976294838206464,
+  "nw_used": 883576288830423,
+  "nw_bits": 50,
+  "records_per_side": 65196422678611466571411401699906505,
+  "records_total": 130392845357222933142822803399813010,
+  "step_charge": {
+   "group_addition": 2000,
+   "packing_charged": 238,
+   "per_record": 2238,
+   "itemised_table": [
+    {
+     "item": "walk_cursor_and_bound",
+     "instructions": 4,
+     "note": "index load, compare, advance"
+    },
+    {
+     "item": "gap_load_2limb",
+     "instructions": 4,
+     "note": "2 LDP from the gap array"
+    },
+    {
+     "item": "gap_index",
+     "instructions": 2,
+     "note": "shift/scale to byte offset"
+    },
+    {
+     "item": "table_point_load",
+     "instructions": 6,
+     "note": "6 LDP (12 limbs)"
+    },
+    {
+     "item": "point_store_into_record",
+     "instructions": 3,
+     "note": "3 STP"
+    },
+    {
+     "item": "walk_loop_control",
+     "instructions": 3,
+     "note": "counter, pointer, branch"
+    },
+    {
+     "item": "p_minus_y",
+     "instructions": 12,
+     "note": "6 sub + 6 sbc"
+    },
+    {
+     "item": "even_rep_select",
+     "instructions": 7,
+     "note": "parity test, branch, 6 csel"
+    },
+    {
+     "item": "key_pack_168_bits",
+     "instructions": 4,
+     "note": "3 word stores + mask register setup"
+    },
+    {
+     "item": "route_4hops_x_21bits",
+     "instructions": 68,
+     "note": "3 hops x 20 + final hop 8"
+    },
+    {
+     "item": "sort_3_passes_x_25",
+     "instructions": 75,
+     "note": "21-bit digits, 25 per record per pass"
+    },
+    {
+     "item": "group_scan",
+     "instructions": 10,
+     "note": "3 key loads, 3 compare/OR, side, branch, emit, loop"
+    }
+   ],
+   "itemised_sum": 198,
+   "stress_rule": "charged = ceil(itemised*6/5) = 238"
+  },
+  "base_entry": {
+   "row": "base_entry_nw50",
+   "value": 12248638064943142273024000,
+   "derivation": "nb * 83 group ops * 2000 instructions (66 doublings + <=17 additions for a 66-bit exponent)"
+  },
+  "amortisation": "base_entry / (2N) = 9.394e-11 instructions per record (negligible)",
+  "walker_state": {
+   "row": "walker_state_nw50",
+   "value": 295147905179352825856,
+   "derivation": "nb bases x 4 instructions (one walk position each)"
+  },
+  "deleted_credit": {
+   "row": "walker_state_nw1_credit",
+   "why": "belonged to the abandoned nw=1 storage story; it removed (nb*nw-1) states that were never charged anywhere else, so it identified no previously charged operation. Deleted; W regenerated."
+  },
+  "storage": "2N*48 B = 2^122.235 B records + sort scratch; peak unchanged at 2^123.235 B"
+ },
+ "keymod": {
+  "number": "WALK_LOG2 = 50",
+  "derivation": "ceil(log2(N/nb)) = ceil(log2(49.650348)) = 50",
+  "what_it_is": "the bit width of the walk-offset field (INDEX_BITS - A_POOL_LOG2 = 128-66 = 62 available; 50 used). The class key is 168 bits; 2^50 is NOT a key modulus.",
+  "pair_correction": {
+   "value": "1125899906842623/1267650600228229401496703205376",
+   "log2": -50.0,
+   "band": 0.003955,
+   "band_log2": -7.982107,
+   "bits_below_band": 42.017893
+  },
+  "fixture_consistency": [
+   {
+    "source": "census/big",
+    "nb": 1024,
+    "nw": 64,
+    "records_per_side": 65536,
+    "nb_times_nw": 65536,
+    "rule_holds": true
+   },
+   {
+    "source": "census/small",
+    "nb": 64,
+    "nw": 64,
+    "records_per_side": 4096,
+    "nb_times_nw": 4096,
+    "rule_holds": true
+   },
+   {
+    "source": "direct/nw1",
+    "nb": 172,
+    "nw": 1,
+    "records_per_side": 172,
+    "nb_times_nw": 172,
+    "rule_holds": true
+   },
+   {
+    "source": "direct/nw1",
+    "nb": 172,
+    "nw": 1,
+    "records_per_side": 172,
+    "nb_times_nw": 172,
+    "rule_holds": true
+   },
+   {
+    "source": "direct/nw2",
+    "nb": 86,
+    "nw": 2,
+    "records_per_side": 172,
+    "nb_times_nw": 172,
+    "rule_holds": true
+   },
+   {
+    "source": "direct/nw2",
+    "nb": 86,
+    "nw": 2,
+    "records_per_side": 172,
+    "nb_times_nw": 172,
+    "rule_holds": true
+   },
+   {
+    "source": "direct/nw4",
+    "nb": 43,
+    "nw": 4,
+    "records_per_side": 172,
+    "nb_times_nw": 172,
+    "rule_holds": true
+   },
+   {
+    "source": "direct/nw4",
+    "nb": 43,
+    "nw": 4,
+    "records_per_side": 172,
+    "nb_times_nw": 172,
+    "rule_holds": true
+   }
+  ],
+  "fixture_rule": "records_per_side == nb*nw in every census and direct cell",
+  "exhaustion": "2^50 is the resolution at which (nw-1)/nw^2 = 2^-50.00 is 42.0 bits below the 0.003955 band: one more walk bit doubles the records row and buys <2^-50 of success, so 50 bits is the right effective modulus for the law at production"
+ },
+ "kappa": {
+  "check_row": {
+   "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+   "m_log2": 234.857089,
+   "D_log2": 167,
+   "sumN2_lower": "m^2/D",
+   "sumN2_lower_log2": 302.714179,
+   "six_m_log2": 237.442052,
+   "sumN2_le_6m_holds": false,
+   "assertion": "assert m^2/D > 6m at the submitted production m"
+  },
+  "direction": "C-S supplies a LOWER bound on sum_k N(k)^2; it refutes the withdrawn v25 upper bound and supplies NO upper bound on kappa. No monotonicity is claimed.",
+  "occupancy_identity": {
+   "derivation": "E[sum_k N(k)^2] = D*((m/D)^2 + m/D) => kappa = D*sum (N/m)^2 = 1 + D/m",
+   "value": "12208678567578594777650176532896421759286993397400453080913717231615/12208678567578594777604504606729831043093128246378069236549469339647",
+   "log2_D_over_m": -67.857089
+  },
+  "measured": {
+   "envelope_top": "508301/500000",
+   "fit_residual_max": "0",
+   "noise_scale_max": "1/sqrt(predicted) over dense rows",
+   "dense_rows": 16
+  },
+  "charge": {
+   "kappa": 1.016602,
+   "rule": "1 + D/m + envelope_top + fit_residual_max",
+   "withdrawn": "1.231 (hand slack, unsupported)"
+  },
+  "price": {
+   "E_bad_charged_log2": 64.6005,
+   "E_bad_v27_log2": 64.324424,
+   "cap_bad_log2": 84,
+   "headroom": 19.675576,
+   "work_row_bits_moved": 0.0
+  }
+ },
+ "ledger": {
+  "C_instructions_per_unit": 2000,
+  "rows": {
+   "records": 291819187909464924373637434008781516380,
+   "chain_tables": 994818461282523598820751704064000,
+   "fixed_per_node": 41538374868278621028243970633760768,
+   "hprime_supply": 11626940766239494561217535541248,
+   "run_pair_cap": 79228162514264337593543950336,
+   "candidate_scan_cap": 20282409603651670423947251286016,
+   "root_and_io": 421315604,
+   "root_scan_T": 4294967296000,
+   "walk_list": 317745634036292242930980832149504,
+   "gap_self_check": 25924182448222977157188550656,
+   "gap_retry_worst": 3877290542265193293613612662784,
+   "base_entry_nw50": 12248638064943142273024000,
+   "walker_state_nw50": 295147905179352825856
+  },
+  "row_log2": {
+   "records": 127.778342,
+   "chain_tables": 109.616132,
+   "fixed_per_node": 115.0,
+   "hprime_supply": 103.197242,
+   "run_pair_cap": 96.0,
+   "candidate_scan_cap": 104.0,
+   "root_and_io": 28.650326,
+   "root_scan_T": 41.965784,
+   "walk_list": 107.969571,
+   "gap_self_check": 94.388285,
+   "gap_retry_worst": 101.612892,
+   "base_entry_nw50": 83.340824,
+   "walker_state_nw50": 68.0
+  },
+  "total_instructions": 291862074740234027862565875858097943152,
+  "W": "18241379671264626741410367241131121447/125",
+  "W_log2": 116.81277007681425,
+  "claim": {
+   "numerator": "116813",
+   "denominator": "1000"
+  },
+  "claim_minus_W": 0.00022992318575631998,
+  "gate": {
+   "numerator": "1168271",
+   "denominator": "10000"
+  },
+  "gate_margin": 0.014099999999999113,
+  "integer_assert": "total == sum(rows); every row is a Python int",
+  "typo_control": {
+   "planted": "+1% on records",
+   "detected": true,
+   "typo_W_log2": 116.82712327085255,
+   "log2_table_typo_caught": true
+  },
+  "complete_W": "W(n) = [2N*2238 + nb*166000 + nb*4 + S]/2000 with N = 2^115.650348, nb = 2^66, S = 42886830756854555715593527690576916 (exact integer sum of the ten secondary rows; secondary/dominant = 0.000147). Evaluable in closed form: no undefined function appears.",
+  "applicability": [
+   "nw=2^50 production geometry: nb=2^66 bases/side, walk 2^50",
+   "no advice; preprocessing included",
+   "peak storage 2^123.235 B (2N 48-B records + sort scratch)",
+   "secondary rows are <= 0.015% of W"
+  ]
+ }
+}

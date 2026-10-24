@@ -1,0 +1,248 @@
+{
+ "kind": "v27 TRANSFER ARM big-n (ratio layer, fixed design density)",
+ "p_field": 67122049,
+ "d": 8,
+ "m": 8390256,
+ "m_log2": 23.000283399571632,
+ "nb": 844,
+ "nw": 1,
+ "K": 0.5094023352803538,
+ "trials_planned": 20000,
+ "partial": 20000,
+ "hits": 7997,
+ "q": 0.39985,
+ "cp95_lower": 0.3941384365874735,
+ "cp95_upper": 0.4055830833013675,
+ "distinct_mean": 682934.61915,
+ "distinct_min": 680598,
+ "distinct_max": 683638,
+ "p_pair_law": 0.39914541889515853,
+ "workers": 24,
+ "core_seconds": 4824.331866502762,
+ "wall_seconds": 202.29802584648132,
+ "per_worker": [
+  {
+   "worker": 0,
+   "trials": 834,
+   "hits": 338,
+   "distinct_sum": 569571382,
+   "distinct_min": 681605,
+   "distinct_max": 683638,
+   "seconds": 201.54089403152466
+  },
+  {
+   "worker": 1,
+   "trials": 834,
+   "hits": 344,
+   "distinct_sum": 569566532,
+   "distinct_min": 681951,
+   "distinct_max": 683420,
+   "seconds": 201.7462420463562
+  },
+  {
+   "worker": 2,
+   "trials": 834,
+   "hits": 327,
+   "distinct_sum": 569566732,
+   "distinct_min": 680598,
+   "distinct_max": 683470,
+   "seconds": 201.85735988616943
+  },
+  {
+   "worker": 3,
+   "trials": 834,
+   "hits": 335,
+   "distinct_sum": 569577033,
+   "distinct_min": 681787,
+   "distinct_max": 683503,
+   "seconds": 201.16234493255615
+  },
+  {
+   "worker": 4,
+   "trials": 834,
+   "hits": 335,
+   "distinct_sum": 569579349,
+   "distinct_min": 681419,
+   "distinct_max": 683462,
+   "seconds": 201.3353750705719
+  },
+  {
+   "worker": 5,
+   "trials": 834,
+   "hits": 338,
+   "distinct_sum": 569565679,
+   "distinct_min": 681625,
+   "distinct_max": 683535,
+   "seconds": 201.09839797019958
+  },
+  {
+   "worker": 6,
+   "trials": 834,
+   "hits": 317,
+   "distinct_sum": 569569595,
+   "distinct_min": 681842,
+   "distinct_max": 683468,
+   "seconds": 200.753014087677
+  },
+  {
+   "worker": 7,
+   "trials": 834,
+   "hits": 315,
+   "distinct_sum": 569567635,
+   "distinct_min": 681367,
+   "distinct_max": 683509,
+   "seconds": 200.67820119857788
+  },
+  {
+   "worker": 8,
+   "trials": 833,
+   "hits": 335,
+   "distinct_sum": 568893362,
+   "distinct_min": 681248,
+   "distinct_max": 683455,
+   "seconds": 201.12719297409058
+  },
+  {
+   "worker": 9,
+   "trials": 833,
+   "hits": 347,
+   "distinct_sum": 568879782,
+   "distinct_min": 681532,
+   "distinct_max": 683539,
+   "seconds": 201.0112919807434
+  },
+  {
+   "worker": 10,
+   "trials": 833,
+   "hits": 307,
+   "distinct_sum": 568890789,
+   "distinct_min": 681435,
+   "distinct_max": 683479,
+   "seconds": 200.3078179359436
+  },
+  {
+   "worker": 11,
+   "trials": 833,
+   "hits": 335,
+   "distinct_sum": 568887377,
+   "distinct_min": 681212,
+   "distinct_max": 683502,
+   "seconds": 200.87353110313416
+  },
+  {
+   "worker": 12,
+   "trials": 833,
+   "hits": 323,
+   "distinct_sum": 568885170,
+   "distinct_min": 681261,
+   "distinct_max": 683547,
+   "seconds": 200.5043818950653
+  },
+  {
+   "worker": 13,
+   "trials": 833,
+   "hits": 325,
+   "distinct_sum": 568895564,
+   "distinct_min": 681834,
+   "distinct_max": 683503,
+   "seconds": 200.86632895469666
+  },
+  {
+   "worker": 14,
+   "trials": 833,
+   "hits": 334,
+   "distinct_sum": 568890932,
+   "distinct_min": 681223,
+   "distinct_max": 683393,
+   "seconds": 201.26796102523804
+  },
+  {
+   "worker": 15,
+   "trials": 833,
+   "hits": 340,
+   "distinct_sum": 568880157,
+   "distinct_min": 681180,
+   "distinct_max": 683512,
+   "seconds": 201.2135510444641
+  },
+  {
+   "worker": 16,
+   "trials": 833,
+   "hits": 347,
+   "distinct_sum": 568873518,
+   "distinct_min": 681450,
+   "distinct_max": 683513,
+   "seconds": 199.92252111434937
+  },
+  {
+   "worker": 17,
+   "trials": 833,
+   "hits": 336,
+   "distinct_sum": 568867937,
+   "distinct_min": 681552,
+   "distinct_max": 683561,
+   "seconds": 200.95207810401917
+  },
+  {
+   "worker": 18,
+   "trials": 833,
+   "hits": 348,
+   "distinct_sum": 568881950,
+   "distinct_min": 681496,
+   "distinct_max": 683493,
+   "seconds": 201.02832198143005
+  },
+  {
+   "worker": 19,
+   "trials": 833,
+   "hits": 332,
+   "distinct_sum": 568880901,
+   "distinct_min": 681218,
+   "distinct_max": 683541,
+   "seconds": 200.7128210067749
+  },
+  {
+   "worker": 20,
+   "trials": 833,
+   "hits": 333,
+   "distinct_sum": 568885859,
+   "distinct_min": 681477,
+   "distinct_max": 683512,
+   "seconds": 202.09086894989014
+  },
+  {
+   "worker": 21,
+   "trials": 833,
+   "hits": 332,
+   "distinct_sum": 568887480,
+   "distinct_min": 680675,
+   "distinct_max": 683583,
+   "seconds": 201.05137991905212
+  },
+  {
+   "worker": 22,
+   "trials": 833,
+   "hits": 356,
+   "distinct_sum": 568871532,
+   "distinct_min": 681255,
+   "distinct_max": 683518,
+   "seconds": 200.065443277359
+  },
+  {
+   "worker": 23,
+   "trials": 833,
+   "hits": 318,
+   "distinct_sum": 568876136,
+   "distinct_min": 681218,
+   "distinct_max": 683483,
+   "seconds": 201.16454601287842
+  }
+ ],
+ "done": true,
+ "floor": 0.39,
+ "floor_met": true,
+ "prediction_small_arm": 0.39907073974609375,
+ "scope": "ratio-hitting probability; equals p_solve at nw=1 because every true ratio hit is the same point and passes affine verification; identical generative design to transfer_v26.py",
+ "p_set_law_expected": 0.38637848103512495,
+ "prediction_in_interval": true
+}

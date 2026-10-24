@@ -1,0 +1,60 @@
+{
+ "C_instructions_per_unit": 2000,
+ "rows": {
+  "records": 291819187909464924373637434008781516380,
+  "chain_tables": 994818461282523598820751704064000,
+  "fixed_per_node": 41538374868278621028243970633760768,
+  "hprime_supply": 11626940766239494561217535541248,
+  "run_pair_cap": 79228162514264337593543950336,
+  "candidate_scan_cap": 20282409603651670423947251286016,
+  "root_and_io": 421315604,
+  "root_scan_T": 4294967296000,
+  "walk_list": 317745634036292242930980832149504,
+  "gap_self_check": 25924182448222977157188550656,
+  "gap_retry_worst": 3877290542265193293613612662784,
+  "base_entry_nw50": 12248638064943142273024000,
+  "walker_state_nw50": 295147905179352825856
+ },
+ "row_log2": {
+  "records": 127.778342,
+  "chain_tables": 109.616132,
+  "fixed_per_node": 115.0,
+  "hprime_supply": 103.197242,
+  "run_pair_cap": 96.0,
+  "candidate_scan_cap": 104.0,
+  "root_and_io": 28.650326,
+  "root_scan_T": 41.965784,
+  "walk_list": 107.969571,
+  "gap_self_check": 94.388285,
+  "gap_retry_worst": 101.612892,
+  "base_entry_nw50": 83.340824,
+  "walker_state_nw50": 68.0
+ },
+ "total_instructions": 291862074740234027862565875858097943152,
+ "W": "18241379671264626741410367241131121447/125",
+ "W_log2": 116.81277007681425,
+ "claim": {
+  "numerator": "116813",
+  "denominator": "1000"
+ },
+ "claim_minus_W": 0.00022992318575631998,
+ "gate": {
+  "numerator": "1168271",
+  "denominator": "10000"
+ },
+ "gate_margin": 0.014099999999999113,
+ "integer_assert": "total == sum(rows); every row is a Python int",
+ "typo_control": {
+  "planted": "+1% on records",
+  "detected": true,
+  "typo_W_log2": 116.82712327085255,
+  "log2_table_typo_caught": true
+ },
+ "complete_W": "W(n) = [2N*2238 + nb*166000 + nb*4 + S]/2000 with N = 2^115.650348, nb = 2^66, S = 42886830756854555715593527690576916 (exact integer sum of the ten secondary rows; secondary/dominant = 0.000147). Evaluable in closed form: no undefined function appears.",
+ "applicability": [
+  "nw=2^50 production geometry: nb=2^66 bases/side, walk 2^50",
+  "no advice; preprocessing included",
+  "peak storage 2^123.235 B (2N 48-B records + sort scratch)",
+  "secondary rows are <= 0.015% of W"
+ ]
+}

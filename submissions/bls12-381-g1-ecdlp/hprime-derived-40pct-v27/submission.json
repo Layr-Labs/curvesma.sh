@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v27: derived nw=2^50 construction and keymod, occupancy-identity kappa 1.0166, 20000-trial transfer arm CP-95 lower 0.394138 >= 0.39, integer ledger W=2^116.81277",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "census-key-v20.json",
+    "certificate.json",
+    "dependencies.json",
+    "derive-v27.json",
+    "derive_v27.py",
+    "direct-v25.json",
+    "direct_v25.py",
+    "fixtures-v25.json",
+    "gate-v25.json",
+    "kappa-v26.json",
+    "keymod.py",
+    "ledger-v27.json",
+    "population-v22.json",
+    "public-note.md",
+    "ratios-v26.json",
+    "ratios_v26.py",
+    "retry-v25.json",
+    "selfaudit_v27.py",
+    "toy.py",
+    "transfer-v27.json",
+    "transfer_v27.py",
+    "verify_v26.py"
+   ],
+   "score": {
+    "numerator": "116813",
+    "denominator": "1000"
+   },
+   "statement": "BLS12-381 G1 auxiliary-powers: given T=A_1=[s]P0 and A_d=[s^d mod r]P0, d=2^20, recover s. Claimed W=2^116.81277 in 2000-instruction units over 13 integer-asserted ledger rows; claim 116.8130; gate 116.8271. CONSTRUCTION DERIVED (flaw 1): production is nb=2^66 A-pool bases per side, each walked nw=ceil(N/nb)=883576288830423=2^49.650348 steps (50-bit field), N=2^115.650348=nb*nw per side; every record is one walk step, charged 2000 (one group addition) + 238 (13-line itemisation: 198 itemised, 6/5 stress rule) = 2238. The per-base 66-bit scalar multiplication is a POSITIVE row nb*166000=2^83.340824, amortised over 2^49.65 records per base (9.4e-11 instructions per record); walker_state_nw50=nb*4=2^68 is also positive; the v26 -(N-1)*4 credit is DELETED because it identified no previously charged operation, regenerating W 116.81148->116.81277 (claim headroom 0.00023 bits). Storage reconciled: 2N 48-B records = 2^122.235 B, sort scratch -> 2^123.235 B peak; walk table 2^55.6 B. W(n) is closed-form with the exact integer S of the ten secondary rows; no undefined function. KEYMOD DERIVED (flaw 4): 50=ceil(log2(N/nb)) is the walk-offset width (class key is 168 bits; 2^50 is not a key modulus), position = 66-bit pool slot || 50-bit offset; the pair correction (nw-1)/nw^2=2^-50 sits 42.018 bits below the 0.003955 band, and every fixture satisfies records/side=nb*nw (census 1024*64 and 64*64, direct 172*1, 86*2, 43*4). KAPPA (flaw 2): Cauchy-Schwarz gives only a LOWER bound sum N^2>=m^2/D=2^302.714 (6m=2^237.442, ratio 2^65.272); it refutes the withdrawn upper bound and supplies no bound above 1, and no monotonicity is claimed. kappa is priced by the exact uniform occupancy identity kappa=1+D/m (D/m=2^-67.857) plus the measured dense-row envelope top 1.016602 (16 rows, predicted>=4096) and the noise-cleared fit residual 0.000000 (max standardised excess 1.999<2), so charged kappa=1.016602 replaces the unsupported 1.231; E_bad=2^64.324424 (cap 2^84, 19.68 bits headroom) and no ledger row moves. SUCCESS (flaw 3): the big-n transfer arm at production density (m=2^23.000283=24.4x anchor, d=8, N=844, K=0.5094) ran 20000 trials over 24 independent streams: 7997 hits, q=0.399850, CP-95 [0.394138, 0.405583] - the lower endpoint CLEARS 0.39 (required n was 4600), superseding the v26 2048-trial interval [0.385841,0.421980] that included sub-floor values. The 131072-trial nw=1 anchor gives q=0.399071 with CP lower 0.396844, and the production-shape corrected law at nw=2^50 (K=0.51) minus the worst fixed-W cell deviation 0.003955 gives 0.393405; all three clear 0.39. DISCLOSED and NOT used: the 29584-record nw1 cell has q=0.392889 and CP lower 0.388472, below the floor; the 131072-trial anchor supersedes it. W is unchanged by posture; the primary claim stays 116.8130 with the transfer-arm floor evidence. SCOPE: no production run; production instruction counts are the regenerated ledger's declared unit costs; the transfer is measured at m=2^23, not production m; kappa is measured at census widths and charged at its envelope top plus the exact occupancy term."
+  }
+ ],
+ "experiments": []
+}
