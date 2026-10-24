@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: four-limb scalar recurrence, two-limb baby indices",
+  "claims": [
+    {
+      "statement": "For uniform s in 1..r-1 on BLS12-381 G1, with public powers A_i=[s^i]P0 for i=1..n at n=2^20, the deterministic four-limb scalar recurrence in proof.md recovers s with probability 1 using at most 2^130 total target-group-operation equivalents, including preprocessing, sorting, lookup and verification. The baby index is two 64-bit limbs because the stage-1 width M satisfies 2^117 < M < 2^118. Peak memory is at most 2^126 bytes; preprocessing is at most 2^130 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. No heuristic. The bound applies when n divides r-1 (true at the scoring n) and the attack reads A_1 and A_n.",
+      "score": {
+        "numerator": "130",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-limb-cheon",
+      "source": "experiment.py",
+      "purpose": "On a prime-order multiplicative toy group whose 2-power dividing the order shares a gcd greater than 1 with the cofactor, recover every secret by the two-stage recurrence. Also check the production integers: M is the ceiling square root of (r-1)/2^20, M fits in two limbs and not in one, and 7 is a primitive root modulo r. Not a production cost measurement.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "modulus": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 5000
+          },
+          "divisor": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          }
+        },
+        "required": [
+          "modulus",
+          "divisor"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "modulus": 193,
+          "divisor": 16
+        }
+      ]
+    }
+  ]
+}
