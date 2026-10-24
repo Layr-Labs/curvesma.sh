@@ -1,0 +1,90 @@
+{
+ "conclusion": "no nonempty sigma-stable inversion-free column set exists; the routing guard is the only remaining structural route",
+ "enumeration": {
+  "closed": [
+   [],
+   [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  ],
+  "closed_and_inversion_free": [
+   []
+  ],
+  "histogram": {
+   "closed_and_free": 1,
+   "closed_not_free": 1,
+   "not_closed_free": 728,
+   "not_closed_not_free": 3366
+  },
+  "largest_closed_inversion_free": [],
+  "subsets": 4096
+ },
+ "lower_half": {
+  "closed": false,
+  "collapse_pairs": [
+   [
+    0,
+    6
+   ],
+   [
+    1,
+    7
+   ],
+   [
+    2,
+    8
+   ],
+   [
+    3,
+    9
+   ],
+   [
+    4,
+    10
+   ],
+   [
+    5,
+    11
+   ]
+  ],
+  "forced_relation": "m(sigma^6 y) = m(y) and sigma^6 m(y) = m(y)^-1 => m^2 = 1 for every entry; r is odd so the only such GT element is the identity",
+  "inversion_free": true,
+  "set": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ]
+ },
+ "transitivity": {
+  "full_set_has_inverse_pair": true,
+  "is_transitive": true,
+  "orbit_of_0": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ]
+ }
+}
