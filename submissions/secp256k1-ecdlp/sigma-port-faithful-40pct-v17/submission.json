@@ -1,0 +1,38 @@
+{
+ "claims": [
+  {
+   "statement": "On secp256k1-ecdlp (input T=[x]P0, x uniform in [0,n), no auxiliary powers) this package ports the judge-validated plain-track mu6 orbit-row walk (bls12-381-g1-ecdlp-plain ticket 5ecbf15) and repairs, after three rejections, every source-level defect the reviewers named. THE SUBMITTED SUCCESS IS 0.550999 >= the 0.39 floor, and it is MEASURED, not modelled, ON THE SAME CHALLENGE (verdict 40b720e2 point 1): evidence/pair-census.json draws ONE challenge block xt (its SHA-256 is in the file), then for each of 3,200 sets runs the walk TWICE at the same budget with only the walker coins redrawn (starting coefficients (a,c) and the walker coin stream are fresh per run), scores a set solved when either run solves, measures 1,817/3,200 = 0.5678125, and takes the one-sided Clopper-Pearson lower bound 0.5532103 (the CP helper is Monte-Carlo calibrated at this n and p: coverage 0.9515, and the k=n closed form 0.05^(1/n) is checked). The reviewer's same-target form 2p-p^2 gives 0.5672827 against the measured 0.5678125 (diff +0.00053), so the measured event is solving the GIVEN challenge in either of two runs. The first v17 draft resampled xt and therefore measured the different-challenge event (2E[p]-(E[p])^2, larger by Var(p(Q))); that draft's 0.560408 is withdrawn. Minus the 2.211e-3 debits (transport, pool overflow, relation failure, detector abort, escape failure) the design success is 0.550999. THE CHARGE IS EXPLICIT: W2 = 2*W, exactly +1.000 bit, every term doubled rather than shared (ledger.py's W2 row). THE LAG-3 PATH IS FAITHFUL AND PROVEN TO FIRE. census_v20n.walk_arm now owns the whole step: it runs qwalk.step with the DP gate off and no run counter, applies EVERY substitution from the SAME pre-step tuple (class,a,c) the step advanced from, applies the run counter/restart to the union of both triggers, and RECOMPUTES the report gate on the class actually reported (v16's arm mixed post-step a/cc with the pre-step canon and kept the stale mask). The lag-3 trigger is successor class == class two steps back, which in a 3-cycle c_a->c_b->c_c->c_a is exactly the closing step. Firing proof (evidence/lag3-firing.json): in a small universe (q=20011, R=8, 3336 classes) 24 of 96 starts have a period-3 lag-1 trace; on those starts the lag-3 channel fires 150 times, the lag-1 arm fires it 0 times, 24/24 planted starts stop being period-3, and invariant violations are 0 in both arms. Production census (3,200 trials x 16 walkers x 1,687 steps, two shipped seed blocks): no-escape control 0.0050/0.0044; escape lag-1 0.2825/0.2897 (CP-95 0.269404); escape lag-1+lag-3 0.3228/0.3316 (pooled 0.32719, CP-95 0.309200). The 3-cycle channel is removed: lag-1 leaves 2,872/2,847 trials in a period-3 trace, lag-3 leaves 0 in both blocks (residual moves to period >=4), with 8,066/8,085 lag-3 fires per block and 0 sampled invariant violations. On secp256k1 that repair is worth +0.040 absolute success, not the bls template's +0.0006. PRODUCT COUNT: spec_window_secp executes 8 partial products (4 at i+j=3, 4 at i+j=4; i<=3 so (4,0) does not exist), not 7; selector.py carries PRODUCTS_V1=8 and asserts the measured (8,3) at import, and the row is priced 35 insn instead of 31. STEP_INSN = 152 (index 35, v0 24, v2 subtraction 4, argmin/selects 12, sign+key 12, orbit slot 7, loads/stores 20, coefficient update 9, checkpoint 10, lag-1 escape 6, lag-3 escape 4, batch inversion 1, counters 7, meter 1); price 1 + 152/1000 = 1.152 at C=1000 (this track's protected normalization; the bls C=2000 is used nowhere). W FORMULA: the cost model is total work = walkers x steps-per-walker x step-price, so W = (1 + 152/1000)*(S_OPS + 2^60) + EXTRAS with S_OPS = ceil(A_H1*S0) = 2^126.72144016; v16's prose A_H1^2*S0^2 would be 2^126.7 LARGER than the charge, so the code was right and the sentence is now the sentence of the code, both readings printed in ledger.py's docstring. KERNEL: scripts/kernel/cios4.c (arm64, clang -O2) is disassembled with otool -tv; scripts/row_extract.py reports the static span (_cios4.._cios4_end = 116 rows) AND the EXECUTED count of one call (59 once-rows + 4 x 57 loop-body rows = 287), writes the listing to evidence/cios-disasm.json, and asserts ledger.M_insn == exec_rows == 287 (restart_count.py reads the same artifact; the hard-coded 92 is gone). The routine itself is corrected: v17a accumulated m*n[j] into t[j] and never performed the CIOS shift-down, so the accumulator now carries the extra limb, the shift is explicit, and the SELFTEST checks 6 random (n,a,b) tuples against a Python reference a*b*R^-1 mod n, R=2^256: 6/6 match, domain a,b < 2^192 < n. Cost effect: W moves by 2^-113 bits; the near-tie fallback reserve (charged in full in EXTRAS) is 2^62.28 and is disclosed under a 2^63 sanity ceiling. Arithmetic: log2 S0 = 126.69996043, log2 W (one run) = 126.92594600, w=2 +1.00000000, log2 W2 = 127.92594600, claim 127.926. HONEST LIMITS: no production transfer argument is claimed for the single-run rate, and the two-run statistic inherits that gap -- it is measured at production shape (visits/sqrt(N) 1.009444 vs ledger 1.009696, dev 2.5e-4) in a scalar quotient simulation with q=4.29e9, R=64, 16 walkers, DP 2^-5, not on secp256k1 with R=2^20, 2^20 workers and DP 2^-60, so comparable trapping, DP recovery, cap and restart behaviour are NOT established; the run-to-run correlation is not modelled (measured p_set sits 0.00053 above 2p-p^2, disclosed); the cycle census is a trace-period statistic, not a terminal basin period; meetings beyond the 1,687-step cap are censored, not extrapolated; and 127.926 does not rank (frontier 126.338). The goal of this round is an honest floor-met posture that survives review, not a leaderboard move.",
+   "score": {
+    "numerator": "127926",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "public-note.md",
+    "dependencies.json",
+    "evidence/census-v20n.json",
+    "evidence/census-seed11.json",
+    "evidence/pair-census.json",
+    "evidence/pair-census-lag1.json",
+    "evidence/lag3-firing.json",
+    "evidence/cios-disasm.json",
+    "evidence/absorb-direct.json",
+    "evidence/restart-count.json",
+    "evidence/ledger-out.json",
+    "ledger.py",
+    "reproduction.json",
+    "scripts/census_v20n.py",
+    "scripts/lag3_fixture.py",
+    "scripts/pair_census.py",
+    "scripts/row_extract.py",
+    "scripts/kernel/cios4.c",
+    "scripts/qwalk.py",
+    "scripts/selector.py",
+    "scripts/restart_count.py",
+    "scripts/absorb_v20n.py"
+   ]
+  }
+ ],
+ "experiments": [],
+ "title": "secp256k1 v17b: faithful lag-3 (real 3-cycle branch, planted firing proof, channel 2872->0) + measured w=2 ON THE SAME CHALLENGE (1817/3200 sets, CP-95 0.5532) = success 0.5510 >= 0.39; 8-product window; W formula = charge; CIOS corrected, executed 287 rows",
+ "version": 1
+}

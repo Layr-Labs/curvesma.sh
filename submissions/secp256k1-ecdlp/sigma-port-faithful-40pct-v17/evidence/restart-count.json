@@ -1,0 +1,73 @@
+{
+ "chain": {
+  "add_insn": 1012,
+  "add_prod": 11,
+  "chain_insn": 228988,
+  "chain_ref": 228.988,
+  "dbl_insn": 644,
+  "dbl_prod": 7,
+  "doubles": 255,
+  "ratio_to_v20l_319": 0.7178307210031348,
+  "window_adds": 64,
+  "window_bits": 4
+ },
+ "fresh_insn_equivalent": 714070,
+ "fresh_ref": 714.07,
+ "ledger_consumes_json": false,
+ "ledger_restart_ref": 1.0202096652265203e+32,
+ "meter_cap_ref": 1.0202096652265203e+32,
+ "ratio": 17001.666666666668,
+ "repricing_factor": 0.7178307210031348,
+ "rows": [
+  {
+   "op": "point doubling 2M+5S at 4-limb insn/product",
+   "unit": "insn",
+   "value": 644
+  },
+  {
+   "op": "window addition 11M at 4-limb insn/product",
+   "unit": "insn",
+   "value": 1012
+  },
+  {
+   "op": "255 doublings + 64 window additions (one 256-bit scalar action)",
+   "unit": "insn",
+   "value": 228988
+  },
+  {
+   "op": "two scalar actions [a]P0 and [c]T",
+   "unit": "insn",
+   "value": 457976
+  },
+  {
+   "op": "S = [a]P0 + [c]T, one batched mixed affine addition",
+   "unit": "insn",
+   "value": 1000
+  },
+  {
+   "op": "normalization S -> affine: one batched-inverse share",
+   "unit": "insn",
+   "value": 24380
+  },
+  {
+   "op": "class key: two fixed-constant 4-limb products + min/max + sign",
+   "unit": "insn",
+   "value": 40
+  },
+  {
+   "op": "lane reset: esc_run=0, prev=class, restart flag, counters, segment",
+   "unit": "insn",
+   "value": 30
+  }
+ ],
+ "starts_admitted_by_meter": 1.4287250062690216e+29,
+ "test": "restart_count_v20n",
+ "unit": {
+  "C": 1000,
+  "INV_INSN": 24380,
+  "M_INSN": 92,
+  "S_INSN": 89
+ },
+ "v20j_priced_insn": 42,
+ "v20l_priced_ref_per_scalar_mult": 319.0
+}
