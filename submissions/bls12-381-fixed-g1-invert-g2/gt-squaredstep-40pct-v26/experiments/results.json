@@ -1,0 +1,71 @@
+{
+ "census": {
+  "cap": 8,
+  "cp95_lower": 0.471342335003843,
+  "cp95_upper": 0.48086108500187885,
+  "invariant_fail": 0,
+  "method": "Clopper-Pearson (exact)",
+  "model_success": 0.47911672329484,
+  "mul_steps": 510194,
+  "p_agree_given_repeat": 0.9999299915989919,
+  "p_recover": 0.4761,
+  "p_repeat": 0.47613333333333335,
+  "s_len": 32,
+  "scope": "production ratio S/sqrt(N); fixture N=785; supports the merge->solve->verify mechanism, not a production rate",
+  "sq_steps": 281800,
+  "sqr_fraction": 0.3558107763442652,
+  "trials": 30000,
+  "workers": 12,
+  "zeroden": 0
+ },
+ "checks": {
+  "claim_covers_disclosed_aux_2_114_812": true,
+  "claim_covers_total": true,
+  "components_sum_exactly": true,
+  "cp_lower_clears_floor": true,
+  "instrumented_equals_plain": true,
+  "invariants_hold": true,
+  "model_calibrated": true,
+  "no_history_in_step": true,
+  "planted_mutation_flagged": true
+ },
+ "claim_log2": "126.2508",
+ "cycle": {
+  "note": "one two-cycle = random-map expectation; the v13 control did NOT reproduce the family as a 2-cycle at this size and is reported as a failed control",
+  "v13_control_failed": true,
+  "v13_two_cycles": 0,
+  "v26_cycle_lengths": {
+   "2": 1,
+   "36": 1,
+   "5": 1
+  },
+  "v26_two_cycles": 1
+ },
+ "delta_vs_v24_bits": 0.4824,
+ "instrumented": {
+  "counts_match": true,
+  "mul_calls": 7289,
+  "per_trial_equal": true,
+  "sqr_calls": 11298
+ },
+ "ladder": {
+  "claim_numerator": "1262508",
+  "statement_chars": 2420
+ },
+ "runner": "experiments/runner.py",
+ "theorem": {
+  "clean_inverse_pair_columns": 384,
+  "clean_total": 384,
+  "orbit_columns": 768,
+  "planted_column_flags": [
+   [
+    7,
+    3,
+    9
+   ]
+  ],
+  "planted_flagged": true,
+  "sigma6_is_inversion": true
+ },
+ "total_log2": 126.25077793065508
+}
