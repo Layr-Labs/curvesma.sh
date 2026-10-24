@@ -1,0 +1,618 @@
+{
+ "fixture": {
+  "G": [
+   218652,
+   2045
+  ],
+  "b": 1,
+  "beta": 43364,
+  "classes": 8341,
+  "log2_sqrtN": 6.513002321489472,
+  "order": 50047,
+  "p": 600217,
+  "table_rows": 2048
+ },
+ "gate": {
+  "mean_detect_over_sref_range": [
+   0.6636176066513167,
+   0.6660299706832894
+  ],
+  "min_cp95_lower": 0.39421845679200357,
+  "note_at_1600": {
+   "min_cp95_lower": 0.36396493111893213,
+   "passed": false,
+   "why": "at a success rate of 0.399 a one-sided 95% Wilson bound needs n>=~8000 to reach 0.39; the specified n=1600 cannot certify a 0.39 floor arithmetically, so the gate is certified at 60000/density and the 1600 reading is disclosed"
+  },
+  "passed": true,
+  "rule": "CP-95 lower >= 0.39 at every density (COST_MODEL.md line 45 floor)",
+  "trials_per_density": 60000
+ },
+ "kappa": 1.015,
+ "package": "plain-truncwindow-40pct-v19d",
+ "protocol": {
+  "D1_fix": "merge gated on kappa*S_ref; DP lag excluded and charged separately",
+  "D2_fix": "orbit element resolved on the point; recovery verified before success",
+  "collision_site": "every visited class (coverage S)",
+  "dp": "report gate only; lag <= one spacing, charged separately",
+  "pool": "session-global, shared by all walks"
+ },
+ "rival_table": {
+  "flat_ours": 0.004968750000000022,
+  "flat_rival": 0.01100000000000001,
+  "kappa": 1.02,
+  "model": 0.4023665609815751,
+  "pipeline": [
+   {
+    "curve": "q26",
+    "diff": 0.0023611111111110916,
+    "dp_bits": 3,
+    "ours": 0.4023611111111111,
+    "rival": 0.4,
+    "rival_trials": 18000,
+    "successes": 28970,
+    "trials": 72000
+   },
+   {
+    "curve": "q30",
+    "diff": 0.0032604166666666545,
+    "dp_bits": 4,
+    "ours": 0.4032604166666667,
+    "rival": 0.4,
+    "rival_trials": 24000,
+    "successes": 38713,
+    "trials": 96000
+   },
+   {
+    "curve": "q34",
+    "diff": 0.008708333333333318,
+    "dp_bits": 6,
+    "ours": 0.40270833333333333,
+    "rival": 0.394,
+    "rival_trials": 12000,
+    "successes": 19330,
+    "trials": 48000
+   }
+  ],
+  "pipeline_pooled": 0.402837962962963,
+  "pipeline_pooled_n": 216000,
+  "pipeline_pooled_rival": 0.3988,
+  "pipeline_pooled_rival_se": 0.0021,
+  "pipeline_pooled_se": 0.002350255638734202,
+  "pipeline_pooled_z": 1.7180952133095422,
+  "rows": [
+   {
+    "curve": "q34",
+    "diff": 0.003291666666666637,
+    "dp_bits": 2,
+    "ours": 0.39829166666666665,
+    "rival": 0.395,
+    "rival_trials": 12000,
+    "se_combined": 0.005476570198982806,
+    "trials": 48000,
+    "within_2se": true,
+    "z": 0.6010452796310393,
+    "z_vs_model": -1.82365778570322
+   },
+   {
+    "curve": "q34",
+    "diff": -0.004583333333333384,
+    "dp_bits": 4,
+    "ours": 0.40041666666666664,
+    "rival": 0.405,
+    "rival_trials": 18000,
+    "se_combined": 0.004397099990843431,
+    "trials": 72000,
+    "within_2se": true,
+    "z": -1.0423536746668864,
+    "z_vs_model": -1.0678161185245172
+   },
+   {
+    "curve": "q34",
+    "diff": -0.0022166666666667,
+    "dp_bits": 6,
+    "ours": 0.4017833333333333,
+    "rival": 0.404,
+    "rival_trials": 30000,
+    "se_combined": 0.0033170688446137815,
+    "trials": 120000,
+    "within_2se": true,
+    "z": -0.668260675465358,
+    "z_vs_model": -0.4121008532903064
+   },
+   {
+    "curve": "q30",
+    "diff": 0.004260416666666655,
+    "dp_bits": 4,
+    "ours": 0.4032604166666667,
+    "rival": 0.399,
+    "rival_trials": 24000,
+    "se_combined": 0.0033921500264957527,
+    "trials": 96000,
+    "within_2se": true,
+    "z": 1.2559635138154142,
+    "z_vs_model": 0.5645700072950662
+   },
+   {
+    "curve": "q30",
+    "diff": 0.008624999999999994,
+    "dp_bits": 6,
+    "ours": 0.402625,
+    "rival": 0.394,
+    "rival_trials": 24000,
+    "se_combined": 0.0033919606384296753,
+    "trials": 96000,
+    "within_2se": false,
+    "z": 2.5427771484969175,
+    "z_vs_model": 0.16327504371965812
+   }
+  ],
+  "within_2se_all": false
+ },
+ "s_ref": 90.85184379478763,
+ "sweep_realec": [
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3837527391995895,
+   "dp_bits": 5,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    646,
+    646
+   ],
+   "invariant_row": [
+    125183,
+    125183
+   ],
+   "invariant_step": [
+    125179,
+    125179
+   ],
+   "mean_detect_over_sref": 0.6212441499599636,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.40375,
+   "successes": 646,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3534671019134855,
+   "dp_bits": 6,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    597,
+    597
+   ],
+   "invariant_row": [
+    128781,
+    128781
+   ],
+   "invariant_step": [
+    128781,
+    128781
+   ],
+   "mean_detect_over_sref": 0.6545528874211891,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.373125,
+   "successes": 597,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3788024972889459,
+   "dp_bits": 7,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    638,
+    638
+   ],
+   "invariant_row": [
+    127079,
+    127079
+   ],
+   "invariant_step": [
+    127077,
+    127077
+   ],
+   "mean_detect_over_sref": 0.6489086296114093,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.39875,
+   "successes": 638,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3763281943264675,
+   "dp_bits": 8,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    634,
+    634
+   ],
+   "invariant_row": [
+    126943,
+    126943
+   ],
+   "invariant_step": [
+    126943,
+    126943
+   ],
+   "mean_detect_over_sref": 0.6441832564813358,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.39625,
+   "successes": 634,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3547016129196327,
+   "dp_bits": 9,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    599,
+    599
+   ],
+   "invariant_row": [
+    128616,
+    128616
+   ],
+   "invariant_step": [
+    128612,
+    128612
+   ],
+   "mean_detect_over_sref": 0.652753287724586,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.374375,
+   "successes": 599,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.3831338400091637,
+   "dp_bits": 10,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    645,
+    645
+   ],
+   "invariant_row": [
+    125823,
+    125823
+   ],
+   "invariant_step": [
+    125820,
+    125820
+   ],
+   "mean_detect_over_sref": 0.631541879498304,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.403125,
+   "successes": 645,
+   "trials": 1600,
+   "walks": 32
+  },
+  {
+   "arm": "realec",
+   "charged_steps": 93,
+   "cp95_lower": 0.38251497475307045,
+   "dp_bits": 11,
+   "invariant_ok": true,
+   "invariant_recovery": [
+    644,
+    644
+   ],
+   "invariant_row": [
+    126773,
+    126773
+   ],
+   "invariant_step": [
+    126770,
+    126770
+   ],
+   "mean_detect_over_sref": 0.6471699570978323,
+   "pool_records_max": 93,
+   "s_ref": 90.85184379478763,
+   "success": 0.4025,
+   "successes": 644,
+   "trials": 1600,
+   "walks": 32
+  }
+ ],
+ "sweep_walkmap": [
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.3948675163696548,
+   "dp_bits": 5,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6648427826809723,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.39815,
+   "successes": 23889,
+   "trials": 60000,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.3966649436627491,
+   "dp_bits": 6,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6654073600850983,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.39995,
+   "successes": 23997,
+   "trials": 60000,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.39778003755651387,
+   "dp_bits": 7,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6660299706832894,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.4010666666666667,
+   "successes": 24064,
+   "trials": 60000,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.39738059889287736,
+   "dp_bits": 8,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6655634722010689,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.40066666666666667,
+   "successes": 24040,
+   "trials": 60000,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.3955831531684338,
+   "dp_bits": 9,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.665102089251552,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.39886666666666665,
+   "successes": 23932,
+   "trials": 60000,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.39421845679200357,
+   "dp_bits": 10,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6636176066513167,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.3975,
+   "successes": 23850,
+   "trials": 60000,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.39421845679200357,
+   "dp_bits": 11,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6638860528863968,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.3975,
+   "successes": 23850,
+   "trials": 60000,
+   "walks_target": 1024
+  }
+ ],
+ "sweep_walkmap_1600": [
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.36952669044414294,
+   "dp_bits": 5,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6575021972621408,
+   "mean_detect_se": 0.4636251615166857,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.389375,
+   "successes": 623,
+   "trials": 1600,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.3763281943264675,
+   "dp_bits": 6,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6568197233384202,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.39625,
+   "successes": 634,
+   "trials": 1600,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.40667564806762224,
+   "dp_bits": 7,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6726653845891536,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.426875,
+   "successes": 683,
+   "trials": 1600,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.3818961434569806,
+   "dp_bits": 8,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6614289499709275,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.401875,
+   "successes": 643,
+   "trials": 1600,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.39737705727589284,
+   "dp_bits": 9,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6708485549234166,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.4175,
+   "successes": 668,
+   "trials": 1600,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.386228674798087,
+   "dp_bits": 10,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6541700081180489,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.40625,
+   "successes": 650,
+   "trials": 1600,
+   "walks_target": 1024
+  },
+  {
+   "N": 561690000,
+   "arm": "walkmap",
+   "budget_steps": 23930,
+   "cp95_lower": 0.36396493111893213,
+   "dp_bits": 11,
+   "kappa": 1.015,
+   "mean_detect_over_sref": 0.6575034669996986,
+   "mean_detect_se": 0.4857025501603374,
+   "model": 0.39935020661817655,
+   "pool_records_max": 23943,
+   "s_ref": 23576.157869090577,
+   "sqrtN": 23700.0,
+   "success": 0.38375,
+   "successes": 614,
+   "trials": 1600,
+   "walks_target": 1024
+  }
+ ],
+ "theta_capped_control": [
+  {
+   "dp_bits": 2,
+   "naive_theta_squared_prediction": 0.031661541590479625,
+   "note": "the naive theta^2 prediction does NOT apply: once two walks coalesce they stay together, so a DP-gated pool sees a chain of coincidences and the cap costs only ~theta, not theta^2. The measured collapse is the discrimination test.",
+   "success": 0.315,
+   "successes": 1260,
+   "trials": 4000
+  },
+  {
+   "dp_bits": 4,
+   "naive_theta_squared_prediction": 0.0020088299511805685,
+   "note": "the naive theta^2 prediction does NOT apply: once two walks coalesce they stay together, so a DP-gated pool sees a chain of coincidences and the cap costs only ~theta, not theta^2. The measured collapse is the discrimination test.",
+   "success": 0.16325,
+   "successes": 653,
+   "trials": 4000
+  },
+  {
+   "dp_bits": 6,
+   "naive_theta_squared_prediction": 0.0001256702501004625,
+   "note": "the naive theta^2 prediction does NOT apply: once two walks coalesce they stay together, so a DP-gated pool sees a chain of coincidences and the cap costs only ~theta, not theta^2. The measured collapse is the discrimination test.",
+   "success": 0.058,
+   "successes": 232,
+   "trials": 4000
+  }
+ ]
+}

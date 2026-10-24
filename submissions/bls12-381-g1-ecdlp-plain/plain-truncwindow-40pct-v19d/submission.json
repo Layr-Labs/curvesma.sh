@@ -1,0 +1,27 @@
+{
+ "version": 1,
+ "title": "Plain G1 v19d: low 448-bit window twist index, 161 instructions, 126.263, toy invariants green and rival sweep reproduced",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "ledger.py",
+    "certificate.json",
+    "scripts/verify_certificate.py",
+    "scripts/toy.py",
+    "scripts/selector.py",
+    "scripts/merge_evidence.py",
+    "evidence/toy.json",
+    "evidence/agreement.json",
+    "evidence/rival_toy_table.json",
+    "evidence/protocol-diff.md"
+   ],
+   "score": {
+    "numerator": "126263",
+    "denominator": "1000"
+   },
+   "statement": "On the bls12-381-g1-ecdlp-plain input, which supplies only T=[x]P0 for x uniform in [0,r) with no auxiliary powers and no n, the algorithm specified in this package recovers and verifies x by [x]G=T with probability at least 0.39, using at most 2^126.263 native-equivalent work units at C=2000 and 2^74.585 bytes of storage. The state is (S,(a,c)) with S affine and S=[a]G+[c]T; the twist index is h=argmin on the three residues x, beta*x, beta^2*x, decided from the low 448-bit window of x*floor(2^448 beta/p) with 12 partial products (i+j in {5,6}), a relative 2^-64 estimate: measured agreement with the exact argmin is 5000/5000 production classes, with beta^2*x obtained by subtraction B=(2p-x-A) mod p. The step is S->S+Tab[h][m] with m=(K*R)>>(bitlen(p)-1), K=min(y,p-y), and (a,c)->(a+r[h][m],c+s[h][m]); there is no per-step canonicalisation and the orbit element is resolved once per record hit at report time. scripts/selector.py is the only implementation of the index and the cell map, shared by the ledger and the toy; the certificate asserts its production instantiation is bit-identical to the verbatim 12-product function on 100 keys. The step ledger charges ten itemised rows totalling 161 instructions (budget 165) on top of one reference addition; the metered exact fallback is 383 instructions at 3*2^-64 per step, charged once as an exact-Fraction total that is 2^-64.9 of phase 1 (0.000000 bits), and the kappa=1.015 budget product 1.096904 is asserted below 2^(claim-log2 S0)=1.097379. The one field inversion an affine addition needs is charged as a total, 101495 instructions per batch of 2^18 steps plus one whole tail batch, never as a per-step average. The toy is certified on two arms: real affine EC on a 20-bit sextic-twist fixture asserts S=[a]G+[c]T on every step (879182/879182), every table row (879738/879738) and every recovered x (4403/4403); a class-walk arm at a rival-scale N=2^29.07, with the pool holding every visited class and the DP condition gating reporting only, reproduces the live head's published flat sweep (five rows at 4x their n: four within 2 SE of their printed value, every row within 2 SE of the 0.4024 model, dp_bits spread 0.0050 against their 0.0110, pipeline pooled 0.4028 vs 0.3988, z=+1.72) and clears the floor with CP-95 lower 0.3942 >= 0.39 at all seven densities 2^-5..2^-11 at 60000 trials each; the control that pools DP classes only gives 0.315/0.163/0.058 at dp 2/4/6, which is the object discrimination. The package is self-contained: dependencies are empty and no experiments are declared."
+  }
+ ],
+ "experiments": []
+}

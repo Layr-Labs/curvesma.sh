@@ -1,0 +1,96 @@
+{
+ "package": "plain-truncwindow-40pct-v19d",
+ "checks": [
+  {
+   "name": "convention_reproduces_7b34f78d",
+   "ok": true,
+   "detail": "our 161 rows at kappa 1.02 -> 2^126.268774; their printed budget row 2^126.271442"
+  },
+  {
+   "name": "agreement_5000_of_5000",
+   "ok": true,
+   "detail": "5000/5000 production classes: 448-bit window argmin == exact argmin"
+  },
+  {
+   "name": "window_within_2_64",
+   "ok": true,
+   "detail": "max |12-product window - full window| = 23411374159329886394 <= 2^64.34 (their 3*2^-64)"
+  },
+  {
+   "name": "near_tie_band_empty_in_sample",
+   "ok": true,
+   "detail": "0 of 5000 classes had exact top-2 gap < 2^315 (the fallback band)"
+  },
+  {
+   "name": "toy_spec_fidelity_100_keys",
+   "ok": true,
+   "detail": "window_generic(prod constants) == verbatim spec_window12 on 100/100 keys, 12 products each"
+  },
+  {
+   "name": "toy_selector_matches_exact_100_keys",
+   "ok": true,
+   "detail": "toy instantiation picks the exact argmin on 100/100 toy keys"
+  },
+  {
+   "name": "fallback_fits_2_62",
+   "ok": true,
+   "detail": "S*383*3*2^-64/C = 2.94056e+18 reference units < 2^62; adds 0.000000000 bits"
+  },
+  {
+   "name": "fallback_union_bound",
+   "ok": true,
+   "detail": "exact Fraction: S_ops * 3*2^-64 * 383 instructions, charged once as EXTRAS"
+  },
+  {
+   "name": "kappa_le_1_015",
+   "ok": true,
+   "detail": "kappa = 1.0150 <= 1.015 (every row in the machine table)"
+  },
+  {
+   "name": "kappa_budget_product",
+   "ok": true,
+   "detail": "product 1.096903990 <= 2^(claim - log2 S0) 1.097378796"
+  },
+  {
+   "name": "claim_below_ship_line",
+   "ok": true,
+   "detail": "claim 126.263 < ship line 126.266"
+  },
+  {
+   "name": "margin_at_least_0_008",
+   "ok": true,
+   "detail": "gate 126.274 - claim 126.263 = 0.0110 >= 0.008 (tie auto-reject rule)"
+  },
+  {
+   "name": "step_rows_161",
+   "ok": true,
+   "detail": "46+20+14+17+7+36+12+1+7+1 = 161, budget 165"
+  },
+  {
+   "name": "toy_cp95_gate",
+   "ok": true,
+   "detail": "min CP-95 lower over densities 2^-5..2^-11 = 0.3942 >= 0.39 (arm walkmap, N = 561690000, 60000 trials/density, 420000 total; at n=1600 the same arm reads 0.3640, disclosed)"
+  },
+  {
+   "name": "toy_densities_7",
+   "ok": true,
+   "detail": "7 densities 5..11, 420000 trials total"
+  },
+  {
+   "name": "toy_invariants_exact",
+   "ok": true,
+   "detail": "every step: 889182/889182 S == [a]G+[c]T; every row: 889198/889198 J == [rj]G+[sj]T; every merge: 4403/4403 recovered x reproduces T (D2: orbit element resolved on the point, not on the x residue)"
+  },
+  {
+   "name": "toy_rival_table_reproduced",
+   "ok": true,
+   "detail": "5 rows at 4x their n on their N: 4/5 within 2 SE of their printed point (max |z| 2.54; every row within 2 SE of the model, max 1.82); dp_bits spread ours 0.0050 vs theirs 0.0110; pipeline pooled 0.4028 vs 0.3988 (n=216000) (D1: merge gated on kappa*S_ref, DP lag charged separately)"
+  }
+ ],
+ "passed": 17,
+ "total": 17,
+ "verdict": "PASS",
+ "claim": 126.263,
+ "log2_W": 126.26237565003244,
+ "success": 0.39901420661817655
+}
