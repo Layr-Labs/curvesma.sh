@@ -1,0 +1,84 @@
+{
+ "kind": "certificate-v15u",
+ "claim": "341837/2500",
+ "claim_value": 136.7348,
+ "W_time_log2": 136.73471732770471,
+ "W_exact": "72480531374366124764350660335251904405407147/500",
+ "ir_per_step": 1869,
+ "ir_per_step_with_action": 595341.5,
+ "composition_rows": {
+  "step_core": 744,
+  "align": 433,
+  "label": 604,
+  "detect": 79,
+  "action": 9,
+  "escape_act_amortized": 478322.5,
+  "reset_hist_amortized": 1.0,
+  "report": 125
+ },
+ "claim_derivation": "smallest 1e-4 decimal c with 2^c >= W + 2e-5, both directions checked",
+ "checks": [
+  {
+   "check": "path_upper_bounds",
+   "pass": true,
+   "evidence": "evidence/check-executed-v15u.json:verdict",
+   "detail": "conservative path upper bounds; every instruction counted, incl. ret"
+  },
+  {
+   "check": "simd_zero",
+   "pass": true,
+   "evidence": "evidence/check-executed-v15u.json:simd_instructions_in_counted_symbols",
+   "detail": "counted TU rebuilt with -mgeneral-regs-only; register-class scan zero matches"
+  },
+  {
+   "check": "invariant_endpoint",
+   "pass": true,
+   "evidence": "evidence/harness-v15u.json:rows[0].endpoint_violations",
+   "detail": "endpoint identity DERIVED from scripts/invariant-row.json; wrong-side control fails"
+  },
+  {
+   "check": "detector_action",
+   "pass": true,
+   "evidence": "evidence/harness-v15u.json:action_rows[0].state_resets",
+   "detail": "forced detector on 120 walks: every trip resets state, endpoint holds after reset"
+  },
+  {
+   "check": "detector_action_control",
+   "pass": true,
+   "evidence": "evidence/harness-v15u.json:action_rows[1].state_resets"
+  },
+  {
+   "check": "recovery_path",
+   "pass": true,
+   "evidence": "evidence/harness-v15u.json:rows[1].solved_and_verified"
+  },
+  {
+   "check": "per_challenge_init",
+   "pass": true,
+   "evidence": "evidence/census-v15u.json:stale_q0_control",
+   "detail": "census calls v15r_init_for_Q per challenge; the fixed-Q0 control recovers 0"
+  },
+  {
+   "check": "census_shipped_object",
+   "pass": true,
+   "evidence": "evidence/census-v15u.json:cp95_2run",
+   "detail": "256 trials x w=2 at the ledger-normalized budget"
+  },
+  {
+   "check": "budget_normalization",
+   "pass": true,
+   "evidence": "evidence/census-v15u.json:budget_normalization"
+  },
+  {
+   "check": "production_load",
+   "pass": true,
+   "evidence": "evidence/census-v15u.json:production_load_stress",
+   "detail": "measured success at the saturated per-slot-write regime"
+  },
+  {
+   "check": "selfaudit",
+   "pass": true,
+   "evidence": "evidence/ledger-v15u.json:selfaudit"
+  }
+ ]
+}

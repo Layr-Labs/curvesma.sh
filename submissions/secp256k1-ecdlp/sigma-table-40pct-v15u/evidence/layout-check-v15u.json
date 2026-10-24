@@ -1,0 +1,31 @@
+{
+ "kind": "layout-check-v15s",
+ "compiler": {
+  "sizeof_rec_t": 88,
+  "off_x": 0,
+  "off_y": 32,
+  "off_idx": 64,
+  "off_len": 72,
+  "off_esc": 80,
+  "sizeof_worker_t": 264,
+  "worker_off_rec": 0,
+  "worker_off_a": 88,
+  "worker_off_c": 120,
+  "worker_off_prev0": 152,
+  "worker_off_prev1": 184,
+  "worker_off_minx": 216,
+  "worker_off_rep": 248,
+  "worker_off_win": 256,
+  "worker_batch": 67,
+  "prefix_bytes": 4288
+ },
+ "listing_equ": {
+  "REC_SIZE": 88,
+  "OFF_IDX": 64,
+  "OFF_LEN": 72,
+  "OFF_ESC": 80
+ },
+ "rule": "sizeof(rec_t) and every field offset equal the listing's .equ constants; sizeof(worker_t) and its offsets are machine-derived with _Static_assert on every field, and the batch prefix array is WORKER_BATCH x 64 B",
+ "mismatches": {},
+ "verdict": "PASS"
+}
