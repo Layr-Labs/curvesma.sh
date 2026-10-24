@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "Claim 126.4973: one address layout (slots=ceil(S/0.625), 127-bit refs), loop-free executed-count prices, ring-6 trap census, bootstrap success p5=0.4134",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in BLS12-381 G2 and uniform z in GT, compute g=e(P0,Q) and recover x with z=g^x by a Frobenius-class rho walk in GT, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W, exact integer check, n-1 asserted to fail; W is the exact sum of nine rows and a planted +1 changes every row. ADDRESSING. One layout: records = S = 95803668470929860550224427498997735090, slots = ceil(S/0.625) = 153285869553487776880359083998396376144, slot ref = 127 bits (2 words), slot = 6+2+1 = 9 words = 72 B; peak = S*688 + slots*72 + 1024*256 + 1024*6*8 + 2^20 B, machine-derived, and the v26 pair (8 Ir/record, 65536*7*8 table bytes) is withdrawn. DICTIONARY. state_key48 493 Ir, dict_lookup 153 Ir, dict_insert 246 Ir from otool; 20000-op differential vs a Python model, 0 structure/counter mismatches, mutated stride detected. EXECUTED COUNTS. The priced kernels are loop-free in the listing (no backward branch inside either span), so every instruction executes at most once per call and the static span is an upper bound on the executed count; the v26 squaring arm carried an unexplained +2239 Ir surcharge, now removed: MUL 22409, SQR 25372, STEP 23477.404 Ir at f_mul 0.639418. TRAP. Guard ring is 6 words. Waste comes from an exact census of slot families of length <= 6 under the ring (vanishing kappa sums exact in Z[zeta] mod Phi_12) against 7680000 measured protocol steps with 0 admissions, charged at 32 steps plus the normal-run term: 168691606152510875773251867992491670823 Ir. A period-6 family is NOT claimed excluded; the charge does not rest on the rule of three. SUCCESS. 5th percentile of 10000 bootstrap draws of (census CP x retention x residual divisor) = 0.4134 (median 0.4758), above the 0.39 floor; the v26 product of quantiles is withdrawn. Survival is claimed at ONE scale only: rp=521041, 400 pairs, gap-1 0.995. Ten kernels pass 10000 bigint vectors each with mutation controls.",
+   "score": {
+    "numerator": "1264973",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/manifest27.json",
+    "evidence/ledger27.json",
+    "evidence/census25.json",
+    "evidence/scan25.json",
+    "evidence/scan26.json",
+    "evidence/scan_forced26.json",
+    "evidence/scan_abortctl26.json",
+    "evidence/survival25.json",
+    "evidence/dict26.json",
+    "evidence/ir25.json",
+    "evidence/ir26.json",
+    "evidence/prices25.json",
+    "evidence/kernel_verify25.json",
+    "evidence/loopfree27.json",
+    "evidence/tie25.json",
+    "public-note.md",
+    "scripts/gen27.py",
+    "scripts/verify27.py",
+    "scripts/protocol25.py",
+    "scripts/loopfree27.py",
+    "scripts/ir26/dict26.c",
+    "scripts/ir25/kernels.c",
+    "scripts/ir25/consts.c"
+   ]
+  }
+ ],
+ "experiments": []
+}

@@ -1,0 +1,251 @@
+{
+ "mode": "ledger27-executed-addressing",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers, one record per visited class",
+  "workers": 1024,
+  "steps": "95803668470929860550224427498997735090",
+  "steps_log2": 126.1714,
+  "S_over_sqrtN": "829/572",
+  "dpbits": 0,
+  "guard_ring_words": 6,
+  "abort": "K_STALL=32 consecutive squarings, armed by a guard admission",
+  "meter": "one global counter in instructions; every step, key build, probe, record write, replay and verification asks fits() before acting; a replay or verification that does not fit abandons that worker"
+ },
+ "rows_ir": {
+  "walk_steps": "2249221408965905297733409839103413355600159",
+  "per_step_lookup_key_and_probe": "61889169832220689915444980164352536868140",
+  "record_writes_and_insert": "89480626351848489753909615284063884574060",
+  "collision_processing": "8192",
+  "trap_waste_bound": "168691606152510875773251867992491670823",
+  "index_slots_widened_refs": "862233016238368744952019847490979615810",
+  "worker_starts_1024": "7843840000",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "W_total_ir": "2401622129772365357023489706267321150752560",
+ "claim": {
+  "value": "126.4973",
+  "numerator": "1264973",
+  "denominator": "10000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W, exact integer check; n-1 asserted to fail",
+  "row_sum_equals_W": true,
+  "planted_typo_detected_every_row": true
+ },
+ "row_derivations": {
+  "walk_steps": "steps x STEP; STEP = f_mul x 22409 + (1-f_mul) x 25372",
+  "per_step_lookup_key_and_probe": "steps x 646 Ir (state_key48 493 + dict_lookup 153)",
+  "record_writes_and_insert": "steps x 934 Ir (688 B serialize + dict_insert 246)",
+  "collision_processing": "ceil(S(S-1)/(2N)) = 2 matches x 4096 Ir",
+  "trap_waste_bound": "route measured_windows: ring-6 census over slot families of length <=6 (0 expected trapped windows) against measured 7680000 protocol steps (0 admissions); charged at 32 steps + normal-run (1-f_mul)^32 x 32",
+  "index_slots_widened_refs": "steps x 9 Ir: one touched slot per visited record, 1 Ir per word; slots = ceil(S/0.625) = 153285869553487776880359083998396376144, slot ref 127 bits = 2 words, layout 9 words = key48(6) + ref(2) + tag(1)",
+  "worker_starts_1024": "1024 x 7660000",
+  "code_and_advice": "2^20",
+  "candidate_verification": "57526800 Ir = 1200 x f12mul + 18000 compare"
+ },
+ "charges": {
+  "MUL_CHARGE": 22409,
+  "SQR_CHARGE": 25372,
+  "SQR_STATIC_SPAN": 25372,
+  "v26_surcharge_removed": 2239,
+  "STEP": "45076615271/1920000",
+  "step_float": 23477.40378697917,
+  "f_mul_measured": 0.6394182291666667,
+  "guard_per_step_measured": 0.0014807291666666667,
+  "LOOKUP_KEY_PLUS_PROBE": 646,
+  "REC_WRITE_PLUS_INSERT": 934,
+  "price_basis": "otool static span of the shipped symbols; the two priced kernels are loop-free in the listing (no backward branch inside the span), so each instruction executes at most once per call and the span is an upper bound on the executed count",
+  "loopfree_evidence": "evidence/loopfree27.json"
+ },
+ "addressing": {
+  "records_total": "95803668470929860550224427498997735090",
+  "load_factor": "0.625",
+  "slots": "153285869553487776880359083998396376144",
+  "slot_ref_bits": 127,
+  "slot_ref_words": 2,
+  "slot_words": 9,
+  "slot_bytes": 72,
+  "table_bytes": 11036582607851119935385854047884539082368,
+  "pool_bytes": 65912923907999744058554406119310441741920,
+  "peak_bytes": 76949506515850863993940260167194982184160,
+  "single_formula": "bytes = records x 688 (pool) + ceil(records/0.625) x (6 + ceil(ceil(log2 slots)/64) + 1) x 8 (index)",
+  "v26_flaw": "v26 charged 8 Ir per record for one slot each and counted the index as 65536*7*8 bytes in the ledger while the prose said S*64 B; both are replaced by this one layout"
+ },
+ "dictionary": {
+  "structure": "open addressing, four probes, stride 0x9E3779B97F4A7C15, seven-word entries (six key words + tag), eviction of the smallest leading key word when all four probes are occupied",
+  "ops": 20000,
+  "inserts": 11289,
+  "lookups": 8711,
+  "hits": 8458,
+  "misses": 253,
+  "evictions": 306,
+  "load_factor_ok": true,
+  "digest_checks": 20,
+  "digest_mismatches": 0,
+  "structure_mismatches": 0,
+  "counter_mismatches": 0,
+  "key_tuples": 32,
+  "key_mismatches": 0,
+  "mutation_control_detected": true,
+  "fixture_slots": 65536
+ },
+ "trap": {
+  "ring_words": 6,
+  "family_census": {
+   "nmax": 6,
+   "route": "measured_windows",
+   "expected_windows": 0.0,
+   "log2_expected_windows": null,
+   "per_length": {},
+   "top_families": [],
+   "W_kappa_counts": {
+    "0": 1,
+    "1": 0,
+    "2": 12,
+    "3": 24,
+    "4": 396,
+    "5": 2160,
+    "6": 23160
+   },
+   "premise": "H4: kappa labels uniform on Z/12 and independent of the slot; the vanishing sums are exact in Z[zeta] mod Phi_12"
+  },
+  "measured_protocol": {
+   "steps": 7680000,
+   "admissions": 0,
+   "aborts": 0,
+   "windows": 1280000,
+   "rate_ub_per_window": "3/1280000",
+   "word_family": "balanced alternating slot words 4..12"
+  },
+  "period6_note": "a period-6 family (abcdefabcdef) has a length-6 window with six distinct slots, which every ring depth >= 1 admits; ring 6 does not exclude it.  The charge therefore comes from this census and the measured traffic, not from an exclusion claim.",
+  "mechanism": {
+   "evidence": "evidence/scan_forced26.json",
+   "label": "MECHANISM EXISTENCE PROOF",
+   "delay_mean": 31.26923076923077,
+   "delay_max": 32,
+   "events": 312,
+   "control_no_abort": 2436
+  },
+  "waste_ir": 168691606152510875773251867992491670823
+ },
+ "survival": {
+  "scales_measured": [
+   "rp=521041"
+  ],
+  "at_production_Rg": {
+   "Rg": 65536,
+   "pairs": 400,
+   "survival_gap1": 0.995,
+   "arm": "true_merge"
+  },
+  "not_measured_at_rp10566001": true,
+  "band_factor": 1.358245962501007,
+  "note": "ONE fixture scale measured (rp=521041, 400 pairs).  v27 claims exactly that; v26's manifest claimed two."
+ },
+ "success": {
+  "route": "bootstrap-product",
+  "draws": 10000,
+  "seed": 20261024,
+  "factors": {
+   "census_scale_a": [
+    292,
+    512
+   ],
+   "census_scale_b": [
+    304,
+    512
+   ],
+   "retention": [
+    398,
+    400
+   ],
+   "band_divisor": [
+    1.0,
+    1.358245962501007
+   ]
+  },
+  "p5": 0.4133597664500056,
+  "p1": 0.3980519744936323,
+  "median": 0.47582122829208995,
+  "floor": 0.39,
+  "floor_met": true,
+  "procedure": "draw Beta(k+1,n-k+1) for each census, Beta(ret+1,pairs-ret+1) for retention, U[1,band] for the residual divisor; multiply; 5th percentile is the bound",
+  "v26_flaw": "v26 multiplied a CP endpoint by a point retention and divided by the band: a product of quantiles, not a quantile of the product"
+ },
+ "tie_analysis": {
+  "samples": 200000,
+  "ties": 2983,
+  "tie_rate": 0.014915,
+  "resolution": "kappa = ks.index(min(ks)) is the FIRST minimum (deterministic); the pool slot is derived from sorted(ks), invariant to which rotation attains the minimum, so a tie cannot fork the table index or the record key."
+ },
+ "symbol_audit": [
+  {
+   "symbol": "state_key48",
+   "ir_count": 493,
+   "priced_in": "evidence/ir26.json",
+   "static_span_is_upper_bound": false,
+   "loop_free_per_listing": false
+  },
+  {
+   "symbol": "dict_lookup",
+   "ir_count": 153,
+   "priced_in": "evidence/ir26.json",
+   "static_span_is_upper_bound": false,
+   "loop_free_per_listing": false
+  },
+  {
+   "symbol": "dict_insert",
+   "ir_count": 246,
+   "priced_in": "evidence/ir26.json",
+   "static_span_is_upper_bound": false,
+   "loop_free_per_listing": false
+  },
+  {
+   "symbol": "dict_record",
+   "ir_count": 4,
+   "priced_in": "evidence/ir26.json",
+   "static_span_is_upper_bound": false,
+   "loop_free_per_listing": false
+  },
+  {
+   "symbol": "cyclotomic_sqr",
+   "ir_count": 25372,
+   "priced_in": "evidence/ir25.json",
+   "static_span_is_upper_bound": true,
+   "loop_free_per_listing": true
+  },
+  {
+   "symbol": "f12mul",
+   "ir_count": 47924,
+   "priced_in": "evidence/ir25.json",
+   "static_span_is_upper_bound": true,
+   "loop_free_per_listing": true
+  },
+  {
+   "symbol": "min_rotation_booth",
+   "ir_count": 381,
+   "priced_in": "evidence/ir25.json",
+   "static_span_is_upper_bound": false,
+   "loop_free_per_listing": false
+  },
+  {
+   "symbol": "key_six_plusminus",
+   "ir_count": 1487,
+   "priced_in": "evidence/ir25.json",
+   "static_span_is_upper_bound": false,
+   "loop_free_per_listing": false
+  }
+ ],
+ "memory": {
+  "pool_bytes": 65912923907999744058554406119310441741920,
+  "table_bytes": 11036582607851119935385854047884539082368,
+  "slot_bytes": 72,
+  "peak_bytes": 76949506515850863993940260167194982184160,
+  "formula": "single formula in addressing.single_formula"
+ },
+ "manifest": {
+  "file": "evidence/manifest27.json",
+  "files": 27,
+  "all_exist": true,
+  "sha256_present": true
+ }
+}

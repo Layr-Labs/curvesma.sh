@@ -1,0 +1,20 @@
+{
+ "mode": "loop-free-span-test",
+ "criterion": "no branch inside the symbol span targets an address at or below the branch; then control only moves forward and the static span upper-bounds the executed count of one call",
+ "symbols": {
+  "cyclotomic_sqr": {
+   "instructions": 25372,
+   "backward_branches": 0,
+   "examples": [],
+   "loop_free": true
+  },
+  "f12mul": {
+   "instructions": 47924,
+   "backward_branches": 0,
+   "examples": [],
+   "loop_free": true
+  }
+ },
+ "all_loop_free": true,
+ "note": "kernels.c is compiled with constant trip counts and full unrolling, which is why the spans contain no backward branch; the dict symbols are shorter and carry their probes as a bounded sequence for the same reason"
+}

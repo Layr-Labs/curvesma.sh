@@ -1,0 +1,88 @@
+{
+ "package": "gt-executed-40pct-v27",
+ "claim": "126.4973",
+ "checks": [
+  {
+   "name": "row_sum_equals_W_exactly",
+   "verdict": "PASS"
+  },
+  {
+   "name": "planted_typo_every_row_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_covers_W",
+   "verdict": "PASS"
+  },
+  {
+   "name": "claim_minimal_ceil",
+   "verdict": "PASS"
+  },
+  {
+   "name": "manifest_every_cited_file_exists",
+   "verdict": "PASS"
+  },
+  {
+   "name": "manifest_has_sha256",
+   "verdict": "PASS"
+  },
+  {
+   "name": "survival_claims_one_scale",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_from_bootstrap",
+   "verdict": "PASS"
+  },
+  {
+   "name": "success_p5_ge_floor",
+   "verdict": "PASS"
+  },
+  {
+   "name": "addressing_one_formula",
+   "verdict": "PASS"
+  },
+  {
+   "name": "addressing_slot_ref_covers_slots",
+   "verdict": "PASS"
+  },
+  {
+   "name": "addressing_load_factor_ok",
+   "verdict": "PASS"
+  },
+  {
+   "name": "ring6_in_protocol",
+   "verdict": "PASS"
+  },
+  {
+   "name": "trap_charge_route_stated",
+   "verdict": "PASS"
+  },
+  {
+   "name": "priced_kernels_loop_free",
+   "verdict": "PASS"
+  },
+  {
+   "name": "v26_surcharge_removed",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_zero_mismatches",
+   "verdict": "PASS"
+  },
+  {
+   "name": "dict_mutation_detected",
+   "verdict": "PASS"
+  },
+  {
+   "name": "all_kernels_pass",
+   "verdict": "PASS"
+  },
+  {
+   "name": "kernel_count_ge_10",
+   "verdict": "PASS"
+  }
+ ],
+ "all_pass": true,
+ "verdict": "PASS"
+}
