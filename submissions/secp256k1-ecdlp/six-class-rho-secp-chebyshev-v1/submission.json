@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "title": "Six-class rho on secp256k1, counted AArch64 kernels, Chebyshev meter control (126.3173)",
+  "claims": [
+    {
+      "statement": "For uniform full-production secp256k1 Q=[x]P, the classical cold six-class negation+GLV parallel Pollard rho attack specified in proof.md recovers x with probability at least 0.39009 under the disclosed heuristics H1 and H2, and on every run its total work is at most 2^126.3173 target-group-operation equivalents because a global meter charges every action before it runs. The exact integer ledger totals W_ledger = 105995162764622566518652505820930400478098 milli-units = 2^126.317266 units: phase 1 is 0.752*(S_int+2^61) < 2^126.31721 (S_int+2^61 bounds the phase-1 operations including the block overshoot) with S_int = ceil(1.02*sqrt(2N' ln(1/(1-0.3901)))) = 140945347563975464246948179984935587492, the hard extras are < 2^107.156 and the random-charge allowances total 2^111.6525; the claim 126.3173 (1263173/10000) is that total's four-decimal ceiling. The algorithm, the ordinary-step price of 752 counted AArch64 instructions (0.752 units of C=1000: 111 + 523 counted instructions per walk for the two generated loop passes plus 118 analytic bookkeeping rows), the doubling price 0.956, the traversal price 0.776, the fully specified report store, the hard-row definitions (the refill row is recomputed for the new W) and the kernels are those of public submission ab043cf7 (126.338), restated in full; no reference operation is also charged. This package changes only the control of the meter's random charges and the H1 floor: H1 is the random-mapping collision-time heuristic with slowdown allowance kappa=1.02 and floor p0=0.3901 at S_ops/kappa (0.3953 in ab043cf7). H2 is the stated second-moment heuristic Var(D) <= 2^80*mu_D and Var(V) <= 2^80*mu_V for the doubling count D and the checkpoint-traversal count V of phase 1, where mu_D = (1/(6R) + 2^-19.9954)*(S_int+2^61) <= 2^-13.5681*(S_int+2^61) and mu_V = 2^-19.99*(S_int+2^61) are ab043cf7's expectation bounds over this operation count. Under H2, Chebyshev allowances 0.204*(mu_D+t_D) and 1.536*(mu_V+t_V) with t = sqrt(2^110*mu) have tails at most 2^-30 each. Starts and small charges (expected < 2^71 units) keep Markov allowances of 2^30 times their expectations, with tails 2^-30 each. This replaces ab043cf7's Markov allowance E/0.00416 = 2^118.910 and its 0.00416 success deduction. Success is at least 0.3901 - 2e-7 - 4*2^-30 = 0.3900997... > 0.39. certificate.py proves the bound and the success chain in exact integer arithmetic both ways: W_ledger^10000 < 1000^10000*2^1263173 (126.3173 holds) and W_ledger^10000 > 1000^10000*2^1263172 (126.3172 fails). Peak memory is below 2^72 bytes (2^71.64 for the store); preprocessing is capped at 2^59.0 units and included; no nonuniform advice. ab043cf7 is the declared dependency; its line (88e72314, 061e00ca, 30f6f34e, 98e7729c, b52f8806, a9f1a6fe, 3682292, 758d8df6, 189ebc42) is credited, but no prior verdict is a mathematical premise. This is an analytical, heuristic bound, not a practical break.",
+      "score": {
+        "numerator": "1263173",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "certificate.py",
+        "experiment.py",
+        "README.md",
+        "kernels/secp_walk.c",
+        "kernels/gen_loops.py",
+        "kernels/secp_loops.s",
+        "kernels/secp_fe.s",
+        "kernels/strip_asm.py",
+        "kernels/test_native.py",
+        "kernels/build.sh"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-six-class-rho-kernels-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production secp256k1 checks of the walk identities and truncated canonical-index rule; Part B: a scaled sequential toy pipeline on configured subgroups of y^2=x^3+7 with an unreduced subgroup-order check, a T_c census, node routing, and a long-trail trap test; kernels: limb-for-limb Python ports of the field kernels checked against big integers and affine secp256k1, instruction counts parsed from the shipped AArch64 assembly, the shipped loops executed by an interpreter, and the work-meter ledger recomputed from the prices, rows and allowances of proof.md sections 4 and 5; the toy summary also reports the per-trial index of dispersion of doubling counts (support for H2). The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q25",
+              "q29"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q25",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 11,
+          "pipeline": true,
+          "kernels": true,
+          "canon_random": 4000,
+          "canon_stress": 2000
+        }
+      ]
+    }
+  ]
+}
