@@ -1,0 +1,37 @@
+{
+ "mode": "dict28-differential",
+ "differential": {
+  "ops": 20000,
+  "lookups": 10000,
+  "inserts": 10000,
+  "hits": 3520,
+  "misses": 6480,
+  "evictions": 2549,
+  "mismatches": {
+   "status": 0,
+   "probes": 0,
+   "ref": 0,
+   "victim": 0,
+   "key": 0
+  },
+  "digest": 1533094562556297863,
+  "control_ops": 8000,
+  "control_drops": 1619
+ },
+ "wide_path": {
+  "cap": "1180591620717411315769",
+  "keys": 200000,
+  "probe_pairs": 800000,
+  "c_model_agreement": 800000,
+  "slots_above_2_64": 787411,
+  "slots_above_cap": 0,
+  "truncation_changes_slot_rows": 1964,
+  "note": "a 64-bit slot field cannot represent these slots, so the 2-word reference and the 128-bit address are load-bearing"
+ },
+ "zero_mismatches": true,
+ "mutation_control": {
+  "changed": "model mix128 stride 0x9E37...C15 -> ...C16",
+  "differential_rows_changed": 2541,
+  "detected": true
+ }
+}

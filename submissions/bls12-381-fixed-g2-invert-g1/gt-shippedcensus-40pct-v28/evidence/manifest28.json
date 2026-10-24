@@ -1,0 +1,126 @@
+{
+ "package": "gt-shippedcensus-40pct-v28",
+ "generated_by": "scripts/gen28.py (os.walk of the package)",
+ "files": [
+  {
+   "path": "argument.md",
+   "bytes": 7124,
+   "sha256": "ee303322170206a064f114bad20e1d5712c580dd9c8b607b2716870df75fb076"
+  },
+  {
+   "path": "certificate.json",
+   "bytes": 1909,
+   "sha256": "6e7f693d31b10ae49cc61c85f032a1aed8168ac399483ec4a1779072ba401318"
+  },
+  {
+   "path": "dependencies.json",
+   "bytes": 3,
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+   "path": "evidence/census28.json",
+   "bytes": 7707,
+   "sha256": "626ad76f3f4beb513027f89876e1e85887df3f299c21128d453afda43aa51f9a"
+  },
+  {
+   "path": "evidence/dict28.json",
+   "bytes": 862,
+   "sha256": "259fdc15c46435cd75b86b4a00a91fa057809c3b03e25e6cfae4b94818f2ea7f"
+  },
+  {
+   "path": "evidence/exec28.json",
+   "bytes": 3027,
+   "sha256": "47a243e5424ad0b943c5b06b8ef767ff87af7508844cb32ec56b665933be8f87"
+  },
+  {
+   "path": "evidence/kernel_verify25.json",
+   "bytes": 2630,
+   "sha256": "aaa74fbc84fd371f12fdb43561887cd49320cee6446fc58c71c932100bcb8cbc"
+  },
+  {
+   "path": "evidence/ledger28.json",
+   "bytes": 10531,
+   "sha256": "7ae57becf30780373fb6bd5c91c8c643bea755f30105c007ac8240e779f9100d"
+  },
+  {
+   "path": "evidence/prices28.json",
+   "bytes": 402,
+   "sha256": "59e468bc254263a07d0ef4253ef63d04824654e26a26db8218e2e80db1619ab5"
+  },
+  {
+   "path": "evidence/survival25.json",
+   "bytes": 8872,
+   "sha256": "4590fbe7bf96ece45915221d0f4961cc4254243c6b7e73f146e6caa0bfc16978"
+  },
+  {
+   "path": "evidence/tie25.json",
+   "bytes": 430,
+   "sha256": "b7043b6cfb8ebedc2cb8d3ffdcdc8566f7bfb7a1d05447fe76e435b266b87e1f"
+  },
+  {
+   "path": "evidence/trap28.json",
+   "bytes": 2169,
+   "sha256": "9ef98d006d50f2033b16fe39ed06e96c0dadb7de3dfd3c9b46d64eed9415b9f6"
+  },
+  {
+   "path": "public-note.md",
+   "bytes": 10261,
+   "sha256": "a1b198088a6c249f3696136bafa91f68525ec6b8799626214c20fda2d6e35754"
+  },
+  {
+   "path": "scripts/census28.py",
+   "bytes": 7872,
+   "sha256": "ae73a4d8459b598c9b5a7e7eadeb9005f9a6129a57c989f741e0345862a9ea29"
+  },
+  {
+   "path": "scripts/dict28_model.py",
+   "bytes": 9072,
+   "sha256": "9b2bfec1d01e5ca8dfb219ccd32dcb991de3991e4f4524a8d5b9ce56ff2e35af"
+  },
+  {
+   "path": "scripts/exec28.py",
+   "bytes": 14958,
+   "sha256": "0be6821fc2721052be9f64b52bc931097b717d07daa2663257f88107b96d27c6"
+  },
+  {
+   "path": "scripts/gen28.py",
+   "bytes": 25979,
+   "sha256": "b285f740c71ee31cc7ea6f6b33bd7bdd0aee9d4020142c1c113d14021dff333a"
+  },
+  {
+   "path": "scripts/ir25/consts.c",
+   "bytes": 1104,
+   "sha256": "e025fc98e34a19141bd2194360a87fbe915aebfde8dd83647506df4a07a6426e"
+  },
+  {
+   "path": "scripts/ir25/kernels.c",
+   "bytes": 11518,
+   "sha256": "52cd2c62abc03cb17720d11139ea7a337d1412ab1341ced54e07acfe3adf55e3"
+  },
+  {
+   "path": "scripts/ir28/dict28.c",
+   "bytes": 10639,
+   "sha256": "52e5714057f153e9ae5ed652b6f9fe6a63597bbd4cd00135d903691415ac920c"
+  },
+  {
+   "path": "scripts/ir28/dict28.o",
+   "bytes": 5552,
+   "sha256": "4bcce6008d629bb0b80b199be1b05c0aefbaa9fcddfd2ddf3619300f72b1865e"
+  },
+  {
+   "path": "scripts/protocol28.py",
+   "bytes": 14501,
+   "sha256": "cbaf473647d33e853ff021605a25d60377ed569e8f68e43c9e892233919528a2"
+  },
+  {
+   "path": "scripts/toy28.py",
+   "bytes": 20008,
+   "sha256": "541d8d6f15854743a268e14aebddc4af5f880798604570ff0cc763edd84f81ae"
+  },
+  {
+   "path": "scripts/trap28.py",
+   "bytes": 11487,
+   "sha256": "65f97354ef1d06b8afc8feabccca9b0718a30d5667106671a1da501947d6f3ce"
+  }
+ ]
+}
