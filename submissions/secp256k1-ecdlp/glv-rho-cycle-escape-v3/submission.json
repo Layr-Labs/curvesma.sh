@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: phase-coupled six-class rho",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the phase-coupled six-class Pollard rho in proof.md recovers x with probability at least 0.39, over the uniform challenge and fresh algorithm coins, using at most 2^128.501153 total target-group-operation equivalents, including preprocessing, distinguished-point handling, exceptional-addition reserve and verification. Peak memory is at most 2^118.735617 bytes. Preprocessing is at most 2^20 target-group-operation equivalents and is included in total work. Nonuniform advice is 0 bytes. Heuristics H_map, H_long, H_dist and H_useful are stated in proof.md. Canonicalization alone is not claimed to remove negation 2-cycles; the mod-3 phase with disjoint per-phase exponents does.",
+      "score": {
+        "numerator": "128501153",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-phase-kills-negation-2cycle",
+      "source": "experiment.py",
+      "purpose": "On Z/13Z, exhibit the unphased canonical negation 2-cycle and check that the mod-3 phased map has none. Also recover a planted discrete log from two frames. Not a production cost measurement.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "modulus": {
+            "type": "integer",
+            "enum": [13]
+          }
+        },
+        "required": [
+          "modulus"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "modulus": 13
+        }
+      ]
+    }
+  ]
+}

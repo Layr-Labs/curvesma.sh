@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "automorphism-rho",
+  "algorithm": "phase-coupled-six-class-rho-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.501153,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 118.735617,
+    "preprocessing_log2": 20,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H_map",
+    "H_long",
+    "H_dist",
+    "H_useful"
+  ],
+  "limitations": [
+    "Birthday collision time and the absence of long fruitless cycles are heuristics; 2-cycles and identical period-3 cycles are unconditional.",
+    "Toy experiment is Z/13Z only and is not a cost measurement.",
+    "Analytic instruction bounds, not a timed production break."
+  ],
+  "lane": "exploratory"
+}
