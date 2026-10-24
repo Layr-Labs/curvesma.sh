@@ -1,0 +1,231 @@
+{
+ "kind": "v33 production-distribution key census (verdict 5a8a74b6 flaw 3)",
+ "production_density": {
+  "law": "bases a_i=[k]P0 with k uniform in [0,2^span); ONE shared walk list w_l=[s]P0, s uniform in [0,2^band); record = a_i*w_l has scalar e=k+s, exact because span+band=37 bits << the 41-bit fixture field (no wrap)",
+  "span_bits": 20,
+  "band_bits": 17,
+  "production_span_bits": 97,
+  "production_band_bits": 77,
+  "density_function": "P(e) = (1/2^(span+band)) * #{(k,s): k+s=e} (triangular on the sum, uniform on each marginal) -- the SAME 4/3 second-moment factor the ledger charges in phi_tri",
+  "sampler": "census_prod_v33.py:run(dist='prod'); one walk list per walk, shared by both sides and all bases; y = canonical even phi(e)"
+ },
+ "canonicalisation": {
+  "rule": "y := y if y even else p-y (stored even representative)",
+  "applied_to": [
+   "prod_crossside",
+   "canon_uniform"
+  ],
+  "not_applied_to": [
+   "uniform_control"
+  ],
+  "note": "the v32 cell skipped this rule entirely; it is applied here and its effect is measured, not assumed"
+ },
+ "key_bits": 20,
+ "key_kernel": "key_mixed_final (168-bit, 3 x 56 windows)",
+ "cells": {
+  "prod_crossside": {
+   "distribution": "prod",
+   "walks": 6000,
+   "per_side": 96,
+   "records": 1152000,
+   "expected_pairs": {
+    "cross": 52.7344,
+    "within": 26.0925
+   },
+   "observed_pairs": {
+    "cross": 118,
+    "within": 55
+   },
+   "kappa": {
+    "cross": 2.23763,
+    "within": 2.107883
+   },
+   "kappa_upper95": {
+    "cross": 2.595447,
+    "within": 2.613761
+   },
+   "charged_kappa": 2.613761,
+   "chi2": {
+    "bits": 12,
+    "bins": 4096,
+    "statistic": 291172.658,
+    "dof": 4095,
+    "z": 3172.1772,
+    "note": "z is (chi2-dof)/sqrt(2*dof); |z|>4 flags non-uniformity"
+   },
+   "hist12": [
+    0.4551,
+    0.512,
+    0.3947,
+    0.4693,
+    0.5013,
+    0.4764,
+    0.4373,
+    0.5582,
+    0.5049,
+    0.5404,
+    0.5013,
+    0.5156,
+    0.5724,
+    0.5191,
+    0.5404,
+    0.4124
+   ],
+   "h20_probe": 1048576
+  },
+  "canon_uniform": {
+   "distribution": "canon_uniform",
+   "walks": 6000,
+   "per_side": 96,
+   "records": 1152000,
+   "expected_pairs": {
+    "cross": 52.7344,
+    "within": 26.0925
+   },
+   "observed_pairs": {
+    "cross": 50,
+    "within": 25
+   },
+   "kappa": {
+    "cross": 0.948148,
+    "within": 0.958129
+   },
+   "kappa_upper95": {
+    "cross": 1.187687,
+    "within": 1.311678
+   },
+   "charged_kappa": 1.311678,
+   "chi2": {
+    "bits": 12,
+    "bins": 4096,
+    "statistic": 290051.008,
+    "dof": 4095,
+    "z": 3159.7831,
+    "note": "z is (chi2-dof)/sqrt(2*dof); |z|>4 flags non-uniformity"
+   },
+   "hist12": [
+    0.512,
+    0.5049,
+    0.5902,
+    0.5938,
+    0.5049,
+    0.5049,
+    0.4551,
+    0.4231,
+    0.5084,
+    0.48,
+    0.4907,
+    0.5511,
+    0.5476,
+    0.5227,
+    0.544,
+    0.5298
+   ],
+   "h20_probe": 1048576
+  },
+  "uniform_control": {
+   "distribution": "uniform",
+   "walks": 6000,
+   "per_side": 96,
+   "records": 1152000,
+   "expected_pairs": {
+    "cross": 52.7344,
+    "within": 26.0925
+   },
+   "observed_pairs": {
+    "cross": 46,
+    "within": 23
+   },
+   "kappa": {
+    "cross": 0.872296,
+    "within": 0.881478
+   },
+   "kappa_upper95": {
+    "cross": 1.102828,
+    "within": 1.222156
+   },
+   "charged_kappa": 1.222156,
+   "chi2": {
+    "bits": 12,
+    "bins": 4096,
+    "statistic": 290025.934,
+    "dof": 4095,
+    "z": 3159.5061,
+    "note": "z is (chi2-dof)/sqrt(2*dof); |z|>4 flags non-uniformity"
+   },
+   "hist12": [
+    0.576,
+    0.5298,
+    0.5618,
+    0.576,
+    0.5084,
+    0.5227,
+    0.416,
+    0.4658,
+    0.5227,
+    0.4338,
+    0.4871,
+    0.5547,
+    0.4978,
+    0.5013,
+    0.4551,
+    0.5191
+   ],
+   "h20_probe": 1048576
+  }
+ },
+ "charged_kappa": 2.613761,
+ "charged_kappa_rule": "max(upper95 over ALL sampled distributions, carried envelope 1.231)",
+ "delta_vs_v32": {
+  "v32_kappa": 1.231,
+  "v33_charged": 2.613761,
+  "delta": 1.382761,
+  "verdict": "kappa is RE-MEASURED at the production density; the charge is the max over cells, so a distribution-induced rise is priced, not argued away"
+ },
+ "uniformity": {
+  "cell": {
+   "bits": 12,
+   "bins": 4096,
+   "statistic": 291172.658,
+   "dof": 4095,
+   "z": 3172.1772,
+   "note": "z is (chi2-dof)/sqrt(2*dof); |z|>4 flags non-uniformity"
+  },
+  "verdict": "20-bit key histogram of the production stream vs uniform: z is reported; the collision charge uses kappa, not this test"
+ },
+ "joint_168bit": {
+  "prod": {
+   "trials": 200000,
+   "single_window_chi2": [
+    365.31,
+    312.66,
+    266.38
+   ],
+   "pairwise_joint_chi2": {
+    "w0w1": 77828.73,
+    "w0w2": 77680.62,
+    "w1w2": 78066.63
+   },
+   "dof_pairwise": 65535,
+   "z_pairwise": 33.957,
+   "distinct_joint_cells": 181683
+  },
+  "uniform": {
+   "trials": 200000,
+   "single_window_chi2": [
+    247.54,
+    286.42,
+    265.06
+   ],
+   "pairwise_joint_chi2": {
+    "w0w1": 65395.24,
+    "w0w2": 66084.02,
+    "w1w2": 64922.73
+   },
+   "dof_pairwise": 65535,
+   "z_pairwise": -0.386,
+   "distinct_joint_cells": 198834
+  }
+ },
+ "verdict_flaw_3": "the census now samples the production structured stream (shared walk list, pool law, canonical-even y, 168-bit key) instead of independent uniform Fp integers; kappa is charged as the max upper95 over the production cell, the canonicalised-uniform cell and the v32 control"
+}

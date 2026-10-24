@@ -1,0 +1,147 @@
+{
+ "preprocessing_recomputes_from_design_only": {
+  "pass_": true,
+  "detail": "{}"
+ },
+ "preprocessing_row_count": {
+  "pass_": true,
+  "detail": "14 rows"
+ },
+ "planted_tautology_control_caught": {
+  "pass_": true,
+  "detail": "row fixed_per_node price 5383208929591296 is outside the accepted price lattice"
+ },
+ "ledger_integer_sum": {
+  "pass_": true,
+  "detail": "300294743237465814817161851058760232261"
+ },
+ "W_recomputed": {
+  "pass_": true,
+  "detail": "116.853862541302"
+ },
+ "claim_reduced_rational": {
+  "pass_": true,
+  "detail": "1168539/10000"
+ },
+ "claim_ge_W": {
+  "pass_": true,
+  "detail": "claim 116.853900 W 116.853863"
+ },
+ "claim_covers_stress": {
+  "pass_": true,
+  "detail": "slack 0.000037459 stress 0.000000098"
+ },
+ "submission_claim_matches_ledger": {
+  "pass_": true,
+  "detail": "1168539/10000"
+ },
+ "success_claim_is_measured_quantity": {
+  "pass_": true,
+  "detail": "claimed 0.395879 key-path 0.395879"
+ },
+ "success_literal_in_submission_statement": {
+  "pass_": true,
+  "detail": "0.395879"
+ },
+ "success_literal_in_note": {
+  "pass_": true,
+  "detail": "0.395879"
+ },
+ "success_meets_floor": {
+  "pass_": true,
+  "detail": "0.395879 >= 0.39"
+ },
+ "k_eff_is_not_the_claim": {
+  "pass_": true,
+  "detail": "claimed 0.395879 is not the collision intensity 0.508674"
+ },
+ "census_has_production_cell": {
+  "pass_": true,
+  "detail": "['prod_crossside', 'canon_uniform', 'uniform_control']"
+ },
+ "census_production_law_declared": {
+  "pass_": true,
+  "detail": "bases a_i=[k]P0 with k uniform in [0,2^span); ONE shared walk list w_l=[s]P0, s "
+ },
+ "census_canonical_even_applied": {
+  "pass_": true,
+  "detail": "both cells present"
+ },
+ "census_delta_vs_v32_reported": {
+  "pass_": true,
+  "detail": "2.613761"
+ },
+ "census_joint_168bit_row": {
+  "pass_": true,
+  "detail": "joint row present"
+ },
+ "kappa_charged_is_max_upper95": {
+  "pass_": true,
+  "detail": "2.613761"
+ },
+ "ledger_kappa_matches_census": {
+  "pass_": true,
+  "detail": "2.613761"
+ },
+ "birthday_under_cap": {
+  "pass_": true,
+  "detail": "E_bad 2^64.687 vs cap 2^84"
+ },
+ "gap_row_uses_production_ell": {
+  "pass_": true,
+  "detail": "ell 1852993781273297218247 vs ceil(N/nb) 1852993781273297218247"
+ },
+ "gap_row_not_fixture_ell": {
+  "pass_": true,
+  "detail": "4774 rejected"
+ },
+ "gap_row_is_union_bound_over_distinct_gaps": {
+  "pass_": true,
+  "detail": "P(max gap > 2^k) <= (ell-1) * exp(-2^k/mu)  [union bound over DISTINCT gaps]"
+ },
+ "gap_abort_bound_below_2_100": {
+  "pass_": true,
+  "detail": "-105.635"
+ },
+ "gap_row_value_uses_corrected_support": {
+  "pass_": true,
+  "detail": "93.873"
+ },
+ "twenty_pair_hd_plausible": {
+  "pass_": true,
+  "detail": "[77, 78, 86, 81, 78, 101, 86, 89, 87, 75, 84, 83, 88, 81, 80, 84, 86, 84, 78, 82]"
+ },
+ "four_planted_controls": {
+  "pass_": true,
+  "detail": "{\"bit_flip_changes_key\": true, \"limb5_reaches_output\": true, \"limb0_reaches_output\": true, \"v31_control_still_collides\": true}"
+ },
+ "claim_literal_in_statement": {
+  "pass_": true,
+  "detail": "116.8539"
+ },
+ "gate_literal_in_statement": {
+  "pass_": true,
+  "detail": "gate"
+ },
+ "no_wrong_116_8543_literal": {
+  "pass_": true,
+  "detail": "v32 claim gone"
+ },
+ "over_gate_disclosed": {
+  "pass_": true,
+  "detail": "crossing stated"
+ },
+ "directions_lower_for_success": {
+  "pass_": true,
+  "detail": "measured production-structure success probability, one-sided"
+ },
+ "title_len_ok": {
+  "pass_": true,
+  "detail": "292"
+ },
+ "statement_len_ok": {
+  "pass_": true,
+  "detail": "5770"
+ },
+ "all_pass": true
+}
