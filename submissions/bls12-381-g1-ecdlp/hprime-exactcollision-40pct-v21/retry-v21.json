@@ -1,0 +1,23 @@
+{
+ "seeds": 128,
+ "failures": 0,
+ "reject_rate": "0",
+ "reject_rate_float": 0.0,
+ "rule_of_three": "3/128",
+ "rule_of_three_float": 0.0234375,
+ "rule_of_three_log2": -5.415,
+ "measured_retry_work_units": 0,
+ "measured_retry_work_log2": null,
+ "disclosure": "0 rejections in 128 seeds. The retry work row is therefore 0 measured, and 3/128 = 2^-5.415 is disclosed as a confidence limit on the rejection RATE, not as a bound on any production event and not multiplied into success: success is conditioned on the self-check having accepted the list, and the self-check is a charged row.",
+ "self_check": {
+  "charged_row": "gap_self_check",
+  "description": "verify max gap <= 2^7.7*mu on the drawn list",
+  "instructions": 4096,
+  "charged": true
+ },
+ "max_over_mean": [
+  10.7321,
+  10.4638
+ ],
+ "thresh_ratio_log2": 7.7
+}

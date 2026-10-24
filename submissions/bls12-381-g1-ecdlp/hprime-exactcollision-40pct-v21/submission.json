@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "title": "H-composite Cheon BSGS v21: exact fixed-list collision expectation, shape-matched coverage ladder, conditioned gap and measured retry",
+ "claims": [
+  {
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "verify_certificate.py",
+    "evidence_v21.py",
+    "exactE-v21.json",
+    "coverage-v21.json",
+    "retry-v21.json",
+    "census_v20.py",
+    "census-key-v20.json",
+    "census-rest-v20.json",
+    "keymod.py",
+    "toy.py",
+    "public-note.md",
+    "verify_v21.py"
+   ],
+   "score": {
+    "numerator": "292033",
+    "denominator": "2500"
+   },
+   "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, uniform nonzero s, and every integer n>=2^20. ORDER STRUCTURE (carried, accepted as internally consistent): r-1=2^32*u, m=(r-1)/2^20, v2(m)=12, 6|m, H the d-th-power subgroup of order m, v=s^d uniform on H, recovery by one 2-Sylow d-th root plus the charged 2^20-candidate scan. EXACT COLLISION IDENTITY, FIXED LISTS (replaces v20's uniform-marginal identity): with B(k) the multiplicity of key k in the FIXED baby list and N(k)=|{h in H : key_w([h]P0)=k}|, E_v[#collisions]=(|Y|/m)*sum_k B(k)N(k). B(k) enters LINEARLY; no averaging condition on the baby marginal is assumed, and the v20 expression |X||Y|*sum_k(N(k)/m)^2 is not used anywhere. CENSUS OF THE EXACT ESTIMATOR: two fixtures, (nb=64,nw=64,4096 records/side) and (nb=256,nw=64,16384 records/side), three challenges each, widths 10..30, every element an H-member and the giant side carrying v=s^d; the per-cell dot product sum_k B(k)N(k) equals the measured cross-side count, and exact/baseline=(|Y|/m)sum_k B(k)N(k) / (|X||Y|/2^(w-1)) lies in 0.917..1.104 over all 28 cells with baseline>=16 (cells below that are printed with their counts). CHARGE: kappa=1.336969, the maximum one-sided UCB of the exact estimator over cells with baseline>=256 (w=21, baseline 256, dot_max=291); E[#bad]=1.336969*N^2/2^167=2^64.721 and Markov gives P(candidate work > 2^104)<=2^-19.279, each surviving candidate charged 2^20 instructions under the unchanged 2^84 candidate cap. At production sparsity (N/D=2^-51.35) B(k) is 0/1 except with probability 2^-102, so the exact mean is |X||Y|/D and kappa is a measured envelope, not a model value. COVERAGE, SHAPE-MATCHED: production geometry is nb=2^65.65 bases/side against a 2^50 walk, i.e. nb/nw=2^15.65; no design-K fixture can reach that split (it needs nw<1), so the package runs a SHAPE LADDER at two field scales (24 and 26 bits) and two d values with nw in {1,2,4} base-heavy and nb in {1,2,4,8} walk-heavy, K matched at 0.51, and says plainly that nw=1 is the closest feasible shape. |rowB| over the eight cells with nw in {1,2} is at most 0.00270272, which is the debit charged ONCE at the design point as an exact Fraction; the walk-heavy cells reach 0.00807556 and are NOT charged because they sit on the other side of the ladder; 3/8 is disclosed as a rule-of-three confidence on those eight cells only, never as a bound. GAP, CONDITIONED: the construction verifies max gap <= 2^7.7*mu on the drawn list (a charged self-check row) and re-draws, so success is CONDITIONED on an accepted list and no gap probability enters the success product; over 128 independent seeds 0 were rejected, so the retry row is 0 measured with 3/128=2^-5.415 disclosed as a rate confidence only. SUCCESS: 0.399504-0.00270272-0.00000155=0.396800>=39/100. WORK: 2*N*2238 instructions plus the carried rows; total W=2^116.812770 (2000-instruction units) < claim 116.8132 < gate 116.8271; peak memory 2^123.3 B, no advice, preprocessing inside the total. CERTIFICATE SCOPE: the certificate recomputes the ledger, the exact-estimator rows, the shape ladder and the retry rows from raw evidence; it does not independently establish production resource bounds or run the production attack."
+  }
+ ],
+ "experiments": []
+}
