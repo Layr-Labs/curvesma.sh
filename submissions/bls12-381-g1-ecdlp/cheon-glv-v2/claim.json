@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "algorithm": "cheon-auxiliary-powers-glv-2^20",
+  "claim": {
+    "time_log2": 126.771798,
+    "memory_log2_bytes": 126,
+    "preprocessing_log2": 125.774017,
+    "success_probability": 1,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "parameters": {
+    "scoring_n": 1048576,
+    "d": 1048576,
+    "M_bits": 235,
+    "m": "223621884914696853578958571250384896",
+    "m_hat": "223621884914696853578958571250384896",
+    "generator_zeta": 7,
+    "lambda_bits": 128,
+    "glv_half_bits_charged": 130,
+    "sort_passes": 118,
+    "batch_size_log2": 64,
+    "record_bytes": 112
+  },
+  "limitations": [
+    "Analytic bound; no production-size execution.",
+    "Cost pricing uses the protected batched-affine reference for additions, the 7M affine doubling, the measured field multiplication, explicit merge-sort/binary-search table bounds, and an itemised 16-unit per-multiplication overhead.",
+    "The table is two m-record sort buffers (2^125.2359 bytes) plus a 2^64-chain batch workspace; the huge memory is reported, not hidden.",
+    "Cheon and GLV are known methods; no novelty is claimed."
+  ]
+}
