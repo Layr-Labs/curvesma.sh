@@ -1,0 +1,465 @@
+{
+ "d": 1048576,
+ "m": 50006747412801924209068050869165387952509453297164571592906626415194112,
+ "r_bits": 255,
+ "widths": [
+  10,
+  12,
+  14,
+  16,
+  18,
+  20,
+  22
+ ],
+ "n_walk": 64,
+ "n_challenges": 6,
+ "sizes": [
+  4096,
+  2048
+ ],
+ "faithful": [
+  {
+   "records_per_side": 4096,
+   "pairs": 16777216,
+   "walk": 64,
+   "h_members": true,
+   "scaled": true,
+   "exact_rows": [
+    {
+     "width": 10,
+     "image_log2": 9,
+     "pairs": 16777216,
+     "observed_mean": 32813.167,
+     "observed_min": 32665,
+     "observed_max": 33038,
+     "predicted": 32768.0,
+     "ratio_mean": 1.001378,
+     "charged_factor": 1.024881
+    },
+    {
+     "width": 12,
+     "image_log2": 11,
+     "pairs": 16777216,
+     "observed_mean": 8183.833,
+     "observed_min": 8106,
+     "observed_max": 8319,
+     "predicted": 8192.0,
+     "ratio_mean": 0.999003,
+     "charged_factor": 1.048907
+    },
+    {
+     "width": 14,
+     "image_log2": 13,
+     "pairs": 16777216,
+     "observed_mean": 2062.0,
+     "observed_min": 1953,
+     "observed_max": 2112,
+     "predicted": 2048.0,
+     "ratio_mean": 1.006836,
+     "charged_factor": 1.098585
+    },
+    {
+     "width": 16,
+     "image_log2": 15,
+     "pairs": 16777216,
+     "observed_mean": 510.0,
+     "observed_min": 473,
+     "observed_max": 536,
+     "predicted": 512.0,
+     "ratio_mean": 0.996094,
+     "charged_factor": 1.182656
+    },
+    {
+     "width": 18,
+     "image_log2": 17,
+     "pairs": 16777216,
+     "observed_mean": 124.667,
+     "observed_min": 116,
+     "observed_max": 137,
+     "predicted": 128.0,
+     "ratio_mean": 0.973958,
+     "charged_factor": 1.345641
+    },
+    {
+     "width": 20,
+     "image_log2": 19,
+     "pairs": 16777216,
+     "observed_mean": 36.0,
+     "observed_min": 32,
+     "observed_max": 42,
+     "predicted": 32.0,
+     "ratio_mean": 1.125,
+     "charged_factor": 1.92726
+    },
+    {
+     "width": 22,
+     "image_log2": 21,
+     "pairs": 16777216,
+     "observed_mean": 9.333,
+     "observed_min": 7,
+     "observed_max": 13,
+     "predicted": 8.0,
+     "ratio_mean": 1.166667,
+     "charged_factor": 3.028122
+    }
+   ]
+  },
+  {
+   "records_per_side": 2048,
+   "pairs": 4194304,
+   "walk": 64,
+   "h_members": true,
+   "scaled": true,
+   "exact_rows": [
+    {
+     "width": 10,
+     "image_log2": 9,
+     "pairs": 4194304,
+     "observed_mean": 8211.167,
+     "observed_min": 8088,
+     "observed_max": 8346,
+     "predicted": 8192.0,
+     "ratio_mean": 1.00234,
+     "charged_factor": 1.052257
+    },
+    {
+     "width": 12,
+     "image_log2": 11,
+     "pairs": 4194304,
+     "observed_mean": 2073.667,
+     "observed_min": 2008,
+     "observed_max": 2139,
+     "predicted": 2048.0,
+     "ratio_mean": 1.012533,
+     "charged_factor": 1.112197
+    },
+    {
+     "width": 14,
+     "image_log2": 13,
+     "pairs": 4194304,
+     "observed_mean": 516.0,
+     "observed_min": 502,
+     "observed_max": 536,
+     "predicted": 512.0,
+     "ratio_mean": 1.007812,
+     "charged_factor": 1.182656
+    },
+    {
+     "width": 16,
+     "image_log2": 15,
+     "pairs": 4194304,
+     "observed_mean": 128.667,
+     "observed_min": 110,
+     "observed_max": 150,
+     "predicted": 128.0,
+     "ratio_mean": 1.005208,
+     "charged_factor": 1.45988
+    },
+    {
+     "width": 18,
+     "image_log2": 17,
+     "pairs": 4194304,
+     "observed_mean": 35.0,
+     "observed_min": 28,
+     "observed_max": 42,
+     "predicted": 32.0,
+     "ratio_mean": 1.09375,
+     "charged_factor": 1.92726
+    },
+    {
+     "width": 20,
+     "image_log2": 19,
+     "pairs": 4194304,
+     "observed_mean": 8.167,
+     "observed_min": 5,
+     "observed_max": 11,
+     "predicted": 8.0,
+     "ratio_mean": 1.020833,
+     "charged_factor": 2.674038
+    },
+    {
+     "width": 22,
+     "image_log2": 21,
+     "pairs": 4194304,
+     "observed_mean": 2.333,
+     "observed_min": 1,
+     "observed_max": 4,
+     "predicted": 2.0,
+     "ratio_mean": 1.166667,
+     "charged_factor": 5.354102
+    }
+   ]
+  }
+ ],
+ "control": [
+  {
+   "records_per_side": 4096,
+   "pairs": 16777216,
+   "walk": 64,
+   "h_members": false,
+   "scaled": false,
+   "exact_rows": [
+    {
+     "width": 10,
+     "image_log2": 9,
+     "pairs": 16777216,
+     "observed": 32535,
+     "predicted": 32768.0,
+     "ratio": 0.992889,
+     "charged_factor": 1.009403
+    },
+    {
+     "width": 12,
+     "image_log2": 11,
+     "pairs": 16777216,
+     "observed": 7975,
+     "predicted": 8192.0,
+     "ratio": 0.973511,
+     "charged_factor": 1.006216
+    },
+    {
+     "width": 14,
+     "image_log2": 13,
+     "pairs": 16777216,
+     "observed": 1929,
+     "predicted": 2048.0,
+     "ratio": 0.941895,
+     "charged_factor": 1.006248
+    },
+    {
+     "width": 16,
+     "image_log2": 15,
+     "pairs": 16777216,
+     "observed": 465,
+     "predicted": 512.0,
+     "ratio": 0.908203,
+     "charged_factor": 1.03469
+    },
+    {
+     "width": 18,
+     "image_log2": 17,
+     "pairs": 16777216,
+     "observed": 106,
+     "predicted": 128.0,
+     "ratio": 0.828125,
+     "charged_factor": 1.070564
+    },
+    {
+     "width": 20,
+     "image_log2": 19,
+     "pairs": 16777216,
+     "observed": 27,
+     "predicted": 32.0,
+     "ratio": 0.84375,
+     "charged_factor": 1.339828
+    },
+    {
+     "width": 22,
+     "image_log2": 21,
+     "pairs": 16777216,
+     "observed": 6,
+     "predicted": 8.0,
+     "ratio": 0.75,
+     "charged_factor": 1.742157
+    }
+   ]
+  },
+  {
+   "records_per_side": 2048,
+   "pairs": 4194304,
+   "walk": 64,
+   "h_members": false,
+   "scaled": false,
+   "exact_rows": [
+    {
+     "width": 10,
+     "image_log2": 9,
+     "pairs": 4194304,
+     "observed": 8009,
+     "predicted": 8192.0,
+     "ratio": 0.977661,
+     "charged_factor": 1.010437
+    },
+    {
+     "width": 12,
+     "image_log2": 11,
+     "pairs": 4194304,
+     "observed": 2015,
+     "predicted": 2048.0,
+     "ratio": 0.983887,
+     "charged_factor": 1.049658
+    },
+    {
+     "width": 14,
+     "image_log2": 13,
+     "pairs": 4194304,
+     "observed": 495,
+     "predicted": 512.0,
+     "ratio": 0.966797,
+     "charged_factor": 1.097291
+    },
+    {
+     "width": 16,
+     "image_log2": 15,
+     "pairs": 4194304,
+     "observed": 113,
+     "predicted": 128.0,
+     "ratio": 0.882812,
+     "charged_factor": 1.133057
+    },
+    {
+     "width": 18,
+     "image_log2": 17,
+     "pairs": 4194304,
+     "observed": 32,
+     "predicted": 32.0,
+     "ratio": 1.0,
+     "charged_factor": 1.538553
+    },
+    {
+     "width": 20,
+     "image_log2": 19,
+     "pairs": 4194304,
+     "observed": 10,
+     "predicted": 8.0,
+     "ratio": 1.25,
+     "charged_factor": 2.493734
+    },
+    {
+     "width": 22,
+     "image_log2": 21,
+     "pairs": 4194304,
+     "observed": 2,
+     "predicted": 2.0,
+     "ratio": 1.0,
+     "charged_factor": 3.598076
+    }
+   ]
+  }
+ ],
+ "membership": {
+  "band": [
+   151115727451828646838272,
+   302231454903657293676544
+  ],
+  "samples": 1048576,
+  "accepted": 2,
+  "rejected_fraction": 0.99999809,
+  "expected_density_log2": -20,
+  "note": "H has index d=2^20 in Z_r^*, so a uniform band element lies in H with probability 1/d; prod_primes applies no such filter, which is the v18 flaw"
+ },
+ "faithful_ratio_max": 1.125,
+ "faithful_ratio_min": 0.973958,
+ "faithful_cells": 11,
+ "control_ratio_max": 1.0,
+ "control_ratio_min": 0.828125,
+ "control_cells": 11,
+ "faithful_vs_control": [
+  {
+   "records_per_side": 4096,
+   "width": 10,
+   "faithful": 1.001378,
+   "control": 0.992889,
+   "delta": 0.008489
+  },
+  {
+   "records_per_side": 4096,
+   "width": 12,
+   "faithful": 0.999003,
+   "control": 0.973511,
+   "delta": 0.025492
+  },
+  {
+   "records_per_side": 4096,
+   "width": 14,
+   "faithful": 1.006836,
+   "control": 0.941895,
+   "delta": 0.064941
+  },
+  {
+   "records_per_side": 4096,
+   "width": 16,
+   "faithful": 0.996094,
+   "control": 0.908203,
+   "delta": 0.087891
+  },
+  {
+   "records_per_side": 4096,
+   "width": 18,
+   "faithful": 0.973958,
+   "control": 0.828125,
+   "delta": 0.145833
+  },
+  {
+   "records_per_side": 4096,
+   "width": 20,
+   "faithful": 1.125,
+   "control": 0.84375,
+   "delta": 0.28125
+  },
+  {
+   "records_per_side": 4096,
+   "width": 22,
+   "faithful": 1.166667,
+   "control": 0.75,
+   "delta": 0.416667
+  },
+  {
+   "records_per_side": 2048,
+   "width": 10,
+   "faithful": 1.00234,
+   "control": 0.977661,
+   "delta": 0.024679
+  },
+  {
+   "records_per_side": 2048,
+   "width": 12,
+   "faithful": 1.012533,
+   "control": 0.983887,
+   "delta": 0.028646
+  },
+  {
+   "records_per_side": 2048,
+   "width": 14,
+   "faithful": 1.007812,
+   "control": 0.966797,
+   "delta": 0.041015
+  },
+  {
+   "records_per_side": 2048,
+   "width": 16,
+   "faithful": 1.005208,
+   "control": 0.882812,
+   "delta": 0.122396
+  },
+  {
+   "records_per_side": 2048,
+   "width": 18,
+   "faithful": 1.09375,
+   "control": 1.0,
+   "delta": 0.09375
+  },
+  {
+   "records_per_side": 2048,
+   "width": 20,
+   "faithful": 1.020833,
+   "control": 1.25,
+   "delta": -0.229167
+  },
+  {
+   "records_per_side": 2048,
+   "width": 22,
+   "faithful": 1.166667,
+   "control": 1.0,
+   "delta": 0.166667
+  }
+ ],
+ "max_abs_delta": 0.416667,
+ "transfer": {
+  "stat": "per-pair collision probability against 2^-167 (the measured ratio)",
+  "argument": "conditional on the challenge, v*y_j is uniform over H because v is uniform over H and H is a group; hence for every pair (i,j) Pr[key_i == key(v*y_j)] = 2^-167 in the measured sense and E_v[#collisions] = pairs/2^167 by linearity over pairs. Markov on the challenge-random variable then applies at the list level. Residual dependence declared: pairs sharing the same j are correlated through the common factor v; the census averages over challenges instead of assuming independence.",
+  "s_to_d_regularity": "x -> x^d on Z_r^* has kernel size gcd(d,r-1)=d=2^20, so it is exactly d-to-1 onto H and s uniform => v=s^d uniform on H"
+ },
+ "note": "faithful = H-members with challenge-scaled giant side; control = the v18 partX object (ordinary primes, no scaling), kept as the mutation control.",
+ "per_challenge_detail": "per-challenge rows are regenerated deterministically by census_v19.py (seed 20261024); the aggregate mean/min/max per width are retained here"
+}

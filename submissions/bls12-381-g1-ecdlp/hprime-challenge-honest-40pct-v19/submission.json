@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "H-composite Cheon BSGS: challenge-faithful H census, one declared coverage statistic, position-index record",
+  "claims": [
+    {
+      "evidence": [
+        "argument.md",
+        "certificate.json",
+        "verify_certificate.py",
+        "build_certificate.py",
+        "keymod.py",
+        "toy.py",
+        "toy-summary.json",
+        "deep-evidence.json",
+        "census_v19.py",
+        "census-v19.json",
+        "public-note.md"
+      ],
+      "score": {
+        "numerator": "292033",
+        "denominator": "2500"
+      },
+      "statement": "For the protected BLS12-381 G1 auxiliary-powers inputs T=A_1=[s]P0 and A_d=[s^d mod r]P0 with d=2^20, uniform nonzero s, and every integer n>=2^20. ORDER STRUCTURE (corrected, carried): r-1=2^32*u with u odd, so m=(r-1)/2^20 has v2(m)=12, 6|m, and m is COMPOSITE (m is even and m>2); H={x:x^m=1} equals the subgroup of d-th powers, is cyclic of order |H|=m (index d), and mu6 lies in H because 6|m. Only the primality assertion is withdrawn; no step inverts d modulo m (gcd(d,m)=2^12, so such an inverse does not exist): v=s^d lies in H and determines s only up to the d-element kernel {s*zeta^j}; recovery is one d-th-root extraction by 2-Sylow lifting on r-1=2^32*u plus the 2^20-candidate scan of [s*zeta^j]P0 against T, a ledger row. Only A_1 and A_d are read. KEY COLLISIONS, MEASURED ON THE CHALLENGE-FAITHFUL OBJECT: both lists are H-MEMBERS, and the giant list carries the challenge multiplier v=s^d with s uniform in Z_r^*, which is uniform on H because x->x^d is exactly d-to-1 (kernel size gcd(d,r-1)=d). The H filter is measured, not assumed: 2 accepts in 2^20 uniform band draws, rejected fraction 0.99999809, against the index-d expectation 2^-20; a prod_primes list is not an H list. Cross-side prefix collisions are exact integers at two list sizes, seven widths and six challenges; the unscaled unfiltered v18 object is the mutation control. Faithful observed/(pairs/2^(k-1)) ratios lie in 0.973958-1.125; control ratios lie in 0.828125-1.0. Hence E[#bad]=kappa*N^2/2^167=2^65.2508 with kappa=1.932 from the 3-sigma faithful cell maxima, as an expectation over the CHALLENGE SPACE: for each pair (i,j), v*y_j is uniform on H so Pr[key_i=key(v*y_j)]=2^-167, and linearity over the N^2 pairs needs no independence; pairs sharing a giant element are correlated through v, which is declared. With a 2^84 candidate cap the probability that candidate work exceeds the charged 2^104 instructions is at most 2^-18.749, and each candidate carries 2^20 instructions. COVERAGE: success=E[C_distinct]/m with K_cand=6N^2 candidate occurrences v=x/(u x'); under H3occ success=1-exp(-K), K=6N^2/m>=51/100, exp(-K)<=0.60050 exactly by rationals, design 0.399504. The deviation is measured as exact Fractions over six censuses on two toy fields and d in {8,16,64} at the production K_cand, enumerating the whole candidate set. The DECLARED transfer statistic is the residual FRACTION |rowB|=(pred_eff-D)/m, dimensionless in m, the quantity the claim charges; row A has exact maximum 283/174824 and row B 1421/262236, charged as Fractions, 0.00703757 in total, cell by cell at exactly the declared bound, and |rowB| falls in 3 of 3 matched field pairs. The v18 statistic |rowB|*sqrt(m) is withdrawn (it increases across the d=64 pair and a ratio set's collision bias is not a 1/sqrt(m) effect) and survives only as an uncharged diagnostic with no extrapolation; the charge is the toy maximum and no Chernoff or exp(-K) identity is asserted. RECORD AND SUCCESS: keymod.py is the single key rule (even member of y,p-y truncated to 168 bits, image 2^167) and the 48-byte record is 3 key limbs, side and a 128-bit position, 297 payload bits, no scalar; the reconstruction is itemised at 39404 instructions and each candidate is charged 2^20. Success after every debit is 0.399504-0.00703757-2^-18.749-2^-40-2^-50=0.392465>=39/100, conditional on H3occ, H3occ-scale, H3key, H3gap, each with measured fit and a disclosed limit. Work is 2*N*2238 instructions for the two walks plus chain tables, per-node fixed work, H-prime supply, the walk list, run-pair cap, 2^84-candidate reconstruction and verification cap, root extraction and the T-scan. Total W=2^116.812770 (2000-instruction units) < claim 116.8132 < gate 116.8271. Peak memory 2^123.3 B, no advice, preprocessing inside the total. CERTIFICATE SCOPE: the certificate recomputes this ledger and the declared formulas from raw evidence; it does not independently establish production resource bounds, run the production attack, or verify the premises."
+    }
+  ],
+  "experiments": []
+}
