@@ -1,0 +1,148 @@
+{
+ "bounds": {
+  "claim": 128.6043,
+  "storage_log2_peak": 134.255,
+  "work_log2": 128.6043
+ },
+ "claim_reduced_rational": {
+  "denominator": 10000,
+  "numerator": 1286043
+ },
+ "claim_time_log2": 128.6043,
+ "cycle": {
+  "precondition_if_stated": "a canonicalised-STATE walk returns to S at gap 2 only if sign(v2) == sign(v1) (row repeat, probability ~1/R with an advancing counter) or v2 == 2S+v1 (mod q) in the negated case / v2 == -v1 or -2S-v1 in the non-negated case; v17/v18 step on the true point and canonicalise only the stored key, so no such return is claimed",
+  "relative_loss": 2.2650852006533828e-07,
+  "source": "cycle_channel_v16.json: MEASURED per-window loss at R=32/64/128 (structural R^-2 2.283e-13 + additive R^-1 1.510e-7); it does NOT rest on any unconditional 2-cycle identity"
+ },
+ "instructions_per_visit": 1910.5543403625488,
+ "policy": {
+  "cycle_charge_steps_per_death": 4.0,
+  "measured_collisions_per_challenge": 0.6378048780487805,
+  "measured_useful_fraction": 1.0,
+  "record_fields": "32B canonical key || 20-bit trail || 108-bit step; no coefficients",
+  "replay_inflation_vs_bulk": 53.34814814814815,
+  "replay_relative_loss": 0.0001666524072111245,
+  "rule": "every hit replays both trails from their stored identities; the replay decides triviality (da=db=0) and, if nontrivial, recovers x=-da/db; rejected hits are charged their own replay",
+  "trail_pairs_charged_per_challenge": 3.2756097560975608,
+  "wasted_steps_per_return": 0.0
+ },
+ "record": {
+  "bytes": 48,
+  "layout": "32B canonical key || 16B identity (20-bit trail || 108-bit step)"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "global_sort_and_witness": 818.5,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "sort": {
+  "addressing": {
+   "address_rule": "addr = 48 * pos over 4 words; chunk = addr bits 128..255, offset = addr bits 0..127 masked by the device window",
+   "byte_address_bits": 256,
+   "cursor_bits": 256,
+   "store_volume_bytes_log2": 133.25
+  },
+  "clear256_ir_per_bucket": 4,
+  "count256_ir": 22.0,
+  "executed": "./radix18 20 -> sorted=1 collisions=256 n=1048576 elems=16777216 moved=16777216 bytes=805306368 (every pass runs scatter256x through the external store)",
+  "passes": 16,
+  "per_pass_ir_per_record": 48.8125,
+  "prefix256_ir_per_bucket": 33,
+  "scatter256x_basis": "scatter256x loop body 0x338..0x3f8 = 49 insns / 2-record unroll = 24.5 Ir/record (objdump, shipped arm64 -O2 build of experiments/radix_sort_v18.c); body includes the 4-word cursor load, the 48*pos multiply, the external (chunk,offset) write and the carried increment",
+  "scatter256x_ir": 24.5,
+  "scope": "GLOBAL over the whole store, through a carried 256-bit cursor and an external chunked store",
+  "total_sort_ir_per_record": 818.5,
+  "witness_ir": 37.5
+ },
+ "success": {
+  "floor": 0.39,
+  "ladder": [
+   {
+    "R": 256,
+    "collisions": 226,
+    "cp95_lower": 0.35893789291047135,
+    "label": "R256_W64_16p",
+    "measured": 0.4075,
+    "periods": 16.0,
+    "trials": 400,
+    "useful_per_collision": 1.0,
+    "wins": 163
+   },
+   {
+    "R": 1024,
+    "collisions": 204,
+    "cp95_lower": 0.42881727510440043,
+    "label": "R1024_W64_16p",
+    "measured": 0.4866666666666667,
+    "periods": 16.0,
+    "trials": 300,
+    "useful_per_collision": 1.0,
+    "wins": 146
+   },
+   {
+    "R": 4096,
+    "collisions": 131,
+    "cp95_lower": 0.38188106726133225,
+    "label": "R4096_W64_16p",
+    "measured": 0.44583333333333336,
+    "periods": 16.0,
+    "trials": 240,
+    "useful_per_collision": 1.0,
+    "wins": 107
+   },
+   {
+    "R": 64,
+    "collisions": 414,
+    "cp95_lower": 0.4377215528054289,
+    "label": "R64_W64_16p",
+    "measured": 0.47833333333333333,
+    "periods": 16.0,
+    "trials": 600,
+    "useful_per_collision": 1.0,
+    "wins": 287
+   },
+   {
+    "R": 1048576,
+    "collisions": 71,
+    "cp95_lower": 0.388644165161638,
+    "label": "R2p20_W1_16p",
+    "measured": 0.49,
+    "periods": 16.0,
+    "trials": 100,
+    "useful_per_collision": 1.0,
+    "wins": 49
+   }
+  ],
+  "min_cell_cp95_lower": 0.35893789291047135,
+  "note": "success = at least one coefficient-nontrivial collision that recovers x, measured per trial on the global store; useful_per_collision = 1.0 in every ladder cell, so the success event is witness existence",
+  "pooled": {
+   "cp95_lower": 0.43420871713455345,
+   "includes_production_rung": true,
+   "rate": 0.4585365853658537,
+   "trials": 1640,
+   "wins": 752
+  },
+  "production_rung": {
+   "R": 1048576,
+   "collisions": 71,
+   "cp95_lower": 0.388644165161638,
+   "label": "R2p20_W1_16p",
+   "rate": 0.49,
+   "trials": 100,
+   "useful_per_collision": 1.0,
+   "wins": 49
+  }
+ },
+ "units_per_visit": 1.910554340362549,
+ "work": {
+  "log2_rows": 128.60399129169525,
+  "log2_visits": 127.67,
+  "log2_work_final": 128.60423202704757,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}

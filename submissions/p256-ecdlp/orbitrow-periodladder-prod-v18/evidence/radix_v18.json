@@ -1,0 +1,48 @@
+{
+ "addressing": {
+  "address_rule": "addr = 48 * pos over 4 words; chunk = addr bits 128..255, offset = addr bits 0..127 masked by the device window",
+  "byte_address_bits": 256,
+  "cursor_bits": 256,
+  "store_volume_bytes_log2": 133.25
+ },
+ "audit_clean_run": "./radix18 20 --clean -> sorted=1 collisions=0, witness_first=0/0 (collision-free fill emits zero witnesses)",
+ "clear256_basis": "clear loop body 4 insns x 65536 buckets (compiler lowered u256_zero to 2 stp)",
+ "clear256_ir_per_bucket": 4,
+ "clear_share_ir_per_record": 0.25,
+ "count256_basis": "v17 measured 88 insns / 4-record unroll = 22.0; v18 rebuild of the identical source measures 85/4 = 21.25, the HIGHER v17 figure is charged",
+ "count256_ir_per_record": 22.0,
+ "counters": "4 x u64 (256-bit) per bucket on EVERY pass; production bucket ~2^111.67 records per 16-bit digit at V=2^127.67",
+ "digits": "16 passes x 16 bits over 4 x u64 limbs (full 256-bit key), 48-byte records",
+ "overflow_test": {
+  "fixture": "65536 buckets preloaded at production-magnitude counts (hi word 0x7FFF..., low word base*(d+1)); uint32 prefix wraps, 256-bit prefix exact",
+  "raw": "overflow-test buckets=65536 bad256=0 bad32=59743",
+  "uint256_buckets_corrupt": 0,
+  "uint32_buckets_corrupt": 59743
+ },
+ "passes": 16,
+ "prefix256_basis": "carry-propagating prefix loop 33 insns x 65536 buckets",
+ "prefix256_ir_per_bucket": 33,
+ "prefix_share_ir_per_record": 2.062,
+ "run": "./radix18 20 -> sorted=1 collisions=256 n=1048576 elems=16777216 moved=16777216 bytes=805306368 (every pass runs scatter256x through the external store)",
+ "scatter256_ir_per_record_v17": 15.0,
+ "scatter256x_basis": "scatter256x loop body 0x338..0x3f8 = 49 insns / 2-record unroll = 24.5 Ir/record (objdump, shipped arm64 -O2 build of experiments/radix_sort_v18.c); body includes the 4-word cursor load, the 48*pos multiply, the external (chunk,offset) write and the carried increment",
+ "scatter256x_ir_per_record": 24.5,
+ "scatter_control": {
+  "command": "./radix18 --scatter-test",
+  "meaning": "the planted-control requirement of the v17 review is met: a bucket whose count exceeds 2^32 (and 2^64, and 2^128) scatters correctly under v18 and is corrupted by the v17 path",
+  "planted": {
+   "bucket0_cursor": "2^32+17",
+   "bucket1_cursor": "2^64+5",
+   "bucket2_cursor": "2^128+3"
+  },
+  "raw": "scatter-test n=4096 bad_new=0 old_path_drops_high_words=1 old_wrote_at=5 correct_pos=2^64+5 old_faults_at_low_2p40=1",
+  "v17_path_result_2p64": "writes the record at position 5 (drops the high word): silent misplacement, not a fault",
+  "v17_path_result_low_word_2p40": "SIGSEGV - the low-word-only position leaves the device window entirely",
+  "v18_bad_positions": 0,
+  "v18_exact_positions": true
+ },
+ "why_scatter_repriced": "v17 read only c256[d].w[0] and incremented that word without carry; at production magnitudes a bucket holds ~2^111.67 records, so the position does not fit 64 bits and the 48-byte record address (2^133.25 B max) does not fit 64 or 128 bits. v18 carries the full 256-bit cursor and addresses a chunked external store, priced at the measured 24.5 Ir/record",
+ "witness_basis": "equal-key scan+emit span 101 insns in the v18 build, charged span/4 = 37.5 per record (4-word compare, conservative; same charge as v17)",
+ "witness_extraction": "emits BOTH identities (trail,step) of every equal-adjacent pair, so replay has the pairs it must charge",
+ "witness_ir_per_record": 37.5
+}

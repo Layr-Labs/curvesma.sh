@@ -1,0 +1,97 @@
+{
+ "conclusion": "structural and additive table families are charged at R^-2; only the residual coefficient-nontrivial family is charged at 1/r",
+ "fixture": {
+  "R_fix": 64,
+  "b": 314159,
+  "cls": "canonical x (P/-P merged, x/p-x distinct)",
+  "order": 1000839,
+  "p": 1000003,
+  "seeds": 16
+ },
+ "method": "full 64^4 enumeration per seed via prefix/inverse-image split; every hit replayed with state+coefficient tracking; structural [A,A,B,B] detected by the exact cancel test canon(S+T_A)==-(S+T_A); R^-2 scaling to R=2^20; chance family keeps 1/r * measured ratio; no two-step escape is claimed because the shipped walk has none",
+ "pricing": {
+  "additive_density_fix": 0.0024740733206272125,
+  "additive_density_prod_R1_scaled": 1.5100545169843826e-07,
+  "additive_hits": 664129,
+  "cancel_probe_rate": 0.505859375,
+  "chance_hits": 1093,
+  "chance_ratio_vs_1_over_r": 65.2025358080864,
+  "claim_delta_bits": 3.267826817479823e-07,
+  "deaths_per_walker": 9.746146277199367e+24,
+  "examples_struct": [
+   [
+    [
+     4,
+     685636
+    ],
+    2,
+    2,
+    3,
+    3
+   ],
+   [
+    [
+     4,
+     685636
+    ],
+    2,
+    2,
+    4,
+    4
+   ],
+   [
+    [
+     4,
+     685636
+    ],
+    2,
+    2,
+    8,
+    8
+   ]
+  ],
+  "per_4step_death_rate_prod": 1.5100568004355885e-07,
+  "pred_other_naive": 16.763151715710517,
+  "relative_work_loss": 2.2650852006533828e-07,
+  "scaling_study": {
+   "R": [
+    32,
+    64,
+    128
+   ],
+   "additive_density": [
+    0.0047969818115234375,
+    0.0025101155042648315,
+    0.0011564058562119803
+   ],
+   "additive_slope": "ratio 0.523, 0.461 per doubling (R^-1)",
+   "structural_density": [
+    0.00025284290313720703,
+    6.011873483657837e-05,
+    1.3367583354314169e-05
+   ],
+   "structural_slope": "ratio 0.238, 0.222 per doubling (R^-2)"
+  },
+  "structural_analytic_density_fix": 6.103515625e-05,
+  "structural_density_prod_R2_scaled": 2.2834512058977907e-13,
+  "structural_two_pair_density_fix": 6.129592657089233e-05,
+  "structural_two_pair_hits": 16454,
+  "waste_per_death_steps": 6.0,
+  "windows_scanned": 268435456
+ },
+ "scan": {
+  "collapse_confirmed": 0,
+  "nonzero_delta_returns": 1093,
+  "probes_per_seed": 262144,
+  "returns": 714418,
+  "trivial": 713325,
+  "windows": 268435456
+ },
+ "trivial_by_family": {
+  "additive": 664129,
+  "alt4": 16483,
+  "chance": 1093,
+  "rev4": 16259,
+  "struct_two_pair": 16454
+ }
+}
