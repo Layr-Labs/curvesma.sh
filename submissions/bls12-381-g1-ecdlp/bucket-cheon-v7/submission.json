@@ -1,0 +1,58 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: bucket Cheon v7 (the accepted lead's own slack, the inversion priced by the full binary extended Euclid and the base-prime search by a self-consistent fixed-point supply bound)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.395 (at least 0.39 required). The success argument is the accepted lineage's law-based argument restated: 1 - e^{-K} = 0.39950 at the lower bound K = 0.51 (the realised 6N^2/m is 0.51 x (1 + 2^-54.2), N = 65196422678611482903494932429799424 = 2^64 x L exactly) under H1, minus the nine cap tails C1-C9 (each computed here from scratch, every tail rounded towards the larger probability, together charged 2^-40) minus the 2^-20 C8 modelling budget. The cost is the exact-integer ledger W = 141265427090654845851081841365587702 target-group-operation units with records 2N x 2000 x (1 + 160/2000) and the charge 160 itemised over the 33-line six-limb listing (maximal 129/122, a 24 percent margin). Every shared price is an algorithm-derived worst case: the F_r-multiplication at 383 instructions (6x6-limb Montgomery, under 200, charged with margin); the field inversion at 2^16 = 65,536 instructions (the FULL binary extended Euclid: four six-limb values - operands and Bezout coefficients - at ~56 limb operations per iteration for at most 762 iterations = 42,672); the point scalar multiplication at 728 reference additions (projective 4-bit fixed windows: at most 330 point operations over all k < r at ~11 F_r-multiplications each plus one final inversion - sequential multiplications cannot batch inversions); the square root at 2048 F_r-multiplications (Tonelli-Shanks at v2(r-1) = 32: odd-part exponentiation ~310 plus at most 32 correction rounds at <= 34 each); the modexp at 512 F_r-multiplications. The gap-table build charges its dependent recurrence honestly - (2000 + 65536 + 47)/2000 per entry, one own inversion per entry - and the base-prime search interval [2^80, F] is sized by the fixed point X = 2^66*2^20*ln(F) (X ~ 2^92.0), the integrand bound 1/ln(q) >= 1/ln(F) giving an expected supply of at least 2^66 against the 2^65 requirement, the shortfall the Chernoff cap C9 at 2^-1.3e19 under the disclosed independence heuristic H2''. Only A_1 and A_d are read, so the bound holds for every n >= 2^20. Score = ceil(10^6 log2 W)/10^6 = 116.765852, against the accepted lead's 116.793080 - a gain of 0.027188 bits, the lead's own published slack (K 0.51 versus 0.52, charge 160 versus 180 at comparable margins) net of the honest repricing.",
+   "score": {
+    "numerator": "116765892",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run, three modes. Mode ledger recomputes every size, term, cap tail, the exact integer memory sum and the exact score from integers and Fractions, asserting d | r-1, 6d | r-1, v2(r-1) = 32, the exact identity 2^64 x L = N with 6N^2/m >= 0.51, the six-limb itemisation totals (walk side 33, listing 129/122, charged 160 with a 24 percent margin) and the H-prime density sanity (402 sixteenth powers below 2^16 against 408.875 expected); it outputs W = 141265427090654845851081841365587702 units, score 116.765892, the beats-lead comparison, the walk-schedule block (the retained value-indexed gap table, the dependent-recurrence build with one own 2^16-instruction inversion per entry, the lockstep segments, the split mechanism, the re-walk rebuild), the algorithm-derived price constants (INV_INSTR 65536, SCALARMUL_EQ 728, SQRT_FQ 2048), the nine caps C1-C9 including the fixed-point base-prime supply cap C9 under H2'', the preprocessing split and the memory block (total 2^122.806 bytes, ceiling 2^122.81). Mode coverage runs three scalar-level birthday toys (r = 134219713/536872321/2147492353 at d = 32/64/128, L = 60, chains sized for K = 0.51) measuring success against the diagonal-loss prediction 1 - e^{-K'}. Mode ec runs the whole attack end to end on the j = 0 curve y^2 = x^3 + 3 over F_207670579 of prime order r = 207671809 at d = 128: H-primes from a sieve, 15 chains of 25 steps per side with per-chain retained gap tables, the 16-bit parity key routed to 32 pseudo-nodes x 16 heads, the bucket table with the whole baby side inserted first, equal-key candidates kept as (key, id, id'), the linear re-walk with the 4-step kept cap, the six GLV/negation candidates tested against the u-twisted A_d, the recovered z divided by the eigenvalue the endomorphism actually realises on the curve (resolved at setup against P0, not assumed), the 7 square roots and the 128-root scan, asserting every recovered s equals the drawn secret. The full mode=all run completes in under 2 seconds and reproduces byte-identically from a foreign working directory.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "ledger",
+       "coverage",
+       "ec",
+       "all"
+      ]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 2026,
+     "trials": 120
+    }
+   ]
+  }
+ ]
+}
