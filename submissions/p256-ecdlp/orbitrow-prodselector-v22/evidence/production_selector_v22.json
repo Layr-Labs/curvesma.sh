@@ -1,0 +1,159 @@
+{
+ "R": 1048576,
+ "armC_fix": {
+  "R": 1048576,
+  "collisions_total": 1222,
+  "dispersion_index": 0.9420834537920401,
+  "dof": 2,
+  "hist_0_1_2plus": [
+   1117,
+   692,
+   239
+  ],
+  "lambda_expected": 0.63336181640625,
+  "mode": "fix",
+  "observed_mean": 0.5966796875,
+  "poisson_0_1_2plus": [
+   1087.087,
+   688.52,
+   272.393
+  ],
+  "poisson_chi2": 4.9344109036096615,
+  "steps_per_trail": 1153,
+  "trails": 2048,
+  "wall_seconds": 0.19
+ },
+ "armC_prod": {
+  "R": 1048576,
+  "collisions_total": 1319,
+  "dispersion_index": 1.0168642189457453,
+  "dof": 2,
+  "hist_0_1_2plus": [
+   1081,
+   682,
+   285
+  ],
+  "lambda_expected": 0.63336181640625,
+  "mode": "prod",
+  "observed_mean": 0.64404296875,
+  "poisson_0_1_2plus": [
+   1087.087,
+   688.52,
+   272.393
+  ],
+  "poisson_chi2": 0.6792868429368805,
+  "steps_per_trail": 1153,
+  "trails": 2048,
+  "wall_seconds": 10.56
+ },
+ "armP_fix": {
+  "cross_trail_row_collisions_expected": 29360128.0,
+  "identity_breaks": 0,
+  "lag1_chi2": 65880.57722267484,
+  "lag1_dof": 65280,
+  "lag1_z": 1.6621254009911397,
+  "mode": "fix",
+  "occupancy": {
+   "cells": 1048576,
+   "chi2": 1045701.75,
+   "chi2_z": -1.9840776638988284,
+   "distinct_cells": 1048219,
+   "dof": 1048575,
+   "entropy_nats": 13.798875763099828,
+   "entropy_over_log_cells": 0.9953784816633516,
+   "max_load": 25,
+   "mean_per_cell": 8.0
+  },
+  "phase_matched_row_repeats": 0,
+  "row_hazard_per_pair_expected": 9.5367431640625e-07,
+  "row_hazard_per_pair_measured": 8.344651263314636e-07,
+  "steps_per_walker": 1048576,
+  "visits": 8388608,
+  "walkers": 8,
+  "wall_seconds": 1.87
+ },
+ "armP_prod": {
+  "cross_trail_row_collisions_expected": 29360128.0,
+  "identity_breaks": 0,
+  "lag1_chi2": 64801.428250885154,
+  "lag1_dof": 65280,
+  "lag1_z": -1.3244695775470865,
+  "mode": "prod",
+  "occupancy": {
+   "cells": 1048576,
+   "chi2": 1044407.5,
+   "chi2_z": -2.8778016755584677,
+   "distinct_cells": 1048198,
+   "dof": 1048575,
+   "entropy_nats": 13.798936179390124,
+   "entropy_over_log_cells": 0.9953828397774716,
+   "max_load": 25,
+   "mean_per_cell": 8.0
+  },
+  "phase_matched_row_repeats": 0,
+  "row_hazard_per_pair_expected": 9.5367431640625e-07,
+  "row_hazard_per_pair_measured": 8.344651263314636e-07,
+  "steps_per_walker": 1048576,
+  "visits": 8388608,
+  "walkers": 8,
+  "wall_seconds": 37.68
+ },
+ "function": "row(t) = (x(T_t) ^ t*2654435761 ^ trail*7919) mod 2^20 ; T_{t+1} = T_t + [a_row]P + [b_row]Q ; Q = [x]P",
+ "hazard_match": {
+  "inputs": {
+   "entropy_over_log_cells": {
+    "fixture": 0.9953784816633516,
+    "production": 0.9953828397774716
+   },
+   "lag1_chi2_z": {
+    "fixture": 1.6621254009911397,
+    "production": -1.3244695775470865
+   },
+   "max_load": {
+    "fixture": 25,
+    "production": 25
+   },
+   "occupancy_chi2_z": {
+    "fixture": -1.9840776638988284,
+    "production": -2.8778016755584677
+   },
+   "per_step_row_hazard": {
+    "basis": "both measured via occupancy chi-square below",
+    "fixture": 9.5367431640625e-07,
+    "match": true,
+    "production": 9.5367431640625e-07
+   },
+   "per_trail_collision_mean": {
+    "fixture": 0.5966796875,
+    "poisson_expected": 0.63336181640625,
+    "production": 0.64404296875
+   },
+   "phase_matched_row_repeats": {
+    "fixture": 0,
+    "production": 0
+   },
+   "poisson_chi2": {
+    "fixture": 4.9344109036096615,
+    "production": 0.6792868429368805
+   }
+  },
+  "period_law": "R | 2^64 and x is a field integer, so the selector is exactly 2^20-periodic in t for fixed S: phase = t mod 2^20 in BOTH functions",
+  "verdict": null
+ },
+ "procs": 8,
+ "seed_rule": "arm P walker seed c,d from Random(99); arm C trail seed c,d from Random(4242); single secret per mode (the protocol attacks one Q); mode=fix repeats the identical walk and seeds in Z/n with the representative-integer selector",
+ "selftest": {
+  "curve_points_ok": true,
+  "nG_is_O": true,
+  "steps_checked": 24,
+  "table_build_seconds": 77.35,
+  "x_mismatches": 0
+ },
+ "table": {
+  "build_seconds": 77.12,
+  "entries": 1048576,
+  "note": "one public key, as the protocol attacks one Q",
+  "secret_hex32": "5f3c9e21d4b7a08c6e1d2f4a9b3c7e08d1f6a2b5c8e0d3f7a1b4c6e9d2f5a8b1"
+ },
+ "wall_seconds_total": 205.04
+}

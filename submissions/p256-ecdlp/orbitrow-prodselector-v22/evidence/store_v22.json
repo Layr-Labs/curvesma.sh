@@ -1,0 +1,69 @@
+{
+ "charges_ir_per_record": {
+  "directory_construction_amortised": 0.01176471,
+  "page_fill_256x16B_amortised": 3.011765,
+  "page_flush_256x16B_amortised": 3.011765,
+  "page_init_256x16B_amortised": 3.011765,
+  "page_table_walk_amortised": 0.494118,
+  "record_load_3x16B": 3.0,
+  "record_store_3x16B": 3.0
+ },
+ "locator": {
+  "addressing_breakdown": "2 pair loads (2) + radix digit shift/mask (2) + next-node address add (1) + presence tag compare/branch (2)",
+  "addressing_per_level_ir": 7,
+  "bytes_per_entry": 16.0,
+  "covers": true,
+  "id_bits": 128,
+  "mutant_u64": "a u64 entry truncates the 122-bit page id; the u64 mutant is exercised by audit_v22.py control (c) on page index 2^64+5",
+  "required_id_bits": 122,
+  "word_bits": 64,
+  "words": 2
+ },
+ "log2_pages": 121.2606090638623,
+ "page_bytes": 4096,
+ "passes": 16,
+ "peaks": {
+  "layout": "whole records only: floor(4096/48)=85 records per page, 3184788678400996908590937940886028288 pages for 2^127.67 records, two streams, 16 B locator entries",
+  "log2_peak_bytes": 134.26342408081035,
+  "log2_radix_directories_bytes": 125.26060975179307,
+  "log2_stream_bytes": 134.2606090638623,
+  "stream_bytes_formula": "2 * pages * 4096"
+ },
+ "per_pass_ir_per_record": {
+  "clear256": 0.25,
+  "count256": 22.0,
+  "prefix256": 2.062,
+  "scatter256x_carried_external": 36.0,
+  "store_translation_and_io": 9.517647,
+  "stream_readback_materialisation": 6.505882
+ },
+ "per_pass_total_ir": 76.335529,
+ "readback_ir_per_record_per_pass": 6.505882,
+ "record_bytes": 48,
+ "records_per_page": 85,
+ "rule": "protected accounting: 1 Ir = one AArch64 general-purpose-register instruction; a register-pair transfer moves at most 16 B",
+ "sort_total_ir_per_record": 1258.880228711492,
+ "store_io_ir_per_record_per_pass": 9.517647,
+ "translation": {
+  "covered_log2_pages": 126,
+  "covers_required": true,
+  "fanout": 2097152,
+  "fanout_bits": 21,
+  "levels": 6,
+  "node_bytes": 33554432.0,
+  "walk_ir_per_page": 42,
+  "walk_ir_per_record": 0.494118
+ },
+ "v21_comparison": {
+  "delta_ir_per_record_per_pass": 0.28235199999998883,
+  "v21_defects": [
+   "8 B directory entries cannot hold a 2^121 page / 2^100 node identifier",
+   "5 Ir/level translation did not include the second word load of a 128-bit id"
+  ],
+  "v21_peak": 134.26201725892625,
+  "v21_per_pass": 76.053177,
+  "v22_peak": 134.26342408081035,
+  "v22_per_pass": 76.335529
+ },
+ "witness_ir_per_record": 37.5
+}

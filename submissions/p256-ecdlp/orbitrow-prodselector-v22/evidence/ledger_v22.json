@@ -1,0 +1,311 @@
+{
+ "bounds": {
+  "claim": 128.9035,
+  "storage_log2_peak": 134.26342408081035,
+  "work_log2": 128.9035
+ },
+ "claim_reduced_rational": {
+  "denominator": 2000,
+  "numerator": 257807
+ },
+ "claim_time_log2": 128.9035,
+ "delta_vs_v21": {
+  "returns": "9.606e-05 (binomial over repeat events) -> 2.745e-19 (first-moment union bound)",
+  "store": "76.0532 -> 76.3355 Ir/record/pass (128-bit locator, 7 Ir/level)",
+  "success": "carrier CP-lo 0.424555 retained; the transfer premise is now a measured hazard match plus a disclosed class-scale conjecture",
+  "v21_claim": 128.9009,
+  "v22_claim": 128.9035
+ },
+ "instructions_per_visit": 2350.934569074041,
+ "policy": {
+  "measured_collisions_per_challenge": 0.615,
+  "measured_useful_fraction": 1.0,
+  "record_fields": "32B canonical key || 20B identity pack (20-bit trail || 108-bit step)",
+  "replay_inflation_vs_bulk": 53.34814814814815,
+  "replay_relative_loss": 0.00016433193065502026,
+  "rule": "every hit replays both trails from their stored identities; the replay decides triviality and, if nontrivial, recovers x=-da/db",
+  "trail_pairs_charged_per_challenge": 3.23
+ },
+ "returns": {
+  "basis": "FIRST-MOMENT union bound over the C(S,2) step pairs against |state| = q*R = 2^276; no independence between repeat events is used anywhere",
+  "high_load_cell": {
+   "cycle_entries": 65,
+   "cycle_entry_rate": 0.065,
+   "entry_rate_consistent_with_bound": true,
+   "fatal_repeats": 0,
+   "first_moment_bound_per_trail": 0.49994039518469385,
+   "identity_breaks": 11,
+   "repeats_total_descriptive": 188848,
+   "seeds": 1000
+  },
+  "no_binomial_anywhere": "the charge is a first-moment union bound over C(S,2) step pairs; no independence between repeat events is used",
+  "positive_control": {
+   "cycle_entries": 74,
+   "cycle_entry_rate": 0.74,
+   "repeats_total_descriptive": 276764,
+   "seeds": 100
+  },
+  "relative_loss": 2.7446720980408664e-19,
+  "state_space": {
+   "R_log2": 20,
+   "bound_log2": -61.66,
+   "q_log2": 256,
+   "state_log2": 276,
+   "trail_steps_log2": 107.67
+  },
+  "unit": "seed",
+  "v21_binomial_retracted": "v21 charged 3.89e-05 from a Clopper-Pearson interval over 94,831 repeat EVENTS, which are not independent observations; that interval is withdrawn and the union bound is charged instead (a strictly smaller, strictly more defensible number)"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "global_sort_and_witness": 1258.880229,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "sort": {
+  "basis": "PROTECTED 64-bit GPR accounting (evidence/store_v22.json): 16 B per register-pair transfer, 3 transfers per 48 B record each way, 256 per 4096 B page init/flush/fill, 128-BIT locator (2 x 64-bit words) per directory entry covering the 2^121.26 page number, 7 Ir/level with both word loads and the radix digit extraction priced, directories charged and included in the peak",
+  "directory_construction_ir": 0.01176471,
+  "locator": {
+   "addressing_breakdown": "2 pair loads (2) + radix digit shift/mask (2) + next-node address add (1) + presence tag compare/branch (2)",
+   "addressing_per_level_ir": 7,
+   "bytes_per_entry": 16.0,
+   "covers": true,
+   "id_bits": 128,
+   "mutant_u64": "a u64 entry truncates the 122-bit page id; the u64 mutant is exercised by audit_v22.py control (c) on page index 2^64+5",
+   "required_id_bits": 122,
+   "word_bits": 64,
+   "words": 2
+  },
+  "passes": 16,
+  "peaks": {
+   "layout": "whole records only: floor(4096/48)=85 records per page, 3184788678400996908590937940886028288 pages for 2^127.67 records, two streams, 16 B locator entries",
+   "log2_peak_bytes": 134.26342408081035,
+   "log2_radix_directories_bytes": 125.26060975179307,
+   "log2_stream_bytes": 134.2606090638623,
+   "stream_bytes_formula": "2 * pages * 4096"
+  },
+  "per_pass_components": {
+   "clear256": 0.25,
+   "count256": 22.0,
+   "prefix256": 2.062,
+   "scatter256x_carried_external": 36.0,
+   "store_translation_and_io": 9.517647,
+   "stream_readback_materialisation": 6.505882
+  },
+  "per_pass_ir_per_record": 76.335529,
+  "readback_ir_per_record": 6.505882,
+  "store_io_ir_per_record": 9.517647,
+  "total_sort_ir_per_record": 1258.880228711492,
+  "witness_ir": 37.5
+ },
+ "success": {
+  "attempts_charged": 1.0,
+  "big_r_replication_not_the_bound": {
+   "R": 1048576,
+   "label": "R2p20_W1_16p",
+   "rate": 0.475,
+   "trials": 200,
+   "wins": 95
+  },
+  "carrier": {
+   "R": 256,
+   "cp95_lower_cross_walker": 0.42455473649353065,
+   "cross_share": 0.989430894308943,
+   "cross_walker_collisions": 1217,
+   "label": "X_R256_W64_p16",
+   "periods": 16,
+   "rate_cross_walker": 0.4465,
+   "seed_rule": null,
+   "trials": 2000,
+   "unit": "SEED (fresh secret per trial)",
+   "walkers": 64,
+   "wins_cross_walker": 893,
+   "within_walker_collisions": 13
+  },
+  "charged_success": 0.42455473649353065,
+  "cross_trail_poisson": {
+   "lambda_cross": 0.6328782969851414,
+   "q_cross_cp95_lower": 0.9970054037877589,
+   "q_cross_measured": 1.0,
+   "records": "2^127.67",
+   "sign_classes": "2^255",
+   "success_poisson": 0.468938952330089,
+   "success_poisson_at_q_lower": 0.4679315231467903,
+   "yield_basis": "carrier useful_relations == collisions (1230/1230), and every one of the 20 ladder cells has useful_relations == collisions"
+  },
+  "floor": 0.39,
+  "hazard_match": {
+   "functions": {
+    "fixture_twin": "row(t) = (T_t ^ t*2654435761 ^ trail*7919) mod 2^20 on Z/q, same increments, trail ids, seeds and rho",
+    "production": "row(t) = (x(T_t) ^ t*2654435761 ^ trail*7919) mod 2^20 ; T_{t+1} = T_t + [a_row]P + [b_row]Q ; Q = [x]P"
+   },
+   "inputs": {
+    "lag1_transition_chi2_z": {
+     "fixture": 1.6621254009911397,
+     "production": -1.3244695775470865
+    },
+    "occupancy_chi2_z": {
+     "fixture": -1.9840776638988284,
+     "production": -2.8778016755584677
+    },
+    "occupancy_entropy_over_log_cells": {
+     "fixture": 0.9953784816633516,
+     "production": 0.9953828397774716
+    },
+    "occupancy_max_load": {
+     "fixture": 25,
+     "production": 25
+    },
+    "per_step_row_hazard": {
+     "basis": "both occupancy chi-square statistics are consistent with the uniform row law; a deviation in either direction is measured, not assumed",
+     "fixture": 9.5367431640625e-07,
+     "match": true,
+     "production": 9.5367431640625e-07
+    },
+    "per_trail_collision_counts_at_load_0p634": {
+     "fixture": {
+      "dispersion_index": 0.9420834537920401,
+      "hist_0_1_2plus": [
+       1117,
+       692,
+       239
+      ],
+      "mean": 0.5966796875,
+      "poisson_chi2_2dof": 4.9344109036096615
+     },
+     "poisson_0_1_2plus": [
+      1087.087,
+      688.52,
+      272.393
+     ],
+     "poisson_expected_mean": 0.63336181640625,
+     "production": {
+      "dispersion_index": 1.0168642189457453,
+      "hist_0_1_2plus": [
+       1081,
+       682,
+       285
+      ],
+      "mean": 0.64404296875,
+      "poisson_chi2_2dof": 0.6792868429368805
+     },
+     "steps_per_trail": 1153,
+     "trails": 2048
+    },
+    "phase_matched_row_repeats": {
+     "fixture": 0,
+     "production": 0
+    },
+    "row_collision_pairs_measured": {
+     "birthday_expected_cross": 29360128.0,
+     "birthday_expected_total": 33554428.0,
+     "fixture_cross": 29348635.0,
+     "fixture_ratio": 0.9996085507529122,
+     "fixture_total": 33542935.0,
+     "production_cross": 29343458.0,
+     "production_ratio": 0.9994322231837681,
+     "production_total": 33537758.0
+    }
+   },
+   "match_rows": [
+    {
+     "fixture": "chi2_z=-1.984",
+     "input": "row occupancy law",
+     "match": true,
+     "production": "chi2_z=-2.878",
+     "test": "same sign of a small NEGATIVE deviation (under-dispersion, conservative of the birthday rate), |z| < 3 in both"
+    },
+    {
+     "fixture": "0.995378",
+     "input": "normalised entropy",
+     "match": true,
+     "production": "0.995383",
+     "test": "agrees to 5 decimal places at 8,388,608 visits"
+    },
+    {
+     "fixture": "lag1_z=1.662",
+     "input": "successive-step independence",
+     "match": true,
+     "production": "lag1_z=-1.324",
+     "test": "both consistent with an independent row sequence at 2^16 cells"
+    },
+    {
+     "fixture": "0.999609 of birthday",
+     "input": "measured row-collision pairs",
+     "match": true,
+     "production": "0.999432 of birthday",
+     "test": "both within 0.1%% of pairs/R on 29.3e6 measured cross-walker collisions"
+    },
+    {
+     "fixture": "mean=0.5967 chi2_2=4.934",
+     "input": "per-trail Poisson at load 0.633",
+     "match": true,
+     "production": "mean=0.6440 chi2_2=0.679",
+     "test": "both fit Poisson(0.6334) inside the 2-dof 95%% critical value 5.991; the two means differ by 1.9 sigma"
+    }
+   ],
+   "residual_conjecture": "the class-scale collapse (x identifies T with -T, r = (n-1)/2 = 2^255 classes) is NOT measurable at 2^24 samples and is disclosed as a conjecture: the birthday rate uses the measured uniform row hazard and the disclosed equidistribution of x over the 2^255 sign classes for this structured additive walk.",
+   "scale": {
+    "R": 1048576,
+    "steps_per_walker": 1048576,
+    "total_wall_seconds": 205.04,
+    "visits": 8388608,
+    "walkers": 8,
+    "wall_seconds": {
+     "fixture": 1.87,
+     "production": 37.68
+    }
+   },
+   "verdict": "MATCH: at identical R, walker count, seeds and trail ids the production x-coordinate selector and the fixture representative-integer selector produce row-occupancy statistics, lag-1 transition statistics, measured row-collision counts and per-trail Poisson collision counts that agree within their confidence intervals (see match_rows).  The selector's SOURCE map is therefore not what carries the hazard; the hazard inputs measured on the fixture transfer to the production function."
+  },
+  "log2_attempts_charged": 0.0,
+  "model": "P(success) = 1 - E[(1-q_cross)^X], X ~ Poisson(lambda_cross), lambda_cross = N(N-1)/(2r); every input machine-copied from a measurement row",
+  "not_claimed": "that a 37-53 bit fixture group is the P-256 subgroup, or that the class-scale equidistribution is proven; the measured hazard inputs transfer and the class-scale step is a disclosed conjecture",
+  "stability_ladder": {
+   "axes": [
+    {
+     "axis": "R@W64_p16",
+     "slope_per_log2_axis": 0.0031250000000000028,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R256_W64",
+     "slope_per_log2_axis": 5.574187089556065e-19,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R1024_W16",
+     "slope_per_log2_axis": 0.013859968766267564,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R4096_W4",
+     "slope_per_log2_axis": -0.013258068714211344,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R65536_W1",
+     "slope_per_log2_axis": -0.011660447761194041,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "walkers@R4096_p256",
+     "slope_per_log2_axis": -0.016666666666666666,
+     "verdict": "FLAT"
+    }
+   ],
+   "role": "SUPPORTING evidence only: flat in coverage 16..1024 periods, walkers 1..64, R 256..65536 under a disjoint exact-CP test"
+  }
+ },
+ "units_per_visit": 2.350934569074041,
+ "work": {
+  "log2_rows": 128.9032343866362,
+  "log2_visits": 127.67,
+  "log2_work_final": 128.90347144801976,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}
