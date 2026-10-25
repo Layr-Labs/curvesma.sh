@@ -1,0 +1,50 @@
+emulated-block.txt -- execution record of the emitted exact-index repair
+(emulate_block.py, a 64-bit AArch64 subset interpreter; every number below is
+produced by running the instructions of schedule.repair_block() as emitted)
+
+{
+ "block_instructions": 1038,
+ "frame_bytes": 512,
+ "max_offset": 496,
+ "v36_block_instructions": 334,
+ "random": {
+  "n": 300,
+  "mismatches": 0,
+  "first": []
+ },
+ "stress_fallbacks": {
+  "population": 10000,
+  "fallbacks": 2092,
+  "executed": 2092,
+  "mismatches": 0,
+  "first": [],
+  "whole_adversarial_population": 10000,
+  "whole_population_mismatches": 0
+ },
+ "control_argmin_new": {
+  "must_select": 2,
+  "got": 2,
+  "x8": 2,
+  "changed_x8": true,
+  "min_is_smallest": true
+ },
+ "control_argmin_v36": {
+  "inputs": 51,
+  "x8_moved": [],
+  "x8_moved_count": 0,
+  "verdict": "x8 never changes: the rejected block's compare reads the slots its own candidate just overwrote"
+ },
+ "control_spill_order": {
+  "inputs": 60,
+  "mismatches": 6,
+  "verdict": "mutant detected"
+ },
+ "control_adc_flags": {
+  "inputs": 60,
+  "mismatches": 11,
+  "verdict": "mutant detected"
+ },
+ "control_stack_contract": "raised: offset 1008 outside frame 512",
+ "errors": [],
+ "verdict": "all green"
+}

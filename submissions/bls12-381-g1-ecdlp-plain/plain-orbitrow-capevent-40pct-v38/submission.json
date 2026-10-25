@@ -1,0 +1,156 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp-plain: GLV rho, 1195-instruction object, exact-index repair in the listing (fallback recomputes argmin and rejoins; no trail lost), 143-instruction span, H1 0.42948, 126.3406",
+ "claims": [
+  {
+   "statement": "Claim (time_log2 = 126.3406): for a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm of proof.md recovers x. Its total work is at most 2^126.3406 batched-incomplete-affine-G1-addition equivalents (one unit = C = 2,000 scalar AArch64 instructions; the organizer's fixed 6M normalization, unchanged), enforced by a global meter that charges every action at an upper-bound price before executing it and halts with failure at the claim. The shipped span is one single-entry function of 1195 object instructions: 144 charged literal rows in emit order plus 1051 synthetic lines (one standalone return, 4 three-instruction exit stubs = 12, and the 1038-instruction exact-index repair block: 13 + 1038 = 1051, all counted from emit_asm() output), 1:1 with the object in order, __text = 0x12ac = 4 x 1195 bytes ending at the last instruction, zero unattributed instructions (completeness.py; three planted enumeration defects each detected). The charge is 143 per non-refresh element (141 literal + 2 amortised per-batch rows: meter and Fermat share) and 146 on the 1-in-64 refresh step (143 + 3 refresh stores); the 64-cycle mean is 143.046875 and the level price is 1.0715234375. Every record field is read before its own first write: offsets 0, 16, 32, 48, 64, 80, 96, 104, 120, 136 are loaded, in emitted order, before the first store to each (10/10, extraction in regen-report.txt); the property is per-field, not the false v32 claim that coordinates are read before the checkpoint/length fields.\n\nTHE EXACT-INDEX REPAIR IS IN THE SHIPPED OBJECT. The three truncated-index exit branches (the range test, the 32-value near-tie window and the wrap window) branch to L_fallback, which is the repair block, not an exit: it recomputes argmin_j (beta^j x mod p) from full limbs and rejoins the walk with the exact index in x8, the register row 4 reads. The arithmetic is real, not a shape: the block reads the six limbs of x from the walk's own record at [x19,#0]..[x19,#40] (the ldp pairs row 1 uses) into its frame immediately after its saves -- it assumes no pre-populated slot, and the interpreter feeds x through that record; beta is carried as beta*R mod p and multiplied by one full 6x6 schoolbook with a two-word carry into each column; the Montgomery step is a separated operand scan that adds m*p at each limb offset with a three-limb carry cascade; the reduction ends in one borrow-propagating 6-limb subs/sbcs cascade plus ONE conditional subtraction of p selected by csel; every multi-limb carry chain uses ADCS except its final limb: ADC does not write NZCV, so a chain of plain ADC would not propagate the carry (a mutant block with ADCS replaced by ADC mismatches 11 of 60 inputs); the third candidate uses the walker's own identity beta^2 x = -(1+beta) x, one borrow-propagating 6-limb subtract and a masked add of p. Per candidate the running minimum is READ from its frame slot, compared against the candidate, and only THEN conditionally written (6 loads, the cascade, 6 csel, 6 stores), so the spill slots can never feed the compare they belong to. It allocates and releases its own 512-byte frame (offsets 496 at most), so the leaf prologue's 16-byte link frame is untouched. It ends b L_rejoin and contains no ret. THE EQUIVALENCE IS EXECUTED, NOT ASSERTED. emulate_block.py is a 64-bit AArch64 subset interpreter that runs the emitted instructions themselves; on 300 random inputs x in [1,p) and on the 10000 adversarial near-tie inputs of the production generator (of which 2092 are the fallback inputs that actually enter L_fallback), the emulated (index, minimum, x8) equals the walker's argmin in every case, 0 mismatches; the emitted block is 1038 instructions and its frame is verified in-frame by the manifest assert. The same interpreter runs the REJECTED v36 block on the same inputs and it never moves x8 (51 inputs, 0 changes): the defect is reproduced, not described. Two further controls fire: moving the running-minimum stores before the compare mismatches 6 of 60 inputs, and an offset outside the frame fails the manifest assert.\nThe block contains no ret, so no trail leaves the pool: p_in = 0 BY CONSTRUCTION, and there is no abandonment debit term anywhere in this claim. v35's 2,172/10,000 adversarial near-tie population is withdrawn as a rate - it is retained only as the reason the truncated index needs a tie-break window - and the 0.2172 p_in and the 0.069174 debit are deleted with the path they priced. The repair's own work is charged instead: 1038 instructions = 0.5190 units per repair at the structural 2^-59 per canonicalisation, so 2^67.24 repairs over S_ops = 2^126.24084 steps cost 2^66.29 units, -60.05 of the phase-1 base, carried in the allowance total below. That bound stays EXPECTED-COUNT: it bounds the probability of at least one repair, is not converted to a probability of none (v34's exp(-2^67.24) = 0 stays retracted), and no exact zero is claimed.\n\nSUCCESS SIDE, with the schedule scaled to buy the bound. S_ops = 1.065 x 1.015 x sqrt(2 N' ln(1/(1-0.3903))): the 0.3903 H1 requirement plus 1.065 times the steps, costing 0.0909 bits of work. The random-mapping law then gives H1 = 1-exp(-(S_ops/1.015)^2/(2N')) = 1-exp(-1.065^2 x 0.494788) = 0.429477, computed from the scaled step count rather than asserted. Charges, each line shown: more than 8 processed matches 0.62^8 = 0.021834; length cap 25 e^-25 applied per age-conditioned live trail and x 2^20 open trails = 0.000364064 (union bound, no independence assumed; the constant is a design parameter, lambda_min = 24); report table 2^-18; recovery 2^-30; meter 0.001047. Success term = 0.429477 - 0.0222019 - 0.001047 = 0.40622, above the 0.39 floor by 0.016220.\n\nMEASUREMENT, directly counted. The toy pipeline at n=880 counts the event recovered == secret once per trial and reports the raw count 379: p-hat 0.4307, a Clopper-Pearson interval at the two-sided five per cent level [0.3977, 0.4642] computed from (k, n) alone - no transformed stopping-time statistic, no ratio transfer, no independence formula posing as a union bound. Two controls run in the same pass. Scaling: with the multiplier at 1.0 the same n gives 338/880 = 0.3841 with lower bound 0.3518, so the scaling is not flat and the extra steps are what move the count. Direct count: flipping one recovered-s field drops the count by exactly one, 379 -> 378, and moves the lower bound 0.3977 -> 0.3966; nothing between trace and claim is re-derived, so the count is the only channel. 8 sub-batches of 110 with a per-batch dump and a 240 s declared budget; measured wall time per sub-batch is recorded in regen-report.txt. Toy scope only: no production-size run. The toy walker canonicalises exactly, which now matches the shipped object's semantics - the object repairs and rejoins - so the v33/v34 mismatch between toy and emitted path is closed by construction, not by disclosure.\n\nWORK SIDE. Phase 1 = 1.0715234375*(S_ops+2^60) = 2^126.340503, headroom 2^112.48, meter early-halt 0.001047. Allowances carry their true multiplicities and executed prices: fresh trail [a]P0+[b]T at the executed scalar-mult chain (1045.75 units) x S_ops/theta = 2^62.15 trials; report lookup + sort share + transfer at 768 instructions per report x 2^62.15 reports; completion of one capped trail (25*2^64*1.0715234375) x the 2^20 open trails; 8 matches x 2 trails x the cap for re-walks; the canonicalisation repair above; verification and output. Total 5.182e+26 units = 2^88.74, i.e. -37.60 of the phase-1 base, charged inside the claim; the claim covers base + allowances. The score is 631703/5000 in lowest terms (gcd 1). Peak memory is below 2^72 bytes. H1 remains a disclosed heuristic (random-mapping law, 1.5% slowdown allowance), and the toy measurement is the only empirical support for it; the work bound does not depend on H1. The v33 esc2_events statistic stays deleted: its counter was never incremented, so its zero was not evidence.",
+   "score": {
+    "numerator": "631703",
+    "denominator": "5000"
+   },
+   "evidence": [
+    "proof.md",
+    "schedule.py",
+    "repair.py",
+    "span_asm.py",
+    "experiment.py",
+    "public-note.md",
+    "completeness.py",
+    "completeness.txt",
+    "regen.py",
+    "regen-report.txt",
+    "emulate_block.py",
+    "emulated-block.txt"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "glv-class-rho-fastcanon-checks",
+   "source": "experiment.py",
+   "purpose": "Part A: production algebra on BLS12-381 G1 (GLV pair, orbit size 6, |y| key, canonical member, section-1.1 truncated-product index against the exact rule on 30,000 random + 10,000 adversarial near-tie inputs, twisted step, doubling class map, coefficient tracking, forced-merge recovery), reporting the random and adversarial fallback populations separately. Part B: the scaled pipeline on a toy curve at n=880, run in 8 sub-batches of 110 with a per-batch dump and a 240 s declared budget, so a slow runner still returns a parsed partial result (per-batch wall time is recorded in regen-report.txt). The cost block recomputes the attack-level success terms, the measured-rate abandonment coverage debit and the true-multiplicity allowances.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q26",
+       "q30",
+       "q34"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048,
+       16384
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 600
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "batch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+     },
+     "resume_batches": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q26",
+     "trials": 880,
+     "R": 256,
+     "dp_bits": 4,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 240,
+     "pipeline": true,
+     "batch": 110
+    }
+   ]
+  }
+ ]
+}
