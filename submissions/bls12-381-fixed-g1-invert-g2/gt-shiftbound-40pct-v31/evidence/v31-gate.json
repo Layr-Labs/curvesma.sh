@@ -1,0 +1,40 @@
+{
+ "age_max_over_theta": 16.0,
+ "age_mean_over_theta": 3.9387824071838944,
+ "arm": 1,
+ "budget": 32,
+ "cap": 32,
+ "delta_residual_all_log2": -168.24946295197088,
+ "delta_residual_report_log2": -182.0165101789893,
+ "gate_p_per_merge": 0.9999758605706561,
+ "merges_all": 41426,
+ "merges_report": 11583,
+ "n_trails": 246000,
+ "p_recover": 0.5791,
+ "shift_hist": {
+  "0": 5532,
+  "1": 2209,
+  "10": 3154,
+  "11": 2198,
+  "2": 3526,
+  "3": 3817,
+  "4": 3913,
+  "5": 2051,
+  "6": 5055,
+  "7": 2255,
+  "8": 3610,
+  "9": 4105
+ },
+ "source": "extract of the v30 arm-1 run produced by v30_measure.py (shipped); full per-arm histograms were shipped in v30 and omitted here for size",
+ "survival_gt_k_theta": {
+  "1": 28028,
+  "16": 0,
+  "2": 20504,
+  "4": 13930,
+  "8": 6902
+ },
+ "theta": 2,
+ "trials": 20000,
+ "unverified": 1,
+ "verified": 41425
+}

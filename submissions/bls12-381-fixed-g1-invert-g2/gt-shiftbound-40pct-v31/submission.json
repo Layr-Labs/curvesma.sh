@@ -1,0 +1,47 @@
+{
+ "version": 1,
+ "title": "Squared-step class-merge rho, fixed-G1 pairing inversion: measured 128-theta tail + fitted residual, in-object 128 gate, cumulative abandoned work, production-width storage",
+ "experiments": [],
+ "claims": [
+  {
+   "score": {
+    "numerator": "1266053",
+    "denominator": "10000"
+   },
+   "statement": "For the fixed nonidentity P in BLS12-381 G1 supplied by the challenge and uniform z in the order-r subgroup of GT (identity included), the disclosed classical algorithm returns Q in G2 with the pinned reduced pairing e(P,Q)=z with success floor 0.39, and its complete classical work is at most 2^126.605236472 dense-Fp12-multiplication equivalents at the protected C=20000, summed over all processors with no amortisation. CLAIM 126.6053 = 1266053/10000 (reduced, gcd 1), the least 4-decimal log2 >= the exact total. THE FOUR v30 FLAWS ARE REPAIRED IN THE ARITHMETIC. (1) RETENTION TAIL, ROUTE (b), NO ASSERTED ENVELOPE. The merge simulator is re-run with the trail cap raised from the 16-theta fixture to 128*theta (the production cap) and the toy budget from 32 to 256 steps, so raw merge ages are sampled on the whole production range and integrated directly: 24000 trials, 3173802 merges, max age 128.0 theta; the measured support integral is 2^-13.03. The only unobserved window is (127.5 theta, 128 theta]; there the residual uses an exponential whose rate is FITTED to the raw tail decades by least squares, kappa = 0.069587 +/- 0.002250 per theta with max |residual| 7.216 bits, anchor a rule-of-three upper bound, and closed-form integration to the cap: 2^-8.31. The fixture law is nevertheless NOT used as a production envelope (785 toy classes): the production retention miss is derived from pair-uniformity on the 128-theta cap, where the younger trail's age has density 2(L-u)/L^2 and the report distance is D ~ Exp(theta) with E[D]=theta, so Markov in D gives delta <= 2/L = 2^-6 exactly (the exact-exponential law is 2^-13.0000, shipped). v31 charges delta = 2^-6.000000, which is 155 bits LARGER than v30's fixture integral: strictly more conservative, and it extrapolates nothing. (2) THE GATE IS IN THE SHIPPED LOOP. v31_protocol.run_protocol is the only launch path in the package (ledger31 imports INFLIGHT_CAP and HALT_RULE from it). The three quoted rules are: RULE 1 cadence 'a launch is authorized when credit = completed aggregate steps not yet consumed >= LAUNCH_PERIOD'; RULE 2 bootstrap 'if NO trail is live, a launch is authorized immediately and consumes no credit' (this is the case the reviewer named: a trail reporting before theta cannot deadlock the schedule); RULE 3 gate 'if a launch is authorized but len(inflight) == INFLIGHT_CAP, the launch is DEFERRED: the credit is retained and the request is retried at the next completion event'. The trace quotes itself: 't=141 inflight=127->128 launch#128 ACCEPT completed=8156 credit=7148 (first time in-flight reaches 128)' and 't=142 inflight=128 completed=8284 credit=7268 launch#129 DENIED gate: len(inflight)==128 (deferred=1, credit retained)'. Patching the shipped constant to 129 makes the same entry point reach 129 live trails, and removing RULE 3 reaches 1023, so the bound is enforced by the object. reserve = 128*128*theta = 19807040628566084398385987584 steps (2^94.00). (3) CUMULATIVE ABANDONED WORK IS A ROW. abandon_row = n_inflight*cap + n_launches*P(collide inside cap)*cap, priced at the max single-step price = 2^94.769251, where the pre-halt population over 62806765694859 launches contributes 2^54.56 steps; W = w_effective + abandon_row + aux + pairing + overflow + stop_loss. Control (c) shows the row rising 1x/2x/4x/8x with earlier halts while w_effective holds. (4) PAIRING AND STORAGE AT PRODUCTION WIDTH. storage31() charges the 128 LIVE GT states (128 trails x 656 B = 83968 B), the fixed-P pairing base (13056 B), the returned G2 point (192 B), the pinned target (576 B) and the deterministic record cap: peak 2^53.643 B. pairing_production_width() audits every field: record count 125613531389718 needs 47 bits and is held as a 2-limb multiword, byte offset 54 bits < 64 with 2^10.4 headroom under SIZE_MAX, class keys 6 x u64 with no truncation before mixing, refs are (valid:u1, shard:u32, slot:u32) and are NEVER identified by a zero word (the g2-invert v36 aliasing mode), and records are sharded 4294967296 per shard. pairing_row charges the pinned check (2^15.676142). (5) MAX-PRICE CEILING KEPT: every step at c_max = 1.704385, w_effective = 2^126.605236, mean-price diagnostic 2^126.274568 undercounts by 0.330669 bits and is never summed. (6) TWELVE-SHIFT GATE KEPT: arm-1 recovery frequency 0.579100 against the independent census 0.586783. TOTAL IS ONE SUM OF SIX DISPLAYED ROWS: w_effective 2^126.605236 + abandon_row 2^94.769251 + aux_sum 2^56.524626 + pairing_row 2^15.676142 + overflow_row 2^0 + stop_loss_row 2^95.769251 = 2^126.605236472. The gate refused 3474 launch requests over the shipped trace; the step mix is f = 14566/41929 and the retention-adjusted stop loss is 2*reserve/S = 2^-30.84 of success. regen_v31.py emits every literal; audit_v31.py sweeps them and runs four planted controls: truncating the tail decades MOVES the fitted kappa, patching the shipped cap to 129 EXCEEDS 128, earlier halts RAISE the abandoned-work row, and a 1-ulp ledger change MOVES the claim. RANK DISCLOSED: 126.6053 is behind the live board minimum 125.82 and this account's valid 125.838.",
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "public-note.md",
+    "classkey.py",
+    "constants.py",
+    "ledger.py",
+    "ledger26.py",
+    "ledger27.py",
+    "ledger30.py",
+    "ledger31.py",
+    "v31_tail.py",
+    "v31_tailfit.py",
+    "v31_protocol.py",
+    "audit_v31.py",
+    "regen_v31.py",
+    "routing.py",
+    "tower.py",
+    "factor_r.py",
+    "toy_census.py",
+    "evidence/v30-age-law.json",
+    "evidence/v30-moments.json",
+    "evidence/v30-stopping.json",
+    "evidence/v30-census.json",
+    "evidence/v31-tail-raw.json",
+    "evidence/v31-protocol.json",
+    "evidence/v31-claim.json",
+    "evidence/v31-literals.json",
+    "evidence/v31-ledger.json",
+    "evidence/v31-audit.json",
+    "evidence/v31-gate.json",
+    "evidence/v31-stop.json"
+   ]
+  }
+ ]
+}
