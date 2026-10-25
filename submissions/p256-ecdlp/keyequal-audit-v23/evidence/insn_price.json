@@ -1,0 +1,43 @@
+{
+ "build": {
+  "cmd": "clang -O2 -fPIC -arch arm64 -c p256_fe_v15.c -o p256_fe_v15.o",
+  "disasm": "objdump -d --no-show-raw-insn p256_fe_v15.o",
+  "host": "arm64-apple-darwin",
+  "source": "p256_fe_v15.c (v10m field kernels verbatim + counted wrappers)"
+ },
+ "consumed_by": "ledger_v15.py rows; every 5-digit literal here is owned by this file",
+ "dynamic_trace": {
+  "affine_add_batched_fe_mul": 3,
+  "affine_add_with_inversion_fe_mul": 388,
+  "inversions": 1
+ },
+ "functions": {
+  "_fe_add_obj": {
+   "addr": 592,
+   "end": 700,
+   "insn_lines": 27,
+   "span_bytes": 108
+  },
+  "_fe_mul_obj": {
+   "addr": 0,
+   "end": 592,
+   "insn_lines": 148,
+   "span_bytes": 592
+  },
+  "_fe_sub_obj": {
+   "addr": 700,
+   "end": 808,
+   "insn_lines": 27,
+   "span_bytes": 108
+  }
+ },
+ "prices_ir": {
+  "add_muls": 3,
+  "affine_add_row": 606,
+  "fe_add": 27,
+  "fe_mul": 148,
+  "fe_sub": 27,
+  "inversion_muls": 385
+ },
+ "trace_reading": "affine_add_batched_fe_mul = 3 proves the hot path executes fe_mul three times per addition when the inverse is batch-supplied; affine_add_with_inversion_fe_mul = 388 = 3 + 385 confirms the chain length used by the inversion row"
+}

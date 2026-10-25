@@ -1,0 +1,94 @@
+{
+ "R": 1048576,
+ "alpha_convention": "one-sided 0.025 tail (the v16-v18 convention); switching to a 0.05 tail would raise the bound and is deliberately NOT done",
+ "birthday_collisions": 126.79999244213037,
+ "classes": 221983420118815,
+ "collision_ratio": 1.143533191188287,
+ "collisions": 145,
+ "coverage_flag": "OK",
+ "coverage_meets_16": true,
+ "coverage_ok": true,
+ "cp95_lower": 0.40412003342497727,
+ "cp_trajectory": [
+  {
+   "cp025": 0.388644,
+   "k": 49,
+   "n": 100,
+   "rate": 0.49
+  },
+  {
+   "cp025": 0.399259,
+   "k": 59,
+   "n": 120,
+   "rate": 0.4917
+  },
+  {
+   "cp025": 0.41439,
+   "k": 70,
+   "n": 140,
+   "rate": 0.5
+  },
+  {
+   "cp025": 0.42004,
+   "k": 80,
+   "n": 160,
+   "rate": 0.5
+  },
+  {
+   "cp025": 0.424712,
+   "k": 90,
+   "n": 180,
+   "rate": 0.5
+  },
+  {
+   "cp025": 0.40412,
+   "k": 95,
+   "n": 200,
+   "rate": 0.475
+  }
+ ],
+ "elapsed_s": 237.0,
+ "extension_note": "trials 0..99 are byte-identical replays of the shipped v18 100-trial cell (same seed rule, same q); 100..199 are fresh. Prefix is checked against the shipped JSON in prefix_check.json.",
+ "identity_breaks": 0,
+ "label": "R2p20_W1_16p",
+ "lambda": 0.633999962210652,
+ "measured_success": 0.475,
+ "meets_floor": true,
+ "notes": "production R, W=1 (conservative within-trail fraction), 200 trials (v18's 100 shipped trials + 100 appended, same seed rule)",
+ "outcome_len": 200,
+ "outcome_ones": 95,
+ "outcomes": "01011010011001001101001110010010110110000000101111001010110011101110001111000010011000010001011111101000110011110100011011000111110011001001110100001010101110011000110101010011010100001111000000100000",
+ "periods_covered": 16.0,
+ "prefix_check": {
+  "PASS": true,
+  "collisions_match": true,
+  "cp95_match": true,
+  "prefix_collisions": 71,
+  "prefix_cp95_recomputed": 0.388644165161638,
+  "prefix_successes": 49,
+  "prefix_trials": 100,
+  "prefix_useful": 71,
+  "shipped_collisions": 71,
+  "shipped_cp95": 0.388644165161638,
+  "shipped_successes": 49,
+  "shipped_trials": 100,
+  "successes_match": true,
+  "trials_match": true
+ },
+ "q": 443966840237629,
+ "q_bits": 49,
+ "seed_rule": "per trial: secret and per-walker seeds from Random((20251024<<26) ^ ti*golden ^ R<<3 ^ W<<50); fresh secret every trial",
+ "steps_per_walker": 16777216,
+ "trials": 200,
+ "trials_ledger_bytes": 30588,
+ "trials_ledger_sha256": "764032d94fed3c2a578371f0c918a01dfd1a31ca0a5c3a2c448c20e42d4a5d14",
+ "trials_ledger_sha256_digest": null,
+ "trials_origin": "100 shipped v18 trials (evidence/ladder_R2p20_W1_16p.json at ticket eab1bb1f) + 100 appended in the same cell, same q, same seed rule; prefix 0..99 reproduced exactly (49 wins, 71 collisions, CP-95 0.388644165161638)",
+ "trivial_collisions": 0,
+ "useful_per_collision": 1.0,
+ "useful_relations": 145,
+ "verified_successes": 95,
+ "visits_per_trial": 16777216,
+ "visits_total": 3355443200,
+ "walkers": 1
+}

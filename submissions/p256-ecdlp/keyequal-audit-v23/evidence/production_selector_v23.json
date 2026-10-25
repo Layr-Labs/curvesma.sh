@@ -1,0 +1,171 @@
+{
+ "R": 1048576,
+ "armC_fix": {
+  "R": 1048576,
+  "collisions_total": 1222,
+  "dispersion_index_variance_over_mean": 0.9815409880892321,
+  "dof": 2,
+  "hist_0_1_2plus": [
+   1117,
+   692,
+   239
+  ],
+  "lambda_expected": 0.63336181640625,
+  "mean_over_lambda": 0.9420834537920401,
+  "mode": "fix",
+  "observed_mean": 0.5966796875,
+  "poisson_0_1_2plus": [
+   1087.087,
+   688.52,
+   272.393
+  ],
+  "poisson_chi2": 4.9344109036096615,
+  "steps_per_trail": 1153,
+  "trails": 2048,
+  "wall_seconds": 0.2
+ },
+ "armC_prod": {
+  "R": 1048576,
+  "collisions_total": 1319,
+  "dispersion_index_variance_over_mean": 1.0130096633583865,
+  "dof": 2,
+  "hist_0_1_2plus": [
+   1081,
+   682,
+   285
+  ],
+  "lambda_expected": 0.63336181640625,
+  "mean_over_lambda": 1.0168642189457453,
+  "mode": "prod",
+  "observed_mean": 0.64404296875,
+  "poisson_0_1_2plus": [
+   1087.087,
+   688.52,
+   272.393
+  ],
+  "poisson_chi2": 0.6792868429368805,
+  "steps_per_trail": 1153,
+  "trails": 2048,
+  "wall_seconds": 11.42
+ },
+ "armP_fix": {
+  "chi2_includes_empty_cells": true,
+  "collision_pairs_total_measured": 134227807.0,
+  "cross_trail_row_collisions_expected": 117440512.0,
+  "cross_trail_row_collisions_measured": 117447469.0,
+  "identity_breaks": 0,
+  "lag1_chi2": 65505.212447534424,
+  "lag1_dof": 65280,
+  "lag1_z": 0.6232859248293875,
+  "mode": "fix",
+  "occupancy": {
+   "cells": 1048576,
+   "chi2": 1049835.875,
+   "chi2_z": 0.870677429554837,
+   "distinct_cells": 1048576,
+   "dof": 1048575,
+   "entropy_nats": 13.83130046942209,
+   "entropy_over_log_cells": 0.997717429814022,
+   "max_load": 38,
+   "mean_per_cell": 16.0
+  },
+  "phase_matched_row_repeats": 15,
+  "phase_repeat_schedule": "S = 2 x R steps per walker: every phase is covered twice, so the detector is not vacuous by schedule",
+  "row_hazard_per_pair_expected": 9.5367431640625e-07,
+  "row_hazard_per_pair_measured": 8.345145090545365e-07,
+  "steps_per_walker": 2097152,
+  "visits": 16777216,
+  "walkers": 8,
+  "wall_seconds": 3.85,
+  "within_walker_pairs_measured": 16780338
+ },
+ "armP_prod": {
+  "chi2_includes_empty_cells": true,
+  "collision_pairs_total_measured": 134218229.0,
+  "cross_trail_row_collisions_expected": 117440512.0,
+  "cross_trail_row_collisions_measured": 117441132.0,
+  "identity_breaks": 0,
+  "lag1_chi2": 64566.760056205836,
+  "lag1_dof": 65280,
+  "lag1_z": -1.9739247224559142,
+  "mode": "prod",
+  "occupancy": {
+   "cells": 1048576,
+   "chi2": 1048638.625,
+   "chi2_z": 0.04393524453687043,
+   "distinct_cells": 1048576,
+   "dof": 1048575,
+   "entropy_nats": 13.831341002930603,
+   "entropy_over_log_cells": 0.9977203536886081,
+   "max_load": 38,
+   "mean_per_cell": 16.0
+  },
+  "phase_matched_row_repeats": 6,
+  "phase_repeat_schedule": "S = 2 x R steps per walker: every phase is covered twice, so the detector is not vacuous by schedule",
+  "row_hazard_per_pair_expected": 9.5367431640625e-07,
+  "row_hazard_per_pair_measured": 8.344694819586875e-07,
+  "steps_per_walker": 2097152,
+  "visits": 16777216,
+  "walkers": 8,
+  "wall_seconds": 80.53,
+  "within_walker_pairs_measured": 16777097
+ },
+ "function": "row(t) = (x(T_t) ^ t*2654435761 ^ trail*7919) mod 2^20 ; T_{t+1} = T_t + [a_row]P + [b_row]Q ; Q = [x]P",
+ "hazard_match": {
+  "inputs": {
+   "entropy_over_log_cells": {
+    "fixture": 0.997717429814022,
+    "production": 0.9977203536886081
+   },
+   "lag1_chi2_z": {
+    "fixture": 0.6232859248293875,
+    "production": -1.9739247224559142
+   },
+   "max_load": {
+    "fixture": 38,
+    "production": 38
+   },
+   "occupancy_chi2_z": {
+    "fixture": 0.870677429554837,
+    "production": 0.04393524453687043
+   },
+   "per_step_row_hazard": {
+    "basis": "both measured via occupancy chi-square below",
+    "fixture": 9.5367431640625e-07,
+    "match": true,
+    "production": 9.5367431640625e-07
+   },
+   "per_trail_collision_mean": {
+    "fixture": 0.5966796875,
+    "poisson_expected": 0.63336181640625,
+    "production": 0.64404296875
+   },
+   "phase_matched_row_repeats": {
+    "fixture": 15,
+    "production": 6
+   },
+   "poisson_chi2": {
+    "fixture": 4.9344109036096615,
+    "production": 0.6792868429368805
+   }
+  },
+  "period_law": "R | 2^64 and x is a field integer, so the selector is exactly 2^20-periodic in t for fixed S: phase = t mod 2^20 in BOTH functions",
+  "verdict": null
+ },
+ "procs": 8,
+ "seed_rule": "arm P walker seed c,d from Random(99); arm C trail seed c,d from Random(4242); single secret per mode (the protocol attacks one Q); mode=fix repeats the identical walk and seeds in Z/n with the representative-integer selector",
+ "selftest": {
+  "curve_points_ok": true,
+  "nG_is_O": true,
+  "steps_checked": 24,
+  "table_build_seconds": 86.6,
+  "x_mismatches": 0
+ },
+ "table": {
+  "build_seconds": 86.81,
+  "entries": 1048576,
+  "note": "one public key, as the protocol attacks one Q",
+  "secret_hex32": "5f3c9e21d4b7a08c6e1d2f4a9b3c7e08d1f6a2b5c8e0d3f7a1b4c6e9d2f5a8b1"
+ },
+ "wall_seconds_total": 269.8
+}

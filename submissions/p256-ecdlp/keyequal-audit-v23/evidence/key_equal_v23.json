@@ -1,0 +1,365 @@
+{
+ "bucket_ladder": [
+  {
+   "R": 256,
+   "S": 3,
+   "T": 204,
+   "W": 68,
+   "bucket_hazard_per_pair": 0.003919508033098297,
+   "bucket_pairs": 121736,
+   "comps": 121736,
+   "conditional_key_given_bucket": 0.007450548728395873,
+   "conditional_model_R_over_r": 0.007823243590135379,
+   "cp95_lower": 0.4272576358558867,
+   "hits": 907,
+   "key_pairs_per_pair": 2.9202485591937926e-05,
+   "lambda_expected": 0.6327659444427467,
+   "mean": 0.6046666666666667,
+   "moments": {
+    "E_X": 0.6046666666666667,
+    "E_XX1": 0.37066666666666664,
+    "dispersion_variance_over_mean": 1.0090159334447881,
+    "factorial_ratio_EXX1_over_EX2": 1.0137981083062155,
+    "second_moment_ratio_EX2_over_EX2": 2.6676018569280457,
+    "var": 0.6101183010896153
+   },
+   "nontrivial": 907,
+   "opposite_point": 471,
+   "rate": 0.45266666666666666,
+   "recovered": 907,
+   "same_point": 436,
+   "steps": 305997,
+   "trials": 1500,
+   "trivial": 0,
+   "wins": 679,
+   "yield_nontrivial": 1.0
+  },
+  {
+   "R": 4096,
+   "S": 3,
+   "T": 204,
+   "W": 68,
+   "bucket_hazard_per_pair": 0.0002562542258282623,
+   "bucket_pairs": 7959,
+   "comps": 7959,
+   "conditional_key_given_bucket": 0.11659756250785275,
+   "conditional_model_R_over_r": 0.12517189744216606,
+   "cp95_lower": 0.44714273554842926,
+   "hits": 928,
+   "key_pairs_per_pair": 2.987861811391223e-05,
+   "lambda_expected": 0.6327659444427467,
+   "mean": 0.6186666666666667,
+   "moments": {
+    "E_X": 0.6186666666666667,
+    "E_XX1": 0.3506666666666667,
+    "dispersion_variance_over_mean": 0.9487761956246693,
+    "factorial_ratio_EXX1_over_EX2": 0.9161805142687276,
+    "second_moment_ratio_EX2_over_EX2": 2.532559824613555,
+    "var": 0.5869762063597954
+   },
+   "nontrivial": 928,
+   "opposite_point": 497,
+   "rate": 0.4726666666666667,
+   "recovered": 928,
+   "same_point": 431,
+   "steps": 305997,
+   "trials": 1500,
+   "trivial": 0,
+   "wins": 709,
+   "yield_nontrivial": 1.0
+  },
+  {
+   "R": 2048,
+   "S": 6,
+   "T": 204,
+   "W": 34,
+   "bucket_hazard_per_pair": 0.0005020444959593032,
+   "bucket_pairs": 15593,
+   "comps": 15593,
+   "conditional_key_given_bucket": 0.06047585455011864,
+   "conditional_model_R_over_r": 0.06258594872108303,
+   "cp95_lower": 0.43520678212835473,
+   "hits": 943,
+   "key_pairs_per_pair": 3.036156991532245e-05,
+   "lambda_expected": 0.6327659444427467,
+   "mean": 0.6286666666666667,
+   "moments": {
+    "E_X": 0.6286666666666667,
+    "E_XX1": 0.432,
+    "dispersion_variance_over_mean": 1.0592080828717907,
+    "factorial_ratio_EXX1_over_EX2": 1.093057175211892,
+    "second_moment_ratio_EX2_over_EX2": 2.6837252558057414,
+    "var": 0.6658888147653992
+   },
+   "nontrivial": 943,
+   "opposite_point": 477,
+   "rate": 0.46066666666666667,
+   "recovered": 943,
+   "same_point": 466,
+   "steps": 305995,
+   "trials": 1500,
+   "trivial": 0,
+   "wins": 691,
+   "yield_nontrivial": 1.0
+  }
+ ],
+ "carrier": {
+  "R": 1024,
+  "S": 3,
+  "T": 204,
+  "W": 68,
+  "bucket_hazard_per_pair": 0.000987894008177984,
+  "bucket_pairs": 122732,
+  "comps": 122732,
+  "conditional_key_given_bucket": 0.0289166639507219,
+  "conditional_model_R_over_r": 0.031292974360541514,
+  "cp95_lower": 0.43502933314852493,
+  "hits": 3549,
+  "key_pairs_per_pair": 2.856659905341447e-05,
+  "lambda_expected": 0.6327659444427467,
+  "mean": 0.5915,
+  "moments": {
+   "E_X": 0.5915,
+   "E_XX1": 0.3466666666666667,
+   "dispersion_variance_over_mean": 0.9947463771434434,
+   "factorial_ratio_EXX1_over_EX2": 0.9908378462900862,
+   "second_moment_ratio_EX2_over_EX2": 2.681454921522546,
+   "var": 0.5883924820803468
+  },
+  "nontrivial": 3549,
+  "opposite_point": 1842,
+  "poisson_fit": {
+   "hist_0_1_2_3plus": [
+    3314,
+    1972,
+    589,
+    125
+   ],
+   "poisson_chi2_3dof": 17.037093431166003,
+   "poisson_expected": [
+    3186.724,
+    2016.451,
+    637.971,
+    158.854
+   ]
+  },
+  "rate": 0.44766666666666666,
+  "recovered": 3549,
+  "same_point": 1707,
+  "steps": 1223980,
+  "trials": 6000,
+  "trivial": 0,
+  "wins": 2686,
+  "yield_nontrivial": 1.0
+ },
+ "carrier_cells": [
+  {
+   "R": 1024,
+   "S": 3,
+   "T": 204,
+   "W": 68,
+   "bucket_hazard_per_pair": 0.000987894008177984,
+   "bucket_pairs": 122732,
+   "comps": 122732,
+   "conditional_key_given_bucket": 0.0289166639507219,
+   "conditional_model_R_over_r": 0.031292974360541514,
+   "cp95_lower": 0.43502933314852493,
+   "hits": 3549,
+   "key_pairs_per_pair": 2.856659905341447e-05,
+   "lambda_expected": 0.6327659444427467,
+   "mean": 0.5915,
+   "moments": {
+    "E_X": 0.5915,
+    "E_XX1": 0.3466666666666667,
+    "dispersion_variance_over_mean": 0.9947463771434434,
+    "factorial_ratio_EXX1_over_EX2": 0.9908378462900862,
+    "second_moment_ratio_EX2_over_EX2": 2.681454921522546,
+    "var": 0.5883924820803468
+   },
+   "nontrivial": 3549,
+   "opposite_point": 1842,
+   "poisson_fit": {
+    "hist_0_1_2_3plus": [
+     3314,
+     1972,
+     589,
+     125
+    ],
+    "poisson_chi2_3dof": 17.037093431166003,
+    "poisson_expected": [
+     3186.724,
+     2016.451,
+     637.971,
+     158.854
+    ]
+   },
+   "rate": 0.44766666666666666,
+   "recovered": 3549,
+   "same_point": 1707,
+   "steps": 1223980,
+   "trials": 6000,
+   "trivial": 0,
+   "wins": 2686,
+   "yield_nontrivial": 1.0
+  },
+  {
+   "R": 1024,
+   "S": 51,
+   "T": 204,
+   "W": 4,
+   "bucket_hazard_per_pair": 0.0009871212852957275,
+   "bucket_pairs": 122636,
+   "comps": 122636,
+   "conditional_key_given_bucket": 0.03010535242506279,
+   "conditional_model_R_over_r": 0.031292974360541514,
+   "cp95_lower": 0.4489902813259019,
+   "hits": 3692,
+   "key_pairs_per_pair": 2.9717634180108825e-05,
+   "lambda_expected": 0.6327659444427467,
+   "mean": 0.6153333333333333,
+   "moments": {
+    "E_X": 0.6153333333333333,
+    "E_XX1": 0.373,
+    "dispersion_variance_over_mean": 0.9910073491844162,
+    "factorial_ratio_EXX1_over_EX2": 0.9851173043763038,
+    "second_moment_ratio_EX2_over_EX2": 2.6102527323286333,
+    "var": 0.6097998555314774
+   },
+   "nontrivial": 3692,
+   "opposite_point": 1965,
+   "poisson_fit": {
+    "hist_0_1_2_3plus": [
+     3230,
+     2013,
+     621,
+     136
+    ],
+    "poisson_chi2_3dof": 4.333101378118354,
+    "poisson_expected": [
+     3186.724,
+     2016.451,
+     637.971,
+     158.854
+    ]
+   },
+   "rate": 0.46166666666666667,
+   "recovered": 3692,
+   "same_point": 1727,
+   "steps": 1223481,
+   "trials": 6000,
+   "trivial": 0,
+   "wins": 2770,
+   "yield_nontrivial": 1.0
+  },
+  {
+   "R": 1024,
+   "S": 17,
+   "T": 204,
+   "W": 12,
+   "bucket_hazard_per_pair": 0.0009917898193760263,
+   "bucket_pairs": 123216,
+   "comps": 123216,
+   "conditional_key_given_bucket": 0.0292088689780548,
+   "conditional_model_R_over_r": 0.031292974360541514,
+   "cp95_lower": 0.44832524688016606,
+   "hits": 3599,
+   "key_pairs_per_pair": 2.8969058887922984e-05,
+   "lambda_expected": 0.6327659444427467,
+   "mean": 0.5998333333333333,
+   "moments": {
+    "E_X": 0.5998333333333333,
+    "E_XX1": 0.34,
+    "dispersion_variance_over_mean": 0.9671519764732485,
+    "factorial_ratio_EXX1_over_EX2": 0.9449693545048674,
+    "second_moment_ratio_EX2_over_EX2": 2.6120991127710527,
+    "var": 0.5801299938878702
+   },
+   "nontrivial": 3599,
+   "opposite_point": 1872,
+   "poisson_fit": {
+    "hist_0_1_2_3plus": [
+     3234,
+     2089,
+     546,
+     131
+    ],
+    "poisson_chi2_3dof": 21.454340316066677,
+    "poisson_expected": [
+     3186.724,
+     2016.451,
+     637.971,
+     158.854
+    ]
+   },
+   "rate": 0.461,
+   "recovered": 3599,
+   "same_point": 1727,
+   "steps": 1223855,
+   "trials": 6000,
+   "trivial": 0,
+   "wins": 2766,
+   "yield_nontrivial": 1.0
+  }
+ ],
+ "curve": {
+  "G": [
+   2,
+   40463
+  ],
+  "a": -3,
+  "b": 76,
+  "form": "y^2 = x^3 - 3x + 76 over F_65519, prime order",
+  "n": 65447,
+  "p": 65519
+ },
+ "planted": {
+  "same_bucket_different_key": {
+   "comparisons": 2,
+   "hit": 0,
+   "keys": [
+    7873,
+    8129
+   ],
+   "old_row_predicate_would_count": true,
+   "same_bucket": true,
+   "same_bucket_pairs": 2
+  },
+  "same_key_pair": {
+   "bucket": 193,
+   "comparisons": 1,
+   "hit": "same_point",
+   "recovered": true,
+   "same_bucket_pairs": 1
+  },
+  "verdict": "PASS: a planted same-x pair with different coefficients fires the key predicate and recovers x through the probe path; a same-bucket different-key pair is compared but NOT counted, while the old row predicate counts it"
+ },
+ "predicate": "bucket = key & (R-1); probe compares the canonical x (32 B); collision iff key equality inside the bucket",
+ "production": {
+  "E_X": 0.6328782969851414,
+  "E_X2": 1.0334132357799544,
+  "E_XX1": 0.4005349387948129,
+  "charged_success": 0.43502933314852493,
+  "charged_success_from_carrier_cp95": 0.43502933314852493,
+  "factorial_ratio_model": 1.0,
+  "formula": "P(X>=1) >= E[X]^2/E[X^2] (Paley-Zygmund) ; Poisson with measured factorial moments ; CP-95 lower from seeded key-collision trials",
+  "lambda": 0.6328782969851414,
+  "paley_zygmund_bound": 0.38758448694777425,
+  "poisson_success": 0.468938952330089,
+  "records_log2": 127.67,
+  "sign_classes_log2": 255,
+  "union_bound_upper": 0.6328782969851414
+ },
+ "r_sign_classes": 32723,
+ "residual_conjecture": "r = 32759 measured here vs r = 2^255 at production. The measured law is the uniform-key-within-bucket law (key hazard 1/r, bucket hazard 1/R, conditional R/r). Extrapolating it to 2^255 sign classes over 2^107.67-step trails is the class-scale equidistribution conjecture, disclosed and not claimed.",
+ "selector": "row(t) = (x(T_t) ^ t*2654435761 ^ trail*7919) mod R ; T_{t+1} = T_t + [a_row]P + [b_row]Q ; Q = [x]P",
+ "selftest": {
+  "base_point_on_curve": true,
+  "curve_order_counted": 65447,
+  "nG_is_O": true,
+  "n_is_prime": true,
+  "point_count_seconds": 0.093,
+  "walk_steps_checked": 24,
+  "x_mismatches": 0
+ },
+ "wall_seconds": 17.87
+}

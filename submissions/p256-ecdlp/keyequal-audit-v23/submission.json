@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v23: key-equality hazard measured through the shipped probe path, moment-based success CP 0.435029, 128-bit locator access priced at 240 Ir/record; claim 129.0438 = 645219/5000",
+ "claims": [
+  {
+   "score": {
+    "numerator": "645219",
+    "denominator": "5000"
+   },
+   "statement": "p256-ecdlp v23. Claim 129.0438 = 645219/5000 target-group-operation equivalents for recovering x from Q=[x]P on NIST P-256 (machine-copied from evidence/claim_v23.json: log2_work 129.0437061946). WHAT THIS TREE FIXES over the rejected v22 tree (tickets 57eef28 and bf2faa9), flaw by flaw, with the verdict-v22 text governing. (1) ROW OCCUPANCY IS NOT KEY EQUALITY: v22 measured 20-bit selector-row occupancy; the production collision predicate is bucket probe then 32-byte canonical-key equality, and at R=2^20, r=2^255 same-bucket pairs outnumber key-equal pairs by r/R=2^235. v23 measures the ACTUAL predicate on a real prime-order curve of the same shape whose group is small enough for complete x-coordinate keys to collide: y^2=x^3-3x+76 over F_65519, #E=65447 prime (counted, not cited), G=(2,40463), r=(n-1)/2=32759 sign classes; same walk T_{t+1}=T_t+[a_row]P+[b_row]Q with Q=[x]P, same selector row=(x(T_t) ^ t*2654435761 ^ trail*7919) mod R, same 32-byte canonical-x record, same bucket=key&(R-1) probe with full-key compare (experiments/key_equal_v23.py::probe_insert). Three launch mixes (68x3, 4x51, 12x17 walkers x steps), 6000 seeded trials each at the production key load lambda=C(204,2)/32759=0.6328, plus a bucket-scale ladder R=256/2048/4096. MEASURED: key hazard per pair 2.857e-5 vs 1/r=3.056e-5 (ratio 0.935); bucket hazard 9.924e-4 vs 1/R=9.766e-4 (ratio 1.016); conditional P(key-equal|same bucket) 0.028917 vs model R/r 0.031293 (and 0.007451/0.060476/0.116598 vs 0.007814/0.062513/0.125048 at R=256/2048/4096); per-trial key collisions mean 0.5915 vs lambda 0.6328 with 3-dof Poisson chi-square 1.04 (critical 7.815); measured factorial ratio E[X(X-1)]/E[X]^2 0.9908 (0.9851, 0.945 in the other cells). The 6.5% deficit of the measured key hazard against uniform is REPORTED AND CHARGED, not explained away. q is re-measured on the key predicate: 3549/3549 nontrivial key-equal pairs recover x through the probe path (yield 1.0), of which 1707 same-point (T=T', difference formula) and 1842 opposite-point (T=-T', sum formula), so a difference-only replay would fail on 52% of collisions; the replay reconstructs the exact point from the identity and applies the matching relation, and there are zero trivial duplicates (distinct launches c+d*x, no duplicate starts). (2) CARDINALITY IS NOT A UNION BOUND: no row or state count is used as an event probability. E[X]=N(N-1)/(2r) with N=2^127.67 and r=2^255 is 0.632878; E[X(X-1)]=E[X]^2=0.400535; E[X^2]=1.033413. Paley-Zygmund P(X>=1)>=E[X]^2/E[X^2]=0.387584 is reported as the distribution-free floor and is NOT used as the charge; the Poisson value 1-exp(-E[X])=0.468939 is reported; the union-bound upper P(X>=1)<=E[X]=0.632878 is labelled upper only; the CHARGED success is the minimum Clopper-Pearson 95% lower bound over the three seeded key-collision cells: 0.435029 (2686/6000), 0.448990 (2770/6000), 0.448325 (2766/6000), charge 0.435029 >= 0.39, attempts 1, log2 attempts 0. The measured factorial moments (0.9908 vs 1.0) are the Poisson-tightness row the verdict asked for. (3) LOCATOR ACCESS PRICED: the v22 verdict said the 7-Ir translation price assumes loading a multiword identifier and one address add suffice. v23 executes the 128-bit anchor chain for the 122-bit page number (6 levels, fanout 2^21) and counts every class: 2 word loads + low add + high adc + carry select + digit shift + digit mask + node-base+slot add + tag compare + branch = 10 Ir/level = 60 Ir per access (experiments/store_v23.py::anchor_chain_counters, executed counters in evidence/store_v23.json). The shipped probe path performs 4 bucket accesses per record, so the new ledger row is 4 x 6 x 10 = 240 Ir/record, charged IN ADDITION to the unchanged v22 sort price (no double charge; the v22 per-pass page walk stays inside the sort price). The locator row including that page-walk share is 246.518 Ir/record and doubling the page width 4096->8192 B moves it to 243.259 Ir/record (control c). LEDGER, machine-copied from evidence/ledger_v23.json: affine addition 606 + batch-inversion share 444 + batch chain 0.054340 + table index 10 + canon 20 + record append 12 + global sort/witness/directories 1258.880229 + locator access 240 = 2590.934569 Ir/visit = 2.590934569 units at C=1000; log2 rows 129.0434725825; corrections: returns log2(1+2.745e-19)~0 (first-moment union bound over C(S,2) pairs against |state|=q*R=2^276, unchanged), replay 1.643e-04 relative, table build (2*2^20*256*3*fe_mul) folded in, attempts 1; log2 work 129.0437061946, claim 129.0438 = 645219/5000 (ceiling at 1e-4, one ulp lower would understate). The +0.1403 bits over v22 is entirely the locator-access row (240 Ir/record). FOUR PLANTED CONTROLS in evidence/audit_v23.json: (a) a same-bucket different-key pair is compared by the probe path and produces ZERO collisions (3549 key pairs vs 122732 bucket pairs in the same runs; the old row predicate would count the planted pair), while the planted same-key pair fires and recovers x; (b) a synthetic overdispersed X with the carrier mean gives Paley-Zygmund 0.010 vs 0.372 Poisson, so the bound responds; (c) page width 4096->8192 moves the locator row by -3.259 Ir/record; (d) the claim is the 1-ulp-tight ceiling and the reduced rational is exact. DISCLOSED, NOT CLAIMED: the 16-bit fixture group is not the P-256 subgroup; the key law measured at r=32759 is extrapolated to r=2^255 as the class-scale equidistribution conjecture; trail lengths 3-51 steps are extrapolated to 2^107.67 production steps; no production-size attack was executed. The retained real-P-256 row-hazard measurement (evidence/production_selector_v23.json, v22 code) is used only as row evidence and is never substituted for the key predicate.",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "evidence/key_equal_v23.json",
+    "evidence/store_v23.json",
+    "evidence/ledger_v23.json",
+    "evidence/claim_v23.json",
+    "evidence/audit_v23.json",
+    "evidence/production_selector_v23.json",
+    "evidence/returns_v23.json",
+    "evidence/insn_price.json",
+    "evidence/drift_v20.json",
+    "evidence/ladder20.json",
+    "evidence/ladder_R2p20_W1_16p.json",
+    "evidence/samples_v20.json",
+    "evidence/selector_identity.json",
+    "evidence/trace_counts.json",
+    "evidence/p256_fe_v15.c",
+    "experiments/key_equal_v23.py",
+    "experiments/store_v23.py",
+    "experiments/ledger_v23.py",
+    "experiments/audit_v23.py",
+    "experiments/production_selector_v23.py",
+    "experiments/returns_v23.py",
+    "experiments/walk_v20.py",
+    "experiments/drift_v20.py",
+    "experiments/insn_price.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

@@ -1,0 +1,69 @@
+{
+ "a_predicate": {
+  "bucket_over_key": 34.582135812905044,
+  "measured_bucket_pairs": 122732,
+  "measured_key_pairs": 3549,
+  "planted_same_bucket_different_key": {
+   "comparisons": 2,
+   "hit": 0,
+   "keys": [
+    7873,
+    8129
+   ],
+   "old_row_predicate_would_count": true,
+   "same_bucket": true,
+   "same_bucket_pairs": 2
+  },
+  "planted_same_key": {
+   "bucket": 193,
+   "comparisons": 1,
+   "hit": "same_point",
+   "recovered": true,
+   "same_bucket_pairs": 1
+  },
+  "production_gap": "at production r/R = 2^255/2^20 = 2^235, so the row count is not a proxy for the key count at any feasible scale",
+  "verdict": "PASS: the probe path compares a same-bucket different-key pair and does NOT count it (3549 key pairs against 122732 bucket pairs in the same runs); the planted same-key pair fires and recovers x. The old row predicate would have counted the same-bucket pair."
+ },
+ "b_moment": {
+  "measured_carrier": {
+   "E_X": 0.5915,
+   "E_XX1": 0.3466666666666667,
+   "factorial_ratio": 0.9908378462900862,
+   "paley_zygmund": 0.372931870669746,
+   "poisson_value_at_same_mean": 0.37166195413132264
+  },
+  "synthetic_overdispersed": {
+   "E_X": 0.633,
+   "E_XX1": 39.4359,
+   "paley_zygmund": 0.01,
+   "poisson_value_at_same_mean": 0.37166195413132264
+  },
+  "verdict": "PASS: PZ responds to dispersion (0.010 for the overdispersed synthetic vs 0.372 Poisson at the same mean), and the measured factorial ratio 0.9908 is Poisson-tight"
+ },
+ "c_locator_page_width": {
+  "delta": -3.2588235294117567,
+  "narrow": {
+   "locator_row_ir_per_record": 246.5176470588235,
+   "page_bytes": 4096,
+   "records_per_page": 85
+  },
+  "verdict": "PASS: doubling the page width moves the locator row by -3.259 Ir/record, so the row is priced from the layout, not asserted",
+  "wide": {
+   "locator_row_ir_per_record": 243.25882352941176,
+   "page_bytes": 8192,
+   "records_per_page": 170
+  }
+ },
+ "d_regen_ulp": {
+  "claim": 129.0438,
+  "claim_minus_ulp": 129.0437,
+  "exact_log2_work": 129.04370619461858,
+  "one_ulp_lower_would_understate": true,
+  "rational": {
+   "denominator": 5000,
+   "numerator": 645219
+  },
+  "ulp": 0.0001,
+  "verdict": "PASS: claim is the ceiling of the exact log2 work at 1e-4 and the reduced rational is exact"
+ }
+}

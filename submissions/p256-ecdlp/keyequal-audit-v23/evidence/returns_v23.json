@@ -1,0 +1,69 @@
+{
+ "cells": {
+  "high_load_R64_S8192": {
+   "R": 64,
+   "S": 8192,
+   "cycle_entries": 65,
+   "cycle_entry_rate": 0.065,
+   "dependency_graph": "row_t = f(x(T_t), t mod R, trail) -> Markov order 1 on the (row, phase) product; successive (s, phase) pairs are NOT independent, so no binomial is taken over repeat events",
+   "entry_rate_consistent_with_bound": true,
+   "fatal_repeats": 0,
+   "first_moment_bound_per_trail": 0.49994039518469385,
+   "identity_breaks": 11,
+   "label": "high_load_R64_S8192",
+   "q": 1048573,
+   "repeat_events_vs_bound": "repeat EVENTS 188848 vs the bound's 499.9 per trail: after a cycle entry every later step re-visits its own state, so the count accumulates quadratically and is NOT a set of independent draws -- no binomial is taken over it",
+   "repeats_per_seed": 188.848,
+   "repeats_total_descriptive": 188848,
+   "seed_level_cp95_upper_on_entry_rate": 0.08210106992136916,
+   "seeds": 1000,
+   "useful_relations": 188848,
+   "why": "the v21 high-load cell, re-scored at the seed level"
+  },
+  "positive_control_q1031": {
+   "R": 64,
+   "S": 4096,
+   "cycle_entries": 74,
+   "cycle_entry_rate": 0.74,
+   "dependency_graph": "row_t = f(x(T_t), t mod R, trail) -> Markov order 1 on the (row, phase) product; successive (s, phase) pairs are NOT independent, so no binomial is taken over repeat events",
+   "entry_rate_consistent_with_bound": true,
+   "fatal_repeats": 0,
+   "first_moment_bound_per_trail": 127.09990300678952,
+   "identity_breaks": 26,
+   "label": "positive_control_q1031",
+   "q": 1031,
+   "repeat_events_vs_bound": "repeat EVENTS 276764 vs the bound's 1.271e+04 per trail: after a cycle entry every later step re-visits its own state, so the count accumulates quadratically and is NOT a set of independent draws -- no binomial is taken over it",
+   "repeats_per_seed": 2767.64,
+   "repeats_total_descriptive": 276764,
+   "seed_level_cp95_upper_on_entry_rate": 0.8226055621323469,
+   "seeds": 100,
+   "useful_relations": 276764,
+   "why": "planted small-q control: the detector MUST fire (non-vacuity)"
+  }
+ },
+ "production_charge": {
+  "analytic_occupancy_bound": 2.7446720980408664e-19,
+  "basis": "FIRST-MOMENT union bound over the C(S,2) step pairs against |state| = q*R = 2^276; no independence between repeat events is used anywhere",
+  "charged_relative_loss": 2.7446720980408664e-19,
+  "formula": "S(S-1)/(2*q*R) with S = 2^107.67, q = 2^256, R = 2^20",
+  "high_load_consistency": {
+   "cell": "high_load_R64_S8192",
+   "cell_bound": 0.49994039518469385,
+   "entry_rate": 0.065,
+   "verdict": "measured entry rate is below the cell's own first-moment bound, so the detector is non-vacuous and does not contradict the arithmetic"
+  },
+  "per_trail_not_divided": "a dead walker loses its own work, so the loss is per trail and is never divided by the 2^20 walker count",
+  "state_space": {
+   "R_log2": 20,
+   "bound_log2": -61.66,
+   "q_log2": 256,
+   "state_log2": 276,
+   "trail_steps_log2": 107.67
+  },
+  "trails_charged": 1,
+  "v21_binomial_retracted": "v21 charged 3.89e-05 from a Clopper-Pearson interval over 94,831 repeat EVENTS, which are not independent observations; that interval is withdrawn and the union bound is charged instead (a strictly smaller, strictly more defensible number)",
+  "vs_v21": 9.605995506458114e-05
+ },
+ "seed_rule": "Random((20251025<<20) ^ (seed*0x9E3779B97F4A7C15) ^ (R<<5) ^ (S<<40)); fresh secret x and fresh launch coefficients c,d per seed",
+ "unit": "seed"
+}

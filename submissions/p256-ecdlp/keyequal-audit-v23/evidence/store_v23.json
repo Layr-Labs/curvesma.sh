@@ -1,0 +1,61 @@
+{
+ "directory_construction_ir_per_record": 0.011764711492204535,
+ "locator_access": {
+  "access_ir": 60,
+  "executed_counters": {
+   "base_adds": 6,
+   "branches": 6,
+   "carry_selects": 6,
+   "high_adcs": 6,
+   "low_adds": 6,
+   "masks": 6,
+   "shifts": 6,
+   "tag_compares": 6,
+   "total": 60,
+   "word_loads": 12
+  },
+  "fanout_bits": 21,
+  "levels": 6,
+  "locator_access_ir_per_record": 240,
+  "mechanism": "122-bit page number resolved by a 6-level radix walk (fanout 2^21); each level carries a 128-bit anchor in two GPR words with an explicit add/adc carry chain, extracts the radix digit, forms the node slot address and tests the presence tag",
+  "per_level_ir": 10,
+  "probe_path_source": "experiments/key_equal_v23.py::probe_insert (bucket probe, key compare) and experiments/store_v23.py::anchor_chain_counters (the executed 128-bit anchor chain)",
+  "probes_per_record": 4,
+  "v22_per_level_ir": 7
+ },
+ "locator_row_ir_per_record": 246.5176470588235,
+ "page_width_control": {
+  "delta": -3.2588235294117567,
+  "moves": true,
+  "narrow": {
+   "locator_row_ir_per_record": 246.5176470588235,
+   "page_bytes": 4096,
+   "records_per_page": 85
+  },
+  "wide": {
+   "locator_row_ir_per_record": 243.25882352941176,
+   "page_bytes": 8192,
+   "records_per_page": 170
+  }
+ },
+ "passes": 16,
+ "peaks": {
+  "layout": "85 records per 4096 B page, two streams, 16 B locator entries",
+  "log2_peak_bytes": 134.26342408081035,
+  "log2_radix_directories_bytes": 125.26060975179307,
+  "log2_stream_bytes": 134.2606090638623
+ },
+ "per_pass_ir_per_record": {
+  "clear256": 0.25,
+  "count256": 22.0,
+  "prefix256": 2.062,
+  "scatter256x_carried_external": 36.0,
+  "store_translation_and_io": 9.517647,
+  "stream_readback_materialisation": 6.505882
+ },
+ "per_pass_total_ir": 76.335529,
+ "rule": "1 Ir = one AArch64 GPR instruction; a register-pair transfer is 16 B",
+ "sort_total_ir_per_record": 1498.880228711492,
+ "sort_total_ir_per_record_v22": 1258.880228711492,
+ "witness_ir_per_record": 37.5
+}

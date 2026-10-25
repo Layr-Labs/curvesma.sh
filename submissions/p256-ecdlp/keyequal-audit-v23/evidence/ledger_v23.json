@@ -1,0 +1,300 @@
+{
+ "bounds": {
+  "claim": 129.0438,
+  "storage_log2_peak": 134.26342408081035,
+  "work_log2": 129.0438
+ },
+ "claim_reduced_rational": {
+  "denominator": 5000,
+  "numerator": 645219
+ },
+ "claim_time_log2": 129.0438,
+ "delta_vs_v22": {
+  "locator_access": "+240 Ir/record (4 probes x 6 levels x 10 Ir)",
+  "success": "row-carrier CP 0.424555 -> key-predicate CP 0.435029",
+  "v22_claim": 128.9035,
+  "v23_claim": 129.0438,
+  "yield": "q re-measured on the key predicate: 1.0 (3549/3549 nontrivial)"
+ },
+ "instructions_per_visit": 2590.934569074041,
+ "locator": {
+  "executed_counters": {
+   "base_adds": 6,
+   "branches": 6,
+   "carry_selects": 6,
+   "high_adcs": 6,
+   "low_adds": 6,
+   "masks": 6,
+   "shifts": 6,
+   "tag_compares": 6,
+   "total": 60,
+   "word_loads": 12
+  },
+  "levels": 6,
+  "note": "this row is charged IN ADDITION to the v22 sort price (which contains the per-pass page walk); the row's page-width sensitivity is shown by the control, and the ledger charges locator_ir exactly once",
+  "page_width_control": {
+   "delta": -3.2588235294117567,
+   "moves": true,
+   "narrow": {
+    "locator_row_ir_per_record": 246.5176470588235,
+    "page_bytes": 4096,
+    "records_per_page": 85
+   },
+   "wide": {
+    "locator_row_ir_per_record": 243.25882352941176,
+    "page_bytes": 8192,
+    "records_per_page": 170
+   }
+  },
+  "per_level_ir": 10,
+  "probes_per_record": 4,
+  "row_including_page_walk_ir_per_record": 246.5176470588235,
+  "row_ir_per_record": 240,
+  "source": "experiments/key_equal_v23.py::probe_insert (bucket probe, key compare) and experiments/store_v23.py::anchor_chain_counters (the executed 128-bit anchor chain)"
+ },
+ "policy": {
+  "measured_collisions_per_challenge": 0.5915,
+  "measured_useful_fraction": 1.0,
+  "record_fields": "32B canonical key || 20B identity pack (20-bit trail || 108-bit step)",
+  "replay_inflation_vs_bulk": 53.34814814814815,
+  "replay_relative_loss": 0.00016194072299533419,
+  "rule": "every hit replays both trails from their stored identities; the replay reconstructs the exact point (resolving the sign class) and recovers x from the matching linear relation",
+  "trail_pairs_charged_per_challenge": 3.183
+ },
+ "returns": {
+  "basis": "FIRST-MOMENT union bound over the C(S,2) step pairs against |state| = q*R = 2^276; no independence between repeat events is used anywhere",
+  "high_load_cell": {
+   "cycle_entries": 65,
+   "cycle_entry_rate": 0.065,
+   "entry_rate_consistent_with_bound": true,
+   "fatal_repeats": 0,
+   "first_moment_bound_per_trail": 0.49994039518469385,
+   "identity_breaks": 11,
+   "repeats_total_descriptive": 188848,
+   "seeds": 1000
+  },
+  "relative_loss": 2.7446720980408664e-19,
+  "state_space": {
+   "R_log2": 20,
+   "bound_log2": -61.66,
+   "q_log2": 256,
+   "state_log2": 276,
+   "trail_steps_log2": 107.67
+  },
+  "unit": "seed",
+  "v21_binomial_retracted": "v21 charged 3.89e-05 from a Clopper-Pearson interval over 94,831 repeat EVENTS, which are not independent observations; that interval is withdrawn and the union bound is charged instead (a strictly smaller, strictly more defensible number)"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "global_sort_and_witness": 1258.880229,
+  "locator_access_128bit_x4probes": 240,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "sort": {
+  "directory_construction_ir": 0.011764711492204535,
+  "passes": 16,
+  "peaks": {
+   "layout": "85 records per 4096 B page, two streams, 16 B locator entries",
+   "log2_peak_bytes": 134.26342408081035,
+   "log2_radix_directories_bytes": 125.26060975179307,
+   "log2_stream_bytes": 134.2606090638623
+  },
+  "per_pass_ir_per_record": 76.335529,
+  "total_including_locator_ir_per_record": 1498.880228711492,
+  "total_sort_only_ir_per_record": 1258.880228711492,
+  "witness_ir": 37.5
+ },
+ "success": {
+  "attempts_charged": 1.0,
+  "bucket_hazard_measured_per_pair": 0.000987894008177984,
+  "bucket_hazard_model_per_pair": 0.0009765625,
+  "carrier_cells": [
+   {
+    "R": 1024,
+    "S": 3,
+    "T": 204,
+    "W": 68,
+    "bucket_hazard_per_pair": 0.000987894008177984,
+    "bucket_pairs": 122732,
+    "comps": 122732,
+    "conditional_key_given_bucket": 0.0289166639507219,
+    "conditional_model_R_over_r": 0.031292974360541514,
+    "cp95_lower": 0.43502933314852493,
+    "hits": 3549,
+    "key_pairs_per_pair": 2.856659905341447e-05,
+    "lambda_expected": 0.6327659444427467,
+    "mean": 0.5915,
+    "moments": {
+     "E_X": 0.5915,
+     "E_XX1": 0.3466666666666667,
+     "dispersion_variance_over_mean": 0.9947463771434434,
+     "factorial_ratio_EXX1_over_EX2": 0.9908378462900862,
+     "second_moment_ratio_EX2_over_EX2": 2.681454921522546,
+     "var": 0.5883924820803468
+    },
+    "nontrivial": 3549,
+    "opposite_point": 1842,
+    "poisson_fit": {
+     "hist_0_1_2_3plus": [
+      3314,
+      1972,
+      589,
+      125
+     ],
+     "poisson_chi2_3dof": 17.037093431166003,
+     "poisson_expected": [
+      3186.724,
+      2016.451,
+      637.971,
+      158.854
+     ]
+    },
+    "rate": 0.44766666666666666,
+    "recovered": 3549,
+    "same_point": 1707,
+    "steps": 1223980,
+    "trials": 6000,
+    "trivial": 0,
+    "wins": 2686,
+    "yield_nontrivial": 1.0
+   },
+   {
+    "R": 1024,
+    "S": 51,
+    "T": 204,
+    "W": 4,
+    "bucket_hazard_per_pair": 0.0009871212852957275,
+    "bucket_pairs": 122636,
+    "comps": 122636,
+    "conditional_key_given_bucket": 0.03010535242506279,
+    "conditional_model_R_over_r": 0.031292974360541514,
+    "cp95_lower": 0.4489902813259019,
+    "hits": 3692,
+    "key_pairs_per_pair": 2.9717634180108825e-05,
+    "lambda_expected": 0.6327659444427467,
+    "mean": 0.6153333333333333,
+    "moments": {
+     "E_X": 0.6153333333333333,
+     "E_XX1": 0.373,
+     "dispersion_variance_over_mean": 0.9910073491844162,
+     "factorial_ratio_EXX1_over_EX2": 0.9851173043763038,
+     "second_moment_ratio_EX2_over_EX2": 2.6102527323286333,
+     "var": 0.6097998555314774
+    },
+    "nontrivial": 3692,
+    "opposite_point": 1965,
+    "poisson_fit": {
+     "hist_0_1_2_3plus": [
+      3230,
+      2013,
+      621,
+      136
+     ],
+     "poisson_chi2_3dof": 4.333101378118354,
+     "poisson_expected": [
+      3186.724,
+      2016.451,
+      637.971,
+      158.854
+     ]
+    },
+    "rate": 0.46166666666666667,
+    "recovered": 3692,
+    "same_point": 1727,
+    "steps": 1223481,
+    "trials": 6000,
+    "trivial": 0,
+    "wins": 2770,
+    "yield_nontrivial": 1.0
+   },
+   {
+    "R": 1024,
+    "S": 17,
+    "T": 204,
+    "W": 12,
+    "bucket_hazard_per_pair": 0.0009917898193760263,
+    "bucket_pairs": 123216,
+    "comps": 123216,
+    "conditional_key_given_bucket": 0.0292088689780548,
+    "conditional_model_R_over_r": 0.031292974360541514,
+    "cp95_lower": 0.44832524688016606,
+    "hits": 3599,
+    "key_pairs_per_pair": 2.8969058887922984e-05,
+    "lambda_expected": 0.6327659444427467,
+    "mean": 0.5998333333333333,
+    "moments": {
+     "E_X": 0.5998333333333333,
+     "E_XX1": 0.34,
+     "dispersion_variance_over_mean": 0.9671519764732485,
+     "factorial_ratio_EXX1_over_EX2": 0.9449693545048674,
+     "second_moment_ratio_EX2_over_EX2": 2.6120991127710527,
+     "var": 0.5801299938878702
+    },
+    "nontrivial": 3599,
+    "opposite_point": 1872,
+    "poisson_fit": {
+     "hist_0_1_2_3plus": [
+      3234,
+      2089,
+      546,
+      131
+     ],
+     "poisson_chi2_3dof": 21.454340316066677,
+     "poisson_expected": [
+      3186.724,
+      2016.451,
+      637.971,
+      158.854
+     ]
+    },
+    "rate": 0.461,
+    "recovered": 3599,
+    "same_point": 1727,
+    "steps": 1223855,
+    "trials": 6000,
+    "trivial": 0,
+    "wins": 2766,
+    "yield_nontrivial": 1.0
+   }
+  ],
+  "charged_basis": "minimum CP-95 lower bound over the three seeded key-collision cells (2686/6000, 2770/6000, 2766/6000), i.e. a lower bound measured on the actual predicate, not a cardinality count",
+  "charged_success": 0.43502933314852493,
+  "conditional_key_given_bucket_measured": 0.0289166639507219,
+  "conditional_key_given_bucket_model_R_over_r": 0.031292974360541514,
+  "floor": 0.39,
+  "key_hazard_measured_per_pair": 2.856659905341447e-05,
+  "key_hazard_model_per_pair": 3.055954527396632e-05,
+  "log2_attempts_charged": 0.0,
+  "moments_note": "E[X(X-1)]/E[X]^2 measured 0.9766 / 1.0236 / 0.9877 vs 1.0 for Poisson; Paley-Zygmund at production moments is 0.387584 and is reported as the distribution-free floor, below the measured CP lower bound that is charged",
+  "predicate": "KEY EQUALITY: bucket = key & (R-1); probe reaches entry; canonical x compares equal; the replay resolves T=T' vs T=-T' and recovers x by the matching linear relation",
+  "production_model": {
+   "E_X": 0.6328782969851414,
+   "E_X2": 1.0334132357799544,
+   "E_XX1": 0.4005349387948129,
+   "factorial_ratio_model": 1.0,
+   "lambda_at_measured_rate": 0.5916050254512116,
+   "measured_to_model_rate_ratio": 0.9347848208248817,
+   "paley_zygmund_bound": 0.38758448694777425,
+   "poisson_success": 0.468938952330089,
+   "poisson_success_at_measured_rate": 0.4465617110445216,
+   "records_log2": 127.67,
+   "sign_classes_log2": 255,
+   "union_bound_upper": 0.6328782969851414
+  },
+  "residual_conjecture": "r = 32759 measured here vs r = 2^255 at production. The measured law is the uniform-key-within-bucket law (key hazard 1/r, bucket hazard 1/R, conditional R/r). Extrapolating it to 2^255 sign classes over 2^107.67-step trails is the class-scale equidistribution conjecture, disclosed and not claimed.",
+  "yield_basis": "3549/3549 nontrivial key-equal events recovered; 1707 same-point, 1842 opposite-point, 0 trivial duplicates",
+  "yield_recovery_given_collision": 1.0
+ },
+ "units_per_visit": 2.590934569074041,
+ "work": {
+  "log2_rows": 129.04347258245573,
+  "log2_visits": 127.67,
+  "log2_work_final": 129.04370619461858,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}
