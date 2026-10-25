@@ -1,0 +1,91 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: additive Cheon v30 (prime class lists, exact energy decomposition, the residual's strata certified at production, one named joint-defect bound)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.390 (at least 0.39 required). The success argument is the exact distinct-index energy decomposition E = 6*sum s(s-1) + E_{k!=0} (the diagonal belongs to E+N), with the mixed-root k=0 term proved EMPTY by the cutoff-free 15-pair Omega-equality certificate over the six fixed constants, shared-prime rho = +/-1 wrapped collisions excluded under the retained 2*X1^2*X2 = 2^235 < r (19.857 bits, the r = 481,153 counterexample demonstrating the weaker bound fails), repeated coordinates bounded at 2.671e-19 of the birthday baseline B0, and the residual decomposed by common-factor structure with every structured stratum PROVED at production under P1 (delta^w <= 500, measured 0.678-8.49 at three scales) and NO H2: the exactly-one-shared-large lattice theorem at 0.002332911916573675 of B0 (affine-coset lattice count with the mod-30 wheel's exact 16/225 area factor, weighted by the actual P1 class masses, at Dusart-certified block endpoints a_B <= 0.57*X1 and a_G <= 0.64*X1), the shared-small Selberg main at 0.038976659226098 (finite optimal Selberg weights at R = 2^35, integer-certified denominator G(2^35) > 322.7629594, no analytic input) and its list-prime exception at 0.002641842 (S35 = 2,086,667,226 by the dyadic binomial argument), the two-large-only correction at 1.633e-17, and the coprime main term certified to 3.492e-13. A coverage-preserving pruning discharges the swap-energy charge entirely (proved density loss D/m <= 6Mn/m = 4.79e-14, no H2). The five certified pieces sum to alpha = 0.043951414, and the claim is the DETERMINISTIC pruned-coverage implication: |S|/m >= kappa - (1+alpha+t)*K^2/2 >= 0.39000000388245215 at the safe joint-defect bound t <= 0.0138998, floor-stated 0.390 >= 0.39, where t = (Delta_0 + R_SS)/B0 - the coprime modular discrepancy plus the signed Selberg remainder - is the SINGLE named unproved estimate (the exact maximal t in the certified formula is 0.013899825669104974). Route B (fourth-order Bonferroni additionally under the measured, unproved premises P3: F3 >= 0.95*kappa^3 and P4: F4 <= 1.20*kappa^4) gives >= 0.4120276 at the sharper t = 0.0121794, >= 0.398 at t <= 0.10492393035226562, and >= 0.39000007446578 at t <= 0.157816. Wording discipline: the pruned implications are NOT the original total-energy P2(0.057) - unpruned, epsilon_total <= alpha + t + beta = 0.058720214 at the safe gap (beta = 8.69e-4 being P1's swap charge), staying under 0.057 only at the sharper t. The exact certificates ship as in-folder source modules (prime_count_inputs.py, shared_large_certificate.py, selberg_certificate.py) executed FRESH by the run; the only external analytic input is Dusart arXiv:1002.0442v1 Theorem 6.9 eq (6.6), stated with its validity domains in prime-count-dependency.txt and transcription-checked against independent sieves; the full derivations (shared-large-derivation.txt, selberg-derivation.txt) are in-folder. The U-filter identity is verified exactly at both energy points, the law is tested against its calibrated null at two scales (0.4219 inside 0.4216-0.4252, z = -1.4; 0.4242 inside 0.4238-0.4303, z = -1.7), and the structured-lambda cyclotomic point r = 48^4 - 48^2 + 1 reproduces the production constant structure with every family below null. Score = log2(W(2^20)) = 116.958777 (exact 116958777/1000000, rounded up; the cost ledger is identical to v28's), against the track frontier 116.982765. Preprocessing <= 2^115.968, included in W. Peak memory <= 2^122.9 bytes. No advice. Reads only A_1 and A_{2^20}.",
+   "score": {
+    "numerator": "116958777",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run with six parts. (1) Recomputes the cost ledger at K = 0.55 (canonical y 30, hash 240, bookkeeping 100; every charge asserted above its itemised count), the exact score, the preprocessing output, the PROVEN prime-availability interval lower bound (Rosser-Schoenfeld) and the shared-class-prefix lost-value bound. (2) The production certificates: the constant structure (L = x^2 - 1 with L^2 + L + 1 = r exactly; the six U-representatives as polynomials with their orders), the cutoff-free 15-pair mixed-root certificate, D_repeat, the retained 2*X1^2*X2 < r with the r = 481,153 counterexample, and the two swap bounds. (2b) The production strata, executed FRESH (runpy) from the three in-folder source modules: the exactly-one-shared-large lattice theorem with the mod-30 wheel and Dusart-certified endpoints, the shared-small Selberg main with the integer-certified hyperbola denominator G(2^35) and the small-prime exception, the two-large-only and repeated-coordinate corrections, the coprime main to 3.492e-13, the coverage-preserving pruning (loss 4.79e-14, no H2), the ledger bound alpha = 0.043951414, and the conditional route floors as exact rationals in the unproved joint defect t; the Dusart lemma is stated with validity domains and transcription spot-checks against independent sieves. (3) The law's calibrated null test at two scales (the v28 experiment, extended with the exact energy decomposition, per-order family rates and class-marginal second moments). (4) The structured-lambda cyclotomic point r = 48^4 - 48^2 + 1: full energy decomposition, family rates, class moments and the exact coverage count. (5) hash_probe: 16,384 structured walk keys, 16 shards at load 1/2. (6) The end-to-end toy attack on a 24-bit j = 0 curve with d = 2^6 under the production block rule, 16 fixed-order and 40 shuffled trials, every recovered scalar asserted correct.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "K": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 6
+     },
+     "cov_bits": {
+      "type": "integer",
+      "minimum": 20,
+      "maximum": 29
+     },
+     "cov_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10
+     },
+     "atk_bits": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 24
+     },
+     "atk_logd": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 6
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "gmax": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 100000
+     }
+    },
+    "required": [
+     "K",
+     "cov_bits",
+     "cov_logd",
+     "atk_bits",
+     "atk_logd",
+     "trials",
+     "gmax",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "K": "0.55",
+     "cov_bits": 29,
+     "cov_logd": 8,
+     "atk_bits": 24,
+     "atk_logd": 6,
+     "trials": 40,
+     "gmax": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}

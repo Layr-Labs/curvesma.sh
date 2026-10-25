@@ -1,0 +1,334 @@
+SELF-CONTAINED FINITE SELBERG MAIN AND PRIME-EXCEPTION DERIVATION
+Date: 2026-10-25 UTC. Companion: selberg_certificate.py (Python stdlib only).
+Status: finite main and exception proved, conditional on the declared P1
+and endpoint inputs. The signed sieve remainder is NOT bounded here.
+All constants are rationally certified; displayed decimals are explanatory.
+
+1. Scope, inputs, and normalization
+
+r=52435875175126190479447740508185965837690552500527637822603658699938581184513,
+d=2^20, m=(r-1)/d, X1=2^82, X2=2^70, Z=X1*X2,
+n=67704887904593045852627984777072135,
+M=5893133993817406318491, B0=36*n^4/m=N^2/m, N=6*n^2.
+The script checks n=ceil(sqrt(11m/120)), and
+M=ceil((floor(196*n*d/X2)+2)/2).
+
+Use the production setting: r is prime, U is the subgroup of six roots,
+B and G use disjoint baby/giant large-prime rows (>X1/2>X2), respectively,
+with actual complementary-chi-class increasing list prefixes P_a;
+|B|=|G|=n. Each side uses at most M rows. No H2, list-class cap,
+unweighted block-class equidistribution, or probabilistic independence
+is used in this component.
+
+The two explicit input hypotheses are:
+(P1) on EACH side s=B,G, writing t_a=|P_a|,
+ W_s(c)=sum_{a:class(a)=c} t_a, one has sum_c W_s(c)=n and
+ d*sum_c W_s(c)^2/n^2-1<=500.
+(END) every used baby block prime is <=(57/100)X1 and every used
+ giant block prime is <=(64/100)X1.
+The package's separate endpoint component proves END with its explicitly
+quoted prime-count theorem. END is an input to this calculation; no
+prime-count result is silently used here. Put ZB=(57/100)Z, ZG=(64/100)Z.
+
+We bound the UNION of wrapped collisions having at least one common
+SMALL/list prime across the two sides of xy'=rho*x'y and satisfying
+x!=x', y!=y'. Additional common primes, including common large primes,
+are ALLOWED. It is important not to add a separate multi-common-small
+stratum afterward. Four placements below may overcount a collision;
+this is an upper bound, so that is harmless.
+
+For rho=+1 or -1, cancel any common small prime p. Both remaining
+positive three-prime products are <=Y=X1^2*X2. The script checks 3Y<r,
+hence in particular 2Y<r. The congruence is then an exact positive
+integer equality for rho=1 (same-root k=0), or impossible for rho=-1.
+Thus wrapped common-small collisions can only have the FOUR nonreal
+ratios rho in U. Each rho has exactly SIX ordered pairs (u,u') in U^2.
+
+2. The maximum class mass, retaining actual prefixes
+
+Let W=max_c W_s(c). Cauchy on the other d-1 classes gives
+ W^2+(n-W)^2/(d-1) <= 501*n^2/d.
+Rearranging yields (dW/n-1)^2<=500(d-1), hence
+ W_s(c)<=n*w, w=(1+sqrt(500(d-1)))/d.                         (2.1)
+The verifier upper-bounds this square root by an explicit rational
+using one integer square root at scale 2^128; no floating comparison
+is used to establish a bound.
+
+Let b_p=#baby rows a with p in P_a, and g_p analogously. Then
+ sum_p b_p=sum_p g_p=n.
+Let R_s(c) be the number of used rows in class c. Prefixes in different
+classes are disjoint; in the same class their overlap is min(t_a,t_a').
+Consequently
+ sum_p b_p^2
+ =sum_{a,a' baby} |P_a intersect P_a'|
+ <=sum_c W_B(c) R_B(c)
+ <=n*w*M,                                                  (2.2)
+and identically sum_p g_p^2<=n*w*M. This uses min(t_a,t_a')<=t_a
+and sum_c R_s(c)<=M; partial final rows are included exactly.
+Define
+ QB=sum_p b_p(b_p-1), QG=sum_p g_p(g_p-1),
+ QBG=sum_p b_p*g_p.
+Then QB,QG<=n*w*M and Cauchy gives QBG<=n*w*M. The slightly sharper
+QB<=n*w*M-n is not needed.
+
+3. The four placements and continuous main area
+
+For a common small prime in x and x' (same baby), fix their DISTINCT
+large primes a,a'. The exact coefficient weight is
+ w(a,a')=|P_a intersect P_a'|.
+After canceling the common small prime the remaining pair is in G^2,
+so enlarge to the positive integer box [1,ZG]^2.
+For a common small prime in y' and y (same giant), fix distinct giant
+large primes and use [1,ZB]^2. Distinctness follows from x!=x',y!=y';
+in a same-side row, equality of the small prime would otherwise make
+the corresponding coordinates equal.
+
+The other two placements share the small prime between a baby and a
+giant element on opposite sides. Fix that baby and giant large prime
+with weight |P_a intersect P_a'|. The remaining box has side lengths
+ZB,ZG, oriented according to the congruence. Repeated-coordinate
+cross cases may be included as extra nonnegative terms.
+
+In every case the canceled congruence has form
+ a*y' == rho*a'*y (mod r),                                 (3.1)
+possibly after relabeling coordinates and replacing rho by rho^-1.
+It defines a determinant-r sublattice of Z^2. Let q label the placement,
+the ordered coefficient pair, and one of the four nonreal rho. Its
+exact prefix weight is w_q and its oriented continuous box is box_q.
+Define the EXACT continuous area quantity
+ V=6*sum_q w_q*area(box_q)/r.                               (3.2)
+The sum in (3.2) already includes four nonreal roots. From Section 2,
+ V <= (24/r)*(QB*ZG^2+QG*ZB^2+2*QBG*ZB*ZG)
+   <=24*n*M*w*(ZB+ZG)^2/r.                                (3.3)
+Thus A=V/B0<=12.580221880370326... . The companion certificate records
+the exact rational upper A, with w rounded up and all other operations
+exact. No claim that a finite lattice count equals its area is made.
+
+4. The graph lemma for small remaining list primes
+
+This section independently proves the prime-exception constant and
+does NOT assume primitive canceled products.
+
+For any U-orbit in F_r^*, consider its positive integer representatives
+in [1,Y], Y=X1^2*X2<r/3. At most one representative can come from each
+opposite pair {v,-v}, since 2Y<r. Therefore there are at most three.
+Join two representatives when their ratio is a nonreal element of U.
+This graph has degree at most two.
+
+There are at most TWO ODD representatives. Indeed, if three were odd,
+one would come from each of {v,-v},{L*v,-L*v},{L^2*v,-L^2*v}, where
+L^2+L+1=0 mod r. Suitable signs therefore give a sum of the three
+representatives equal to 0 mod r. Its absolute value is at most 3Y<r,
+so it is an integer zero. But a signed sum of three odd integers is
+odd and cannot be zero. Thus the induced graph on odd representatives
+is a matching (degree at most one).
+
+Here are two elementary counting consequences. All supports below
+are BOOLEAN functions, and all even vertices are marked.
+(a) For one support C and marked subset C*, the number of ordered
+nonreal edges in C^2 with at least one marked endpoint is at most
+ 2|C*|+2|C_even|.
+Proof: odd-odd edges contribute <=2|C*_odd| because the odd graph is
+a matching; edges with an even endpoint contribute <=4|C_even| because
+the full graph has degree <=2. Add and use C_even subset C*.
+(b) For two supports C,D with marked subsets C*,D*, the number of
+oriented nonreal edges C->D with a marked endpoint is at most
+ |C*|+|D*|+|C_even|+|D_even|.
+The odd matching contributes <=|C*_odd|+|D*_odd|; edges with an even
+endpoint contribute <=2|C_even|+2|D_even|. The displayed bound follows.
+These inequalities can also be checked on K3; the verifier exhausts
+all 1,468 support/mark/parity cases.
+
+Let H_B(R),H_G(R) count B/G elements whose list prime is <=R (R>=2).
+Let B2,G2 count those with list prime 2. Since each used row has at
+most pi(R) such entries,
+ H_B+H_G<=2M*pi(R), B2+G2<=2M.                              (4.1)
+
+For a fixed shared small prime p define A_B(p) to be the baby large
+primes whose rows contain p. Its cardinality is b_p. The integer
+convolution
+ c_p(s)=#{(a,y) in A_B(p) x G : a*y=s}
+is BOOLEAN: s has one baby large prime, one giant large prime, and
+one small prime. Unique factorization and the disjoint tiers/blocks
+recover these three factors, even if OTHER factors are shared by
+the two sides of a collision. Thus c_p has mass b_p*n; its marked
+mass (remaining G list prime <=R) is b_p*H_G, and its even mass is
+b_p*G2. Apply (a), multiply by the six (u,u') pairs per rho, and sum p.
+Since sum_p b_p=n, the same-baby exception is at most
+ 12*n*(H_G+G2).
+The same-giant exception is at most 12*n*(H_B+B2).
+
+For one cross placement also define the BOOLEAN convolution
+ d_p(s)=#{(x,a') in B x A_G(p) : x*a'=s}.
+Its marked/even masses are g_p*H_B and g_p*B2; c_p's are as above.
+Apply (b), multiply by six, and sum p. Each cross placement contributes
+at most 6*n*(H_B+H_G+B2+G2). There are two cross placements. Adding all
+four gives the rigorous union bound
+ E_exc(R)<=24*n*(H_B+H_G+B2+G2)
+          <=48*n*M*(pi(R)+1).                             (4.2)
+This excludes only the two REMAINING list primes in the canceled
+coordinate pair. The fixed common list prime is allowed to be small.
+
+5. An elementary finite pi bound, with integer endpoints
+
+For j>=2 let k_j count primes in (2^(j-1),2^j]. Every such prime
+divides binomial(2^j,2^(j-1)): it occurs once in the numerator
+factorial and not in either denominator factorial. Their product is
+therefore at most this binomial, which is STRICTLY less than
+2^(2^j), the sum of all binomial coefficients in that row.
+Each prime is STRICTLY greater than 2^(j-1). Hence
+ (j-1)*k_j < 2^j
+and, using integrality,
+ k_j <= floor((2^j-1)/(j-1)).
+The prime 2 is handled separately. At R=2^35 this proves
+ pi(R)<=1+sum_{j=2}^35 floor((2^j-1)/(j-1))
+       =2086667226.                                       (5.1)
+Combining (4.2),(5.1) and dividing by B0, exact rational arithmetic gives
+ E_exc/B0 <=0.002641841664166639...                         (5.2)
+A certified outward decimal is 0.00264184166416664. The script also
+checks the binomial divisibility/endpoints exactly through j=12;
+the argument above proves every j, including j=35.
+
+6. The actual Selberg sequence and its unproved remainder
+
+For real squarefree-supported lambda_d, d<=R, lambda_1=1, put
+ F_R(v)=(sum_{d|v,d<=R} lambda_d)^2.
+F_R(v)=1 for integers with no prime factor <=R, and F_R(v)>=0 always.
+After removing Section 4's exception, both remaining coordinates in
+(3.1) have no prime factor <=R, since their large factors exceed R.
+Thus F_R(y*y')=1 on the desired rough pairs. Replacing the actual
+remaining B/G products by ALL positive integer lattice points gives
+a valid nonnegative majorant. In particular no gcd restriction remains.
+
+For squarefree k set
+ g(k)=product_{p|k}(2/p-1/p^2).
+The determinant-r lattice maps onto all pairs modulo k when (k,r)=1:
+given any two residues mod k, solve (3.1) simultaneously mod r by CRT.
+Of its k^2 residue pairs, exactly 2p-1 out of p^2 have p|y*y', so
+g(k) is the exact local density. All k here are <=R^2<r.
+
+Define using the ACTUAL coefficient primes and prefix masks
+ C(k)=6*sum_q w_q*#{(y,y') in lattice_q intersect box_q : k|y*y'},
+ Rcal(k)=C(k)-g(k)*V.                                     (6.1)
+No equidistribution is asserted by this definition. Expanding the square
+gives, exactly,
+ E_small,nonrepeat <= E_exc(R)+V*H_R(lambda)+Ecal_R,          (6.2)
+ H_R(lambda)=sum_{d,e<=R} lambda_d*lambda_e*g(lcm(d,e)),
+ Ecal_R=sum_{d,e<=R} lambda_d*lambda_e*Rcal(lcm(d,e)).        (6.3)
+Ecal_R is SIGNED. It is not bounded in this component. No absolute-value
+replacement, unweighted averaging, or independent-class assumption
+has been inserted.
+
+7. Exact finite optimal weights, proved here
+
+Let
+ h(k)=mu(k)^2 product_{p|k}(2p-1)/(p-1)^2,
+ G(R)=sum_{k<=R} h(k).
+For squarefree d<=R take
+ lambda_d = mu(d)/G(R) *
+            product_{p|d}(1-g(p))^-1 *
+            sum_{k<=R/d,(k,d)=1} h(k),                    (7.1)
+and lambda_d=0 for nonsquarefree d. Then lambda_1=1 and
+ H_R(lambda)=1/G(R) EXACTLY.
+
+Proof. Restrict indices to squarefree values. The identity
+ g(lcm(d,e))=g(d)g(e)/g(gcd(d,e))
+and divisor expansion
+ 1/g(v)=sum_{ell|v} kappa(ell),
+ kappa(ell)=product_{p|ell}(1-g(p))/g(p)=1/h(ell)
+give
+ H_R=sum_ell kappa(ell)*y_ell^2,
+ y_ell=sum_{d<=R,ell|d} lambda_d*g(d).
+Finite Mobius inversion yields sum_ell mu(ell)y_ell=lambda_1=1.
+Cauchy gives H_R>=1/G(R), with equality for
+ y_ell=mu(ell)h(ell)/G(R).
+Inverting this equality over multiples yields (7.1), since
+h(d)/g(d)=product_{p|d}(1-g(p))^-1 and h is squarefree multiplicative.
+This proves the identity and the weights without citing a sieve theorem.
+The certificate checks it by exact rational arithmetic at R=2,4,8,16,32.
+
+8. A finite lower bound for G, without asymptotic constants
+
+For every prime p,
+ h(p)=(2p-1)/(p-1)^2=sum_{nu>=1}(nu+1)/p^nu.
+Multiplying this absolutely convergent positive series over the finitely
+many primes of each squarefree k gives
+ h(k)=sum_{rad(v)=k} tau(v)/v.
+Therefore
+ G(R)=sum_{rad(v)<=R} tau(v)/v
+     >=sum_{v<=R} tau(v)/v
+      =D(R):=sum_{u*v<=R} 1/(u*v).                        (8.1)
+Thus no prime-number theorem, standard sieve constant, or limiting
+formula is needed for the finite lower bound.
+
+At R=34359738368 and J=floor(sqrt(R))=185363, splitting the hyperbola
+along u<=J or v<=J gives the EXACT identity
+ D(R)=2*sum_{u=1}^J H_floor(R/u)/u-H_J^2.                   (8.2)
+For n>=J, convexity of 1/t bounds each integral over [j,j+1] by the
+endpoint trapezoid. Summing and rearranging proves
+ H_n>=H_J+log(n/J)-1/(2J)+1/(2n).                          (8.3)
+
+The companion implements a rigorous lower certificate for (8.2):
+- Scale B=2^128. Hlo=sum_{j<=J}floor(B/j) <= B*H_J
+  and Hhi=Hlo+J >= B*H_J.
+- Lower-bound each logarithm by range-reducing n/J=2^k*v,1<=v<2,
+  and using 24 POSITIVE terms of
+  log(v)=2*sum_{j>=0} z^(2j+1)/(2j+1), z=(v-1)/(v+1).
+  Log(2) uses the same positive series with z=1/3.
+  Every positive fixedpoint multiplication/division rounds DOWN.
+  Omitting the positive tail also rounds down.
+- In (8.3), use Hlo and the log lower bound, subtract
+  ceil(B/(2J)), add floor(B/(2n)), then divide by u rounding down.
+- Subtract ceil(Hhi^2/B), rounding the negative H_J^2 term UP in size.
+Consequently every assertion establishing the final bound is integer
+or Fraction arithmetic, independent of machine floating point.
+
+The resulting exact certificate is
+ G(2^35)>=D(2^35)>=
+ 109830543788030032342585375633314908186445 /
+ 340282366920938463463374607431768211456
+ =322.762959426423... .                                   (8.4)
+Combining (3.3),(7.1),(8.4) gives
+ V/(B0*G(R)) <=0.0389766592260972... .                     (8.5)
+A certified outward decimal is 0.03897665922609721.
+The JSON records all exact rational upper/lower fractions.
+
+9. What is and is not obtained
+
+Under the declared P1 and END inputs, this component proves
+ E_small,nonrepeat/B0
+ <=0.03897665922609721+0.00264184166416664+Ecal_R/B0.
+The actual combined upper from the two rational certificates is
+about 0.04161850089026384, before the SIGNED weighted remainder.
+It covers every common-small-prime wrapped nonrepeat collision,
+including cases having additional shared primes.
+
+This does NOT prove P2. Neither the coprime excess nor Ecal_R is bounded
+at the required scale here. A package using a joint target must carry
+the SUM of the coprime excess and Ecal_R; it may not silently put the
+coprime excess at zero. If the coprime baseline allocation is M0, retain
+Delta0=E_coprime-36*M0/m, delta0=1-M0/n^4, and distinguish
+Delta0_star=E_coprime-B0=Delta0-delta0*B0.
+
+For a prospective remainder estimate the actual mask can be factorized
+exactly by layers:
+ |P_a intersect P_a'|
+ =sum_c sum_{ell>=1}1_{class(a)=c,t_a>=ell}
+                       *1_{class(a')=c,t_a'>=ell}.
+For squarefree k one may also unfold, prime by prime,
+ 1_{k|y*y'}=
+ sum_{d,e|k,lcm(d,e)=k}mu(gcd(d,e))*1_{d|y,e|y'}.
+Writing y=d*u,y'=e*v leaves the congruence
+ a*e*v == rho*a'*d*u (mod r).
+Thus the remainder kernel still involves inverses of coefficient primes
+modulo the fixed LARGE r and bounded integer representatives. Their
+residues modulo the SMALL lcm(d,e) do not determine the kernel.
+The fact R^2=2^70 is below a product-coefficient square-root scale is
+therefore not itself a factorable large-sieve/BV proof. No such missing
+estimate is inferred from the exact identities.
+
+Reproduce on EC2:
+ python3 /srv/sig/workspace/research/prime-character-A-20261024/p2-selfcontained-20261025/selberg_certificate.py
+Outputs selberg_certificate.json. The status explicitly says
+PASS_MAIN_AND_EXCEPTION_ONLY_NOT_P2.
+
