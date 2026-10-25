@@ -1,0 +1,38 @@
+{
+ "correction": {
+  "fixed_here": "tracking keys on (true point, t mod R); every repeat is classified USEFUL (nonzero coefficient difference: the loop recovers x) or FATAL ((0,0) difference, or an unresolvable relation)",
+  "retracted": "v20 asserted that (S,t) never recurs because t strictly increases. That is FALSE: R is a power of two dividing 2^64, so the selector is R-periodic in t and the effective phase is t mod R.",
+  "therefore": "a repeated TRUE point at the same effective phase repeats the subsequent point dynamics, exactly as the review says"
+ },
+ "high_load_cell": {
+  "R": 64,
+  "detects_repeats": true,
+  "expected_repeats_analytic": 0.49994039518469385,
+  "fatal_fraction": 0.0,
+  "fatal_fraction_cp95_upper": 3.889875364851414e-05,
+  "measured": {
+   "fatal": 0,
+   "identity_breaks": 2,
+   "repeats": 94831,
+   "useful": 94831,
+   "visits": 1638400
+  },
+  "q": 1048573,
+  "steps_per_walker": 8192,
+  "trails": 200,
+  "trials": 200,
+  "walkers": 1,
+  "why_non_vacuous": "expected phase-matched repeats computed analytically BEFORE the run and printed below; the cell is chosen so the expectation is large"
+ },
+ "note": "this row is a correctness fix, not a price reduction: the charged loss is the same order as v20's, and the justification is now the one the review asked for",
+ "production_charge": {
+  "analytic_cycle_loss_charge": 1.067643237876421e-23,
+  "basis": "the LARGER of the analytic cycle charge and the per-trail CP-95 upper bound on identity restarts from the v20 stability runs; the loss model is per trail (a dead walker loses its own work), never divided by 2^20",
+  "charged_relative_loss": 9.605995506458114e-05,
+  "fatal_fraction_cp95_upper": 3.889875364851414e-05,
+  "formula": "S(S-1)/(2*q*R), S = 2^107.67 steps, q = 2^256, R = 2^20",
+  "measured_restart_charge": 9.605995506458114e-05,
+  "repeats_per_trail_analytic": 2.7446720980408664e-19
+ },
+ "v20_error": "v19 divided a per-walker probability by 2^20 and claimed 5.845e-09; that division is wrong (each dead walker loses its own work, so the loss fraction is the per-trail rate) and the underlying zero was measured on coefficient pairs, not states"
+}

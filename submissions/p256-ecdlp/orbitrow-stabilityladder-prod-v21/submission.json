@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v21: cycle accounting corrected (phase t mod R, 94,831 repeats / 0 fatal, charge 9.606e-05), store peak padded to 134.2620 with directories charged, cross-walker carrier 893/2000 CP-lo 0.424555 + frequency x utility (E=0.632878, q=1.0); transfer disclosed as conjecture; claim ",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1289009",
+    "denominator": "10000"
+   },
+   "statement": "p256-ecdlp v21. Claim 128.9009 = 1289009/10000 target-group-operation equivalents for recovering x from Q=[x]P on P-256 (machine-copied from evidence/claim_v21.json). CORRECTIONS over the rejected v20 tree (ticket 90e73945): (1) the cycle argument was wrong. R is a power of two dividing 2^64, so the selector prod=(S XOR t*2654435761 XOR trail*7919) mod R is R-periodic in the counter and the effective phase is t mod R; v20's claim that (S,t) never recurs is retracted. v21 tracks (TRUE point, t mod R) and reports 94831 phase-matched repeats with 0 fatal in a high-load cell (q=1048573, R=64, 8192 steps/walker, 200 trials) whose expected repeat count was computed analytically before the run, so the test is not vacuous; the fatal fraction CP-95 upper bound is 3.890e-05 and the charged loss is 9.606e-05 relative -- the larger of the analytic cycle estimate and the per-trail identity-restart bound, i.e. the v20 charge is retained (a dead walker loses its own work, so the loss is per trail, never divided by 2^20). (2) the peak storage bound omitted page padding: with floor(4096/48)=85 whole records per page, two streams need 2*4096*V/85 bytes, so the disclosed peak is 134.2620 log2 bytes including the six-level 2^21-fanout radix directories (their construction is charged at 0.005882 Ir/record). (3) store transfer is priced scalar: a 48 B record is 3 register-pair (16 B) transfers each way, a 4096 B page is 256 transfers for init/flush/fill over 85 records, and translation is 6 levels x 5 Ir per page, giving 76.0532 Ir/record/pass x 16 passes + 37.5 witness = 1254.36 Ir, rows 2346.4 Ir/visit = 2.346411 units at C=1000. SUCCESS EVIDENCE, stated at the width it actually has: the carrier cell X_R256_W64_p16 runs the production selector with 64 walkers sharing one store, 16 full selector periods and lambda held at the production load 0.634, and counts ONLY collisions between distinct walkers (the production mix, since production per-trail load is 2^-40.66): 893/2000 = 0.4465 with exact Clopper-Pearson lower 0.424555. The FREQUENCY x UTILITY decomposition gives the same picture from the other side: E[collisions per attack] = N(N-1)/(2r) = 0.632878 for N=2^127.67 records and r=2^255 sign classes, utility P(recovery|collision) = 1.0 measured at 1230/1230 collisions in the carrier and at every one of the 20 ladder cells, so 1-exp(-E*q) = 0.4679; the smaller of the two (0.424555) is charged. STABILITY LADDER: 20 cells cover 16/64/256/1024 selector periods, walker counts 1/16/64 and R=256/1024/4096/65536; every axis is FLAT under a disjoint-exact-CP-95-interval test and the planted controls show the detector flags drifting counts and does not flag flat ones. LIMITATION, DISCLOSED NOT ARGUED AWAY: the fixture's group is 37-53 bits with a representative-integer selector, matching the selector source byte-for-byte between two fixture runners does not establish P-256 x-coordinate dynamics, and no executable cell exists at production load (2^127.67 records); overlapping intervals also cannot exclude a long-range correlation. The Poisson/independence step and the selector transfer are therefore conjectures, the package claims no proven production success rate, and the claim above is the work bound with those premises disclosed.",
+   "evidence": [
+    "evidence/audit_v20.json",
+    "evidence/audit_v21.json",
+    "evidence/claim_v21.json",
+    "evidence/drift_v20.json",
+    "evidence/insn_price.json",
+    "evidence/ladder20.json",
+    "evidence/ladder_R2p20_W1_16p.json",
+    "evidence/ledger_v21.json",
+    "evidence/p256_fe_v15.c",
+    "evidence/returns_v21.json",
+    "evidence/samples_v20.json",
+    "evidence/selector_identity.json",
+    "evidence/store_v21.json",
+    "evidence/trace_counts.json",
+    "argument.md",
+    "public-note.md",
+    "experiments/audit_v21.py",
+    "experiments/drift_v20.py",
+    "experiments/insn_price.py",
+    "experiments/ledger_v21.py",
+    "experiments/make_submission_v20.py",
+    "experiments/production_v17.py",
+    "experiments/returns_v21.py",
+    "experiments/store_v21.py",
+    "experiments/walk_v20.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

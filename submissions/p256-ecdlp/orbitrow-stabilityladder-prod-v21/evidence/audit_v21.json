@@ -1,0 +1,219 @@
+{
+ "all_pass": true,
+ "carry_scatter_control": {
+  "all_slots_in_page": true,
+  "distinct_pages": true,
+  "note": "the 256-bit address splits without aliasing across the 2^64/2^128 word boundaries; this is the arithmetic the demoted C unit test planted",
+  "pass": true,
+  "placed": {
+   "2^121+1": [
+    649037107316853453566312041152512,
+    1,
+    0
+   ],
+   "2^128+3": [
+    83076749736557242056487941267521536,
+    3,
+    0
+   ],
+   "2^32+17": [
+    1048576,
+    17,
+    0
+   ],
+   "2^64+5": [
+    4503599627370496,
+    5,
+    0
+   ]
+  },
+  "planted": {
+   "2^121+1": 2658455991569831745807614120560689153,
+   "2^128+3": 340282366920938463463374607431768211459,
+   "2^32+17": 4294967313,
+   "2^64+5": 18446744073709551621
+  }
+ },
+ "collision_efficiency_control": {
+  "all_collisions_useful": true,
+  "cells": {
+   "P_R1024_p1024": {
+    "collisions": 33,
+    "ratio": 1.0,
+    "useful": 33
+   },
+   "P_R1024_p16": {
+    "collisions": 120,
+    "ratio": 1.0,
+    "useful": 120
+   },
+   "P_R1024_p256": {
+    "collisions": 61,
+    "ratio": 1.0,
+    "useful": 61
+   },
+   "P_R1024_p64": {
+    "collisions": 101,
+    "ratio": 1.0,
+    "useful": 101
+   },
+   "P_R4096_p1024": {
+    "collisions": 32,
+    "ratio": 1.0,
+    "useful": 32
+   },
+   "P_R4096_p16": {
+    "collisions": 145,
+    "ratio": 1.0,
+    "useful": 145
+   },
+   "P_R4096_p256": {
+    "collisions": 76,
+    "ratio": 1.0,
+    "useful": 76
+   },
+   "P_R4096_p64": {
+    "collisions": 98,
+    "ratio": 1.0,
+    "useful": 98
+   },
+   "P_R65536_p1024": {
+    "collisions": 10,
+    "ratio": 1.0,
+    "useful": 10
+   },
+   "P_R65536_p16": {
+    "collisions": 88,
+    "ratio": 1.0,
+    "useful": 88
+   },
+   "P_R65536_p256": {
+    "collisions": 28,
+    "ratio": 1.0,
+    "useful": 28
+   },
+   "P_R65536_p64": {
+    "collisions": 44,
+    "ratio": 1.0,
+    "useful": 44
+   },
+   "W_R4096_W1": {
+    "collisions": 62,
+    "ratio": 1.0,
+    "useful": 62
+   },
+   "W_R4096_W16": {
+    "collisions": 23,
+    "ratio": 1.0,
+    "useful": 23
+   },
+   "W_R4096_W64": {
+    "collisions": 17,
+    "ratio": 1.0,
+    "useful": 17
+   },
+   "X_R1024_W64_p16": {
+    "collisions": 514,
+    "ratio": 1.0,
+    "useful": 514
+   },
+   "X_R256_W64_p16": {
+    "collisions": 1230,
+    "ratio": 1.0,
+    "useful": 1230
+   },
+   "X_R256_W64_p256": {
+    "collisions": 242,
+    "ratio": 1.0,
+    "useful": 242
+   },
+   "X_R256_W64_p64": {
+    "collisions": 387,
+    "ratio": 1.0,
+    "useful": 387
+   },
+   "X_R4096_W64_p16": {
+    "collisions": 244,
+    "ratio": 1.0,
+    "useful": 244
+   }
+  },
+  "pass": true
+ },
+ "exact_cp_control": {
+  "carrier_cell": {
+   "cell": "X_R256_W64_p16",
+   "difference": -0.00015800243877200915,
+   "exact_cp95_lower": 0.42455473649353065,
+   "p_hat": 0.4465,
+   "trials": 2000,
+   "wald_lower": 0.42471273893230266,
+   "wins_cross": 893
+  },
+  "claim_uses": "exact",
+  "note": "exact is below Wald in both cells; at n=200 the gap is material (1.7e-03) and at n=2000 it is small (1.5e-04), so a Wald bound would have overstated the floor",
+  "pass": true,
+  "small_n_cell": {
+   "cell": "R2p20_W1_16p",
+   "difference": -0.001671448551205823,
+   "exact_cp95_lower": 0.40412003342497727,
+   "p_hat": 0.475,
+   "trials": 200,
+   "wald_lower": 0.4057914819761831,
+   "wins": 95
+  }
+ },
+ "flatness_control": {
+  "drifting_counts": [
+   96,
+   84,
+   62,
+   40
+  ],
+  "drifting_verdict": "DRIFT_DOWN",
+  "flat_counts": [
+   95,
+   92,
+   99,
+   93
+  ],
+  "flat_verdict": "FLAT",
+  "mild_decline_verdict": "FLAT",
+  "pass": true
+ },
+ "regen_1ulp_control": {
+  "claim": 128.9009,
+  "log2_work": 128.90083141318541,
+  "one_step_1e-4": 0.0001,
+  "overshoot": 6.858681459220861e-05,
+  "pass": true,
+  "rational": {
+   "denominator": 10000,
+   "numerator": 1289009
+  },
+  "rational_exact": true
+ },
+ "selector_identity": {
+  "digests_match": true,
+  "pass": true,
+  "replay_cell": {
+   "R": 1024,
+   "identical_q": true,
+   "label": "R1024_W64_16p",
+   "reproduces_v19": true,
+   "trials": 300,
+   "v19_q": 1734245469757,
+   "v19_wins": 146,
+   "v20_q": 1734245469757,
+   "v20_replay_wins": 146,
+   "walkers": 64
+  },
+  "selector_source": [
+   "prod = (S ^ ((t * tmul) & 0xFFFFFFFFFFFFFFFF) ^ (trail * 7919)) % R",
+   "tmul = 2654435761",
+   "return 1 + (r * 7 + 3) % R, 1 + (r * 11 + 5) % R"
+  ],
+  "sha256_v19_production_runner": "c75cbc56b2a003161b4db832f145ed709970f62dc5e1c40b0c487e04913a3b1f",
+  "sha256_v20_runner": "c75cbc56b2a003161b4db832f145ed709970f62dc5e1c40b0c487e04913a3b1f"
+ }
+}
