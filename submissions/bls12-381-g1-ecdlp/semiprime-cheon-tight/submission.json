@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon reduction with H-prime semiprime walks, sort-based matching, capacity and caps",
+  "claims": [
+    {
+      "statement": "Setting: BLS12-381 G1, generator P0 of prime order r, d=2^20 (6d divides r-1), input T=A_1=[s]P0 and A_i=[s^i]P0, i<=n, n>=2^20 (only T and A_d are read, so the bound holds for every n>=2^20 including 2^20), s uniform in 1..r-1. Claim: the deterministic classical attack of proof.md recovers s with success probability at least 0.39 using at most 2^116.7764 total target-group-operation equivalents (one equivalent = one batched incomplete affine G1 addition = 2000 AArch64 instructions, C=2000), including all preprocessing (at most 2^115.79, included), failed runs, record routing, sorting, matching, caps, verification and output; peak memory at most 2^124.1 bytes (2^84 owner, 2^20 generating and 2^31 storage nodes, each counted at its full 2^40 bytes); no advice, no quantum step. Attack (details in proof.md Sections 2-7): Cheon's reduction to z=s^d in the order-m subgroup H of d-th powers (m=(r-1)/2^20). Baby and giant scalars are products a*w of two H-primes (primes q with q^m=1 mod r), w from the list W of the first 2^50 H-primes above 2^39 and a from disjoint lists of H-primes in (2^77,2^97). Each chain advances by one batched incomplete affine addition per step from a table of even multiples [g]Q, g<=2^33. The N=2^115.6361 baby and N giant points (6N^2/m=0.50) give 224-bit keys (bits 1..224 of the even one of y, p-y) invariant under the six GLV/negation automorphisms. The 2N=2^116.6361 records of 48 bytes are matched on a shared-nothing cluster with 2^40 bytes of RAM per node and no remote-memory instruction: each record is routed by 3 passes on 28-bit digits of the 84-bit key prefix (27 instructions each: 17 control, 4 for the n/b part of posting, 6 transport copy) and sorted locally by 2 LSD passes on 28-bit digits (25 each: counting 9, scatter 16) to a 140-bit sort prefix, then scanned once (10); the per-record overhead is itemised at 192 instructions with no percentage allowance. Posting is counted per destination and per block, not per record: a node with n_d records for destination d posts ceil(n_d/25) blocks, at most mu/25 + 2^28 blocks per pass, so the 4 covers the mu/25 part and the partial-block flush of at most one block per destination per pass (3 x 2^28 blocks x 100 instructions per node) is charged as fixed work. The run fails after 2^104 run-pair comparisons or 2^20 verifications (charged at the caps, 2^98.03 and 2^32 units) or if an owner node would exceed C=7247757312=2^32.7549 records (mean mu=2^32.636, load factor 1.0858 after the other per-node allocations, which include the 2^38.229-byte open-block area that every forwarding node holds; Chernoff bound 2^-3.45e7 per node). The final d-th root uses 20 square roots and a 2^11-step search over the 2^20-th roots of unity. Hypotheses: (H1) the 6N^2 ratios x/(u x') are Poisson-like in H, so coverage is 1-exp(-0.50)=0.39347; (H2/H2') a fraction 1/2^20 of the primes near q are H-primes (density 1/(2^20 ln q) among integers), the 2^50-th H-prime above 2^39 is below 2^77 and consecutive listed H-primes differ by at most 2^33 (checked when W is built); (H3) the 140-bit key prefixes of the 2N records behave like independent uniform strings, giving cap-exceedance probability below 2^-11.7 each (Markov) and node-overflow probability far below the budgeted 2^-20 (Chernoff), so success is at least 0.39347-2^-10.7-2^-20 > 0.3928 and 0.39 is claimed. F_r multiplications in prime searches are priced at the 383 instructions of blst_fp_mul. Instruction counts are listed, not measured on hardware; the bound is analytic, memory is exponential, toy experiments are evidence at toy scale only; not a practical break.",
+      "score": {
+        "numerator": "291941",
+        "denominator": "2500"
+      },
+      "evidence": [
+        "proof.md",
+        "evidence.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "mode all (the single initial run) runs ledger (exact recomputation of the cost rows, the 84-bit owner id and its three 28-bit routing digits, the posting bound mu/b + 2^28 blocks per node per pass with its per-record share and its partial-block flush, the two 28-bit LSD passes, the 140-bit sort prefix, the run-pair and verification caps, the node capacity from the per-node memory budget and its Chernoff margin, memory, and an exact integer check of W <= 2^116.7764), coverage (scalar-level toy vs the Poisson model) and ec (Algorithm A end to end on toy j=0 curves with truncated keys, a false-match cap, d-th root and a node-occupancy test). Each mode can be rerun with more trials. Toy results are evidence at toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "maxLength": 16,
+            "enum": [
+              "all",
+              "ledger",
+              "coverage",
+              "ec"
+            ]
+          },
+          "toy": {
+            "type": "string",
+            "maxLength": 8,
+            "enum": [
+              "t28",
+              "t30",
+              "t32"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "K_permille": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 2000
+          },
+          "key_bits": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 2026
+        }
+      ]
+    }
+  ]
+}
