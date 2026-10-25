@@ -1,0 +1,53 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: bucket Cheon v4 (the accepted lead's own slack with a fully closed walk schedule: retained value-indexed gap tables, two-channel C5, exact 2^64-multiple sizes, every price re-derived)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.395 (at least 0.39 required). The success argument is the accepted lineage's law-based argument restated: 1 - e^{-K} = 0.39950 at the lower bound K = 0.51 (the realised 6N^2/m is 0.51 x (1 + 2^-54.2) with N = 65196422678611482903494932429799424 = 2^64 x L exactly) under H1 (the 6N^2(1 - (L-1)/L^2) independent rationals hit z = s^d like uniform elements of H, supported by Lemma 4, the L-entry walk list that realises exactly N distinct scalars per side, three coverage toys and an end-to-end run on a j = 0 curve), minus the eight cap tails C1-C8 (each computed here from scratch, every tail rounded towards the larger probability, together charged 2^-40) minus the 2^-20 C8 modelling budget. C4 and C6 carry the routing/slot conditioning (a compared pair agrees on 84 + 33 = 117 of the 192 key bits; false candidates N^2/2^192 = 2^39.30, Chernoff 2^-5.7e13 at the 2^44 cap); C5 carries two channels (the off-diagonal Poisson tail exp(-1.42e7) and the diagonal challenges z = a/a' at union probability 6*2^128/m = 2^-104.27, the single event that would also break C4/C7). The walk schedule is explicit and closed: per chain the generating node builds and RETAINS the value-indexed gap table [g]Q - the affine point for every even g < 2^33, 2^32 entries at 96 bytes - by a unit walk at one batched addition per entry (the gap-tables term), every step reads its addend from the table, rare gaps above 2^33 split against the reserve, and the 2^16 lockstep segments share the table with one Montgomery inversion per round; the toy retains its per-chain tables the same way. The cost is the exact-integer ledger W = 141260229321733040345609882975462768 target-group-operation units: records 2N x 2000 x (1 + 160/2000) with the per-record charge 160 itemised over a 33-line six-limb listing (maximal 128/122, a 25 percent margin), plus the fourteen re-derived terms - every shared price (383-instruction F_r-multiplication, 2000-instruction batched reference addition, 383-group-operation point scalar multiplication, 512-F_r-multiplication modexp, 128-F_r-multiplication square root) derived in proof.md section 3, not inherited. Only A_1 and A_d are read, so the bound holds for every n >= 2^20. Score = ceil(10^6 log2 W)/10^6 = 116.765839, against the accepted lead's 116.793080; the 0.027241-bit gain is the lead's own published slack (K 0.51 versus 0.52, charge 160 versus 180 at matched 25/26 percent margins) net of the honest repricing.",
+   "score": {
+    "numerator": "116765839",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run, three modes. Mode ledger recomputes every size, term, cap tail, the exact integer memory sum and the exact score from integers and Fractions, asserting d | r-1, 6d | r-1, v2(r-1) = 32, the exact-multiple identity 2^64 x L = N with 6N^2/m >= 0.51, the six-limb itemisation totals (walk side 33, listing 128/122, charged 160 with a 25 percent margin) and the H-prime density sanity (402 sixteenth powers below 2^16 against 408.875 expected); it outputs W = 141260229321733040345609882975462768 units, score 116.765839, the beats-lead integer comparison, the walk schedule block (the retained value-indexed gap table [g]Q, its unit-walk build, the lockstep segments, the split-gap mechanism), the corrected C4 (false mean N^2/2^192 = 2^39.30 with the Chernoff tail), the two-channel C5 (Poisson tail exp(-1.42e7); diagonal challenges 6*2^128/m = 2^-104.27), C6 (both candidate sinks), the preprocessing split (baby side 2^115.7614, tables 2^97.08) and the memory block (per-owner-node 386142163104 bytes over 2^84 nodes; per-generating-node 421595709440 bytes including the retained 2^32 x 96-byte gap table; total 2^122.490 bytes). Mode coverage runs three scalar-level birthday toys (r = 134219713/536872321/2147492353 at d = 32/64/128, L = 60, chains sized for K = 0.51) measuring success against the diagonal-loss prediction 1 - e^{-K'}. Mode ec runs the whole attack end to end on the j = 0 curve y^2 = x^3 + 3 over F_207670579 of prime order r = 207671809 at d = 128: H-primes from a sieve, 15 chains of 25 steps per side with per-chain retained gap tables, the 16-bit parity key routed to 32 pseudo-nodes x 16 heads, the bucket table with the whole baby side inserted first, equal-key candidates kept as (key, id, id'), the linear re-walk with the 4-step kept cap, the six GLV/negation candidates tested against the u-twisted A_d, the recovered z divided by the eigenvalue the endomorphism actually realises on the curve (resolved at setup against P0, not assumed), the 7 square roots and the 128-root scan, asserting every recovered s equals the drawn secret. The full mode=all run completes in under 2 seconds and reproduces byte-identically from a foreign working directory.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": ["ledger", "coverage", "ec", "all"]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 2026,
+     "trials": 120
+    }
+   ]
+  }
+ ]
+}
