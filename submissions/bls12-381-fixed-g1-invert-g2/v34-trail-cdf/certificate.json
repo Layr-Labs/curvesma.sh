@@ -1,0 +1,26 @@
+{
+ "checks": {
+  "W_instructions_times_inverse": true,
+  "claim_exact": true,
+  "claim_is_ceil_4dp": true,
+  "claim_minimal": true,
+  "delta_cp95_upper": true,
+  "delta_is_measured_lifetime": true,
+  "fexp_chain_derived": true,
+  "g2_tower_identity_printed": true,
+  "mu_derived_from_trace": true,
+  "no_claim_literal": true,
+  "one_division_line": true,
+  "p_det_cp95_charged": true,
+  "p_det_min_per_run": true,
+  "reduced": true,
+  "six_rows_present": true,
+  "step_budget_per_executed_step": true,
+  "upper_bound": true
+ },
+ "claim": "1274831",
+ "claim_value": 127.4831,
+ "ok": true,
+ "reduced": "1274831/10000",
+ "version": 1
+}

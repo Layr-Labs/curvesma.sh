@@ -1,0 +1,75 @@
+{
+ "a_cdf": {
+  "bound_rises_when_population_shrinks": true,
+  "never": 1790,
+  "point": 0.18183665176757416,
+  "population": 9844,
+  "rows": [
+   {
+    "cp95_upper": 0.18835125245110906,
+    "n": 9844,
+    "over": 1790
+   },
+   {
+    "cp95_upper": 0.19112030678803432,
+    "n": 4922,
+    "over": 895
+   },
+   {
+    "cp95_upper": 0.19531576628396322,
+    "n": 2461,
+    "over": 448
+   }
+  ],
+  "verdict": "the delta ROW reported for frame B is the CP-95 UPPER bound on the measured P(T > 128*theta); halving and quartering the population raises it (0.1884 -> 0.1911 -> 0.1953), so the bound is data. The CHARGED frame A carries the same lifetime loss inside the merge-all denominator instead (finalize34), so it is counted once"
+ },
+ "b_denominator": {
+  "differ": true,
+  "merge_all": {
+   "charged": 0.04305364323650976,
+   "cp95_lower": 0.7870443434897635,
+   "detected": 123893,
+   "events": 157076,
+   "p": 0.7887455753902569
+  },
+  "selection_bias_delta": 0.7398966105579464,
+  "shared_report_only": {
+   "merged": 7673,
+   "note": "conditioned on a DP hit AND a store record: the selection-biased object",
+   "p": 0.04884896483231047
+  },
+  "verdict": "the two denominators give 0.7887 (all class merges) and 0.0488 (shared reports only): the selection bias is 0.7399, charged as a row"
+ },
+ "c_mu": {
+  "expected_ratio": 0.9090909090909091,
+  "formula": "mu = completed / (launches * theta), per run, averaged",
+  "mean_completed": 19831.875,
+  "mean_launches": 410.1666666666667,
+  "moves": true,
+  "mu_derived": 1.9064890262131258,
+  "mu_with_launches_plus_10pct": 1.7331718420119329,
+  "ratio": 0.9090909090909093,
+  "verdict": "perturbing the trace launch count by +10% moves mu from 1.906489 to 1.733172 (ratio 0.909091 vs 1/1.1 = 0.909091), so the row is computed from the trace, not asserted"
+ },
+ "d_unit_chain": {
+  "base_claim": 127.4831,
+  "carries_minimal": true,
+  "carries_upper": true,
+  "claim_quantum": 0.0001,
+  "control_d_ok": true,
+  "control_d_stdout": [
+   "control d: base 127.4831 ; raw ledger x C_REF -> 141.7709 (shift 14.287800, log2 C_REF 14.287712) ; p_det - 1e-3 -> 127.4767",
+   "control d moves the claim exactly once: True"
+  ],
+  "log2_cref": 14.287712379549449,
+  "raw_times_cref_claim": 141.7709,
+  "shift_bits": 14.287800000000018,
+  "shift_equals_log2_cref": true,
+  "verdict": "the 4-decimal ceiling carries (2^c >= W_ref > 2^(c-1e-4)) and one C_REF division means a scaled ledger moves the claim by exactly log2(20000) = 14.287712 bits"
+ },
+ "inputs": {
+  "delta": "0",
+  "mu": "1794782761/941407339",
+  "p_det": "394947905333/797029382784"
+ }
+}

@@ -1,0 +1,425 @@
+{
+ "charged": 0.49552490016548534,
+ "charged_kind": "cluster lower bound on the mean of the 24 per-run merge-all rates (normal approximation, z=1.96); the pooled binomial and the minimum per-run CP are both reported beside it as the non-exchangeable diagnostics",
+ "detected_total": 123893,
+ "distinct_detected_classes": 782,
+ "distinct_merge_classes": 786,
+ "event_definition": "a step of trail j landing on a class key already visited by a DIFFERENT trail (first such arrival for j); NO store and NO DP requirement, so misses are in the denominator",
+ "events_total": 157076,
+ "frames": {
+  "A": {
+   "delta": 0.0,
+   "effective": 0.49552490016548534,
+   "note": "merge-all rate, cluster lower bound, delta deleted",
+   "p_all": 0.49552490016548534
+  },
+  "B": {
+   "delta": 0.8066464260198536,
+   "effective": 0.1933535739801464,
+   "note": "(1 - delta_max) * conditioned detection",
+   "p_cond": 1.0
+  }
+ },
+ "merge_all_cluster": {
+  "interval": "normal approximation on the mean of the per-run rates",
+  "lower": 0.49552490016548534,
+  "mean": 0.6380494327633621,
+  "n": 24,
+  "sd": 0.3562371231565978,
+  "se": 0.07271659826422285,
+  "upper": 0.7805739653612389,
+  "z": 1.96
+ },
+ "min_per_run_cp95_lower": 0.04305364323650976,
+ "old_v33_object": {
+  "merged": 7673,
+  "note": "merges that reached a DP AND a store record: P(recover | shared report), the selection-biased object v33 charged"
+ },
+ "p_det_conditioned": {
+  "charged": 1.0,
+  "cluster": {
+   "interval": "normal approximation on the mean of the per-run rates",
+   "lower": 1.0,
+   "mean": 1.0,
+   "n": 24,
+   "sd": 0.0,
+   "se": 0.0,
+   "upper": 1.0,
+   "z": 1.96
+  },
+  "min_per_run_cp95_lower": 0.9018553723226655,
+  "per_run": [
+   {
+    "cp95_lower": 0.9820078731719567,
+    "detected": 165,
+    "merged": 165,
+    "rate": 1.0,
+    "seed": 1000
+   },
+   {
+    "cp95_lower": 0.9661523893183396,
+    "detected": 87,
+    "merged": 87,
+    "rate": 1.0,
+    "seed": 1007
+   },
+   {
+    "cp95_lower": 0.9649649693950071,
+    "detected": 84,
+    "merged": 84,
+    "rate": 1.0,
+    "seed": 1014
+   },
+   {
+    "cp95_lower": 0.9948304803868244,
+    "detected": 578,
+    "merged": 578,
+    "rate": 1.0,
+    "seed": 1021
+   },
+   {
+    "cp95_lower": 0.9949439043637518,
+    "detected": 591,
+    "merged": 591,
+    "rate": 1.0,
+    "seed": 1028
+   },
+   {
+    "cp95_lower": 0.9951090012674432,
+    "detected": 611,
+    "merged": 611,
+    "rate": 1.0,
+    "seed": 1035
+   },
+   {
+    "cp95_lower": 0.981218285570732,
+    "detected": 158,
+    "merged": 158,
+    "rate": 1.0,
+    "seed": 1042
+   },
+   {
+    "cp95_lower": 0.982326304949125,
+    "detected": 168,
+    "merged": 168,
+    "rate": 1.0,
+    "seed": 1049
+   },
+   {
+    "cp95_lower": 0.9950768501015218,
+    "detected": 607,
+    "merged": 607,
+    "rate": 1.0,
+    "seed": 1056
+   },
+   {
+    "cp95_lower": 0.9018553723226655,
+    "detected": 29,
+    "merged": 29,
+    "rate": 1.0,
+    "seed": 1063
+   },
+   {
+    "cp95_lower": 0.9910172977304705,
+    "detected": 332,
+    "merged": 332,
+    "rate": 1.0,
+    "seed": 1070
+   },
+   {
+    "cp95_lower": 0.9592463137693562,
+    "detected": 72,
+    "merged": 72,
+    "rate": 1.0,
+    "seed": 1077
+   },
+   {
+    "cp95_lower": 0.977044841554439,
+    "detected": 129,
+    "merged": 129,
+    "rate": 1.0,
+    "seed": 1084
+   },
+   {
+    "cp95_lower": 0.9704869503929111,
+    "detected": 100,
+    "merged": 100,
+    "rate": 1.0,
+    "seed": 1091
+   },
+   {
+    "cp95_lower": 0.9950360618074194,
+    "detected": 602,
+    "merged": 602,
+    "rate": 1.0,
+    "seed": 1098
+   },
+   {
+    "cp95_lower": 0.9923869530002062,
+    "detected": 392,
+    "merged": 392,
+    "rate": 1.0,
+    "seed": 1105
+   },
+   {
+    "cp95_lower": 0.992557181926415,
+    "detected": 401,
+    "merged": 401,
+    "rate": 1.0,
+    "seed": 1112
+   },
+   {
+    "cp95_lower": 0.9950524579604605,
+    "detected": 604,
+    "merged": 604,
+    "rate": 1.0,
+    "seed": 1119
+   },
+   {
+    "cp95_lower": 0.9948659183689377,
+    "detected": 582,
+    "merged": 582,
+    "rate": 1.0,
+    "seed": 1126
+   },
+   {
+    "cp95_lower": 0.9542702976692282,
+    "detected": 64,
+    "merged": 64,
+    "rate": 1.0,
+    "seed": 1133
+   },
+   {
+    "cp95_lower": 0.9950687461555143,
+    "detected": 606,
+    "merged": 606,
+    "rate": 1.0,
+    "seed": 1140
+   },
+   {
+    "cp95_lower": 0.962789323938377,
+    "detected": 79,
+    "merged": 79,
+    "rate": 1.0,
+    "seed": 1147
+   },
+   {
+    "cp95_lower": 0.9222252889948118,
+    "detected": 37,
+    "merged": 37,
+    "rate": 1.0,
+    "seed": 1154
+   },
+   {
+    "cp95_lower": 0.9949778094254024,
+    "detected": 595,
+    "merged": 595,
+    "rate": 1.0,
+    "seed": 1161
+   }
+  ],
+  "pooled": 0.999609651043254
+ },
+ "p_detect_all_merges": 0.7887455753902569,
+ "p_shared_report": 0.04884896483231047,
+ "per_run": [
+  {
+   "cp95_lower": 0.5509406570705409,
+   "detected": 2019,
+   "events": 3575,
+   "p": 0.5647552447552447,
+   "seed": 1000
+  },
+  {
+   "cp95_lower": 0.2805674950199775,
+   "detected": 981,
+   "events": 3342,
+   "p": 0.29353680430879714,
+   "seed": 1007
+  },
+  {
+   "cp95_lower": 0.2445920288672648,
+   "detected": 800,
+   "events": 3107,
+   "p": 0.2574831026713872,
+   "seed": 1014
+  },
+  {
+   "cp95_lower": 0.9693670463173427,
+   "detected": 8332,
+   "events": 8568,
+   "p": 0.9724556489262371,
+   "seed": 1021
+  },
+  {
+   "cp95_lower": 0.9887073369613675,
+   "detected": 6907,
+   "events": 6971,
+   "p": 0.9908191077320327,
+   "seed": 1028
+  },
+  {
+   "cp95_lower": 0.9997759781088437,
+   "detected": 13371,
+   "events": 13371,
+   "p": 1.0,
+   "seed": 1035
+  },
+  {
+   "cp95_lower": 0.5324606678369067,
+   "detected": 2513,
+   "events": 4614,
+   "p": 0.5446467273515387,
+   "seed": 1042
+  },
+  {
+   "cp95_lower": 0.5788312383143133,
+   "detected": 2229,
+   "events": 3764,
+   "p": 0.5921891604675876,
+   "seed": 1049
+  },
+  {
+   "cp95_lower": 0.9993309570139436,
+   "detected": 9406,
+   "events": 9408,
+   "p": 0.9997874149659864,
+   "seed": 1056
+  },
+  {
+   "cp95_lower": 0.04305364323650976,
+   "detected": 181,
+   "events": 3714,
+   "p": 0.04873451803984922,
+   "seed": 1063
+  },
+  {
+   "cp95_lower": 0.792997890652966,
+   "detected": 4550,
+   "events": 5674,
+   "p": 0.8019034191046881,
+   "seed": 1070
+  },
+  {
+   "cp95_lower": 0.15250943142138032,
+   "detected": 819,
+   "events": 5089,
+   "p": 0.1609353507565337,
+   "seed": 1077
+  },
+  {
+   "cp95_lower": 0.367463196306262,
+   "detected": 1426,
+   "events": 3747,
+   "p": 0.3805711235655191,
+   "seed": 1084
+  },
+  {
+   "cp95_lower": 0.26349567588786926,
+   "detected": 901,
+   "events": 3260,
+   "p": 0.2763803680981595,
+   "seed": 1091
+  },
+  {
+   "cp95_lower": 0.9964418663185148,
+   "detected": 13001,
+   "events": 13036,
+   "p": 0.9973151273396748,
+   "seed": 1098
+  },
+  {
+   "cp95_lower": 0.9418670384085601,
+   "detected": 8018,
+   "events": 8475,
+   "p": 0.9460766961651917,
+   "seed": 1105
+  },
+  {
+   "cp95_lower": 0.888455928249591,
+   "detected": 5471,
+   "events": 6112,
+   "p": 0.8951243455497382,
+   "seed": 1112
+  },
+  {
+   "cp95_lower": 0.9983256833252352,
+   "detected": 8610,
+   "events": 8618,
+   "p": 0.9990717103736366,
+   "seed": 1119
+  },
+  {
+   "cp95_lower": 0.9555589926830879,
+   "detected": 8799,
+   "events": 9174,
+   "p": 0.959123610202747,
+   "seed": 1126
+  },
+  {
+   "cp95_lower": 0.23417094353899423,
+   "detected": 698,
+   "events": 2820,
+   "p": 0.2475177304964539,
+   "seed": 1133
+  },
+  {
+   "cp95_lower": 0.9986710226662122,
+   "detected": 14614,
+   "events": 14626,
+   "p": 0.999179543279092,
+   "seed": 1140
+  },
+  {
+   "cp95_lower": 0.27614879746510834,
+   "detected": 1216,
+   "events": 4228,
+   "p": 0.2876064333017975,
+   "seed": 1147
+  },
+  {
+   "cp95_lower": 0.09444865489146205,
+   "detected": 312,
+   "events": 3016,
+   "p": 0.10344827586206896,
+   "seed": 1154
+  },
+  {
+   "cp95_lower": 0.9930411341632769,
+   "detected": 8719,
+   "events": 8767,
+   "p": 0.9945249230067298,
+   "seed": 1161
+  }
+ ],
+ "pooled_cp95_lower": 0.7870443434897635,
+ "reverify": {
+  "checked": 3600,
+  "failed": 0,
+  "recovered": 3600,
+  "skipped": 153476
+ },
+ "selection_bias_delta": 0.7398966105579464,
+ "top_classes": [
+  [
+   160486137436832550,
+   1163
+  ],
+  [
+   4665929591167966,
+   1065
+  ],
+  [
+   26418029072489742,
+   1022
+  ],
+  [
+   164393968331089468,
+   967
+  ],
+  [
+   8671432020528946,
+   932
+  ]
+ ]
+}

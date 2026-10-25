@@ -1,0 +1,200 @@
+{
+ "S": 139528627497097697523360967773670271203,
+ "W_instructions": "4756251854796248714126699096368027969999584",
+ "W_log2": 127.48309271694406,
+ "claim": 127.4831,
+ "claim_reduced": "1274831/10000",
+ "delta_charged": "0",
+ "files": [
+  {
+   "bytes": 10824,
+   "path": "argument.md",
+   "sha256": "1bc2f157e305f510a3a190b73b40479283408c16b1837425f83ff92fd0924f15"
+  },
+  {
+   "bytes": 632,
+   "path": "certificate.json",
+   "sha256": "1410ffb4a4ebc3da3e2a8b3c8c713ee06a46845a86904c0711e3ae16c6cf0b20"
+  },
+  {
+   "bytes": 39,
+   "path": "dependencies.json",
+   "sha256": "b667dc75bb7c8dd08c50487157f53030edc6db5545e130e4f1a03ebea702c413"
+  },
+  {
+   "bytes": 10824,
+   "path": "public-note.md",
+   "sha256": "1bc2f157e305f510a3a190b73b40479283408c16b1837425f83ff92fd0924f15"
+  },
+  {
+   "bytes": 4957,
+   "path": "submission.json",
+   "sha256": "4af622ba6989fd348bb5041e0d5d1fbf9d4ff6da3113d942ef9c4fd397819835"
+  },
+  {
+   "bytes": 2593,
+   "path": "evidence/audit34.json",
+   "sha256": "65ba3e8b3ed221c52fc19e43a12c96152799c33f03ca3af049853d8b3a05b8f0"
+  },
+  {
+   "bytes": 3387,
+   "path": "evidence/ledger34.json",
+   "sha256": "5d29fbe578072bd38ae3ee18894759d75ac70488b26dd1c971d071fa2c29d9c5"
+  },
+  {
+   "bytes": 8276,
+   "path": "evidence/merge34.json",
+   "sha256": "e5bbc9deaaab71a6f01567b86a26512aa9724335ef4a9efb5ee9d63a60582282"
+  },
+  {
+   "bytes": 20548,
+   "path": "evidence/tail34.json",
+   "sha256": "97b95a7ea5e24d1af3eaa023c3d5ca1a506dfd532c139775e0f64cceed05832d"
+  },
+  {
+   "bytes": 7116,
+   "path": "scripts/audit34.py",
+   "sha256": "2b7b05fd5b50083e2b26bad50df1d39a44800f00ea8bca55b4e02ae14bfeeb8e"
+  },
+  {
+   "bytes": 11347,
+   "path": "scripts/classkey.py",
+   "sha256": "36e474264a2bfe82f28c9574c1ef2c76549a09532d2822f766e18d81de10bb49"
+  },
+  {
+   "bytes": 10554,
+   "path": "scripts/constants.py",
+   "sha256": "cc9cab53c58b55dab7520b6ea353befcae133d01dff490bf55592cf8a5148f62"
+  },
+  {
+   "bytes": 2108,
+   "path": "scripts/cp95.py",
+   "sha256": "4d5cf9ce997483d007981b9324d7c5e8fea8590335d8ad4c122e95bb405fc5b2"
+  },
+  {
+   "bytes": 11849,
+   "path": "scripts/emit_v34.py",
+   "sha256": "b792d8cb86a86406fa14c6fa6afb0979fd21f7a93e771c0ed076614537d06071"
+  },
+  {
+   "bytes": 6392,
+   "path": "scripts/finalize34.py",
+   "sha256": "931a2bfbc5c72259608d211901ee73f0355a601e3a2e2a73064f1e47d865d5c4"
+  },
+  {
+   "bytes": 19270,
+   "path": "scripts/ledger.py",
+   "sha256": "e50fdf2458dd07b96f1c9bebdf83a6a68f44dbf95b6fb2f03e3b66f92e9e23cb"
+  },
+  {
+   "bytes": 16906,
+   "path": "scripts/ledger34.py",
+   "sha256": "c05fd87857f8ffb619a5fddc149be16e4da2e0b4619b6731ffadbe2e0a052b69"
+  },
+  {
+   "bytes": 16485,
+   "path": "scripts/measure_v34.py",
+   "sha256": "803fe7558dcf2f8811c79b47d042c08bcc58ec3e9bf899c167437f3bbf598526"
+  },
+  {
+   "bytes": 17470,
+   "path": "scripts/protocol.py",
+   "sha256": "320d3c177a3b63b4a6522112a59f404761ce3fc13c2d8a453e40795a483fbff0"
+  },
+  {
+   "bytes": 5037,
+   "path": "scripts/regen_v34.py",
+   "sha256": "331a06f501d3885909b4cea0bc52766a792f297b451b390bad7602841e9d264f"
+  },
+  {
+   "bytes": 5349,
+   "path": "scripts/routing.py",
+   "sha256": "cc50bf657ac351e08a4023b929d4958fb7f482cb8c2cbfe6dfc0eb50d2fe1a3d"
+  },
+  {
+   "bytes": 6657,
+   "path": "scripts/tower.py",
+   "sha256": "d7140ebc9e14ebdd2cad40f918c1c13e0c38bc340a6d5e4ce4af0a21345d25cb"
+  },
+  {
+   "bytes": 6035,
+   "path": "scripts/toy.py",
+   "sha256": "e307e3cef308f5f79381e04ea565d3d9a6f3afcc343055f02f9a89e766a738c2"
+  }
+ ],
+ "frames": {
+  "A": {
+   "delta": 0.0,
+   "effective": 0.49552490016548534,
+   "note": "merge-all rate, cluster lower bound, delta deleted",
+   "p_all": 0.49552490016548534
+  },
+  "B": {
+   "delta": 0.8066464260198536,
+   "effective": 0.1933535739801464,
+   "note": "(1 - delta_max) * conditioned detection",
+   "p_cond": 1.0
+  }
+ },
+ "measured": {
+  "delta_worst_run_cp95_upper": 0.8066464260198536,
+  "detected": 123893,
+  "merge_events": 157076,
+  "min_per_run_cp95_lower": 0.04305364323650976,
+  "never": 1790,
+  "p_T_gt_cap": 0.18183665176757416,
+  "p_all_cluster_lower": 0.49552490016548534,
+  "p_all_merges": 0.7887455753902569,
+  "p_det_conditioned": 1.0,
+  "selection_bias": 0.7398966105579464,
+  "trails": 9844
+ },
+ "mu_charged": "1794782761/941407339",
+ "n_files": 23,
+ "p_det_charged": "394947905333/797029382784",
+ "pairing": {
+  "extra_instr": 155520,
+  "final_exp_chain": {
+   "easy_fp12": "821/54",
+   "fp_inversion_fp_muls": 608,
+   "hard_exponentiations": 3,
+   "hard_fp12": 216,
+   "hard_muls_chain": 12,
+   "inversion_fp12": "713/54",
+   "multiply_per_exp": 5,
+   "rule": "binary square-and-multiply: (bitlen-1) squarings + (popcount-1) multiplies for the exponent |x|; three exponentiations plus the 12-mul hard-part chain; easy part 1 inversion + 2 muls",
+   "square_per_exp": 63,
+   "total_fp12": "12485/54",
+   "total_fp12_ceil": 232,
+   "x": "0xd201000000010000",
+   "x_bits": 64,
+   "x_hamming": 6
+  },
+  "final_exp_fp12": 232,
+  "fixed_p_fp12": 1765,
+  "fp12_from_karatsuba": 54,
+  "fp12_tower": {
+   "fp2_mul_per_fp6": 6,
+   "fp6_mul_per_fp12": 3,
+   "fp_mul_per_fp2": 3
+  },
+  "g2_add_instr": 142240,
+  "g2_adds": 7112,
+  "g2_ctrl_instr": 8160,
+  "g2_fp12mul": "2032/9",
+  "g2_fp_mul": 12192,
+  "miller_adds_instr": 5120,
+  "miller_fp12": 1533,
+  "pairing_fp12mul": "33802/9",
+  "pairing_instructions": "75115556",
+  "pairing_instructions_total": "75271076",
+  "pairing_log2": 26.16559225915219,
+  "verify_fp12": 1765
+ },
+ "score": {
+  "denominator": "10000",
+  "numerator": "1274831"
+ },
+ "total_bytes": 204655,
+ "version": 1
+}

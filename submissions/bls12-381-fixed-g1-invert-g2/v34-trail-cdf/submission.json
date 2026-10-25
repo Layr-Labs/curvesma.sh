@@ -1,0 +1,29 @@
+{
+ "claims": [
+  {
+   "evidence": [
+    "evidence/tail34.json",
+    "evidence/merge34.json",
+    "evidence/audit34.json",
+    "evidence/ledger34.json",
+    "evidence/submission34.json",
+    "argument.md",
+    "public-note.md",
+    "scripts/protocol.py",
+    "scripts/measure_v34.py",
+    "scripts/ledger34.py",
+    "scripts/regen_v34.py",
+    "scripts/audit34.py",
+    "scripts/finalize34.py"
+   ],
+   "score": {
+    "denominator": "10000",
+    "numerator": "1274831"
+   },
+   "statement": "Recover x from z = g^x in the order-r subgroup of BLS12-381 GT by the Frobenius-class rho walk of scripts/protocol.py, returning [x]Q0 verified by e(P,Q) = z. CLAIM: the least n/10000 with 2^(n/10000) >= W/C_REF, W the exact INSTRUCTION total of evidence/ledger34.json (W = 2^127.483093 instructions), C_REF = 20000 the dense Fp12 multiply price, so the division by C_REF happens exactly once; scripts/regen_v34.py emits it and no claim literal is typed. TAIL ON THE RIGHT OBJECT (v33 flaw 1). v33 charged q^R with R = min(cap, S - t_launch), the AGGREGATE remaining budget, once per step; routing.dp_hit reads a field of the CLASS KEY, so that was the wrong random variable. v34 instruments the shipped run_protocol and measures each trail's own lifetime T = executed steps to its first DP report over 9844 trails in 24 runs (S = 20000), resolving every never-reporting trail EXACTLY through the deterministic class map, so T is fully observed with no censoring and no estimator. The measured survival is flat above q = 32 (largest finite T = 61): P(T > 128*theta) = 1790/9844 = 0.181837 pooled, 0.806646 on the worst run; the per-trail cap is the schedule line `self.cap = cap_mult * self.theta` (cap_mult = 128, 4096 steps) enforced by `limit = cfg.cap`, and no aggregate R is used anywhere. CHARGED (see below) delta = 0: the verdict's own first remedy. The lifetime loss is real but it is not a separate multiplicative event -- it lands on the MERGE, so it is charged there, once, and the two factorizations are both printed; charging the worst-run UPPER bound (0.8066) makes the 0.392 target INFEASIBLE at all ((1-delta) = 0.1934 < 0.392), which is a statement about the degenerate 785-class fixture, not about production. MERGES COUNTED WITHOUT THE STORE (v33 flaw 2). v33 conditioned on a shared report (1054/1054). v34 defines a class merge as a step of one trail landing on a class a DIFFERENT trail already visited -- no DP, no store lookup -- so trajectory merges that never reach a DP stay in the denominator: 157076 events, 123893 detected inside the follower's remaining lifetime, P(detect|merge) = 0.788746 pooled (CP-lo 0.787044). Because the class map is deterministic and destination classes are shared, events are NOT exchangeable Bernoulli draws; pooling is refused and the CLUSTER lower bound on the mean of the 24 per-run rates, 0.043054, is charged (the minimum per-run CP-lo 0.0431 and the pooled CP-lo are reported beside it as the pessimistic diagnostics). The old shared-report object is 0.048849, so the selection bias is 0.739897. MU DERIVED (v33 flaw 3). mu = completed/(launches*theta) = 1.906489 measured on the same runs, replacing the imported 1.1 (an audit perturbs the trace launch count by +10 percent and the row moves by exactly 1/1.1). CONSTANTS DERIVED (v33 accounting). The final exponentiation is COUNTED from the shipped BLS12-381 seed |x| = 0xd201000000010000 (64 bits, Hamming weight 6): 63 squarings + 5 multiplies per exponentiation, three of them, plus the 12-mul hard-part chain, plus the easy part (1 inversion + 2 muls) = 232 Fp12 multiplications; v33 asserted 300 with no chain. The G2 row prints the Karatsuba tower identity 54 = 18 Fp2-mul x 3 Fp-mul and charges its 142240 addition and loop-control instructions instead of hiding them inside the divisor. UNCHANGED AND ACCEPTED BY v33: the per-executed-step budget inside run_protocol (consumed == executed on every run, completed <= S on every run, completed == S on the 22 runs that halt at the budget; the other 2 stop earlier at the launch bound, which is a legitimate stop and is disclosed), DP-first termination, the twelve-shift recovery with verification, the in-flight gate, and the single C_REF division (a scaled ledger moves the claim by exactly log2(20000) = 14.287800 bits). DISCLOSED: the fixture is 785 classes, so its walk is degenerate and the seed-to-seed spread of both measured penalties is large (1790 of 9844 trails never report, but per-run never-rates run from 0.002 to 0.753); at production theta = 2^80 with S >> theta the same quantities are far smaller, so charging the fixture values is conservative, and section 6 of argument.md prints the sensitivity row (v33 premises, delta = 0, mu = 1.1)."
+  }
+ ],
+ "experiments": [],
+ "title": "Claim 127.4831: per-trail lifetime-to-DP CDF measured, P(detect|merge) on ALL class merges at a cluster lower bound, mu and the final-exponentiation chain derived from the trace",
+ "version": 1
+}
