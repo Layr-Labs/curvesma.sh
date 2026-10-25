@@ -1,0 +1,21 @@
+{
+ "checks": {
+  "claim_exact": true,
+  "claim_is_ceil_4dp": true,
+  "claim_minimal": true,
+  "counter_87_bit": true,
+  "labels_255_bit": true,
+  "no_claim_literal": true,
+  "pairing_instruction_counted": true,
+  "reduced": true,
+  "retention_charged": true,
+  "retention_measured": true,
+  "six_rows_present": true,
+  "total_log2_matches": true
+ },
+ "claim": "634779",
+ "claim_value": 126.9558,
+ "ok": true,
+ "reduced": "634779/5000",
+ "version": 1
+}

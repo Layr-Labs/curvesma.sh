@@ -1,0 +1,34 @@
+{
+ "a_integration": {
+  "budget": 400,
+  "steps_nodp_note": "no DP test, so every trail runs to the cap: the control burns more steps for zero successes",
+  "success_protocol": 0.75,
+  "success_skip_dp": 0.0,
+  "trials": 24
+ },
+ "b_sampler_order": {
+  "bug_matches": 0,
+  "bug_retention": 0.0,
+  "fixed_matches": 40,
+  "fixed_retention": 0.6,
+  "fixed_shared": 6,
+  "hist_differs": true,
+  "mean_age_bug": null,
+  "mean_age_fixed": 30891.7,
+  "suppressed_shared_events": 2770
+ },
+ "c_bootstrap_credit": {
+  "binds": true,
+  "bootstrap": [],
+  "completed": 971,
+  "consumed": 4000,
+  "consumed_equals_launches_times_theta": true,
+  "cut_steps": 8,
+  "launch_bound": 125,
+  "launches": 125,
+  "n_bootstrap": 125,
+  "v31_credit_charged": 0,
+  "v31_note": "v31 free bootstrap: the same 125 launches would have charged 0 and the bound would never bind; v32 charges theta per launch, consumed = launches*theta exactly"
+ },
+ "d_regen_carry": true
+}
