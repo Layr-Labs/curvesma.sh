@@ -1,0 +1,200 @@
+{
+ "mode": "bounds35-from-source",
+ "source": "scripts/ir28/dict28.c (parsed, not transcribed)",
+ "parsed_constants": {
+  "PROBES": 4,
+  "ENTRY": 9,
+  "NODE_BYTES": 33554432,
+  "BUCKET_HEAD_BYTES": 8,
+  "HEADER_BYTES": 16,
+  "NB_FIELD_BITS": 64,
+  "NB_MAX_LOG2": 63,
+  "PROBE_MASK_BITS": 128
+ },
+ "production_layout": {
+  "rule": "radix tree over the 128-bit slot: h = ceil(128/22) = 6 levels, node = 2^22 x 8 B = 33554432 B (<= SIZE_MAX); v35's two u64 levels are withdrawn",
+  "shipped_db": 22,
+  "height": 6,
+  "node_bytes": 33554432,
+  "max_single_allocation_bytes": 33554432,
+  "max_level_count_x_elem": 33554432,
+  "size_max": 18446744073709551615,
+  "all_allocations_within_size_max": true,
+  "heads_log2": 132,
+  "heads": "340282366920938463463374607431768211456",
+  "capacity": "PROBES x heads = 4 x 2^126",
+  "capacity_log2": 134,
+  "load_factor_ok": true,
+  "lambda_bucket": 0.2815416776890734,
+  "lambda_definition": "lambda_bucket = arrivals / heads (occupancy per bucket head)",
+  "v34_withdrawn": "2^128 bucket heads / 2^130 node capacity: dict28_ws_init takes u64 nb and ws_bucket masks 64 bits, so neither is representable or addressable"
+ },
+ "bounds_table": [
+  {
+   "array": "records[] (A,D,y) per insert",
+   "source_constant": "one entry per executed step",
+   "bound_formula": "min(arrivals, capacity) = S",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 640,
+   "bytes": "61314347821395110752143633599358550457600",
+   "max_single_allocation_bytes": 10737418240,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "alive[] / matched[] / trail_ids[]",
+   "source_constant": "protocol28.run_one lists",
+   "bound_formula": "one flag per record + the 8-byte trail id the v35 gate reads",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 10,
+   "bytes": "958036684709298605502244274989977350900",
+   "max_single_allocation_bytes": 167772160,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "guard ring hist[]",
+   "source_constant": "depth = 6 (protocol config)",
+   "bound_formula": "<= depth = 6",
+   "value": "6",
+   "bytes_per_entry": 8,
+   "bytes": "48",
+   "max_single_allocation_bytes": 48,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "probe chain per bucket",
+   "source_constant": "#define PROBES 4",
+   "bound_formula": "<= PROBES = 4 (chain full triggers the shipped FIFO eviction)",
+   "value": "4",
+   "bytes_per_entry": 33554432,
+   "bytes": "134217728",
+   "max_single_allocation_bytes": 134217728,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "slot_export buffers (keys_buf, ref, ev)",
+   "source_constant": "6 key words + 2 ref words + 2 evicted words",
+   "bound_formula": "fixed scratch: 6 + 2 + 2 words",
+   "value": "10",
+   "bytes_per_entry": 8,
+   "bytes": "80",
+   "max_single_allocation_bytes": 80,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "sort work array",
+   "source_constant": "N = 12 (Fp12 degree), 6 limbs each",
+   "bound_formula": "N = 12, 6 words each",
+   "value": "12",
+   "bytes_per_entry": 48,
+   "bytes": "576",
+   "max_single_allocation_bytes": 576,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "radix node (one calloc per reached node)",
+   "source_constant": "#define D28_DB 22 -> calloc(2^22, sizeof(ws_node *))",
+   "bound_formula": "2^22 x 8 B per node, h = ceil(128/22) = 6 levels; the LARGEST single allocation in the store",
+   "value": "4194304",
+   "bytes_per_entry": 8,
+   "bytes": "33554432",
+   "max_single_allocation_bytes": 33554432,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "radix nodes reached (lazy path allocation)",
+   "source_constant": "h levels x ceil(arrivals / (PROBES x 2^D28_DB)) leaves",
+   "bound_formula": "ceil(S/(4*2^22)) x 6 nodes x 2^22 x 8 B",
+   "value": "34262061764334390360197220146298",
+   "bytes_per_entry": 33554432,
+   "bytes": "1149644021651158326602693129987986292736",
+   "max_single_allocation_bytes": 562949953421312,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "node pool",
+   "source_constant": "sizeof(ws_node) = 33554432 B, one per live record",
+   "bound_formula": "min(arrivals, capacity) = S nodes x 33554432 B",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 33554432,
+   "bytes": "3214637679058359982601988137254049570231418880",
+   "max_single_allocation_bytes": 562949953421312,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "meter rows / counters",
+   "source_constant": "6 meter rows + 16 exported C counters",
+   "bound_formula": "22 x 8 B",
+   "value": "22",
+   "bytes_per_entry": 8,
+   "bytes": "176",
+   "max_single_allocation_bytes": 176,
+   "single_allocation_ok": true
+  }
+ ],
+ "peak_bytes": "3214701101086887738169672385825053906913293156",
+ "init_ir": "143705502706394790825336641248498286592",
+ "init_rule": "zeroing/initialising the bucket array is charged: d28_it_outer += nb counts one increment per head, and the shard headers are one calloc each; no row is free",
+ "type_table": [
+  {
+   "quantity": "bucket bits (production)",
+   "spec_bits": 128,
+   "code_type": "u64 bits field; dict28_ws_init rejects bits>128",
+   "max_value": "128",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "radix digit bits / height",
+   "spec_bits": 22,
+   "code_type": "u64 db (<=22: 2^22*8 B = 32 MiB <= SIZE_MAX); h=ceil(bits/db)",
+   "max_value": "22",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "bucket index",
+   "spec_bits": 128,
+   "code_type": "u128 (rd_leaf descends the full slot; no 64-bit mix)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "slot label / record reference",
+   "spec_bits": 128,
+   "code_type": "u128 slot; u64 ref[2] (two-word)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "live records (capacity)",
+   "spec_bits": 134,
+   "code_type": "u64 d28_ws_live (fixture); capacity = PROBES x heads",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 70
+  },
+  {
+   "quantity": "arrivals (records written)",
+   "spec_bits": 127,
+   "code_type": "Python int (ledger) / u64 counter in the fixture",
+   "max_value": "95803668470929860550224427498997735090",
+   "headroom_bits": 0
+  }
+ ],
+ "sweep": {
+  "patterns": [
+   "2^126 heads",
+   "2^130",
+   "2^135.75",
+   "1361129467683753853853498429727072845824"
+  ],
+  "exempt_file": "evidence/historical-disclosure.json",
+  "violations_after_planting_the_control": [
+   {
+    "file": "PLANTED/control",
+    "line": 1,
+    "token": "2^130",
+    "text": "planted stale token -- the sweep MUST flag this"
+   }
+  ],
+  "planted_control_flagged": true,
+  "rule": "a stale token is allowed ONLY in evidence/historical-disclosure.json or on a line that names its withdrawn source (v34 / ea688603 / withdraw).  The sweep is run AFTER planting one bare token; if the planted token is not flagged the sweep is broken and the package must not fire."
+ }
+}

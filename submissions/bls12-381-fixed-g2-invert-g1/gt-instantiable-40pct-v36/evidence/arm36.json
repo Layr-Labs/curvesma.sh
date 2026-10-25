@@ -1,0 +1,59 @@
+{
+ "policy": "shipped dict28.c four-probe FIFO chains (evict tail when chain reaches PROBES=4)",
+ "lambda_rule": "lambda_b = S / 2^128: the v36 store addresses the FULL 128-bit slot through a radix tree of h = ceil(128/D28_DB) = 6 levels, node = 2^22 x 8 B = 32 MiB <= SIZE_MAX, every allocation <= SIZE_MAX (evidence/bounds36.json). v35's 2^126 heads and its lambda 1.1262 are WITHDRAWN: that layout needs a 2^63 x 8 B = 2^66 B calloc, which does not fit the stated 64-bit ABI.",
+ "lambda_num": "95803668470929860550224427498997735090",
+ "lambda_den": "340282366920938463463374607431768211456",
+ "lambda": 0.2815416776890734,
+ "nb_total_log2": 128,
+ "fixture_nb": 4096,
+ "arrivals": 1153,
+ "trials": 900,
+ "lambda_hat": 0.281494140625,
+ "retention": {
+  "resident": 1037652,
+  "denominator": 1037700,
+  "p_hat": 0.999953743856606,
+  "se": 6.676344793718029e-06,
+  "p_derived": 0.9999883322852278,
+  "delta": -3.458842862180678e-05,
+  "delta_explanation": "1-P(Poisson(lambda)>=5) is the terminal-size limit for an insertion-only bucket; the shipped chain evicts during fill as well, so the measured loss is larger. Both are reported; the LOWER of the two is used."
+ },
+ "kappa_detect_cross": {
+  "hits": 62007,
+  "probes": 62008,
+  "k_hat": 0.9999838730486389,
+  "se": 1.612682132130606e-05
+ },
+ "kappa_detect_within": {
+  "hits": 60794,
+  "probes": 60794,
+  "k_hat": 1.0,
+  "se": 0.0,
+  "definition": "P(a WITHIN-TRAIL pair is detected): the planted record is an earlier record of the arriving record's own trail (lag < 64), so this is the class v35 discarded."
+ },
+ "kappa_detect_pooled": {
+  "hits": 122801,
+  "probes": 122802,
+  "k_hat": 0.9999918568101497,
+  "se": 8.14315669448519e-06,
+  "rule": "pooled over BOTH classes; the classes partition the pairs, so no pair is counted twice"
+ },
+ "kappa_detect": {
+  "hits": 62007,
+  "probes": 62008,
+  "k_hat": 0.9999838730486389,
+  "se": 1.612682132130606e-05,
+  "definition": "P(true cross-trail key collision is DETECTED) = P(the earlier record is resident and the shipped dict28_wide_lookup returns its reference at the later arrival). Injected-collision control: uniformly chosen earlier key replayed through the shipped lookup.",
+  "control_wrong_ref_rejected": true
+ },
+ "success_debit": {
+  "rule": "p_used = p5 * min(kappa_lower, retention_lower)",
+  "kappa_lower_3se": 0.999935492584675,
+  "kappa_lower_rule": "the MINIMUM of the two class lower bounds (cross, within), each at 3 sigma; the detection debit is the worse class, not the pooled average",
+  "retention_lower_3se": 0.9999337148222248
+ },
+ "wrong_lambda_control": {
+  "lambda": 0.2815416777,
+  "note": "the v34 lambda is not instantiable by the shipped u64 store (the v34 head count); the arm is not run there because no bucket count of that size can be initialised"
+ }
+}

@@ -1,0 +1,350 @@
+{
+ "mode": "ledger36-spec-to-code",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers declared, depth 6, 128-bit radix store",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "95803668470929860550224427498997735090",
+  "budget": {
+   "rule": "W_total is TOTAL WORK: every executed step is charged at STEP_IR (the walk rows), whether it ends in a relation or in an abandoned trail; the only row outside them is the fresh trail start, charged ceil(S/L) x RESTART BY CONSTRUCTION because every trail is capped at L = 64 steps.  Nothing here is a probabilistic bound on a toy frequency.",
+   "per_trail_step_cap": 64,
+   "per_trail_cap_quote": {
+    "file": "scripts/protocol36.py",
+    "line": 349,
+    "verbatim": "for _k in range(cfg[\"trail\"]):"
+   },
+   "abort_line_quote": {
+    "file": "scripts/protocol36.py",
+    "line": 365,
+    "verbatim": "                stall += 1\n                if guard:\n                    armed = True\n                if armed and stall >= K_STALL:\n                    aborts += 1; aborted = abandoned = True"
+   },
+   "aborted_steps_charged_as_work": true,
+   "aborted_steps_measured": 0,
+   "steps_measured": 587638,
+   "measured_waste_fraction": 0.0,
+   "success_denominator": "S_eff = S: the budget is stated in EXECUTED steps and every one of them is charged, so the success model uses S and the waste is inside the charge instead of being added to it",
+   "withdrawn": "v35 trap_abort_waste = ceil(4497*S/5040000) x (32*STEP_IR + RESTART): Markov does not turn an observed toy abort frequency into an upper bound, and the aborted window's steps were already charged in the walk rows (double charge)."
+  },
+  "detection": {
+   "mechanism": "the shipped dict28_wide_lookup hit; BOTH collision classes are accepted (within-trail and cross-trail), each hit is one pair and the classes partition the hits.  recovery is x = (q^k A1 - A2)/(D2 - q^k D1) with the Frobenius index k from G.shift(); the denominator vanishes only with probability 1/r, so a same-trail pair is USABLE -- v35's discard rested on the false identity 'same start => D2 - q^k D1 = 0'.",
+   "store_shared_across_workers": true,
+   "store_load_bearing": true,
+   "kappa_detect": 0.9999838730486389,
+   "kappa_detect_within": 1.0,
+   "kappa_detect_pooled": 0.9999918568101497,
+   "kappa_lower_3se": 0.999935492584675,
+   "kappa_source": "evidence/arm36.json: an injected-collision arm for EACH class at the production lambda; the debit uses the worse class, not the pool"
+  },
+  "census_fidelity": {
+   "depth": 6,
+   "dict": "shipped dict28.c (radix, evicting), 9-word entries, 4-probe chains",
+   "workers_measured": [
+    8,
+    64,
+    128
+   ],
+   "workers_declared": 1024,
+   "production_1024_not_reachable": true,
+   "why": "trail >= guard ring (6) for guard stationarity; the partition series at fixed S carries the W-dependence"
+  }
+ },
+ "store_spec_to_code": {
+  "shipped_structure": "radix tree over the 128-bit slot: h = ceil(128/22) = 6 levels, node = 2^22 x 8 B = 33554432 B (<= SIZE_MAX); v35's two u64 levels are withdrawn",
+  "parsed_constants": {
+   "PROBES": 4,
+   "ENTRY": 9,
+   "NODE_BYTES": 33554432,
+   "BUCKET_HEAD_BYTES": 8,
+   "HEADER_BYTES": 16,
+   "NB_FIELD_BITS": 64,
+   "NB_MAX_LOG2": 63,
+   "PROBE_MASK_BITS": 128
+  },
+  "production_layout": {
+   "rule": "radix tree over the 128-bit slot: h = ceil(128/22) = 6 levels, node = 2^22 x 8 B = 33554432 B (<= SIZE_MAX); v35's two u64 levels are withdrawn",
+   "shipped_db": 22,
+   "height": 6,
+   "node_bytes": 33554432,
+   "max_single_allocation_bytes": 33554432,
+   "max_level_count_x_elem": 33554432,
+   "size_max": 18446744073709551615,
+   "all_allocations_within_size_max": true,
+   "heads_log2": 132,
+   "heads": "340282366920938463463374607431768211456",
+   "capacity": "PROBES x heads = 4 x 2^126",
+   "capacity_log2": 134,
+   "load_factor_ok": true,
+   "lambda_bucket": 0.2815416776890734,
+   "lambda_definition": "lambda_bucket = arrivals / heads (occupancy per bucket head)",
+   "v34_withdrawn": "2^128 bucket heads / 2^130 node capacity: dict28_ws_init takes u64 nb and ws_bucket masks 64 bits, so neither is representable or addressable"
+  },
+  "lambda_bucket": 0.2815416776890734,
+  "lambda_rule": "lambda = S / 2^128: the radix store addresses the full 128-bit slot, so 2^128 buckets are instantiable at 32 MiB per node.  v35's 2^126 heads are withdrawn, and lambda 1.1262 are withdrawn (2^66 B calloc > SIZE_MAX).",
+  "measured_retention_at_production_lambda": {
+   "resident": 1037652,
+   "denominator": 1037700,
+   "p_hat": 0.999953743856606,
+   "se": 6.676344793718029e-06,
+   "p_derived": 0.9999883322852278,
+   "delta": -3.458842862180678e-05,
+   "delta_explanation": "1-P(Poisson(lambda)>=5) is the terminal-size limit for an insertion-only bucket; the shipped chain evicts during fill as well, so the measured loss is larger. Both are reported; the LOWER of the two is used."
+  },
+  "measured_kappa_detect": {
+   "hits": 62007,
+   "probes": 62008,
+   "k_hat": 0.9999838730486389,
+   "se": 1.612682132130606e-05,
+   "definition": "P(true cross-trail key collision is DETECTED) = P(the earlier record is resident and the shipped dict28_wide_lookup returns its reference at the later arrival). Injected-collision control: uniformly chosen earlier key replayed through the shipped lookup.",
+   "control_wrong_ref_rejected": true
+  },
+  "retention_lower_3se": 0.9999337148222248,
+  "kappa_lower_3se": 0.999935492584675
+ },
+ "arithmetic": {
+  "fp12_tower": {
+   "f6mul_calls_in_f12mul": 4,
+   "f2mul_per_f6mul": 6,
+   "fpmul_per_f2mul": 3,
+   "fpmul_per_f12mul": 72,
+   "source": "scripts/ir25/kernels.c f12mul, parsed"
+  },
+  "fp_mul_ir": 666,
+  "mul_charge_ir": 47924,
+  "sqr_charge_ir": 25372,
+  "montmul_ir": 472,
+  "keys12_ir": 2037,
+  "lookup_span_ir": 149,
+  "insert_span_ir": 267,
+  "addressing_rule": "the radix descent is INLINED into dict28_wide_lookup/insert (rd_leaf has no symbol at -O2); 4 x the loop-free span (596 / 1068 Ir) is below the censused per-call charges 959 / 1711 Ir, so per-access addressing is charged by those rows and the init row is nodes x 2^22",
+  "row_anchors": {
+   "fp12_dense_mulmod": "executed f12mul span x non-guard steps",
+   "fp12_guard_cyclo_sqr": "executed cyclotomic-square span x guard steps",
+   "keys12_formation": "span(d28_keys12_form) + 4 x span(d28_montmul_r), both read from the shipped object's disassembly; every loop <= 4 iterations, so 4x the loop-free span upper-bounds the executed count",
+   "scalar_coefficient_update": "2 x span(d28_montmul_r) x 4 -- the executed MAC implementation, NOT an Fp12 span divided by 72",
+   "store_addressing_radix": "2 x span(rd_leaf): the fixture descends h=3 levels, production h=6, so twice the executed descent covers the production one"
+  }
+ },
+ "budget": {
+  "ledger_row": "trail_starts_construction",
+  "per_trail_step_cap": 64,
+  "trail_starts": "1496932319858279071097256679671839611",
+  "charge_ir": "11466501570114417684604986166286291420260",
+  "steps_aborted_measured": 0,
+  "steps_measured": 587638,
+  "evidence": "evidence/trap36.json"
+ },
+ "bounds_table": [
+  {
+   "array": "records[] (A,D,y) per insert",
+   "source_constant": "one entry per executed step",
+   "bound_formula": "min(arrivals, capacity) = S",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 640,
+   "bytes": "61314347821395110752143633599358550457600",
+   "max_single_allocation_bytes": 10737418240,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "alive[] / matched[] / trail_ids[]",
+   "source_constant": "protocol28.run_one lists",
+   "bound_formula": "one flag per record + the 8-byte trail id the v35 gate reads",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 10,
+   "bytes": "958036684709298605502244274989977350900",
+   "max_single_allocation_bytes": 167772160,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "guard ring hist[]",
+   "source_constant": "depth = 6 (protocol config)",
+   "bound_formula": "<= depth = 6",
+   "value": "6",
+   "bytes_per_entry": 8,
+   "bytes": "48",
+   "max_single_allocation_bytes": 48,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "probe chain per bucket",
+   "source_constant": "#define PROBES 4",
+   "bound_formula": "<= PROBES = 4 (chain full triggers the shipped FIFO eviction)",
+   "value": "4",
+   "bytes_per_entry": 33554432,
+   "bytes": "134217728",
+   "max_single_allocation_bytes": 134217728,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "slot_export buffers (keys_buf, ref, ev)",
+   "source_constant": "6 key words + 2 ref words + 2 evicted words",
+   "bound_formula": "fixed scratch: 6 + 2 + 2 words",
+   "value": "10",
+   "bytes_per_entry": 8,
+   "bytes": "80",
+   "max_single_allocation_bytes": 80,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "sort work array",
+   "source_constant": "N = 12 (Fp12 degree), 6 limbs each",
+   "bound_formula": "N = 12, 6 words each",
+   "value": "12",
+   "bytes_per_entry": 48,
+   "bytes": "576",
+   "max_single_allocation_bytes": 576,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "radix node (one calloc per reached node)",
+   "source_constant": "#define D28_DB 22 -> calloc(2^22, sizeof(ws_node *))",
+   "bound_formula": "2^22 x 8 B per node, h = ceil(128/22) = 6 levels; the LARGEST single allocation in the store",
+   "value": "4194304",
+   "bytes_per_entry": 8,
+   "bytes": "33554432",
+   "max_single_allocation_bytes": 33554432,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "radix nodes reached (lazy path allocation)",
+   "source_constant": "h levels x ceil(arrivals / (PROBES x 2^D28_DB)) leaves",
+   "bound_formula": "ceil(S/(4*2^22)) x 6 nodes x 2^22 x 8 B",
+   "value": "34262061764334390360197220146298",
+   "bytes_per_entry": 33554432,
+   "bytes": "1149644021651158326602693129987986292736",
+   "max_single_allocation_bytes": 562949953421312,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "node pool",
+   "source_constant": "sizeof(ws_node) = 33554432 B, one per live record",
+   "bound_formula": "min(arrivals, capacity) = S nodes x 33554432 B",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 33554432,
+   "bytes": "3214637679058359982601988137254049570231418880",
+   "max_single_allocation_bytes": 562949953421312,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "meter rows / counters",
+   "source_constant": "6 meter rows + 16 exported C counters",
+   "bound_formula": "22 x 8 B",
+   "value": "22",
+   "bytes_per_entry": 8,
+   "bytes": "176",
+   "max_single_allocation_bytes": 176,
+   "single_allocation_ok": true
+  }
+ ],
+ "peak_bytes": "3214701101086887738169672385825053906913293156",
+ "type_table": [
+  {
+   "quantity": "bucket bits (production)",
+   "spec_bits": 128,
+   "code_type": "u64 bits field; dict28_ws_init rejects bits>128",
+   "max_value": "128",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "radix digit bits / height",
+   "spec_bits": 22,
+   "code_type": "u64 db (<=22: 2^22*8 B = 32 MiB <= SIZE_MAX); h=ceil(bits/db)",
+   "max_value": "22",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "bucket index",
+   "spec_bits": 128,
+   "code_type": "u128 (rd_leaf descends the full slot; no 64-bit mix)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "slot label / record reference",
+   "spec_bits": 128,
+   "code_type": "u128 slot; u64 ref[2] (two-word)",
+   "max_value": "340282366920938463463374607431768211455",
+   "headroom_bits": 0
+  },
+  {
+   "quantity": "live records (capacity)",
+   "spec_bits": 134,
+   "code_type": "u64 d28_ws_live (fixture); capacity = PROBES x heads",
+   "max_value": "18446744073709551615",
+   "headroom_bits": 70
+  },
+  {
+   "quantity": "arrivals (records written)",
+   "spec_bits": 127,
+   "code_type": "Python int (ledger) / u64 counter in the fixture",
+   "max_value": "95803668470929860550224427498997735090",
+   "headroom_bits": 0
+  }
+ ],
+ "rows_ir": {
+  "fp12_dense_mulmod": "4587198370171858432775100449033557046187124",
+  "fp12_guard_cyclo_sqr": "2168848383327502500237238671179970980508",
+  "per_step_key_lookup_probe": "417416583527841402417327830613133131787130",
+  "per_step_slot_export": "65242298228703235034702835126817457596290",
+  "record_writes_and_insert": "229833000661760735459988401570095566480910",
+  "state_key_full_width_sort_structural": "142747466021685492219834396973506625284100",
+  "keys12_formation": "195152072675284125940807158815458386378330",
+  "scalar_coefficient_update": "90438663036557788359411859559053861924960",
+  "guard_and_meter_eval": "2490895380244176374305835114973941112340",
+  "index_slots_widened_refs": "1149644021651158326602693129987972821080",
+  "trail_starts_construction": "11466501570114417684604986166286291420260",
+  "store_init_radix_nodes": "143705502706394790825336641248498286592",
+  "worker_starts_1024": "7843840",
+  "collision_processing": "8192",
+  "code_and_advice": "1048576",
+  "candidate_verification": "57526800"
+ },
+ "step_ir": 59870,
+ "W_total_ir": "5745448049181734861883749021415298816687032",
+ "claim": {
+  "value": 127.7557,
+  "numerator": "1277557",
+  "denominator": "10000",
+  "reduced": "1277557/10000",
+  "rule": "minimal n with 20000*2^(n/10000) >= W; exact integer test",
+  "n_minus_1_fails": true,
+  "row_sum_equals_W": true
+ },
+ "bound": {
+  "log2_W": 142.04339938869373,
+  "step_ir": 59870,
+  "coeff_per_step": 944,
+  "fp_mul_ir": 666
+ },
+ "success": {
+  "route_a_p5": 0.578125,
+  "route_a_median": 0.625,
+  "kappa_detect_cross": 0.9999838730486389,
+  "kappa_detect_within": 1.0,
+  "kappa_lower_3se": 0.999935492584675,
+  "p_used": 0.5780877066505152,
+  "floor": 0.39,
+  "rule": "p_used = p5 x min(kappa_cross, kappa_within) lower 3-sigma; both classes are counted, so p5's pair count is now fully usable"
+ },
+ "prices": {
+  "source": "evidence/exec31.json + the shipped object's spans",
+  "censused_symbols": {
+   "state_key48w": 3398,
+   "dict28_wide_lookup": 959,
+   "dict28_wide_insert": 1711,
+   "dict28_slot_export": 681
+  },
+  "per_step_rows": {
+   "fp12_dense_mulmod": 47924,
+   "fp12_guard_cyclo_sqr": 25372,
+   "per_step_key_lookup_probe": 4357,
+   "per_step_slot_export": 681,
+   "record_writes_and_insert": 2399,
+   "state_key_full_width_sort_structural": 1490,
+   "keys12_formation": 2037,
+   "scalar_coefficient_update": 944,
+   "guard_and_meter_eval": 26,
+   "index_slots_widened_refs": 12
+  }
+ }
+}

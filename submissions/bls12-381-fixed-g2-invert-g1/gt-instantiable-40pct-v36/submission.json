@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "Claim 127.7557: within-trail collisions accepted with lag-aware q^k recovery, 128-bit radix store (h=6, 32 MiB nodes, lambda 0.2815), total-work budget, keys12 + mod-r rows priced from the shipped object",
+ "claims": [
+  {
+   "statement": "Recover x from z = g^x in BLS12-381 GT by a Frobenius-class rho walk on 1024 workers, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W (exact integer test, n-1 asserted to fail); W = 5745448049181734861883749021415298816687032 is the exact sum of FOURTEEN ceil rows in evidence/ledger36.json, recomputed by scripts/cert36.py. COLLISIONS (verdict v35 defect 2, math). A pair of records from the SAME trail obeys the same linear relation as a cross-trail pair: (A2 - q^k A1) + x(D2 - q^k D1) = 0, and the denominator vanishes only with probability 1/r. v35 discarded same-trail hits on the identity 'same start => D2 - q^k D1 = 0', which is false; v36 stores each record's trail id AND position, accepts BOTH classes with the same q^k multiplier, and counts each hit once (the classes partition the hits). The smoke run recovers x from within-trail pairs (evidence/protocol36.json: 16 within hits, 2 recovered). The debit is the WORSE class: kappa_cross 0.999984, kappa_within 1.000000, lower 3-sigma 0.999935, so p_used = 0.578125 x 0.999935 = 0.578088, above the 0.39 floor. STORE (defect 1). bounds_table is regenerated from scripts/ir28/dict28.c: the flat calloc(nb, 8) is replaced by a 128-BIT-ADDRESSED RADIX TREE, h = ceil(128/22) = 6 levels, node = 2^22 x 8 B = 32 MiB, so EVERY allocation is <= SIZE_MAX and the per-level count x element size is <= SIZE_MAX; v35's two 2^63 levels needed a 2^66 B calloc and are withdrawn. lambda = S/2^128 = 0.281542, measured retention 0.999954. Record references are read AND evicted as full 128-bit pairs (dict28_wide_insert returns evicted_ref[0..1]), so the S = 9.58e37 ordinal range has an access path; smoke36 round-trips a reference above 2^64 through insertion and eviction. BUDGET (defect 3). W_total is TOTAL WORK: every executed step is charged at STEP_IR whether it yields a relation or ends an abandoned trail, and the only row outside the walk is the fresh trail start, ceil(S/64) x RESTART, BY CONSTRUCTION because every trail is capped at 64 steps. v35's 'aborts <= guard_conversions' substitution and its 1.599e41 Ir trap row are withdrawn: an observed toy frequency is not an upper bound and the aborted steps were already charged. Measured waste: 0 aborted steps in 587638 executed (0.000000), reported as a measurement. SCALAR ROWS (defect 4). keys12 formation is priced as its own row: span(d28_keys12_form) + 4 x span(d28_montmul_r) = 2037 Ir/step, executed in the shipped object BEFORE state_key48w consumes the lanes. The mod-r coefficient update is priced as its own executed row, 2 x span(d28_montmul_r) x 4 = 944 Ir/step -- a Montgomery multiply from the shipped object, not an Fp12 span divided by 72. The radix descent is priced at 416 Ir/step from span(rd_leaf). NO FLOAT in any charged term: every row is a Python int; retention, kappa and p_used are reported values and are labelled as such.",
+   "score": {
+    "numerator": "1277557",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger36.json",
+    "evidence/arm36.json",
+    "evidence/bounds36.json",
+    "evidence/trap36.json",
+    "evidence/trap31.json",
+    "evidence/census28.json",
+    "evidence/prices28.json",
+    "evidence/exec31.json",
+    "evidence/protocol36.json",
+    "evidence/audit36.json",
+    "public-note.md",
+    "scripts/regen36.py",
+    "scripts/cert36.py",
+    "scripts/arm36.py",
+    "scripts/bounds36.py",
+    "scripts/smoke36.py",
+    "scripts/audit36.py",
+    "scripts/protocol36.py",
+    "scripts/toy28.py",
+    "scripts/ir28/dict28.c",
+    "scripts/ir25/kernels.c"
+   ]
+  }
+ ],
+ "experiments": []
+}

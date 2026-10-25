@@ -1,0 +1,109 @@
+{
+ "mode": "exec31-wide-symbols",
+ "toolchain": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+ "rule": "charge = max over calls of executed count, implemented as static span + structural loop allowance; equals or exceeds every measured per-call value",
+ "symbols": {
+  "state_key48w": {
+   "static_span_ir": 176,
+   "loop_bodies": [
+    34,
+    36,
+    34,
+    52,
+    32
+   ],
+   "loop_free": false,
+   "structural_loop_allowance": 3222,
+   "executed_per_call": 2972.511,
+   "calls_in_harness": 20000,
+   "charge": 3398,
+   "charge_ge_executed": true,
+   "basis": "gcov executed per call on the shipped source; charge = static span + per-loop structural maximum x body span, raised to the measured call count when that is larger; covers every call in the harness"
+  },
+  "dict28_wide_lookup": {
+   "static_span_ir": 95,
+   "loop_bodies": [
+    9,
+    16,
+    20,
+    29,
+    33,
+    37
+   ],
+   "loop_free": false,
+   "structural_loop_allowance": 864,
+   "executed_per_call": 256.802,
+   "calls_in_harness": 20000,
+   "charge": 959,
+   "charge_ge_executed": true,
+   "basis": "gcov executed per call on the shipped source; charge = static span + per-loop structural maximum x body span, raised to the measured call count when that is larger; covers every call in the harness"
+  },
+  "dict28_wide_insert": {
+   "static_span_ir": 175,
+   "loop_bodies": [
+    10,
+    14,
+    23,
+    27,
+    31,
+    76,
+    75
+   ],
+   "loop_free": false,
+   "structural_loop_allowance": 1536,
+   "executed_per_call": 298.417,
+   "calls_in_harness": 20000,
+   "charge": 1711,
+   "charge_ge_executed": true,
+   "basis": "gcov executed per call on the shipped source; charge = static span + per-loop structural maximum x body span, raised to the measured call count when that is larger; covers every call in the harness"
+  },
+  "dict28_slot_export": {
+   "static_span_ir": 139,
+   "loop_bodies": [],
+   "loop_free": true,
+   "structural_loop_allowance": 0,
+   "executed_per_call": 680.0,
+   "calls_in_harness": 40000,
+   "charge": 681,
+   "charge_ge_executed": true,
+   "basis": "gcov executed per call on the shipped source; charge = static span + per-loop structural maximum x body span, raised to the measured call count when that is larger; covers every call in the harness"
+  },
+  "dict28_lookup": {
+   "static_span_ir": 219,
+   "loop_bodies": [
+    135,
+    142
+   ],
+   "loop_free": false,
+   "structural_loop_allowance": 1108,
+   "executed_per_call": 1306.986,
+   "calls_in_harness": 20000,
+   "charge": 1327,
+   "charge_ge_executed": true,
+   "basis": "gcov executed per call on the shipped source; charge = static span + per-loop structural maximum x body span, raised to the measured call count when that is larger; covers every call in the harness"
+  },
+  "dict28_insert": {
+   "static_span_ir": 387,
+   "loop_bodies": [
+    117,
+    123,
+    86
+   ],
+   "loop_free": false,
+   "structural_loop_allowance": 1218,
+   "executed_per_call": 1461.944,
+   "calls_in_harness": 20000,
+   "charge": 1605,
+   "charge_ge_executed": true,
+   "basis": "gcov executed per call on the shipped source; charge = static span + per-loop structural maximum x body span, raised to the measured call count when that is larger; covers every call in the harness"
+  }
+ },
+ "wide_harness_traffic": {
+  "key": 20000,
+  "insert": 20000,
+  "lookup": 20000,
+  "slot_export": 40000,
+  "live_max": 9585
+ },
+ "all_charges_cover_executed": true
+}
