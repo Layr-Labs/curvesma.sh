@@ -1,0 +1,153 @@
+{
+ "version": 1,
+ "title": "Six-class secp256k1 rho at 125.9294: rare-exit carry tails and paired pointer traffic, 580-instruction step",
+ "claims": [
+  {
+   "statement": "For a uniform full-production secp256k1 input Q=[x]P, the classical cold six-class negation-plus-GLV parallel Pollard-rho attack described in proof.md and upstream-proof.md halts on every run with total work at most 2^125.9294 target-group-operation equivalents under classical-group-work-v2 (C=1000). It is d50309e4 (125.9613: R = 2^20, checkpoint-only cycle detection, global anchor rounds, even-y key, rare-event and fused field kernels, the canonical-index rule, arrival rows executed as kernels/arrive.s, and loops unrolled 8/4/2) with three carry tails of its counted loops moved out of line and its pointer traffic paired. fe_sub's second borrow chain (three per step: 9 -> 7), the plain reduction's last carry into limbs 2 and 3 (four per step: 85 -> 84) and y3's signed fold and carry (91 -> 90) each run only behind one branch (B.LO, B.CS, TBNZ) to an out-of-line stub that charges 20 milli-units to the meter and then executes the dropped instructions unchanged on the same flags and registers, so every result is bit-identical to d50309e4's loops and every failure row is unchanged. Each main loop loads the table pointers of two walks with one LDP, and the arrival pass loads a pair's two K_cp words with one LDP and stores its two table addresses with one STP, moving the same words. Pass 1 is 798 instructions per 8 walks (99.75 per walk), pass 2 1,791 per 4 walks (447.75 per walk), the arrival rows 32.5; the ordinary step is 580 = 99.75 + 447.75 + 32.5, doubling 765 (inline kernels, tail walks 22.5), traversal 613. Before each round the meter charges n*(580 + 256) milli-units and returns n*256, so the stubs (at most 8 per walk, 160 milli-units) are charged before they run from a non-negative reserve. experiment.py's interpreter executes the loops on production points (exactly 99.75 and 447.75 per walk), on constructed inputs taking each kind of exit against an exact model of the inline tails (266 exits, meter drop 20 per exit, 0 mismatches) and the arrival rows against a bit-exact model (888 walks, 0 mismatches, 31.5 per walk); executed under qemu-aarch64 next to d50309e4's code, 1,218 on-curve walks, 11,907 constructed exits and 27,360 arrivals matched word for word. The walk, H1 (kappa = 1.01, p0 = 0.3901753, h = 0.000165), the census, the store and the failure rows (sum 1.0103e-7 < 2e-7) are unchanged; the ledger adds one random row for the exits taken, 0.02*(3*C0/2^64 + 5*2^-63 + 2^-27.4)*(S_ops + 2^61) = 2^93.84, under the random-point premise of the kernel rows. Recovery probability is greater than 0.3900101 and therefore at least 0.39. Peak memory is below 2^72 bytes; preprocessing is capped at 2^59 units, charged and included; nonuniform advice is zero. Exact ledger: phase 1 = 2^125.928143, hard extras = 2^114.564105, expected random extras < 2^102.25, allowance = ceil(extras/0.000165) = 2^114.8152, W_ledger = 2^125.9293411 < 2^125.9294; Markov ratio at most 0.0001514 < 0.000165 against the headroom at this cap. certificate.py proves the bound in exact integer and rational arithmetic, including W^10000 < 1000^10000*2^1259294 and W^10000 > 1000^10000*2^1259293. The claim is self-contained in proof.md; no prior acceptance, review verdict, official score or cross-submission comparison is a premise. Declared secp256k1 dependencies: d50309e4, 67772ed0, 2d25756c, 13c3295f, b5de673a, 736c001a, f99114e0, 5d3bf6c4, daa13d54, 09990b8a, 1ca8ae82 and 02feb284; the P-256 package 6d5e2adb and the BLS12-381 G1 package 67154fda are credited as design provenance. This is an analytic heuristic bound, not a practical break.",
+   "score": {
+    "numerator": "1259294",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "proof.md",
+    "upstream-proof.md",
+    "experiment.py",
+    "certificate.py",
+    "census_cp.py",
+    "census-cp-q29.json",
+    "README.md",
+    "kernels/a64.py",
+    "kernels/arrive.s",
+    "kernels/gen_unrolled.py",
+    "kernels/secp_fe.s",
+    "kernels/secp_loops.s",
+    "kernels/secp_tests.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-six-class-rho-kernels-evidence",
+   "source": "experiment.py",
+   "purpose": "Part A: production secp256k1 checks of the walk identities and truncated canonical-index rule; Part B: a scaled sequential toy pipeline of the checkpoint-only walk with the even-y key and per-trail anchor phases on configured subgroups of y^2=x^3+7 with an unreduced subgroup-order check, a T_c census, node routing, and a long-trail trap test; kernels: limb-for-limb Python ports of the generated field kernels (asserting every no-overflow step and the rare-event predicates, including the fused reductions) checked against big integers and affine secp256k1, the shipped counted loops (unrolled, with tail loops and rare exits; also on constructed inputs that take each kind of exit, against an exact model of the inline tails and the meter), emitter wrappers and arrival rows (kernels/arrive.s, by pairs, against a bit-exact model of the canonical-index rule and the exact rule) executed by an AArch64 interpreter that expands assembler macros (kernels/a64.py) (including constructed reduction inputs whose last addition carries, which must return the predicted z mod p - C0), instruction counts parsed from the shipped assembly, and the work-meter ledger recomputed from the prices and rows of proof.md. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q25",
+       "q29"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "nodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q25",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 5,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 6,
+     "pipeline": true,
+     "kernels": true
+    }
+   ]
+  }
+ ]
+}
