@@ -1,0 +1,11 @@
+{
+ "rule": "W_total is TOTAL WORK.  (a) EVERY executed step is charged at the SINGLE frequency-independent price max(MUL span, SQR span) = 47924 Ir -- the guard-squaring substitution is DELETED, so no cheaper step is ever assumed.  (b) The launch rule executes S steps at ",
+ "per_trail_step_cap": 65536,
+ "starts_lower_bound": "starts >= ceil(S/L) = 3474105614449001709139712367581928 (the inequality v36 had reversed)",
+ "starts_equality_by_construction": true,
+ "restart_ir_cold": 73084100,
+ "restart_ir_v36_hot": 7660,
+ "restart_ratio": 9541.005221932115,
+ "early_abort": "removed from the production schedule: the fixture's stall-abort path is a measurement convenience and is NOT on the launched path (the run_one loop runs to the step budget and every trail to the cap), so the start count cannot exceed ceil(S/L)",
+ "guard_split": "DELETED: every step pays STEP12, frequency-independent"
+}

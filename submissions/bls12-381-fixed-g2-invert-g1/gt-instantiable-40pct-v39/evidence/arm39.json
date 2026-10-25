@@ -1,0 +1,2038 @@
+{
+ "mode": "arm39-production-normalised-budget",
+ "budget": {
+  "steps_per_run": 718,
+  "S_over_sqrt_r": 0.9947,
+  "sqrt_r": 721.832,
+  "seeds": 200,
+  "workers": 8,
+  "note": "v38's arms ran at 55 sqrt(r); these run at 1.00 sqrt(r), the production normalisation"
+ },
+ "verified_only": true,
+ "solved_seeds": 83,
+ "runs": [
+  {
+   "gid": 0,
+   "solved": true,
+   "steps": 718,
+   "verified": 434,
+   "matches": 434,
+   "hit_calls": 546,
+   "wasted_steps": 0,
+   "pt_missed": 165
+  },
+  {
+   "gid": 1,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 319,
+   "wasted_steps": 0,
+   "pt_missed": 365
+  },
+  {
+   "gid": 2,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 3,
+   "solved": true,
+   "steps": 718,
+   "verified": 231,
+   "matches": 231,
+   "hit_calls": 453,
+   "wasted_steps": 0,
+   "pt_missed": 250
+  },
+  {
+   "gid": 4,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 365
+  },
+  {
+   "gid": 5,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 6,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 313,
+   "wasted_steps": 0,
+   "pt_missed": 375
+  },
+  {
+   "gid": 7,
+   "solved": true,
+   "steps": 718,
+   "verified": 167,
+   "matches": 167,
+   "hit_calls": 423,
+   "wasted_steps": 0,
+   "pt_missed": 282
+  },
+  {
+   "gid": 8,
+   "solved": true,
+   "steps": 718,
+   "verified": 477,
+   "matches": 477,
+   "hit_calls": 539,
+   "wasted_steps": 0,
+   "pt_missed": 174
+  },
+  {
+   "gid": 9,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 323,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 10,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 11,
+   "solved": true,
+   "steps": 718,
+   "verified": 143,
+   "matches": 143,
+   "hit_calls": 386,
+   "wasted_steps": 0,
+   "pt_missed": 311
+  },
+  {
+   "gid": 12,
+   "solved": true,
+   "steps": 718,
+   "verified": 113,
+   "matches": 113,
+   "hit_calls": 373,
+   "wasted_steps": 0,
+   "pt_missed": 317
+  },
+  {
+   "gid": 13,
+   "solved": true,
+   "steps": 718,
+   "verified": 235,
+   "matches": 235,
+   "hit_calls": 408,
+   "wasted_steps": 0,
+   "pt_missed": 293
+  },
+  {
+   "gid": 14,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 343,
+   "wasted_steps": 0,
+   "pt_missed": 343
+  },
+  {
+   "gid": 15,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 368
+  },
+  {
+   "gid": 16,
+   "solved": true,
+   "steps": 718,
+   "verified": 1,
+   "matches": 1,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 352
+  },
+  {
+   "gid": 17,
+   "solved": true,
+   "steps": 718,
+   "verified": 79,
+   "matches": 79,
+   "hit_calls": 346,
+   "wasted_steps": 0,
+   "pt_missed": 342
+  },
+  {
+   "gid": 18,
+   "solved": true,
+   "steps": 718,
+   "verified": 345,
+   "matches": 345,
+   "hit_calls": 498,
+   "wasted_steps": 0,
+   "pt_missed": 211
+  },
+  {
+   "gid": 19,
+   "solved": true,
+   "steps": 718,
+   "verified": 545,
+   "matches": 545,
+   "hit_calls": 596,
+   "wasted_steps": 0,
+   "pt_missed": 118
+  },
+  {
+   "gid": 20,
+   "solved": true,
+   "steps": 718,
+   "verified": 191,
+   "matches": 191,
+   "hit_calls": 451,
+   "wasted_steps": 0,
+   "pt_missed": 258
+  },
+  {
+   "gid": 21,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 22,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 23,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 323,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 24,
+   "solved": true,
+   "steps": 718,
+   "verified": 4,
+   "matches": 4,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 362
+  },
+  {
+   "gid": 25,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 312,
+   "wasted_steps": 0,
+   "pt_missed": 372
+  },
+  {
+   "gid": 26,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 27,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 332,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 28,
+   "solved": true,
+   "steps": 718,
+   "verified": 99,
+   "matches": 99,
+   "hit_calls": 393,
+   "wasted_steps": 0,
+   "pt_missed": 301
+  },
+  {
+   "gid": 29,
+   "solved": true,
+   "steps": 718,
+   "verified": 245,
+   "matches": 245,
+   "hit_calls": 429,
+   "wasted_steps": 0,
+   "pt_missed": 268
+  },
+  {
+   "gid": 30,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 31,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 32,
+   "solved": true,
+   "steps": 718,
+   "verified": 184,
+   "matches": 184,
+   "hit_calls": 419,
+   "wasted_steps": 0,
+   "pt_missed": 274
+  },
+  {
+   "gid": 33,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 351
+  },
+  {
+   "gid": 34,
+   "solved": true,
+   "steps": 718,
+   "verified": 140,
+   "matches": 140,
+   "hit_calls": 367,
+   "wasted_steps": 0,
+   "pt_missed": 327
+  },
+  {
+   "gid": 35,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 36,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 37,
+   "solved": true,
+   "steps": 718,
+   "verified": 187,
+   "matches": 187,
+   "hit_calls": 422,
+   "wasted_steps": 0,
+   "pt_missed": 272
+  },
+  {
+   "gid": 38,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 359
+  },
+  {
+   "gid": 39,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 362
+  },
+  {
+   "gid": 40,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 41,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 339,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 42,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 339,
+   "wasted_steps": 0,
+   "pt_missed": 354
+  },
+  {
+   "gid": 43,
+   "solved": true,
+   "steps": 718,
+   "verified": 77,
+   "matches": 77,
+   "hit_calls": 363,
+   "wasted_steps": 0,
+   "pt_missed": 332
+  },
+  {
+   "gid": 44,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 45,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 322,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 46,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 47,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 48,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 343,
+   "wasted_steps": 0,
+   "pt_missed": 348
+  },
+  {
+   "gid": 49,
+   "solved": true,
+   "steps": 718,
+   "verified": 235,
+   "matches": 235,
+   "hit_calls": 443,
+   "wasted_steps": 0,
+   "pt_missed": 266
+  },
+  {
+   "gid": 50,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 359
+  },
+  {
+   "gid": 51,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 52,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 53,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 54,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 55,
+   "solved": true,
+   "steps": 718,
+   "verified": 243,
+   "matches": 243,
+   "hit_calls": 430,
+   "wasted_steps": 0,
+   "pt_missed": 271
+  },
+  {
+   "gid": 56,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 57,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 336,
+   "wasted_steps": 0,
+   "pt_missed": 346
+  },
+  {
+   "gid": 58,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 332,
+   "wasted_steps": 0,
+   "pt_missed": 353
+  },
+  {
+   "gid": 59,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 322,
+   "wasted_steps": 0,
+   "pt_missed": 365
+  },
+  {
+   "gid": 60,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 61,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 367
+  },
+  {
+   "gid": 62,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 352
+  },
+  {
+   "gid": 63,
+   "solved": true,
+   "steps": 718,
+   "verified": 67,
+   "matches": 67,
+   "hit_calls": 353,
+   "wasted_steps": 0,
+   "pt_missed": 342
+  },
+  {
+   "gid": 64,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 65,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 352
+  },
+  {
+   "gid": 66,
+   "solved": true,
+   "steps": 718,
+   "verified": 176,
+   "matches": 176,
+   "hit_calls": 425,
+   "wasted_steps": 0,
+   "pt_missed": 280
+  },
+  {
+   "gid": 67,
+   "solved": true,
+   "steps": 718,
+   "verified": 69,
+   "matches": 69,
+   "hit_calls": 350,
+   "wasted_steps": 0,
+   "pt_missed": 332
+  },
+  {
+   "gid": 68,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 69,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 351
+  },
+  {
+   "gid": 70,
+   "solved": true,
+   "steps": 718,
+   "verified": 82,
+   "matches": 82,
+   "hit_calls": 372,
+   "wasted_steps": 0,
+   "pt_missed": 320
+  },
+  {
+   "gid": 71,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 72,
+   "solved": true,
+   "steps": 718,
+   "verified": 22,
+   "matches": 22,
+   "hit_calls": 355,
+   "wasted_steps": 0,
+   "pt_missed": 330
+  },
+  {
+   "gid": 73,
+   "solved": true,
+   "steps": 718,
+   "verified": 5,
+   "matches": 5,
+   "hit_calls": 334,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 74,
+   "solved": true,
+   "steps": 718,
+   "verified": 160,
+   "matches": 160,
+   "hit_calls": 406,
+   "wasted_steps": 0,
+   "pt_missed": 292
+  },
+  {
+   "gid": 75,
+   "solved": true,
+   "steps": 718,
+   "verified": 113,
+   "matches": 113,
+   "hit_calls": 392,
+   "wasted_steps": 0,
+   "pt_missed": 309
+  },
+  {
+   "gid": 76,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 335,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 77,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 332,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 78,
+   "solved": true,
+   "steps": 718,
+   "verified": 2,
+   "matches": 2,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 79,
+   "solved": true,
+   "steps": 718,
+   "verified": 155,
+   "matches": 155,
+   "hit_calls": 399,
+   "wasted_steps": 0,
+   "pt_missed": 295
+  },
+  {
+   "gid": 80,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 81,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 82,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 332,
+   "wasted_steps": 0,
+   "pt_missed": 354
+  },
+  {
+   "gid": 83,
+   "solved": true,
+   "steps": 718,
+   "verified": 1,
+   "matches": 1,
+   "hit_calls": 319,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 84,
+   "solved": true,
+   "steps": 718,
+   "verified": 46,
+   "matches": 46,
+   "hit_calls": 359,
+   "wasted_steps": 0,
+   "pt_missed": 333
+  },
+  {
+   "gid": 85,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 86,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 87,
+   "solved": true,
+   "steps": 718,
+   "verified": 323,
+   "matches": 323,
+   "hit_calls": 466,
+   "wasted_steps": 0,
+   "pt_missed": 244
+  },
+  {
+   "gid": 88,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 316,
+   "wasted_steps": 0,
+   "pt_missed": 370
+  },
+  {
+   "gid": 89,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 323,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 90,
+   "solved": true,
+   "steps": 718,
+   "verified": 10,
+   "matches": 10,
+   "hit_calls": 337,
+   "wasted_steps": 0,
+   "pt_missed": 350
+  },
+  {
+   "gid": 91,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 336,
+   "wasted_steps": 0,
+   "pt_missed": 347
+  },
+  {
+   "gid": 92,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 368
+  },
+  {
+   "gid": 93,
+   "solved": true,
+   "steps": 718,
+   "verified": 13,
+   "matches": 13,
+   "hit_calls": 337,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 94,
+   "solved": true,
+   "steps": 718,
+   "verified": 14,
+   "matches": 14,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 359
+  },
+  {
+   "gid": 95,
+   "solved": true,
+   "steps": 718,
+   "verified": 42,
+   "matches": 42,
+   "hit_calls": 367,
+   "wasted_steps": 0,
+   "pt_missed": 327
+  },
+  {
+   "gid": 96,
+   "solved": true,
+   "steps": 718,
+   "verified": 73,
+   "matches": 73,
+   "hit_calls": 383,
+   "wasted_steps": 0,
+   "pt_missed": 306
+  },
+  {
+   "gid": 97,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 98,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 99,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 335,
+   "wasted_steps": 0,
+   "pt_missed": 352
+  },
+  {
+   "gid": 100,
+   "solved": true,
+   "steps": 718,
+   "verified": 509,
+   "matches": 509,
+   "hit_calls": 617,
+   "wasted_steps": 0,
+   "pt_missed": 100
+  },
+  {
+   "gid": 101,
+   "solved": true,
+   "steps": 718,
+   "verified": 202,
+   "matches": 202,
+   "hit_calls": 440,
+   "wasted_steps": 0,
+   "pt_missed": 266
+  },
+  {
+   "gid": 102,
+   "solved": true,
+   "steps": 718,
+   "verified": 106,
+   "matches": 106,
+   "hit_calls": 383,
+   "wasted_steps": 0,
+   "pt_missed": 308
+  },
+  {
+   "gid": 103,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 318,
+   "wasted_steps": 0,
+   "pt_missed": 369
+  },
+  {
+   "gid": 104,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 341,
+   "wasted_steps": 0,
+   "pt_missed": 351
+  },
+  {
+   "gid": 105,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 336,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 106,
+   "solved": true,
+   "steps": 718,
+   "verified": 132,
+   "matches": 132,
+   "hit_calls": 371,
+   "wasted_steps": 0,
+   "pt_missed": 325
+  },
+  {
+   "gid": 107,
+   "solved": true,
+   "steps": 718,
+   "verified": 270,
+   "matches": 270,
+   "hit_calls": 461,
+   "wasted_steps": 0,
+   "pt_missed": 240
+  },
+  {
+   "gid": 108,
+   "solved": true,
+   "steps": 718,
+   "verified": 14,
+   "matches": 14,
+   "hit_calls": 338,
+   "wasted_steps": 0,
+   "pt_missed": 350
+  },
+  {
+   "gid": 109,
+   "solved": true,
+   "steps": 718,
+   "verified": 144,
+   "matches": 144,
+   "hit_calls": 429,
+   "wasted_steps": 0,
+   "pt_missed": 275
+  },
+  {
+   "gid": 110,
+   "solved": true,
+   "steps": 718,
+   "verified": 9,
+   "matches": 9,
+   "hit_calls": 334,
+   "wasted_steps": 0,
+   "pt_missed": 352
+  },
+  {
+   "gid": 111,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 325,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 112,
+   "solved": true,
+   "steps": 718,
+   "verified": 392,
+   "matches": 392,
+   "hit_calls": 469,
+   "wasted_steps": 0,
+   "pt_missed": 233
+  },
+  {
+   "gid": 113,
+   "solved": true,
+   "steps": 718,
+   "verified": 47,
+   "matches": 47,
+   "hit_calls": 342,
+   "wasted_steps": 0,
+   "pt_missed": 348
+  },
+  {
+   "gid": 114,
+   "solved": true,
+   "steps": 718,
+   "verified": 48,
+   "matches": 48,
+   "hit_calls": 365,
+   "wasted_steps": 0,
+   "pt_missed": 328
+  },
+  {
+   "gid": 115,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 116,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 347,
+   "wasted_steps": 0,
+   "pt_missed": 344
+  },
+  {
+   "gid": 117,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 118,
+   "solved": true,
+   "steps": 718,
+   "verified": 8,
+   "matches": 8,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 119,
+   "solved": true,
+   "steps": 718,
+   "verified": 247,
+   "matches": 247,
+   "hit_calls": 421,
+   "wasted_steps": 0,
+   "pt_missed": 278
+  },
+  {
+   "gid": 120,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 367
+  },
+  {
+   "gid": 121,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 362
+  },
+  {
+   "gid": 122,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 123,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 322,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 124,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 125,
+   "solved": true,
+   "steps": 718,
+   "verified": 281,
+   "matches": 281,
+   "hit_calls": 456,
+   "wasted_steps": 0,
+   "pt_missed": 247
+  },
+  {
+   "gid": 126,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 337,
+   "wasted_steps": 0,
+   "pt_missed": 350
+  },
+  {
+   "gid": 127,
+   "solved": true,
+   "steps": 718,
+   "verified": 513,
+   "matches": 513,
+   "hit_calls": 576,
+   "wasted_steps": 0,
+   "pt_missed": 140
+  },
+  {
+   "gid": 128,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 340,
+   "wasted_steps": 0,
+   "pt_missed": 346
+  },
+  {
+   "gid": 129,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 130,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 131,
+   "solved": true,
+   "steps": 718,
+   "verified": 122,
+   "matches": 122,
+   "hit_calls": 369,
+   "wasted_steps": 0,
+   "pt_missed": 318
+  },
+  {
+   "gid": 132,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 359
+  },
+  {
+   "gid": 133,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 134,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 358
+  },
+  {
+   "gid": 135,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 136,
+   "solved": true,
+   "steps": 718,
+   "verified": 471,
+   "matches": 471,
+   "hit_calls": 559,
+   "wasted_steps": 0,
+   "pt_missed": 153
+  },
+  {
+   "gid": 137,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 138,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 139,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 322,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 140,
+   "solved": true,
+   "steps": 718,
+   "verified": 348,
+   "matches": 348,
+   "hit_calls": 493,
+   "wasted_steps": 0,
+   "pt_missed": 215
+  },
+  {
+   "gid": 141,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 367
+  },
+  {
+   "gid": 142,
+   "solved": true,
+   "steps": 718,
+   "verified": 28,
+   "matches": 28,
+   "hit_calls": 340,
+   "wasted_steps": 0,
+   "pt_missed": 343
+  },
+  {
+   "gid": 143,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 332,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 144,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 323,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  },
+  {
+   "gid": 145,
+   "solved": true,
+   "steps": 718,
+   "verified": 191,
+   "matches": 191,
+   "hit_calls": 439,
+   "wasted_steps": 0,
+   "pt_missed": 262
+  },
+  {
+   "gid": 146,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 147,
+   "solved": true,
+   "steps": 718,
+   "verified": 278,
+   "matches": 278,
+   "hit_calls": 436,
+   "wasted_steps": 0,
+   "pt_missed": 262
+  },
+  {
+   "gid": 148,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 362
+  },
+  {
+   "gid": 149,
+   "solved": true,
+   "steps": 718,
+   "verified": 173,
+   "matches": 173,
+   "hit_calls": 423,
+   "wasted_steps": 0,
+   "pt_missed": 282
+  },
+  {
+   "gid": 150,
+   "solved": true,
+   "steps": 718,
+   "verified": 541,
+   "matches": 541,
+   "hit_calls": 625,
+   "wasted_steps": 0,
+   "pt_missed": 92
+  },
+  {
+   "gid": 151,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 340,
+   "wasted_steps": 0,
+   "pt_missed": 351
+  },
+  {
+   "gid": 152,
+   "solved": true,
+   "steps": 718,
+   "verified": 246,
+   "matches": 246,
+   "hit_calls": 416,
+   "wasted_steps": 0,
+   "pt_missed": 284
+  },
+  {
+   "gid": 153,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 370
+  },
+  {
+   "gid": 154,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 316,
+   "wasted_steps": 0,
+   "pt_missed": 374
+  },
+  {
+   "gid": 155,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 358
+  },
+  {
+   "gid": 156,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 320,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 157,
+   "solved": true,
+   "steps": 718,
+   "verified": 2,
+   "matches": 2,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 158,
+   "solved": true,
+   "steps": 718,
+   "verified": 185,
+   "matches": 185,
+   "hit_calls": 409,
+   "wasted_steps": 0,
+   "pt_missed": 286
+  },
+  {
+   "gid": 159,
+   "solved": true,
+   "steps": 718,
+   "verified": 193,
+   "matches": 193,
+   "hit_calls": 401,
+   "wasted_steps": 0,
+   "pt_missed": 295
+  },
+  {
+   "gid": 160,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 338,
+   "wasted_steps": 0,
+   "pt_missed": 350
+  },
+  {
+   "gid": 161,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 334,
+   "wasted_steps": 0,
+   "pt_missed": 354
+  },
+  {
+   "gid": 162,
+   "solved": true,
+   "steps": 718,
+   "verified": 1,
+   "matches": 1,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 163,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 363
+  },
+  {
+   "gid": 164,
+   "solved": true,
+   "steps": 718,
+   "verified": 32,
+   "matches": 32,
+   "hit_calls": 335,
+   "wasted_steps": 0,
+   "pt_missed": 355
+  },
+  {
+   "gid": 165,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 166,
+   "solved": true,
+   "steps": 718,
+   "verified": 2,
+   "matches": 2,
+   "hit_calls": 337,
+   "wasted_steps": 0,
+   "pt_missed": 350
+  },
+  {
+   "gid": 167,
+   "solved": true,
+   "steps": 718,
+   "verified": 35,
+   "matches": 35,
+   "hit_calls": 334,
+   "wasted_steps": 0,
+   "pt_missed": 356
+  },
+  {
+   "gid": 168,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 169,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 339,
+   "wasted_steps": 0,
+   "pt_missed": 348
+  },
+  {
+   "gid": 170,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 317,
+   "wasted_steps": 0,
+   "pt_missed": 368
+  },
+  {
+   "gid": 171,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 172,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 336,
+   "wasted_steps": 0,
+   "pt_missed": 352
+  },
+  {
+   "gid": 173,
+   "solved": true,
+   "steps": 718,
+   "verified": 439,
+   "matches": 439,
+   "hit_calls": 501,
+   "wasted_steps": 0,
+   "pt_missed": 203
+  },
+  {
+   "gid": 174,
+   "solved": true,
+   "steps": 718,
+   "verified": 1,
+   "matches": 1,
+   "hit_calls": 342,
+   "wasted_steps": 0,
+   "pt_missed": 349
+  },
+  {
+   "gid": 175,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 339,
+   "wasted_steps": 0,
+   "pt_missed": 347
+  },
+  {
+   "gid": 176,
+   "solved": true,
+   "steps": 718,
+   "verified": 439,
+   "matches": 439,
+   "hit_calls": 572,
+   "wasted_steps": 0,
+   "pt_missed": 137
+  },
+  {
+   "gid": 177,
+   "solved": true,
+   "steps": 718,
+   "verified": 232,
+   "matches": 232,
+   "hit_calls": 447,
+   "wasted_steps": 0,
+   "pt_missed": 250
+  },
+  {
+   "gid": 178,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 324,
+   "wasted_steps": 0,
+   "pt_missed": 367
+  },
+  {
+   "gid": 179,
+   "solved": true,
+   "steps": 718,
+   "verified": 297,
+   "matches": 297,
+   "hit_calls": 563,
+   "wasted_steps": 0,
+   "pt_missed": 147
+  },
+  {
+   "gid": 180,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 333,
+   "wasted_steps": 0,
+   "pt_missed": 351
+  },
+  {
+   "gid": 181,
+   "solved": true,
+   "steps": 718,
+   "verified": 271,
+   "matches": 271,
+   "hit_calls": 469,
+   "wasted_steps": 0,
+   "pt_missed": 235
+  },
+  {
+   "gid": 182,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 318,
+   "wasted_steps": 0,
+   "pt_missed": 367
+  },
+  {
+   "gid": 183,
+   "solved": true,
+   "steps": 718,
+   "verified": 1,
+   "matches": 1,
+   "hit_calls": 319,
+   "wasted_steps": 0,
+   "pt_missed": 365
+  },
+  {
+   "gid": 184,
+   "solved": true,
+   "steps": 718,
+   "verified": 239,
+   "matches": 239,
+   "hit_calls": 431,
+   "wasted_steps": 0,
+   "pt_missed": 272
+  },
+  {
+   "gid": 185,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 327,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 186,
+   "solved": true,
+   "steps": 718,
+   "verified": 402,
+   "matches": 402,
+   "hit_calls": 542,
+   "wasted_steps": 0,
+   "pt_missed": 168
+  },
+  {
+   "gid": 187,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 331,
+   "wasted_steps": 0,
+   "pt_missed": 357
+  },
+  {
+   "gid": 188,
+   "solved": true,
+   "steps": 718,
+   "verified": 361,
+   "matches": 361,
+   "hit_calls": 522,
+   "wasted_steps": 0,
+   "pt_missed": 187
+  },
+  {
+   "gid": 189,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 328,
+   "wasted_steps": 0,
+   "pt_missed": 361
+  },
+  {
+   "gid": 190,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 329,
+   "wasted_steps": 0,
+   "pt_missed": 360
+  },
+  {
+   "gid": 191,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 322,
+   "wasted_steps": 0,
+   "pt_missed": 366
+  },
+  {
+   "gid": 192,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 326,
+   "wasted_steps": 0,
+   "pt_missed": 359
+  },
+  {
+   "gid": 193,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 341,
+   "wasted_steps": 0,
+   "pt_missed": 347
+  },
+  {
+   "gid": 194,
+   "solved": true,
+   "steps": 718,
+   "verified": 28,
+   "matches": 28,
+   "hit_calls": 352,
+   "wasted_steps": 0,
+   "pt_missed": 334
+  },
+  {
+   "gid": 195,
+   "solved": true,
+   "steps": 718,
+   "verified": 140,
+   "matches": 140,
+   "hit_calls": 441,
+   "wasted_steps": 0,
+   "pt_missed": 260
+  },
+  {
+   "gid": 196,
+   "solved": true,
+   "steps": 718,
+   "verified": 137,
+   "matches": 137,
+   "hit_calls": 388,
+   "wasted_steps": 0,
+   "pt_missed": 303
+  },
+  {
+   "gid": 197,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 330,
+   "wasted_steps": 0,
+   "pt_missed": 359
+  },
+  {
+   "gid": 198,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 339,
+   "wasted_steps": 0,
+   "pt_missed": 350
+  },
+  {
+   "gid": 199,
+   "solved": false,
+   "steps": 718,
+   "verified": 0,
+   "matches": 0,
+   "hit_calls": 321,
+   "wasted_steps": 0,
+   "pt_missed": 364
+  }
+ ],
+ "p_hat": 0.415,
+ "cp95_lower": 0.356431,
+ "model_prediction": 0.389829,
+ "model_consistent": true,
+ "verified_total": 14505,
+ "matches_total": 14505,
+ "dead_hits_total": 0,
+ "aborts_total": 0,
+ "hit_calls_total": 72703,
+ "steps_total": 143600,
+ "pt_hits_total": 78027,
+ "pt_missed_total": 65573,
+ "wasted_steps_production": 0,
+ "forced_abort_control": {
+  "runs": 8,
+  "wasted_steps": 32,
+  "steps_aborted": 32,
+  "reasons": [
+   "walk"
+  ],
+  "row_moves": true
+ },
+ "runs_note": "per-seed summary only (gid, solved, steps, verified, matches, hit_calls, wasted_steps, pt_missed); the full row dictionaries are reproducible with V39_SEEDS=200 python3 scripts/v39.py arm"
+}
