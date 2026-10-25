@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class rho with a cyclotomic-squaring branch priced by its measured instruction count",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (compute g=e(P0,Q); solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key, a Granger-Scott cyclotomic-squaring branch taken with probability 3/8 (branch, multiplier and distinguished-point bits read from the free class invariant T=Re(c_0), so squaring steps need no key computation; the 12 keys are computed on multiply steps and at distinguished points only), deterministic fruitless-cycle escapes, and hard caps on steps, reports, restarts, false-fingerprint verifications and a metered total-work abort at 2^125.682 (so the work bound holds on every run); output P=[x]P0 and verify e(P,Q)=z) succeeds with probability at least 0.39 using at most 2^125.682 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, walk starts, distinguished-point handling, cycle handling, detection delay, output and verification. The table multiply is the reference operation (1 unit); the branch, distinguished-point and key-minimum rule is stated on the limbs as stored by the pinned blst kernels (Montgomery form x*2^384 mod p), so the priced operations read exactly the representation the rule names and no conversion is charged; the squaring branch is priced at the Callgrind-measured marginal of blst's own blst_fp12_cyclotomic_sqr, 9,803 scalar instructions per call (measured with the cost model's toolchain and instrument on real GT elements, in the same harness that reproduces the cost model's blst_fp_mul = 383 and blst_fp12_mul = 22,996 exactly; the record ships in measure/ and experiment.py re-derives the price from it), plus 282 instructions of bookkeeping carried by every step (270 itemised, plus 8 for the 192-bit work meter, which adds the step charge and runs its full 3-word compare against the cap on every step, and 4 for the 2-word stuck-walk counter: adds/adc, then cmp of its high word with 2560 and a branch, exact because 20/theta = 2560 * 2^64), so a squaring step is 10,085 instructions (0.50425 unit); multiply steps carry a further 2,119 instructions for the keys (1.12005 unit); the walk costs 0.889125 units per step, the ledger total is 2^125.6616283 and the metered abort is set at 2^125.682, the least thousandth that also covers a 2-percentage-point drop of the squaring fraction at these prices. The meter's per-walk updates across the 2^20 walks are charged (below 2^11.04 units for the starts and 2^27.04 for the restarts); restarts are capped once at 2^36 against an expected 2^26.91, counted per gap between consecutive reports (the stuck-walk counter is reset at every report, a 4-instruction charge inside the 4,000-instruction report item, and at every start and restart), and the meter pays for the whole cap; a run past the cap is a cap failure inside the 0.01 allowance. The distinguished-point rate is theta = 2^-71 (a class is distinguished iff bits 13 to 83 of T are zero; the fingerprint is bits 84 to 211), so at most 2^55 reports are made and every address, index and report count fits one native 64-bit word; the stuck-walk threshold 20/theta = 2^75.32 and the work meter are the only multiword counters, with their carry chains priced. Reports go into one flat fixed-depth store of 2^52 buckets of 16 eighty-byte records with no pointer field (2^56 * 80 = 2^62.32 bytes, below 2^63; no sharding and no multiword address), addressed from the low 52 bits of the fingerprint with the bucket and slot arithmetic stated, at a load factor of 0.5 at the report cap with a probe bound of 16 and an explicitly charged truncation rule: a report is dropped only when its bucket already holds 16 other records, which at the cap (8 records per bucket on average) has probability at most q = 0.00824 (the exact bucket-full tail, computed in experiment.py), so success loses at most 0.43 * 2q = 0.00709 and the success after every charged loss is at least 0.412. Peak memory is below 2^63 bytes; preprocessing is at most 2^44.08 units and is included (an explicit clearing pass zeroes the whole report store before any walk starts, 2^52 buckets x 82 instructions, below 2^44.07 units; every other setup item is at most 2^31 units); a stored record sets a used bit (bit 255 of its alpha field, never set by a residue below r), which is all the free-slot test reads, so no stored record reads as free; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for rho walks, adjusted for the branch mix (effective class count N/(1-s^2-(1-s)^2/R)), with model success 0.43 (at least 0.412 after the 0.01 for H1+ and the truncation loss) against the required 0.39, supported by toy-field experiments and by running the production step rule in the real BLS12-381 GT; the firing of the abort and of the caps is covered by the heuristic H1+ (no percentage-point drift of the branch, cycle and report statistics over the run) with a budget of 0.01 of success probability; no production-size run is claimed.",
+      "score": {
+        "numerator": "125682",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "measure/README.md",
+        "measure/results.tsv",
+        "measure/disassembly-audit.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-measured-squaring-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements check that Re(c_0) is the same for all 12 conjugates, the Frobenius formula, the 4-multiplication conjugate-key formula, distinctness of the 12 keys, the canonical representative, the Granger-Scott squaring formula with its operation counts (9 Fp2 squarings, 34 Fp2 additions) against the dense product, the factorisation of r-1 and the orders of p and 2 modulo r. Part C: execute the production step rule (branch, multiplier and distinguished bits read from Re(c_0), keys only on multiply steps, twisted table, squaring, 2-cycle escape) in the real GT for thousands of steps and compare against explicit Frobenius arithmetic. Part B: run the complete algorithm (cycle escapes, distinguished points, collision solving) in a small field with the same tower shape and compare first-collision times with the random-mapping law adjusted for the branch mix. Part E: sample classes, apply one step and count image coincidences to test the pair-collision law of the branch mix. Part D: read the shipped measurement record (measure/results.tsv and the six raw Callgrind records), assert the three per-call marginals 383, 22,996 and 9,803, and recompute the work ledger, the work cap with its integer inequality, the drift table, the record store's load factor and truncation figure, and the per-report and meter charges, the store clearing pass, the preprocessing bound and the non-walk sum. Part B also reports the run-to-run fluctuation of the mean charge against the independent-steps prediction. Toy scale only; does not validate production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              67,
+              139,
+              163,
+              211,
+              379
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30000
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "sq8",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 67,
+          "trials": 40,
+          "R": 64,
+          "sq8": 3,
+          "dp_bits": 3,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "production_steps": 2000,
+          "seconds": 6,
+          "pair_samples": 4000
+        }
+      ]
+    }
+  ]
+}
