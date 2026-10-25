@@ -1,0 +1,21 @@
+{
+ "version": 1,
+ "title": "Claim 126.9558: one integrated protocol (step_v26 walk, DP-first termination, twelve-shift recovery, credit-charged bootstrap) executed end-to-end by every experiment; sampler order fixed and the measured 0.600 first-report retention charged; Q=[x]Q0 output path with instruction counts and 255-bit/87-bit widths",
+ "claims": [
+  {
+   "statement": "Solve z = z0^x in the order-r subgroup of BLS12-381 GT by a Frobenius-class rho walk whose every launch -- bootstrap included -- is charged to one step budget S and clamped at ceil(S/theta); return Q=[x]Q0 with e(P,Q)=z. CLAIM: smallest n/10000 with 20000*2^(n/10000) >= W, W the exact sum of six ceil rows in evidence/ledger32.json recomputed by scripts/regen_v32.py. The success and retention experiments call scripts/protocol.py run_protocol -- the same function that performs step_v26, the DP test, the store match, the twelve-shift recovery and the in-flight gate -- so no measurement bypasses the protocol. Bootstrap launches consume theta each (v31: free), the launch count is clamped at ceil(S/theta) and the trace shows the clamp binding. is_dp is tested before the store lookup, so a repeated distinguished point terminates its trail and yields the shared report; the dedup-first order is retained only as a control and measures 0 of 10 reports shared against 6 of 10 for the shipped order.",
+   "score": {
+    "numerator": "634779",
+    "denominator": "5000"
+   },
+   "evidence": [
+    "evidence/protocol32.json",
+    "evidence/gate32.json",
+    "evidence/retention32.json",
+    "evidence/audit32.json",
+    "evidence/ledger32.json"
+   ]
+  }
+ ],
+ "experiments": []
+}
