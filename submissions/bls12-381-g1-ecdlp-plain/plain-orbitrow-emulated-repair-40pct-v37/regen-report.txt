@@ -1,0 +1,28 @@
+claim -> extraction table (regen.py; every row Y)
+
+claim element                      | extraction                                           | value                                        | status
+-----------------------------------+------------------------------------------------------+----------------------------------------------+-------
+object instructions                | completeness.py, clang+otool on schedule.build()     | 1171                                         | Y
+charged literal rows               | schedule.build() in emit_asm() order                 | 132                                          | Y
+scaffolding                        | emit_asm() synthetic lines                           | 1039                                         | Y
+scaffolding decomposition          | emit_asm() labels and ret lines                      | 1 standalone return + 4 stubs x 3 + 1026 repair = 1 + 12 + 1026 = 1039 | Y
+__text                             | otool -l size field = 4 x object                     | 0x124c                                       | Y
+charge non-refresh / refresh       | experiment.py LEDGER sum / +REFRESH_INSTR            | 131 / 134                                    | Y
+record fields read before own write | schedule rows, [x19,#off], emitted order             | 10/10 offsets 0, 16, 32, 48, 64, 80, 96, 104, 120, 136 | Y
+exact-index repair in the object   | emit_asm() L_fallback block, ends `b L_rejoin`       | 1026 instructions, no `ret`, re-enters at the row-4 head | Y
+p_in / abandonment debit           | deleted with the exit path (no `ret` in L_fallback)  | p_in = 0 by construction; no debit term in the claim | Y
+repair work allowance              | experiment.py cost block                             | 0.5130 units/repair, 2^67.24 repairs, 2^66.28 units (-60.05 of base) | Y
+exact-index repair EXECUTED        | emulate_block.py over the emitted block              | 300 random + 10000 adversarial (2092 fallback) inputs, 0 mismatches; v36 block x8 never moved (51 inputs); spill-order mutant 6/60; frame 512 B, max offset 496, assert green | Y
+failure terms (attack level)       | experiment.py cost block                             | H1 0.429477 - charges 0.0239991 - meter 0.001047 = 0.40443 | Y
+allowances (true multiplicities)   | experiment.py cost block                             | log2 total 88.41                             | Y
+toy pipeline (Part B)              | experiment.py initial_inputs, 8 sub-batches          | n=880 k=379 0.4307 [0.3977, 0.4642]; unscaled k=338 0.3518; per-batch s 0.30/0.32/0.32/0.31/0.31/0.31/0.30/0.31 | Y
+score (reduced rational)           | experiment.py CLAIM, gcd(50533,400)=1                | 50533/400                                    | Y
+esc2_events                        | grep experiment.py                                   | absent (deleted, never incremented)          | Y
+
+literal sweep: every number token in claims[0] must be owned by an artifact or by a
+constant traceable to experiment.py; tokens checked 194, unowned 0 
+
+regenerated from the shipped tree by regen.py --write; --check compares this
+manifest byte-for-byte; --control deletes one emitter instruction and requires every
+derived count to move (148->147, 0x250->0x24c); --control-sweep plants a 17 in the
+claim text (object says 16) and REQUIRES the literal sweep to fail.
