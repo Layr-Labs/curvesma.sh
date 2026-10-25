@@ -1,0 +1,25 @@
+row-enumeration completeness -- plain BLS12-381 G1 span (v32)
+================================================================================================
+source    : schedule.py build() rows in emit_asm() order, not the disassembly
+object    : clang -arch arm64 -c span.s -o span.o ; otool -t -v / -l
+
+per-row tables: elided (pass --tables to print every row; the identity check below compares
+ALL 1183 source lines against the object whether or not they are printed here)
+
+|---:|---:|---|---|---|---|---:|
+
+
+accounting closure
+------------------------------------------------------------------------------------------------
+  enumerated rows                 : 132  (129 literal non-refresh + 3 refresh)
+  synthetic scaffolding           : 1051  (1 return + 4 stubs x 3 + the repair block)
+  object instruction count        : 1183
+  __text bytes                    : 0x127c = 4 x 1183
+  unattributed instructions       : 0
+  charged per non-refresh step    : 131 = 129 literal + 2 amortised (meter, Fermat share)
+  charged on the refresh step     : 134 = 132 literal + 2 amortised
+  scaffolding budget              : 1051 per batch / 2^18 elements = 4.009e-03 per element
+  reserve inside the charged price: 1 - 232,864/2^18 = 0.1117 per element
+  the level price 1.0655234375    : (63 x 131 + 134)/64 = 131.046875 exactly, no per-step max
+
+RESULT: COMPLETE -- every instruction in __text is enumerated or charged
