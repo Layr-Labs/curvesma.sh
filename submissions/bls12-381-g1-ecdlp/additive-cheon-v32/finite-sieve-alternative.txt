@@ -1,0 +1,374 @@
+FINITE SIEVE ALTERNATIVES FOR THE SAME-SIDE SHARED-SMALL RESIDUAL
+Date: 2026-10-25 UTC. All scientific files are on the primary EC2 server.
+Status: NEW proved deterministic partial bound under accepted P1 and endpoint
+inputs. No coprime-excess bound, original P2 proof, or route-B proof is claimed.
+
+The strongest calculation in this note is the DIRECT ROW sieve, Sections 4-8.
+It gives
+ E_same1S / B0 < 0.156980,
+with exact certificate 0.15697936430584272... .
+This replaces, rather than bounds, the former fixed-level all-integer Selberg
+remainder. Its proof retains actual class-prefix weights through P1 and
+weighted short-vector counting. No H2 or unweighted class premise is used.
+
+Files:
+ direct_row_sieve_verify.py / .json: strongest exact rational certificate.
+ finite_sieve_alternative_verify.py / .json: earlier adaptive affine-wheel
+ and R=64 Selberg certificates, superseded as bounds by the direct row sieve.
+ finite_sieve_scan.py and finite_sieve_weight_diagnostic.py: expressly marked
+ floating diagnostics, NOT proof certificates.
+
+1. Parameters, scope, and mass hypotheses
+
+r=52435875175126190479447740508185965837690552500527637822603658699938581184513,
+d=2^20, m=(r-1)/d, X1=2^82, X2=2^70, Z=X1*X2,
+n=67704887904593045852627984777072135,
+M=5893133993817406318491, B0=36*n^4/m.
+B/G use disjoint baby/giant large-prime rows (>X1/2>X2), with actual
+complementary-character-class list prefixes P_a and |B|=|G|=n.
+There are at most M used rows per side.
+
+Explicit accepted inputs:
+ P1 on EACH side: if W_s(c)=sum_{a:class(a)=c}|P_a|,
+ sum_c W_s(c)=n and d*sum_c W_s(c)^2/n^2-1<=500.
+ Certified endpoints: baby a<=AB=.57X1, giant a<=AG=.64X1.
+Put ZB=.57Z and ZG=.64Z. The package's independent endpoint component
+proves these endpoints from the expressly quoted total-prime theorem.
+
+Cauchy on the other d-1 classes proves
+ max_c W_s(c)<=n*w, w=(1+sqrt(500(d-1)))/d.
+For same-side coefficient pairs a!=a', weight their exact shared prefix by
+ w(a,a')=|P_a intersect P_a'|
+        =1_class(a)=class(a') * min(t_a,t_a'), t_a=|P_a|.
+Then the total ordered coefficient mass on EACH side is bounded by
+ Q_s=sum_{a!=a'}w(a,a')<=Qbar:=n*M*w.                    (1.1)
+Indeed sum_p b_p^2=sum_{a,a'}min(t_a,t_a')1_sameclass
+ <=sum_c W_s(c)R_s(c)<=n*w*M; subtracting the n diagonal only helps.
+
+E_same1S means the wrapped energy family with EXACTLY ONE common prime
+across xy'=rho*x'y, that common prime being SMALL and appearing either
+in x,x' (same baby) or in y',y (same giant).
+After canceling it, the remaining variable pair y,y' is primitive as an
+ordinary integer pair. The two cross/inner common-small placements are
+handled separately after pruning, in the parent decomposition. Additional
+shared-prime families are also handled separately; this bound must not
+be mislabelled as the earlier all-common-small, nonprimitive majorant.
+
+The elementary 2X1^2X2<r condition rules out rho=-1 and wrapped rho=1 after
+cancellation. Four nonreal rho remain, each with six ordered (u,u') pairs.
+Every bound below is initially for ONE rho and ONE same-side placement;
+multiplication by24 and summation over the two placements restores energy.
+
+2. Short-lattice removal and a fully paid list-prime exception
+
+Let
+ t0=floor((r-1)/(2Z))=4592394459902008069420521096196,
+ z0=floor(2t0/X1)=1899369.
+The code checks 3X1^2X2<r. For a coefficient pair a,a', let Lambda be
+ a*s == rho*a'*t (mod r)
+and lambda_infty its first sup-norm minimum. If lambda_infty<=t0, take
+a shortest ordinary primitive vector v. It is primitive because its
+content can be divided out modulo the prime r to shorten it.
+For any actual primitive positive variable point w in [1,Z]^2,
+ |det(v,w)|<=2t0*Z<r.
+That determinant is a multiple of r, so it is zero. Since both points
+are ordinary primitive, w=+/-v and ||w||infty<=t0. Each coordinate is a
+large prime >X1/2 times its list prime. Thus both remaining list primes
+are <=z0. Consequently all such actual collisions are included in the
+following explicit exception. Remove the ENTIRE bad coefficient lattice
+from subsequent majorants; retaining its long nonprimitive rays would
+unnecessarily enlarge the artificial sieve sequence.
+
+Here is a self-contained exception argument, with NO primality
+distribution or coprimality conjecture. Let H_s(z) count entries of side s
+whose list prime is <=z, and s_2 count entries with list prime2.
+H_B+H_G<=2M*pi(z), B_2+G_2<=2M.
+
+For a fixed shared list prime p, the integer convolution
+ c_p(v)=#{(a,y):p in P_a on baby side, y in G, a*y=v}
+is BOOLEAN by unique factorization: v has one baby large prime, one giant
+large prime, and one list prime. Its marked/even masses are b_p*H_G(z)
+and b_p*G_2, with sum_p b_p=n.
+Every such v is at most Y=X1^2X2<r/3. A U-orbit has at most three positive
+representatives <=Y, one per opposite pair. At most two are odd: three odd
+representatives would satisfy a signed cubic-root sum0 modulo r, hence
+an integer zero since their absolute sum is <r, impossible by parity.
+Thus the nonreal-root graph on odd representatives is a matching, while
+the full graph has degree<=2.
+For a boolean support with all even points marked, ordered nonreal edges
+touching a mark are <=2*(marked mass)+2*(even mass). Odd-odd matching
+edges cost at most twice the marked odd mass; edges touching an even point
+cost at most four times the even mass. Multiplying by six rootpairs and
+summing p bounds same-baby exception by12n(H_G+G_2); same-giant similarly.
+Therefore, for the TWO same-side placements together,
+ E_exc,ss(z)<=12n(H_B+H_G+B_2+G_2)
+            <=24nM(pi(z)+1).                           (2.1)
+An elementary Eratosthenes computation in the certificate gives exactly
+pi(1899369)=141993. Hence
+ E_exc,ss(z0)/B0 <=8.988631737917206e-8.                 (2.2)
+This removes both all lambda_infty<=t0 actual collisions AND every
+remaining list prime<=31 (indeed <=41), since31<z0. It is charged ONCE.
+
+From now on coefficient lattices satisfy lambda_infty>t0 and all actual
+variable pairs have unit coordinates modulo every wheel used below.
+
+3. Selected-vector events preserve the divisor density
+
+Select an L1-SHORTEST vector v=(a,b) for each ORIGINAL coefficient lattice,
+with first coordinate positive; put ell=||v||infty. Section4 proves
+||v||1<=sqrt(2r)<r. It is ordinary primitive: otherwise divide its content
+out of the congruence modulo the prime r, making a shorter vector.
+The original sup-minimum was trimmed, so ell>t0. No monotonicity of a
+selected norm under passing to sublattices is asserted or required.
+
+Elementary primitive fan lemma. In a determinant-D integer lattice, the
+number of ordinary primitive points in (0,U]x(0,V] is at most
+floor(2UV/D)+1. Order them by angle: distinct primitive points cannot
+lie on the same ray; adjacent nonzero determinants are multiples of D.
+The resulting disjoint triangles lie in the rectangle. Thus
+(number-1)D/2<=UV. Splitting signs gives at most4UV/D+2 points in
+(0,U]x[-V,V]. This argument uses ordinary primitive points throughout.
+
+Fix ONE placement, one nonreal rho, and large-coefficient endpoint A
+(AB or AG). For a squarefree divisor h of the finite wheel, consider
+the ACTUAL selected original directions with h|v1*v2 and ell<=T.
+Ordinary primitivity means each p|h divides exactly one coordinate,
+giving one of2^omega(h) coprime allocations d*e=h with d|v1,e|v2.
+There is NO content sum here: the selected original direction is already
+ordinary primitive. This is stronger than using an arbitrary ordinary
+minimum of a divisor sublattice, which could have nontrivial content.
+
+For one allocation write the selected direction as (s,t), s>0.
+Noncross case: a' does not divide s. The point
+ (s,w)=(s,a'*t)
+is ordinary primitive, belongs to the determinant-(r*h) lattice
+ a*s == rho*w mod r, d|s,e|w,
+and lies in (0,T]x[-A*T,A*T]. The small divisors d,e are coprime to
+all large primes because h<X1/2. If X1*T<(X1/2)^3, |w| has at most
+two eligible a' divisors. The signed fan lemma bounds possible a'
+for fixed a by8A*T^2/(r*h)+4.
+Since the ACTUAL prefix overlap is <=t_a and sum_a t_a=n, the weighted
+event count for this allocation is at most
+ 8nA*T^2/(r*h)+4n.                                   (3.1)
+
+Cross case a'|s: put U=a*s/a', V=t.
+Simultaneous a|t is impossible under12T^2<r*X1^2: cancel both large
+primes to get a nonzero cubic-root norm divisible by r but smaller
+than r. Thus(U,V) is ordinary primitive, satisfies U==rho*V mod r
+with d|U,e|V, and lies in(0,2T]x[-T,T]. Under T<X1^2/8, U has at
+most two eligible a divisors. For each root point and each such a,
+sum the ACTUAL overlap weights over all a':
+ sum_a' min(t_a,t_a')1_sameclass <=sum_a' t_a'=n.
+The signed fan lemma therefore bounds this weighted event by
+ 16n*T^2/(r*h)+4n.                                   (3.2)
+It is ZERO for T<sqrt(r/12), because the nonzero norm of U,V is at
+most12T^2 and divisible by r. The range T<X1^2/8 and3X1^2<r also
+implies the simultaneous-cross exclusion. Both maps use ordinary
+primitive selected points and retain actual weights. They do not
+replace a class list by an assumed ambient density.
+
+Let I_h=sum w(a,a')/ell over the selected directions with h|v1*v2.
+Put C_A=8nA/r,C_x=16n/r,tc=floor(sqrt((r-1)/12)).
+Sum(3.1),(3.2) over the2^omega(h) allocations. The layer-integral bound
+sum w/ell<=Qbar/T+integral_(t0)^T F(t)/t^2 dt, optimized in its quadratic
+part, proves
+ I_h <=2sqrt(Qbar*(C_A+C_x))*sqrt(2^omega(h)/h)
+       +4n*2^omega(h)*(1/t0+1/tc).                   (3.3)
+The cross constant is integrated only from tc, where cross events
+can first occur. The certificate checks EVERY optimizing endpoint
+T=sqrt(Qbar*h/((C_A+C_x)*2^omega(h))) for EVERY divisor of EVERY
+tested wheel lies above t0 and below X1^2/8 and satisfies all norm
+and factor-count conditions. Equation(3.3) retains the prime-divisor
+density 1/h without a class-density postulate.
+
+4. Row geometry and the L1-shortest direction
+
+Extend the chosen direction v=(a,b) to a lattice basis(v,w),det(v,w)=r.
+Rows have det(v,z)=r*j, j integer. Let f(j) be the continuous positive-box
+chord length measured in units of v. For a square of side Y,
+integral f=Y^2/r,max f<=Y/ell, and the row-index interval length is
+ L=(|a|+|b|)*Y/r.
+For EVERY integer h>=1, excluding row0,
+ S_h=sum_(j!=0,h|j) f(j)
+satisfies the SHARP two-sided bound
+ Y^2/(r*h)-max f <= S_h <= Y^2/(r*h).                 (4.1)
+
+For same-sign coordinates, the full sampled chord sum is a scaled
+interval CROSS-CORRELATION. Exactly, for positive u,v,
+ sum_(j integer) (1_(0,u) star 1_(0,v))(j)
+ =u*v+min({u},{v})-{u}{v} >=u*v.
+One proof decomposes each interval into full unit pieces plus its
+fractional piece; any full-unit term periodizes exactly, and the two
+fractional pieces overlap at sample0 by min({u},{v}). After scaling by h
+the full sum is at least the integral/h. Row0 has chord f(0)=max f;
+deleting it gives the lower bound in(4.1). The upper follows from
+monotone right/left Riemann sums away from row0.
+
+For opposite signs the chord is a scaled interval CONVOLUTION, with
+exact sampling identity
+ sum_j (1_(0,u)*1_(0,v))(j)=u*v-E({u},{v}),
+ E(alpha,beta)=alpha*beta if alpha+beta<=1,
+              (1-alpha)*(1-beta) otherwise.
+Thus the upper in(4.1) holds; the deficit is at most max f, proving
+the lower too. Row0 has zero chord here.
+These identities hold also when sampled at step h by rescaling.
+They were independently algebraically audited and exhaustively checked
+in primitive-coefficient-one / unitwheel-row-audit.
+
+On row0 there is at most ONE ordinary primitive point; add it separately.
+For nonzero rows, counting all unit-coordinate points is an upper bound
+for the actual primitive points.
+
+The chosen L1-shortest vector satisfies
+ ||v||1<=sqrt(2r).                                    (4.2)
+Self-contained proof: map a half-diamond {||x||1<s/2} of area s^2/2
+into a fundamental parallelogram of area r. If s>sqrt(2r), the total
+area exceeds r, so two pieces in this projection overlap. Their
+preimages differ by a nonzero lattice vector of L1 norm<s. Let
+s decrease to sqrt(2r). The vector norm is integer, so
+||v||1<=floor(sqrt(2r)), which the certificate uses exactly.
+This is an area-pigeonhole proof of the diamond bound, not an
+uncomputed lattice constant.
+
+5. Exact row densities and the bad-direction loss
+
+Let Q be squarefree and prime to r, and rho1=phi(Q)/Q.
+For a fixed row j, the integer row parameter t maps with j invertibly
+to coordinates mod every p|Q because the basis determinant is r.
+Put delta_p(j)=1_{p|j}.
+If p does NOT divide a*b, the exact proportion of t residues making
+both coordinates nonzero mod p is
+ g_p(j)=(p-2)/p+(1/p)*delta_p(j).                       (5.1)
+The two forbidden roots coincide when j=0 mod p and are distinct otherwise.
+If p|a*b, then p divides just one coordinate of v, and
+ g_p(j)=(1-1/p)*(1-delta_p(j)).                         (5.2)
+Let g_Q(j)=product_p g_p(j)=sum_{h|Q} c_h 1_{h|j}.
+Its mean over j is rho1^2, or equivalently sum_h c_h/h=rho1^2.
+
+Let b=omega(gcd(a*b,Q)).
+For b=0 all c_h>=0, so(4.1) directly gives
+ sum_{j!=0}g_Q(j)f(j)<=rho1^2*Y^2/r.
+For b>0, sum c_h=g_Q(0)=0 and
+ sum |c_h|=2^b*rho1, so the negative coefficient mass is2^(b-1)*rho1.
+Apply the lower side of(4.1) only to those negative coefficients:
+ sum_{j!=0}g_Q(j)f(j)
+ <=rho1^2*Y^2/r+rho1*2^(b-1)*max f.                       (5.3)
+Thus the troublesome inverse-short-vector term occurs only when a wheel
+prime divides the selected short direction, and can be bounded by(3.3).
+
+The exact odd-subset identity is
+ 2^(b-1)*1_(b>0)
+ =sum_(h|Q,omega(h) odd)1_(h|a*b).                    (5.4)
+There are2^(b-1) odd subsets of a nonempty set of b bad primes, and
+none when b=0. Thus no union-bound inflation is needed.
+Let a_p=sqrt(2/p). Equation(3.3) sums over these odd divisors with
+leading factor
+ .5[product_(p|Q)(1+a_p)-product_(p|Q)(1-a_p)]
+ =.5 product_(p|Q)(1+a_p),                           (5.5)
+since2|Q and a_2=1. The content-constant factor is
+ .5[3^k-(-1)^k], k=omega(Q).
+Both are exact positive-coefficient divisor sums, so rational outward
+bounds for square roots preserve their upper-bound direction.
+
+6. A period-6 average controls point-rounding errors
+
+Pre-sieve primes2 and3 EXACTLY on each row. Let n6(j) be the number of
+allowed t residue classes mod6. For each such class, every remaining
+wheel prime forbids at most two residues of its free progression variable.
+Finite inclusion-exclusion and the elementary interval AP error<=1 give
+row-count error at most
+ n6(j)*3^(k-2).                                       (6.1)
+Indeed the sum of CRT root counts is product_(p>=5)(1+nu_p)<=3^(k-2).
+
+The invertible basis map (j,t) mod6 has exactly phi(6)^2=4 pairs whose
+two coordinates are units. Therefore
+ sum_{j mod6}n6(j)=4.
+For a real interval of row-index length L, splitting integer indices
+into periods plus one partial period proves
+ sum_j n6(j)<=2L/3+4.                                 (6.2)
+This is substantially sharper than charging the worst two classes on
+every row. By(4.2), the total row-rounding contribution for one lattice is
+at most
+ 3^(k-2)[(2/3)*floor(sqrt(2r))*Y/r+4]+1.             (6.3)
+The final +1 is the possible primitive origin-row point. It must not be
+lost when removing that row from chord sums.
+
+7. Exact combined production certificate
+
+Apply Sections4-6 to each original GOOD coefficient lattice with its
+actual weight w(a,a'), sum the two same-side placements, and multiply24.
+Use Qbar for each total mass, and(3.3) only for the bad-direction sum.
+The result is the sum of these FOUR explicitly bounded quantities:
+ main =rho1^2 * [24 Qbar (ZG^2+ZB^2)/(r B0)];
+ bad =rho1/2 * [L0*product(1+a_p)+K0*(3^k-(-1)^k)];
+ rounding =3^(k-2)[(2/3)D0+4C0]+C0;
+ exception =24nM(pi(z0)+1)/B0,
+where
+ L0=24/B0 *sum_(A,Y) 2Y sqrt(Qbar*(8nA/r+16n/r)),
+ K0=24/B0 *(ZG+ZB)*4n*(1/t0+1/tc),
+ D0=24/B0 *(ZG+ZB)*Qbar*floor(sqrt(2r))/r,
+ C0=48Qbar/B0,
+and (A,Y) runs over(AB,ZG),(AG,ZB).
+These L0,K0,C0 are coefficient names local to this formula, not original
+list lengths or baseline notation.
+
+The standalone direct_row_sieve_verify.py uses only integers/Fractions.
+Square roots are enclosed by integer square roots at scale2^128;
+floor(sqrt(2r)) is computed exactly.
+It verifies all finite cutoffs, computes pi(z0) by Eratosthenes, and
+checks every optimal integration endpoint for every divisor of every
+tested wheel. It reads no finished JSON, and outputs exact fractions.
+
+The best wheel among initial prime lists through41 is Q=product_(p<=31)p:
+ Q=200560490130, phi(Q)=30656102400, k=11.
+Its normalized certified components are
+ main          0.14745261263704520...
+ bad direction 0.00178787281989093...
+ row rounding  0.00773878896258920...
+ exception     0.00000008988631738...
+ TOTAL         0.15697936430584272... <0.156980.            (7.1)
+All root/placement factors24 and BOTH same-side placements are included.
+
+For comparison: through29 gives0.16149956939; through37 gives0.16495035572.
+A smaller/larger wheel is not declared impossible; this is only the
+specified finite scan. Independent algebra/regression audits cover row
+densities, period6, chord bounds, diamond geometry, and the primitive selected-vector maps;
+the production numerical fraction is freshly recomputed in the script.
+
+8. Relation to the old Selberg target and the still missing proof
+
+The old full all-integer C(k) sequence included long nonprimitive rays in
+short coefficient lattices. Our sequence FIRST removes those coefficient
+lattices, paying their ACTUAL primitive collisions by(2.1), and then uses a
+direct row-wise positive majorant. Consequently(7.1) is a NEW sufficient
+energy bound; it is NOT an estimate for the former fixed R_SS remainder.
+
+Keeping only the two same-side placements also changes the finite
+level-2^35 Selberg main and exception to
+ main_same/B0<=0.01955355249065528...,
+ exception_same/B0<=0.0013209208320833195... .
+Those figures, independently recomputed in finite_sieve_alternative_verify,
+are valid MAIN/exception quantities, with an unresolved signed remainder.
+They must not be combined with(7.1); they are alternative bounds.
+
+The same verifier proves two weaker complete alternatives:
+ adaptive finite affine wheels: E_same1S/B0<0.304
+    (computed0.30358943974600155...);
+ exact R64 Selberg good-remainder upper0.11450191953131221...,
+    main0.28474651598680495..., combined about0.3992485254.
+Diagnostic optimization of combined main/absolute-error weights does not
+close the target; it is explicitly labelled noncertifying research.
+
+The parent route-B full normalized excess allowance is approximately
+0.2017679063357367. After all other proved strata and(7.1), the coprime
+excess must STILL receive an additional proved bound of about0.04246.
+No such estimate is proved here. In particular neither route B nor the
+original epsilon<=.057 P2 target is solved by this partial result.
+The new shared-small bound is deterministic at the declared production
+scale under accepted P1/endpoints, not a toy extrapolation or a new
+equidistribution premise.
+
+Reproduce:
+ python3 /srv/sig/workspace/research/prime-character-A-20261024/p2-routeb-joint-20261025/direct_row_sieve_verify.py
+The output status says PASS_SHARED_SMALL_BOUND_ONLY_NOT_P2.
+

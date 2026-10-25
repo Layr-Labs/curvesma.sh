@@ -1,0 +1,177 @@
+P3/P4 EXACT-MASK LADDER MEASUREMENT CAMPAIGN
+2026-10-25
+
+STATUS
+All seven requested controls were recomputed exactly after the declared
+swap pruning. All three previously registered d=2^20 critical-load target
+masks were measured by a new output-character-stratum Horvitz--Thompson
+design, with exact design variance/covariance estimates. No outcome was
+dropped or clipped. These are finite-scale measurements, not production
+proofs of P3/P4 and not a proof of the remaining coprime discrepancy.
+
+DEFINITIONS THAT THE IMPLEMENTATION ACTUALLY USES
+Let h=m/6, with m=(r-1)/d. Original B,G are the exact full49 construction,
+using the same physical blocks, character lists, terminal prefixes and
+full-critical target n as in the prior coprime campaign. For each physical
+baby/giant row pair (a,c), if the small prime is the same on both sides,
+keep only its first shared prime; remove the remaining same-prime base
+pairs. All six U-translates are pruned consistently. No further modular
+collision, repeated-coordinate or coprime pruning is performed.
+
+Let T0 be the retained BASE-pair count, N0=6T0. Let r0(C) count retained
+ratio pairs x/y in U coset C. Then
+  K0 = T0/h = N0/m,
+  Fj = (1/h) sum_C (r0(C))_j = (1/m) sum_(v in H) (R0(v))_j.
+The ratios requested are F3/K0^3 and F4/K0^4. The coarse production
+lower bound K-6Mn/m is NOT their normalizer. Product occupancy B*G and
+ratio occupancy B/G have equal total second energies, but not these
+higher moments. Every measurement here uses the RATIO occupancy.
+
+The exact U-coset key is (x/y)^6 modulo r, since the kernel of sixth power
+on F_r^* is exactly U. For input x=ab,y=ce the swap-pruning test is
+b=e and b is not the first prime of that actual complementary class.
+Zero-occupancy bins are retained in the total h even though they do not
+contribute positive falling-factorial sums.
+
+EXACT CONTROLS
+The following are fresh full counts. The six full-critical controls and
+the low-K screen are distinguished. Exact integer histograms, T0, D,
+falling-factorial sums, rational moments, coverage, four-term Bonferroni
+floors, and native resource records are in exact-controls.json and its
+per-case records. The first full control independently matches the
+stdlib constructor/ratio oracle digit-for-digit.
+
+name | K0 | F3/K0^3 | F4/K0^4 | P3 | P4
+quartic-d4-full | 0.543193624896 | 1.00055978239 | 1.03210978686 | True | True
+quartic-d8-full | 0.550252280284 | 0.998438629455 | 1.00546595527 | True | True
+quartic-d12-full | 0.550150366578 | 1.00164887562 | 1.02291694071 | True | True
+quartic-d16-full | 0.550032076586 | 0.999469771104 | 0.997466557275 | True | True
+quartic-d20-low-K-screen | 0.00500073127747 | 1.00721029037 | 0 | True | True
+C3-d20-sparse-full | 0.55004268211 | 0.999572647869 | 0.997956508497 | True | True
+C3-d20-rich-full | 0.550022394329 | 0.999685280146 | 0.999426317515 | True | True
+
+HT TARGETS (point estimate +/- design SE)
+name | X2/d | n_full | K0 | S | L | s | F3/K0^3 +/- SE | F4/K0^4 +/- SE
+quartic-d20-X2-27 | 128 | 124013 | 0.550003860807 | 136540 | 204790 | 64 | 1.00188558123 +/- 0.00313647810395 | 1.00816438173 +/- 0.0103139133078
+quartic-d20-X2-31 | 2048 | 972259 | 0.550000607104 | 133805 | 12844832 | 64 | 0.999010108581 +/- 0.00411741292472 | 0.99100192651 +/- 0.0109849825893
+quartic-d20-X2-35 | 32768 | 24654937 | 0.550000010509 | 133278 | 8292521939 | 64 | 1.00456174541 +/- 0.00369436248245 | 1.01875478655 +/- 0.0132576627862
+
+HT SAMPLING DESIGN AND WHY IT DOES NOT THIN OCCUPANCIES
+For each high target choose S|h closest multiplicatively to 2^17 subject
+to L=h/S>=256, with ties resolved by smaller S. Select s=64 labels by
+uniform sampling without replacement from Z/L. The exact deterministic
+PRNG seeds, all64 IDs, divisor selection and target hashes were frozen in
+ladder-preregistration.json BEFORE the new moment outputs:
+  SHA256 c28143cfaaf420c7146587078b7b1951d25e316cfa01e084a0c6b214932cad49.
+
+Set theta(x)=x^(6S)=x^(m/L). It is constant on U cosets and has exactly L
+values on H, each stratum containing exactly S quotient bins. For a chosen
+label j enumerate ALL original base pairs with theta(x)/theta(y)=zeta_L^j,
+apply only the declared swap pruning, and count the full retained ratio
+occupancy in those bins. Original rows are never subsampled or shortened.
+
+For Z_kj=sum_(C in stratum j)(r0(C))_k, define
+  Fhat_k = L/(s h) sum_(j sampled) Z_kj,
+  rhohat_k = Fhat_k/K0^k.
+K0 is the exact fixed FULL-target mean, not a sample estimate. The estimator
+is design-unbiased under ideal uniform sampling of the labels. Unequal
+pair counts or empty strata are valid observations and never trigger a
+redraw.
+
+If s_kl is the usual sample covariance of the stratum TOTALS, then
+  Covhat(Fhat_k,Fhat_l)=L^2(1-s/L)/(s h^2) s_kl.
+Normalize by K0^(k+l) for the ratio covariance. The SEs are square roots
+of these exact rational variance estimates. The same64 strata are used
+for both moments. For J34=F3/6-F4/24:
+  Varhat(J34)=V3/36+V4/576-Cov34/72.
+The covariance term is kept. Independent-bin or independent-index
+variance approximations are not used.
+
+ESTIMATED HIGHER-MOMENT GAIN AND ANCILLARY COVERAGE
+The following are recomputed from the same primary histograms. The J34
+boundary is .95*K0^3/6-1.20*K0^4/24, the contribution guaranteed by the
+two named moment premises. Coverage is an ancillary HT count of occupied
+quotient bins, not an additional full target execution.
+
+name | J34 +/- SE | premise J34 boundary | margin | HTcoverage +/- SE | max occupancy
+quartic-d20-X2-27 | 0.0239380401348 +/- 5.77243658954e-05 | 0.0217678221173 | 0.00217021801748 | 0.422818175992 +/- 0.000173465808757 | 7
+quartic-d20-X2-31 | 0.023923339935 +/- 8.61868397485e-05 | 0.0217674628653 | 0.00215587706967 | 0.423143170098 +/- 0.000160071552674 | 8
+quartic-d20-X2-35 | 0.0239713934408 +/- 6.44567421044e-05 | 0.0217673969936 | 0.00220399644717 | 0.423226732844 +/- 0.000162427827316 | 8
+
+QUANTITATIVE CARTESIAN NULL REFERENCE
+For independent uniform subsets of H/U with sizes nB,nG, the ratio
+occupancy in one bin is hypergeometric. Therefore exactly
+  E(Fk)=(nB)_k(nG)_k/(h)_k.
+This retains Cartesian sharing of the B/G indices. It is stronger as a
+reference model than independently assigning a uniform value to every
+coverage index.
+
+To match the ACTUAL retained mass T0, an explicit additional null model
+retains exactly T0 of T=nB*nG base pairs uniformly without replacement:
+  E(Fk_ret)=(nB)_k(nG)_k/(h)_k * (T0)_k/(T)_k,
+  K0=T0/h.
+cartesian-null-model.py recomputes all toy benchmarks, 4904 hypergeometric
+checks, and25830 exhaustive subset/retention checks. At production the
+unpruned normalized finite-subset deficits are about8.862e-35 (k3) and
+1.7724e-34 (k4). Uniform fixed-mass retention changes them by at most
+5.697e-83 and1.1393e-82 using the elementary D<=Mn bound.
+These are a post-measurement mathematical null reference, not an assertion
+that the fixed prime sets are uniform subsets or that swap pruning is
+uniform deletion. The exact prime/class/prefix data are used in the
+measurements themselves.
+
+The low-load screen is especially weak as a fourth-moment comparison:
+under the null it has only about0.728 expected unordered quadruple events.
+One such event changes normalized F4 by about1.3725. Its exact F4=0 must
+not be interpreted as high-precision evidence for production P4.
+
+VALIDATION AND REPRODUCTION
+* All seven exact controls have complete occupancy histograms and exact
+  integer factorial sums; their figures are independently recomputed by
+  p34_arithmetic_check.py.
+* The native high-target Montgomery arithmetic passed160000 GMP product
+  comparisons and400 power comparisons across four moduli, before primary
+  execution. Every retained primary pair passed key^S=zeta_L^j.
+* A complete all-strata d4 native run matched the independent stdlib
+  full-critical oracle exactly.
+* An independent stdlib replay of the first preregistered X2-27 stratum
+  (j17102) matched its complete histogram and F1..F4 sums:
+  (75159,41126,22260,12792). It read the actual full target cache, not a
+  row sample. Its source/report are included; its large cache remains EC2.
+* estimator_design.py exhausts genuine finite prefix/pruning examples and
+  verifies design-unbiased mean, variance, covariance, joint gain, unequal
+  stratum treatment and negative controls. The independent p34_fast_check.py
+  also exhausts all10 size2-of5 stratum designs on the full d4 control.
+* preregistration_verify.py checks ten target identities, primality/order
+  certificates, exact divisor optimum, seeds/IDs and the pruning witness.
+  Optional --source-root rehashes/re-extracts the actual full source masks.
+* The compact protocol is stdlib-only. It recomputes genuine small inputs
+  and all saved count arithmetic; it does not execute the billion-pair
+  controls or reconstruct omitted large prime caches within the short run.
+  Native sources and exact heavy invocation records remain available.
+
+WHAT THESE DATA SUPPORT, AND THE GAP THAT REMAINS
+All exact controls satisfy F3/K0^3>=.95 and F4/K0^4<=1.20. Each of the three
+new actual-mask critical-load estimates has substantial observed headroom
+against those thresholds. This supplies the requested finite-scale
+higher-moment evidence and a quantified Cartesian null reference.
+
+SEs describe sampling uncertainty for the FIXED finite ladder targets.
+They do not include uncertainty about production extrapolation, unseen
+rare stratum tails, or the PRNG's ideal uniform-sampling interpretation.
+No rigorous normal confidence bound or production confidence statement is
+claimed. The exact rational covariance estimates, the64 observations and
+all selection rules are supplied so the uncertainty can be assessed.
+
+The dense target ladder preserves d=2^20 and raises X2/d through2^7,2^11,
+2^15 with full critical prefixes. Production has X2/d=2^50:35 density bits
+remain unmeasured. These targets also do not reproduce the production
+field-size/tier-ratio geometry or the exclusions3X1^2<r and2X1^2X2<r.
+The C3 controls and the low-load screen remain separately labeled.
+The Cartesian null has normalized moments tending to1 as n grows; that
+model has no independent wrap-growth parameter. This is a model
+extrapolation, not a theorem excluding new prime correlations at scale.
+
+P3/P4 remain production premises, now with the requested ladder support.
+The production coprime bound Delta0/B0<=.0424 also remains unproved.
+No unconditional production coverage claim follows from this campaign.

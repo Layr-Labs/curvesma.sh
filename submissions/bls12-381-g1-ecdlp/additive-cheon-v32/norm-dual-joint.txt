@@ -1,0 +1,201 @@
+ROUTE-B JOINT RESIDUAL: PRUNED INNER SHARED-SMALL AND DIVISOR-LATTICE LEMMAS
+2026-10-25 UTC. Proved partial results; NO bound for the whole coprime defect.
+All science and verification files are remote.
+
+Setting and notation
+====================
+r=lambda^2+lambda+1 is the declared BLS scalar prime,
+lambda=228988810152649578064853576960394133503.
+X1=2^82, X2=2^70, Z=X1 X2, d=2^20, m=(r-1)/d,
+n=ceil(sqrt(11m/120)), M=5893133993817406318491.
+Baby and giant large-prime blocks are disjoint and each has at most M rows.
+Every coverage triple is (u,x,y), x=a b in B, y=c e in G.
+For two triples put P=x y', Q=x' y. Each of P,Q has four prime
+factors counted with multiplicity, two large and two small.
+We count ordered distinct-index modular collisions.
+Let D(Y)=floor(2Y^2/r)+1 and B0=36 n^4/m.
+The prime-count input is the certified integer upper
+ pi(X2)<=Pup=24896332478097058409
+from prime_count_inputs.py, consuming Dusart2010 Thm6.9 eq6.6.
+The published analytic prime-count theorem is accepted, not re-proved
+by the arithmetic verifier.
+
+Primitive rectangle lemma
+==========================
+A determinant-D lattice has at most floor(2AB/D)+1 integer-primitive
+points in a positive rectangle (0,A]x(0,B].
+Order the primitive rays by slope; adjacent determinants are nonzero
+multiples of D. The disjoint triangles from the origin have area>=D/2
+and lie in the rectangle of area AB.
+For first coordinate positive and second coordinate signed, the
+corresponding bound is <=4AB/D+2, splitting by the sign of the second
+coordinate. We apply it only to nonzero coordinates.
+
+PART I. Pruned INNER exactly-one-shared-small theorem
+======================================================
+Pruning rule: for each used baby/giant pair (a,c), among coverage
+indices with x=a p and y=c p for p in their shared prefix, retain
+at most one p (and apply the selected rule consistently for all U).
+This removes known integer duplicates without changing the support.
+
+INNER here means the shared small prime lies WITHIN one original
+coverage triple: either x=a p,y=c p or x'=a' p,y'=c' p.
+It does NOT mean p is shared between x,x' or between y,y'.
+Assume gcd(P,Q)=p is exactly one small prime, with no common large
+prime. Thus the remaining four large coordinates are all distinct,
+and the remaining two small coordinates b,b' are coprime.
+
+Claim:
+ E_inner,exactly1S,noL,pruned <=48 Pup^2 D(X1^2).
+At production this is <=4.10202264460009e-8 B0.
+
+Proof for the first inner placement:
+Write x=a p,y=c p,x'=a' b,y'=c' b'.
+After canceling p, the collision is
+ b' A ==rho b A' (mod r), A=a c', A'=a' c.
+The large-prime disjointness and exactly-one-small gcd ensure
+gcd(A,A')=1, and A,A'<=X1^2.
+For each fixed ordered pair b,b' there are at most D(X1^2)
+primitive positive pairs A,A'. Each product A has one baby and one
+giant prime, so tier separation and disjoint blocks recover its
+factor assignment uniquely; likewise for A'.
+The retained p is then uniquely determined by (a,c), if any.
+Hence there is no extra sum over possible p.
+There are four nonreal root ratios, six ordered U-pairs per ratio,
+and two inner placements: coefficient 4*6*2=48.
+Shared-root rho=1 wrapped cases and rho=-1 cases are excluded by
+2X1^2X2<r, using the previously proved shared-prime cancellation.
+The bound uses no P1 or H2.
+
+Optional sharper endpoint version:
+Dusart input also certifies baby a<=.57X1 and giant c<=.64X1.
+Therefore A,A'<=Amax=floor((228/625)X1^2), giving
+ E_inner,pruned <=48 Pup^2 D(Amax)
+               <=5.458932356016412e-9 B0.
+Both exact rational values are in norm_dual_joint_verify.json.
+
+This theorem is NOT a bound on raw inner energy, and NOT a bound on
+the two SAME-SIDE shared-small placements.
+
+PART II. Complete multi-common-prime correction (raw, hence pruned)
+===================================================================
+Suppose Omega(gcd(P,Q))>=2 and we count only wrapped collisions.
+The rho=+/-1 families are excluded as above.
+For nonreal rho, if Omega(gcd(P,Q))>=3 then canceling gcd leaves
+at most one prime on each side. Their nonzero norm is at most
+3X1^2<r, contradicting divisibility by r.
+It remains exactly two common prime factors. There are three types.
+
+2L: gcd is one baby and one giant large prime, <=M^2 choices;
+remaining primitive products <=X2^2.
+ Bound: 96 M^2 D(X2^2) <=1.633090075706988e-17 B0.
+
+1L+1S: gcd is one large and one small prime, <=2M Pup choices;
+remaining primitive products <=Z.
+ Bound: 192 M Pup D(Z) <=2.314989841620039e-12 B0.
+
+2S: gcd is a multiset of two small primes, <=Pup(Pup+1)/2 choices;
+remaining primitive products <=X1^2.
+ Bound: 48 Pup(Pup+1) D(X1^2) <=4.102022644600091e-8 B0.
+
+For every type: a fixed gcd and fixed nonreal rho has at most D(Y)
+remaining primitive pairs. Each original integer product has at
+most two B x G representations, so a pair has at most four.
+Four nonreal rho times six ordered U-pairs times four representations
+is 96. These statements count gcd factors with multiplicity and
+include repeated small primes. They are valid before pruning, so
+they remain upper bounds after pruning.
+The full multi correction is <=4.102254145217342e-8 B0.
+This explicitly includes the 1L+1S type; it must not be silently
+replaced by only a 2L correction.
+
+Using the certified endpoints, replace the 1L+1S bound by
+ 96 M Pup [D(floor(.57Z))+D(floor(.64Z))]
+and the 2S D(X1^2) by D(Amax).
+Then all multi types together are <=5.459782552366647e-9 B0.
+The tight inner-plus-multi sum is <=1.091871490838306e-8 B0.
+No P1/H2 is used for these corrections.
+
+PART III. Prefix-preserving ordinary divisor-minimum F theorem
+==============================================================
+This is PER ONE nonreal rho and ONE same-side large-prime block.
+Let a,a' be distinct primes in (X1/2,X1], both from that block.
+Let t_a>=0 be actual row prefix lengths, sum_a t_a=n.
+Put w(a,a')=min(t_a,t_a') when their chi classes agree, otherwise0.
+The two same-side shared-small placements use this exact weight.
+
+Let d,e be coprime positive integers <X1/2. Define
+ Lambda_de(a,a')={ (s,t) in Z^2:
+                  a s==rho a' t (mod r), d|s, e|t }.
+Its determinant is r d e.
+For a canonical shortest nonzero vector z of this lattice in sup norm,
+choose first coordinate positive. Define F_de(T) as the total weight
+of pairs (a,a') whose shortest vector has norm<=T.
+Assume T<r and T<X1^2/8; production also has 3X1^2<r.
+
+CONTENT STEP.
+The integer content g=gcd(z1,z2) divides de.
+Otherwise some prime factor of g could be divided out while
+preserving both divisibility conditions and the modular congruence,
+contradicting shortestness. The prime r cannot occur because T<r.
+Write z=g(s,t), with gcd(s,t)=1. Set
+ d0=d/gcd(d,g), e0=e/gcd(e,g).
+Since (d,e)=1 and g|de, d0 e0=de/g. The primitive core has height<=T/g
+and satisfies d0|s,e0|t and a s==rho a' t.
+
+NONCROSS CASE a' does not divide s.
+Map (s,t) to (s,a't). It is primitive and belongs to the determinant
+r d0 e0 lattice a u==rho v, d0|u,e0|v.
+It lies in (0,T/g]x[-X1 T/g,X1 T/g].
+Its second coordinate has at most two eligible a' prime divisors:
+three such primes would exceed (X1/2)^3, whereas X1 T<(X1/2)^3.
+For fixed a, the primitive signed-rectangle bound therefore allows
+at most 8X1 (T/g)^2/(r d0 e0)+4 antecedent a'.
+Use w(a,a')<=t_a and sum_a t_a=n, then sum over g|de:
+ F_de,nc(T)<= [8n X1/r] [sigma_-1(de)/(de)] T^2
+              +4n tau(de).
+
+CROSS CASE a' divides s.
+Write s=a'v. If also a|t, canceling a a' gives v==rho(t/a),
+with both absolute coordinates <2(T/g)/X1. Its nonzero norm is
+<12T^2/X1^2<3X1^2/16<r, impossible.
+Thus a does not divide t. Map to the primitive fixed-root point
+ (U,V)=(a v,t), so U==rho V, d0|U,e0|V.
+It has 0<U<=2T/g, |V|<=T/g.
+For fixed (U,V), there are at most two eligible a prime divisors
+(in fact at most one under the stated T bound).
+For each resulting a, drop reconstruction/height restrictions and use
+ sum_{a'} w(a,a')<=sum_{a'}t_a'=n.
+The signed-rectangle lemma and summation over g then give
+ F_de,cross(T)<= [16n/r] [sigma_-1(de)/(de)] T^2
+                 +4n tau(de).
+Furthermore F_de,cross(T)=0 whenever 12T^2<r, because
+U^2 +/- UV+V^2<=12(T/g)^2<r.
+
+These are counts for ORDINARY shortest vectors, not merely the first
+primitive vector. The content step is essential to that distinction.
+The bounds preserve the actual prefix weights; no division by d is
+inserted after dropping masks.
+Also F_de(T)<=F_1,1(T), since Lambda_de is a sublattice of Lambda_1,1.
+Combining the two bounds by taking their minimum can improve the
+constant-term integration in a lattice discrepancy estimate.
+
+This theorem does NOT itself prove a Selberg remainder or RSS bound.
+One_shared owns the finite Selberg allocation and h=gcd(d,e) scaling.
+Independent rank-two audit agreed with these content/noncross/cross
+steps; the more conservative constants above are retained.
+
+Conclusion
+============
+The inner and multi corrections are now explicitly covered at tiny
+finite cost. The ordinary divisor-minimum theorem is new usable input
+for a SAME-SIDE shared-small sieve. The coprime defect Delta0 is still
+unbounded at the requested precision, so the joint .157816 target is
+NOT established by this file.
+
+Additional reproducibility: divisor_minimum_toy_verify.py/json exhaustively
+checks ordinary shortest vectors at r=162007=lambda^2+lambda+1,lambda=402,
+X1=100,47coprime allocations andfourroots:10384content/mappingchecks,
+including3302nontrivial contents and202cross cases;4512weightedFchecks
+pass. This is a transcription/edge-case check, not the proof or a
+production extrapolation.
