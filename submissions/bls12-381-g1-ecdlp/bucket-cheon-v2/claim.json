@@ -1,0 +1,37 @@
+{
+ "schema_version": 2,
+ "target_profile": "production-v2",
+ "target_id": "bls12-381-g1-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "binding_note": "sha256 of tracks/bls12-381-g1-ecdlp/target-profile.json and tracks/classical-group-work-v2.json at repository revision 6423c2728dc03d5f2d647c7f22adf1dac0643a66.",
+ "supersedes": [],
+ "lineage": "Provenance: this package FORKS the accepted lead 0a45ddb2 (116.793080), whose own lineage is cbadde77 -> 6ecec8e3 -> cf6d45a8 -> 0a45ddb2; all four are declared as dependencies. Every identity, size, itemisation, bound, cap and toy result is restated and re-verified in THIS package; nothing is inherited by citation. Changes against the accepted lead: (1) K = 51/100 where the lead settled at 52/100 - the margin jungjipdo's own entry identified, worth about 0.008 bits; (2) the per-record charge is 150 against OUR OWN 27-line itemisation (walk-side 30, three relay hops at 26 each, owner-side 17 baby / 11 giant; the maximal possible listing is 125 baby / 119 giant, so the charge carries a 20 percent margin) where the lead charged 180 against a 143-line listing - exactly the slack the lead's note names ('the 180-against-143 charge; a tighter charge would be worth up to 0.02 bits and I would rather be accepted than close'), taken honestly with a finer-grained itemisation rather than a bare price cut. Everything else - the walk, the six-fold key, the bucket matching, the node classes, the ledger structure, the heuristics - is the lead's architecture restated and re-verified with this package's own arithmetic. Net effect: 116.759165 vs 116.793080, a gain of 0.033915 bits, of which about 0.026 is the itemisation and about 0.008 is K.",
+ "submission_state": "ready",
+ "review_status": "pending",
+ "algorithm": "bucket-cheon-v2",
+ "work_function": "W(n) for n >= 2^20 equals W(2^20) = records + per-node fixed work + comparisons + gap tables + candidate re-walk + strand starts + segment starts + status tree + walk list + base H-primes + split gaps + candidate multiplications + Lemma 1 + kept blocks + candidate copy, with records = 2N x 2000 x (1 + 150/2000), N = 65196422678611466571411401699906505 per side (2^64 chains of L = 3534305155321688 steps), m = (r-1)/2^20, K = 51/100; the attack reads only A_1 and A_d. W(2^20) = 140608259479823067978322281977746804 units exactly. Score = ceil(10^6 log2 W)/10^6 = 116.759165 = 116759165/1000000.",
+ "proof": "proof.md",
+ "claim": {
+  "time_log2": 116.759165,
+  "time_unit": "target-group-operations",
+  "memory_log2_bytes": 122.5,
+  "preprocessing_log2": 115.755,
+  "success_probability": 0.395,
+  "nonuniform_advice_log2_bytes": 0
+ },
+ "heuristics": [
+  "H1 (coverage; the load-bearing heuristic): the 6N^2(1 - (L-1)/L^2) independent rationals a w/(u a' w') hit z = s^d like uniform elements of the order-m subgroup H, so the success probability is 1 - e^{-K} = 0.39950 at K = 0.51. Support: Lemma 4 (the six-fold symmetry and the parity key make the six orbit images of one record share one key and one comparison), the diagonal collapse K' = K(1 - (L-1)/L^2), the three coverage toys (d = 32/64/128 at r ~ 2^27.6/2^29.7/2^31.7, measured 0.4167/0.4333/0.3333 against predicted 0.3974/0.3913/0.3974, z = +0.43/+0.94/-1.43) and the end-to-end toy (measured 0.3833 against 0.3935 predicted, z = -0.23).",
+  "H2 and H2' (supply only): a fraction 1/2^20 of primes near q are H-primes (q^m = 1 mod r), gaps between consecutive H-primes are exponential with mean 2^20 ln q, so the L-th H-prime above 2^39 is below 2^78 and a gap above 2^33 among the listed ones has expectation 2^-167. Both are checked by the run's H-prime sanity block: 402 of the 6542 primes below 2^16 are sixteenth powers against 408.875 expected (binomial z = -0.34).",
+  "H3 (key bits): the 192-bit parity-selected y keys of the walked points behave like independent uniform strings across the six-element mu_6 orbits. This is a heuristic about coordinates of structured points; the end-to-end toy bins 16-bit truncated keys into 32 pseudo-nodes x 16 heads and reports occupancy chi^2 = 24.27 on 31 degrees of freedom (z = -0.85).",
+  "Caps C1-C8 (our own tails, every tail rounded towards the larger probability): C1 comparisons per node (Bernstein, 2^-94845 over all nodes), C2 head-slot depth (Poisson 0.392, tail 2^-82.6 over 2^117 slots), C3 node record-count deviations (Chernoff 2^-3008), C4 false candidate pairs (Markov 4.0e-27), C5 true-match count (Poisson(0.51) beyond 2^20 is beyond exp(-1.5e12); the Markov screen 4.9e-7 is not load-bearing), C6 owner/generating slot overflow (65536 slots at mean 2.65e-26), C7 re-walk key repeats (4-step kept cap, tail 1.7e-194 over all chains), C8 node overflow against the pool capacity (Chernoff 2^-1309819329 plus a 2^-20 modelling budget). Success claimed = 0.39950 - 2^-40 (every cap tail) - 2^-20 (C8 modelling) = 0.395 >= 0.39."
+ ],
+ "limitations": [
+  "This is an analytic bound, not a full-size execution.",
+  "H1 and H3 are validated at toy scale only (the three coverage toys and the end-to-end run in this package's own evidence).",
+  "Instruction counts are itemised analytic counts from an AArch64-scalar-style listing, not hardware measurements; the cluster model (no remote-memory instruction, 512-byte block transfers charged to sender and receiver, waiting nodes free) is the accepted lineage's definition restated here.",
+  "Memory is exponential, as for any BSGS-form Cheon attack: the exact integer sum is 2^122.490 bytes, claimed at its ceiling 2^122.5.",
+  "The per-record charge 150 is an itemised analytic count over a 27-line listing whose maximal variant is 125/119; it is not a hardware measurement. The score sits 0.0339 bits under the accepted lead only because the lead's own note identified its 180-against-143 charge as slack; a reviewer who prices any line differently gets a different number and the ledger is a single script."
+ ]
+}
