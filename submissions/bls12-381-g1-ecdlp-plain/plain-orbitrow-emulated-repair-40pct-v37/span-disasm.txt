@@ -1,0 +1,102 @@
+object-disassembly reconciliation -- plain BLS12-381 G1 rho span (v31)
+============================================================================================
+source   : schedule.py build()  (135 rows, 134 costed)
+toolchain: clang -arch arm64 -c span.s -o span.o ; otool -t -v span.o
+
+charged per iteration          : 134  (131 non-refresh, 3 refresh-only)
+literal machine instructions   : 132  (leaf body 126, prefix loop 6)
+amortised per-batch charges    : 2  (rows 11, 12: never per-element instructions)
+leaf-body back-edges           : 1
+prefix-loop back-edges         : 1
+exit stubs                     : 5 distinct targets, in-degree [1, 1, 1, 1, 3]
+
+RECONCILIATION: EXACT -- every charged literal row is one machine instruction, in order, with the same registers
+
+row 6 segmented per coordinate (object instructions)
+--------------------------------------------------------------------------------------------
+| coordinate | path | executed insns | charged | inside C (instr.) | traffic weight |
+|---|---|---:|---:|---:|---:|
+| entry | entry-address fetch | 1 | 1 | 0.0 | 1.00 |
+| x | table+state transfers | 9 | 9 | 574.5 | 1.00 |
+| y | table+state transfers | 9 | 9 | 574.5 | 1.00 |
+| product | batch-product transfer | 1 | 1 | 0.0 | 1.00 |
+
+branch -> target edges in the object
+--------------------------------------------------------------------------------------------
+| branch PC | instruction | target | target region | back-edge | stub body (insn) |
+|---|---|---|---|---|---:|
+| 0x14 | b.ne | 0x0 | prefix loop | yes | - |
+| 0xd0 | b.hs | 0x214 | exit stub | no | 3 |
+| 0xfc | b.ls | 0x214 | exit stub | no | 3 |
+| 0x138 | b.ls | 0x214 | exit stub | no | 3 |
+| 0x190 | cbz | 0x220 | exit stub | no | 1 |
+| 0x1b4 | b.hs | 0x238 | exit stub | no | 1 |
+| 0x1d0 | b.eq | 0x22c | exit stub | no | 1 |
+| 0x1d8 | b.ne | 0x1e8 | in-body continuation | no | - |
+| 0x1fc | b.ne | 0x18 | in-body continuation | yes | - |
+| 0x204 | cbz | 0x244 | exit stub | no | 1 |
+
+store -> reload pairs, eligibility-filtered (same record only)
+--------------------------------------------------------------------------------------------
+| record offset | field | producer | consumer | distance |
+|---:|---|---:|---:|---:|
+| 48 | y limb 0/1 | 19 | 75 | 56 |
+| 64 | y limb 2/3 | 20 | 76 | 56 |
+| 80 | y limb 4/5 | 21 | 77 | 56 |
+| 0 | x limb 0/1 | 16 | 22 | 6 |
+| 16 | x limb 2/3 | 17 | 23 | 6 |
+| 32 | x limb 4/5 | 18 | 24 | 6 |
+
+6 eligible pairs, max distance 56, bound 134; 10 candidates excluded (different record or carried state); 0 stack/frame operands.
+
+row-by-row (source row | source text | object instruction | encoding)
+--------------------------------------------------------------------------------------------
+  0 | row 15 | sub sp,sp,#16                                  | sub sp, sp, #0x10                | 
+  1 | row 15 | stur x30,[sp,#8]                               | stur x30, [sp, #0x8]             | 
+131 | row 13 | ldr x2,[x0,#96]                                | ldr x2, [x0, #0x60]              | 
+132 | row 13 | add x0,x0,#512                                 | add x0, x0, #0x200               | 
+133 | row 13 | subs x1,x1,#1                                  | subs x1, x1, #0x1                | 
+134 | row 13 | b.ne prefix                                    | b.ne _batch_prefix               | 
+  2 | row 6  | ldr x5,[x19,#96]                               | ldr x5, [x19, #0x60]             | 
+... [abridged: 345 lines total; `python3 completeness.py` regenerates the full
+     otool -t -v listing and asserts 1:1 identity against emit_asm()] ...
+00000000000001b0	cmp	x28, #0x14
+00000000000001b4	b.hs	0x238
+00000000000001b8	ldp	x7, x8, [x19, #0x68]
+00000000000001bc	ldp	x9, x29, [x19, #0x78]
+00000000000001c0	cmp	x0, x7
+00000000000001c4	ccmp	x2, x8, #0x0, eq
+00000000000001c8	ccmp	x3, x9, #0x0, eq
+00000000000001cc	ccmp	x29, #0x1, #0x0, eq
+00000000000001d0	b.eq	0x22c
+00000000000001d4	tst	x27, #0x3f
+00000000000001d8	b.ne	0x1e8
+00000000000001dc	stp	x0, x2, [x19, #0x68]
+00000000000001e0	mov	x26, #0x1
+00000000000001e4	stp	x3, x26, [x19, #0x78]
+00000000000001e8	adds	x27, x27, #0x1
+00000000000001ec	adc	x28, x28, xzr
+00000000000001f0	stp	x27, x28, [x19, #0x88]
+00000000000001f4	add	x19, x19, #0x200
+00000000000001f8	cmp	x19, x20
+00000000000001fc	b.ne	_leaf_span
+0000000000000200	ldur	x8, [sp]
+0000000000000204	cbz	x8, 0x244
+0000000000000208	ldur	x30, [sp, #0x8]
+000000000000020c	add	sp, sp, #0x10
+0000000000000210	ret
+0000000000000214	ldur	x30, [sp, #0x8]
+0000000000000218	add	sp, sp, #0x10
+000000000000021c	ret
+0000000000000220	ldur	x30, [sp, #0x8]
+0000000000000224	add	sp, sp, #0x10
+0000000000000228	ret
+000000000000022c	ldur	x30, [sp, #0x8]
+0000000000000230	add	sp, sp, #0x10
+0000000000000234	ret
+0000000000000238	ldur	x30, [sp, #0x8]
+000000000000023c	add	sp, sp, #0x10
+0000000000000240	ret
+0000000000000244	ldur	x30, [sp, #0x8]
+0000000000000248	add	sp, sp, #0x10
+000000000000024c	ret
