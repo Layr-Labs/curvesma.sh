@@ -1,0 +1,382 @@
+{
+ "all_ok": true,
+ "controls": {
+  "a": {
+   "base": {
+    "a_hi_steps": 255,
+    "a_lo_steps": 15,
+    "decade_slopes": [
+     {
+      "slope_per_step": -0.09707400013122428,
+      "window": [
+       127,
+       255
+      ]
+     },
+     {
+      "slope_per_step": -0.017994074342149453,
+      "window": [
+       63,
+       127
+      ]
+     },
+     {
+      "slope_per_step": -0.013455615525798374,
+      "window": [
+       31,
+       63
+      ]
+     },
+     {
+      "slope_per_step": -0.01517996048305379,
+      "window": [
+       15,
+       31
+      ]
+     }
+    ],
+    "delta_fixture": 0.003270889564612798,
+    "delta_fixture_log2": -8.256101234282996,
+    "integral_measured": 0.00011947256186154695,
+    "integral_measured_log2": -13.03103305348963,
+    "intercept_log2": 0.8999944142470633,
+    "kappa_lo": 0.0650864476621577,
+    "kappa_per_theta": 0.06958660862141491,
+    "kappa_se": 0.002250080479628608,
+    "merges": 3173802,
+    "p_hi": 5.4823801343750274e-05,
+    "p_hi_counts": 85,
+    "resid_max_bits": 7.216091575579673,
+    "resid_rms_bits": 1.2100120286344935,
+    "residual_charge": 0.0031514170027512507,
+    "residual_log2": -8.309783616946925,
+    "slope_per_step": -0.03479330431070746,
+    "theta": 2,
+    "truncate": null,
+    "u_hi": 127.5,
+    "u_lo": 7.5,
+    "window_points": 241
+   },
+   "trunc4": {
+    "a_hi_steps": 250,
+    "a_lo_steps": 15,
+    "decade_slopes": [
+     {
+      "slope_per_step": -0.08526041799946323,
+      "window": [
+       125,
+       250
+      ]
+     },
+     {
+      "slope_per_step": -0.017828540500157013,
+      "window": [
+       62,
+       125
+      ]
+     },
+     {
+      "slope_per_step": -0.013428546327577904,
+      "window": [
+       31,
+       62
+      ]
+     },
+     {
+      "slope_per_step": -0.015188287370004924,
+      "window": [
+       15,
+       31
+      ]
+     }
+    ],
+    "delta_fixture": 0.009422859687131295,
+    "delta_fixture_log2": -6.729619323513613,
+    "integral_measured": 2.4605042808937045e-05,
+    "integral_measured_log2": -15.31068644790221,
+    "intercept_log2": 0.6995224467108496,
+    "kappa_lo": 0.061537621835238886,
+    "kappa_per_theta": 0.0654301338090478,
+    "kappa_se": 0.0019462559869044599,
+    "merges": 3172968,
+    "p_hi": 0.00018909728109625998,
+    "p_hi_counts": 298,
+    "resid_max_bits": 5.898988740910452,
+    "resid_rms_bits": 1.0141340758850605,
+    "residual_charge": 0.009398254644322358,
+    "residual_log2": -6.733391426784301,
+    "slope_per_step": -0.0327150669045239,
+    "theta": 2,
+    "truncate": 251,
+    "u_hi": 125.0,
+    "u_lo": 7.5,
+    "window_points": 236
+   },
+   "trunc8": {
+    "a_hi_steps": 246,
+    "a_lo_steps": 15,
+    "decade_slopes": [
+     {
+      "slope_per_step": -0.08099156965436836,
+      "window": [
+       123,
+       246
+      ]
+     },
+     {
+      "slope_per_step": -0.017681292003584436,
+      "window": [
+       61,
+       123
+      ]
+     },
+     {
+      "slope_per_step": -0.013381958591500659,
+      "window": [
+       30,
+       61
+      ]
+     },
+     {
+      "slope_per_step": -0.015378787118312183,
+      "window": [
+       15,
+       30
+      ]
+     }
+    ],
+    "delta_fixture": 0.010718584619229492,
+    "delta_fixture_log2": -6.543741778161171,
+    "integral_measured": 5.173708559619659e-06,
+    "integral_measured_log2": -17.560369781523722,
+    "intercept_log2": 0.5958977960195955,
+    "kappa_lo": 0.05968677900744087,
+    "kappa_per_theta": 0.06334323079976249,
+    "kappa_se": 0.0018282258961608107,
+    "merges": 3171483,
+    "p_hi": 0.0003140484662547671,
+    "p_hi_counts": 496,
+    "resid_max_bits": 5.447210275545025,
+    "resid_rms_bits": 0.9284469760267778,
+    "residual_charge": 0.010713410910669872,
+    "residual_log2": -6.544438314684477,
+    "slope_per_step": -0.031671615399881246,
+    "theta": 2,
+    "truncate": 247,
+    "u_hi": 123.0,
+    "u_lo": 7.5,
+    "window_points": 232
+   }
+  },
+  "b": {
+   "bare_max": 1023,
+   "loosened_max": 129,
+   "ship": {
+    "accepted": 512,
+    "bootstrap": 1,
+    "completed": 502108,
+    "deferred": 3474,
+    "denied_at_cap": 3474,
+    "denied_lines": [
+     "t=142 inflight=128 completed=8284 credit=7268 launch#129 DENIED gate: len(inflight)==128 (deferred=1, credit retained)",
+     "t=143 inflight=128 completed=8412 credit=7396 launch#129 DENIED gate: len(inflight)==128 (deferred=2, credit retained)",
+     "t=144 inflight=128 completed=8540 credit=7524 launch#129 DENIED gate: len(inflight)==128 (deferred=3, credit retained)",
+     "t=145 inflight=128 completed=8668 credit=7652 launch#129 DENIED gate: len(inflight)==128 (deferred=4, credit retained)",
+     "t=146 inflight=128 completed=8796 credit=7780 launch#129 DENIED gate: len(inflight)==128 (deferred=5, credit retained)",
+     "t=147 inflight=128 completed=8924 credit=7908 launch#129 DENIED gate: len(inflight)==128 (deferred=6, credit retained)",
+     "t=148 inflight=128 completed=9052 credit=8036 launch#129 DENIED gate: len(inflight)==128 (deferred=7, credit retained)",
+     "t=149 inflight=128 completed=9180 credit=8164 launch#129 DENIED gate: len(inflight)==128 (deferred=8, credit retained)",
+     "t=150 inflight=128 completed=9308 credit=8292 launch#129 DENIED gate: len(inflight)==128 (deferred=9, credit retained)",
+     "t=151 inflight=128 completed=9436 credit=8420 launch#129 DENIED gate: len(inflight)==128 (deferred=10, credit retained)",
+     "t=152 inflight=128 completed=9564 credit=8548 launch#129 DENIED gate: len(inflight)==128 (deferred=11, credit retained)",
+     "t=153 inflight=128 completed=9692 credit=8676 launch#129 DENIED gate: len(inflight)==128 (deferred=12, credit retained)",
+     "t=154 inflight=128 completed=9820 credit=8804 launch#129 DENIED gate: len(inflight)==128 (deferred=13, credit retained)",
+     "t=155 inflight=128 completed=9948 credit=8932 launch#129 DENIED gate: len(inflight)==128 (deferred=14, credit retained)"
+    ],
+    "first_cap_tick": 141,
+    "gate": true,
+    "inflight_cap": 128,
+    "launch_period": 8,
+    "max_inflight": 128,
+    "rounds": 4000,
+    "trace": [
+     "t=141 inflight=127->128 launch#128 ACCEPT completed=8156 credit=7148 (first time in-flight reaches 128)"
+    ],
+    "trail_len": 1024
+   }
+  },
+  "c": {
+   "1": [
+    2.223904811217447e+28,
+    {
+     "cap": 154742504910672534362390528,
+     "cap_mult": 128,
+     "charge_log2": 94.16708169521175,
+     "halt_abandoned_steps": "19807040628566084398385987584",
+     "n_inflight": 128,
+     "n_launches": 62806765694859,
+     "note": "supersedes v30 trap_charge (same in-flight bound, now with the cumulative pre-halt population added)",
+     "p_cap_log2": -78.27212691232603,
+     "population": "cumulative abandoned trails: post-halt in-flight x cap x reserve_mult + n_launches x P(cap) x cap",
+     "pre_halt_abandoned_steps": "2.6629194344547976e+16",
+     "pre_halt_log2": 54.563858299254484,
+     "price": "max single-step price c_mul_stress",
+     "reserve_mult": 1,
+     "total_steps_log2": 94.00000000000193
+    }
+   ],
+   "2": [
+    4.447809622431904e+28,
+    {
+     "cap": 154742504910672534362390528,
+     "cap_mult": 128,
+     "charge_log2": 95.16708169521078,
+     "halt_abandoned_steps": "39614081257132168796771975168",
+     "n_inflight": 128,
+     "n_launches": 62806765694859,
+     "note": "supersedes v30 trap_charge (same in-flight bound, now with the cumulative pre-halt population added)",
+     "p_cap_log2": -78.27212691232603,
+     "population": "cumulative abandoned trails: post-halt in-flight x cap x reserve_mult + n_launches x P(cap) x cap",
+     "pre_halt_abandoned_steps": "2.6629194344547976e+16",
+     "pre_halt_log2": 54.563858299254484,
+     "price": "max single-step price c_mul_stress",
+     "reserve_mult": 2,
+     "total_steps_log2": 95.00000000000097
+    }
+   ],
+   "4": [
+    8.895619244860818e+28,
+    {
+     "cap": 154742504910672534362390528,
+     "cap_mult": 128,
+     "charge_log2": 96.1670816952103,
+     "halt_abandoned_steps": "79228162514264337593543950336",
+     "n_inflight": 128,
+     "n_launches": 62806765694859,
+     "note": "supersedes v30 trap_charge (same in-flight bound, now with the cumulative pre-halt population added)",
+     "p_cap_log2": -78.27212691232603,
+     "population": "cumulative abandoned trails: post-halt in-flight x cap x reserve_mult + n_launches x P(cap) x cap",
+     "pre_halt_abandoned_steps": "2.6629194344547976e+16",
+     "pre_halt_log2": 54.563858299254484,
+     "price": "max single-step price c_mul_stress",
+     "reserve_mult": 4,
+     "total_steps_log2": 96.00000000000048
+    }
+   ],
+   "8": [
+    1.7791238489718646e+29,
+    {
+     "cap": 154742504910672534362390528,
+     "cap_mult": 128,
+     "charge_log2": 97.16708169521006,
+     "halt_abandoned_steps": "158456325028528675187087900672",
+     "n_inflight": 128,
+     "n_launches": 62806765694859,
+     "note": "supersedes v30 trap_charge (same in-flight bound, now with the cumulative pre-halt population added)",
+     "p_cap_log2": -78.27212691232603,
+     "population": "cumulative abandoned trails: post-halt in-flight x cap x reserve_mult + n_launches x P(cap) x cap",
+     "pre_halt_abandoned_steps": "2.6629194344547976e+16",
+     "pre_halt_log2": 54.563858299254484,
+     "price": "max single-step price c_mul_stress",
+     "reserve_mult": 8,
+     "total_steps_log2": 97.00000000000024
+    }
+   ]
+  },
+  "d": {
+   "base": 126.6053,
+   "moved": 126.6053,
+   "total_base": "10532978240239601024724166492522399138476354658255655767300453984747858021737947428721695819797290583813706333/81391190450523965184030030711532206953954188309187128243663128930980000",
+   "total_moved": "52664891201198390457741106489904408982957911452219904518087829765490859343395949171163870987558834347899666271/406955952252619825920150153557661034769770941545935641218315644654900000"
+  },
+  "e": {
+   "excess": 1024,
+   "observed": 128,
+   "observed_steps": 131072,
+   "reserve127_steps": 130048
+  }
+ },
+ "literal_misses": [],
+ "recompute": [
+  [
+   "claim>=total",
+   true
+  ],
+  [
+   "claim-total<1e-4",
+   true
+  ],
+  [
+   "sum(rows)==total",
+   true
+  ],
+  [
+   "delta markov 2^-6",
+   true
+  ],
+  [
+   "delta exact 2^-13",
+   true
+  ],
+  [
+   "S strict",
+   true
+  ],
+  [
+   "w_eff == S*c_max",
+   true
+  ],
+  [
+   "abandon >= halt bound",
+   true
+  ],
+  [
+   "stop loss > reserve",
+   true
+  ],
+  [
+   "pairing row positive",
+   true
+  ],
+  [
+   "overflow row == 1",
+   true
+  ],
+  [
+   "aux > 0",
+   true
+  ],
+  [
+   "storage peak > store",
+   true
+  ],
+  [
+   "live trails charged",
+   true
+  ],
+  [
+   "u64 no overflow",
+   true
+  ],
+  [
+   "record count fits u64",
+   true
+  ],
+  [
+   "ref has valid bit",
+   true
+  ],
+  [
+   "class key full width",
+   true
+  ],
+  [
+   "shards cover records",
+   true
+  ],
+  [
+   "reserve == 128*128*theta",
+   true
+  ]
+ ]
+}

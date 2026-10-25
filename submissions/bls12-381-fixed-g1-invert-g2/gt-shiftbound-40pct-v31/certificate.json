@@ -1,0 +1,218 @@
+{
+ "S": {
+  "log2": 125.83598521158049,
+  "value": "75928720695000206964395418238767046674"
+ },
+ "abandon": {
+  "cap": 154742504910672534362390528,
+  "cap_mult": 128,
+  "charge_log2": 94.76925125977502,
+  "halt_abandoned_steps": "19807040628566084398385987584",
+  "n_inflight": 128,
+  "n_launches": 62806765694859,
+  "note": "supersedes v30 trap_charge (same in-flight bound, now with the cumulative pre-halt population added)",
+  "p_cap_log2": -78.27212691232603,
+  "population": "cumulative abandoned trails: post-halt in-flight x cap x reserve_mult + n_launches x P(cap) x cap",
+  "pre_halt_abandoned_steps": "2.6629194344547976e+16",
+  "pre_halt_log2": 54.563858299254484,
+  "price": "max single-step price c_mul_stress",
+  "reserve_mult": 1,
+  "total_steps_log2": 94.00000000000193
+ },
+ "census": 0.5867833333333333,
+ "claim": {
+  "claim_log2": 126.6053,
+  "denominator": 10000,
+  "numerator": 1266053,
+  "total": "10532978240239601024724166492522399138476354658255655767300453984747858021737947428721695819797290583813706333/81391190450523965184030030711532206953954188309187128243663128930980000",
+  "total_log2": 126.60523647248262
+ },
+ "components": {
+  "abandon_row": {
+   "log2": 94.76925125977502,
+   "value": "429323560537286061321459575996607619846762658526602452712672174828031768441180005138330335708184576/12717373507894369560004692298676907336555341923310488788072363895465625"
+  },
+  "aux_sum": {
+   "log2": 56.52462613218142,
+   "value": "259148063652508062067/2500"
+  },
+  "overflow_row": {
+   "log2": 0.0,
+   "value": "1"
+  },
+  "pairing_row": {
+   "log2": 15.676141855381598,
+   "value": "32724192/625"
+  },
+  "stop_loss_row": {
+   "log2": 95.76925125977309,
+   "value": "210992643385741285983394384052224/3125"
+  },
+  "w_effective": {
+   "log2": 126.60523647135356,
+   "value": "12941177262174792774701108491488097284546549/100000"
+  }
+ },
+ "delta": {
+  "analytic": 9.201238775566508e-51,
+  "analytic_log2": -166.21650473297103,
+  "charged": 0.015625,
+  "charged_log2": -6.0,
+  "charged_term": "production_markov",
+  "fixture": {
+   "a_hi_steps": 255,
+   "a_lo_steps": 15,
+   "decade_slopes": [
+    {
+     "slope_per_step": -0.09707400013122428,
+     "window": [
+      127,
+      255
+     ]
+    },
+    {
+     "slope_per_step": -0.017994074342149453,
+     "window": [
+      63,
+      127
+     ]
+    },
+    {
+     "slope_per_step": -0.013455615525798374,
+     "window": [
+      31,
+      63
+     ]
+    },
+    {
+     "slope_per_step": -0.01517996048305379,
+     "window": [
+      15,
+      31
+     ]
+    }
+   ],
+   "delta_fixture": 0.003270889564612798,
+   "delta_fixture_log2": -8.256101234282996,
+   "integral_measured": 0.00011947256186154695,
+   "integral_measured_log2": -13.03103305348963,
+   "intercept_log2": 0.8999944142470633,
+   "kappa_lo": 0.0650864476621577,
+   "kappa_per_theta": 0.06958660862141491,
+   "kappa_se": 0.002250080479628608,
+   "merges": 3173802,
+   "p_hi": 5.4823801343750274e-05,
+   "p_hi_counts": 85,
+   "resid_max_bits": 7.216091575579673,
+   "resid_rms_bits": 1.2100120286344935,
+   "residual_charge": 0.0031514170027512507,
+   "residual_log2": -8.309783616946925,
+   "slope_per_step": -0.03479330431070746,
+   "theta": 2,
+   "truncate": null,
+   "u_hi": 127.5,
+   "u_lo": 7.5,
+   "window_points": 241
+  },
+  "production": {
+   "cap_theta": 128.0,
+   "charged": 0.015625,
+   "delta_exact": 0.0001220703125,
+   "delta_exact_log2": -13.0,
+   "delta_markov": 0.015625,
+   "delta_markov_log2": -6.0,
+   "rule": "pair-uniform age law; Markov in the report distance D (E[D]=theta); no tail envelope"
+  },
+  "rule": "max(production pair-uniform 2^-6, closed form, fixture measured+slope-fitted residual); no asserted envelope",
+  "terms": {
+   "closed_form": 9.201238775566508e-51,
+   "fixture_measured_plus_residual": 0.003270889564612798,
+   "production_markov": 0.015625
+  }
+ },
+ "gate": 0.5791,
+ "protocol": {
+  "bare_max": 1023,
+  "denied": 3474,
+  "first_cap_tick": 141,
+  "loosened_max": 129,
+  "ship_max": 128
+ },
+ "stop": {
+  "halt_rule": "stop authorizing launches when completed aggregate steps >= S - reserve, reserve = INFLIGHT_CAP * CAP_MULT * theta",
+  "launch_interval_steps": 1208925819614629174706176,
+  "loss_bits": 7.526932688365476e-10,
+  "loss_rel_S2": 5.217272317317035e-10,
+  "n_inflight": 128,
+  "price": "max single-step price (c_mul_stress)",
+  "reserve_over_S": 2.6086361586585176e-10,
+  "reserve_steps": "19807040628566084398385987584",
+  "rule": "halt is a rule of the shipped loop (v31_protocol.RULE 3 + HALT_RULE)",
+  "trail_cap_steps": 154742504910672534362390528
+ },
+ "storage": {
+  "advice_bytes": 113246208,
+  "code_bytes": 262144,
+  "g2_point_bytes": 192,
+  "live_gt_states": 128,
+  "live_trail_bytes": 83968,
+  "overflow_policy": "drop-oldest + drain (charged in aux); capacity is the deterministic cap",
+  "pairing_base_bytes": 13056,
+  "peak_bytes": 14068715635550624,
+  "peak_log2": 53.64334014593365,
+  "pinned_target_bytes": 576,
+  "records": 125613531389718,
+  "scratch_bytes": 4608,
+  "store_bytes": 14068715515648416,
+  "u_label_bytes": 6291456
+ },
+ "width": {
+  "byte_offset": {
+   "bits": 54,
+   "fits_u64": true,
+   "repr": "(shard_id u32, slot u32, limb offset 2x64)",
+   "value": 14068715515648416,
+   "width": 64
+  },
+  "class_key": {
+   "bits": 381,
+   "repr": "6 x u64 little-endian",
+   "truncation": "none before mixing",
+   "words": 6
+  },
+  "gt_element": {
+   "bits": 4572,
+   "repr": "12 Fp limbs x 6 u64 = 576 B, full width",
+   "words": 72
+  },
+  "labels": {
+   "bits": 80,
+   "repr": "(a,b) 2 x 2 u64, no truncation; every branch input is a function of the class key alone",
+   "words": 2
+  },
+  "record_count": {
+   "bits": 47,
+   "fits_u64": true,
+   "repr": "2-limb multiword (hi,lo) with carry assert",
+   "sharded": true,
+   "value": 125613531389718,
+   "width": 64
+  },
+  "ref": {
+   "form": "(valid:u1, shard:u32, slot:u32)",
+   "note": "refs carry an explicit valid bit; a slot is never identified by a zero word (the aliasing mode that killed g2-invert v36)",
+   "zero_word_test": false
+  },
+  "shards": {
+   "bytes_per_shard": 481036337152,
+   "count": 29247,
+   "slots_per_shard": 4294967296
+  },
+  "size_max": {
+   "headroom_log2": 10.356659866361882,
+   "no_overflow": true,
+   "record_bytes": 14068715515648416,
+   "size_max": 18446744073709551615
+  }
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "abandon_log2": {
+  "formatted": "94.769251",
+  "source": "ledger31.total31:abandon_row",
+  "value": 94.76925125977502
+ },
+ "aux_log2": {
+  "formatted": "56.524626",
+  "source": "ledger31.total31:aux_sum",
+  "value": 56.52462613218142
+ },
+ "bare": {
+  "formatted": "1023",
+  "source": "v31-protocol:bare:max_inflight",
+  "value": 1023
+ },
+ "claim": {
+  "formatted": "126.6053",
+  "source": "ledger31.claim31:claim_log2",
+  "value": 126.6053
+ },
+ "claim_den": {
+  "formatted": "10000",
+  "source": "ledger31.claim31:denominator",
+  "value": 10000
+ },
+ "claim_num": {
+  "formatted": "1266053",
+  "source": "ledger31.claim31:numerator",
+  "value": 1266053
+ },
+ "delta_exact_log2": {
+  "formatted": "-13.0000",
+  "source": "v31_tailfit.production_delta:delta_exact",
+  "value": -13.0
+ },
+ "delta_log2": {
+  "formatted": "-6.000000",
+  "source": "ledger31.delta_charge:charged",
+  "value": -6.0
+ },
+ "denied": {
+  "formatted": "3474",
+  "source": "v31-protocol:ship:denied_at_cap",
+  "value": 3474
+ },
+ "f": {
+  "formatted": "14566/41929",
+  "source": "ledger31.total31:f",
+  "value": "14566/41929"
+ },
+ "first_cap_tick": {
+  "formatted": "141",
+  "source": "v31-protocol:ship:first_cap_tick",
+  "value": 141
+ },
+ "fit_resid_max": {
+  "formatted": "7.216",
+  "source": "v31_tailfit.fit:resid_max_bits",
+  "value": 7.216091575579673
+ },
+ "fit_u_hi": {
+  "formatted": "127.5",
+  "source": "v31_tailfit.fit:u_hi",
+  "value": 127.5
+ },
+ "fixture_imeas_log2": {
+  "formatted": "-13.03",
+  "source": "v31_tailfit.fit:integral_measured_log2",
+  "value": -13.03103305348963
+ },
+ "fixture_resid_log2": {
+  "formatted": "-8.31",
+  "source": "v31_tailfit.fit:residual_log2",
+  "value": -8.309783616946925
+ },
+ "gate": {
+  "formatted": "0.579100",
+  "source": "v30-age-law:arm1 p_recover",
+  "value": 0.5791
+ },
+ "gate_census": {
+  "formatted": "0.586783",
+  "source": "v30-census:production_like p_recover",
+  "value": 0.5867833333333333
+ },
+ "kappa": {
+  "formatted": "0.069587",
+  "source": "v31_tailfit.fit:kappa_per_theta",
+  "value": 0.06958660862141491
+ },
+ "kappa_se": {
+  "formatted": "0.002250",
+  "source": "v31_tailfit.fit:kappa_se",
+  "value": 0.002250080479628608
+ },
+ "live_bytes": {
+  "formatted": "83968",
+  "source": "ledger31.storage31:live_trail_bytes",
+  "value": 83968
+ },
+ "loose": {
+  "formatted": "129",
+  "source": "v31-protocol:loosened:max_inflight",
+  "value": 129
+ },
+ "loss_rel_log2": {
+  "formatted": "-30.84",
+  "source": "ledger31.stop_loss31:loss_rel_S2",
+  "value": -30.835985211580493
+ },
+ "mean_w_log2": {
+  "formatted": "126.274568",
+  "source": "ledger31.total31:diagnostic_average_price",
+  "value": 126.27456771238948
+ },
+ "n_inflight": {
+  "formatted": "128",
+  "source": "ledger31.stop_loss31:n_inflight",
+  "value": 128
+ },
+ "overflow_log2": {
+  "formatted": "0",
+  "source": "ledger31.total31:overflow_row",
+  "value": 0.0
+ },
+ "pairing_log2": {
+  "formatted": "15.676142",
+  "source": "ledger31.total31:pairing_row",
+  "value": 15.676141855381598
+ },
+ "pre_halt_log2": {
+  "formatted": "54.56",
+  "source": "ledger31.abandon_row:pre_halt_log2",
+  "value": 54.563858299254484
+ },
+ "reserve_log2": {
+  "formatted": "94.00",
+  "source": "ledger31.stop_loss31:reserve_steps",
+  "value": 94.0
+ },
+ "stop_log2": {
+  "formatted": "95.769251",
+  "source": "ledger31.total31:stop_loss_row",
+  "value": 95.76925125977309
+ },
+ "storage_peak_log2": {
+  "formatted": "53.643",
+  "source": "ledger31.storage31:peak_log2",
+  "value": 53.64334014593365
+ },
+ "total_log2": {
+  "formatted": "126.605236472",
+  "source": "ledger31.total31:log2_total",
+  "value": 126.60523647248262
+ },
+ "under_bits": {
+  "formatted": "0.330669",
+  "source": "ledger31.total31:max minus mean",
+  "value": 0.3306687589640802
+ },
+ "w_eff_log2": {
+  "formatted": "126.605236",
+  "source": "ledger31.total31:w_effective",
+  "value": 126.60523647135356
+ }
+}

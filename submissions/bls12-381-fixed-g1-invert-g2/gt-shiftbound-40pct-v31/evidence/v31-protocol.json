@@ -1,0 +1,54 @@
+{
+ "gate_lines": [
+  "t=142 inflight=128 completed=8284 credit=7268 launch#129 DENIED gate: len(inflight)==128 (deferred=1, credit retained)",
+  "t=143 inflight=128 completed=8412 credit=7396 launch#129 DENIED gate: len(inflight)==128 (deferred=2, credit retained)",
+  "t=144 inflight=128 completed=8540 credit=7524 launch#129 DENIED gate: len(inflight)==128 (deferred=3, credit retained)",
+  "t=145 inflight=128 completed=8668 credit=7652 launch#129 DENIED gate: len(inflight)==128 (deferred=4, credit retained)",
+  "t=146 inflight=128 completed=8796 credit=7780 launch#129 DENIED gate: len(inflight)==128 (deferred=5, credit retained)",
+  "t=147 inflight=128 completed=8924 credit=7908 launch#129 DENIED gate: len(inflight)==128 (deferred=6, credit retained)"
+ ],
+ "hit_lines": [
+  "t=141 inflight=127->128 launch#128 ACCEPT completed=8156 credit=7148 (first time in-flight reaches 128)"
+ ],
+ "rule": "ONE shipped loop: RULE 1 cadence, RULE 2 bootstrap, RULE 3 atomic in-flight gate; no other launch path exists",
+ "shipped": {
+  "cap_mult": 128,
+  "halt_rule": "stop authorizing launches when completed aggregate steps >= S - reserve, reserve = INFLIGHT_CAP * CAP_MULT * theta",
+  "inflight_cap": 128,
+  "launch_period": 8,
+  "reserve_log2": 17.0,
+  "reserve_steps": 131072,
+  "theta": 8,
+  "trail_cap_steps": 1024
+ },
+ "traces": {
+  "bare": {
+   "accepted": 3986,
+   "deferred": 0,
+   "denied_at_cap": 0,
+   "first_cap_tick": 141,
+   "max_inflight": 1023
+  },
+  "loosened": {
+   "accepted": 516,
+   "deferred": 3470,
+   "denied_at_cap": 3470,
+   "first_cap_tick": 142,
+   "max_inflight": 129
+  },
+  "ship": {
+   "accepted": 512,
+   "deferred": 3474,
+   "denied_at_cap": 3474,
+   "first_cap_tick": 141,
+   "max_inflight": 128
+  },
+  "small": {
+   "accepted": 508,
+   "deferred": 3478,
+   "denied_at_cap": 3478,
+   "first_cap_tick": 140,
+   "max_inflight": 127
+  }
+ }
+}
