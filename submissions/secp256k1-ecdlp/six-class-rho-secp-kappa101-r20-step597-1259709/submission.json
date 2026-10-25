@@ -1,0 +1,152 @@
+{
+ "version": 1,
+ "title": "Six-class secp256k1 rho at 125.9709: arrival rows cut to 34 and executed, 597-instruction step (105+458+34)",
+ "claims": [
+  {
+   "statement": "For a uniform full-production secp256k1 input Q=[x]P, the classical cold six-class negation-plus-GLV parallel Pollard-rho attack described in proof.md and upstream-proof.md halts on every run with total work at most 2^125.9709 target-group-operation equivalents under classical-group-work-v2 (C=1000). It is this solver's 2d25756c (R = 2^20, checkpoint-only cycle detection, global anchor rounds, even-y key, rare-event and fused field kernels, counted loops 105 + 458) with the per-arrival bookkeeping cut from 53 analytic rows to 34 and shipped as kernels/arrive.s, which experiment.py's interpreter executes (33 instructions per arrival on either parity path, plus the share row). The canonical index j = argmin(x, beta*x, beta^2*x mod p) uses the upstream F0 and F1 with a new rule: S = F0 + F1, m = min(F0, F1), and j = 2 when m + S carries, else 1 if F0 >= F1, else 0, with fallback windows F1 >= 2^64 - 16, S >= 2^64 - 17, (m + S) mod 2^64 >= 2^64 - 33 and F0 - F1 mod 2^64 < 16 (proof.md section 3.1). F0 and F1 never exceed their true values and F2* = 2^64 - S never falls below its own, so choosing v2 needs no gap test; the rule is exact except when j = 0 and x mod 2^192 > 2^192 - C0, a failure row of 2^-33.29 per run, and with the upstream and kernel rows all non-halt failures sum to 1.0103e-7 < 2e-7. A branch on the parity of y forms the even-y key, three slot bases and one BFI form the table address, the distinguished test, fallback windows and checkpoint filter share one conditional-compare chain and one branch, and the loop ends on an address bit. The ordinary step is 597 = 105 + 458 + 34; doubling 744, traversal 630. The walk, table layout, H1 (kappa = 1.01, p0 = 0.3901753, h = 0.000165), the census and the store are unchanged. Recovery probability is greater than 0.3900101 and therefore at least 0.39. Peak memory is below 2^72 bytes; preprocessing is capped at 2^59 units, charged and included; nonuniform advice is zero. Exact ledger: phase 1 = 2^125.969821, hard extras = 2^114.564105, expected random extras = 2^102.0278, allowance = ceil(extras/0.000165) = 2^114.5930, W_ledger = 2^125.9708948 < 2^125.9709; Markov ratio 0.000163434 < 0.000165. certificate.py proves the bound in exact integer and rational arithmetic, including W^10000 < 1000^10000*2^1259709 and W^10000 > 1000^10000*2^1259708. The claim is self-contained in proof.md; no prior acceptance, review verdict, official score or cross-submission comparison is a premise. Dependencies: 2d25756c, 13c3295f, b5de673a, 6d5e2adb, 736c001a, f99114e0, 5d3bf6c4, 67154fda, daa13d54 and 02feb284. This is an analytic heuristic bound, not a practical break.",
+   "score": {
+    "numerator": "1259709",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "proof.md",
+    "upstream-proof.md",
+    "experiment.py",
+    "certificate.py",
+    "census_cp.py",
+    "census-cp-q29.json",
+    "README.md",
+    "kernels/a64.py",
+    "kernels/arrive.s",
+    "kernels/secp_fe.s",
+    "kernels/secp_loops.s",
+    "kernels/secp_tests.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-six-class-rho-kernels-evidence",
+   "source": "experiment.py",
+   "purpose": "Part A: production secp256k1 checks of the walk identities and truncated canonical-index rule; Part B: a scaled sequential toy pipeline of the checkpoint-only walk with the even-y key and per-trail anchor phases on configured subgroups of y^2=x^3+7 with an unreduced subgroup-order check, a T_c census, node routing, and a long-trail trap test; kernels: limb-for-limb Python ports of the generated field kernels (asserting every no-overflow step and the rare-event predicates, including the fused reductions) checked against big integers and affine secp256k1, the shipped counted loops, emitter wrappers and arrival rows (kernels/arrive.s, against a bit-exact model of the canonical-index rule and the exact rule) executed by an AArch64 interpreter (kernels/a64.py) (including constructed reduction inputs whose last addition carries, which must return the predicted z mod p - C0), instruction counts parsed from the shipped assembly, and the work-meter ledger recomputed from the prices and rows of proof.md. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q25",
+       "q29"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "nodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q25",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 5,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 6,
+     "pipeline": true,
+     "kernels": true
+    }
+   ]
+  }
+ ]
+}
