@@ -1,0 +1,105 @@
+{
+ "access_row_added_to_ledger_ir_per_record": 68,
+ "collision_finding": {
+  "key_compare_ir": 8,
+  "mechanism": "after the 16-pass radix sort on the 256-bit key, equal keys are adjacent in the sorted stream; the find pass is one 32-byte adjacency comparison per record. No hash-bucket scan is used or charged: the bucket in key_equal_v23.py is a measurement device for the same key-equality predicate."
+ },
+ "directory_construction_ir_per_record": 0.011764711492204535,
+ "locator_access": {
+  "access_ir": 68,
+  "anchor_ir": 60,
+  "assumed_page_id_bits": 122,
+  "counters_per_access": {
+   "base_adds": 6,
+   "branches": 6,
+   "carry_selects": 6,
+   "high_adcs": 6,
+   "low_adds": 6,
+   "masks": 6,
+   "shifts": 6,
+   "tag_compares": 6,
+   "word_loads": 12
+  },
+  "fanout_bits": 21,
+  "hi_word_cases": [
+   {
+    "hi": "0",
+    "lo": "0",
+    "nonzero_hi": false,
+    "page": "0"
+   },
+   {
+    "hi": "0",
+    "lo": "4097",
+    "nonzero_hi": false,
+    "page": "1"
+   },
+   {
+    "hi": "0",
+    "lo": "1101659181073",
+    "nonzero_hi": false,
+    "page": "1099511627793"
+   },
+   {
+    "hi": "1",
+    "lo": "28677",
+    "nonzero_hi": true,
+    "page": "18446744073709551621"
+   },
+   {
+    "hi": "68719476736",
+    "lo": "319111225",
+    "nonzero_hi": true,
+    "page": "1267650600228229401496703217721"
+   },
+   {
+    "hi": "288230376151711744",
+    "lo": "9143574527",
+    "nonzero_hi": true,
+    "page": "5316911983139663491615228241121378303"
+   }
+  ],
+  "key_compare_ir": 8,
+  "levels": 6,
+  "mechanism": "one 122-bit page resolution per record: 6-level radix walk (fanout 2^21) carrying a 128-bit anchor in two GPR words, with add/adc carry, digit shift/mask, node slot address and tag test",
+  "per_level_ir": 10,
+  "real_directory_walk_per_access_ir": 30
+ },
+ "locator_row_ir_per_record": 74.51764705882354,
+ "page_width_control": {
+  "delta": -0.24705882352941444,
+  "moves": true,
+  "narrow": {
+   "locator_row_ir_per_record": 74.51764705882354,
+   "page_bytes": 4096,
+   "pair_transfers_per_page": 256,
+   "records_per_page": 85
+  },
+  "wide": {
+   "locator_row_ir_per_record": 74.27058823529413,
+   "page_bytes": 8192,
+   "pair_transfers_per_page": 512,
+   "records_per_page": 170
+  }
+ },
+ "passes": 16,
+ "peaks": {
+  "layout": "85 records per 4096 B page, two streams, 16 B locator entries",
+  "log2_peak_bytes": 134.26342408081035,
+  "log2_radix_directories_bytes": 125.26060975179307,
+  "log2_stream_bytes": 134.2606090638623
+ },
+ "per_pass_ir_per_record": {
+  "clear256": 0.25,
+  "count256": 22.0,
+  "prefix256": 2.062,
+  "scatter256x_carried_external": 36.0,
+  "store_translation_and_io": 9.517647,
+  "stream_readback_materialisation": 6.505882
+ },
+ "per_pass_total_ir": 76.335529,
+ "rule": "1 Ir = one AArch64 GPR instruction; a register-pair transfer is 16 B",
+ "sort_total_ir_per_record": 1326.880228711492,
+ "sort_total_ir_per_record_v22": 1258.880228711492,
+ "witness_ir_per_record": 37.5
+}

@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v23 rev 2: key equality on the shipped sorted-store predicate, full-period fresh-challenge trails, a resolved 128-bit locator, measured cycle charge; claim 128.9579 = 1289579/10000",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1289579",
+    "denominator": "10000"
+   },
+   "statement": "p256-ecdlp v23 rev 2. Claim 128.9579 = 1289579/10000 target-group-operation equivalents for recovering x from Q=[x]P on NIST P-256 (machine-copied from evidence/claim_v23.json: log2_work 128.9578414981). This revision answers the five numbered flaws in the fire-1 rejection of ticket 9c353dd. (1) THE BUCKET SCAN IS NOT THE PRODUCTION PROBE. Fire 1 said the bucket scan costs ~2^234 comparisons at N=2^127.67, R=2^20. Correct: production collision finding is the 16-pass radix sort's adjacency test (equal 256-bit keys are adjacent; ONE 32-byte key comparison per record, 8 Ir), priced in experiments/store_v23.py::collision_finding. The fixture bucket in experiments/key_equal_v23.py is a MEASUREMENT DEVICE for the same key-equality predicate at 204 records and R=64 (~325 comparisons per trial, 1.6 per record), not the shipped store. The new ledger row is one 128-bit page resolution (60 Ir) + the adjacency compare (8 Ir) = 68 Ir/record. (2) THE 128-BIT LOCATOR IS RESOLVED, NOT JUST COUNTED. experiments/store_v23.py::make_directory/walk_page build a REAL 3-level sparse radix directory of node objects, insert 204 page ids, resolve every one and ASSERT object identity; the measured cost is 30 Ir per access (3 levels x 10 Ir) from the walking code. resolve128() walks the same structure on a 122-bit page id held in two 64-bit words: the radix digit is extracted from the combined (hi:lo) anchor (bits 63-83 and 84-104 come from the HIGH word), the slot offset is added with an explicit add/adc carry into the high word, and the high word is asserted nonzero for pages above 2^64 (3 of 6 ids, including 2^64+5 and 2^122-1). The page-width control recomputes every page-size-dependent quantity: at 8192 B pages records/page=170 and PAIR TRANSFERS PER PAGE=512 (not the fire-1 256); the locator row moves 74.518 -> 74.271 Ir/record. (3) FULL-PERIOD TRAILS AND FRESH CHALLENGES. Fire 1 said the cells used one fixed secret and 3-51-step trails shorter than one selector period. Rev 2 draws a FRESH challenge secret per trial (new Q=[x]P, rebuilt row table) and covers 1.6-3.2 full selector periods: (W=2,S=102,R=64), (W=1,S=204,R=64), (W=1,S=204,R=128), 4000 trials each, T=204 records, lambda=C(204,2)/32723=0.6328. Measured key hazard 3.0595e-5 per pair vs 1/r=3.0560e-5 (ratio 1.0012); P(key-equal|same bucket) 0.0019638 vs R/r 0.0019558 (ratio 1.0041); bucket hazard 1.5538e-2 vs 1/R 1.5625e-2; mean key collisions 0.6335/0.6290/0.6198 vs lambda 0.6328; factorial ratio E[X(X-1)]/E[X]^2 1.336/1.380/1.308 (mild clustering). The model-mean Poisson chi-square is reported honestly at 25.41/34.19/16.58 on 3 dof (fitted-mean 25.465/33.809/14.306); it is NOT used to confirm the rate. The CHARGED success is the minimum CP-95 lower bound over the three cells: 0.431511, 0.423794, 0.433752 -> charge 0.423794 >= 0.39, attempts 1. Paley-Zygmund at production moments is 0.387584 and is reported as the distribution-free floor, NOT the charge; no cardinality or row count is used as an event probability. q is re-measured on the key predicate: 2516/2516 nontrivial pairs recover x (yield 1.0), 1259 same-point (difference relation) and 1257 opposite-point (sum relation), so the replay reconstructs the exact point and resolves the sign class. (4) THE CYCLE CHARGE IS MEASURED. The walk detects a (point, phase) repeat and truncates the trail; measured cycle entries are 13/8000, 25/4000, 6/4000. The charged relative loss is the CP-95 UPPER bound on the worst cell, 0.0092125 (log2 0.013230), the fraction of trails whose remaining records are lost. No cardinality expression (C(S,2)/qR) appears anywhere in the charge. (5) CONFLICTING LITERALS FIXED. r=(65447-1)/2=32723 is used everywhere; the Poisson chi-square is the JSON's own value (25.41/34.19/16.58 at the model mean), not the fire-1 1.04. LEDGER, machine-copied from evidence/ledger_v23.json: affine addition 606 + batch-inversion share 444 + batch chain 0.054340 + table index 10 + canon 20 + record append 12 + global sort/witness/directories 1258.880229 + key-equality find pass 68 = 2418.934569 Ir/visit = 2.418934569 units at C=1000; log2 rows 128.9443717457; cycle charge log2(1.0092125)=0.013230; replay 1.643e-04 relative; table build (2*2^20*256*3*fe_mul) folded in; attempts 1; log2 work 128.9578414981, claim 128.9579 = 1289579/10000 (ceiling at 1e-4, one ulp lower would understate). FOUR PLANTED CONTROLS in evidence/audit_v23.json: (a) same-bucket different-key pair compared, ZERO collisions (2534 key pairs vs 1290328 bucket pairs in the same runs), planted same-key pair fires and recovers x; (b) overdispersed synthetic X gives Paley-Zygmund 0.010 vs 0.388, bound responds; (c) page width 4096->8192 moves the locator row by -0.247 Ir and the wide page has 512 pair transfers (asserted); (d) claim is the 1-ulp-tight ceiling and the reduced rational is exact. The curve selftest counts the order (65447 prime), checks n*G=O and replays 24 walk steps against a scalar reference. DISCLOSED, NOT CLAIMED: the 16-bit fixture group is not the P-256 subgroup; the key law at r=32723 is extrapolated to r=2^255 as the class-scale equidistribution conjecture; trails of 102-204 steps are extrapolated to 2^107.67 production steps; the cycle charge uses the fixture's measured rate as a conservative measured upper bound; no production-size attack was executed.",
+   "evidence": [
+    "argument.md",
+    "evidence/audit_v23.json",
+    "evidence/claim_v23.json",
+    "evidence/drift_v20.json",
+    "evidence/insn_price.json",
+    "evidence/key_equal_v23.json",
+    "evidence/ladder20.json",
+    "evidence/ladder_R2p20_W1_16p.json",
+    "evidence/ledger_v23.json",
+    "evidence/p256_fe_v15.c",
+    "evidence/production_selector_v23.json",
+    "evidence/samples_v20.json",
+    "evidence/selector_identity.json",
+    "evidence/store_v23.json",
+    "evidence/trace_counts.json",
+    "experiments/audit_v23.py",
+    "experiments/drift_v20.py",
+    "experiments/insn_price.py",
+    "experiments/key_equal_v23.py",
+    "experiments/ledger_v23.py",
+    "experiments/production_selector_v23.py",
+    "experiments/store_v23.py",
+    "experiments/walk_v20.py",
+    "public-note.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
