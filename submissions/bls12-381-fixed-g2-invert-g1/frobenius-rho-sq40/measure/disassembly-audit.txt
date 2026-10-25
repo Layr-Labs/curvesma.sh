@@ -1,0 +1,91 @@
+Disassembly audit of blst_fp12_cyclotomic_sqr (blst f7a88067), the squaring step's routine
+=============================================================================================
+
+Binary audited: /work/cyc2, built by harness/build-and-run.sh from blst's src/server.c with
+  cc -O3 -fno-builtin -fPIC -fno-tree-vectorize -mgeneral-regs-only
+(cc 14.2.0), blst's build/assembly.S as shipped, and harness/cyc2.c.
+Dump: objdump -d --no-show-raw-insn /work/cyc2 (the same binary whose Callgrind records are in
+callgrind/). Object hashes are printed by the build script:
+  blst.o      f3343283bb2ee765d5804c1c64f9caab110b7bceec4a03b7dad18c2f33586396
+  assembly.o  f637976256b619f22f82b7544f248514036b83952ca12036902a19cc5ffce76b
+
+1. Branch census (whole call tree reachable from blst_fp12_cyclotomic_sqr)
+--------------------------------------------------------------------------
+function                          insns  condbr  indir  backb
+__mul_384                           168       0      1      0
+sqr_382x                             88       0      1      0
+__add_mod_384                         6       0      0      0
+add_mod_384x                         24       0      1      0
+__sub_mod_384x384                    48       0      1      0
+sub_mod_384x384                      24       0      1      0
+__add_mod_384x384                    48       0      1      0
+add_mod_384x384                      24       0      1      0
+__mul_by_1_mont_384                 160       0      1      0
+__redc_tail_mont_384                 32       0      1      0
+redc_mont_384                        24       0      1      0
+sqr_fp4                             112       0      1      0
+__sub_mod_384                        32       0      1      0
+sub_mod_384x                         24       0      1      0
+__add_mod_384_ab_are_loaded          26       0      1      0
+mul_by_1_plus_i_mod_384x             32       0      1      0
+cyclotomic_sqr_fp12                 144       0      1      0
+blst_fp12_cyclotomic_sqr              1       0      0      0
+TOTAL 18 functions, 1017 static insns, 0 conditional, 16 indirect, 0 backward-b
+
+The 16 "indirect" instructions are the 16 `ret`s; there is no `br`, `blr` or `eret`. With no
+conditional branch, no backward branch and no indirect branch, the executed instruction count is
+identical for every input: the routine is straight-line, so its Callgrind count cannot depend on
+the GT element, the slice offset or the walk position. That is the input-independence claim, and
+it is why one measurement is enough.
+
+2. Static composition (call sites per function body, from the same dump)
+-----------------------------------------------------------------------
+cyclotomic_sqr_fp12 (144) = 3 x sqr_fp4 + 3 x sub_mod_384x + 15 x add_mod_384x
+                            + 1 x mul_by_1_plus_i_mod_384x
+sqr_fp4 (112)             = 3 x sqr_382x + 4 x redc_mont_384 + 3 x add_mod_384x384
+                            + 5 x sub_mod_384x384 + 1 x add_mod_384x
+sqr_382x (88)             = 88 + 2 x __mul_384
+redc_mont_384 (24)        = 24 + __mul_by_1_mont_384 + __redc_tail_mont_384
+add_mod_384x (24)         = 24 + 2 x __add_mod_384
+sub_mod_384x (24)         = 24 + 2 x __sub_mod_384
+add_mod_384x384 (24)      = 24 + __add_mod_384x384
+sub_mod_384x384 (24)      = 24 + __sub_mod_384x384
+mul_by_1_plus_i_mod_384x  = 32 + __sub_mod_384 + __add_mod_384_ab_are_loaded
+so one squaring executes 18 __mul_384, 12 redc_mont_384, 12 __mul_by_1_mont_384,
+12 __redc_tail_mont_384, 18 add_mod_384x, 3 sub_mod_384x, 15 sub_mod_384x384,
+9 add_mod_384x384 and one mul_by_1_plus_i_mod_384x. Note `__FP2x2__` is not defined in
+blst f7a88067, so the compiled path is the double-width sqr_382x/redc_mont_384 one; that is why
+the routine costs 9,798-9,803 instructions and not the 18 x 383 = 6,894 of a naive
+full-precision-multiply count, nor the 11,190 of pricing the Granger-Scott formula line by line
+through standalone blst_fp_mul calls.
+
+3. Static vs dynamic reconciliation
+-----------------------------------
+Summing the composition of section 2 with each symbol body counted once gives
+  144 + 3 x 2,860 + 3 x 88 + 15 x 36 + 90 = 9,618, plus the 1-instruction exported wrapper = 9,619.
+The dynamic Callgrind count is 9,803 per call. The gap is 184 instructions (1.88%): one `ret` for
+every executed call (181 executed call sites per squaring) plus the few instructions around them.
+The static sum cannot see them because a symbol body is counted once while its `ret` executes per
+call; and the two shared assembly entry points __mul_by_1_mont_384 and __redc_tail_mont_384 are
+entered mid-body from several callers, so a per-symbol sum is a lower bound on their executed
+share. The two figures therefore agree to within 1.9%, and the dynamic count - exact to the
+instruction, identical at n = 1, n = 65 and all five slice offsets - is the number the ledger
+charges. The static audit's role is to confirm the order of magnitude and the straight-line
+property, not to set the price.
+
+4. What the ledger charges, and why it is 9,798 rather than 9,803
+------------------------------------------------------------------
+results.tsv gives I(n=1) = 9,823 and I(n=65) = 637,215, so the marginal per call is
+(I_65 - I_1)/64 = (637,215 - 9,823)/64 = 9,803.0, exactly, at every offset and every routine.
+That marginal is the like-for-like counterpart of the cost model's "executed instructions,
+including call and loop work" convention, which is why the same harness reproduces the model's
+two reference counts exactly: blst_fp_mul = (24,915 - 403)/64 = 383.0 and
+blst_fp12_mul = (1,494,761 - 23,017)/64 = 22,996.0.
+The per-call marginal includes the harness's own loop and call control (5 instructions per
+iteration: increment, compare, branch, call and one more), and the walk loop's control is
+already charged in the step ledger's common rows (30 instructions of loop control, output
+buffer and slot pointer), so the squaring row charges the routine's own body,
+9,803 - 5 = 9,798, plus 52 for the alpha/beta doubling and nothing else. Charging the full
+9,803 instead would raise the squaring step by 5 instructions (2.5e-4 units) and log2 W by
+2.5e-4 bits, which moves no printed digit; the 10,098 budget is 9,798 + 300 and its counted
+rows are 9,951, leaving 147 instructions of slack that already absorb the difference.

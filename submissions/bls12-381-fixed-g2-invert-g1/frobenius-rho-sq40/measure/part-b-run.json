@@ -1,0 +1,264 @@
+{
+ "config": {
+  "trials": 1000,
+  "seconds": 1300,
+  "seed": 1,
+  "parts": "B",
+  "production_checks": 1
+ },
+ "note": "Part B only, run to 1.05 S0' (BUDGET_F); the packaged run at its initial inputs completes a smaller sample.",
+ "partB_toy": {
+  "walks": 4,
+  "bits": "t0",
+  "s": 0.546875,
+  "branch_bits": 6,
+  "branch_threshold": 35,
+  "trials_stop_at_first_recovery": false,
+  "rows": [
+   {
+    "q": 1048963,
+    "r_prime": 48674953,
+    "classes_N": 4056246,
+    "R": 64,
+    "dp_bits": 4,
+    "bits": "t0",
+    "s": 0.546875,
+    "decisions_read_from": "the toy field's Montgomery form a*R_t mod q",
+    "N_prime_over_N": 1.43324,
+    "trials_completed": 1000,
+    "step_budget_1.05_S0p": 2517.2,
+    "fraction_Tc_le_S0p": 0.37,
+    "fraction_Tc_le_S0p_err": 0.015,
+    "fraction_Tc_le_1.05_S0p": 0.401,
+    "fraction_Tc_le_1.05_S0p_err": 0.015,
+    "recovered_and_verified_fraction": 0.459,
+    "recovered_and_verified_count": 459,
+    "trials_with_first_collision_in_budget": 401,
+    "collision_in_budget_without_recovery": 3,
+    "mean_Tc_over_sqrtNp_uncensored": 1.2812,
+    "mean_Tc_standard_error": 0.0207,
+    "trials_with_Tc_before_horizon": 998,
+    "model_mean_sqrt_pi_over_2": 1.2533,
+    "sharp_model_mean": 1.2507,
+    "squaring_fraction_measured": 0.5477,
+    "two_cycles_per_step": 0.0003446144652097955,
+    "predicted_two_cycles_per_step_(1-s)^2/(12R)": 0.00026734670003255207,
+    "long_cycle_events": 67,
+    "long_cycles_per_step": 2.3608557432572904e-05,
+    "squarings_inside_cycle_traversals": 950,
+    "abandoned_walks": 0,
+    "key_ties_toy_only": 28,
+    "distinguished_fraction_measured": 0.06261,
+    "distinguished_fraction_nominal": 0.0625,
+    "report_cap_per_slot_toy": 82,
+    "report_log_cap_toy": 328,
+    "report_log_max_length": 234,
+    "report_cap_stops": 0,
+    "duplicate_appends_skipped": 20,
+    "pairs_charged_max_per_trial": 2,
+    "pair_budget_toy": 3685288098398208,
+    "pair_budget_aborts": 0,
+    "detection_window_toy_steps": 320,
+    "slot_meter_cap_toy": 11178910,
+    "slots_stopped_by_meter_in_trials": 327,
+    "meter_rms_relative_deviation_x_sqrt_steps": 0.3933,
+    "meter_rms_independent_steps_prediction": 0.3877,
+    "meter_slots_measured": 4000,
+    "stress": {
+     "cap4": {
+      "reports_logged": 16,
+      "log_cap": 16,
+      "cap_stops": 4,
+      "log_within_slot_attempts": true
+     },
+     "stuck2": {
+      "restarts": 64,
+      "reports_logged": 16,
+      "log_within_cap": true,
+      "log_within_slot_attempts": true
+     },
+     "meter": {
+      "slot_meter_cap": 624175,
+      "slots_stopped_by_meter": 4,
+      "max_slot_meter": 638764,
+      "bound_cap_minus_1_plus_I_MUL": 646424,
+      "every_slot_within_bound": true
+     },
+     "pairs": {
+      "two_record_budget_1": [
+       1,
+       false
+      ],
+      "two_record_budget_0": [
+       0,
+       true
+      ]
+     }
+    }
+   },
+   {
+    "q": 1049611,
+    "r_prime": 64668529,
+    "classes_N": 5389044,
+    "R": 256,
+    "dp_bits": 4,
+    "bits": "t0",
+    "s": 0.546875,
+    "decisions_read_from": "the toy field's Montgomery form a*R_t mod q",
+    "N_prime_over_N": 1.42831,
+    "trials_completed": 1000,
+    "step_budget_1.05_S0p": 2896.4,
+    "fraction_Tc_le_S0p": 0.386,
+    "fraction_Tc_le_S0p_err": 0.015,
+    "fraction_Tc_le_1.05_S0p": 0.414,
+    "fraction_Tc_le_1.05_S0p_err": 0.016,
+    "recovered_and_verified_fraction": 0.465,
+    "recovered_and_verified_count": 465,
+    "trials_with_first_collision_in_budget": 414,
+    "collision_in_budget_without_recovery": 5,
+    "mean_Tc_over_sqrtNp_uncensored": 1.2576,
+    "mean_Tc_standard_error": 0.0208,
+    "trials_with_Tc_before_horizon": 1000,
+    "model_mean_sqrt_pi_over_2": 1.2533,
+    "sharp_model_mean": 1.2527,
+    "squaring_fraction_measured": 0.5468,
+    "two_cycles_per_step": 8.828281836058807e-05,
+    "predicted_two_cycles_per_step_(1-s)^2/(12R)": 6.683667500813802e-05,
+    "long_cycle_events": 89,
+    "long_cycles_per_step": 2.7666094486240625e-05,
+    "squarings_inside_cycle_traversals": 1470,
+    "abandoned_walks": 2,
+    "key_ties_toy_only": 31,
+    "distinguished_fraction_measured": 0.06327,
+    "distinguished_fraction_nominal": 0.0625,
+    "report_cap_per_slot_toy": 94,
+    "report_log_cap_toy": 376,
+    "report_log_max_length": 265,
+    "report_cap_stops": 0,
+    "duplicate_appends_skipped": 0,
+    "pairs_charged_max_per_trial": 3,
+    "pair_budget_toy": 4844723109888000,
+    "pair_budget_aborts": 0,
+    "detection_window_toy_steps": 320,
+    "slot_meter_cap_toy": 12673145,
+    "slots_stopped_by_meter_in_trials": 281,
+    "meter_rms_relative_deviation_x_sqrt_steps": 0.3933,
+    "meter_rms_independent_steps_prediction": 0.3877,
+    "meter_slots_measured": 4000,
+    "stress": {
+     "cap4": {
+      "reports_logged": 16,
+      "log_cap": 16,
+      "cap_stops": 4,
+      "log_within_slot_attempts": true
+     },
+     "stuck2": {
+      "restarts": 84,
+      "reports_logged": 16,
+      "log_within_cap": true,
+      "log_within_slot_attempts": true
+     },
+     "meter": {
+      "slot_meter_cap": 624175,
+      "slots_stopped_by_meter": 4,
+      "max_slot_meter": 632602,
+      "bound_cap_minus_1_plus_I_MUL": 646424,
+      "every_slot_within_bound": true
+     },
+     "pairs": {
+      "two_record_budget_1": [
+       1,
+       false
+      ],
+      "two_record_budget_0": [
+       0,
+       true
+      ]
+     }
+    }
+   },
+   {
+    "q": 1054003,
+    "r_prime": 35456053,
+    "classes_N": 2954671,
+    "R": 1024,
+    "dp_bits": 3,
+    "bits": "t0",
+    "s": 0.546875,
+    "decisions_read_from": "the toy field's Montgomery form a*R_t mod q",
+    "N_prime_over_N": 1.42709,
+    "trials_completed": 1000,
+    "step_budget_1.05_S0p": 2143.8,
+    "fraction_Tc_le_S0p": 0.385,
+    "fraction_Tc_le_S0p_err": 0.015,
+    "fraction_Tc_le_1.05_S0p": 0.409,
+    "fraction_Tc_le_1.05_S0p_err": 0.016,
+    "recovered_and_verified_fraction": 0.446,
+    "recovered_and_verified_count": 446,
+    "trials_with_first_collision_in_budget": 409,
+    "collision_in_budget_without_recovery": 2,
+    "mean_Tc_over_sqrtNp_uncensored": 1.2513,
+    "mean_Tc_standard_error": 0.0207,
+    "trials_with_Tc_before_horizon": 999,
+    "model_mean_sqrt_pi_over_2": 1.2533,
+    "sharp_model_mean": 1.2531,
+    "squaring_fraction_measured": 0.5484,
+    "two_cycles_per_step": 2.34375e-05,
+    "predicted_two_cycles_per_step_(1-s)^2/(12R)": 1.6709168752034504e-05,
+    "long_cycle_events": 64,
+    "long_cycles_per_step": 2.777777777777778e-05,
+    "squarings_inside_cycle_traversals": 1112,
+    "abandoned_walks": 1,
+    "key_ties_toy_only": 20,
+    "distinguished_fraction_measured": 0.1297,
+    "distinguished_fraction_nominal": 0.125,
+    "report_cap_per_slot_toy": 139,
+    "report_log_cap_toy": 556,
+    "report_log_max_length": 353,
+    "report_cap_stops": 0,
+    "duplicate_appends_skipped": 0,
+    "pairs_charged_max_per_trial": 3,
+    "pair_budget_toy": 10602728065597440,
+    "pair_budget_aborts": 0,
+    "detection_window_toy_steps": 160,
+    "slot_meter_cap_toy": 9077093,
+    "slots_stopped_by_meter_in_trials": 103,
+    "meter_rms_relative_deviation_x_sqrt_steps": 0.3974,
+    "meter_rms_independent_steps_prediction": 0.3877,
+    "meter_slots_measured": 4000,
+    "stress": {
+     "cap4": {
+      "reports_logged": 16,
+      "log_cap": 16,
+      "cap_stops": 4,
+      "log_within_slot_attempts": true
+     },
+     "stuck2": {
+      "restarts": 23,
+      "reports_logged": 16,
+      "log_within_cap": true,
+      "log_within_slot_attempts": true
+     },
+     "meter": {
+      "slot_meter_cap": 624175,
+      "slots_stopped_by_meter": 4,
+      "max_slot_meter": 644764,
+      "bound_cap_minus_1_plus_I_MUL": 646424,
+      "every_slot_within_bound": true
+     },
+     "pairs": {
+      "two_record_budget_1": [
+       1,
+       false
+      ],
+      "two_record_budget_0": [
+       0,
+       true
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "seconds": 452.34
+}
