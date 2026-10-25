@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "hprime-bucket-k051-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 116.779095,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 123.3242,
+    "preprocessing_log2": 115.7815,
+    "success_probability": 0.399,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 coverage: the 6N^2(1 - 1/L) distinct rationals a w/(u a' w') hit z nearly like independent uniform elements of H: at production size |R|/m >= 1 - e^-K - 0.0005, a coverage within the census deviation (1 - e^-K = 0.399504 rounded down at K = 0.51; success at least 0.399003 after every failure term and this allowance). z is uniform in H and independent of the lists, so P(z is an off-diagonal candidate) = |R|/m exactly, R the mu6 multiples of the off-diagonal ratios. Support: an exact census of R on toy primes built by the production rules at K = 0.51 (evidence.py mode census; proof Section 6): over primes, |R|/m - (1 - e^-K) has mean +0.000043 to +0.000119 at m from 2^30 to 2^34.9 and lowest prime -0.00024 there (13 of 32 primes at 2^30 lie below 1 - e^-K, every prime from 2^26 up lies within 0.0005 of it); the success line carries the 0.0005 as an explicit term, and a shortfall up to 0.0095 still clears the required 0.39. Toy index 2^2 to 2^10, product sizes and m differ from production, so the census supports H1 and does not prove it; production success rests on H1",
+    "H2/H2' H-prime availability over the exact windows the capped searches examine, supported by the density 1/2^20 among primes: the primes in (2^39, 2^78], all within the 2^73 H-tests charged, hold at least L (below 2^51.6504) H-primes (expected above 2^52.24, 1.50 L); the first 2^86 primes above 2^80, all inside the sieved (2^80, 2^80 + 2^92], hold at least 2^65 (expected 2^66); at most 16 walk-list gaps exceed 2^33 and none 2^34 (exponential gaps, expected number above 2^33 below 2^-166.9); on a shortage the run stops with no scalar",
+    "H3 key bits: 192-bit parity y-keys behave as independent uniform strings across mu6 orbits (bucket occupancy, comparison and false-match caps; toy chi-square 31.32 vs 31, consistent with the model at toy size; the production independence and concentration every cap uses rest on H3)"
+  ],
+  "limitations": [
+    "Analytic bound; no full-size run. Instruction counts itemised, not measured on hardware.",
+    "Memory is exponential (2^123.3242 bytes, the exact itemised sum over all nodes at full allocation, asserted as an integer inequality; records alone below 2^120.66).",
+    "Per-node comparison cap, per-slot cap, candidate caps at owner and generating nodes, re-walk cap and node overflow make the run fail with total probability below 2^-20 + 2^-40 under H1 and H3, and the diagonal true-match event (z = a/(u a') for one base pair gives L > 2^44 candidates, so the run outputs fail) adds at most 6 x 2^128 / m < 2^-104.27; every tail, cost and memory figure is rounded up and every success figure down; charged work is the maximum, not the expectation.",
+    "Depends on the walk-with-one-addition idea of cbadde77, the H-prime semiprime construction of 6ecec8e3 / cf6d45a8 and the bucket-matching package of 0a45ddb2; the one parameter change from 0a45ddb2 is K = 0.51 instead of 0.52; its true-match tail (now with the diagonal event) and its Lemma 4 key-equality sentence are corrected, H2 is stated over the searched windows, and every field inversion is named and charged (the shared F_p inversion of each round: 4 instructions per record inside the 180 charged, plus ledger rows for the gap tables, the re-walks and the F_r inversions forming the six z), the split-gap walk overhead and re-walk split steps are charged by name, and a census mode counts the H1 coverage exactly on toy primes."
+  ],
+  "lane": "exploratory"
+}
