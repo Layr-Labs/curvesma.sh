@@ -1,0 +1,188 @@
+{
+ "S": "79570896929087176848291468308578693689",
+ "S_log2": 125.90358037208506,
+ "all_checks": true,
+ "claim": {
+  "claim_log2": 126.6729,
+  "denominator": 10000,
+  "numerator": 1266729,
+  "total": "27123888652751743347567940614737221529487797/200000",
+  "total_log2": 126.6728316329355
+ },
+ "components": {
+  "aux_sum": "271578971349766145613/2500",
+  "overflow_row": "1",
+  "stop_loss_row": "210992643385741285983394384052224/3125",
+  "trap_charge": "105496321692870642991697192026112/3125",
+  "w_stress": "27123888632496449582515050842623379368625253/200000"
+ },
+ "components_log2": {
+  "aux_sum": 56.59222129268498,
+  "overflow_row": 0.0,
+  "stop_loss_row": 95.76925125977309,
+  "trap_charge": 94.76925125977309,
+  "w_stress": 126.67283163185814
+ },
+ "concurrency": {
+  "launch_interval_steps": 1208925819614629174706176,
+  "loss_bits": 7.182404167704546e-10,
+  "loss_rel_S2": 4.978463582286355e-10,
+  "n_inflight": 128,
+  "price": "max single-step price (c_mul_stress)",
+  "reserve_over_S": 2.4892317911431777e-10,
+  "reserve_steps": "19807040628566084398385987584",
+  "rule": "halt launches when completed steps >= S - reserve; atomic in-flight cap enforced",
+  "trail_cap_steps": 154742504910672534362390528
+ },
+ "controls": {
+  "gate": {
+   "census_rate": 0.5867833333333333,
+   "delivered_p_recover": 0.5791,
+   "fires": true,
+   "literal_changes": true,
+   "p_11": 0.9469173948727853,
+   "p_12": 0.9999758605706561,
+   "shifts_11": 39227,
+   "shifts_12": 41425,
+   "shipped_is_12": true
+  },
+  "inflight": {
+   "bare_exceeds_derived": true,
+   "bare_trace_max": 1023,
+   "derived_ratio": 128,
+   "enforce_holds": true,
+   "enforced_cap": 128,
+   "enforced_trace_max": 128,
+   "fires": true,
+   "reserve_steps": "19807040628566084398385987584",
+   "toosmall_cap": 127,
+   "toosmall_trace_max": 127,
+   "undercoverage_steps": "32512"
+  },
+  "max_vs_mean": {
+   "c_max": 1.704385,
+   "fires": true,
+   "mean_price": 1.3552720700469845,
+   "mean_underprices_synthetic": true,
+   "n": 1000,
+   "synthetic_max_sum": 1704.385,
+   "synthetic_mean_sum": 1355.2720700469845,
+   "undercount_bits": 0.3306687589640944,
+   "w_max_log2": 126.67283163185814,
+   "w_mean_log2": 126.34216287289405
+  },
+  "support": {
+   "fires": true,
+   "ratio": 2.5401224714019754,
+   "tail_16_log2": -3.5896883525728747,
+   "tail_8_log2": -2.2447902946995653,
+   "truncation_raises": true
+  }
+ },
+ "delta": {
+  "analytic": 9.201238775566508e-51,
+  "analytic_log2": -166.21650473297103,
+  "charged": 0.08306080403339347,
+  "measured": 2.2483550654262058e-51,
+  "measured_arm": "1",
+  "measured_log2": -168.24946295197088,
+  "rule": "max(measured support integral + exponential-decay tail row, normalised closed form)",
+  "tail": 0.08306080403339347,
+  "tail_detail": {
+   "arm": "1",
+   "charge": "each tail merge charged as a full miss (cap atom <= 1); P(A>a) = s4 exp(-lam (a-4))",
+   "decay_per_theta": 0.11652653711942884,
+   "decay_rule": "half the measured 1->4 theta slope (conservative)",
+   "p_tail": 0.08306080403339347,
+   "p_tail_log2": -3.5896883525728747,
+   "production_cap": "128 theta",
+   "support": "[1,16] theta (fixture cap)",
+   "survival_1": 0.6765799256505576,
+   "survival_4": 0.336262250760392,
+   "tail_start_theta": 16.0
+  },
+  "uniform_rejected": "1/128",
+  "v28_text_value": 2.1071539180686662e-52
+ },
+ "f": "14566/41929",
+ "gate": {
+  "formatted": "0.579100",
+  "source": "v30-age-law:arm1 p_recover",
+  "value": 0.5791
+ },
+ "independent_recompute": {
+  "all_equal": true,
+  "n": 20,
+  "passed": 20
+ },
+ "literal_checks": {
+  "claim_is_least_4dp": true,
+  "claim_matches_statement": true,
+  "statement_has_aux": true,
+  "statement_has_census": true,
+  "statement_has_claim": true,
+  "statement_has_gate": true,
+  "statement_has_inflight": true,
+  "statement_has_mean": true,
+  "statement_has_reserve": true,
+  "statement_has_stop": true,
+  "statement_has_sumline": true,
+  "statement_has_trap": true,
+  "statement_has_w": true,
+  "total_is_sum_of_five": true
+ },
+ "literal_sweep": {
+  "all_Y": true,
+  "n_tokens": 19,
+  "tokens": {
+   "-166.216505": "computed:delta_closed_log2",
+   "-168.25": "computed:delta_measured_log2",
+   "-177.09": "computed:age_2_delta_residual_all_log2",
+   "-181.05": "computed:age_3_delta_residual_all_log2",
+   "-182.02": "computed:age_1_delta_residual_report_log2",
+   "-182.28": "computed:age_2_delta_residual_report_log2",
+   "-182.87": "computed:age_4_delta_residual_all_log2",
+   "-183.01": "computed:age_3_delta_residual_report_log2",
+   "-183.78": "computed:age_4_delta_residual_report_log2",
+   "-3.589688": "computed:delta_charged_log2",
+   "-30.90": "computed:loss_rel_log2",
+   "-31.90": "computed:reserve_over_S_log2",
+   "126.342163": "computed:mean_w_log2",
+   "126.672831633": "computed:claim",
+   "126.672832": "computed:claim",
+   "56.592221": "computed:aux_log2",
+   "94.00": "computed:reserve_log2",
+   "94.769251": "computed:trap_log2",
+   "95.769251": "computed:stop_log2"
+  }
+ },
+ "planted": {
+  "gate_fires": true,
+  "inflight_fires": true,
+  "max_vs_mean_fires": true,
+  "support_fires": true
+ },
+ "planted_score": "4/4",
+ "stop": {
+  "launch_interval_steps": 1208925819614629174706176,
+  "loss_bits": 7.182404167704546e-10,
+  "loss_rel_S2": 4.978463582286355e-10,
+  "n_inflight": 128,
+  "price": "max single-step price (c_mul_stress)",
+  "reserve_over_S": 2.4892317911431777e-10,
+  "reserve_steps": "19807040628566084398385987584",
+  "rule": "halt launches when completed steps >= S - reserve; atomic in-flight cap enforced",
+  "trail_cap_steps": 154742504910672534362390528
+ },
+ "trap": {
+  "cap": 154742504910672534362390528,
+  "cap_mult": 128,
+  "charge_log2": 94.76925125977309,
+  "measured_rule": "E[L^3]/(2E[L^2]) diagnostic only, not charged",
+  "measured_wasted_theta_mult": 2.5251503463074862,
+  "n_inflight": 128,
+  "population": "enforced in-flight cap x max single-trail charge",
+  "theta": 1208925819614629174706176,
+  "wasted_steps": "19807040628566084398385987584"
+ }
+}

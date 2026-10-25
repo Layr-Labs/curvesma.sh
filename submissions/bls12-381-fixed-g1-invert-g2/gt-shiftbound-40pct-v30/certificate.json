@@ -1,0 +1,143 @@
+{
+ "S": {
+  "log2": 125.90358037208506,
+  "value": "79570896929087176848291468308578693689"
+ },
+ "age_law": {
+  "1": {
+   "delta_residual_all_log2": -168.24946295197088,
+   "gate_p_per_merge": 0.9999758605706561,
+   "mean_age_over_theta": 3.9387824071838944,
+   "merges_all": 41426,
+   "p_recover": 0.5791
+  },
+  "2": {
+   "delta_residual_all_log2": -177.08701104005362,
+   "gate_p_per_merge": 0.9999430985675064,
+   "mean_age_over_theta": 3.1545656286897024,
+   "merges_all": 70297,
+   "p_recover": 0.38835
+  },
+  "3": {
+   "delta_residual_all_log2": -181.0450838348944,
+   "gate_p_per_merge": 1.0,
+   "mean_age_over_theta": 1.9719627812518852,
+   "merges_all": 49733,
+   "p_recover": 0.26416666666666666
+  },
+  "4": {
+   "delta_residual_all_log2": -182.87311088761058,
+   "gate_p_per_merge": 1.0,
+   "mean_age_over_theta": 1.095193861066236,
+   "merges_all": 49520,
+   "p_recover": 0.17575
+  }
+ },
+ "claim": {
+  "claim_log2": 126.6729,
+  "denominator": 10000,
+  "numerator": 1266729,
+  "total": "27123888652751743347567940614737221529487797/200000",
+  "total_log2": 126.6728316329355
+ },
+ "components": {
+  "aux_sum": {
+   "log2": 56.59222129268498,
+   "value": "271578971349766145613/2500"
+  },
+  "overflow_row": {
+   "log2": 0.0,
+   "value": "1"
+  },
+  "stop_loss_row": {
+   "log2": 95.76925125977309,
+   "value": "210992643385741285983394384052224/3125"
+  },
+  "trap_charge": {
+   "log2": 94.76925125977309,
+   "value": "105496321692870642991697192026112/3125"
+  },
+  "w_stress": {
+   "log2": 126.67283163185814,
+   "value": "27123888632496449582515050842623379368625253/200000"
+  }
+ },
+ "concurrency": {
+  "bare_schedule_bound_attained": false,
+  "bare_schedule_max_inflight": 1023,
+  "derived_ratio": 128,
+  "enforce_holds": true,
+  "enforced_cap": 128,
+  "enforced_trace_max_inflight": 128,
+  "launch_cadence_clock": "aggregate completed steps",
+  "launch_interval_steps": 2,
+  "toosmall_bound_fails": true,
+  "toosmall_cap_trace_max_inflight": 127,
+  "trail_cap_clock": "own executed steps",
+  "trail_cap_steps": 256
+ },
+ "delta": {
+  "analytic": 9.201238775566508e-51,
+  "analytic_log2": -166.21650473297103,
+  "charged": 0.08306080403339347,
+  "measured": 2.2483550654262058e-51,
+  "measured_arm": "1",
+  "measured_log2": -168.24946295197088,
+  "rule": "max(measured support integral + exponential-decay tail row, normalised closed form)",
+  "tail": 0.08306080403339347,
+  "tail_detail": {
+   "arm": "1",
+   "charge": "each tail merge charged as a full miss (cap atom <= 1); P(A>a) = s4 exp(-lam (a-4))",
+   "decay_per_theta": 0.11652653711942884,
+   "decay_rule": "half the measured 1->4 theta slope (conservative)",
+   "p_tail": 0.08306080403339347,
+   "p_tail_log2": -3.5896883525728747,
+   "production_cap": "128 theta",
+   "support": "[1,16] theta (fixture cap)",
+   "survival_1": 0.6765799256505576,
+   "survival_4": 0.336262250760392,
+   "tail_start_theta": 16.0
+  },
+  "uniform_rejected": "1/128",
+  "v28_text_value": 2.1071539180686662e-52
+ },
+ "diagnostic_average_price": {
+  "c_stress": "454601621/335432000",
+  "note": "mean-price row shown only to expose the undercount; NOT summed",
+  "w_stress_at_average": 1.078402141965792e+38,
+  "w_stress_at_average_log2": 126.34216287289405
+ },
+ "gate": {
+  "census": 0.5867833333333333,
+  "measured": 0.5791,
+  "merges": 41426,
+  "per_merge": 0.9999758605706561,
+  "shifts": {
+   "0": 5532,
+   "1": 2209,
+   "10": 3154,
+   "11": 2198,
+   "2": 3526,
+   "3": 3817,
+   "4": 3913,
+   "5": 2051,
+   "6": 5055,
+   "7": 2255,
+   "8": 3610,
+   "9": 4105
+  },
+  "trials": 20000,
+  "verified": 41425
+ },
+ "stop": {
+  "launch_interval_steps": 1208925819614629174706176,
+  "loss_bits": 7.182404167704546e-10,
+  "loss_rel_S2": 4.978463582286355e-10,
+  "n_inflight": 128,
+  "price": "max single-step price (c_mul_stress)",
+  "reserve_over_S": 2.4892317911431777e-10,
+  "reserve_steps": "19807040628566084398385987584",
+  "rule": "halt launches when completed steps >= S - reserve; atomic in-flight cap enforced",
+  "trail_cap_steps": 154742504910672534362390528
+ }
+}
