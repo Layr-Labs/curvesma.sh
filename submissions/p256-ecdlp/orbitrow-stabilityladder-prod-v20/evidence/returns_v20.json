@@ -1,0 +1,48 @@
+{
+ "cell": {
+  "R": 64,
+  "label": "RET_R64_W64_16p",
+  "lambda": 0.6339903251725495,
+  "periods": 16,
+  "q": 6774396373,
+  "q_bits": 33,
+  "steps_per_walker": 1024,
+  "trials": 600,
+  "walkers": 64
+ },
+ "exact_pair_returns": 0,
+ "identity_break_rate": 0.0,
+ "identity_break_rate_cp95_upper": 9.605995506458114e-05,
+ "identity_breaks": 0,
+ "pricing": {
+  "basis": "identity break = one lost trail (that walker's remaining steps); rate charged at the exact CP-95 upper bound on the per-TRAIL rate, NOT divided by the walker count",
+  "relative_work_loss_charge": 9.605995506458114e-05,
+  "v19_error": "v19 divided a per-walker probability by 2^20 and claimed 5.845e-09; that division is wrong (each dead walker loses its own work, so the loss fraction is the per-trail rate) and the underlying zero was measured on coefficient pairs, not states"
+ },
+ "return_positive_control": {
+  "cell": {
+   "R": 64,
+   "q": 1031,
+   "steps_per_walker": 4096,
+   "trails": 384,
+   "walkers": 64
+  },
+  "detects": true,
+  "s_returns_detected": 1042261,
+  "trivial": 417,
+  "useful": 1041844,
+  "why": "same tracker, tiny group q=1031 where S returns are certain"
+ },
+ "s_returns_at_other_phase": 9,
+ "s_returns_trivial": 0,
+ "s_returns_useful": 9,
+ "structural_argument": {
+  "consequence": "an S return at a different phase does not stop progress; it is a collision subtype whose relation is tested by the shipped predicate (measured useful / trivial above)",
+  "statement": "the row index is prod = (S XOR (t*2654435761 mod 2^64) XOR trail*7919) mod R, so the next state is a function of (S, t) and t increases strictly inside a trail; the pair (S, t) never recurs, therefore a walker's future never repeats and the classical rho-cycle death does not exist on this walk",
+  "verified_count": 0
+ },
+ "trails": 38400,
+ "trails_with_identity_break": 0,
+ "trials": 600,
+ "unit": "trail = one walker's walk; trails = trials * walkers"
+}

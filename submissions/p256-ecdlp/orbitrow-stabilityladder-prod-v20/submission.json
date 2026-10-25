@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v20: cross-walker success bound on the PRODUCTION selector, 893/2000 = 0.4465, exact CP-95 lower 0.424555 >= 0.39; frequency x utility decomposition (E[X]=0.6329, q=1.0); stability ladder 16-1024 periods x R 256-65536 x W 1-64 all FLAT with planted drift controls; store repric",
+ "claims": [
+  {
+   "score": {
+    "numerator": "1289009",
+    "denominator": "10000"
+   },
+   "statement": "For NIST P-256 Q=[x]P the full-store rho walk specified in argument.md is claimed at total classical work at most 2^128.9009 target-group-operation equivalents (reduced rational 1289009/10000, copied from evidence/claim_v20.json). Prices: fe_mul 148 Ir, fe_add/fe_sub 27 Ir, affine addition 606 Ir, batch-inversion share 444 Ir, table/canon/append 10+20+12 Ir, and a 1254.4 Ir global radix sort plus witness extraction priced at 0.25 clear + 22.00 count + 2.062 prefix + 36.0 carried-scatter body + 9.3765 external page translation/write/flush + 6.3647 per-pass read-back = 76.0532 Ir/record/pass over 16 passes, plus 37.5 witness. The store is priced ANALYTICALLY under the protected 64-bit general-purpose-register rule: a 48 B record is 3 register-pair (16 B) transfers each way, a 4096 B page is 256 transfers for init, flush and fill amortised over 85 records per page, and translation is a 6-level radix with fanout 2^21 over the page number, which covers 2^126 pages against the required 2^121.255; the radix directories are charged (0.00586 Ir/record) and included in the disclosed peak of log2 134.2564 bytes. SUCCESS BOUND, and it is the point of this package: the carrier is cell X_R256_W64_p16 -- the production selector (row(t) = (S XOR t*2654435761 XOR trail*7919) mod R, row r = (1+(7r+3) mod R)*P + (1+(11r+5) mod R)*Q, step on the true point, canonicalise only the stored key), 64 walkers sharing one store, 16 full selector periods, lambda held at the production load 0.634, 2000 trials -- with success counted ONLY from collisions between DISTINCT walkers, which is the production collision mix (production per-trail load is 2^-40.66, so its success is cross-trail): 893/2000 = 0.4465, exact Clopper-Pearson lower 0.424555 >= 0.39. 98.4% of the cell's collisions are cross-walker and every collision recovers x. The same selector at R=2^20, W=1, 16 periods replicates at 95/200 = 0.4750 (CP-95 lower 0.404120) and is reported but is no longer the bound, because its collisions are all within one trail. STABILITY LADDER (the answer to the regime-transfer objection): with the identical selector source at every rung (control (a) matches SHA-256 of the selector source against the shipped production runner and replays a v19 cell exactly), success per challenge is measured at 16/64/256/1024 selector periods, at walker counts 1/16/64 and at R=256/1024/4096/65536; every axis is FLAT under a disjoint-exact-CP-95-interval test, with planted controls showing the detector flags drifting counts and does not flag flat ones. The step from 1024 to 2^87.67 periods is DISCLOSED AS A RHO-HEURISTIC CONJECTURE, not a measurement, and the bound charged is the carrier cell's own CP-95 lower bound rather than an extrapolated point. Returns: classical rho-cycle deaths cannot occur on an advancing-counter selector (the next state is a function of (S,t) with t strictly increasing), verified by exact tracking over 38400 trails (0 exact (S,t) returns, 9 S-returns at other phases all of which recover x, 0 identity restarts, positive control detects 1042261 returns at q=1031); the restart charge is the per-trail CP-95 upper bound 9.606e-05, replacing v19's 5.845e-09 division error. Collision policy: 0.6150 collisions per challenge, 3.2300 trail-pairs charged, replay cost 1.643e-04 relative. Claim 2^128.9009.",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "evidence/insn_price.json",
+    "evidence/p256_fe_v15.c",
+    "evidence/trace_counts.json",
+    "evidence/ladder20.json",
+    "evidence/ladder_R2p20_W1_16p.json",
+    "evidence/store_v20.json",
+    "evidence/returns_v20.json",
+    "evidence/drift_v20.json",
+    "evidence/ledger_v20.json",
+    "evidence/claim_v20.json",
+    "evidence/audit_v20.json",
+    "evidence/selector_identity.json",
+    "evidence/samples_v20.json",
+    "experiments/walk_v20.py",
+    "experiments/production_v17.py",
+    "experiments/returns_v20.py",
+    "experiments/store_v20.py",
+    "experiments/drift_v20.py",
+    "experiments/ledger_v20.py",
+    "experiments/audit_v20.py",
+    "experiments/make_submission_v20.py",
+    "experiments/insn_price.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

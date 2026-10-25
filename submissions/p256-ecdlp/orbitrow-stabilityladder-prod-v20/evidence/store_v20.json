@@ -1,0 +1,60 @@
+{
+ "charges_ir_per_record": {
+  "directory_construction_amortised": 0.00585938,
+  "page_fill_256x16B_amortised": 3.011765,
+  "page_flush_256x16B_amortised": 3.011765,
+  "page_init_256x16B_amortised": 3.011765,
+  "page_table_walk_amortised": 0.352941,
+  "record_load_3x16B": 3.0,
+  "record_store_3x16B": 3.0
+ },
+ "log2_pages": 121.25496250072115,
+ "page_bytes": 4096,
+ "passes": 16,
+ "peaks": {
+  "log2_peak_bytes": 134.2563706957851,
+  "log2_radix_directories_bytes": 124.25496318865191,
+  "log2_stream_bytes_96V": 134.25496250072115,
+  "note": "96V (two record streams) PLUS the six-level radix directories; v19 omitted the directories from this bound"
+ },
+ "per_pass_ir_per_record": {
+  "clear256": 0.25,
+  "count256": 22.0,
+  "prefix256": 2.062,
+  "scatter256x_carried_external": 36.0,
+  "store_translation_and_io": 9.376471,
+  "stream_readback_materialisation": 6.364706
+ },
+ "per_pass_total_ir": 76.053177,
+ "readback_ir_per_record_per_pass": 6.364706,
+ "record_bytes": 48,
+ "records_per_page": 85,
+ "rule": "protected accounting: 1 Ir = one AArch64 general-purpose-register instruction; a register-pair transfer moves at most 16 B",
+ "sort_total_ir_per_record": 1254.356691377794,
+ "store_io_ir_per_record_per_pass": 9.376471,
+ "translation": {
+  "coverage_bits": 126,
+  "covered_log2_pages": 126,
+  "covers_required": true,
+  "fanout": 2097152,
+  "fanout_bits": 21,
+  "levels": 6,
+  "node_bytes": 16777216,
+  "note": "one node read per PAGE, not per record; v19's 2^40 fanout covered only 2^120 pages and its 2^41-pointer description is removed",
+  "walk_ir_per_page": 30.0,
+  "walk_ir_per_record": 0.352941
+ },
+ "v19_comparison": {
+  "direction": "UP by 10.6357 Ir/record/pass: the 16 B rule and the page init/flush charges cost more than v19's vector-op and near-zero page-open prices",
+  "v19_defects": [
+   "record store/load priced at 1 Ir for 32 B of transfer",
+   "page open 0.0117 Ir and flush 1.5 Ir for a 4096 B page",
+   "fanout 2^40 x 3 levels = 2^120 pages < 2^121.255 required",
+   "radix directories absent from the 96V peak"
+  ],
+  "v19_per_pass": 65.417469,
+  "v20_per_pass": 76.053177
+ },
+ "vector_op_policy": "no 32 B vector load/store is priced at 1 Ir; every transfer in this file is a 16 B register pair",
+ "witness_ir_per_record": 37.5
+}

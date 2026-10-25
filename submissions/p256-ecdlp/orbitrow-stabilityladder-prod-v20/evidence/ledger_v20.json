@@ -1,0 +1,177 @@
+{
+ "bounds": {
+  "claim": 128.9009,
+  "storage_log2_peak": 134.2563706957851,
+  "work_log2": 128.9009
+ },
+ "claim_reduced_rational": {
+  "denominator": 10000,
+  "numerator": 1289009
+ },
+ "claim_time_log2": 128.9009,
+ "decomposition": {
+  "assumptions_disclosed": "X ~ Poisson and collisions mutually independent; the stability ladder supports the absence of long-range correlation (flat in 16..1024 periods, W 1..64, R 256..65536) but does not prove independence at 2^87.67 periods. This is a rho-heuristic CONJECTURE, and the bound charged is the smaller of the analytic value and the measured carrier CP-95 lower bound.",
+  "frequency": {
+   "conceded_by_review": "the verdict states the same birthday arithmetic ((2^107.67)^2/r per trail, and the 0.634 per-challenge load)",
+   "expected_collisions_per_attack": 0.6328782969851414,
+   "formula": "E[X] = N(N-1)/(2r)",
+   "records": "2^127.67",
+   "sign_classes": "2^255"
+  },
+  "success_per_attack": {
+   "analytic_from_decomposition": 0.4679315231467903,
+   "charged": 0.42455473649353065,
+   "measured_cross_walker_cp95_lower": 0.42455473649353065
+  },
+  "utility": {
+   "all_cells": "every one of the 20 ladder cells has useful_relations == collisions (control (f)), so q = 1.0 is measured at 16/64/256/1024 periods, W 1..64 and R 256..65536",
+   "carrier_collisions": 1230,
+   "carrier_recoveries": 1230,
+   "definition": "q = P(recovery | collision)",
+   "q_cp95_lower": 0.9970054037877589,
+   "q_hat": 1.0
+  },
+  "why": "the review's arithmetic separates collision FREQUENCY (analytic) from collision UTILITY (measured); production success is a whole-attack event over 2^20 walkers' records, not a per-walker hit"
+ },
+ "delta_vs_v19": {
+  "price_delta": "store price 65.4175 -> 76.0532 Ir/record/pass (16 B rule + page I/O)",
+  "return_delta": "5.845e-09 (per-walker/2^20) -> 9.606e-05 (per-trail CP-95 upper)",
+  "v19_carrier": "R2p20_W1_16p, 95/200 = 0.475, CP-lo 0.404120, W=1 (all collisions within one trail)",
+  "v19_claim": 128.7921,
+  "v20_carrier": "X_R256_W64_p16 cross-walker, 893/2000 = 0.4465, CP-lo 0.424555"
+ },
+ "instructions_per_visit": 2346.411031740343,
+ "policy": {
+  "measured_collisions_per_challenge": 0.615,
+  "measured_useful_fraction": 1.0,
+  "record_fields": "32B canonical key || 20B identity pack (20-bit trail || 108-bit step)",
+  "replay_inflation_vs_bulk": 53.34814814814815,
+  "replay_relative_loss": 0.00016433193065502026,
+  "rule": "every hit replays both trails from their stored identities; the replay decides triviality and, if nontrivial, recovers x=-da/db",
+  "trail_pairs_charged_per_challenge": 3.23
+ },
+ "record": {
+  "bytes": 48,
+  "layout": "32B canonical key || 16B identity (20-bit trail || 108-bit step)"
+ },
+ "returns": {
+  "relative_loss": 9.605995506458114e-05,
+  "s_returns_trivial": 0,
+  "s_returns_useful": 9,
+  "source": "returns_v20.json: per-TRAIL exact tracking on the declared walk, 38,400 trails, 0 exact (S,t) returns, 0 identity restarts, positive control detects 1.04e6 S returns at q=1031",
+  "structural_argument": "the row index is prod = (S XOR (t*2654435761 mod 2^64) XOR trail*7919) mod R, so the next state is a function of (S, t) and t increases strictly inside a trail; the pair (S, t) never recurs, therefore a walker's future never repeats and the classical rho-cycle death does not exist on this walk",
+  "v19_error": "v19 divided a per-walker probability by 2^20 and claimed 5.845e-09; that division is wrong (each dead walker loses its own work, so the loss fraction is the per-trail rate) and the underlying zero was measured on coefficient pairs, not states"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "global_sort_and_witness": 1254.356691,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "sort": {
+  "basis": "PROTECTED 64-bit GPR accounting (evidence/store_v20.json): 16 B per register-pair transfer, 3 transfers per 48 B record each way, 256 per 4096 B page init/flush/fill, fanout 2^21 x 6 levels over the page number, directories charged and included in the peak",
+  "directory_construction_ir": 0.00585938,
+  "passes": 16,
+  "peaks": {
+   "log2_peak_bytes": 134.2563706957851,
+   "log2_radix_directories_bytes": 124.25496318865191,
+   "log2_stream_bytes_96V": 134.25496250072115,
+   "note": "96V (two record streams) PLUS the six-level radix directories; v19 omitted the directories from this bound"
+  },
+  "per_pass_components": {
+   "clear256": 0.25,
+   "count256": 22.0,
+   "prefix256": 2.062,
+   "scatter256x_carried_external": 36.0,
+   "store_translation_and_io": 9.376471,
+   "stream_readback_materialisation": 6.364706
+  },
+  "per_pass_ir_per_record": 76.053177,
+  "readback_ir_per_record": 6.364706,
+  "store_io_ir_per_record": 9.376471,
+  "total_sort_ir_per_record": 1254.356691377794,
+  "witness_ir": 37.5
+ },
+ "success": {
+  "attempts_charged": 1.0,
+  "big_r_replication_not_the_bound": {
+   "R": 1048576,
+   "cp95_lower": 0.40412003342497727,
+   "label": "R2p20_W1_16p",
+   "note": "same walk at R=2^20, W=1, 16 periods; retained as the large-R replication of the same selector",
+   "rate": 0.475,
+   "trials": 200,
+   "walkers": 1,
+   "wins": 95
+  },
+  "carrier": {
+   "R": 256,
+   "cp95_lower_cross_walker": 0.42455473649353065,
+   "cross_share": 0.989430894308943,
+   "cross_walker_collisions": 1217,
+   "label": "X_R256_W64_p16",
+   "periods": 16,
+   "rate_any": 0.449,
+   "rate_cross_walker": 0.4465,
+   "trials": 2000,
+   "walkers": 64,
+   "why_carrier": "production success comes from collisions between DISTINCT walkers (per-trail load 2^-40.66); at W=64 only 1.6% of collisions are within-walker, and the bound counts ONLY cross-walker relations, so it is the mix-matched statistic",
+   "wins_any": 898,
+   "wins_cross_walker": 893,
+   "within_walker_collisions": 13,
+   "within_walker_load": 0.00015474736689506096
+  },
+  "drift_down_axes": [],
+  "floor": 0.39,
+  "log2_attempts_charged": 0.0,
+  "p_used_cp95_lower": 0.42455473649353065,
+  "p_used_point": 0.4465,
+  "transfer": {
+   "measured_axes": [
+    {
+     "axis": "R@W64_p16",
+     "slope_per_log2_axis": 0.0031250000000000028,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R256_W64",
+     "slope_per_log2_axis": 5.574187089556065e-19,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R1024_W16",
+     "slope_per_log2_axis": 0.013859968766267564,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R4096_W4",
+     "slope_per_log2_axis": -0.013258068714211344,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "periods@R65536_W1",
+     "slope_per_log2_axis": -0.011660447761194041,
+     "verdict": "FLAT"
+    },
+    {
+     "axis": "walkers@R4096_p256",
+     "slope_per_log2_axis": -0.016666666666666666,
+     "verdict": "FLAT"
+    }
+   ],
+   "not_claimed": "that a 37-53 bit fixture group is the P-256 subgroup; the fixture is a stand-in at matched load lambda = 0.634",
+   "statement": "success per challenge is measured on the production selector, cross-walker only, and is FLAT in coverage (16..1024 periods), in walker count (1..64) and in R (256..65536) wherever the exact CP intervals overlap; the remaining step to 2^87.67 periods is DISCLOSED AS A CONJECTURE (a rho-style heuristic: the per-period row hazard has no measured dependence on the period count), not as a measurement, and the bound charged is the carrier cell's own CP-95 lower bound, not an extrapolated point"
+  }
+ },
+ "units_per_visit": 2.346411031740343,
+ "work": {
+  "log2_rows": 128.90045575910884,
+  "log2_visits": 127.67,
+  "log2_work_final": 128.90083139905738,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "control": "(a) selector identity",
+ "digests_match": true,
+ "empirical": "the v20 runner replays the v19 cell R1024_W64_16p from its seed rule and reproduces its win count exactly, so the selector is identical in effect, not only in text",
+ "pass": true,
+ "replay_of_v19_cell": {
+  "R": 1024,
+  "identical_q": true,
+  "label": "R1024_W64_16p",
+  "reproduces_v19": true,
+  "trials": 300,
+  "v19_q": 1734245469757,
+  "v19_wins": 146,
+  "v20_q": 1734245469757,
+  "v20_replay_wins": 146,
+  "walkers": 64
+ },
+ "selector_lines": [
+  "prod = (S ^ ((t * tmul) & 0xFFFFFFFFFFFFFFFF) ^ (trail * 7919)) % R",
+  "tmul = 2654435761",
+  "return 1 + (r * 7 + 3) % R, 1 + (r * 11 + 5) % R"
+ ],
+ "sha256_v19_production_runner": "c75cbc56b2a003161b4db832f145ed709970f62dc5e1c40b0c487e04913a3b1f",
+ "sha256_v20_runner": "c75cbc56b2a003161b4db832f145ed709970f62dc5e1c40b0c487e04913a3b1f",
+ "why": "the ladder must run the PRODUCTION selector at every rung"
+}
