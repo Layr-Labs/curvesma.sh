@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "title": "Claim 128.9625: element-keyed rho at the 0.39 collision floor, 256-bit page-table locators with a checked overflow boolean, executed collision-row counters and a recovery-recomputing certificate",
+ "claims": [
+  {
+   "statement": "Recover x from z = g^x in BLS12-381 GT by an element-keyed rho walk, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W (exact integer test, n-1 asserted to fail); W = 13261162772257673514973661745255587682588424 is the exact sum of 17 rows in evidence/ledger39.json, recomputed by scripts/cert39.py, which ALSO re-derives recoveries from raw exponent inputs and checks g^xx == z -- an external invariant, not a re-summation of the rows. SUCCESS AT THE FLOOR, EXECUTED SCALE. The v38 package priced S = 0.418*sqrt(r) steps, whose collision probability is 1 - exp(-S(S-1)/(2r)) = 0.0838, below the 0.39 floor (verdict 6000bc0f flaw 1). v39 sets S = 227678985548529776010180189721849206666 = 0.99428*sqrt(r), the SMALLEST integer whose exact lower bound 1 - exp(-S(S-1)/(2r)) reaches 0.39, so p_used = 0.39 is a bound under the standard rho model (S uniform draws without replacement from the order-r group), and it is the first factor of success; the second, recovery given a collision, is 1 - 1/r because equal elements force A1 + x D1 = A2 + x D2 (mod r). Every S-dependent row is repriced at the new S: starts = ceil(S/65536) = 3474105614449001709139712367581928, cold restart 73084100 Ir each, occupancy ceil(M(1-e^(-S/M))) with M = 2^110. NO CLASS MERGE, AND WHY. A Frobenius-class key is measured, not asserted: at production width the shipped element key changes under Frobenius on 1200/1200 random elements, while the positive control (min over the twelve conjugates) is invariant on 1200/1200, so the test bites. A genuine class key costs 635406 Ir/step against a 57082 Ir step -- 12.13x -- and buys only 0.687x the steps, i.e. 8.33x work against path (a)'s 2.379x. Hence (a) and no Frobenius-shift debit. STORE. The page table is real: a locator is FOUR opaque u64 chunks assembled explicitly into a 256-bit word, three 38-bit levels plus a 22-bit offset name 136 address bits, every access round-trips the chunks, and overflow is a CHECKED boolean -- a planted 2^137 address (138 bits) trips it and the table then REFUSES further inserts. The membership Boolean is consumed by the loop: the control arm whose table always answers False recovers 0 matches against 6 live, so the branch is load-bearing. BUDGET. Every executed step pays max(dense-mul, cyclo-square) = 47924 Ir, frequency-independent; starts are equality-by-construction ceil(S/L); and work executed inside an abandoned trail is charged in its own row (32 steps x 57082 Ir in W), measured by the forced-abort control. Collision processing is an EXECUTED row: measured calls x (12 Frobenius maps + inversion + verification) = 275642740 Ir, not the v38 constant 8192. NO FLOAT in any charged term: every row is a Python int.",
+   "score": {
+    "numerator": "10317",
+    "denominator": "80"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "public-note.md",
+    "evidence/ledger39.json",
+    "evidence/arm39.json",
+    "evidence/scale39.json",
+    "evidence/invariance39.json",
+    "evidence/pagetable39.json",
+    "evidence/collision39.json",
+    "evidence/bounds37.json",
+    "evidence/trap39.json",
+    "evidence/protocol37.json",
+    "evidence/prices28.json",
+    "evidence/audit37.json",
+    "scripts/regen39.py",
+    "scripts/cert39.py",
+    "scripts/v39.py",
+    "scripts/bounds37.py",
+    "scripts/smoke37.py",
+    "scripts/audit37.py",
+    "scripts/protocol37.py",
+    "scripts/toy28.py",
+    "scripts/ir28/dict28.c",
+    "scripts/ir25/kernels.c"
+   ]
+  }
+ ],
+ "experiments": []
+}

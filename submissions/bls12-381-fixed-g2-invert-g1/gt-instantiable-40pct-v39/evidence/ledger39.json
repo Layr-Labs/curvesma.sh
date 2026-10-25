@@ -1,0 +1,244 @@
+{
+ "mode": "ledger39-spec-to-code",
+ "protocol": {
+  "name": "meter-first full-store rho, 1024 workers, depth 6, 128-bit radix store, six-limb key formation",
+  "workers_declared": 1024,
+  "depth": 6,
+  "guard_ring_words": 6,
+  "steps": "227678985548529776010180189721849206666",
+  "trail_cap": 65536,
+  "budget": {
+   "rule": "W_total is TOTAL WORK.  (a) EVERY executed step is charged at the SINGLE frequency-independent price max(MUL span, SQR span) = 47924 Ir -- the guard-squaring substitution is DELETED, so no cheaper step is ever assumed.  (b) The launch rule executes S steps at ",
+   "per_trail_step_cap": 65536,
+   "starts_lower_bound": "starts >= ceil(S/L) = 3474105614449001709139712367581928 (the inequality v36 had reversed)",
+   "starts_equality_by_construction": true,
+   "restart_ir_cold": 73084100,
+   "restart_ir_v36_hot": 7660,
+   "restart_ratio": 9541.005221932115,
+   "early_abort": "removed from the production schedule: the fixture's stall-abort path is a measurement convenience and is NOT on the launched path (the run_one loop runs to the step budget and every trail to the cap), so the start count cannot exceed ceil(S/L)",
+   "guard_split": "DELETED: every step pays STEP12, frequency-independent"
+  },
+  "detection": {
+   "mechanism": "the shipped dict28_wide_lookup hit; both collision classes are accepted and each hit is one pair",
+   "kappa_detect_cross": 0.0,
+   "success_given_collision": "1 - 1/r (proof, see budget.success_rule)",
+   "arm_executed_evidence": {
+    "budget_steps": 718,
+    "seeds": 200,
+    "solved_seeds": 83,
+    "p_hat": 0.415,
+    "cp95_lower": 0.356431,
+    "model_prediction": 0.389829,
+    "hit_calls": 72703,
+    "verified": 14505
+   },
+   "yield_source": "evidence/arm39.json: the shipped protocol at 1.00 sqrt(r), 200 seeds, verified only",
+   "p_used": 0.39
+  },
+  "census_fidelity": {
+   "depth": 6,
+   "dict": "shipped dict28.c, 9-word entries, 4-probe chains",
+   "store_shrunk_for_the_yield_arm": 256,
+   "why": "a census-scale store makes ACTUAL collisions frequent; the walk, the store code and the recovery are the shipped ones"
+  }
+ },
+ "store_spec_to_code": {
+  "shipped_structure": "h = ceil(128/22) = 6 radix levels; a node is 2^22 x 8 B = 32 MiB; every calloc argument is <= SIZE_MAX",
+  "parsed_constants": {
+   "DB": 22,
+   "H": 6,
+   "M_leaf_prefixes": "1298074214633706907132624082305024",
+   "NODE_BYTES_RADIX": 33554432,
+   "NODE_BYTES_RECORD": 96,
+   "RECORD_BYTES": 640,
+   "source": "scripts/ir28/dict28.c: D28_DB, rd_new() calloc(2^db, 8), ws_node record = 96 B"
+  },
+  "occupancy": {
+   "S": "95803668470929860550224427498997735090",
+   "M": "1298074214633706907132624082305024",
+   "S_over_M": 73804.46155612446,
+   "S_over_M_log2": 16.171420410880376,
+   "regime": "dense: reached == M, because M*e^-x < 1 (14*S/M >= 1100)",
+   "reached_leaf_nodes": "1298074214633706907132624082305024",
+   "exponential_argument_magnitude": "S/M = 7.380446e+04; e^-x < 2^-106473, so M(1-e^-x) exceeds M-1 by a margin larger than one node",
+   "rule": "reached(M,S) = ceil(M(1-exp(-S/M))), NOT 6*ceil(S/(4*2^22))"
+  },
+  "dense_six_ceil_control": {
+   "v36_formula": "6*ceil(S/(4*2^22))",
+   "value": "34262061764334390360197220146298",
+   "occupancy_value": "1298074214633706907132624082305024",
+   "ratio": 37.88663459783255,
+   "verdict": "the dense-leaf formula understates the reached-node count by the printed ratio; it is flagged, not used"
+  },
+  "init_row": "reached nodes x 2^22 Ir; reached = ceil(M(1-e^(-S/M))), M = 2^110 -- NOT 6*ceil(S/(4*2^22))"
+ },
+ "arithmetic": {
+  "spans_ir": {
+   "d28_montmul6": 182,
+   "d28_l6_add": 92,
+   "d28_l6_sub": 66,
+   "d28_l6_neg": 58,
+   "d28_keys12_form6": 63,
+   "dict28_wide_lookup": 149,
+   "dict28_wide_insert": 267
+  },
+  "montmul6_executed_ir": 1092,
+  "element_key_ir": 1707,
+  "coefficient_ir": 3288,
+  "loop_bound_rule": "every six-limb loop runs at most 6 iterations, so 6 x the loop-free span upper-bounds the executed count of one call",
+  "executed_code": "scripts/protocol37.Group.state and Group.step CALL these symbols through ctypes on EVERY step -- the priced code is the executed code (v36 priced four-limb helpers the fixture never called)"
+ },
+ "budget": {
+  "per_trail_step_cap": 65536,
+  "trail_starts": "3474105614449001709139712367581928",
+  "charge_ir": "253901882136952285810937652643594384144800",
+  "restart_cold_ir": 73084100,
+  "restart_v36_hot_ir": 7660
+ },
+ "bounds_table": [
+  {
+   "array": "records[] (A,D,y) + tags + 128-bit ref",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 640,
+   "bytes": "61314347821395110752143633599358550457600",
+   "single_allocation_ok": true,
+   "note": "one entry per executed step"
+  },
+  {
+   "array": "alive[] / matched[] / trail_ids[] / positions[]",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 24,
+   "bytes": "2299288043302316653205386259975945642160",
+   "single_allocation_ok": true,
+   "note": "two flags + 8-byte trail id + 8-byte position"
+  },
+  {
+   "array": "record node (96 B), one per NEW RESIDENT KEY (verdict 4558f762 flaw 5: v37 charged one per 40 records while dict28_wide_insert allocates per resident key)",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 96,
+   "bytes": "9197152173209266612821545039903782568640",
+   "single_allocation_ok": true,
+   "note": "SEPARATE constant from the radix node; v36 overwrote NODE_BYTES with the 32 MiB radix size"
+  },
+  {
+   "array": "radix node (32 MiB), one calloc per REACHED node",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 33554432,
+   "bytes": "87112296316356439596948023275171312828416",
+   "single_allocation_ok": true,
+   "note": "32 MiB <= SIZE_MAX: every allocation is addressable with 64-bit pointers; the 128-bit slot is consumed 22 bits per level over h=6 levels"
+  },
+  {
+   "array": "page table (one 128-bit node id per allocated node)",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 16,
+   "bytes": "41538379820039958761667262685380608",
+   "single_allocation_ok": true,
+   "note": "the table is addressed by the same level structure recursively"
+  },
+  {
+   "array": "probe chain per bucket",
+   "value": 4,
+   "bytes_per_entry": 72,
+   "bytes": 288,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "slot export buffers (keys 6 + ref 2 + evicted 2)",
+   "value": 10,
+   "bytes_per_entry": 8,
+   "bytes": 80,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "guard ring hist[]",
+   "value": 6,
+   "bytes_per_entry": 8,
+   "bytes": 48,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "six-limb scratch (montmul t[8] + 12 lanes + key 6)",
+   "value": 86,
+   "bytes_per_entry": 8,
+   "bytes": 688,
+   "single_allocation_ok": true
+  }
+ ],
+ "peak_bytes": "159923125892642953655077349841672276878528",
+ "rows_ir": {
+  "per_step_key_lookup_probe": "218344147141040055193762801943253389192694",
+  "per_step_slot_export": "155049389158548777462932709200579309739546",
+  "record_writes_and_insert": "546201886330922932648422275142716246791734",
+  "element_key_formation": "388648028331340327649377583855196595778862",
+  "address_translation": "8651801450844131488386847209430269853308",
+  "scalar_coefficient_update": "748608504483565903521472463805440191517808",
+  "l6_bridge_pack_unpack": "10928591306329429248488649106648761919968",
+  "guard_and_meter_eval": "5919653624261774176264684932768079373316",
+  "index_slots_widened_refs": "2732147826582357312122162276662190479992",
+  "fp12_step_mulmod_max": "10911287703427740985511875412229901380261384",
+  "trail_starts_cold": "253901882136952285810937652643594384144800",
+  "store_init_radix_nodes": "10889037039544554949618502909396414103552",
+  "worker_starts_1024": "7843840",
+  "collision_processing": "275642740",
+  "abandoned_trail_waste": "1826624",
+  "code_and_advice": "1048576",
+  "candidate_verification": "183069680"
+ },
+ "row_count": 17,
+ "step_ir": 57082,
+ "W_total_ir": "13261162772257673514973661745255587682588424",
+ "claim": {
+  "value": 128.9625,
+  "numerator": "1289625",
+  "denominator": "10000",
+  "reduced": "10317/80",
+  "rule": "minimal n with 20000*2^(n/10000) >= W; exact integer test",
+  "n_minus_1_fails": true,
+  "row_sum_equals_W": true
+ },
+ "success": {
+  "p_used": 0.39,
+  "floor": 0.39,
+  "rule": "PRODUCTION SUCCESS = Pr[collision inside the budget] x Pr[recovery | collision].  The first factor is computed, not assumed away: with the uniform random element model (S draws without replacement from the order-r group, the standard rho model) the collision probability is 1 - prod_{i<S}(1-i/r) >= 1 - exp(-S(S-1)/(2r)), and S is the SMALLEST integer whose LOWER bound reaches the floor, so p_used = 0.39 is a bound, not an estimate.  The second factor is 1 - 1/r: equal elements force A1 + x D1 = A2 + x D2 (mod r), so x = (A2-A1)/(D1-D2), and only D1 = D2 fails.  v38 reported the second factor as the success (0.084 was the first; verdict 6000bc0f flaw 1).",
+  "S": "227678985548529776010180189721849206666",
+  "S_over_sqrt_r": 0.99428,
+  "p_old_v38": 0.083799,
+  "p_new": 0.39,
+  "model": "uniform random element model, standard for rho: the S walk records are S draws without replacement from the order-r group, so the exact collision probability is 1 - prod_{i<S}(1-i/r) >= 1 - exp(-S(S-1",
+  "arm_executed": {
+   "seeds": 200,
+   "steps_per_run": 718,
+   "solved": 83,
+   "p_hat": 0.415,
+   "cp95_lower": 0.356431,
+   "model_prediction": 0.389829,
+   "normalisation": "1.00 sqrt(r) -- v38's arms ran at 55 sqrt(r)"
+  },
+  "class_key": {
+   "withdrawn": true,
+   "production_invariance_trials": 1200,
+   "production_invariant_holds": 0,
+   "positive_control_holds": 1200,
+   "cost_of_a_genuine_class_key_per_step": 635406,
+   "step_multiplier": 12.1315,
+   "decision": "path (a): a genuine class key costs 12.13x the step and buys 0.687x the steps -- net 8.33x work, WORSE than (a)'s 2.379x arithmetic scaling at the same success."
+  },
+  "hash_false_hit": "2^-381 at the production modulus; verification rejects them"
+ },
+ "prices": {
+  "source": "evidence/exec31.json + the shipped object's spans",
+  "per_step_rows": {
+   "per_step_key_lookup_probe": 959,
+   "per_step_slot_export": 681,
+   "record_writes_and_insert": 2399,
+   "element_key_formation": 1707,
+   "address_translation": 38,
+   "scalar_coefficient_update": 3288,
+   "l6_bridge_pack_unpack": 48,
+   "guard_and_meter_eval": 26,
+   "index_slots_widened_refs": 12
+  },
+  "step12": 47924
+ }
+}

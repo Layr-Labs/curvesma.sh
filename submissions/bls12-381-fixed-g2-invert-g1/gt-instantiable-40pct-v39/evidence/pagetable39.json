@@ -1,0 +1,22 @@
+{
+ "page_index_2_137": "174224571863520493293247799005065324265472",
+ "tripped": true,
+ "message": "address 174224571863520493293247799005065324265472 needs 138 bits; the three 38-bit levels address 136",
+ "overflow_boolean": true,
+ "trips": 1,
+ "post_trip_insert_refused": true,
+ "locator_bits": 256,
+ "addr_bits": 136,
+ "absent_before_insert": true,
+ "present_after_insert": true,
+ "locator_round_trip": true,
+ "max_addr_bits_seen": 121,
+ "membership_control": {
+  "live_pt_hits": 502,
+  "live_matches": 6,
+  "false_table_hits": 502,
+  "false_table_matches": 0,
+  "false_table_pt_missed": 900,
+  "biters": true
+ }
+}

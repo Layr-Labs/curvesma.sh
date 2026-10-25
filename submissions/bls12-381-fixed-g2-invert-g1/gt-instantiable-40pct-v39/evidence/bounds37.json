@@ -1,0 +1,149 @@
+{
+ "mode": "bounds37-occupancy",
+ "store": "128-bit radix tree over the 128-bit slot, h = ceil(128/22) = 6 levels, node = 2^22 x 8 B = 32 MiB, one calloc per REACHED node",
+ "parsed_constants": {
+  "DB": 22,
+  "H": 6,
+  "M_leaf_prefixes": "1298074214633706907132624082305024",
+  "NODE_BYTES_RADIX": 33554432,
+  "NODE_BYTES_RECORD": 96,
+  "RECORD_BYTES": 640,
+  "source": "scripts/ir28/dict28.c: D28_DB, rd_new() calloc(2^db, 8), ws_node record = 96 B"
+ },
+ "occupancy": {
+  "S": "95803668470929860550224427498997735090",
+  "M": "1298074214633706907132624082305024",
+  "S_over_M": 73804.46155612446,
+  "S_over_M_log2": 16.171420410880376,
+  "regime": "dense: reached == M, because M*e^-x < 1 (14*S/M >= 1100)",
+  "reached_leaf_nodes": "1298074214633706907132624082305024",
+  "exponential_argument_magnitude": "S/M = 7.380446e+04; e^-x < 2^-106473, so M(1-e^-x) exceeds M-1 by a margin larger than one node",
+  "rule": "reached(M,S) = ceil(M(1-exp(-S/M))), NOT 6*ceil(S/(4*2^22))"
+ },
+ "levels": [
+  {
+   "level": 1,
+   "prefix_bits": 22,
+   "capacity": "4194304",
+   "reached": "4194304"
+  },
+  {
+   "level": 2,
+   "prefix_bits": 44,
+   "capacity": "17592186044416",
+   "reached": "17592186044416"
+  },
+  {
+   "level": 3,
+   "prefix_bits": 66,
+   "capacity": "73786976294838206464",
+   "reached": "73786976294838206464"
+  },
+  {
+   "level": 4,
+   "prefix_bits": 88,
+   "capacity": "309485009821345068724781056",
+   "reached": "309485009821345068724781056"
+  },
+  {
+   "level": 5,
+   "prefix_bits": 110,
+   "capacity": "1298074214633706907132624082305024",
+   "reached": "1298074214633706907132624082305024"
+  },
+  {
+   "level": 6,
+   "prefix_bits": 132,
+   "capacity": "5444517870735015415413993718908291383296",
+   "reached": "1298074214633706907132624082305024"
+  }
+ ],
+ "init_ir": "10889037039544554949618502909396414103552",
+ "node_bytes_total": "87112296316356439596948023275171312828416",
+ "dense_six_ceil_control": {
+  "v36_formula": "6*ceil(S/(4*2^22))",
+  "value": "34262061764334390360197220146298",
+  "occupancy_value": "1298074214633706907132624082305024",
+  "ratio": 37.88663459783255,
+  "verdict": "the dense-leaf formula understates the reached-node count by the printed ratio; it is flagged, not used"
+ },
+ "small_regime_control": {
+  "reached": 1000,
+  "S_over_M": 7.703719777548943e-31,
+  "regime": "sparse: bound == S (every record is a new node)"
+ },
+ "bounds_table": [
+  {
+   "array": "records[] (A,D,y) + tags + 128-bit ref",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 640,
+   "bytes": "61314347821395110752143633599358550457600",
+   "single_allocation_ok": true,
+   "note": "one entry per executed step"
+  },
+  {
+   "array": "alive[] / matched[] / trail_ids[] / positions[]",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 24,
+   "bytes": "2299288043302316653205386259975945642160",
+   "single_allocation_ok": true,
+   "note": "two flags + 8-byte trail id + 8-byte position"
+  },
+  {
+   "array": "record node (96 B), one per NEW RESIDENT KEY (verdict 4558f762 flaw 5: v37 charged one per 40 records while dict28_wide_insert allocates per resident key)",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 96,
+   "bytes": "9197152173209266612821545039903782568640",
+   "single_allocation_ok": true,
+   "note": "SEPARATE constant from the radix node; v36 overwrote NODE_BYTES with the 32 MiB radix size"
+  },
+  {
+   "array": "radix node (32 MiB), one calloc per REACHED node",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 33554432,
+   "bytes": "87112296316356439596948023275171312828416",
+   "single_allocation_ok": true,
+   "note": "32 MiB <= SIZE_MAX: every allocation is addressable with 64-bit pointers; the 128-bit slot is consumed 22 bits per level over h=6 levels"
+  },
+  {
+   "array": "page table (one 128-bit node id per allocated node)",
+   "value": "95803668470929860550224427498997735090",
+   "bytes_per_entry": 16,
+   "bytes": "41538379820039958761667262685380608",
+   "single_allocation_ok": true,
+   "note": "the table is addressed by the same level structure recursively"
+  },
+  {
+   "array": "probe chain per bucket",
+   "value": 4,
+   "bytes_per_entry": 72,
+   "bytes": 288,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "slot export buffers (keys 6 + ref 2 + evicted 2)",
+   "value": 10,
+   "bytes_per_entry": 8,
+   "bytes": 80,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "guard ring hist[]",
+   "value": 6,
+   "bytes_per_entry": 8,
+   "bytes": 48,
+   "single_allocation_ok": true
+  },
+  {
+   "array": "six-limb scratch (montmul t[8] + 12 lanes + key 6)",
+   "value": 86,
+   "bytes_per_entry": 8,
+   "bytes": 688,
+   "single_allocation_ok": true
+  }
+ ],
+ "peak_bytes": "159923125892642953655077349841672276878528",
+ "production_layout": {
+  "rule": "h = ceil(128/22) = 6 radix levels; a node is 2^22 x 8 B = 32 MiB; every calloc argument is <= SIZE_MAX"
+ }
+}

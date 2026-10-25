@@ -1,0 +1,69 @@
+{
+ "certificate": "v39 external-invariant",
+ "A_recovery_from_raw": {
+  "trials": 300,
+  "verified_g_xx_eq_z": 300,
+  "failed": 0,
+  "input_digest": "82c809e71d156290c7514f1674a78c7d981bdf447781e0fabfbcfc4d19f3020b",
+  "sample": [
+   {
+    "A1": "44195",
+    "D1": "470112",
+    "A2": "216047",
+    "D2": "223360",
+    "planted_k": 3,
+    "detected_k": 3,
+    "x": "505444"
+   },
+   {
+    "A1": "269462",
+    "D1": "311282",
+    "A2": "38990",
+    "D2": "319385",
+    "planted_k": 0,
+    "detected_k": 0,
+    "x": "505444"
+   },
+   {
+    "A1": "152568",
+    "D1": "108009",
+    "A2": "102696",
+    "D2": "146373",
+    "planted_k": 2,
+    "detected_k": 2,
+    "x": "505444"
+   }
+  ],
+  "rule": "x = (p^k A1 - A2)/(p^k D1 - D2) mod r recomputed from raw exponents, then g^xx == z checked by exponentiation; the detector k comes from the shipped Group.shift, not from the planted value"
+ },
+ "B_collision_algebra_production_modulus": {
+  "trials": 1000,
+  "consistent": 1000,
+  "rule": "for k=0 the equation returns x; for k != 0 it returns a different residue (so the shift index is load-bearing)",
+  "wrong_k_rejected": 919
+ },
+ "C_floor_arithmetic": {
+  "S": "227678985548529776010180189721849206666",
+  "p_collision_lower_bound": 0.39,
+  "floor": 0.39,
+  "floor_met": true,
+  "claim_is_minimal": true,
+  "w_equals_row_sum": "13261162772257673514973661745255587682588424"
+ },
+ "D_planted_control_corrupt_input": {
+  "corrupted_input_verifies": false,
+  "control_fails_as_required": true
+ },
+ "E_page_table_overflow": {
+  "overflow_tripped": true,
+  "overflow_boolean": true
+ },
+ "row_sum_bookkeeping": {
+  "row_sum": "13261162772257673514973661745255587682588424",
+  "W": "13261162772257673514973661745255587682588424",
+  "equal": true,
+  "note": "BOOKKEEPING ONLY -- A and B are the checks that do not depend on the ledger"
+ },
+ "source_digest": "0df2901b41b149df76ef1a4fa52d24bdac627d02c96157f86333ecdb9b691edf",
+ "ok": true
+}

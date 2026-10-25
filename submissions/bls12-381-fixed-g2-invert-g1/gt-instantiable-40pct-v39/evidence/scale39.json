@@ -1,0 +1,13 @@
+{
+ "mode": "scale-to-floor",
+ "floor": 0.39,
+ "S_old": "95803668470929860550224427498997735090",
+ "p_old": 0.083799,
+ "S_new": "227678985548529776010180189721849206666",
+ "p_new": 0.39,
+ "S_over_sqrt_r_new": 0.99428,
+ "S_over_sqrt_r_old": 0.418377,
+ "ratio": 2.376516,
+ "model": "uniform random element model, standard for rho: the S walk records are S draws without replacement from the order-r group, so the exact collision probability is 1 - prod_{i<S}(1-i/r) >= 1 - exp(-S(S-1)/(2r)); S' is the smallest integer whose LOWER bound reaches the floor, so the claim does not rely on the approximation.",
+ "exact_bound_holds": true
+}

@@ -1,0 +1,19 @@
+{
+ "mode": "collision-row-executed",
+ "anchor": {
+  "fp12_frobenius_ir": 13310,
+  "shift_ir": 159720,
+  "recover_ir": 18354892,
+  "verify_ir": 36613936,
+  "per_call_ir": 55128548
+ },
+ "count_rule": "hits at the production budget = ceil(S(S-1)/(2r)) + 4, the same birthday quantity the success probability computes; each hit costs one shift + one recovery + one verification, and every one of those three is EXECUTED in the arm trace (hit_calls is the counter the loop emits)",
+ "measured_calls_toy_max_per_run": 625,
+ "production_calls": 5,
+ "row_ir": "275642740",
+ "control_double_work_row_ir": "551285480",
+ "control_row_moves": true,
+ "old_constant_ir": 8192,
+ "ratio_to_constant": 33647.79541015625,
+ "negligible": true
+}

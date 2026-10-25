@@ -1,0 +1,42 @@
+{
+ "mode": "frobenius-class-key-invariance",
+ "production_config": {
+  "p_bits": 381,
+  "r_bits": 255,
+  "element_key": "the two Fp limbs of y[1][0] (the SHIPPED d28_keys12_form6 input)",
+  "trials": 1200,
+  "invariant_holds": 0,
+  "invariant_fails": 1200,
+  "verdict": "NOT INVARIANT at production width",
+  "example_key_limb_y": "2591721991175190243431517074976672922751526894952415129911964435351441178935798167389621377161440472071694147198699",
+  "example_key_limb_frob_y": "333557879464589093041147193041019534151586181610832014908593319855933021688291645266657330047969629804144677216945",
+  "why": "Frobenius multiplies that coefficient by a fixed nontrivial xi^k and conjugates it; the key is invariant only on the codimension-1 set where c = conj(c)*xi^k, which no random element hits"
+ },
+ "positive_control": {
+  "key": "canon_orbit_key = min over the twelve conjugates of the element's serialization",
+  "trials": 1200,
+  "invariant_holds": 1200,
+  "invariant_fails": 0,
+  "verdict": "INVARIANT by construction -- the test can and does pass when the construction is a real class key, so the failure above is a fact about the shipped key, not about the test"
+ },
+ "toy_config": {
+  "q": 523,
+  "r": 521041,
+  "trials": 1200,
+  "invariant_holds": 0,
+  "invariant_fails": 1200,
+  "verdict": "NOT invariant either: the toy residue key changes under its own Frobenius.  v37's '1 key over 200 randoms' was a bug in the probe, not evidence of an invariant."
+ },
+ "test_bites": true,
+ "orbit_key_cost": {
+  "fp12_frobenius_fp2_muls": 21,
+  "fp2_mul_ir": 2662,
+  "class_key_ir_per_step": 635406,
+  "step_ir": 57082,
+  "step_multiplier": 12.1315,
+  "success_gain_from_12x_orbit": 0.6866,
+  "work_if_b": 8.3295,
+  "work_if_a": 2.379,
+  "decision": "path (a): a genuine class key costs 12.13x the step and buys 0.687x the steps -- net 8.33x work, WORSE than (a)'s 2.379x arithmetic scaling at the same success."
+ }
+}
