@@ -1,0 +1,35 @@
+{
+ "charged": 0.9971617846365884,
+ "merge_batch": {
+  "budget": 20000,
+  "cp95_lower": 0.9971617846365884,
+  "detected": 1054,
+  "false_merges": 0,
+  "j_hist": {
+   "0": 80,
+   "1": 89,
+   "2": 83,
+   "3": 77,
+   "4": 89,
+   "5": 105,
+   "6": 86,
+   "7": 82,
+   "8": 92,
+   "9": 78,
+   "10": 93,
+   "11": 100
+  },
+  "merged": 1054,
+  "note": "detected/merged conditioned on merge events of the INTEGRATED protocol; the CP-95 lower bound is what is charged, not the point estimate",
+  "p_detect": 1.0,
+  "runs": 7,
+  "steps": 140000,
+  "target": 1000
+ },
+ "old_shared_report": {
+  "matches": 38,
+  "reports": 10,
+  "shared": 6,
+  "shared_fraction": 0.6
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "a_step_budget": {
+  "legacy_v32": {
+   "completed": 654518,
+   "consumed": 19904,
+   "halt": "launch_bound",
+   "launches": 625,
+   "over_S": 32.7259,
+   "remaining": -634518
+  },
+  "same_seed": true,
+  "shipped_v33": {
+   "budget_binds": true,
+   "completed": 20000,
+   "consumed": 20000,
+   "consumed_equals_executed": true,
+   "executed_equals_S": true,
+   "halt": "step_budget",
+   "halt_row": {
+    "completed": 20000,
+    "consumed": 20000,
+    "deferred": 0,
+    "event": "halt_step_budget",
+    "inflight": 103,
+    "launches": 360,
+    "remaining": 0,
+    "round": 360,
+    "t": 20000
+   },
+   "launch_bound": 625,
+   "launch_bound_binds": false,
+   "launches": 360,
+   "remaining": 0
+  },
+  "verdict": "v32 charged launches and never tested the step counter: the same seed executes 32.7x the declared S.  v33 stops at completed == S with consumed == executed."
+ },
+ "b_tail_R": {
+  "R_at_1x": {
+   "R_max": 4096,
+   "R_min": 64,
+   "mean_qR": 0.00037899006412903954,
+   "n": 360
+  },
+  "R_at_2x": {
+   "R_max": 8192,
+   "R_min": 128,
+   "mean_qR": 4.78041834379939e-05,
+   "n": 360
+  },
+  "R_at_half": {
+   "R_max": 2048,
+   "R_min": 32,
+   "mean_qR": 0.0012544915719671494,
+   "n": 360
+  },
+  "analytic_ceiling": 0.0009312,
+  "charged": 0.0009312,
+  "row_moves_with_R": true,
+  "verdict": "the row is a function of the measured R, not a constant: halving R raises it, doubling R lowers it"
+ },
+ "c_detection": {
+  "cp95_lower": 0.9971617846365884,
+  "detected": 1054,
+  "differ": true,
+  "n_merged": 1054,
+  "old_object": {
+   "matches": 38,
+   "reports": 10,
+   "shared": 6
+  },
+  "old_shared_report_fraction": 0.6,
+  "p_detect_given_merge": 1.0,
+  "verdict": "P(detect|merge) 1.0000 (CP-lo 0.9972, n=1054) vs the old shared-report fraction 0.600 -- different objects, both labelled"
+ },
+ "d_unit_chain": {
+  "base_claim": 126.582,
+  "double_normalisation_would_show": false,
+  "log2_cref": 14.287712379549449,
+  "one_division_line": "W_ref = W_instructions / C_REF (ledger33.total33)",
+  "scaled_claim": 140.8697,
+  "shift_bits": 14.287700000000001,
+  "shift_equals_log2_cref": true,
+  "verdict": "multiplying the RAW instruction ledger by C_REF moves the claim by exactly log2(C_REF) = 14.287712 bits; a second division would leave it fixed or move it by 2*log2(C_REF)"
+ }
+}

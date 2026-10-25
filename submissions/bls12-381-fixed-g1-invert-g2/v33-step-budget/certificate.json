@@ -1,0 +1,21 @@
+{
+ "checks": {
+  "W_instructions_times_inverse": true,
+  "claim_exact": true,
+  "claim_is_ceil_4dp": true,
+  "claim_minimal": true,
+  "delta_is_actual_event_tail": true,
+  "no_claim_literal": true,
+  "one_division_line": true,
+  "p_det_cp95_charged": true,
+  "reduced": true,
+  "six_rows_present": true,
+  "step_budget_per_executed_step": true,
+  "upper_bound": true
+ },
+ "claim": "63291",
+ "claim_value": 126.582,
+ "ok": true,
+ "reduced": "63291/500",
+ "version": 1
+}

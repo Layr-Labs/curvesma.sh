@@ -1,0 +1,27 @@
+{
+ "R_at_1x": {
+  "R_max": 4096,
+  "R_min": 64,
+  "mean_qR": 0.00037899006412903954,
+  "n": 360
+ },
+ "R_at_2x": {
+  "R_max": 8192,
+  "R_min": 128,
+  "mean_qR": 4.78041834379939e-05,
+  "n": 360
+ },
+ "R_at_half": {
+  "R_max": 2048,
+  "R_min": 32,
+  "mean_qR": 0.0012544915719671494,
+  "n": 360
+ },
+ "S": 20000,
+ "analytic_ceiling": 0.0009312,
+ "analytic_form": "delta <= (1/(e-1)) * theta / S = 0.582 * theta / S",
+ "charged": 0.0009312,
+ "n_launches": 360,
+ "row_moves_with_R": true,
+ "theta": 32
+}

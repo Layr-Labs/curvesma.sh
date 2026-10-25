@@ -1,0 +1,122 @@
+{
+ "at_cap": null,
+ "bootstrap": {
+  "completed": 0,
+  "consumed": 0,
+  "deferred": 0,
+  "event": "bootstrap",
+  "inflight": 1,
+  "launches": 1,
+  "remaining": 20000,
+  "round": 1,
+  "t": 0
+ },
+ "cfg": {
+  "S": 20000,
+  "cap": 4096,
+  "cap_mult": 128,
+  "inflight_cap": 128,
+  "launch_bound": 625,
+  "theta": 32,
+  "theta_bits": 5
+ },
+ "completed": 20000,
+ "consumed": 20000,
+ "deferred": 0,
+ "executed_equals_S": true,
+ "first_defer": null,
+ "gate_control_cap32": {
+  "at_cap": {
+   "completed": 1226,
+   "consumed": 1226,
+   "deferred": 0,
+   "event": "accept",
+   "inflight": 32,
+   "launches": 73,
+   "remaining": 18774,
+   "round": 73,
+   "t": 1226
+  },
+  "completed": 20000,
+  "deferred": 541,
+  "first_defer": {
+   "completed": 1258,
+   "consumed": 1258,
+   "deferred": 1,
+   "event": "defer",
+   "inflight": 32,
+   "launches": 73,
+   "remaining": 18742,
+   "round": 74,
+   "t": 1258
+  },
+  "halt": "step_budget",
+  "inflight_cap": 32,
+  "launches": 119
+ },
+ "gate_control_cut_steps": {
+  "at_cap": null,
+  "completed": 4391,
+  "cut_steps": 8,
+  "deferred": 0,
+  "first_defer": null,
+  "halt": "launch_bound",
+  "launches": 625
+ },
+ "halt": "step_budget",
+ "halt_row": {
+  "completed": 20000,
+  "consumed": 20000,
+  "deferred": 0,
+  "event": "halt_step_budget",
+  "inflight": 103,
+  "launches": 360,
+  "remaining": 0,
+  "round": 360,
+  "t": 20000
+ },
+ "launch_bound": 625,
+ "launch_bound_binds": false,
+ "launches": 360,
+ "max_inflight_shipped": 103,
+ "merged": 245,
+ "n_bootstrap": 1,
+ "remaining": 0,
+ "reports": 12,
+ "tail": [
+  {
+   "completed": 19834,
+   "consumed": 19834,
+   "deferred": 0,
+   "event": "accept",
+   "inflight": 102,
+   "launches": 359,
+   "remaining": 166,
+   "round": 359,
+   "t": 19834
+  },
+  {
+   "completed": 19936,
+   "consumed": 19936,
+   "deferred": 0,
+   "event": "accept",
+   "inflight": 103,
+   "launches": 360,
+   "remaining": 64,
+   "round": 360,
+   "t": 19936
+  },
+  {
+   "completed": 20000,
+   "consumed": 20000,
+   "deferred": 0,
+   "event": "halt_step_budget",
+   "inflight": 103,
+   "launches": 360,
+   "remaining": 0,
+   "round": 360,
+   "t": 20000
+  }
+ ],
+ "trace_len": 361
+}

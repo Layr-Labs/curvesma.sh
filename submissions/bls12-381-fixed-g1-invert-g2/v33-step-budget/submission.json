@@ -1,0 +1,22 @@
+{
+ "version": 1,
+ "title": "Claim 126.582: per-executed-step budget inside run_protocol (completed==S traced), P(D>R) from the geometric tail, P(detect|merge) at its CP-lo, one C_REF division",
+ "claims": [
+  {
+   "statement": "Solve z = z0^x in the order-r subgroup of BLS12-381 GT by a Frobenius-class rho walk and return Q = [x]Q0 with e(P,Q) = z. CLAIM: the least n/10000 with 2^(n/10000) >= W/C_REF, where W is the exact INSTRUCTION total of evidence/ledger33.json (W = 2^140.869663 instructions) and C_REF = 20000 is the dense Fp12 multiply price, so W/C_REF is the target-operation total and the division by C_REF happens exactly once; the claim is emitted by scripts/regen_v33.py and no claim literal is typed. The step budget is EXECUTED STEPS, not launches: run_protocol charges one unit per executed step, tests the remaining budget before every step, and stops with a trace row whose completed counter equals S (S=20000, completed=20000, consumed==executed, launches 360 <= ceil(S/theta)=625; the v32 rule on the same seed executes 654518 steps against S=20000, 32.70x). P(miss|merge) is bounded on the actual event: P(D>R) = q^R with q = 1-1/theta from the per-step DP test, integrated over each launch's measured remaining lifetime R, charged at the geometric ceiling 0.582*theta/S = 9.41e-15 at production. P(detect|merge) is measured conditioned on 1054 merge events of the integrated protocol (1054 detected, CP-95 lower bound 0.997162 charged); the old shared-report fraction 0.600 is reported beside it as a coverage statistic with a different meaning. The in-flight gate, DP-first termination, twelve-shift recovery with verification, sampler-order control and instruction-counted pairing row are unchanged.",
+   "score": {
+    "numerator": "63291",
+    "denominator": "500"
+   },
+   "evidence": [
+    "evidence/protocol33.json",
+    "evidence/gate33.json",
+    "evidence/tail33.json",
+    "evidence/detect33.json",
+    "evidence/audit33.json",
+    "evidence/ledger33.json"
+   ]
+  }
+ ],
+ "experiments": []
+}

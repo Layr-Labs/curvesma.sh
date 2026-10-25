@@ -1,0 +1,60 @@
+{
+ "C_REF": 20000,
+ "S": 74712357095124621315373948935154181646,
+ "W_instructions": "2546794829333790492347067830466800580289586",
+ "W_target_ops": "1273397414666895246173533915233400290144793/10000",
+ "aux_rows_instructions": {
+  "gt_exp_starts": "2039863225934644195968",
+  "report_cap_drain": "51912515178069840",
+  "report_writes": "3460834345204656",
+  "restart_bookkeeping": "1977619625831232",
+  "solve": "10350304",
+  "store_lookup": "51912515178069840",
+  "table_build": "31447646208",
+  "verify": "10240000"
+ },
+ "cap": 154742504910672534362390528,
+ "claim_log2": 126.582,
+ "components_instructions": {
+  "abandon_row": "851816387066871",
+  "aux_sum": "2039972489450439608048",
+  "overflow_row": "0",
+  "pairing_row": "77835556",
+  "stop_loss_row": "675182400946560685823997931830263",
+  "w_effective": "2546794828658608091398467171301535743948848"
+ },
+ "delta": "14658225562827378743312384/1556507439481762944070290602815712117625",
+ "denominator": 500,
+ "division_line": "W_target_ops = W_instructions / C_REF",
+ "halt_rule": "RULE 1 the budget is EXECUTED STEPS: consumed += 1 per step actually executed (every trail, bootstrap included), remaining = S - consumed, and the loop tests remaining BEFORE each step, so total executed steps over ALL trails cannot exceed S; the halt is a trace row with completed == S. RULE 2 a launch requires remaining >= theta (one report interval of headroom). RULE 3 a credit-eligible launch at INFLIGHT_CAP is DEFERRED, credit kept. RULE 4 launches <= ceil(S/theta) by construction, asserted. RULE 5 halt on the first verified recovery, else at the step budget.",
+ "launches": 61800613307226,
+ "numerator": 63291,
+ "p_det": "938394708/941065655",
+ "p_trail": "1361129467683753853853498429727072845824/4069559522526198259201501535576610347697709415459356412183156446549",
+ "pairing": {
+  "final_exp_fp12": 300,
+  "fixed_p_fp12": 1833,
+  "g2_fp12mul": "2032/9",
+  "g2_fp_mul": 12192,
+  "miller_fp12": 1533,
+  "pairing_fp12mul": "35026/9",
+  "pairing_instructions": "77835556",
+  "pairing_log2": 26.2139260063991,
+  "pairing_target_ops": "35026/9",
+  "verify_fp12": 1833
+ },
+ "reports": 123601226614452,
+ "rows_log2_instructions": {
+  "abandon_row": 49.597535812846075,
+  "aux_sum": 70.7890396891446,
+  "overflow_row": null,
+  "pairing_row": 26.2139260063991,
+  "stop_loss_row": 109.05697633617822,
+  "w_effective": 140.8696627251721
+ },
+ "scale": 1,
+ "step_price_instructions": 34088,
+ "step_price_mean_instructions": "212407/8",
+ "theta": 1208925819614629174706176,
+ "total_log2": 126.58195034600513
+}
