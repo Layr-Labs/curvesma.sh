@@ -1,0 +1,144 @@
+{
+ "mode": "arm38-verified-recovery",
+ "protocol_path": "scripts/protocol37.run_one -- the SHIPPED walk, store, recovery and the SAME loop the claim prices (no replacement loop)",
+ "store": "shipped dict28.c radix store; retain shrunk to 256 so collisions occur at census scale (disclosed; same code path)",
+ "arms": [
+  {
+   "trail": 64,
+   "seeds": [
+    424242,
+    424243,
+    424244,
+    424245
+   ],
+   "per_seed": [
+    {
+     "seed": 424242,
+     "steps": 40000,
+     "hits": 39416,
+     "den_nonzero": 885,
+     "verified": 885,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    },
+    {
+     "seed": 424243,
+     "steps": 40000,
+     "hits": 39410,
+     "den_nonzero": 945,
+     "verified": 945,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    },
+    {
+     "seed": 424244,
+     "steps": 40000,
+     "hits": 39401,
+     "den_nonzero": 584,
+     "verified": 584,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    },
+    {
+     "seed": 424245,
+     "steps": 40000,
+     "hits": 39407,
+     "den_nonzero": 799,
+     "verified": 799,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    }
+   ],
+   "steps": 160000,
+   "hits": 157634,
+   "den_nonzero": 3213,
+   "verified": 3213,
+   "aborts": 0,
+   "solved_seeds": 4,
+   "metric": "verified = g^xx == z, counted per hit, loop NOT terminated by success"
+  },
+  {
+   "trail": 65536,
+   "seeds": [
+    424242,
+    424243,
+    424244,
+    424245
+   ],
+   "per_seed": [
+    {
+     "seed": 424242,
+     "steps": 40000,
+     "hits": 39828,
+     "den_nonzero": 34046,
+     "verified": 34046,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    },
+    {
+     "seed": 424243,
+     "steps": 40000,
+     "hits": 39526,
+     "den_nonzero": 5796,
+     "verified": 5796,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    },
+    {
+     "seed": 424244,
+     "steps": 40000,
+     "hits": 39597,
+     "den_nonzero": 25198,
+     "verified": 25198,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    },
+    {
+     "seed": 424245,
+     "steps": 40000,
+     "hits": 39735,
+     "den_nonzero": 24642,
+     "verified": 24642,
+     "solved": true,
+     "dead_hits": 0,
+     "aborts": 0,
+     "addr_walks": 120000,
+     "addr_writes": 120000
+    }
+   ],
+   "steps": 160000,
+   "hits": 158686,
+   "den_nonzero": 89682,
+   "verified": 89682,
+   "aborts": 0,
+   "solved_seeds": 4,
+   "metric": "verified = g^xx == z, counted per hit, loop NOT terminated by success"
+  }
+ ],
+ "metric_note": "matches (denominator nonzero) is reported SEPARATELY from verified",
+ "floor": 0.39,
+ "success_rule": "success given a genuine collision = 1 - 1/r (exact relation); this arm is executed evidence, not a fitted constant",
+ "verified_total": 92895,
+ "solved_seeds": 8
+}
