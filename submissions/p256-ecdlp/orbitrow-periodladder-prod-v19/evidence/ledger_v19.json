@@ -1,0 +1,183 @@
+{
+ "bounds": {
+  "claim": 128.7921,
+  "storage_log2_peak": 134.255,
+  "work_log2": 128.7921
+ },
+ "claim_reduced_rational": {
+  "denominator": 10000,
+  "numerator": 1287921
+ },
+ "claim_time_log2": 128.7921,
+ "cycle": {
+  "death_rate_cp95_upper": 0.00612927133066926,
+  "gap2_condition": {
+   "derivation": "expand eps2*(eps1*S + eps1*v1 + v2) = S and use 1/eps2 = eps2",
+   "load_bearing": false,
+   "sign_correction": "v18 stated v2 = +eps1*v1 or +2*eps1*S + eps1*v1; those signs were WRONG (verdict v18, flaw 4). The corrected congruence above is the one this package uses.",
+   "statement": "from eps2*(eps1*(S+v1)+v2) = S with eps1,eps2 in {+1,-1}: v2 = -eps1*v1 (when eps2 = eps1) or v2 = -2*eps1*S - eps1*v1 (when eps2 = -eps1), all mod q",
+   "why_not": "the shipped walk steps on the true point and canonicalises only the stored key, so no state return is asserted; the cycle row is the measurement above"
+  },
+  "measured_deaths": 0,
+  "relative_loss": 5.8453286463444326e-09,
+  "source": "cycle_declared_v19.json: MEASURED ON THE DECLARED WALK (true-point stepping, canonical key only) at R=64/W=64/16 periods, 600 trails, tracking on: 0 deaths; charged at the 95% CP upper bound on the per-trail death rate divided by the 2^20 walkers.",
+  "trails": 600,
+  "v18_source": "cycle_channel_v16.json measured the CANONICALISED-STATE walk; that number is superseded here and kept only as the control that the tracker detects deaths (every v16 trail cycles at gap 2)"
+ },
+ "instructions_per_visit": 2176.233840362549,
+ "policy": {
+  "cycle_charge_steps_per_death": 4.0,
+  "measured_collisions_per_challenge": 0.725,
+  "measured_useful_fraction": 1.0,
+  "record_fields": "32B canonical key || 20-bit trail || 108-bit step",
+  "replay_inflation_vs_bulk": 53.34814814814815,
+  "replay_relative_loss": 0.00017552481757269965,
+  "rule": "every hit replays both trails from their stored identities; the replay decides triviality and, if nontrivial, recovers x=-da/db; rejected hits are charged their own replay",
+  "trail_pairs_charged_per_challenge": 3.45,
+  "wasted_steps_per_return": 0.0
+ },
+ "record": {
+  "bytes": 48,
+  "layout": "32B canonical key || 16B identity (20-bit trail || 108-bit step)"
+ },
+ "rows_ir_per_visit": {
+  "affine_add": 606,
+  "batch_chain_share": 0.05434,
+  "batch_invert_share": 444,
+  "canon_sign_rule": 20,
+  "global_sort_and_witness": 1084.1795,
+  "record_append_48B": 12,
+  "table_read_index": 10
+ },
+ "sort": {
+  "basis": "ANALYTIC production store (evidence/store_v19.json): 36 Ir measured loop body + external page-table walk, record store, page flush and per-pass read-back charged per access. No bounded fixture is priced; the shipped C program is a unit test of the addressing arithmetic only.",
+  "capacity": {
+   "address_bits_needed": 134,
+   "log2_pages": 121.255,
+   "log2_stream_bytes": 133.255,
+   "no_bounded_fixture": "no fixed page count and no linear search; capacity is argued from the address width, not from an array in the test program",
+   "page_bytes": 4096,
+   "record_bytes": 48,
+   "records": "2^127.67",
+   "resident_structures": "2^16 x 4 x u64 bucket cursors = 2 MiB, plus one page buffer per stream (2^12 B): both inside the disclosed peak",
+   "translation": "3-level radix over the page number, fanout 2^40 per level (2^41 pointers/node); one node read per page, not per record"
+  },
+  "passes": 16,
+  "per_pass_components": {
+   "clear256": 0.25,
+   "count256": 22.0,
+   "prefix256": 2.062,
+   "scatter256x_carried_external": 36.0,
+   "store_translation_and_io": 2.558594,
+   "stream_readback_materialisation": 2.546875
+  },
+  "per_pass_ir_per_record": 65.417469,
+  "readback_ir_per_record": 2.546875,
+  "scatter256x_ir": 36.0,
+  "store_io_ir_per_record": 2.558594,
+  "total_sort_ir_per_record": 1084.1795,
+  "v18_comparison": {
+   "price_direction": "UP: v19 charges the 36 Ir body AND the store translation the review named, so the claim cannot be flattered by the fix",
+   "v18_defects": [
+    "bounded page fixture + linear search (not production capacity)",
+    "page_for / allocation / ext_read materialisation not charged",
+    "manifest quoted 24.5 while the review was granted 36"
+   ],
+   "v18_per_pass": 48.812,
+   "v18_sort_total": 818.492,
+   "v19_scatter_price": 36.0
+  },
+  "witness_ir": 37.5
+ },
+ "success": {
+  "claimed_object": "production cell ALONE (R = 2^20, 16 full selector periods, fresh secret per trial, lambda 0.634)",
+  "floor": 0.39,
+  "note": "success = at least one coefficient-nontrivial collision that recovers x, measured per trial on the global store; useful_per_collision = 1.0",
+  "pooled_descriptive_only": {
+   "note": "descriptive; NOT the claimed bound and not used to transfer success across R, group order or walker count",
+   "trials": 1740,
+   "wins": 798
+  },
+  "production_rung": {
+   "R": 1048576,
+   "collisions": 145,
+   "cp95_lower": 0.40412003342497727,
+   "label": "R2p20_W1_16p",
+   "outcomes": "01011010011001001101001110010010110110000000101111001010110011101110001111000010011000010001011111101000110011110100011011000111110011001001110100001010101110011000110101010011010100001111000000100000",
+   "periods": 16.0,
+   "prefix_check": {
+    "PASS": true,
+    "collisions_match": true,
+    "cp95_match": true,
+    "prefix_collisions": 71,
+    "prefix_cp95_recomputed": 0.388644165161638,
+    "prefix_successes": 49,
+    "prefix_trials": 100,
+    "prefix_useful": 71,
+    "shipped_collisions": 71,
+    "shipped_cp95": 0.388644165161638,
+    "shipped_successes": 49,
+    "shipped_trials": 100,
+    "successes_match": true,
+    "trials_match": true
+   },
+   "rate": 0.475,
+   "seed_rule": "per trial: secret and per-walker seeds from Random((20251024<<26) ^ ti*golden ^ R<<3 ^ W<<50); fresh secret every trial",
+   "trials": 200,
+   "useful_per_collision": 1.0,
+   "wins": 95
+  },
+  "supporting_ladder_not_the_bound": [
+   {
+    "R": 256,
+    "cp95_lower": 0.35893789291047135,
+    "label": "R256_W64_16p",
+    "measured": 0.4075,
+    "periods": 16.0,
+    "trials": 400,
+    "wins": 163
+   },
+   {
+    "R": 1024,
+    "cp95_lower": 0.42881727510440043,
+    "label": "R1024_W64_16p",
+    "measured": 0.4866666666666667,
+    "periods": 16.0,
+    "trials": 300,
+    "wins": 146
+   },
+   {
+    "R": 4096,
+    "cp95_lower": 0.38188106726133225,
+    "label": "R4096_W64_16p",
+    "measured": 0.44583333333333336,
+    "periods": 16.0,
+    "trials": 240,
+    "wins": 107
+   },
+   {
+    "R": 64,
+    "cp95_lower": 0.4377215528054289,
+    "label": "R64_W64_16p",
+    "measured": 0.47833333333333333,
+    "periods": 16.0,
+    "trials": 600,
+    "wins": 287
+   }
+  ],
+  "transfer_chain": {
+   "assumption_stated": "hazard equivalence: the row index is derived from the state representative XOR an advancing counter, and the representative is a uniform element of a PRIME-ORDER cyclic group in both regimes (fixture q prime; P-256 subgroup prime order). This link is an assumption, is the only unmeasured link, and is stated as such; no cross-R pooling is used to support it.",
+   "direction": "production affords 2^87.67 selector periods per walker, not 16, and the within-trail collision probability is monotone non-decreasing in the number of periods, so the measured 16-period rate is a LOWER bound on the production per-walker probability, provided the per-period row-hazard is the same in both regimes",
+   "measured": "per-trail success probability at 16 selector periods",
+   "not_claimed": "that a 49-bit fixture is isomorphic to the P-256 subgroup; the fixture is a stand-in whose failure modes (trivial collisions, cycle deaths, identity breaks) are measured and charged"
+  }
+ },
+ "units_per_visit": 2.176233840362549,
+ "work": {
+  "log2_rows": 128.79183358517545,
+  "log2_visits": 127.67,
+  "log2_work_final": 128.79208680017098,
+  "steps_per_walker": 2.58166349090657e+32,
+  "walkers": 1048576
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "cell": {
+  "R": 64,
+  "classes": 3387198187,
+  "label": "R64_W64_16p",
+  "periods_covered": 16.0,
+  "q": 6774396373,
+  "q_bits": 33,
+  "steps_per_walker": 1024,
+  "trials": 600,
+  "visits_per_trial": 65536,
+  "walkers": 64
+ },
+ "control": "the v16 canonicalised-state walk is re-run on the same cell: every v16 trail cycles at gap 2 (see cycle_channel_v16.json), so the zero here is a property of the declared walk, not of the tracker",
+ "cycle_lengths": [],
+ "death_rate": 0.0,
+ "death_rate_cp95_upper": 0.00612927133066926,
+ "deaths": 0,
+ "identity_breaks": 0,
+ "pricing": {
+  "basis": "a death kills at most ONE of 2^20 walkers and loses at most that walker's remaining steps; charged at the 95% CP upper bound on the per-trail death rate divided by 2^20",
+  "prior_basis": "cycle_channel_v16.json, measured on the CANONICALISED-STATE walk (v16), which is not the declared walk",
+  "prior_v18_charge": 2.265e-07,
+  "relative_work_loss_charge": 5.8453286463444326e-09,
+  "walkers": 1048576
+ },
+ "tracking": "exact true-state repeat = cycle; tracking is on because STEPS=1024 <= 2^17",
+ "trails": 600,
+ "visits_total": 39321600,
+ "walk": "declared v17/v18 walk: step on the true point, canonicalise ONLY the stored key (c,d negated when the key is negated); no walk-state canonicalisation"
+}

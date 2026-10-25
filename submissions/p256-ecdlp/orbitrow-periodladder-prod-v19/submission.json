@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp v19: production cell ALONE carries the success bound (200 trials, 95/200, CP-95 0.4041 >= 0.39), analytic production store with every access charged, census runner + full walk specification shipped, gap-2 signs corrected; claim 128.7921",
+  "claims": [
+    {
+      "score": {
+        "numerator": "1287921",
+        "denominator": "10000"
+      },
+      "statement": "For NIST P-256 Q=[x]P the full-store rho walk specified in argument.md is claimed at total classical work at most 2^128.7921 target-group-operation equivalents (reduced rational 1287921/10000, copied from evidence/claim_v19.json). Prices: fe_mul 148 Ir, fe_add/fe_sub 27 Ir (evidence/p256_fe_v15.c + fe_disasm_sample.txt + trace_counts.json ship in-package), affine addition 606 Ir, batch-inversion share 444 Ir, table/canon/append 10+20+12 Ir, and a 1084.2 Ir global radix sort plus witness extraction, priced at 0.25 clear + 22.0 count + 2.062 prefix + 36.0 carried-scatter body + 2.5586 external page translation/write/flush + 2.5469 per-pass read-back = 65.4175 Ir/record/pass over 16 passes, plus 37.5 witness. The store is priced ANALYTICALLY (evidence/store_v19.json): 2^127.67 records x 48 B = 2^133.25 B, 4096 B pages, 3-level radix over the page number (fanout 2^40), no bounded page array and no linear search; the shipped C program is a unit test of the addressing arithmetic only (planted cursors 2^32+17/2^64+5/2^128+3 place all 4096 records exactly, retrievable from each address; the v17 low-word path writes at position 5 and faults at a 2^40 low word). Total 2176.2 Ir = 2.176234 units at protected C=1000; work = 127.67 + log2(units) = 128.791834, plus cycle 5.845e-09 and replay 1.755e-04 relative, plus table construction, giving 2^128.7921. The census runner ships in-package (experiments/period_ladder_v17.py) and the walk is fully specified: row(t) = (S XOR t*2654435761 XOR trail*7919) mod R, row r = (1+(7r+3) mod R)*P + (1+(11r+5) mod R)*Q, step on the true point, canonicalise only the stored key, per-trial seeds from Random((20251024<<26) ^ ti*golden ^ R<<3 ^ W<<50), records 32B key || 20-bit trail || 108-bit step so every hit replays both trails. SUCCESS BOUND: the R=2^20 production cell ALONE, 16 full selector periods, fresh secret per trial, lambda 0.634, 200 trials (95/200 = 0.4750), exact Clopper-Pearson lower 0.404120 >= 0.39, 145 collisions, useful_per_collision 1.00; the first 100 trials reproduce the v18 cell exactly (49/100, CP-95 0.388644) and the bound moves 0.388644 -> 0.404120 as the trials land. Smaller rungs are supporting measurements only; no cross-R/order/walker pooling carries the bound. One assumption is stated: the per-period row hazard is the same in both regimes (structurally supported, direction conservative because production affords 2^87.67 periods per walker against 16 measured). The gap-2 congruence is stated with corrected signs: from eps2*(eps1*(S+v1)+v2)=S, v2 = -eps1*v1 (eps2=eps1) or v2 = -2*eps1*S - eps1*v1 (eps2=-eps1) mod q; v18 printed the opposite signs and control (c) confirms the corrected values return while the v18-signed ones do not. The cycle row is measured on the declared walk (600 trails, 0 deaths, charge 5.845e-09), not on the v16 canonicalised walk. Collision policy: 0.7250 collisions per challenge, 3.4500 trail-pairs charged, replay cost 1.755e-04 relative. Storage log2 134.2550 bytes (96V, external) disclosed and non-binding.",
+      "evidence": [
+        "argument.md",
+        "public-note.md",
+        "evidence/insn_price.json",
+        "evidence/p256_fe_v15.c",
+        "evidence/trace_counts.json",
+        "evidence/fe_disasm_sample.txt",
+        "evidence/period_ladder_v17.json",
+        "evidence/ladder_R2p20_W1_16p.json",
+        "evidence/store_v19.json",
+        "evidence/cycle_declared_v19.json",
+        "evidence/ledger_v19.json",
+        "evidence/claim_v19.json",
+        "evidence/radix_v19.json",
+        "evidence/audit_v19.json",
+        "experiments/period_ladder_v17.py"
+      ]
+    }
+  ],
+  "experiments": []
+}

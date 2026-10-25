@@ -1,0 +1,97 @@
+{
+ "a_addressing_unit_test": {
+  "PASS": true,
+  "control": {
+   "command": "./radix18 --scatter-test",
+   "meaning": "a bucket whose count exceeds 2^32 (and 2^64, and 2^128) scatters to exact, DISTINCT and RETRIEVABLE locations under v18; the v17 low-word path misplaces the same record at position 5 and faults at a 2^40 low word",
+   "planted": {
+    "bucket0_cursor": "2^32+17",
+    "bucket1_cursor": "2^64+5",
+    "bucket2_cursor": "2^128+3"
+   },
+   "raw": "scatter-test n=4096 bad_new=0 old_path_drops_high_words=1 old_wrote_at=5 correct_pos=2^64+5 old_faults_at_low_2p40=1 | readback: distinct_locations=1 readable_at_5=1 no_alias_at_2p64=1",
+   "retrievable": true,
+   "v17_path_result_2p64": "writes the record at position 5 (drops the high word): silent misplacement",
+   "v17_path_result_low_word_2p40": "SIGSEGV - the low-word-only position leaves the device window entirely",
+   "v18_bad_positions": 0
+  },
+  "passes": "planted cursors 2^32+17 / 2^64+5 / 2^128+3 place all 4096 records exactly (bad_new=0); the v17 low-word path writes at position 5 and faults at a 2^40 low word",
+  "raw": "scatter-test n=4096 bad_new=0 old_path_drops_high_words=1 old_wrote_at=5 correct_pos=2^64+5 old_faults_at_low_2p40=1 | readback: distinct_locations=1 readable_at_5=1 no_alias_at_2p64=1"
+ },
+ "all_pass": true,
+ "b_success_from_vector": {
+  "PASS": true,
+  "clears_floor_alone": true,
+  "cp95_from_vector_100": 0.388644165161638,
+  "cp95_from_vector_200": 0.40412003342497727,
+  "floor": 0.39,
+  "matches_200": true,
+  "matches_v18_prefix": true,
+  "new_trials_move_the_bound": true,
+  "outcome_vector_length": 200,
+  "prefix_wins_match_v18": true,
+  "shipped_cp95_100_v18": 0.388644165161638,
+  "shipped_cp95_200": 0.40412003342497727,
+  "wins_all_200": 95,
+  "wins_first_100": 49
+ },
+ "c_gap2_signs": {
+  "PASS": true,
+  "all_corrected_return": true,
+  "cases": {
+   "eps1=+1,eps2=+1": {
+    "returns_corrected": true,
+    "returns_v18": false,
+    "v2_corrected": 728175,
+    "v2_v18_wrong_sign": 271828
+   },
+   "eps1=+1,eps2=-1": {
+    "returns_corrected": true,
+    "returns_v18": false,
+    "v2_corrected": 99857,
+    "v2_v18_wrong_sign": 900146
+   },
+   "eps1=-1,eps2=+1": {
+    "returns_corrected": true,
+    "returns_v18": false,
+    "v2_corrected": 900146,
+    "v2_v18_wrong_sign": 99857
+   },
+   "eps1=-1,eps2=-1": {
+    "returns_corrected": true,
+    "returns_v18": false,
+    "v2_corrected": 271828,
+    "v2_v18_wrong_sign": 728175
+   }
+  },
+  "fixture": {
+   "S": 314159,
+   "q": 1000003,
+   "v1": 271828
+  },
+  "no_wrong_sign_case_returns": true,
+  "statement": "v2 = -eps1*v1 (eps2 = eps1) or v2 = -2*eps1*S - eps1*v1 (eps2 = -eps1), mod q"
+ },
+ "d_witness": {
+  "PASS": true,
+  "control": "./radix18 20 --clean -> sorted=1 collisions=0, witness_first=0/0 (collision-free fill emits zero witnesses)",
+  "passes": "collision-free fill emits zero witnesses; the duplicated fill emits exactly the planted 256"
+ },
+ "e_store_price": {
+  "PASS": true,
+  "body_only": 60.312,
+  "body_plus_store": 65.417469,
+  "charged_more_than_body_only": true,
+  "consistent": true,
+  "ledger_row": 1084.1795,
+  "store_row": 1084.1795
+ },
+ "f_cycle_declared_walk": {
+  "PASS": true,
+  "charge": 5.8453286463444326e-09,
+  "cp95_upper": 0.00612927133066926,
+  "declared_walk_deaths": 0,
+  "positive_control": "the v16 canonicalised-state walk cycles on every trail (cycle_channel_v16.json), so the tracker detects deaths",
+  "trails": 600
+ }
+}

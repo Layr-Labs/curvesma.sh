@@ -1,0 +1,51 @@
+{
+ "capacity": {
+  "address_bits_needed": 134,
+  "log2_pages": 121.255,
+  "log2_stream_bytes": 133.255,
+  "no_bounded_fixture": "no fixed page count and no linear search; capacity is argued from the address width, not from an array in the test program",
+  "page_bytes": 4096,
+  "record_bytes": 48,
+  "records": "2^127.67",
+  "resident_structures": "2^16 x 4 x u64 bucket cursors = 2 MiB, plus one page buffer per stream (2^12 B): both inside the disclosed peak",
+  "translation": "3-level radix over the page number, fanout 2^40 per level (2^41 pointers/node); one node read per page, not per record"
+ },
+ "charges_ir_per_record_per_pass": {
+  "page_flush_vector_stores_amortised": 1.5,
+  "page_metadata_and_open_amortised": 0.011719,
+  "page_table_walk_amortised": 0.046875,
+  "record_store": 1.0
+ },
+ "passes": 16,
+ "per_pass_ir_per_record": {
+  "clear256": 0.25,
+  "count256": 22.0,
+  "prefix256": 2.062,
+  "scatter256x_carried_external": 36.0,
+  "store_translation_and_io": 2.558594,
+  "stream_readback_materialisation": 2.546875
+ },
+ "per_pass_total_ir": 65.417469,
+ "readback_components": {
+  "page_fill_vector_loads_amortised": 1.5,
+  "page_table_walk_amortised": 0.046875,
+  "record_load": 1.0
+ },
+ "readback_ir_per_record_per_pass": 2.546875,
+ "sort_total_ir_per_record": 1084.1795,
+ "store_io_ir_per_record_per_pass": 2.558594,
+ "unit_test_scope": "experiments/radix_sort_v18.c is retained as a unit test of the 256-bit addressing arithmetic only (planted cursors 2^32+17, 2^64+5, 2^128+3 scatter 4096 records exactly); it is NOT offered as the production store and its bounded page array is not priced",
+ "v18_comparison": {
+  "price_direction": "UP: v19 charges the 36 Ir body AND the store translation the review named, so the claim cannot be flattered by the fix",
+  "v18_defects": [
+   "bounded page fixture + linear search (not production capacity)",
+   "page_for / allocation / ext_read materialisation not charged",
+   "manifest quoted 24.5 while the review was granted 36"
+  ],
+  "v18_per_pass": 48.812,
+  "v18_sort_total": 818.492,
+  "v19_scatter_price": 36.0
+ },
+ "why": "the rejected v18 store was a bounded fixture and its price omitted the lookup; v19 prices the production store analytically and charges every access",
+ "witness_ir_per_record": 37.5
+}
