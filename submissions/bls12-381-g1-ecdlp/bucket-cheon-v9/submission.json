@@ -1,0 +1,59 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: bucket Cheon v9 (the organiser's normalisation clause as the unit convention, the scalar multiplication fully normalised at 648, bounded-increment C1 with the C3 envelope inside it, and an exact-coverage census for H1)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.391 (at least 0.39 required). The success argument is the accepted lineage's law-based argument restated: 1 - e^{-K} = 0.39195 at the lower bound K = 0.4975 (the realised 6N^2/m is 0.4975 x (1 + 2^-51), N = 64392490294377459008906942102896640 = 2^64 x L exactly) under H1, minus the nine cap tails C1-C9 (each computed here from scratch, every tail rounded towards the larger probability, together charged 2^-40) minus the 2^-20 C8 modelling budget minus a 0.0008 census-informed allowance. The cost is the exact-integer ledger W = 138753688136071046572921189446548829 target-group-operation units with score ceil(10^6 log2 W)/10^6 = 116.740010 = 116740010/1000000, against the accepted lead 116.793080 and the pending fork entry 116.761224. H1's support is quantitative: three coverage toys (z = +0.43, +0.94, -1.43), an exact-coverage census over twelve genuine primes that enumerates the covered set exactly at the claim's own K (mean absolute deviation 0.0032 from the diagonal-corrected law, worst 0.0067, both signs), and the end-to-end toy (z = -0.23, every recovered s correct). Peak memory 2^122.81 bytes, the exact integer sum output by the run. No advice; preprocessing 2^115.7354 included in W.",
+   "score": {
+    "numerator": "116740010",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run, four modes. Mode ledger recomputes every size, term, cap tail, the exact integer memory sum and the exact score from integers and Fractions, asserting d | r-1, 6d | r-1, v2(r-1) = 32, the exact identity 2^64 x L = N with 6N^2/m >= 0.4975, the six-limb itemisation totals (walk side 33, listing 129/122, charged 148 with a 14.7 percent margin) and the H-prime density sanity (402 sixteenth powers below 2^16 against 408.875 expected); it outputs W = 138753688136071046572921189446548829 units, score 116.740010, the beats-lead comparison, the walk-schedule block (the retained value-indexed gap table, the dependent-recurrence build with one own 2^16-instruction inversion per entry, the lockstep segments, the split mechanism, the re-walk rebuild), the scalar-multiplication itemisation including the 15-entry window table's batched-inversion affine normalisation (total 1,295,091 instructions = 647.5 reference additions, charged 648), the bounded-increment C1 evaluated at the C3-envelope worst mean (per-node tail 2^-937.2, all-nodes 2^-853.2), the C3 envelope pricing, the two-channel C5, the four-hits C7, the base-prime fixed-point supply C9 and every other cap tail. Mode coverage runs three scalar-level birthday toys at d = 32/64/128 sized at the claim's K, measuring success against the diagonal-loss prediction. Mode census (new) builds the same semiprime structure on twelve genuine primes with 6d | r-1 (two disjoint H-prime base lists over one shared walk list, L = 74/104, products wrapping mod r_t as at production), enumerates the covered set C = {b*u/g mod r_t} EXACTLY and reports exact coverage against the diagonal-corrected law 1 - e^{-K(1-(L-1)/L^2)} at the claim's own K: mean absolute deviation 0.0032, worst 0.0067, deviations of both signs (8 positive, 4 negative). Mode ec runs the whole attack end to end on the j = 0 curve y^2 = x^3 + 3 over F_207670579 of prime order r = 207671809 at d = 128 - H-prime walks with retained per-chain gap tables, bucket matching, the re-walk cap, the six candidates against the u-twisted A_d, the eigenvalue-resolved z recovery, the square roots and the root-of-unity scan - reporting measured success 0.3833 against 0.3935 predicted (z = -0.23), 46 Lemma-1 recoveries in 120 trials with every recovered s correct, comparisons 274.68 per run against 274.66 expected, zero cap violations, key occupancy chi^2 24.27 on 31 degrees of freedom. The full mode=all run (seed 2026, trials 120) reproduces byte-identically from a foreign working directory in about 2 seconds on one core, standard library only.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "ledger",
+       "coverage",
+       "census",
+       "ec",
+       "all"
+      ]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 2026,
+     "trials": 120
+    }
+   ]
+  }
+ ]
+}
