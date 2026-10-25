@@ -1,0 +1,553 @@
+Shared-large collision bound: complete derivation and exact certificate
+Date: 2026-10-25 UTC
+
+Purpose and precise conclusion
+-----------------------------
+This document proves the entire chain behind the shared-large number,
+including all lattice and weighted-density lemmas. It uses the one
+standard prime-counting theorem quoted explicitly below. No other
+prime-distribution estimate is used. Its finite certificate is the
+standalone standard-library program shared_large_certificate.py.
+
+Under the stated construction and the accepted premise
+delta_B^w,delta_G^w<=500, the EXACT rational upper bound C_L computed by
+the certificate satisfies
+  0.002332911916573674 < C_L < 0.002332911916573675,
+  E_one-large <= C_L * (N^2/m).
+Thus the earlier printed 0.002332911916573674 was a rounded display,
+not an outward upper endpoint. The safe upper endpoint is
+0.002332911916573675; the budget may use0.002333.
+
+E_one-large here counts wrapped ordered collisions whose two integer
+cross-products have exactly one common prime factor, that factor being
+a large block prime. The count is bounded by a possibly larger modular
+count, so no unproved assertion about mixed-root integer identities is
+needed in this theorem. A final section gives the explicit two-large-only
+correction and explains the covering boundary needed for integration.
+
+A. Inputs and what is assumed
+----------------------------
+Put
+ z=0xd201000000010000=15132376222941642752,
+ L=z^2-1=228988810152649578064853576960394133503,
+ r=z^4-z^2+1
+  =52435875175126190479447740508185965837690552500527637822603658699938581184513,
+ d=2^20, m=(r-1)/d, X1=2^82, X2=2^70.
+Let
+ n=ceil sqrt(11m/120)
+  =67704887904593045852627984777072135,
+ NA=floor(196 n d/X2)+2,
+ M=ceil(NA/2)=5893133993817406318491,
+ N=6n^2, baseline=N^2/m=36n^4/m.
+
+A baby block consists of the first M primes above X1/2; the giant
+block consists of the next M. The declared blocks are disjoint.
+Each used block prime a has a row P_a of t_a small primes<=X2,
+all in its prescribed complementary character class; P_a is the
+declared prefix. Each side has sum_a t_a=n. The products ab form
+sets B and G. Because a>X1/2>X2, each product has a unique large
+prime factor and uniquely recovers a,b; thus both parametrizations
+are injective, and B,G are disjoint.
+
+Index the small-prime class lists by c and set
+ ell_c=number of small primes in the complete class c,
+ W_s(c)=sum_{a on side s whose row uses class c}t_a.
+Then sum_c W_s(c)=n. This is just a permutation of the block-class
+weight vector in P1. The sole class-distribution premise used is
+ P1: d sum_c W_s(c)^2/n^2-1<=500, s=B,G.
+Consequently
+ ||W_s||_2<=n*mu, mu=sqrt(501/d).
+No bound on max ell_c and no unweighted block-class equidistribution
+is assumed.
+
+The group U is the six sixth roots modulo r. Its four nonreal roots
+can be represented by L,-L,L+1,-L-1. Indeed L^2+L+1=r gives a
+nontrivial cube root L, and adjoining -1 gives six distinct roots.
+For any fixed rho in U there are exactly six ordered pairs(u,u')
+with u'/u=rho. The bound counts the four nonreal rho, hence its final
+restoration factor is4*6=24.
+
+The only external analytic theorem
+----------------------------------
+Dusart, Estimates of Some Functions Over Primes without R.H.,
+arXiv:1002.0442v1, Theorem6.9, equation(6.6), printed page9:
+ pi(x)>=x/(log x-1),       x>5393;
+ pi(x)<=x/(log x-11/10),   x>60184.
+Source: https://arxiv.org/pdf/1002.0442
+
+This standard theorem is accepted as an analytic input. The certificate
+does not claim to prove it. All consuming inequalities, domains, square
+roots, logarithm enclosures and arithmetic consequences are proved or
+verified explicitly below. There are only five prime-counting evaluation
+points: upper bounds at2^70,2^55,X1/2, and lower bounds at.57X1,.64X1.
+
+B. A self-contained primality certificate for r
+-----------------------------------------------
+Factor z=2^16*906349*254760293. Trial division through the square roots
+proves2,906349,254760293 are prime. Let F=z^2. Then
+ F=2^32*906349^2*254760293^2 divides r-1, and F^2>r.
+For p=2,906349,254760293 respectively, use witness bases5,2,2.
+The program verifies
+ a_p^(r-1)==1 mod r,
+ gcd(a_p^((r-1)/p)-1,r)=1.
+
+For completeness, these checks prove primality by the following
+elementary order argument. If q is any prime divisor of r, each witness
+has multiplicative order modulo q dividing both r-1 and q-1. The gcd
+condition says its order does not divide(r-1)/p, so its p-adic exponent
+equals the full exponent in r-1, at least the exponent in F. Doing this
+for every p|F gives F|(q-1), hence q>F>sqrt(r). A composite positive
+integer has a prime divisor<=sqrt(r), contradiction. This proves r is
+prime without probabilistic primality testing or an external table.
+The order divisibility follows by the division algorithm applied to the
+least positive exponent; the fact that the order divides q-1 follows
+from permutation of the nonzero residues modulo the prime q.
+
+C. The declared block endpoints and total prime bounds
+-------------------------------------------------------
+The certificate preserves the original rational log enclosures
+ l2lo=693147180559945309/10^18 <log2<
+ l2hi=693148/10^6.
+To prove them, use forty terms of
+ log2=2 sum_{j>=0}1/[(2j+1)3^(2j+1)]
+and bound the remaining tail above by
+ [2/(81*3^81)]*(9/8).
+For any rational u>=1, put t=(u-1)/(u+1). Sixty-four positive terms
+of2 sum t^(2j+1)/(2j+1) give a lower bound for logu, with upper tail
+2t^129/[129(1-t^2)]. These are exact fraction computations.
+
+Set
+ P = X2/(70*l2lo-11/10),
+ P0=2^55/(55*l2lo-11/10).
+Dusart and the lower log bound give pi(X2)<=P and pi(2^55)<=P0.
+
+For alpha=.57 and.64, write
+ log(alpha X1)=81log2+log(2alpha).
+Use the upper log enclosure in the lower prime bound and the lower
+log enclosure in the upper prime bound. This proves
+ pi(alpha X1)-pi(X1/2)
+ >=alpha X1/[upper_log(alpha X1)-1]
+   -(X1/2)/[lower_log(X1/2)-11/10].
+The certificate's rational floors are
+ alpha=.57:5940160041347741659303 >M;
+ alpha=.64:11946878750762797794455 >2M.
+Therefore every declared baby block prime is<=.57X1 and every declared
+giant block prime is<=.64X1. Put
+ Z=X1X2, ZB=(57/100)Z, ZG=(16/25)Z.
+Thus B subset(0,ZB], G subset(0,ZG].
+Every use of Dusart's thresholds is checked by the program.
+
+D. Reduction of the exactly-one-large family
+--------------------------------------------
+Write an ordered collision as
+ u*x/y == u'*x'/y' mod r,
+or xy'==rho*x'y, rho=u'/u.
+The large prime sets on the two sides are disjoint. Therefore a large
+prime common to xy' and x'y is either the common baby factor of x,x',
+or the common giant factor of y,y'. In the exactly-one-large family
+these placements cannot both occur.
+
+For a common baby large prime a, write x=ab,x'=ac, b,c in P_a.
+Here b!=c, and the two variable giant products y',y are coprime:
+otherwise the original cross-products would have another common prime.
+After cancelling a,
+ b*y'==rho*c*y mod r, with(y',y) in G times G.
+The common giant placement is identical with the sides exchanged.
+
+The roots rho=1,-1 give no such wrapped collisions. After cancelling a
+common large prime, both remaining products are<=X1X2^2<r/2.
+For rho=1, equality modulo r is integer equality; their common gcd
+would then contain the whole remaining product, which is>1, contrary
+to exactly one common prime. For rho=-1 their positive sum is<r,
+impossible. Only the four nonreal roots remain.
+
+For fixed distinct primes b,c and nonreal rho define
+ Lambda_(b,c,rho)={(s,t) in Z^2:b*s==rho*c*t mod r}.
+Its index/determinant is r: for each t modulo r exactly one s works.
+Let lambda be its first sup-norm minimum. The variables(y',y) are
+positive primitive points of this lattice. Later, after the coordinate
+wheel is imposed, it is safe to count all integer points in the allowed
+cosets, which is an upper bound for these primitive variables.
+
+E. Two elementary lattice-counting lemmas
+------------------------------------------
+E1. For any affine translate v+Lambda of a determinant-r lattice whose
+first sup-norm minimum is lambda,
+ |#[(v+Lambda) intersect(0,X]^2]-X^2/r|
+ <=X/lambda+2X*lambda/r+1.                             (E1)
+
+Proof. Choose a shortest lattice vector(a,b), sign/exchange coordinates
+so a=lambda>0, |b|<=lambda. It is primitive as a lattice vector:
+otherwise dividing it inside the lattice gives a shorter vector.
+Using Bezout on its coordinates in any lattice basis extends it to a
+basis with determinant r. The parallel lattice lines in this direction
+have determinant coordinates spaced by r. At most2Xlambda/r+1 meet
+the square, since the projection width is at most(|a|+|b|)X.
+
+Measure each line's square chord in units of(a,b). The resulting
+function f of the real line index is nonnegative, unimodal, and has
+maximum<=X/lambda. To see unimodality without another geometric theorem,
+the allowed line parameter is the intersection of two intervals whose
+endpoints are affine in the line index. Its length is concave where
+positive and has interval support. Its integral is X^2/r by the
+Jacobian determinant r. Its integer sum differs from this integral by
+at most max f: each superlevel set is an interval, whose integer count
+differs from its length by at most one; integrate over the superlevel.
+On each active line, counting lattice points differs from its chord
+length by at most one. Adding the line-rounding error proves(E1).
+The same argument applies to translated lattices and shifted line
+indices.
+
+E2. The number of primitive positive points of a determinant-r congruence
+lattice in(0,X]^2 is at most
+ D(X)=floor(2X^2/r)+1.                                (E2)
+
+Proof. Order their distinct rays by angle. Each ray has at most one
+primitive positive integer point. Adjacent vectors have a nonzero
+positive determinant, which is a multiple of r. Their triangles with
+the origin are disjoint inside the square and have area>=r/2.
+Thus(K-1)r/2<=X^2 for K points, proving(E2).
+
+F. An exact finite coordinate wheel
+------------------------------------
+Take Q=30. The lattice intersection with any specified residue pair
+modulo Q is an affine coset of QLambda, or empty. Indeed two such points
+differ by Q(s,t), and since Q is invertible modulo r this difference
+belongs to Lambda iff(s,t) belongs to Lambda.
+In fact every residue pair occurs: solve the congruence after adding
+Q times an integer to its first coordinate. We only need the upper bound.
+
+The vector lattice QLambda has determinant Q^2r and first minimum
+Qlambda. There are exactly eight unit residues modulo30,
+{1,7,11,13,17,19,23,29}. Apply(E1) to each of the64 allowed unit pairs.
+The count R_Q(X) with gcd(s*t,30)=1 satisfies
+ R_Q(X)<=rho_w X^2/r
+           +sigma_w(X/lambda+2Xlambda/r)+tau_w,         (F1)
+ rho_w=16/225, sigma_w=32/15, tau_w=64.
+These coefficients are exactly64/900,64/30,64. This is a finite
+coset count, not an asserted density model or rough-number asymptotic.
+
+G. The complete small-prime exception for the wheel
+----------------------------------------------------
+Let H_s(z)=sum_a #{p in P_a:p<=z}. Each side has at most M rows, so
+ H_B(z)+H_G(z)<=2M*pi(z).                              (G1)
+
+Fix a common baby large row a. For the product variable w=b*y, define
+ C_a(w)=#{(b,y) in P_a times G:b*y=w}.
+We have0<w<=X1X2^2<r/2 and C_a(w)<=2: the unique large prime factor
+recovers the giant row, and the two small prime factors have at most
+two assignments. For any fixed w, at most two of the four nonreal
+multiples rho*w have representatives in(0,X1X2^2]. The roots form two
+opposite pairs, and an interval below r/2 contains at most one image
+from each pair. The inverse roots are also in the same set, so the
+same degree bound holds in either orientation.
+
+Mark a representation(b,y) when b<=z or y's list prime<=z.
+Summing marked mass over all common baby rows is at most
+ n H_B(z)+n H_G(z).
+For an ordered colliding representation pair touching a marked member,
+choose its orientation in at most two ways, its neighbor in at most
+two ways, and the representation at that neighbor in at most two ways.
+This bounds the count by8 times the marked mass, already summed over
+all four nonreal rho. Restore the six ordered root pairs: the baby
+common-large placement costs at most48n(H_B+H_G). The common giant
+placement costs the same. Consequently
+ E_one-large,any-list-prime<=z
+ <=96n(H_B(z)+H_G(z))<=192nM*pi(z).                    (G2)
+
+At z=5, pi(5)=3 exactly; this costs at most576nM.
+Every original list-prime occurrence lies in one of the two product
+representations used above, so all four list-prime positions are covered.
+After this exception is removed, both variable products y,y' are units
+modulo30, and(F1) applies. Any overlap with other exceptional counts
+is conservative overcounting in an upper bound.
+
+H. Preserve the class densities in the coefficient mass
+--------------------------------------------------------
+For side s, the total ordered row coefficient-pair mass satisfies
+ sum_a t_a(t_a-1)
+ <=sum_c W_s(c)*ell_c
+ <=||W_s||_2 ||ell||_2
+ <=n*mu*pi(X2)<=n*mu*P.                               (H1)
+The last norm inequality uses only
+ ||ell||_2<=sum_c ell_c=pi(X2).
+It is not a per-class maximum or an H2 hypothesis.
+Let Qbar=2n*mu*P be the combined upper bound for both sides.
+
+I. Weighted distribution of short coefficient lattices
+--------------------------------------------------------
+Put B0=2^55 and restrict now to b,c>=B0. We will separately count the
+lower coefficients. Define
+ T=floor sqrt[(r-1)B0^2/(3X2^2)],
+ L0=floor sqrt[r/(3X2^2)].
+Numerically
+ T=4034629857880991917349738110544953,
+ L0=111983474101490008.
+The certificate checks
+ 3X2^2 T^2<rB0^2,
+ 3X2^2(T+1)^2>=rB0^2,
+ X2*T<B0^4,
+ T<2^56 L0.                                          (I1)
+
+Every lattice under consideration has lambda>=sqrt[r/(3X2^2)].
+A shortest vector(s0,t0) has b*s0==rho*c*t0; its nonzero positive
+quadratic norm is
+ (b*s0)^2 +/- (b*s0)(c*t0)+(c*t0)^2.
+The sign is chosen according to whether rho^2+rho+1 or
+rho^2-rho+1 vanishes modulo r. This norm is divisible by r and at most
+3X2^2 lambda^2, proving the lower bound.
+
+A shortest vector has lambda<=sqrt(r) by the following elementary
+two-dimensional pigeonhole argument: use the determinant-r lattice
+and the centered square of area>4r, or equivalently apply the standard
+area fundamental-cell pigeonhole proof. More explicitly, a measurable
+set of area>r has two points differing by a lattice vector, by reducing
+its translated portions to a fundamental parallelogram of area r;
+apply this to a square of side>sqrt(r) and let its size decrease.
+Its difference lies in the centered square with side twice that size.
+Thus lambda<=sqrt(r).
+It follows that the shortest vector is integer-primitive: its ordinary
+gcd is<r, so dividing that gcd preserves the congruence modulo the
+prime r and would otherwise give a shorter vector. Neither coordinate
+is zero, since an axis vector would have length>=r.
+
+For lambda<=t<=T, neither b|t0 nor c|s0. For example if t0=b*v,
+cancellation yields s0==rho*c*v mod r. Its nonzero norm is at most
+3(X2*lambda/B0)^2<r by(I1), contradiction. The other case is symmetric.
+As b,c are distinct primes and gcd(s0,t0)=1, this makes
+ (w1,w2)=(b*s0,c*t0)
+an ordinary primitive pair. Choose the shortest vector canonically with
+s0>0. Then0<w1<=X2*t, |w2|<=X2*t, and w1==rho*w2 mod r.
+
+The fixed root lattice has these explicit basis pairs:
+ rho=L:       (L,1),(-1,L+1);
+ rho=-L:      (-L,1),(1,L+1);
+ rho=L+1:     (L+1,1),(-1,L);
+ rho=-L-1:    (-L-1,1),(1,L).
+Each determinant is+/-r. Their centered fundamental parallelograms
+lie in[-Rcell,Rcell]^2, where
+ Rcell=ceil((L+2)/2)=114494405076324789032426788480197066753.
+Every lattice-point cell in the rectangle for w fits in a rectangle
+of area(X2*t+2Rcell)(2X2*t+2Rcell). The cells are disjoint and each
+has area r. Therefore the number of possible w is at most
+ K(t)=floor[(X2*t+2Rcell)(2X2*t+2Rcell)/r].             (I2)
+
+Since X2*T<B0^4, either coordinate has at most three distinct prime
+divisors>=B0. A fixed w therefore has at most3*3=9 antecedent ordered
+coefficient pairs(b,c). This proves at most9K(t) bad coefficient pairs
+globally. Class restrictions have not been replaced by a fictitious
+uniform factor; they are retained in the following weighted step.
+
+Let k_c(t) count bad ordered pairs from the complete class list c.
+In a prefix of length t_a, their count is at most
+ min(t_a^2,k_c(t))<=t_a sqrt(k_c(t)).
+Thus the weighted row count F_s(t) is at most
+ sum_c W_s(c)sqrt(k_c(t))
+ <=||W_s||_2 sqrt(sum_c k_c(t))
+ <=3n*mu*sqrt(K(t)).
+Combining both sides,
+ F_B(t)+F_G(t)<=6n*mu*sqrt(K(t))<=C1*t+C0,              (I3)
+ C1=6n*mu*X2*sqrt(2/r),
+ C0=12n*mu*Rcell*sqrt(2/r).
+The last inequality follows from
+ (x+2Rcell)(2x+2Rcell)<=2(x+2Rcell)^2.
+Each individual side has half the displayed bounds.
+
+J. Sum the lattice boundary terms
+----------------------------------
+Let I be the weighted sum of1/lambda over all retained coefficient
+pairs on both sides. By(H1), pairs with lambda>T contribute at most
+their mass divided by T. For the rest, integrate their counting function:
+ I<=Qbar/T+integral_{L0}^T F(t)/t^2 dt
+  <=Qbar/T+C1*log(T/L0)+C0/L0=:Ibar.                   (J1)
+This follows directly by summing
+ 1/lambda=1/T+integral_lambda^T dt/t^2
+for lambda<=T; for lambda>T use1/lambda<=1/T.
+The lower integration cutoff is valid by the norm bound.
+For actual computation, log(T/L0)<56*l2hi by(I1).
+The weighted sum of lambda is at most Qbar*sqrt(r), by the minimum bound.
+
+Each side separately has coefficient mass<=Qbar/2 and inverse-minimum
+sum<=Ibar/2. A common baby factor uses the variable box G times G,
+with side ZG; a common giant factor uses B times B, with side ZB.
+Summing(F1) and restoring the factor24 gives
+ E_retained<=24[
+  rho_w*(Qbar/2)*(ZB^2+ZG^2)/r
+ +sigma_w*(Ibar/2)*(ZB+ZG)
+ +sigma_w*Qbar*(ZB+ZG)/sqrt(r)
+ +tau_w*Qbar ].                                       (J2)
+The coefficient weights remain inside(I3); replacing them by unweighted
+row counts before that Cauchy step would lose the useful class information.
+
+K. Lower coefficient split
+---------------------------
+For a row of length t_a, ordered pairs with b<B0 or c<B0 number at most
+2t_a*pi(B0). Summing a side gives at most2n*pi(B0). The variable points
+are primitive in the exactly-one-large family, so(E2) applies. Hence
+ E_low<=48n*P0*(DB+DG),                                (K1)
+ DB=floor(2ZB^2/r)+1=403896293673398,
+ DG=floor(2ZG^2/r)+1=509190279743379.
+This primitivity qualification matters. We do not silently apply(K1)
+to collisions with a second common prime.
+
+L. Exact rational assembly of the printed constant
+---------------------------------------------------
+Add(J2),(K1), and the wheel exception(G2) at z=5:
+ E_one-large<=E_retained+48nP0(DB+DG)+576nM.             (L1)
+
+The certificate uses no floating-point value in proving this bound.
+For every square root of a positive rational v it uses
+ [floor sqrt(floor(v*10^200))+1]/10^100,
+and checks the resulting square is>=v. For1/sqrt(r) it uses1/floor sqrt(r),
+also an outward bound. It preserves exactly l2lo,l2hi and the old coarse
+endpoint checks so that the final Fraction equals the earlier certificate.
+
+The resulting contributions relative to baseline are displayed as:
+ coordinate-wheel area       0.0018978023734899636
+ inverse-minimum boundary    0.0002442062485251657
+ direct-minimum boundary     0.0000000075240335873
+ finite constants            0.0000000000000074824
+ low-coefficient split       0.0001908957553247796
+ wheel exceptions            0.0000000000151926956
+ rounded display             0.002332911916573674.
+
+The exact rational is stored as upper_ratio_exact in the JSON output.
+The script verifies, by integer cross-multiplication,
+ C_L>0.002332911916573674,
+ C_L<0.002332911916573675,
+ C_L<0.002333.
+All printed digits are therefore auditable without treating a decimal
+display as an exact upper bound.
+
+M. Covering boundary: two common large primes and no common small prime
+-----------------------------------------------------------------------
+The principal theorem is exactly-one-large. To combine it with a
+shared-small sieve safely, partition the remaining nonrepeated wrapped
+collisions as follows:
+ * any common small prime: covered by the four-placement shared-small
+   count, which counts all integer variable pairs rather than only
+   primitive ones;
+ * no common small prime, one common large prime: this theorem;
+ * no common small prime, two common large primes: the correction below.
+Repeated coordinates are handled separately when the shared-small
+reduction excludes them. Multiple memberships in a sieve superset are
+harmless for an upper union bound; no cancellation between covers is used.
+
+For the last family fix the common baby large prime a and common giant
+large prime a'. There are at most M^2 choices. Cancelling both leaves
+ s=b1*b2', t=b2*b1', with s,t<=X2^2 and gcd(s,t)=1.
+For each nonreal rho, the primitive-ray bound(E2) gives at most
+ D2=floor(2X2^4/r)+1
+pairs(s,t). Each semiprime s has at most two assignments to its baby
+and giant list-prime roles, and likewise t, giving a factor<=4.
+There are four nonreal rho and six ordered root pairs. Therefore
+ E_two-large,no-small<=96M^2 D2,
+ E_two-large,no-small/baseline
+ <=1.6330900757069875e-17<1.64e-17.                     (M1)
+The formula and final rational comparison are checked by the certificate.
+
+Why the lower-coefficient issue does not invalidate this partition:
+in(J2) all integer variable pairs are counted, so nonprimitive ones are
+already harmless. In(K1) a nonprimitive variable pair would create a
+second common large prime or a common small prime. Those cases belong
+to the other explicitly covered strata; they must not be silently
+declared part of the exactly-one-large primitive estimate.
+
+For any wrapped collision sharing at least one prime, rho=1,-1 can
+also be excluded directly under2X1^2X2<r: cancel one shared prime.
+Both remaining products are<=X1^2X2. For rho=1 a congruence implies an
+integer identity and hence k=0; for rho=-1 the positive sum is<r.
+Thus the four nonreal roots cover these wrapped shared-prime strata.
+
+N. Swap pruning when a coverage calculation uses it
+-----------------------------------------------------
+This paragraph does not replace the total-energy premise by another
+claim. For each baby/giant large pair(a,a') and root u, a shared list
+prefix of length s gives s indexed values
+ u*(a*b)/(a'*b)=u*a/a'.
+Retain one representation when s>=1 and delete the other s-1. These
+index groups are disjoint, so every deleted value has a retained
+representation. The support is unchanged and collision energy cannot
+increase. The total number deleted satisfies
+ D=6sum_(a,a')(s-1)_+
+ <=6sum_(a,a')s
+ <=6M sum_a t_a=6Mn.
+Hence N0=N-D and
+ D/m<=6Mn/m=4.787281682183675e-14,
+checked exactly in the certificate. No H2 or weighted P1 is used here.
+
+A total-energy calculation on the original multiset must account for
+the swap energy. A pruned-support calculation may instead use N0 and
+the corresponding pruned factorial moments, with the above mass loss.
+The shared-large theorem alone makes no occupancy, higher-moment, or
+P2 assertion; the coprime residual and signed Selberg remainder remain
+the separate unproved analytic step.
+
+O. Mixed-root integer identities: the elementary fifteen-pair certificate
+-------------------------------------------------------------------------
+This section supplies the fixed arithmetic fact needed if the pruning
+discussion is used to assert that all remaining k=0 collisions are gone.
+Let Omega(v) count prime factors with multiplicity. Every cross-product
+P=xy', Q=x'y has Omega(P)=Omega(Q)=4 and v2(P),v2(Q)<=2, since only its
+two list primes can equal2.
+
+The six positive integer representatives of U are precisely
+ {1,L,L^2,L+1,L^2+1,L(L+1)}.
+Separate the low chain{1,L,L^2}, the high chain{L+1,L(L+1)}, and
+T5=L^2+1. We exclude uP=u'Q for all fifteen unordered unequal pairs:
+
+* Three pairs inside the low chain and the one pair inside the high
+  chain have unequal Omega(u),Omega(u'), because each strict divisibility
+  step multiplies by L>1. They cannot satisfy uP=u'Q, since Omega(P)=
+  Omega(Q)=4 would require Omega(u)=Omega(u').
+
+* The eight pairs between a high-chain member and a member of
+  {1,L,L^2,T5} have v2(u)=32 on the high side, versus0 or1 on the other
+  side. Indeed z has v2=16, L=z^2-1 is odd, and v2(T5)=1. The gap>=31
+  cannot be offset by v2(P),v2(Q)<=2.
+
+* The three remaining pairs are T5 versus1,L,L^2. We have gcd(T5,L)=1.
+  Direct exact division shows2*5*37*1637 divides T5 with quotient>1.
+  The four displayed factors are prime, verified by trial division.
+  Hence Omega(T5)>=5. Coprimality implies T5 would divide the opposite
+  four-prime cross-product, impossible.
+
+These disjoint classes have3+1+8+3=15 pairs and cover every mixed root.
+The code checks every numerical divisibility, valuation and small-factor
+primality used. No complete factorization of L or T5 is required.
+
+For u=u', write x=a*b1, x'=a2*b2, y=c*d1, y'=c2*d2.
+An integer identity xy'=x'y forces a=a2 and c=c2 by unique
+factorization and the disjoint large blocks. Thus b1*d2=b2*d1.
+The two-prime multisets agree. Their two possible matchings are
+ (i) b1=b2 and d2=d1: the diagonal;
+ (ii) b1=d1 and d2=b2: the two ratio pairs are
+      (a*b1,c*b1) and(a*b2,c*b2).
+In (ii), both b1,b2 lie in P_a intersect P_c; distinct indexed pairs
+require b1!=b2. This is precisely the swap family. For intersection
+size s there are s(s-1) ordered distinct choices. Therefore the
+ordered distinct-index k=0 energy is exactly6sum s(s-1), and the
+pruning in SectionN removes every such integer-identity collision.
+
+P. Repeated coordinates: a complete tiny bound
+-----------------------------------------------
+Suppose x=x'. For a distinct-index collision, rho=1 would force y=y'
+and u=u', the same index, so it is excluded. Rho=-1 cannot occur since
+y+y'<=2Z<r. Thus y'==rho*y for one of the four nonreal roots.
+If y,y' share a large prime, cancel it to obtain a nonzero nonreal-root
+pair of list primes, whose norm is<=3X2^2<r, impossible. If they share
+a small prime, cancellation gives a nonreal-root pair of large primes
+with norm<=3X1^2<r, also impossible. Consequently gcd(y,y')=1.
+The primitive-ray lemma(E2) bounds their pairs by D(Z).
+There are n choices of x, four nonreal roots and six ordered root pairs:
+this case contributes<=24nD(Z). The symmetric repeated-y case contributes
+the same, so their union is at most
+ E_repeat<=48nD(Z),
+ E_repeat/baseline<=2.670714293117111e-19<2.671e-19.
+The certificate verifies3X1^2<r and the exact rational comparison.
+This is a union bound, so possible double membership could only make
+it conservative.
+
+Together SectionsM,N,O,P make the known-stratum covering and swap
+pruning explicit. They do not estimate the coprime discrepancy or the
+signed Selberg remainder, which remain the named unresolved step.

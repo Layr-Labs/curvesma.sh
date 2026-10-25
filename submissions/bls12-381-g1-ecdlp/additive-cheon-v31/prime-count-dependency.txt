@@ -1,0 +1,38 @@
+PRIME-COUNT DEPENDENCY AND FINITE ARITHMETIC
+
+Standard analytic input (quoted displayed equations):
+  x/(ln x - 1) <= pi(x) <= x/(ln x - 1.1).
+Validity domains as printed: lower x>5393; upper x>60184.
+These strict domains are the ones invoked by this package.
+
+Source: Pierre Dusart, Estimates of Some Functions Over Primes without R.H.,
+arXiv:1002.0442v1, Theorem6.9, equation(6.6), printed p.9.
+https://arxiv.org/pdf/1002.0442
+The bounds are unconditional published theorems. Their proof is an analytic
+input; the package does not claim to re-prove the prime number theorem or
+the zeta-zero estimates underlying that paper.
+
+Every numerical use is recomputable by prime_count_inputs.py using Python
+integers and Fraction. It never calls a floating-point logarithm. It proves
+the logarithm enclosures by
+ ln u = 2 sum_{j>=0} [(u-1)/(u+1)]^(2j+1)/(2j+1)
+after dyadic range reduction, and bounds the omitted positive tail by a
+geometric series. Substituting outward log bounds in Dusart's denominators
+then gives exact rational pi lower and upper bounds.
+
+Production consequences checked:
+ pi(2^70) <=24896332478097058409.
+ At least5940219918861239907136 primes lie in (X1/2,.57X1], more thanM.
+ At least11946945700771265222865 primes lie in (X1/2,.64X1], more than2M.
+ Here X1=2^82, M=5893133993817406318491, and2M=NA+1 becauseNA is odd.
+ Thus every declared baby prime is<=.57X1 and every declared giant prime
+ is<=.64X1, independently of chi and regardless of which prefixes are used.
+
+An independent sieve through2^20 verifies the formulas at2^13 (lower only),
+2^16,2^18 and2^20. These are small-scale transcription/constant checks.
+They do not independently certify the production counts at2^70 or2^82;
+those conclusions follow from the cited theorem plus exact arithmetic.
+
+The exact arithmetic is suitable for copying into the package evidence.py
+or importing from this compact helper. No PDF, external numerical table,
+large prime list or network access is needed when the verifier runs.
