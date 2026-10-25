@@ -1,0 +1,20 @@
+{
+ "rule": "W_total is TOTAL WORK: every executed step is charged at STEP_IR (the walk rows), whether it ends in a relation or in an abandoned trail; the only row outside them is the fresh trail start, charged ceil(S/L) x RESTART BY CONSTRUCTION because every trail is capped at L = 64 steps.  Nothing here is a probabilistic bound on a toy frequency.",
+ "per_trail_step_cap": 64,
+ "per_trail_cap_quote": {
+  "file": "scripts/protocol36.py",
+  "line": 349,
+  "verbatim": "for _k in range(cfg[\"trail\"]):"
+ },
+ "abort_line_quote": {
+  "file": "scripts/protocol36.py",
+  "line": 365,
+  "verbatim": "                stall += 1\n                if guard:\n                    armed = True\n                if armed and stall >= K_STALL:\n                    aborts += 1; aborted = abandoned = True"
+ },
+ "aborted_steps_charged_as_work": true,
+ "aborted_steps_measured": 0,
+ "steps_measured": 587638,
+ "measured_waste_fraction": 0.0,
+ "success_denominator": "S_eff = S: the budget is stated in EXECUTED steps and every one of them is charged, so the success model uses S and the waste is inside the charge instead of being added to it",
+ "withdrawn": "v35 trap_abort_waste = ceil(4497*S/5040000) x (32*STEP_IR + RESTART): Markov does not turn an observed toy abort frequency into an upper bound, and the aborted window's steps were already charged in the walk rows (double charge)."
+}

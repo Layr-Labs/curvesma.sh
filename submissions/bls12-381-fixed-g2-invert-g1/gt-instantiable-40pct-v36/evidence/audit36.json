@@ -1,0 +1,136 @@
+{
+ "mode": "audit36",
+ "a_within_trail_recovery": {
+  "cases": 4,
+  "recovered": 4,
+  "failed": 0,
+  "detail": [
+   {
+    "k": 0,
+    "den_nonzero": true,
+    "recovered_x": true
+   },
+   {
+    "k": 1,
+    "den_nonzero": true,
+    "recovered_x": true
+   },
+   {
+    "k": 5,
+    "den_nonzero": true,
+    "recovered_x": true
+   },
+   {
+    "k": 11,
+    "den_nonzero": true,
+    "recovered_x": true
+   }
+  ],
+  "degenerate_den_zero_returns_none": true,
+  "rule": "x = (q^k A1 - A2)/(D2 - q^k D1); the denominator vanishes only with probability 1/r, so a within-trail pair is usable and a same-trail hit is accepted by run_one (evidence/protocol36.json counts both classes)"
+ },
+ "b_ref_width": {
+  "hit": 1,
+  "read_back_128": "85070591730234615865843651858929707185",
+  "read_ok": true,
+  "evicted_128": "85070591730234615865843651858929707185",
+  "evicted_ok": true,
+  "high_word_nonzero": true,
+  "rule": "both the read path and the eviction return path carry the full pair; v35 read only ref[0] and returned only last->ref[0]"
+ },
+ "c_calloc_sweep": {
+  "allocations": [
+   {
+    "call": "calloc",
+    "expr": "nb, sizeof(ws_node *"
+   },
+   {
+    "call": "calloc",
+    "expr": "2^db, sizeof(ws_node *"
+   },
+   {
+    "call": "calloc",
+    "expr": "n, sizeof(ws_node *"
+   }
+  ],
+  "size_checks": [
+   {
+    "array": "radix node",
+    "count": 4194304,
+    "elem": 8,
+    "bytes": 33554432,
+    "ok": true
+   },
+   {
+    "array": "ws_node pool (per-record malloc)",
+    "count": 1,
+    "elem": 96,
+    "bytes": 96,
+    "ok": true
+   }
+  ],
+  "violations": [],
+  "planted_violation_caught": false,
+  "rule": "a single allocation above SIZE_MAX = 2^64-1 fails the package; v35's calloc(2^63, 8) = 2^66 B did"
+ },
+ "c_planted_control": {
+  "allocations": [
+   {
+    "call": "calloc",
+    "expr": "nb, sizeof(ws_node *"
+   },
+   {
+    "call": "calloc",
+    "expr": "2^db, sizeof(ws_node *"
+   },
+   {
+    "call": "calloc",
+    "expr": "n, sizeof(ws_node *"
+   }
+  ],
+  "size_checks": [
+   {
+    "array": "radix node",
+    "count": 4194304,
+    "elem": 8,
+    "bytes": 33554432,
+    "ok": true
+   },
+   {
+    "array": "ws_node pool (per-record malloc)",
+    "count": 1,
+    "elem": 96,
+    "bytes": 96,
+    "ok": true
+   },
+   {
+    "array": "PLANTED 2^63 pointers",
+    "count": 9223372036854775808,
+    "elem": 8,
+    "bytes": 73786976294838206464,
+    "ok": false
+   }
+  ],
+  "violations": [
+   {
+    "array": "PLANTED 2^63 pointers",
+    "count": 9223372036854775808,
+    "elem": 8,
+    "bytes": 73786976294838206464,
+    "ok": false
+   }
+  ],
+  "planted_violation_caught": true,
+  "rule": "a single allocation above SIZE_MAX = 2^64-1 fails the package; v35's calloc(2^63, 8) = 2^66 B did"
+ },
+ "d_keygen_control": {
+  "claim_full": 127.7557,
+  "claim_without_keys12": 127.7059,
+  "claim_with_span_over_72_coeff": 127.7653,
+  "keys12_ir": 2037,
+  "mont_ir": 472,
+  "withdrawn_coeff_ir": 1342,
+  "rows_move_claim": true,
+  "rule": "zeroing the keys12 row or restoring the span/72 coefficient price each moves the claim, so both rows are load-bearing in W, not decoration"
+ }
+}

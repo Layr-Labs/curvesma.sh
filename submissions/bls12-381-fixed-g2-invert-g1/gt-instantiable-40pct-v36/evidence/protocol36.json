@@ -1,0 +1,34 @@
+{
+ "mode": "protocol36-smoke",
+ "code": "scripts/protocol36.py with the v36 class-partitioned recovery",
+ "fixtures": 4,
+ "solved": 4,
+ "steps": 827,
+ "records": 823,
+ "within_trail_hits": 16,
+ "cross_trail_hits": 20,
+ "within_recovered": 2,
+ "cross_recovered": 2,
+ "matches": 4,
+ "aborts": 0,
+ "steps_aborted": 0,
+ "trail_starts": 9,
+ "dict_calls": {
+  "d28_lookups": 827,
+  "d28_inserts": 823,
+  "d28_evictions": 0,
+  "d28_drops": 0,
+  "d28_probes": 200,
+  "d28_wide_slots": 0,
+  "d28_wide_reads": 102,
+  "d28_wide_writes": 889,
+  "d28_ws_deep": 0
+ },
+ "gate": {
+  "lookup_hit": 1,
+  "ref_128_round_trip": true,
+  "evicted_ref_128": "1180591620717411315769",
+  "evicted_ref_above_2_64": true
+ },
+ "gate_rule": "both classes are accepted: a hit's class is a LABEL, not a veto.  The store returns the full 128-bit reference and the full 128-bit evicted reference."
+}

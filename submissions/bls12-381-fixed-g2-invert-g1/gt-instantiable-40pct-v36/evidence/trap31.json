@@ -1,0 +1,84 @@
+{
+ "mode": "trap28-enumeration",
+ "ring_words": 6,
+ "depth": 6,
+ "Rg": 65536,
+ "measured": {
+  "steps": 5040000,
+  "multiply": 3221964,
+  "guard_conversions": 4497,
+  "branch_sqr": 1813539,
+  "f_mul": 0.6392785714285715,
+  "guard_per_step": 0.0008922619047619048,
+  "windows": 360000,
+  "period_windows": {
+   "14": 5035425,
+   "15": 5035419,
+   "16": 5035413,
+   "17": 5035407,
+   "18": 5035401,
+   "19": 5035395,
+   "20": 5035389,
+   "21": 5035383,
+   "22": 5035377
+  },
+  "admissions": {
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "22": 0
+  },
+  "admissions_total": 0,
+  "observer": "windows of length 14..22 tested for EVERY period p <= 22 (not only 2-slot alternating words), at depth 6",
+  "one_sided_95_poisson_upper_per_window": {
+   "14": 8.333333333333334e-06,
+   "15": 8.333333333333334e-06,
+   "16": 8.333333333333334e-06,
+   "17": 8.333333333333334e-06,
+   "18": 8.333333333333334e-06,
+   "19": 8.333333333333334e-06,
+   "20": 8.333333333333334e-06,
+   "21": 8.333333333333334e-06,
+   "22": 8.333333333333334e-06
+  },
+  "independence": "the Poisson upper limit needs independent windows and is reported under that hypothesis; the charge does not use it"
+ },
+ "family_census": {
+  "short_lengths": "2..6",
+  "nmax": 6,
+  "expected_windows_fraction": 0.0,
+  "per_length": {
+   "2": 0.0,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0
+  },
+  "expected_windows_at_S": null,
+  "route": "MARKOV: the charge is the expected number of trapping windows from this exact census (P(any) <= E[count]); no independence and no observed-zero rule of three is used",
+  "extended_lengths": "7..12 NOT enumerated exactly (canonical-word count too large); covered by the period<=12 observer below",
+  "W_kappa_counts": {
+   "0": 1,
+   "1": 0,
+   "2": 12,
+   "3": 24,
+   "4": 396,
+   "5": 2160,
+   "6": 23160
+  },
+  "premise": "H4: kappa uniform on Z/12, independent of the slot; vanishing sums exact in Z[zeta] mod Phi_12"
+ },
+ "mechanism": {
+  "forced_admission_events": 120,
+  "forced_delay_mean": 31.4,
+  "forced_delay_max": 32,
+  "control_no_abort_events": 3681,
+  "control_aborts": 0
+ },
+ "seconds": 97.4
+}
