@@ -1,0 +1,59 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: bucket Cheon v10 (the L-stratified exact-coverage census with a 1/L residual fit, the scalar multiplication at 662 with the standard batch-inversion cost, and the preprocessing figure as the run's computed ceiling)",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.3907 (at least 0.39 required). The success argument is the accepted lineage's law-based argument restated: 1 - e^{-K} = 0.39226 at the lower bound K = 0.498 (the realised 6N^2/m is 0.498 x (1 + 2^-54), N = 64424840203624563870472181515288576 = 2^64 x L exactly) under H1, minus the nine cap tails C1-C9 (each computed here from scratch, every tail rounded towards the larger probability, together charged 2^-40) minus the 2^-20 C8 modelling budget minus a 0.0015 census-informed allowance. H1's support is quantitative and stratified: three coverage toys (z = +0.43, +0.94, -1.43), an exact-coverage census over twenty genuine primes in four growing L strata that enumerates the covered set exactly at the claim's own K - the post-diagonal-correction residual shrinks monotonically with L (mean |dev| 0.00361 to 0.00127) and fits 0.235/L, implying a fitted production residual of 6.7e-17 at L = 2^51.63, with the allowance set at the fitted residual at L = 159 - and the end-to-end toy (z = -0.23, every recovered s correct). The cost is the exact-integer ledger W = 138823277198598325615651887091741570 target-group-operation units with score ceil(10^6 log2 W)/10^6 = 116.740733 = 116740733/1000000, against the accepted lead 116.793080 and the pending fork entry 116.761224. Preprocessing is the run's computed ceiling 2^115.7363 (the exact integer sum, output by the run), included in W. Peak memory 2^122.81 bytes, the exact integer sum output by the run. No advice.",
+   "score": {
+    "numerator": "116740733",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run, four modes. Mode ledger recomputes every size, term, cap tail, the exact integer memory sum, the exact preprocessing sum and the exact score from integers and Fractions, asserting d | r-1, 6d | r-1, v2(r-1) = 32, the exact identity 2^64 x L = N with 6N^2/m >= 0.498, the six-limb itemisation totals (walk side 33, listing 129/122, charged 148 with a 14.7 percent margin) and the H-prime density sanity (402 sixteenth powers below 2^16 against 408.875 expected); it outputs W = 138823277198598325615651887091741570 units, score 116.740733, the beats-lead comparison, the preprocessing block (baby side 2^115.7362, tables and lists 2^102.0815, total 2^115.73628, claim ceiling 115.7363), the walk-schedule block (the retained value-indexed gap table, the dependent-recurrence build with one own 2^16-instruction inversion per entry, the lockstep segments, the split mechanism, the re-walk rebuild), the scalar-multiplication itemisation including the 15-entry window table's affine normalisation at the standard batch-inversion cost (3(n-1) = 42 multiplications plus the inversion, then 4 multiplications per entry's rescale x = X/z^2, y = Y/z^3: 102 multiplications + 65,536 = 104,662 instructions; total 1,322,593 instructions = 661.3 reference additions, charged 662), the bounded-increment C1 evaluated at the C3-envelope worst mean (per-node tail 2^-938.2, all-nodes 2^-854.2), the C3 envelope pricing, the two-channel C5, the four-hits C7, the base-prime fixed-point supply C9 and every other cap tail. Mode coverage runs three scalar-level birthday toys at d = 32/64/128 sized at the claim's K, measuring success against the diagonal-loss prediction. Mode census (new in v10: L-stratified) builds the same semiprime structure on twenty genuine primes with 6d | r-1 in four growing strata (r_t ~ 2^25 to 2^28, L = 74 to 295; two disjoint H-prime base lists over one shared walk list), enumerates the covered set C = {b*u/g mod r_t} EXACTLY and reports exact coverage against the diagonal-corrected law 1 - e^{-K(1-(L-1)/L^2)} at the claim's own K, per-stratum aggregates, the products_wrap flag per row (ten wrap, ten do not; the two subsets agree at mean |dev| 0.0023 vs 0.0024), the sign counts (14 positive, 6 negative) and the least-squares 1/L fit of the residual (c = 0.235; fitted production residual 6.7e-17; the 0.0015 allowance is the fitted residual at L = 159). Mode ec runs the whole attack end to end on the j = 0 curve y^2 = x^3 + 3 over F_207670579 of prime order r = 207671809 at d = 128 - H-prime walks with retained per-chain gap tables, bucket matching, the re-walk cap, the six candidates against the u-twisted A_d, the eigenvalue-resolved z recovery, the square roots and the root-of-unity scan - reporting measured success 0.3833 against 0.3935 predicted (z = -0.23), 46 Lemma-1 recoveries in 120 trials with every recovered s correct, comparisons 274.68 per run against 274.66 expected, zero cap violations, key occupancy chi^2 24.27 on 31 degrees of freedom. The full mode=all run (seed 2026, trials 120) reproduces byte-identically from a foreign working directory in about 3.8 seconds on one core, standard library only.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "ledger",
+       "coverage",
+       "census",
+       "ec",
+       "all"
+      ]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1500
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 2026,
+     "trials": 120
+    }
+   ]
+  }
+ ]
+}
