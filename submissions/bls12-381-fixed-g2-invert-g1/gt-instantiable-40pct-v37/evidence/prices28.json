@@ -1,0 +1,5 @@
+{"MUL_CHARGE": 47924, "SQR_CHARGE": 25372, "LOOKUP": 700, "VERIFY_PROD": 57526800,
+ "VERIFY_RESERVE": 1434176, "TABLE_IR": 15320000, "START_IR": 7660000,
+ "CODE_IR": 1048576, "W_PROD": 2401622129772365357023489706267321150752560,
+ "REPLAY_IR": 4096,
+ "provisional": "MUL/SQR are the executed f12mul/cyclotomic_sqr spans (loop-free); LOOKUP is replaced from exec28.json before the ledger is generated"}

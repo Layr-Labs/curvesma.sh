@@ -1,0 +1,37 @@
+{
+ "version": 1,
+ "title": "Claim 127.7881: six-limb borrow-and-reduce key formation wired into the fixture, frequency-independent step charge, ceil(S/L) cold starts, occupancy-bounded radix store, in-protocol relation yield",
+ "claims": [
+  {
+   "statement": "Recover x from z = g^x in BLS12-381 GT by a Frobenius-class rho walk, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W (exact integer test, n-1 asserted to fail); W = 5875623158933707187335667578720804574982150 is the exact sum of 15 rows in evidence/ledger37.json, recomputed by scripts/cert37.py. PRICED = EXECUTED (verdict 177471b7 flaw 1). The fixture's Group.state and Group.step CALL the shipped SIX-LIMB routines through ctypes: d28_l6_sub and d28_l6_neg propagate borrow across all six limbs and reduce modulo m, d28_l6_add carries and conditionally subtracts m, d28_montmul6 is a six-limb Montgomery CIOS with a six-limb final subtraction, and d28_keys12_form6 forms the twelve lanes and returns kappa, so no Python part takes part in key formation. The modulus is an argument: the fixture runs the toy modulus and audit37.py runs the same symbols at the 381-bit production modulus p, where neg(1) returns m-1 (all six limbs), 1000 random add/sub/neg agree with the Python reference, and reduce handles a carry limb. The rows are those spans: keys12 4764 Ir/step, coefficient update 3288 Ir/step. BUDGET (flaw 3). Every executed step pays the SINGLE price max(dense-mul span, cyclo-square span) = 47924 Ir, frequency-independent: the ceil(4497 S/5040000) guard-squaring substitution is DELETED. A trail of length at most L = 65536 forces AT LEAST ceil(S/L) = 1461847968611600655368414726242031 starts -- v36 reversed that inequality and its launch rule started only 1024 trails; the shipped loop now runs until S steps are executed, so the count is ceil(S/L) with equality by construction. Each start is COLD: y = g^a z^b, a two-scalar exponentiation of 1525 full multiplies (73084100 Ir) that never reads x, replacing v36's 7660-Ir start that read it. STORE (flaw 4). The reachable leaf count is the uniform-address OCCUPANCY ceil(M(1-e^(-S/M))) with M = 2^110 distinct leaf prefixes: S/M = 7.380e+04, so e^-x < 2^-106473 and the occupancy is M itself (1298074214633706907132624082305024 leaves), not the 34262061764334390360197220146298 nodes the dense-leaf formula 6*ceil(S/(4*2^22)) charges -- a 37.88663459783255x understatement, flagging that formula. The 96-byte record node and the 32-MiB radix node are SEPARATE constants (v36 let one overwrite the other), every calloc argument is <= SIZE_MAX, and the 128-bit slot is consumed 22 bits per level over h = 6 levels. SUCCESS (flaw 5). The yield is measured on ACTUAL collisions inside the shipped loop, by class and schedule: 14383 hits at L = 64 with CP-lo 0.912110, and the shipped schedule gives CP-lo 0.999937; p_used = 0.578125 x 0.912110 = 0.527314, above the 0.39 floor. No planted pair with a chosen denominator is used anywhere in the debit. NO FLOAT in any charged term: every row is a Python int.",
+   "score": {
+    "numerator": "1277881",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger37.json",
+    "evidence/arm37.json",
+    "evidence/bounds37.json",
+    "evidence/trap37.json",
+    "evidence/protocol37.json",
+    "evidence/audit37.json",
+    "evidence/prices28.json",
+    "public-note.md",
+    "scripts/regen37.py",
+    "scripts/cert37.py",
+    "scripts/arm37.py",
+    "scripts/bounds37.py",
+    "scripts/smoke37.py",
+    "scripts/audit37.py",
+    "scripts/protocol37.py",
+    "scripts/ir28/dict28.c",
+    "scripts/ir25/kernels.c",
+    "scripts/toy28.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

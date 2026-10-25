@@ -1,0 +1,11 @@
+{
+ "rule": "W_total is TOTAL WORK.  (a) EVERY executed step is charged at the SINGLE frequency-independent price max(MUL span, SQR span) = 47924 Ir -- the guard-squaring substitution is DELETED, so no cheaper step is ever assumed.  (b) The launch rule executes S steps at a per-trail cap L = 65536, so the number of trail starts is ceil(S/L) = 1461847968611600655368414726242031: a trail of length AT MOST L forces AT LEAST S/L starts, and the schedule produces exactly that many because every trail runs to the cap and no early abort exists on the production path.  (c) Each start is priced as a COLD two-scalar exponentiation y = g^a z^b (1525 full multiplies at 47924 Ir) that never reads the secret x: v36 priced G.start(g^a z^{xb}) at 7660 Ir and the fixture read x.",
+ "per_trail_step_cap": 65536,
+ "starts_lower_bound": "starts >= ceil(S/L) = 1461847968611600655368414726242031 (the inequality v36 had reversed)",
+ "starts_equality_by_construction": true,
+ "restart_ir_cold": 73084100,
+ "restart_ir_v36_hot": 7660,
+ "restart_ratio": 9541.005221932115,
+ "early_abort": "removed from the production schedule: the fixture's stall-abort path is a measurement convenience and is NOT on the launched path (the run_one loop runs to the step budget and every trail to the cap), so the start count cannot exceed ceil(S/L)",
+ "guard_split": "DELETED: every step pays STEP12, frequency-independent"
+}

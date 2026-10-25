@@ -1,0 +1,45 @@
+{
+ "mode": "arm37-relation-yield",
+ "protocol_path": "scripts/protocol37.run_one -- the SAME walk, store and recovery the claim prices; no replacement loop",
+ "store": "shipped dict28.c radix store, retain shrunk to 256 so that collisions occur at census scale (disclosed: smaller key width, SAME code path)",
+ "arms": [
+  {
+   "trail": 64,
+   "seeds": 3,
+   "steps": 180096,
+   "hits": 14383,
+   "within": 257,
+   "cross": 14126,
+   "den_nonzero": 13175,
+   "recovered": 13175,
+   "within_den": 248,
+   "within_rec": 248,
+   "yield": 0.9160119585621915,
+   "yield_cp_lower": 0.9121104282341521,
+   "yield_rule": "usable_relation / actual_hits, both classes pooled, 95% CP lower bound"
+  },
+  {
+   "trail": 65536,
+   "seeds": 3,
+   "steps": 196608,
+   "hits": 186894,
+   "within": 186894,
+   "cross": 0,
+   "den_nonzero": 186888,
+   "recovered": 186888,
+   "within_den": 186888,
+   "within_rec": 186888,
+   "yield": 0.9999678962406497,
+   "yield_cp_lower": 0.9999366367537023,
+   "yield_rule": "usable_relation / actual_hits, both classes pooled, 95% CP lower bound"
+  }
+ ],
+ "v36_premise": 0.578125,
+ "floor": 0.39,
+ "schedule_sensitivity": {
+  "yield_at_64": 0.9121104282341521,
+  "yield_at_shipped": 0.9999366367537023,
+  "rule": "the debit uses the SHIPPED schedule's lower bound; the L=64 arm is the control that shows the measurement is schedule-sensitive"
+ },
+ "p_used": 0.5273138413228692
+}

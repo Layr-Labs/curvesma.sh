@@ -1,0 +1,50 @@
+{
+ "mode": "audit37-four-plants",
+ "a_borrow": {
+  "neg1_equals_m_minus_1": true,
+  "neg1_value_hex": "0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa",
+  "old_limb_local_rule_value": "0xffffffffffffffff",
+  "old_rule_fails_planted_case": true,
+  "old_rule_note": "v36's (0 - A[j]) per limb gives the low limb 2^64-1 with zero upper limbs, i.e. 0xffffffffffffffff, not m-1",
+  "randoms": 1000,
+  "mismatches": 0,
+  "reduce_overflow_mismatches": 0,
+  "modulus": "p (381-bit production base field)",
+  "landing": "borrow-propagating sub/add/neg and carry-limb reduce all match the Python reference exactly"
+ },
+ "b_cold_start": {
+  "start_matches_public_combination": true,
+  "start_source_reads_secret": false,
+  "restart_ir_cold": 73084100,
+  "restart_ir_v36": 7660,
+  "row_changed": true,
+  "rule": "a cold attack constructs the start from the public g and z only; the priced start is 2 two-scalar powerings at the per-step multiply price"
+ },
+ "c_occupancy": {
+  "sparse_S_1000": {
+   "reached": "1000",
+   "S_over_M": 7.703719777548943e-31,
+   "regime": "sparse: bound == S (every record is a new node)",
+   "approx_S": true
+  },
+  "dense_S": {
+   "reached": "1298074214633706907132624082305024",
+   "S_over_M": 73804.46155612446,
+   "regime": "dense: reached == M, because M*e^-x < 1 (14*S/M >= 1100)",
+   "equals_M": true
+  },
+  "dense_six_ceil_value": "34262061764334390360197220146298",
+  "dense_six_ceil_below_occupancy": true,
+  "flagged": "the v36 bound is 37.9 x BELOW the occupancy"
+ },
+ "d_yield_schedule": {
+  "yield_cp_lower_at_64": 0.9142513980096021,
+  "hits_at_64": 4904,
+  "yield_cp_lower_at_113": 0.9488127786108081,
+  "yield_cp_lower_at_shipped": 0.9998157654887099,
+  "hits_at_shipped": 64276,
+  "schedule_sensitive": true,
+  "rule": "lengthening the trail must RAISE the yield if the arm measures the schedule and not a constant: 64 < 113 < 65536 in this run"
+ },
+ "all_four_pass": true
+}
