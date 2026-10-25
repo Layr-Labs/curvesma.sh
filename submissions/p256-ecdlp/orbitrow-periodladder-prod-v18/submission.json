@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp v18: carried 256-bit external scatter (planted >2^32 bucket control), price anchors shipped in-package, MEASURED R=2^20 production rung (100 trials) pooled into the ladder, unconditional 2-cycle claim deleted; claim 128.7369",
+  "claims": [
+    {
+      "score": {
+        "numerator": "1287369",
+        "denominator": "10000"
+      },
+      "statement": "For NIST P-256 Q=[x]P the full-store rho walk of argument.md is claimed at total classical work at most 2^128.7369 target-group-operation equivalents (reduced rational 1287369/10000, copied from evidence/claim_v18.json). Prices: fe_mul 148 Ir, fe_add/fe_sub 27 Ir (evidence/p256_fe_v15.c + fe_disasm_sample.txt + trace_counts.json ship in the package), affine addition 606 Ir, batch-inversion share 444 Ir, table/canon/append 10+20+12 Ir, and a 1002.5 Ir global radix sort plus witness extraction from experiments/radix_sort_v18.c: 16 LSD passes of 16 bits over 4 x u64 limbs with 4 x u64 counters on every pass, priced clear 0.25 + count 22.0 + prefix 2.062 + carried external scatter 24.5 = 60.312 Ir/record/pass, plus witness scan/emit 37.5. The scatter carries the full 256-bit bucket cursor with an explicit carry chain and addresses a chunked external store through the 256-bit byte address 48*pos (at V=2^127.67 the stream is 2^133.25 bytes, so no 64-bit offset exists); planted control: bucket cursors 2^32+17, 2^64+5 and 2^128+3 scatter all 4096 records to their exact positions under v18, while the v17 low-word path writes the same record at position 5 and faults when the low word alone is 2^40. Executed at 2^20 records: sorted=1, 16777216 records scattered through the carried path, 805306368 bytes, collisions=256, and the collision-free fill emits zero witnesses. Total 2094.6 Ir = 2.094554 units at protected C=1000; work = 127.67 + log2(units) = 128.736643, plus cycle 2.265e-07 and replay 1.667e-04 relative, plus table construction, giving 2^128.7369. Success is measured, not transferred: the selector-period ladder censuses R in {64,256,1024,4096,2^20} at 16 full periods every rung, fresh secret per trial, lambda held at 0.634, exact Clopper-Pearson bounds, success = at least one coefficient-nontrivial collision that recovers x, useful_per_collision = 1.00 everywhere. The R=2^20 PRODUCTION rung is executed: 49/100 = 0.4900, CP-95 lower 0.3886, 71 collisions, and its first 24 trials reproduce the v17 24-trial cell exactly. Pooled over all five rungs including the production cell: 752/1640 = 0.4585, CP-95 lower 0.4342, above the 0.39 floor. The production cell alone falls 0.0014 short of the floor and is reported as such. The v16 walk-state canonicalisation defect is NOT claimed as an unconditional 2-cycle: a gap-2 return of a canonicalised state requires the sign-cancellation congruence v2 = eps1*v1 or 2*eps1*S + eps1*v1 (mod q) between the two rows, which an advancing selector realises only with probability ~1/R, so no permanence is claimed; the cycle row is the measured per-window loss in cycle_channel_v16.json (R=32/64/128). Collision policy uses record fields only (32B canonical key + 20-bit trail + 108-bit step): every cross-trail hit replays both trails at the dependent 57586 Ir/step, the replay decides triviality and recovers x otherwise, and rejected hits are charged their own pair; 0.6378 collisions per challenge, 3.2756 trail-pairs charged, relative cost 1.667e-04. Storage log2 134.2550 bytes (96V, external) is disclosed and non-binding.",
+      "evidence": [
+        "argument.md",
+        "public-note.md",
+        "evidence/insn_price.json",
+        "evidence/p256_fe_v15.c",
+        "evidence/trace_counts.json",
+        "evidence/fe_disasm_sample.txt",
+        "evidence/period_ladder_v17.json",
+        "evidence/ladder_R2p20_W1_16p.json",
+        "evidence/ledger_v18.json",
+        "evidence/claim_v18.json",
+        "evidence/radix_v18.json",
+        "evidence/audit_v18.json",
+        "evidence/cycle_channel_v16.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
