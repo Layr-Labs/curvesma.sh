@@ -1,0 +1,98 @@
+{
+ "at_cap": {
+  "completed": 35710,
+  "consumed": 15520,
+  "credit": 20190,
+  "deferred": 0,
+  "event": "accept",
+  "inflight": 128,
+  "launches": 485,
+  "round": 848,
+  "t": 35710
+ },
+ "bootstrap": {
+  "completed": 0,
+  "consumed": 32,
+  "credit": -32,
+  "deferred": 0,
+  "event": "bootstrap",
+  "inflight": 1,
+  "launches": 1,
+  "round": 1,
+  "t": 0
+ },
+ "cfg": {
+  "S": 20000,
+  "cap": 4096,
+  "cap_mult": 128,
+  "inflight_cap": 128,
+  "launch_bound": 625,
+  "theta": 32,
+  "theta_bits": 5
+ },
+ "completed": 654518,
+ "consumed": 20000,
+ "deferred": 3628,
+ "first_defer": {
+  "completed": 35966,
+  "consumed": 15552,
+  "credit": 20414,
+  "deferred": 1,
+  "event": "defer",
+  "inflight": 128,
+  "launches": 486,
+  "round": 850,
+  "t": 35966
+ },
+ "halt": "launch_bound",
+ "last": {
+  "completed": 654517,
+  "consumed": 20000,
+  "credit": 634517,
+  "deferred": 3628,
+  "event": "bound",
+  "inflight": 1,
+  "launches": 625,
+  "round": 8710,
+  "t": 654517
+ },
+ "launch_bound": 625,
+ "launch_bound_binds": true,
+ "launches": 625,
+ "tail": [
+  {
+   "completed": 654513,
+   "consumed": 20000,
+   "credit": 634513,
+   "deferred": 3628,
+   "event": "bound",
+   "inflight": 2,
+   "launches": 625,
+   "round": 8708,
+   "t": 654513
+  },
+  {
+   "completed": 654515,
+   "consumed": 20000,
+   "credit": 634515,
+   "deferred": 3628,
+   "event": "bound",
+   "inflight": 2,
+   "launches": 625,
+   "round": 8709,
+   "t": 654515
+  },
+  {
+   "completed": 654517,
+   "consumed": 20000,
+   "credit": 634517,
+   "deferred": 3628,
+   "event": "bound",
+   "inflight": 1,
+   "launches": 625,
+   "round": 8710,
+   "t": 654517
+  }
+ ],
+ "trace_len": 8710
+}
