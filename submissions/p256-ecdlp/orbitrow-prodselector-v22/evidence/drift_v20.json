@@ -1,0 +1,398 @@
+{
+ "all_axes_flat": true,
+ "axes": [
+  {
+   "axis": "R@W64_p16",
+   "cells": [
+    {
+     "axis": 256,
+     "cp95_lower": 0.42455473649353065,
+     "cp95_upper": 0.4686023389177454,
+     "label": "X_R256_W64_p16",
+     "p_hat": 0.4465,
+     "trials": 2000,
+     "wins": 893
+    },
+    {
+     "axis": 1024,
+     "cp95_lower": 0.42008857542185474,
+     "cp95_upper": 0.4902441793614142,
+     "label": "X_R1024_W64_p16",
+     "p_hat": 0.455,
+     "trials": 800,
+     "wins": 364
+    },
+    {
+     "axis": 4096,
+     "cp95_lower": 0.4079007736646167,
+     "cp95_upper": 0.5077325550309495,
+     "label": "X_R4096_W64_p16",
+     "p_hat": 0.4575,
+     "trials": 400,
+     "wins": 183
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "cross",
+   "slope_per_log2_axis": 0.0031250000000000028,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  {
+   "axis": "periods@R256_W64",
+   "cells": [
+    {
+     "axis": 16,
+     "cp95_lower": 0.42455473649353065,
+     "cp95_upper": 0.4686023389177454,
+     "label": "X_R256_W64_p16",
+     "p_hat": 0.4465,
+     "trials": 2000,
+     "wins": 893
+    },
+    {
+     "axis": 64,
+     "cp95_lower": 0.4327655525704748,
+     "cp95_upper": 0.5141647865885806,
+     "label": "X_R256_W64_p64",
+     "p_hat": 0.47333333333333333,
+     "trials": 600,
+     "wins": 284
+    },
+    {
+     "axis": 256,
+     "cp95_lower": 0.385367636335488,
+     "cp95_upper": 0.48224477430393614,
+     "label": "X_R256_W64_p256",
+     "p_hat": 0.43333333333333335,
+     "trials": 420,
+     "wins": 182
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "cross",
+   "slope_per_log2_axis": 5.574187089556065e-19,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  {
+   "axis": "periods@R1024_W16",
+   "cells": [
+    {
+     "axis": 16,
+     "cp95_lower": 0.3315462637356381,
+     "cp95_upper": 0.47146432720295506,
+     "label": "P_R1024_p16",
+     "p_hat": 0.4,
+     "trials": 200,
+     "wins": 80
+    },
+    {
+     "axis": 64,
+     "cp95_lower": 0.3834620219830884,
+     "cp95_upper": 0.5429527609631458,
+     "label": "P_R1024_p64",
+     "p_hat": 0.4625,
+     "trials": 160,
+     "wins": 74
+    },
+    {
+     "axis": 256,
+     "cp95_lower": 0.37608918513092054,
+     "cp95_upper": 0.583564083301576,
+     "label": "P_R1024_p256",
+     "p_hat": 0.4791666666666667,
+     "trials": 96,
+     "wins": 46
+    },
+    {
+     "axis": 1024,
+     "cp95_lower": 0.31371542207217556,
+     "cp95_upper": 0.6082780024010918,
+     "label": "P_R1024_p1024",
+     "p_hat": 0.4583333333333333,
+     "trials": 48,
+     "wins": 22
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "cross",
+   "slope_per_log2_axis": 0.013859968766267564,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  {
+   "axis": "periods@R4096_W4",
+   "cells": [
+    {
+     "axis": 16,
+     "cp95_lower": 0.36038559182698765,
+     "cp95_upper": 0.5017208471715798,
+     "label": "P_R4096_p16",
+     "p_hat": 0.43,
+     "trials": 200,
+     "wins": 86
+    },
+    {
+     "axis": 64,
+     "cp95_lower": 0.2531740940008704,
+     "cp95_upper": 0.40344863145436377,
+     "label": "P_R4096_p64",
+     "p_hat": 0.325,
+     "trials": 160,
+     "wins": 52
+    },
+    {
+     "axis": 256,
+     "cp95_lower": 0.31684940653370697,
+     "cp95_upper": 0.5217678493181659,
+     "label": "P_R4096_p256",
+     "p_hat": 0.4166666666666667,
+     "trials": 96,
+     "wins": 40
+    },
+    {
+     "axis": 1024,
+     "cp95_lower": 0.18659628309601253,
+     "cp95_upper": 0.46251357810543564,
+     "label": "P_R4096_p1024",
+     "p_hat": 0.3125,
+     "trials": 48,
+     "wins": 15
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "cross",
+   "slope_per_log2_axis": -0.013258068714211344,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  {
+   "axis": "periods@R65536_W1",
+   "cells": [
+    {
+     "axis": 16,
+     "cp95_lower": 0.4565452197361475,
+     "cp95_upper": 0.6409283624620717,
+     "label": "P_R65536_p16",
+     "p_hat": 0.55,
+     "trials": 120,
+     "wins": 66
+    },
+    {
+     "axis": 64,
+     "cp95_lower": 0.35750199671976157,
+     "cp95_upper": 0.6127411917795774,
+     "label": "P_R65536_p64",
+     "p_hat": 0.484375,
+     "trials": 64,
+     "wins": 31
+    },
+    {
+     "axis": 256,
+     "cp95_lower": 0.33801781373723466,
+     "cp95_upper": 0.6619821862627653,
+     "label": "P_R65536_p256",
+     "p_hat": 0.5,
+     "trials": 40,
+     "wins": 20
+    },
+    {
+     "axis": 1024,
+     "cp95_lower": 0.24651011149057533,
+     "cp95_upper": 0.7534898885094246,
+     "label": "P_R65536_p1024",
+     "p_hat": 0.5,
+     "trials": 16,
+     "wins": 8
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "cross",
+   "slope_per_log2_axis": -0.011660447761194041,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  {
+   "axis": "walkers@R4096_p256",
+   "cells": [
+    {
+     "axis": 1,
+     "cp95_lower": 0.3661084523448648,
+     "cp95_upper": 0.5733715787239922,
+     "label": "W_R4096_W1",
+     "p_hat": 0.46875,
+     "trials": 96,
+     "wins": 45
+    },
+    {
+     "axis": 16,
+     "cp95_lower": 0.25769897284640886,
+     "cp95_upper": 0.5473041990893204,
+     "label": "W_R4096_W16",
+     "p_hat": 0.3958333333333333,
+     "trials": 48,
+     "wins": 19
+    },
+    {
+     "axis": 64,
+     "cp95_lower": 0.18799292819600225,
+     "cp95_upper": 0.5940636159920559,
+     "label": "W_R4096_W64",
+     "p_hat": 0.375,
+     "trials": 24,
+     "wins": 9
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "cross",
+   "slope_per_log2_axis": -0.016666666666666666,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  }
+ ],
+ "detector_controls": {
+  "detected_drift": true,
+  "did_not_flag_flat": true,
+  "drifting_counts_must_flag": {
+   "axis": "control_drifting",
+   "cells": [
+    {
+     "axis": 1,
+     "cp95_lower": 0.4090139996380052,
+     "cp95_upper": 0.551587601339427,
+     "label": "synthetic_0",
+     "p_hat": 0.48,
+     "trials": 200,
+     "wins": 96
+    },
+    {
+     "axis": 2,
+     "cp95_lower": 0.35074385779105427,
+     "cp95_upper": 0.4916638251226209,
+     "label": "synthetic_1",
+     "p_hat": 0.42,
+     "trials": 200,
+     "wins": 84
+    },
+    {
+     "axis": 3,
+     "cp95_lower": 0.24665803744172426,
+     "cp95_upper": 0.3790770405203267,
+     "label": "synthetic_2",
+     "p_hat": 0.31,
+     "trials": 200,
+     "wins": 62
+    },
+    {
+     "axis": 4,
+     "cp95_lower": 0.1468944882157579,
+     "cp95_upper": 0.26222636458960125,
+     "label": "synthetic_3",
+     "p_hat": 0.2,
+     "trials": 200,
+     "wins": 40
+    }
+   ],
+   "extreme_intervals_disjoint": true,
+   "mode": "pooled",
+   "slope_per_log2_axis": -0.1350953043208219,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "DRIFT_DOWN"
+  },
+  "flat_counts_must_not_flag": {
+   "axis": "control_flat",
+   "cells": [
+    {
+     "axis": 1,
+     "cp95_lower": 0.40412003342497727,
+     "cp95_upper": 0.546631982529677,
+     "label": "synthetic_0",
+     "p_hat": 0.475,
+     "trials": 200,
+     "wins": 95
+    },
+    {
+     "axis": 2,
+     "cp95_lower": 0.389479430029482,
+     "cp95_upper": 0.5317238980080451,
+     "label": "synthetic_1",
+     "p_hat": 0.46,
+     "trials": 200,
+     "wins": 92
+    },
+    {
+     "axis": 3,
+     "cp95_lower": 0.42373705031707604,
+     "cp95_upper": 0.5664133450249894,
+     "label": "synthetic_2",
+     "p_hat": 0.495,
+     "trials": 200,
+     "wins": 99
+    },
+    {
+     "axis": 4,
+     "cp95_lower": 0.3943527352614556,
+     "cp95_upper": 0.5367001422116799,
+     "label": "synthetic_3",
+     "p_hat": 0.465,
+     "trials": 200,
+     "wins": 93
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "pooled",
+   "slope_per_log2_axis": 0.001077024964058147,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  "mild_decline_sensitivity": {
+   "axis": "control_mild_decline",
+   "cells": [
+    {
+     "axis": 1,
+     "cp95_lower": 0.40412003342497727,
+     "cp95_upper": 0.546631982529677,
+     "label": "synthetic_0",
+     "p_hat": 0.475,
+     "trials": 200,
+     "wins": 95
+    },
+    {
+     "axis": 2,
+     "cp95_lower": 0.389479430029482,
+     "cp95_upper": 0.5317238980080451,
+     "label": "synthetic_1",
+     "p_hat": 0.46,
+     "trials": 200,
+     "wins": 92
+    },
+    {
+     "axis": 3,
+     "cp95_lower": 0.374901094718509,
+     "cp95_upper": 0.5167536888074271,
+     "label": "synthetic_2",
+     "p_hat": 0.445,
+     "trials": 200,
+     "wins": 89
+    },
+    {
+     "axis": 4,
+     "cp95_lower": 0.36038559182698765,
+     "cp95_upper": 0.5017208471715798,
+     "label": "synthetic_3",
+     "p_hat": 0.43,
+     "trials": 200,
+     "wins": 86
+    }
+   ],
+   "extreme_intervals_disjoint": false,
+   "mode": "pooled",
+   "slope_per_log2_axis": -0.021885329374369954,
+   "test": "exact CP-95 intervals of the extreme cells; FLAT unless disjoint",
+   "verdict": "FLAT"
+  },
+  "sensitivity_note": "the test is deliberately blunt: a monotone decline smaller than the CP width at these trial counts is reported FLAT, which is why the claim uses the carrier cell's own CP lower bound and not a fitted trend"
+ },
+ "why": "verdict d32b4f73 flaw 1: does success per trial stay put as coverage, walker count and R move, at fixed lambda = 0.634 and the production selector"
+}

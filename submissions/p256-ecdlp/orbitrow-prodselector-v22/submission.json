@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "p256-ecdlp v22: production selector measured on real P-256 (8,388,608 curve steps) matches the fixture's hazard inputs; success = 1-exp(-lambda q) with measured q; seed-level cycle bound; 128-bit locators; claim 128.9035 = 257807/2000",
+ "claims": [
+  {
+   "score": {
+    "numerator": "257807",
+    "denominator": "2000"
+   },
+   "statement": "p256-ecdlp v22. Claim 128.9035 = 257807/2000 target-group-operation equivalents for recovering x from Q=[x]P on NIST P-256 (machine-copied from evidence/claim_v22.json: log2_work 128.9034714480). WHAT THIS TREE FIXES over the rejected v21 tree (ticket e3676e56), flaw by flaw. (1) TRANSFER: the production selector FUNCTION is now measured on the actual curve. row(t) = (x(T_t) XOR (t*2654435761 mod 2^64) XOR (trail*7919)) mod 2^20 with T_{t+1} = T_t + [a_row]P + [b_row]Q, Q=[x]P, a_r = 1+(7r+3) mod 2^20, b_r = 1+(11r+5) mod 2^20; because R=2^20 divides 2^64 the selector consumes the low 20 bits of the affine x-coordinate. experiments/production_selector_v22.py runs it on real P-256 (Jacobian, a=-3, one inversion per step) for 8,388,608 steps (8 walkers x 2^20, one store, one public key, 37.68 s wall) and a production-load arm of 2,361,344 steps (2048 independent trails x 1153 steps, lambda = 0.6334, 10.56 s), and runs the FIXTURE TWIN -- identical walk, coefficients, trail ids, seeds and rho in Z/n with the representative-integer selector -- at the same scale. Hazard inputs, production vs fixture: occupancy chi2 z = -2.878 vs -1.984 over 2^20 cells (both small, same sign = under-dispersion, conservative); normalised entropy 0.995382840 vs 0.995378482; max row load 25 vs 25 at mean 8.0; lag-1 transition chi2 z = -1.324 vs +1.662 over 2^16 cells; MEASURED row-collision pairs 29,343,458 vs 29,348,635 against the birthday expectation 29,360,128 (ratios 0.999432 and 0.999609); per-trail collision means at load 0.6334 of 0.6440 vs 0.5967 (1.9 sigma apart) with Poisson chi2 0.679 and 4.934 on 2 dof (critical 5.991) and dispersion indices 1.0169 / 0.9421; 0 phase-matched row repeats in 8.4M steps. The selector's SOURCE MAP therefore does not carry the hazard: the measured hazard inputs are identical within CI, so the fixture's measured rates transfer to the production function. The distinction the verdict raised (x identifies T with -T) is kept explicit: a ROW match is an address coincidence (rate 1/R, measured above) while a KEY match (same affine x, r = (n-1)/2 = 2^255 sign classes) is the success-relevant event, and the store is keyed on the canonical x, not the row. (2) SUCCESS REFRAMED as the verdict's own cross-trail event: production per-trail load is 2^-40.66, so a challenge succeeds iff at least one CROSS-TRAIL collision occurs. X ~ Poisson(lambda = N(N-1)/(2r) = 0.632878 with N = 2^127.67 and r = 2^255), q = P(recovery | collision) measured = 1.0 (1230/1230 on the carrier and every collision in all 20 ladder cells), so P(success) = 1 - E[(1-q)^X] = 1 - exp(-lambda q) = 0.468939 (0.467932 at the q CP-95 lower bound 0.997005). The charged success is the smaller of that and the carrier cell X_R256_W64_p16's seed-level CP-95 lower bound 0.424555 (893/2000 cross-walker wins, 64 walkers, 16 full selector periods, lambda held at 0.634, 98.4% of collisions cross-walker), so success >= 0.39 with attempts = 1. The stability ladder (16..1024 periods, walkers 1..64, R 256..65536, FLAT under disjoint exact-CP tests with planted drift controls) is retained as SUPPORTING evidence. (3) CYCLE STATISTIC at the seed level, no binomial over events: 1000 seeds with a fresh secret and fresh launch schedule each (RNG line in evidence/returns_v22.json); 65/1000 cycle entries against the cell's own first-moment bound 0.49994 per trail; positive control q=1031 fires 74/100. The 188,848 repeat events are a COUNT (after a cycle entry every later step revisits the same state, so it accumulates quadratically), the v21 Clopper-Pearson interval over those events is WITHDRAWN, and the charge is a first-moment union bound needing no independence: |state| = q*R = 2^276, P(any repeat) <= C(2^107.67,2)/2^276 = 2^-61.66 = 2.745e-19 per trail. (4) 128-BIT LOCATORS: every directory entry is two 64-bit words (128 bits) holding the absolute 2^121.26-scale page/node identifier (the store needs ~2^121.26 pages and ~2^100 lowest-level nodes, so the v21 8-byte entry cannot address them); translation is priced at 7 Ir/level = 2 pair loads + radix digit shift/mask + next-node address add + presence-tag compare/branch, 42 Ir per page, 0.494118 Ir/record amortised over floor(4096/48)=85 records per page, directories (2^21 x 16 B nodes) charged at 0.011765 Ir/record and INCLUDED in the peak; whole-record pages retained from v21. Store price 76.335529 Ir/record/pass (v21: 76.0532), 1258.880229 Ir/record after 16 passes + 37.5 witness + directories, disclosed peak log2 134.2634 bytes. LEDGER: affine addition 606 + batch-inversion share 444 + batch chain 0.05434 + table index 10 + canon 20 + append 12 + sort/witness/directories 1258.880229 = 2350.934569 Ir/visit = 2.350934569 units at C=1000; log2 rows 128.9032343866; corrections: returns log2(1+2.745e-19) ~= 0, replay 1.643e-04 relative, table build (2*2^20*256*3*fe_mul) folded in, attempts 1; log2 work 128.9034714480, claim 128.9035 = 257807/2000 (ceiling at 1e-4 granularity, one ulp lower would understate). FOUR PLANTED CONTROLS in evidence/audit_v22.json: (a) the hazard-match test passes on the as-measured rows and FAILS when either fixture input is corrupted (so the bridge is checked, not asserted); (b) two planted same-point records with different coefficients on real P-256 (d_B=d_A+1, c_B=s_A-d_B x) fire 512 cross-trail hits of which all 256 nontrivial ones recover x (yield 1.0) and 256 identical-coefficient pairs are classified trivial; (c) page 2^64+5 and 2^121+12345 round-trip through the 128-bit locator while the u64 mutant corrupts 3 of 6 indices; (d) the claim is the 1-ulp-tight ceiling. DISCLOSED, NOT CLAIMED: class-scale equidistribution of x over the 2^255 sign classes is not measurable at 2^24 samples and is a conjecture stated as such; the step from 1024 measured periods to 2^87.67 periods is disclosed; no production-size attack was executed and none is claimed.",
+   "evidence": [
+    "argument.md",
+    "public-note.md",
+    "evidence/production_selector_v22.json",
+    "evidence/store_v22.json",
+    "evidence/returns_v22.json",
+    "evidence/ledger_v22.json",
+    "evidence/claim_v22.json",
+    "evidence/audit_v22.json",
+    "evidence/ladder20.json",
+    "evidence/ladder_R2p20_W1_16p.json",
+    "evidence/drift_v20.json",
+    "evidence/insn_price.json",
+    "evidence/store_v21.json",
+    "evidence/samples_v20.json",
+    "evidence/selector_identity.json",
+    "evidence/trace_counts.json",
+    "evidence/p256_fe_v15.c",
+    "experiments/production_selector_v22.py",
+    "experiments/store_v22.py",
+    "experiments/returns_v22.py",
+    "experiments/ledger_v22.py",
+    "experiments/audit_v22.py",
+    "experiments/walk_v20.py",
+    "experiments/drift_v20.py",
+    "experiments/insn_price.py",
+    "experiments/store_v21.py"
+   ]
+  }
+ ],
+ "experiments": []
+}

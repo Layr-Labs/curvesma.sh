@@ -1,0 +1,161 @@
+{
+ "a_hazard_match": {
+  "as_measured": {
+   "pass": true,
+   "rows": {
+    "entropy_difference": {
+     "pass": true,
+     "tolerance": 0.0001,
+     "value": 2.9238745861137616e-06
+    },
+    "lag1_z_difference": {
+     "pass": true,
+     "tolerance": 4.0,
+     "value": 2.597210647285302
+    },
+    "occupancy_chi2_z_difference": {
+     "pass": true,
+     "tolerance": 4.0,
+     "value": 0.8267421850179665
+    },
+    "per_trail_mean_difference_sigmas": {
+     "pass": true,
+     "tolerance": 3.0,
+     "value": 1.9044335404404922
+    }
+   }
+  },
+  "corrupt_occupancy_z": {
+   "failed_rows": [
+    "occupancy_chi2_z_difference"
+   ],
+   "pass": false
+  },
+  "corrupt_per_trail_mean": {
+   "failed_rows": [
+    "per_trail_mean_difference_sigmas"
+   ],
+   "pass": false
+  },
+  "verdict": "PASS: the as-measured rows satisfy the match test; corrupting either the occupancy z or the per-trail mean breaches it, so the bridge is CHECKED, not asserted"
+ },
+ "b_cross_collision": {
+  "R": 64,
+  "cross_trail_collisions_detected": 512,
+  "nontrivial_cross_collisions": 256,
+  "real_curve": "P-256 affine x selector, planted c_B = s_A - d_B*x",
+  "records_per_walker": 256,
+  "recoveries": 256,
+  "row_sequence_identical_steps": 256,
+  "steps": 256,
+  "store_key": "affine x (the 32 B canonical key of the shipped record), NOT the selector row: a row match is an address coincidence, a key match is the success-relevant event",
+  "trail_ids": [
+   7,
+   7,
+   7
+  ],
+  "trivial_class_0_0": 256,
+  "verdict": "PASS: planted same-x records with DIFFERENT coefficients fire the cross-trail detector and every nontrivial one recovers the secret; the identical-coefficient twin is classified TRIVIAL (0,0), so the two classes are separated, not conflated",
+  "yield_measured_nontrivial": 1.0
+ },
+ "c_locator_128": {
+  "pages_tested": 6,
+  "required_id_bits": 122,
+  "round_trip": [
+   {
+    "page": "0",
+    "round_trip_equal": true,
+    "words": [
+     "0",
+     "0"
+    ]
+   },
+   {
+    "page": "1",
+    "round_trip_equal": true,
+    "words": [
+     "1",
+     "0"
+    ]
+   },
+   {
+    "page": "1099511627793",
+    "round_trip_equal": true,
+    "words": [
+     "1099511627793",
+     "0"
+    ]
+   },
+   {
+    "page": "18446744073709551621",
+    "round_trip_equal": true,
+    "words": [
+     "5",
+     "1"
+    ]
+   },
+   {
+    "page": "2658455991569831745807614120560701497",
+    "round_trip_equal": true,
+    "words": [
+     "12345",
+     "144115188075855872"
+    ]
+   },
+   {
+    "page": "2658455991569831745807614120560689151",
+    "round_trip_equal": true,
+    "words": [
+     "18446744073709551615",
+     "144115188075855871"
+    ]
+   }
+  ],
+  "shipped_id_bits": 128,
+  "u64_mutant": [
+   {
+    "corrupts": false,
+    "mutant_value": "0",
+    "page": "0"
+   },
+   {
+    "corrupts": false,
+    "mutant_value": "1",
+    "page": "1"
+   },
+   {
+    "corrupts": false,
+    "mutant_value": "1099511627793",
+    "page": "1099511627793"
+   },
+   {
+    "corrupts": true,
+    "mutant_value": "5",
+    "page": "18446744073709551621"
+   },
+   {
+    "corrupts": true,
+    "mutant_value": "12345",
+    "page": "2658455991569831745807614120560701497"
+   },
+   {
+    "corrupts": true,
+    "mutant_value": "18446744073709551615",
+    "page": "2658455991569831745807614120560689151"
+   }
+  ],
+  "verdict": "PASS: 128-bit locators round-trip page 2^64+5 and every tested index; the u64 mutant (the v21 entry size) returns the wrong page for 3 of 6 indices, so the v21 8-byte entry cannot address the 2^121.26 pages"
+ },
+ "d_regen_ulp": {
+  "claim": 128.9035,
+  "claim_minus_ulp": 128.9034,
+  "exact_log2_work": 128.90347144801976,
+  "one_ulp_lower_would_understate": true,
+  "rational": {
+   "denominator": 2000,
+   "numerator": 257807
+  },
+  "ulp": 0.0001,
+  "verdict": "PASS: claim is the ceiling of the exact log2 work at 1e-4 granularity and the reduced rational is exact"
+ }
+}
