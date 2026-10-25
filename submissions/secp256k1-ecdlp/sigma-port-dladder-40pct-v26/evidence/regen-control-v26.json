@@ -1,0 +1,6 @@
+{
+ "test": "regen_planted_control_v26",
+ "changed": true,
+ "claim_before": "128533/1000",
+ "claim_after": "128534/1000"
+}

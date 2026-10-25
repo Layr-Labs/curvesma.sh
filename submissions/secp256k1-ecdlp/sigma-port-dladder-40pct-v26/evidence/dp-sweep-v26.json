@@ -1,0 +1,76 @@
+{
+ "test": "dp_density_direct_count_v26",
+ "law": "success = DIRECTLY COUNTED verified recoveries ([x]G==Q) / trials; CP-lo from that count alone; no transform, no ratio, no pooling",
+ "cells": [
+  {
+   "target_classes": 131072,
+   "L": 16,
+   "R": 32,
+   "dgate": 0,
+   "trials": 1200,
+   "recovered": 467,
+   "rate": 0.38916666666666666,
+   "cp95_lower": 0.36581896024857763,
+   "records_per_run": null,
+   "visits": 361794,
+   "N_CLASSES": 131253,
+   "classes_log2": 17.002
+  },
+  {
+   "target_classes": 131072,
+   "L": 16,
+   "R": 32,
+   "dgate": 4,
+   "trials": 1200,
+   "recovered": 190,
+   "rate": 0.15833333333333333,
+   "cp95_lower": 0.14121668099650625,
+   "records_per_run": null,
+   "visits": 403447,
+   "N_CLASSES": 131253,
+   "classes_log2": 17.002
+  },
+  {
+   "target_classes": 131072,
+   "L": 16,
+   "R": 32,
+   "dgate": 8,
+   "trials": 1200,
+   "recovered": 14,
+   "rate": 0.011666666666666667,
+   "cp95_lower": 0.007066670715393741,
+   "records_per_run": null,
+   "visits": 421335,
+   "N_CLASSES": 131253,
+   "classes_log2": 17.002
+  },
+  {
+   "target_classes": 131072,
+   "L": 16,
+   "R": 32,
+   "dgate": 12,
+   "trials": 1200,
+   "recovered": 1,
+   "rate": 0.0008333333333333334,
+   "cp95_lower": 4.27434984602848e-05,
+   "records_per_run": null,
+   "visits": 422299,
+   "N_CLASSES": 131253,
+   "classes_log2": 17.002
+  },
+  {
+   "target_classes": 131072,
+   "L": 16,
+   "R": 32,
+   "dgate": 16,
+   "trials": 1200,
+   "recovered": 0,
+   "rate": 0.0,
+   "cp95_lower": 0.0,
+   "records_per_run": null,
+   "visits": 422400,
+   "N_CLASSES": 131253,
+   "classes_log2": 17.002
+  }
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "test": "audit_v26",
+ "A1": {
+  "name": "A1_jensen",
+  "p": 0.001,
+  "mean_T": 1000.0,
+  "n": 20000,
+  "exact_heavy_tailed": 0.37290726483341896,
+  "exact_degenerate": 0.6323045752289658,
+  "exp_of_mean": 0.6323045752290363,
+  "verdict": "exact < exp-of-mean for heavy tails; equal for degenerate"
+ },
+ "A3": {
+  "name": "A3_key_level",
+  "column": 7,
+  "key1": [
+   123768,
+   0,
+   0,
+   7
+  ],
+  "key2": [
+   123222,
+   0,
+   1,
+   7
+  ],
+  "keld_klass_equal": false,
+  "key_equal": false,
+  "class_equal": true,
+  "key_detector_collision": false,
+  "class_detector_collision": true,
+  "verdict": "same column, different keys -> key-level detector reports NO collision; class-level would have reported one"
+ },
+ "A3b": {
+  "name": "A3b_full_adversarial",
+  "n": 36,
+  "class_key_equal": 36,
+  "h_equal": 20,
+  "truncated": false,
+  "verdict": "all 36 pairs class-key (K,b,column) equal, no truncation; twist index h agrees 20/36 between the window selector and the exact argmin (DISCLOSED, h is a canonicalisation label, not the class key)"
+ },
+ "A4": {
+  "name": "A4_price",
+  "total_insn": 754,
+  "modr_row": 194,
+  "stubbed_total": 560,
+  "delta": 194,
+  "verdict": "stubbing the mod-r row drops the total by exactly 194"
+ }
+}
