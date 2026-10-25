@@ -1,0 +1,36 @@
+{
+ "version": 1,
+ "title": "Claim 127.7152: executed six-limb element-key formation, exponent-invariant walk (y = g^A z^D on every step), exact S-step schedule, occupancy-bounded radix store with a priced >2^64 address translation",
+ "claims": [
+  {
+   "statement": "Recover x from z = g^x in BLS12-381 GT by an element-keyed rho walk, returning [x]P0 verified by e(P,Q)=z. CLAIM. Smallest n/10000 with 20000*2^(n/10000) >= W (exact integer test, n-1 asserted to fail); W = 5586391883819969938334540032101330412745440 is the exact sum of 16 rows in evidence/ledger37.json, recomputed by scripts/cert37.py. PRICED = EXECUTED. Group.state and Group.step CALL the shipped SIX-LIMB routines through ctypes on every step: d28_l6_sub/neg propagate borrow across six limbs and reduce mod m, d28_l6_add carries and conditionally subtracts m, d28_montmul6 is a six-limb Montgomery CIOS. d28_keys12_form6 forms the KEY from the element's two residues with one montmul and one add -- element key, no class canonicalisation and NO Python key rule (v37 called Tower.keys12 and its twelve-lane fold was measured to collapse to a single key over 200 random elements: verdict 4558f762 flaw 3). Rows: element key 1707 Ir/step, coefficient update 3288 Ir/step, address translation 38 Ir/step. INVARIANT. The non-guard coefficient update moves A and D by the TABLE element's (a,b), scaled by lam^-kappa, so y = g^A z^D holds after EVERY step; the guard step doubles both. audit37.py checks the invariant on all 300 steps of a walk and after every arithmetic plant (v37 updated A += lam^-k A and lost the invariant: flaw 1). BUDGET. Every executed step pays max(dense-mul span, cyclo-square span) = 47924 Ir, frequency-independent. A trail of length at most L = 65536 forces AT LEAST ceil(S/L) = 1461847968611600655368414726242031 starts; the shipped loop runs until S steps are executed and TRUNCATES the last trail at the remaining budget, so no early abort exists and the count is equality by construction (flaw 4: v37 kept a stall-abort and overshot the budget). Each start is COLD, y = g^a z^b: 1525 full multiplies (73084100 Ir), never reading x, replacing v36's 7660-Ir start. STORE. Reached leaves are the uniform-address OCCUPANCY ceil(M(1-e^(-S/M))) with M = 2^110: S/M = 7.380e+04, so the occupancy is M itself (1298074214633706907132624082305024 leaves), not the 34262061764334390360197220146298 nodes the dense formula 6*ceil(S/(4*2^22)) charges -- a 37.88663459783255x understatement, flagged as a control. The 96-byte record node (ONE PER RESIDENT KEY, not per 40 records) and the 32-MiB radix node are separate constants, and a THREE-LEVEL page table with 2^22-byte pages is implemented and charged per record, so the roughly 2^137-byte store is addressed by a priced path rather than native 64-bit pointers (flaw 5). SUCCESS. Success given a genuine collision is 1 - 1/r by the relation itself, not a measured ratio: equal elements force A1 + x D1 = A2 + x D2 (mod r), so x = (A2-A1)/(D1-D2) and only D1 = D2 fails, with probability 1/r. The store keys on the element, so no Frobenius class or shift enters the debit; the 0.578125 premise and the CP bounds over correlated hits are DELETED (flaw 2), and the toy run EXECUTES the path and solves an instance (evidence/arm37.json). NO FLOAT in any charged term: every row is a Python int.",
+   "score": {
+    "numerator": "1277152",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "argument.md",
+    "certificate.json",
+    "dependencies.json",
+    "evidence/ledger37.json",
+    "evidence/arm37.json",
+    "evidence/bounds37.json",
+    "evidence/trap37.json",
+    "evidence/protocol37.json",
+    "evidence/audit37.json",
+    "evidence/prices28.json",
+    "public-note.md",
+    "scripts/regen37.py",
+    "scripts/cert37.py",
+    "scripts/arm37.py",
+    "scripts/bounds37.py",
+    "scripts/smoke37.py",
+    "scripts/audit37.py",
+    "scripts/protocol37.py",
+    "scripts/ir28/dict28.c",
+    "scripts/ir25/kernels.c"
+   ]
+  }
+ ],
+ "experiments": []
+}
