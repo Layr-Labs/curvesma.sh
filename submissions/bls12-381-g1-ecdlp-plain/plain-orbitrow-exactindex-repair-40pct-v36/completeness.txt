@@ -1,0 +1,12 @@
+completeness.txt -- ABRIDGED EVIDENCE (the per-instruction dump is 479 lines and the packed
+archive is capped at 256 KiB; regenerate the full table with `python3 completeness.py`, which
+asserts the counts below against the object it builds).
+
+row-enumeration completeness -- plain BLS12-381 G1 span (v32)
+synthetic lines appended by emit_asm() -- belong to no ledger row:
+accounting closure
+  synthetic scaffolding           : 347  (2 returns + 5 stubs x 3)
+  object instruction count        : 479
+  unattributed instructions       : 0
+  scaffolding budget              : 347 per batch / 2^18 elements = 1.324e-03 per element
+RESULT: COMPLETE -- every instruction in __text is enumerated or charged
