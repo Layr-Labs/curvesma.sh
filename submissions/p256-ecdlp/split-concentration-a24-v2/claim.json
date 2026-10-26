@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "target_id": "p256-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "algorithm": "sigma-rho-split-concentration-a24-v2",
+  "claim": {
+    "time_log2": 127.234729,
+    "memory_log2_bytes": 77,
+    "preprocessing_log2": 50,
+    "success_probability": 0.39,
+    "nonuniform_advice_bytes": 0
+  },
+  "premises": [
+    "H1 collision law with epsilon re-derived at the derived longer-entry bound",
+    "M1 and L-ori including conditional fresh-class exposure",
+    "H3 instruction pricing and forced-path bounds, with the compiled step argued A-independent at source level"
+  ],
+  "provenance": {
+    "submission_id": "b89d1d72-d9a1-4ef9-9ed7-c6ef0eec1ed3",
+    "commit": "0e1d63e9afd0fdb04b311b1ae72a2618271b371b"
+  },
+  "limitations": [
+    "Conditional analytic bound; no full-size attack execution.",
+    "Production arithmetic and reduced-order evidence reproduced in this package originate from the predecessor unless separately identified.",
+    "The A-independence of the measured per-step prices is a source-level instruction-count argument, not a new measurement.",
+    "The predecessor sensitivity multiplier 124 does not apply to the revised budget."
+  ]
+}
