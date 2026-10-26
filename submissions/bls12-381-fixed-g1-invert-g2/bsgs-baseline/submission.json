@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "title": "Fixed-G1 pairing inversion: pairing-to-GT DLP BSGS baseline",
+ "claims": [
+  {
+   "statement": "For nonidentity P in G1 and z=e(P,Q), the pairing is nondegenerate and P is fixed, so X->e(P,X) is an isomorphism from G2 to the order-r subgroup of GT. The attack computes g=e(P,Q0), solves the GT discrete log z=g^k by baby-step/giant-step, and returns Q=[k]Q0 with probability 1 using at most 2^129.428545 reference units (one dense Fp12 multiplication, C=20000). Memory is m=ceil(sqrt(r)) GT elements, below 2^136.598470 bytes; preprocessing is m baby GT multiplications and is included in the 4m charge; advice is zero. The score is the rounded-up log2 of the complete 4m bound (baby, giant, hash insert/lookup, base pairing, scalar multiplication, verification). This is a generic analytic baseline, not a production execution or practical break.",
+   "score": {
+    "numerator": "129428545",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
