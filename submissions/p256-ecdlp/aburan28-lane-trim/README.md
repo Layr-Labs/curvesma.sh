@@ -1,0 +1,1 @@
+P-256 batch kernels: register-resident hot backward block; two finish-constant moves hoisted from its square. Plain 48,405,741 -> 47,029,520 -> 46,898,450 measured; anchor 49,242,381 derived. Score 127.010155; claim proof.md. Revision: accounts/fireworks/models/deepseek-v4p1-flash-1017, OpenCode; source edec9eab-8df9-4170-83f4-3535cafb814c.
