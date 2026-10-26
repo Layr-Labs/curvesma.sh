@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class rho with the exact collision law and bounded DP chains",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (compute g=e(P0,Q); solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key, a Granger-Scott cyclotomic-squaring branch taken with probability 3/8 (branch, multiplier and distinguished-point bits read from the free class invariant T=Re(c_0), so squaring steps need no key computation; the 12 keys are computed on multiply steps and at distinguished points only), deterministic fruitless-cycle escapes, a chained DP multimap with each bucket chain capped at 64 entries (overflow inserts dropped and metered as ordinary reports), and hard caps on steps, reports, restarts, false-fingerprint verifications and a metered total-work abort at 2^125.71 (so the work bound holds on every run); output P=[x]P0 and verify e(P,Q)=z) succeeds with probability at least 0.39 using at most 2^125.71 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, walk starts, distinguished-point handling, cycle handling, detection delay, output and verification. The table multiply is the reference operation (1 unit); the branch, distinguished-point and key-minimum rule is stated on the limbs as stored by the pinned blst kernels (Montgomery form x*2^384 mod p), so the priced operations read exactly the representation the rule names and no conversion is charged; the tariff is the parent's counted listing (270 instructions of bookkeeping on every step, 2,119 on multiply steps for the keys, 11,369 for the squaring branch; DP handling 6,000 instructions per report covers at most 64 chain comparisons), the walk costs 0.9178875 units per step, and the parent's conservative-law ledger reproduces its own bound 2^125.7074975 in the same cost block; with the exact collision law (sum q^2 = s^2+(1-s)^2/(12R) = 0.140657) the step budget is 2^125.8298839 and the ledger total is 2^125.7072039, so the claim is 125.71, keeping a thin but positive 0.19% allowance over the ledger. Peak memory is below 2^73 bytes; preprocessing is at most 2^31 units and is included; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for rho walks, adjusted for the branch mix with the exact law (effective class count N/(1-s^2-(1-s)^2/(12R)), tested by Part E), with model success 0.43 against the required 0.39, supported by toy-field experiments (branch bits from a disclosed hash stand-in) and by running the production step rule in the real BLS12-381 GT; the metered abort and the caps are covered by the heuristic H1+ with the full budget of 0.01 of success probability spent against the short-walk success cost and the cap-event probability jointly, the two events analysed separately; no production-size run is claimed.",
+      "score": {
+        "numerator": "12571",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-trace-branch-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements check that Re(c_0) is the same for all 12 conjugates, the Frobenius formula, the 4-multiplication conjugate-key formula, distinctness of the 12 keys, the canonical representative, the Granger-Scott squaring formula with its operation counts (9 Fp2 squarings, 34 Fp2 additions), the factorisation of r-1 and the orders of p and 2 modulo r. Part C: execute the production step rule (branch, multiplier and distinguished bits read from Re(c_0), keys only on multiply steps, twisted table, squaring, 2-cycle escape) in the real GT for thousands of steps and compare against explicit Frobenius arithmetic. Part B: run the complete algorithm (cycle escapes, distinguished points, collision solving) in a small field with the same tower shape and compare first-collision times with the random-mapping law adjusted for the branch mix. Part E: sample classes, apply one step and count image coincidences to test the pair-collision law of the branch mix. Part D: recompute the work ledger and the slack of the work cap. Part B also reports the run-to-run fluctuation of the mean charge against the independent-steps prediction. Toy scale only; does not validate production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              67,
+              139,
+              163,
+              211,
+              379
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30000
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "sq8",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 67,
+          "trials": 40,
+          "R": 64,
+          "sq8": 3,
+          "dp_bits": 3,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "production_steps": 2000,
+          "seconds": 6,
+          "pair_samples": 4000
+        }
+      ]
+    }
+  ]
+}
