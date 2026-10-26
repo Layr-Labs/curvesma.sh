@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class rho with a cyclotomic-squaring branch priced at the measured compiled-kernel count, output Q=[x]Q0 in G2",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT, the algorithm in proof.md (compute g=e(P,Q0) with the pinned order pairing(Q0,P); if z=1, return Q=infinity without a walk; otherwise solve z=g^x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key, a Granger-Scott cyclotomic-squaring branch taken with probability 35/64 (branch, multiplier and distinguished-point bits read from the free class invariant T=Re(c_0), so squaring steps need no key computation; the 12 keys are computed on multiply steps and at distinguished points only), deterministic fruitless-cycle escapes, and hard caps on steps, reports, restarts, false-fingerprint verifications and a metered total-work abort at 2^125.62 (so the work bound holds on every run); output Q=[x]Q0 in G2 and verify e(P,Q)=z) succeeds with probability at least 0.39 using at most 2^125.62 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, walk starts, distinguished-point handling, cycle handling, detection delay, output and verification. The per-instance pairing and the verification pairing are counted in experiment.py part F on a transcription of the pinned pairing, every field operation charged one full unit, at 10,331 units each, and the G2 output [x]Q0 at its hard maximum for a 255-bit scalar (254 doublings and 254 additions over Fp2 plus the affine encoding) at most 12,809 units; with the table and starts these setup and output items total at most 2^29.9973 units, inside the 2^31 the ledger allows. The table multiply is the reference operation (1 unit); the branch, distinguished-point and key-minimum rule is stated on the limbs as stored by the pinned blst kernels (Montgomery form x*2^384 mod p), so the priced operations read exactly the representation the rule names and no conversion is charged; the prices are those itemised in the same package (submission 747ad6c9) but charged at their own counted or measured listing rather than at its rounded-up figures: the squaring branch is priced at the measured 9,708.0022 AArch64 instructions per call of a straight-line wide-lazy kernel written over blst's exported arm64 primitives and compiled in the grader's image (79,527,954 Callgrind `Ir` over 8,192 calls, rounded upward and charged at 9,709 instructions = 0.48545 unit), replacing the audited 11,369-instruction narrow listing (9 Fp2 squarings + 34 Fp2 additions + 200 moves); the same run's control, blst_fp12_cyclotomic_sqr, measures 9,803.0018, so the compiled kernel saves 95.0 instructions by flattening its call glue, and the kernel is bit-exact against the control on 1,000 random cyclotomic elements (measured-kernel.md records the blst commit f7a88067, the harness sources, the per-part split and every Callgrind count); every step carries 270 instructions of bookkeeping and multiply steps a further 2,119 instructions for the keys; distinguished-point reports go to one flat buffer of 80-byte records, sorted by the 128-bit fingerprint with eight fixed stable 16-bit radix passes and scanned for equal neighbours, at an itemised 3,831 instructions and a 4,000 charge (12 keys 2,119; two 255-bit modular multiplications 1,024; append 32; eight passes 640; scan 16), so the DP-handling term is at most 2^63.80 units and no per-report cost rests on a load factor (experiment.py part G exercises the sort and scan); the parent's charge vector (11,400 / 300 / 2,200) reproduces its own bound 2^125.7147 at its own squaring probability s=3/8 in the same cost block, and with the measured compiled squaring price and s=35/64 the walk costs 0.7801140625 units per step, so the ledger total is 2^125.6197624 and the claim is 125.62. Peak memory is below 2^74 bytes; preprocessing is at most 2^31 units and is included; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for rho walks, adjusted for the branch mix (effective class count N/(1-s^2-(1-s)^2/R)), with model success 0.43 against the required 0.39, supported by toy-field experiments and by running the production step rule in the real BLS12-381 GT; the firing of the abort and of the caps is covered by the heuristic H1+ (no percentage-point drift of the branch, cycle and report statistics over the run) with a budget of 0.01 of success probability; no production-size run is claimed.",
+      "score": {
+        "numerator": "12562",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "measured-kernel.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-trace-branch-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements check that Re(c_0) is the same for all 12 conjugates, the Frobenius formula, the 4-multiplication conjugate-key formula, distinctness of the 12 keys, the canonical representative, the Granger-Scott squaring formula with its operation counts (9 Fp2 squarings, 34 Fp2 additions), the factorisation of r-1 and the orders of p and 2 modulo r. Part C: execute the production step rule (branch, multiplier and distinguished bits read from Re(c_0), keys only on multiply steps, twisted table, squaring, 2-cycle escape) in the real GT for thousands of steps and compare against explicit Frobenius arithmetic. Part B: run the complete algorithm (cycle escapes, distinguished points, collision solving) in a small field with the same tower shape and compare first-collision times with the random-mapping law adjusted for the branch mix. Part E: sample classes, apply one step and count image coincidences to test the pair-collision law of the branch mix. Part F: on BLS12-381 compute g=e(P,Q0) for a sampled nonidentity P with a transcription of the pinned pairing(Q0,P), check g^r=1 and g!=1, form Q=[x]Q0 in G2 for a sampled x, check Q on the G2 curve with [r]Q=O and e(P,Q)=g^x, run the identity target (Q=infinity, e(P,O)=1), and count the operations of both pairings, of each branch of the G2 doubling and addition, and of the affine encoding. Part D: recompute the work ledger, with part F's counts in the setup and output items, and the slack of the work cap. Part G: sort 4,096 seeded 128-bit fingerprints with the same eight-pass stable radix sort and scan adjacent records, checking the fixed pass count, sorted order and all 8 planted duplicate groups. Part B also reports the run-to-run fluctuation of the mean charge against the independent-steps prediction. Toy scale only; does not validate production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              67,
+              139,
+              163,
+              211,
+              379
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 1024
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 14
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30000
+          },
+          "sq64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "sq64",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 67,
+          "trials": 30,
+          "R": 64,
+          "dp_bits": 3,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "production_steps": 6000,
+          "seconds": 8,
+          "pair_samples": 8000,
+          "sq64": 35
+        }
+      ]
+    }
+  ]
+}
