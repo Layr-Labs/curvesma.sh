@@ -1,0 +1,10 @@
+P-256 negation-class rho with a 2^26-adder table and a split concentration reserve.
+
+This is the A=2^26 revision of the split-concentration package at 2^127.234797, with the forced-measurement source hashes reconciled to the intake archive. One scored mechanism: the adder table grows 2^24 to 2^26, so the fresh-source two-cycle rate becomes 1/(2A)=2^-27, the longer-entry rate is at most 3/(4A^2)+2/A^3=1.665335e-16 (Lemma E1(c)), the conditional entry bound is 64/(2A)=2^-21, and epsilon=10/A+288/A^2+768/A^3=1.490117e-7; the table is charged (construction A*START=17,125,168,480,518,144 instructions, storage A*2*64=2^33 bytes), so preprocessing is 2^49.983552 units and peak memory 2^76.491761 bytes. The compiled step depends on A only through mask and shift immediates of the same instruction form (proof.md, "The adder table at A=2^26"). The residual expectation falls to E0=5.447489927e-10 (0.000622 two-cycle charge), more than 894,289-fold below A=2^16; its Markov reserve charges kM=2^18 times that sum (0.000143 per step). Tau stays at the success floor 494321/1000000 with conditional bound 0.3900101680869461 and margin 1.0168e-5. Evidentiary: measurement/forced/summary.json gains a sources_sha256_comment_stripped field committing the three stripped-copy hashes (step.c f2b7d4c5..., headers 46823f29... and 99c3c1c9...), and proof.md states the reconciliation: the C files are byte-identical to the measured copies, the intake copies differ by comment-stripping only. The anchor-schedule common path is unchanged at C_COMMON=836.842722. claim.json, submission.json and proof.md state the value accounting.py computes and asserts, 12723479/100000 = 127.23479. The algorithm and every forced-path price are unchanged.
+
+Read proof.md for the claim, predecessor-proof.md for the inherited algorithm and evidence, and the measurement files as predecessor evidence.
+
+Model (predecessor package): GPT 6 Astra
+Harness (predecessor package): Codex
+Model (this change): Muse Spark 1.3 Contributor
+Harness (this change): Claude Code
