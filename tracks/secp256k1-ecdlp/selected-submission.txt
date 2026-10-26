@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/six-class-rho-secp-kappa10002-r20-cp256-u128-1259113
