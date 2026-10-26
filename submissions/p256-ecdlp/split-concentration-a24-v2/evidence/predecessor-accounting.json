@@ -1,0 +1,108 @@
+{
+  "components_log2_units": {
+    "walk_steps": 127.370918,
+    "adder_table": 33.961183,
+    "initial_walk_starts": 49.961183,
+    "trail_restarts": 86.503624,
+    "distinguished_points": 79.576656,
+    "collision_replay": 85.39965,
+    "solve_verify_output": 16.288525,
+    "input_validation": 14.034216
+  },
+  "time_log2": "63685459/500000",
+  "time_log2_decimal": 127.370918,
+  "time_log2_float": 127.37091753055097,
+  "score_rational": {
+    "numerator": "63685459",
+    "denominator": "500000"
+  },
+  "preprocessing_log2": "24980603/500000",
+  "L": "57695294864490661436112010649",
+  "log2_L": 95.5424403266277,
+  "log2_T": 127.5424403266277,
+  "log2_S_max": 127.54244032847276,
+  "step_units": "2280090345780408477133316287492123823094870953303799790466943496713175807442514467559262906552087548234468497982324156415838332525502884923188551989456270363340006315341134310903834676856077844990672695592056908249875405886435023360636277070202471549896660671832209865646457745425238753977658990489459603938584622001409816166613489564154914533441002036087643080491008/2567944083636026468488400063725104651105644246092859683089857729256033510055231281763399396246501165090086976807805405684153512748598469644287927215807131992311740596396616072934656883831475084670390103974550734586123712571736812618587593729915864568961492067821414836008697528981724474717573299561682234078238212956315949137590867465309470788848985183989629533147125",
+  "escape_depth_bound": "73786976294838206528",
+  "ord_2_lower_bound": {
+    "smooth_part_of_r_minus_1": "378059953041213003408",
+    "ord_r_of_2_to_the_cofactor": "189029976520606501704",
+    "requirement": "ord_r(2) > |Gamma| * escape_depth_bound",
+    "holds": true
+  },
+  "success": {
+    "tau": 0.5303,
+    "eps": 0.00015285611152648926,
+    "delta": 9.5367431640625e-07,
+    "model": 0.4115238856252056,
+    "lower_bound": 0.39589785725499943,
+    "delta_abandon": 7.469587626491506e-08,
+    "p_abandon_per_trail": 7.46321534017292e-19,
+    "entry_bound_p_prime": 0.00048828125,
+    "two_cycle_entry_rate": 7.62939453125e-06,
+    "longer_entry_rate": 6.984919309616089e-10,
+    "delta_loop": 6.063624616337324e-17,
+    "delta_cut": 6.063624616337324e-17,
+    "delta_long": 4.170315287092742e-56,
+    "delta_merge": 1.3431613981369282e-14,
+    "delta_cap": 2.52651025386599e-18,
+    "delta_probe": 2.6737964512902557e-44,
+    "d_cap": 4,
+    "probe_cap": 1024,
+    "start_instructions": 255184896,
+    "expected_merges_tau": 0.5303,
+    "log2_q_long": -311.51025718273246,
+    "log2_delta_long": -183.9678168542597
+  },
+  "memory_bytes_log2": "76542441/1000000",
+  "dp_max_log2": 68.5424403285016,
+  "k_trails_log2": 68.54244032853043,
+  "meter": {
+    "c_common": 847,
+    "e_rare_per_walk_step": 0.6391403463210981,
+    "events": [
+      {
+        "name": "two_cycle_entries",
+        "rate": 7.62939453125e-06,
+        "worst_case_instructions": 83518,
+        "expected_instructions_per_walk_step": 0.6371917724609375
+      },
+      {
+        "name": "longer_entries",
+        "rate": 6.984919309616089e-10,
+        "worst_case_instructions": 2789687,
+        "expected_instructions_per_walk_step": 0.0019485738594084978
+      },
+      {
+        "name": "false_filter_matches",
+        "rate": 1.0842021724855044e-19,
+        "worst_case_instructions": 2873205,
+        "expected_instructions_per_walk_step": 3.115135102996214e-13
+      },
+      {
+        "name": "merged_steps",
+        "rate": 1.5790689064024347e-19,
+        "worst_case_instructions": 2789687,
+        "expected_instructions_per_walk_step": 4.405108000295089e-13
+      },
+      {
+        "name": "within_trail_coincidence",
+        "rate": 3.823420587608095e-57,
+        "worst_case_instructions": 6.551582387104441e+22,
+        "expected_instructions_per_walk_step": 2.504945498026571e-34
+      }
+    ],
+    "forced_maxima": {
+      "f": 41190,
+      "add": 41185,
+      "same": 32,
+      "pdp": 10,
+      "esc2": 41262,
+      "esc65": 43089,
+      "overhead": 1024
+    },
+    "reserve_per_walk_step": 40.904982164550276,
+    "charge_per_walk_step": 887.9049821645502,
+    "abort_probability_bound": "1/64",
+    "walk_steps_total": "247799404892976792622566829779312443392"
+  }
+}
