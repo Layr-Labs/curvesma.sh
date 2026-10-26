@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "title": "BLS12-381 G1 plain DLP: deterministic sorted-table BSGS",
+ "claims": [
+  {
+   "statement": "For uniform x in 0..r-1 and T=[x]P0 in BLS12-381 G1, the deterministic sorted-table baby-step/giant-step attack in proof.md recovers x with probability 1 using at most 2^130.777910 target-group-operation equivalents at C=2000 (one reference batched-affine G1 addition per unit). Memory is below 2^135.235900 bytes: m=ceil(sqrt(r)) 112-byte records plus a same-size merge-sort scratch, with a 16-byte j index in every record. Preprocessing is included (m baby additions); advice is zero. The score charges 2m reference additions and the exact merge-sort and binary-search comparison/move counts (32/64 instructions per G1 comparison/move, L=128), i.e. 10.192m units, rounded up. Success is 1 and the sort/search are deterministic. This is a generic analytic baseline, not a production execution or practical break.",
+   "score": {
+    "numerator": "130777910",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
