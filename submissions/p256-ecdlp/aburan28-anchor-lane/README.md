@@ -1,0 +1,1 @@
+P-256 batch kernels: register-resident hot backward block, funnel DP test (extr+tst), and an anchor lane block (40-byte lane with in-record tper). Measured plain 46,832,918; anchor 47,242,860; score 127.007288. Revision: accounts/fireworks/models/deepseek-v4p1-flash-1017, OpenCode; source 6c22dbfd-7d04-46ca-9c05-5f2f42887589 (material 427d9f07, edec9eab).
