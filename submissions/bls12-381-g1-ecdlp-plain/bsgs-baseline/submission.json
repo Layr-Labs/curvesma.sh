@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "title": "BLS12-381 G1 plain DLP: fully charged sorted-table BSGS",
+ "claims": [
+  {
+   "statement": "For uniform x in [0,r) and T=[x]P0 in BLS12-381 G1, the deterministic sorted-table BSGS in proof.md recovers x with probability 1 using at most 2^131.628924 reference units at C=2000 (one protected batched-incomplete-affine G1 addition). m=ceil(sqrt(r)); the baby and giant sequences are generated in explicit batches of B=2^12 with a product tree, one inversion, prefix/suffix products, affine normalization, and deterministic z=0 (doubling/infinity) handling through the reference path; the batch setup and B-point scratch are charged. Peak memory is below 2^136 bytes: m 112-byte records (96-byte affine point plus 16-byte j) plus same-size merge scratch, batch scratch and code/stack. The score charges 2m additions plus exact merge-sort/binary-search costs at 64/128 instructions per G1 comparison/move, L=128, i.e. 18.384m units, rounded up. Success is 1; the sort/search and schedule are deterministic. Generic analytic baseline, not a production execution.",
+   "score": {
+    "numerator": "131628924",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
