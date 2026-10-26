@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon with H-prime semiprime walks and bucket matching",
+  "claims": [
+    {
+      "statement": "For uniform secret s in Z_r*, given T=[s]P0 and A_i=[s^i]P0 for i=1..n with n>=2^20: Cheon's d=2^20 reduction to z=s^d in the subgroup H of order m=(r-1)/2^20, solved by a baby-step/giant-step whose elements are products of two H-primes walked in increasing order, one batched incomplete affine addition per step, 192-bit parity y-key with the six mu6 candidates per match, records routed by three data-independent hops to 2^84 owner nodes and matched in a direct-mapped bucket table with a chained pool (baby side inserted in full before the giant side probes), each node capping its own comparisons at 1.005x the per-node mean and its slots at 64 records, candidate pairs capped at 2^44 (fail on exceeding), each candidate retaining its 192-bit key and copied to both generating nodes named by its chain ids, so recovery is one linear re-walk of each of its two chains by their own generating nodes (at most 4 matching steps per chain, the kept values of the giant chain sent to the baby chain's node, at most 96 scalar multiplications per candidate), then 20 square roots and a 2^11-scalar-multiplication root-of-unity search. Heuristic success 0.4055 under H1-H3, claimed 0.40. Total work W = 143952337617827733247150307843510371 reference units at C=2000, including lists, tables with walk overhead, all records, routing with relay work, matching, candidate forwarding, recovery, kept-value forwarding, status collection, node setup, Lemma 1 and output; log2 W = 116.7930745, the bound holds for every n >= 2^20. Peak memory 2^123.3242 bytes (exact itemised sum over all nodes at full allocation, asserted as an integer inequality), preprocessing at most 2^115.7954 units (upward-rounded, integer-asserted as pre^10000 <= 2^1157954; included), no advice.",
+      "score": {
+        "numerator": "4671723",
+        "denominator": "40000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ledger-and-toy",
+      "source": "evidence.py",
+      "purpose": "Mode ledger recomputes every size, cap, memory sum and the exact score from integers; mode ec runs Algorithm A end to end on a small j=0 curve (walks, bucket matching, key-retaining candidates, one linear re-walk per chain with duplicates processed in arrival order and the 4-step cap counted as a failure, six-candidate check, d-th root) and compares success, comparison counts, false and true matches and bucket occupancy with the model. Toy scale only, one process and no routing; it does not establish production cost or production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {"type": "string", "enum": ["ledger", "ec", "all"], "maxLength": 6},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 2147483647},
+          "trials": {"type": "integer", "minimum": 20, "maximum": 2000}
+        },
+        "required": ["mode", "seed", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"mode": "all", "seed": 2026, "trials": 400}
+      ]
+    }
+  ]
+}
