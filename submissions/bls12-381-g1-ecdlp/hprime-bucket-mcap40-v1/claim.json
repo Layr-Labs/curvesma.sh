@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "hprime-bucket-mcap40-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 116.793079,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 123.3242,
+    "preprocessing_log2": 115.7954,
+    "success_probability": 0.4,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 coverage: the 6N^2 distinct rationals a w/(u a' w') hit z like independent uniform elements of H (toy: 0.4025 at 400 trials and 0.3895 at 2000 trials vs 0.3935 predicted; standard error 0.011 cannot separate 0.4055 from 0.39, so production success rests on H1)",
+    "H2/H2' H-prime density 1/2^20 among primes and exponential gaps (list sizes and the 2^33 gap bound, checked when the lists are built)",
+    "H3 key bits: 192-bit parity y-keys behave as independent uniform strings across mu6 orbits (bucket occupancy, comparison and false-match caps; toy chi-square 31.32 vs 31)"
+  ],
+  "limitations": [
+    "Analytic bound; no full-size run. Instruction counts itemised, not measured on hardware.",
+    "Memory is exponential (2^123.3242 bytes, the exact itemised sum over all nodes at full allocation, asserted as an integer inequality; records alone 2^120.66).",
+    "Per-node comparison cap, per-slot cap, candidate caps at owner and generating nodes, re-walk cap and node overflow make the run fail with total probability below 2^-20 + 2^-36 under H1 and H3 (the global candidate cap 2^40 overflows with probability below 2^-36.8 by Chebyshev; every other tail is below 2^-47); every tail is rounded towards the larger probability; charged work is the maximum, not the expectation.",
+    "Depends on the walk-with-one-addition idea of cbadde77, the H-prime semiprime construction of 6ecec8e3 / cf6d45a8 and the bucket-matching package of 0a45ddb2; the one change from that package is the global candidate-pair cap, 2^40 instead of 2^44."
+  ],
+  "lane": "exploratory"
+}
