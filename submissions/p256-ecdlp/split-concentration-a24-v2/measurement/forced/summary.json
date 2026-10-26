@@ -1,0 +1,356 @@
+{
+ "source": "measured by the rare-path forced-path harness (organizer image, -O3 -fno-tree-vectorize -mgeneral-regs-only)",
+ "full_results": "kept with the work, not in this package (the full file exceeds the package file limit)",
+ "subject": "worst-case Ir of the unbatched rare-path primitives of the P-256 rho kernel (step.c)",
+ "sources_sha256": {
+  "step.c": "5e37670dec6b416577723ca6715d6ecc69e5d31f8227e25ccc8227c4846a28bc",
+  "p256_field.h": "baf0c720aa34e9f2eea2fc7f94f169a3d6bad32be7ab3b68e6c97cd51437b5e9",
+  "p256_sub.h": "a58fa9db3d667bd11e376394e320a30284fa87d4f1d9700e45ec1bd17f8e2cf8",
+  "harness.c": "6fe9f2fd45a7187890a40a5d535460d48e522912ead5538d1ef356fd667c8ed9",
+  "harness_rare.c": "059062df813d493879f8d9e0005af3f6ed04ec1e2cce26f441387b2db918b33e",
+  "gen_bounded.py": "b4b2d87ad827079eb25e0abcd251b8a95f90b3450f8ea163e67aead48a9796b6",
+  "bounded.h": "e5302efec1c717b8146761f77b26fd6c2abd61e164cdd01b46083e47c6429ffe"
+ },
+ "sources_sha256_comment_stripped": {
+  "note": "The Yukon intake archive strips comments from submitted sources, so the intake copy of each measured C file hashes differently from the measured (commented) copy above. The two copies are the same program: the stripped bytes are the source with only C comments removed, hence the same token stream, same object code and the same Ir counts. These hashes are the stripped copies a reviewer recomputes from the supplied files with the intake rule (whole-line comments dropped with their newline; trailing comments dropped; a separating space kept only where two tokens would otherwise join).",
+  "step.c": "f2b7d4c509e4d688d46063ee0b943cd1cb5d6ef0d7e98665c4d6533f82c41416",
+  "p256_field.h": "46823f29946198a0977a9319c701cd3b4159f15d5fa45853f9c1038cdbc5d5df",
+  "p256_sub.h": "99c3c1c9f524be4fc12b132ae717cbd71813253627177e5057799deefcdffb60"
+ },
+ "toolchain": [
+  "cc (Debian 14.2.0-19) 14.2.0",
+  "valgrind-3.24.0",
+  "aarch64"
+ ],
+ "compile_flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only; bounded variants with -DPAD_FEQ=5 -DPAD_LT=0 -DPAD_DP=1",
+ "platform": "linux/arm64 container curvesma-reference-count, valgrind --tool=callgrind --collect-atstart=no, Ir between two CALLGRIND_TOGGLE_COLLECT",
+ "units": "Ir per call = Callgrind instructions of one call: the slope between N = 1000 and N = 2000 calls, minus the harness loop measured without a call or with an empty call (the cheaper), so the call, argument setup, the wrapper's tail branch, the body and the return are included and up to about 3 instructions of loop control may remain: a figure slightly above the body alone",
+ "worst_cases": {
+  "f_single_max": {
+   "ir_per_call": 41190,
+   "measured_original_max": 41188,
+   "bounded_variant_max": 41190,
+   "max_variants": [
+    "d"
+   ],
+   "all_variants_original": {
+    "a0": 40883,
+    "a1": 40887,
+    "a2": 40891,
+    "a3": 40895,
+    "d": 41188,
+    "z0": 50,
+    "z1": 54,
+    "z2": 58,
+    "z3": 62,
+    "zz": 66
+   }
+  },
+  "add_single_max": {
+   "ir_per_call": 41185,
+   "measured_original_max": 41183,
+   "bounded_variant_max": 41185,
+   "max_variants": [
+    "d"
+   ],
+   "all_variants_original": {
+    "a0": 40878,
+    "a1": 40882,
+    "a2": 40886,
+    "a3": 40890,
+    "d": 41183,
+    "z0": 45,
+    "z1": 49,
+    "z2": 53,
+    "z3": 57,
+    "zz": 61
+   }
+  },
+  "same_class_max": {
+   "ir_per_call": 32,
+   "library_memcmp_max": 32,
+   "inline_chain_max_original": 22,
+   "inline_chain_max_bounded": 22,
+   "max_variants": [
+    "m16",
+    "m17",
+    "m18",
+    "m19",
+    "m20",
+    "m21",
+    "m22",
+    "m23",
+    "m24",
+    "m25",
+    "m26",
+    "m27",
+    "m28",
+    "m29",
+    "m30",
+    "m31",
+    "me"
+   ],
+   "note": "the library memcmp (32 bytes) costs 26 when the first 16 bytes differ and 32 otherwise; rare_anchor calls it, the other sites inline a limb chain"
+  },
+  "point_is_dp_max": {
+   "ir_per_call": 10,
+   "measured_original_max": 9,
+   "bounded_variant_max": 10,
+   "max_variants": [
+    "p0",
+    "p1",
+    "p2"
+   ]
+  },
+  "escape_max_2": {
+   "ir_per_call": 41262,
+   "measured_original_max": 41256,
+   "bounded_variant_max": 41262,
+   "max_original_variants": [
+    "d.t0.p1"
+   ],
+   "original_variants": {
+    "d.t3.p0": 41223,
+    "d.t2.p0": 41225,
+    "d.t1.p0": 41229,
+    "d.t0.p0": 41233,
+    "d.te.p0": 41228,
+    "d.t3.p1": 41246,
+    "d.t2.p1": 41248,
+    "d.t1.p1": 41252,
+    "d.t0.p1": 41256,
+    "d.te.p1": 41251
+   },
+   "note": "the escape is the doubling of the canonical point of the least-key member: least-key search (loop types t0..t3, te), even-y normalisation (parity), then add_single(c, c)"
+  },
+  "escape_max_65": {
+   "ir_per_call": 43089,
+   "measured_original_max": 42894,
+   "bounded_variant_max": 43089,
+   "max_original_variants": [
+    "d.t0.p1"
+   ],
+   "original_variants": {
+    "d.t3.p0": 42231,
+    "d.t2.p0": 42359,
+    "d.t1.p0": 42615,
+    "d.t0.p0": 42871,
+    "d.te.p0": 42551,
+    "d.t3.p1": 42254,
+    "d.t2.p1": 42382,
+    "d.t1.p1": 42638,
+    "d.t0.p1": 42894,
+    "d.te.p1": 42574
+   },
+   "note": "the escape is the doubling of the canonical point of the least-key member: least-key search (loop types t0..t3, te), even-y normalisation (parity), then add_single(c, c)"
+  },
+  "esc_seen_max": {
+   "ir_per_call": 46,
+   "max_variants": [
+    "n4_m",
+    "n5_m"
+   ],
+   "variants": {
+    "n0_m": 25,
+    "n1_m": 33,
+    "n2_m": 38,
+    "n3_m": 43,
+    "n4_m": 46,
+    "n5_m": 46,
+    "n1_h0": 20,
+    "n2_h0": 20,
+    "n2_h1": 25,
+    "n3_h0": 20,
+    "n3_h1": 25,
+    "n3_h2": 30,
+    "n4_h0": 20,
+    "n4_h1": 25,
+    "n4_h2": 30,
+    "n4_h3": 35,
+    "n5_h0": 20,
+    "n5_h1": 25,
+    "n5_h2": 30,
+    "n5_h3": 35
+   },
+   "note": "the diagnostic repeat counter: every ring state (0..5 keys held) and every position of a hit"
+  }
+ },
+ "headline": {
+  "f_max": 41190,
+  "add_max": 41185,
+  "same_max": 32,
+  "pdp_max": 10,
+  "esc2_max": 41262,
+  "esc65_max": 43089,
+  "seen_max": 46
+ },
+ "rare_function_forced_calls": {
+  "method": "the real rare_2cycle and rare_anchor, compiled from the kernel source, on forged walks (adders chosen so that the unbatched step maps each point to the next), costs attributed by instruction address; callees (add_single, finv, memcmp) are separate rows, 'own' is the function itself with everything the compiler inlined (the escape's search and negation, the distinguished-point tests, the repeat counter, record copies, call setup)",
+  "forced_inside_the_function": "loop type of the minimum search (limb 0..3 first differing), odd y of the least member, ring state (empty, full without a match, full with the match in the last slot)",
+  "codegen_fidelity": {
+   "rare_anchor": {
+    "instructions_kernel_alone": 247,
+    "instructions_harness_rare": 246,
+    "same_instruction_sequence": false,
+    "mnemonic_count_difference": 1,
+    "longest_path_instructions_kernel_alone": null,
+    "longest_path_instructions_harness_rare": null,
+    "allowed_slack_instructions": 3,
+    "note": "same code except how a link address is formed (one add more or fewer on the negation path) and, for rare_2cycle (a constant-propagated clone in the kernel), the register allocation of a few instructions"
+   },
+   "rare_2cycle": {
+    "instructions_kernel_alone": 205,
+    "instructions_harness_rare": 204,
+    "same_instruction_sequence": false,
+    "mnemonic_count_difference": 5,
+    "longest_path_instructions_kernel_alone": 192,
+    "longest_path_instructions_harness_rare": 191,
+    "allowed_slack_instructions": 3,
+    "note": "same code except how a link address is formed (one add more or fewer on the negation path) and, for rare_2cycle (a constant-propagated clone in the kernel), the register allocation of a few instructions"
+   }
+  },
+  "rare_2cycle": {
+   "own_ir_max": 191,
+   "own_by_ring_mode": {
+    "0": 167,
+    "1": 188,
+    "2": 176
+   },
+   "measured_whole_call_ir": 82259,
+   "additions": 2,
+   "bound_ir": 82561,
+   "false_filter_match": {
+    "own": 39,
+    "total_measured": 40933,
+    "bound_ir": 41227,
+    "calls": {
+     "add_single": 1,
+     "memcmp": 0
+    }
+   }
+  },
+  "rare_anchor": {
+   "own_ir_affine_in_len": {
+    "intercept": 107,
+    "per_member": 59,
+    "from": "len 2 and 65, maximum over worst=0..4 and ring modes 0..2"
+   },
+   "cycle_of_len_65": {
+    "own_measured": 3939,
+    "own_bound": 3942,
+    "callee_calls": {
+     "add_single": 66,
+     "memcmp": 65
+    },
+    "total_measured": 2702925,
+    "bound_ir": 2724232,
+    "bound_covers_measured": true
+   },
+   "cycle_of_len_2": {
+    "own_measured": 222,
+    "own_bound": 225,
+    "callee_calls": {
+     "add_single": 3,
+     "memcmp": 2
+    },
+    "total_measured": 123201,
+    "bound_ir": 123844,
+    "bound_covers_measured": true
+   },
+   "no_cycle_65_steps": {
+    "total_measured": 2659972,
+    "own": 2169,
+    "calls": {
+     "add_single": 65,
+     "memcmp": 65
+    },
+    "bound_ir": 2681277
+   },
+   "look_ahead_dp_at_step_64": {
+    "total_measured": 2619070,
+    "own": 2156,
+    "calls": {
+     "add_single": 64,
+     "memcmp": 64
+    },
+    "bound_ir": 2640047
+   },
+   "max_bound_ir": 2724232,
+   "ring_modes_len65": {
+    "0": 3918,
+    "1": 3939,
+    "2": 3926
+   }
+  },
+  "formulas": {
+   "rare_2cycle": "own + 2*add_max (the f_single and the escape's doubling); the same_class chain, the escape's search and negation and the repeat counter are inlined in own",
+   "rare_anchor": "own(len) + (len + 1) * add_max + len * memcmp_max for a cycle of len classes (len <= 65): len f_single, one doubling in the escape, len library memcmp; own(len) is the instructions of rare_anchor itself and of the escape function it calls (control plus the minimum search, the negation, the distinguished-point tests, the diagnostic repeat counter, record copies, call setup), callees add_single, finv and memcmp excluded"
+  },
+  "control_overhead": "the charged OVERHEAD of 1,024 instructions per rare event and per look-ahead step is far above the measured own cost: at most 191 for a 2-cycle check and 107 + 59 per cycle member for an anchor check"
+ },
+ "checks": {
+  "equality_bounded_vs_original": [
+   "EQ add_single cases=400000 mismatches=0",
+   "coverage add_single: addition=320068 zero-return=64077 doubling=15855",
+   "EQ f_single cases=300000 mismatches=0",
+   "EQ escape cases=300000 mismatches=0",
+   "coverage escape: zero-return=37630 point=262370 y_even_min=168963 y_odd_min=131037 min_at_0=69751 min_elsewhere=230249",
+   "EQ same_class/b_lt/feq/point_is_dp cases=2000000 mismatches=0",
+   "coverage: point_is_dp false=1524628 true=475372; b_lt a>=b=1084173 a<b=915827",
+   "eq exit=0"
+  ],
+  "bounded_covers_original_on_forced_paths": {
+   "checked": 52,
+   "failed": []
+  },
+  "count_linear_in_N": {
+   "variants": 159,
+   "all_linear": true
+  },
+  "seed_independent": {
+   "variants": 159,
+   "all_equal": true
+  }
+ },
+ "bounding_variants": "bounded.h is generated by gen_bounded.py from the text of src/step3.c: add_single, f_single, escape, same_class and point_is_dp are copied and feq/fcmp/&& are replaced by branch-free routines (or-reduced xor, borrow chain, mask select, & instead of &&); the remaining branches are the control variants that are forced. The routines carry nop padding (PAD_FEQ=5, PAD_LT=0, PAD_DP=1) so each bounded variant costs at least as much as the original on every forced path.",
+ "conditional_branch_counts_in_the_compiled_functions": {
+  "add_single": 9,
+  "b_add_single": 3,
+  "finv": 3,
+  "escape": 7,
+  "b_escape": 3,
+  "w_seen": 8,
+  "w_same_o": 4,
+  "w_same_b": 0,
+  "w_pdp_o": 1,
+  "w_pdp_b": 0,
+  "rare_anchor": 24,
+  "rare_2cycle": 21
+ },
+ "branch_kinds_and_handling": {
+  "data dependent: early-exit comparison": "all exit positions are forced one by one (classes a0..a3, z0..z3, s0..s3, t0..t3, worst=1..4) and a bounded variant replaces the chain by a straight-line routine that is padded to cost at least as much as the longest path; the maximum of both is reported",
+  "control": "every outcome forced by chosen inputs (classes d, zz, parity 0/1, scenarios) and the maximum is taken",
+  "input independent": "same decision on every call (constant exponent, or a counter fixed by len); the Ir per call is identical for all inputs, which the seed and N checks confirm",
+  "error exit (abort), not on a measured path": "reached only on arithmetic impossibilities (exceptional counter, abort); not part of a rare-path charge"
+ },
+ "field_routines": {
+  "p256_field.h": "k_mul, k_sqr, k_add, k_sub, k_to, k_from: straight-line assembly ending in csel/masks; no b./cb/tb instruction (checked: none in the file)",
+  "p256_sub.h": "k_subb and k_sub2 contain b.cs (add p back on borrow, data dependent) but step3.c uses only the branch-free k_subb_bl and k_sub2_bl, and only in batch_step; the rare paths call neither",
+  "step3_uses_branchy_sub": false
+ },
+ "library_memcmp": "glibc memcmp as resolved in the organizer image (the code at libc.so.6 0x9bfc0..0x9c068): data-dependent branch is 'first 16 bytes differ' (ccmp then b.ne); length branches are fixed by n = 32. All 33 outcomes (first differing byte 0..31, equal) are forced and measured: 17 instructions when byte 0..15 differs, 23 otherwise (body, PLT stub not counted by Callgrind)",
+ "files": {
+  "harness.c": "primitive harness (includes step.c with main renamed; wrappers, forced variants, drivers, equality tests)",
+  "harness_rare.c": "whole-function harness for rare_2cycle and rare_anchor on forged walks",
+  "gen_bounded.py / bounded.h": "bounded copies of the primitives generated from the text of step.c",
+  "make_jobs*.py, runjob*.sh, build_and_run.sh, run_rare.sh, run_all.sh": "container build and Callgrind runs",
+  "collect.py, collect_rare.py, cgaddr.py, static_longest.py, assemble.py, build_pkg_summary.py": "result processing"
+ },
+ "notes_and_limitations": [
+  "ir_per_call includes the call, the wrapper's tail branch and up to 3 instructions of measuring loop; it is slightly above the body alone.",
+  "Every control path of add_single (10), the memcmp (33 outcomes) and esc_seen (every ring state and hit) is enumerated; the minimum search is covered by the loop types, which are additive per iteration.",
+  "The harness copy of the rare functions differs from the kernel's by at most 3 instructions per call (address formation, register allocation); 3 is added to every own figure.",
+  "The long path of the distinguished-point test after an escape adds at most 3 instructions per rare call and is inside OVERHEAD.",
+  "The library memcmp outcomes are those of the glibc in the organizer image."
+ ]
+}
