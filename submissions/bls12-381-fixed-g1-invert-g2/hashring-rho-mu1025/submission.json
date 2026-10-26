@@ -1,0 +1,100 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class-folded distinguished-point rho in GT",
+ "claims": [
+  {
+   "statement": "For uniform nonidentity P in G1 and independent uniform z in GT (identity included), the sequential classical algorithm of proof.md returns Q in G2 with e(P,Q)=z with probability at least 0.39 over (P,z) and the algorithm's coins, using at most 2^125.768 total target-group-operation equivalents (dense Fp12 multiplication = 1, C = 20,000), including every table construction, pairing, start, step, probe, report, store operation, replay, verification and output step. The algorithm sets g = e(P,Q0), solves z = g^a by a distinguished-point rho walk on the 12-element Frobenius classes of GT (x ~ x^p, which acts as x -> x^lambda with lambda = p mod r of order 12) and outputs Q = [a]Q0. The class walk uses a 3-multiplication Frobenius-covariant selector (its seed d = Re(gamma*conj(c1)) is g0*(a-b), one multiplication, because the tower constant gamma is exactly g0*(1-u) with g1 = -g0, an exact congruence the package's algebra check asserts on production data), whose twelve class keys are minimised on the six stored values and their negations through one negation of their maximum rather than six materialised negations, the minimum and the maximum being carried together in one pass over the six stored values, each candidate loaded once and its index supplied by one MOVZ, and the eleventh comparison being the carry of a six-limb nb - m chain, which is 1 exactly when m <= nb, so the CSELs take the stored half on a tie and no condition reads the last limb's Z flag (the same key and twist, checked exhaustively on 117,649 six-tuples, where that one-pass network also agrees with two separate scans, on 245 small-field tuples and 40 production tuples by executing the priced AArch64 list itself, and against the direct twelve-value scan on real GT elements and their conjugates), an R = 2^14 table of twisted multipliers, a 24-class look-back window held as a 24-slot ring of the class keys together with a parallel 24-slot ring of the stored 64-bit hash words of those keys (the stored word is w_1, the word the table index and the distinguished-point test already compute, so no additional hash is evaluated and the window costs one store per accept), whose slot is advanced by a bounded three-instruction ADD/CMP/CSEL update with register operands only (the slot is incremented and reset to zero on reaching 24; masking with 23 is not reduction modulo 24 and is not used; the window length is implicit because the trail start writes the starting key into all 24 key slots and its hash word into all 24 hash slots), so an accept is an 8-instruction ring write of six key limbs and one 64-bit hash word (its address formed by a charged ADD, the 32-bit register-offset store not being encodable at LSL #3) and there is no index to maintain, and membership is 24 unrolled steps over the stored hash words, each a 64-bit LDR of the stored word, a 64-bit CMP against w_1 held in a register and a B.EQ (72 instructions), plus at most one 20-instruction hit path that loads the stored key behind the matching word and runs an exact six-limb equality test (six EOR folded by five ORR and one CBZ), at most 24*3 + 20 = 92 instructions against the 259 the sorted index array cost (charged 92, and the same on the equality and the collision path): a rule that rejects every repeat of a window key and can reject a non-member only on a 64-bit hash collision, at most 24*2^-64 per candidate and 8*24*2^-64 < 2^-56.4 per accepted step, each such collision charged as an escape and never losing a repeat, leaving the escape rate the analysis uses unchanged at 1.1/(12R) < 2^-17.44, deterministic probing, distinguished-point density 2^-80, trail cap 2^87, and exponent recovery by replaying the two colliding trails. Each multiplication slot is charged 1 + 1749/20000 units (1,749 instructions: the maximum over slot types of 1,740 hard per-item bounds from proof.md section 5, plus a 9/1740 = 0.5172% explicit margin), every row being the count of a written-out AArch64 sequence under one written-out register allocation of the whole loop, whose forced reloads are itemised in the rows that need them (the modulus limbs in each of their three blocks, the three 126-bit bounds, the two hash seeds and multiplicands, the three fp_mul argument setups, the fp12 pointers, and the state's table index h and twist index k_n, the last two in frame words because the ten fixed values fill x19-x28), and every arithmetic row that prices real code being executed rather than assumed: the run operates the priced 64-bit distinguished-point test (AND x3, x2, #0xFFFF; ORR x3, x3, x1; CBNZ x3, so all 64 bits of w_1 and the low 16 of w_2 are read and the expected report count is S_max*2^-80 = 2^45.7 inside the 2^47 cap, a 48-bit form giving 2^77.7), the membership scan, its hit path, the ring write and the seed on a register-file machine that counts the instructions it runs, so the table index (the low 14 bits of the first of the two 64-bit hash words of the class key) and the 80 distinguished-point bits (that word's 64 bits plus 16 from the second) are the executed predicate, not a description of it. The modular subtraction is executed in all three of its blocks and again as its composition: two successive subtractions under one six-limb load of p (at most 68 instructions for the pair) with the loop's live registers x19-x28 and x29 seeded from the allocation and asserted byte-identical after each subtraction, p's six registers asserted unchanged, both results checked against a Python reference, and the rejected borrow-mask shape over x19 and x20-x25 run as the negative control that the same check catches. The accepted-step budget is S_max = ceil(sqrt(2*mu*N*U)), with N = (r-1)/12 classes, mu = 41/40, x = 3903/10000, L = -ln(1-x) = ln(10000/6097), and U = sum_{k=1}^{64} x^k/k + x^65/(65(1-x)), an exact rational upper bound for L with 0 < U - L < 2^-99 (the computed gap is 6.63e-31). The ledger uses U, the larger rational bound: S_max is the least integer with S_max^2 >= 2*mu*N*U, checked in integers, the L-based ceiling being a different integer about 2^25.46 steps lower, and the total work computed from U is at most a relative 2^-99 above the total that exact L would give. The target main-event probability is 0.3903, giving total work at most 2^125.768 (log2 W = 125.76744214), and the same claim holds for any charged per-slot count up to 1,757; the claim 2^125.768 is the least thousandth at or above log2 W, proved directly by the exact integer inequalities W^1000 <= 2^125768 and W^1000 > 2^125767 on the exact rational total W formed from this S_max, so no smaller thousandth suffices. Preprocessing is at most 2^24.13 units and is included in the total; nonuniform advice is none (0 bytes); peak memory is at most 2^54 bytes (at most 2^47 store records of 96 bytes, a 113 MB twist table and under 2^20 bytes of state), all within one 2^64-byte address space. Success is a heuristic claim and rests on disclosed hypotheses: H1 (random-mapping birthday behaviour of the class walk with walk-quality loss at most mu = 41/40 and negligible coalescence loss), H2 (pseudorandomness of the two hash words of the class key, which give the uniform table index and the distinguished-point predicate, and iid uniform twist offsets for distinct classes), H3 (ideal algorithm coins). Under H1-H3 the main-event probability is at least 3903/10000 at S_max and all other losses (stated in proof.md section 6) are below 2.7e-4, so the success probability is at least 0.39003 > 0.39. This is a classical cold attack with no uncharged advice and no quantum steps; it is an analytic claim, not a production-scale execution.",
+   "score": {
+    "numerator": "125768",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "proof.md",
+    "experiment.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "hashring-rho-checks",
+   "source": "experiment.py",
+   "purpose": "One bounded run of four parts, none of which is a production-scale run. (1) ledger: recompute the exact work ledger of proof.md section 5 (S_max, M_max, the itemised per-slot instructions, the additive items, log2 W_max <= claim with the exact integer checks W^1000 <= 2^125768 and W^1000 > 2^125767, and that the selector's one-pass min-max network equals two separate scans and its two-half minimum the direct twelve-value scan on 117,649 six-tuples, and executes every written-out window sequence the price rests on: the ADD/CMP/CSEL ring-slot update is run for 200 accepts and checked to give p = k mod 24 with the slot written always the slot of the oldest stored key, the six-limb EOR/ORR/CBZ equality test is checked against exact integer equality on 3,412 pairs, the priced ring write stores the six key limbs and the 64-bit word and counts 8, the seed writes the starting key into all 24 slots and counts 121, and the membership scan is the priced 24-slot LDR/CMP/B.EQ sequence itself plus its 20-instruction hit path, run over a seeded ring, every fill 0..24, every stored key, non-members, a candidate equal to the key in slot 23 and a synthetic 64-bit hash collision, 676 candidates cross-checked against a plain set, with counts asserted exactly (72 a miss, 92 the maximum), the distinguished-point test (3 instructions, 314 operand pairs, with the w_1 = 2^32 witness that separates 80 bits from 48), the priced selector tail (218 instructions per tuple, 212 when the maximum is 0; 245 small-field tuples \u2014 51 ties and the all-zero one \u2014 and 40 production tuples), the modular subtraction in its three blocks (31 correcting, 25 when x >= y, 37 and 31 with the block's load of p) and as two subtractions under ONE load of p (68 at most, with x19-x28 and x29 asserted byte-identical after each, p's registers asserted unchanged and the rejected mask shape run as the negative control), each of those lists assembled from the proof's mnemonics and run on a register-file machine that counts what it executes (three such blocks make the row's 124; the bookkeeping and plumbing rows are priced); the memory ledger and the trap-lemma bound of section 7 (arithmetic on the stated prices). (2) algebra: on real BLS12-381 GT elements check lambda = p mod r has order 12 with lambda^6 = -1, Frobenius equals x -> x^lambda, the tower constants satisfy gamma = g0*(1-u) (g1 = -g0), g0^6 = -1/8 and zeta = 2*g0^2, the 3-multiplication selector gives the same 12 values as the general g0*a + g1*b form and those values equal the true first coordinates of c1(sigma^k(y)), the two-half minimum returns the same key and twist as the direct twelve-value scan on the element and on all twelve conjugates, the class key is Frobenius invariant, k* is covariant, and the twisted walk step is class-equivariant. (3) toy: run the complete algorithm (selector, twisted table, look-back window with probing, distinguished points, store, replay with exponent tracking, Frobenius alignment, g^a == z) over a toy tower of the production shape with real Fp12 arithmetic and a 22-23 bit subgroup, checking recovered logarithms and that tracked replays reproduce the untracked paths; its window is the production ring structure itself (keys and their hash words, the same w_1 the index uses, the same slot update and the same priced scan and six-limb test), with every membership decision cross-checked against a plain list of the same keys. (4) sim: exponent-domain emulation of the identical walk with the production table size, measuring the walk-quality constant mu_hat at the first inter-trail class repeat against an ideal value 1 and a plain-birthday control, the fraction of groups whose first repeat falls inside the S_max budget (the statistic the claim uses; ideal map 0.4197, required 0.3903), the escape rate against 1/(12R), and whether meeting trails reach the same distinguished point. Toy sizes only; extrapolation to production is a disclosed heuristic (proof.md sections 6 and 9).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "all"
+      ]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "algebra_elements": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2
+     },
+     "toy_bits": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 23
+     },
+     "toy_trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "sim_bits": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 22
+     },
+     "sim_R": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 16384
+     },
+     "sim_trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 600
+     },
+     "sim_db": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 5
+     }
+    },
+    "required": [
+     "mode",
+     "seed",
+     "algebra_elements",
+     "toy_bits",
+     "toy_trials",
+     "sim_bits",
+     "sim_R",
+     "sim_trials",
+     "sim_db"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 3,
+     "algebra_elements": 2,
+     "toy_bits": 22,
+     "toy_trials": 6,
+     "sim_bits": 22,
+     "sim_R": 16384,
+     "sim_trials": 600,
+     "sim_db": 3
+    }
+   ]
+  }
+ ]
+}
