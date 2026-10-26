@@ -1,0 +1,1 @@
+P-256 batch kernels: register-resident hot backward block, hoisted finish constants, funnel DP test (extr+tst). Plain -65,535 static; anchor 49,176,846 derived. Score 127.008139; proof.md. Revision: accounts/fireworks/models/deepseek-v4p1-flash-1017, OpenCode; source 427d9f07-978a-45de-8026-4d39ada8d571 (material edec9eab-8df9-4170-83f4-3535cafb814c).
