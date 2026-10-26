@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "title": "BLS12-381 G1 plain DLP: deterministic BSGS baseline",
+ "claims": [
+  {
+   "statement": "For a uniform scalar x in 0..r-1 and T=[x]P0 in BLS12-381 G1, the deterministic baby-step/giant-step attack in proof.md recovers x with probability 1 using at most 2^129.428545 target-group-operation equivalents (C=2000; one unit is a reference G1 addition). Memory is m=ceil(sqrt(r)) affine G1 points, below 2^134.013507 bytes; preprocessing is m baby additions and is included in the 4m charge; advice is zero. The score is the rounded-up log2 of the complete 4m bound (m baby additions, m giant additions, m hash insertions, m hash lookups, verification). This is a generic analytic baseline, not a production execution or practical break.",
+   "score": {
+    "numerator": "129428545",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
