@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: STNFS in F_{p^12} with a unit-orbit-correct per-a slice sieve, priced in Fp12-mul units",
+  "claims": [
+    {
+      "statement": "For every production instance (uniform nonidentity Q in G2, uniform z in GT, including z=1), the algorithm in proof.md returns P in G1 with e(P,Q)=z (P=infinity exactly for z=1) with success probability at least 0.39 over the uniform challenge and the algorithm's coins (>= 0.98 under the stated heuristics). The attack solves the GT discrete logarithm of z base g=e(P0,Q), a route the track rules explicitly admit, with a Special Tower Number Field Sieve in F_{p^12}: tower h = y^6 + y^3 + y^2 - y - 1 (v1-v4's; h irreducible mod p and u y a non-square in F_{p^6} are verified explicitly, so the tower is F_{p^12}), f = y^6 3p(x^2/y) mod h = x^12 - 2y x^10 + 2y^3 x^6 + y^5 x^2 + (1 + y - y^2 - y^3), g = x^2 + |u| y, with the x -> -x automorphism (aut 2). Relation collection is charged on a fundamental domain F of the unit group O_h^* (unit multiples of a sieve point give the same relation; the earlier packages v1-v4 credited every point although a point has ~8 unit multiples inside the region, an ~11x yield over-count that this package corrects): F = {(a,b) in the sigma-symmetric yield-weighted ellipsoid E (volume fraction 1/32 of the box, block-diagonal form): a canonical (Q_a-minimiser of its unit orbit, all 595 units of height <= 4 verified exactly), a5 > 0, b5 > 0, Q_a(a) <= theta}. The sieve is organised per canonical a (ARCH-E): a 6-dimensional half-slice of bucket bytes per a, laid out in lines (b5 = k) and segments of <= 2^62 bytes so that every address is a 64-bit integer; primes below 2^40 are applied line by line by exact 5-dimensional Schnorr-Euchner coset enumeration with direct byte updates, primes in [2^40, X2] by one 6-dimensional enumeration per sigma-pair emitting 12-byte bucket records to their segment with an apply pass (a standard bucket sieve); every coset origin is recentred exactly before enumeration so the walk coordinates are O(1) for every p; the fold b -> -b supplies the conjugate ideal; no 12-dimensional walk, no routing between jobs, no shared memory. Ideals above X2 are found by full-budget ECM cofactorisation of threshold survivors (small primes by trial division, large sieved primes from the records) with per-side slack (k_f, k_g) x log2 B, the lost relations (more unsieved primes than the slack admits) charged with the Dickman-conditioned Poisson count. Every sieve constant is a retired-instruction count of the shipped production-width kernel slice7.c (both paths brute-force checked bit-identical), indexed by expected points per coset; filtering is a CADO-style purge + merge simulated on the production ideal-occurrence profile with the dense columns propagated through the merge (explicit small-prime columns with valuation coefficients, additive mid band), at scales 2^15-2^18, calibrated against the De Micheli-Gaudry-Pierrot F_{p^6} record, charged with a factor-2 pad on the matrix dimension; linear algebra is block Wiedemann on the square sparse system with Schirokauer maps as right-hand sides at 35 instructions per entry (shipped kernel la_mac.s, 33 per entry) and row weight 100 (the simulated merge target, coefficients <= 60 < 255); two individual-log descents (boot on the index-p^6 subfield-coset lattice, measured boot norms, then a dynamic programme over 1-bit size levels with explicit per-node costs on the ideal's own side, ending in the factor base) are metered at a 2^104-unit cap (Markov abort <= 0.0083). Operating point A = 2^10.50, B = 2^68.50, theta = 0.4, X2 = 2^64, (k_f, k_g) = (4, 3), excess 1.2: |F| = 2^126.799 points at 196.7 instructions per point, distinct relation orbits 2^63.611 against the required 2^63.225 (+0.25-bit margin), relation collection 2^120.130 units, linear algebra 2^118.343 units (N = 2^59.64). Total work W <= 2^120.497520 target-group-operation equivalents (1 unit = one dense Fp12 multiplication = 20,000 AArch64 instructions), the full-ledger logarithm (evidence.py prints total_log2W_full_ledger = 120.497519) rounded up at 6 decimals: relcol 2^120.130 + LA 2^118.343 + descent cap 2^104 + Schirokauer maps 2^88 + factor-base construction 2^70 + canonical list 2^60 + filtering/storage/misc 2^60 + verification 2^11. No preprocessing or advice beyond this charged work; peak memory is reported (section 13: a slice is 2^71.37 bytes of bounding-box-addressed buckets in segments of <= 2^62 bytes plus 2^70.93 bytes of records), not scored. All heuristics are disclosed with support, sensitivity and limitations (H1 Murphy/Dickman smoothness with recomputed GS21 alpha; H1' 0.25-bit yield margin vs the pool's bootstrap spread; H2 measured region/orbit capture on a held-out pool regenerated in-sandbox; H3 simulated filtering with the production occurrence profile and the dense columns propagated, calibrated, padded x2; H4 retired-instruction kernel constants of the production-width kernel indexed by points per coset; H5 explicit descent dynamic programme with table ECM costs and x2 node pads; H6 pairing transfer). This is an analytic cost claim supported by exact-norm simulation, measured kernels, a filtering simulation and a descent programme, not a full-size execution.",
+      "score": {
+        "numerator": "120497520",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One stdlib-only run (imports the sibling modules filtsim.py, descent_core.py, descent_fast.py). [0] exact check that Res_y(h, f(x^2 -> -|u| y)) = 0 mod p for h = y^6 + y^3 + y^2 - y - 1, f = y^6 3p(x^2/y) mod h, g = x^2 + |u| y; [0b] h irreducible mod p (Frobenius orbit of y) and (u y)^((p^6-1)/2) = -1 in F_p[y]/h, so the tower is F_{p^12}. [1] Dickman rho from Marsaglia's exact series, checked against reference values. [U] the unit group of O_h: all products of the three embedded fundamental units up to height 4, each verified exactly to have norm +-1, count compared with the embedded brute-force count. [2] held-out targeted pool: the first `samples` seeds are regenerated (uniform integer points of the region D), their canonical-a flag is recomputed with the unit set, and for canonical points the exact norms and Q_a are compared with the embedded records; the region's point count is recomputed. [3] ellipsoid volume fraction, sigma-invariance (cross terms), canonical fraction. [4] the ARCH-E cost model at the claimed operating point from the embedded pool and the measured kernel constants: F-points, distinct relation orbits vs the required excess x U with the 0.25-bit margin, instructions per point (updates, empty cosets, setups, scan, cofactorisation), relation-collection units, filtering ratio and linear-algebra units; [5] filtering simulation with the production occurrence profile at scale 2^14 (seed), the embedded 2^15-2^19 convergence table and the DGP21 record calibration numbers. [6] the descent dynamic programme (boot bound, tree, per-log and two-log cost, Markov abort bound at the cap) with a few node lines. [7] la_mac.s inner-loop instruction count. [8] exact membership and |det| = p^6 of the embedded boot lattice. Ledger: total_log2W_full_ledger and two sensitivities. Larger `samples` re-verifies more of the pool (about 1.5 ms per canonical sample).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 12000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 2000,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
