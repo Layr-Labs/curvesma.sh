@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "title": "Fixed-G2 pairing inversion: deterministic sorted-table GT BSGS",
+ "claims": [
+  {
+   "statement": "For nonidentity Q in G2 and z=e(P,Q), the map X->e(X,Q) is an isomorphism onto the order-r subgroup of GT. The deterministic sorted-table attack computes g=e(P0,Q), solves z=g^k by BSGS, and returns P=[k]P0 with probability 1 using at most 2^129.828209 reference units (dense Fp12 multiplication, C=20000). Memory is below 2^137.637998 bytes: m=ceil(sqrt(r)) 592-byte records (GT value plus 16-byte j index) plus a same-size merge scratch. Preprocessing is included; advice is zero. The score charges 2m reference multiplications plus the exact merge-sort and binary-search comparison/move counts (128/256 instructions per GT comparison/move, L=128) and 2^24 units for the base pairing, output scalar multiplication, validation and verification, i.e. 5.2768m+2^24, rounded up. Success is 1 and the sort/search are deterministic; z=1 gives k=0 and infinity, which the acceptance allows. Generic analytic baseline, not a production execution.",
+   "score": {
+    "numerator": "129828209",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": []
+}
