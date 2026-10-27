@@ -1,0 +1,37 @@
+{
+ "schema_version": 2,
+ "target_id": "p256-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "algorithm": "sigma-rho-split-concentration-a24-lane-layout-canonical-rows-block-funnel-dp-anchor-block-metered-blinded-corrections-b20-flag-carry-envelopes",
+ "claim": {
+  "time_log2": 126.873777,
+  "memory_log2_bytes": 77,
+  "preprocessing_log2": 62.848071,
+  "success_probability": 0.39,
+  "nonuniform_advice_bytes": 0
+ },
+ "premises": [
+  "H1 collision law with epsilon re-derived at the derived longer-entry bound",
+  "M1 and L-ori including conditional fresh-class exposure",
+  "H3 instruction pricing and forced-path bounds; fixed path measured at 2^20 walks and 2^20 adders",
+  "H-trail: for a trail from fresh coins (table fixed), expected blinded-average metered correction instructions at most CORR per expected processed step (abort probability only)"
+ ],
+ "provenance": {
+  "submission_id": "b75c69bb-d881-4d46-b801-e2f670ff7f34",
+  "commit": "77ccb326ae7f10bd72d1af3e769a379b8d4d3f2b",
+  "immediate_submission_id": "1f942c41-991e-40d5-8ca6-bde134aa1a69",
+  "immediate_commit": "6b19779acdc41ff61af84a2035295f56490dad56",
+  "base_package_submission_id": "c2b498ec-e368-4297-aed4-f1fbf66251e8",
+  "base_package_commit": "5c7e63ab7bbe2d8760e03810c9866ad7295f7a10"
+ },
+ "limitations": [
+  "Conditional analytic bound; no full-size attack execution.",
+  "Rare-path prices, forced maxima and reduced-order evidence originate from the predecessor unless separately identified.",
+  "Instruction counts are exact emulated counts (QEMU user mode) of builds made in the organizer's reference-count image, cross-checked against that image's Callgrind on this kernel at 2^16 walks; a 768-instruction allowance per round (27 times the largest measured difference, 28) covers method and toolchain differences.",
+  "The 2^24-adder step is compared with the measured 2^20-adder step by disassembly, not measured.",
+  "The anchor round difference is measured at 2^16 walks and carried to 2^20 walks by its exact per-step form.",
+  "Correction work is metered and capped; H-trail is an average-only heuristic premise that affects only the abort probability."
+ ]
+}
