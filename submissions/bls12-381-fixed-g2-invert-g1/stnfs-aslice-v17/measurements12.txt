@@ -1,0 +1,73 @@
+# stnfs-aslice-v12: raw check and measurement logs (linux/arm64 Debian 12 container, GCC 12.2.0, valgrind 3.19.0 callgrind Ir)
+# Sources: slice12.c, ecm12.c, slice_mb.h (shipped) and nbound12.c (C port of embedding_bounds.py). Section A: correctness checks. Section B: slice12 callgrind
+# measurements (measure12.sh, slice of 2^26 cells). Section C: nbound12 and ecm12 callgrind measurements.
+
+######## A. correctness checks ########
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+valgrind-3.19.0
+== slice12 check (line + record paths, apply, scan, recover vs brute force), several slice sizes and segment shifts
+check log2pts=18 gs=0: region: R2=22.776 K=6 L4=43875 segments=6 cells=222594 box6=3422250 (box/cells 15.37) cells=222594 walked=1935 f/g digests MATCH | survivors 1 (ref 1) recovered records 1 (ref 1) MATCH 
+check log2pts=20 gs=1: region: R2=36.155 K=8 L4=104329 segments=4 cells=922823 box6=14188744 (box/cells 15.38) cells=922823 walked=7820 f/g digests MATCH | survivors 3 (ref 3) recovered records 3 (ref 3) MATCH 
+check log2pts=22 gs=2: region: R2=57.393 K=10 L4=279841 segments=3 cells=3794958 box6=58766610 (box/cells 15.49) cells=3794958 walked=32187 f/g digests MATCH | survivors 11 (ref 11) recovered records 11 (ref 11) MATCH 
+check log2pts=22 gs=0: region: R2=57.393 K=10 L4=279841 segments=10 cells=3794958 box6=58766610 (box/cells 15.49) cells=3794958 walked=32187 f/g digests MATCH | survivors 11 (ref 11) recovered records 11 (ref 11) MATCH 
+check log2pts=24 gs=3: region: R2=91.105 K=13 L4=658503 segments=2 cells=15511016 box6=231134553 (box/cells 14.90) cells=15511016 walked=131563 f/g digests MATCH | survivors 37 (ref 37) recovered records 37 (ref 37) MATCH 
+check log2pts=20 gs=4: region: R2=36.155 K=8 L4=104329 segments=1 cells=922823 box6=14188744 (box/cells 15.38) cells=922823 walked=7820 f/g digests MATCH | survivors 3 (ref 3) recovered records 3 (ref 3) MATCH 
+== slice12 barrett / recentre
+barrett: 1220000 reductions, bit lengths 3..63, 0 mismatches
+recentre p=1048583: max |coordinate| of representative / max |basis entry| = 0
+recentre p=16777259: max |coordinate| of representative / max |basis entry| = 0
+recentre p=2147483659: max |coordinate| of representative / max |basis entry| = 0
+recentre p=1099511627791: max |coordinate| of representative / max |basis entry| = 1
+recentre p=281474976710677: max |coordinate| of representative / max |basis entry| = 0
+recentre p=4611686018427388039: max |coordinate| of representative / max |basis entry| = 1
+recentre: coset membership failures 0
+== nbound12 check (replay of the Python reference vectors, all 2401 pool rows)
+cases=2401 reps=1 rows=2401 points=38332 evaluations=4221 leaves=3311 rejected=0 mismatches=0 ref_weighted_density=0.115474173601
+== nbound12 explore L0=64 W=128
+evaluations_total=6003 L0=64 W=128 weighted: evaluations/point=0.04232 leaves/point=0.02932 sampled-point rejected weight=0.000000 mean (f+g) bound width at the sample=5.954 bits
+== ecm12 check
+mont_mul (5 limbs): 20000 products, 0 mismatches
+
+######## B. slice12 measurements (measure12.sh; "Ir per unit" = (Ir(R2) - Ir(R1)) / (units(R2) - units(R1))) ########
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+valgrind-3.19.0
+== LINE path per update, setups included (h = points per line coset = cells / K / p)
+line p=257: Ir 801031310 -> 824681352, hits 981955 -> 1963351, Ir per unit 24.10
+line p=4099: Ir 781284654 -> 785113324, hits 123285 -> 246341, Ir per unit 31.11
+line p=65537: Ir 784343086 -> 791116334, hits 77184 -> 153880, Ir per unit 88.31
+line p=1048583: Ir 792460820 -> 807358278, hits 48339 -> 96287, Ir per unit 310.70
+== LINE path setup per (pair, line, coset)
+setup_line p=65537: Ir 73847755 -> 171495602, units 100000 -> 300000, Ir per unit 488.24
+== RECORD path per hit, per-coset recentring/centre included (h = 2 cells / p)
+record p=257: Ir 800829313 -> 824278978, hits 522274 -> 1044530, Ir per unit 44.90
+record p=65537: Ir 780768765 -> 783984892, hits 40961 -> 82082, Ir per unit 78.21
+record p=8388617: Ir 779359170 -> 781104900, hits 6395 -> 12934, Ir per unit 266.97
+record p=67108879: Ir 781584498 -> 785305881, hits 3873 -> 7840, Ir per unit 938.08
+record p=268435459: Ir 784306225 -> 790780268, hits 2743 -> 5644, Ir per unit 2231.66
+== APPLY per record (record path + apply minus record path alone, same records)
+apply p=65537: Ir per record 7.00
+== per-(slice, pair) setup6
+setup6 p=1048583: Ir 65665231 -> 147038877, units 100000 -> 300000, Ir per unit 406.87
+setup6 p=9223372036854775783: Ir 63017744 -> 137832734, units 100000 -> 300000, Ir per unit 374.07
+== per cell: zero pass (bench zero minus bench build: one extra zero pass)
+zero_cells: Ir per cell 0.625
+build (whole program incl. allocation, layout, first zero pass) Ir per suffix-box entry 27.27, per cell 12.325; rows 4124308 entries 28509425
+== per cell: scan (bench scan minus bench apply on the same records), block length 16 and 4
+scan block=16: Ir per cell 9.313 survivors 0
+scan block=4: Ir per cell 13.250 survivors 0
+== per record: recover (bench recover minus bench scan)
+recover: Ir per record 7.003 (records 38187)
+
+######## C. nbound12 and ecm12 measurements (whole program at reps 1 and 3; benchsetup = per-a + per-row setups only) ########
+== nbound12 measurements (callgrind Ir, whole program at reps 1 and 3)
+b1=130674714
+b3=273052056
+s1=105756583 s3=198640649
+e1=140904194 e3=303818912
+bench(16-blocks) Ir 1/3 reps: 130674714 273052056 evaluations/rep 4221 ; benchsetup 1/3: 105756583 198640649 ; explore(64,128) 1/3: 140904194 303818912 evaluations/rep 6003
+per block evaluation: 16-blocks 5862.7 Ir, 64/128 explore 5833.0 Ir (blocks minus per-case setups, divided by evaluations per rep)
+per-a + per-row setups per case: 19342.8 Ir
+== ecm12 mont_mul Ir per product
+mont_mul: 367.76 Ir per product
+benchrow (setup_a once per case, row_setup reps times) Ir 1/5 reps: 105748675 145313293 (2401 rows per rep)
+per-row setup (row_setup): 4119.6 Ir
