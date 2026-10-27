@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Special Tower Number Field Sieve (STNFS) with derived sieve, low-merge Block-Wiedemann, and descent bounds",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT on BLS12-381, the Special Tower Number Field Sieve (STNFS) attack in proof.md computes g = e(P, Q0) in GT, recovers a in [0, r) satisfying g^a = z in F_{p^12}^* using the degree-6 tower h(Y) = Y^6 - Y^2 + 1 with f_y(X) = X^12 - 2*y*X^10 + 2*y^3*X^6 + y^5*X^2 + y^2 - 1 and g_y(X) = X^2 - u*y at parameters A = 686 and B = 2^65.316, and returns Q = [a]Q0 in G2 satisfying e(P, Q) = z. Under the STNFS smoothness, relation-yield, sparse-rank, and special-q descent heuristics disclosed and empirically checked in proof.md and experiment.py, the attack succeeds with probability at least 0.40 over uniform challenges and fresh algorithm coins (with an oversampling ratio lambda_orb / SP_orb >= 1.39 that preserves P(RF >= SP_orb) > 0.40 even under a 25% systematic downward modeling error in mean smoothness probability) using at most 2^118.860000 total target-group-operation equivalents (normalized by C = 20,000 scalar AArch64 instructions per reference dense F_{p^12} multiplication, corresponding to at most 2^133.142459 scalar AArch64 instructions). Peak memory is at most 2^73.000000 bytes (including 2,048 bytes per unfiltered relation, full 32-byte F_r matrix coefficients alongside 8-byte column indices, factor base tables, and Block-Wiedemann working vectors); preprocessing (charging all challenge-independent polynomial selection, factor base, sieving, and linear algebra stages in full without amortization) is at most 2^118.860000 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes (2^0 bytes) and is included in memory.",
+      "score": {
+        "numerator": "5943",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-exact-norms-yield-and-ledger",
+      "source": "experiment.py",
+      "purpose": "Verify BLS12-381 STNFS polynomial identities and exact integer resultant norms in O_h = Z[y]/(y^6 - y^2 + 1) (including N_g(1+y, 0) = 1 and agreement with the 3 distinct complex conjugate-pair embeddings), validate empirical prime valuations and observe actual smooth relations on small-norm coprime pairs, compute 1/zeta_{K_h}(2) and exact TNFS Murphy alpha values alpha(f_y, h, B0) and alpha(g_y, h, B0), run Algorithm 6.1 at A = 686 and B = 2^65.316 with systematic error margin checks, and audit the complete instruction and memory ledgers.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "alpha_prime_bound": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 2000
+          },
+          "mc_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 25000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "A": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 5000
+          },
+          "B_log2_milli": {
+            "type": "integer",
+            "minimum": 50000,
+            "maximum": 80000
+          }
+        },
+        "required": [
+          "alpha_prime_bound",
+          "mc_samples",
+          "seed",
+          "A",
+          "B_log2_milli"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "alpha_prime_bound": 1000,
+          "mc_samples": 5000,
+          "seed": 42,
+          "A": 686,
+          "B_log2_milli": 65316
+        }
+      ]
+    }
+  ]
+}
