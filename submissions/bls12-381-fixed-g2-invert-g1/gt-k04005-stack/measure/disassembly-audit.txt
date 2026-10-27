@@ -1,0 +1,115 @@
+Disassembly audit of blst_fp12_cyclotomic_sqr (blst f7a88067), the squaring step's routine
+=============================================================================================
+
+Binary audited: /work/cyc2, built by harness/build-and-run.sh from blst's src/server.c with
+  cc -O3 -fno-builtin -fPIC -fno-tree-vectorize -mgeneral-regs-only
+(cc 14.2.0), blst's build/assembly.S as shipped, and harness/cyc2.c.
+Dump: objdump -d --no-show-raw-insn /work/cyc2 (the same binary whose Callgrind records are in
+callgrind/). Object hashes are printed by the build script:
+  blst.o      f3343283bb2ee765d5804c1c64f9caab110b7bceec4a03b7dad18c2f33586396
+  assembly.o  f637976256b619f22f82b7544f248514036b83952ca12036902a19cc5ffce76b
+
+1. Branch census (whole call tree reachable from blst_fp12_cyclotomic_sqr)
+--------------------------------------------------------------------------
+function                          insns  condbr  indir  backb
+__mul_384                           168       0      1      0
+sqr_382x                             88       0      1      0
+__add_mod_384                         6       0      0      0
+add_mod_384x                         24       0      1      0
+__sub_mod_384x384                    48       0      1      0
+sub_mod_384x384                      24       0      1      0
+__add_mod_384x384                    48       0      1      0
+add_mod_384x384                      24       0      1      0
+__mul_by_1_mont_384                 160       0      1      0
+__redc_tail_mont_384                 32       0      1      0
+redc_mont_384                        24       0      1      0
+sqr_fp4                             112       0      1      0
+__sub_mod_384                        32       0      1      0
+sub_mod_384x                         24       0      1      0
+__add_mod_384_ab_are_loaded          26       0      1      0
+mul_by_1_plus_i_mod_384x             32       0      1      0
+cyclotomic_sqr_fp12                 144       0      1      0
+blst_fp12_cyclotomic_sqr              1       0      0      0
+TOTAL 18 functions, 1017 static insns, 0 conditional, 16 indirect, 0 backward-b
+
+The 16 "indirect" instructions are the 16 `ret`s; there is no `br`, `blr` or `eret`. With no
+conditional branch, no backward branch and no indirect branch, the executed instruction count is
+identical for every input: the routine is straight-line, so its Callgrind count cannot depend on
+the GT element, the slice offset or the walk position. That is the input-independence claim, and
+it is why one measurement is enough.
+
+2. Static composition (call sites per function body, from the same dump)
+-----------------------------------------------------------------------
+cyclotomic_sqr_fp12 (144) = 3 x sqr_fp4 + 3 x sub_mod_384x + 15 x add_mod_384x
+                            + 1 x mul_by_1_plus_i_mod_384x
+sqr_fp4 (112)             = 3 x sqr_382x + 4 x redc_mont_384 + 3 x add_mod_384x384
+                            + 5 x sub_mod_384x384 + 1 x add_mod_384x
+sqr_382x (88)             = 88 + 2 x __mul_384
+redc_mont_384 (24)        = 24 + __mul_by_1_mont_384 + __redc_tail_mont_384
+add_mod_384x (24)         = 24 + 2 x __add_mod_384
+sub_mod_384x (24)         = 24 + 2 x __sub_mod_384
+add_mod_384x384 (24)      = 24 + __add_mod_384x384
+sub_mod_384x384 (24)      = 24 + __sub_mod_384x384
+mul_by_1_plus_i_mod_384x  = 32 + __sub_mod_384 + __add_mod_384_ab_are_loaded
+so one squaring executes 18 __mul_384, 12 redc_mont_384, 12 __mul_by_1_mont_384,
+12 __redc_tail_mont_384, 18 add_mod_384x, 3 sub_mod_384x, 15 sub_mod_384x384,
+9 add_mod_384x384 and one mul_by_1_plus_i_mod_384x. Note `__FP2x2__` is not defined in
+blst f7a88067, so the compiled path is the double-width sqr_382x/redc_mont_384 one; that is why
+the routine costs 9,803 instructions and not the 18 x 383 = 6,894 of a naive
+full-precision-multiply count, nor the 11,190 of pricing the Granger-Scott formula line by line
+through standalone blst_fp_mul calls.
+
+3. Static vs dynamic reconciliation
+-----------------------------------
+Summing the composition of section 2 with each symbol body counted once gives
+  144 + 3 x 2,860 + 3 x 88 + 15 x 36 + 90 = 9,618, plus the 1-instruction exported wrapper = 9,619.
+The dynamic Callgrind count is 9,803 per call. The gap is 184 instructions (1.88%): one `ret` for
+every executed call (181 executed call sites per squaring) plus the few instructions around them.
+The static sum cannot see them because a symbol body is counted once while its `ret` executes per
+call; and the two shared assembly entry points __mul_by_1_mont_384 and __redc_tail_mont_384 are
+entered mid-body from several callers, so a per-symbol sum is a lower bound on their executed
+share. The two figures therefore agree to within 1.9%, and the dynamic count - exact to the
+instruction, identical at n = 1, n = 65 and all five slice offsets - is the number the ledger
+charges. The static audit's role is to confirm the order of magnitude and the straight-line
+property, not to set the price.
+
+4. What the ledger charges
+--------------------------
+results.tsv gives I(n=1) = 9,823 and I(n=65) = 637,215, so the marginal per call is
+(I_65 - I_1)/64 = (637,215 - 9,823)/64 = 9,803.0, exactly, at every offset and every routine.
+That marginal is the like-for-like counterpart of the cost model's "executed instructions,
+including call and loop work" convention, which is why the same harness reproduces the model's
+two reference counts exactly: blst_fp_mul = (24,915 - 403)/64 = 383.0 and
+blst_fp12_mul = (1,494,761 - 23,017)/64 = 22,996.0.
+The earlier revision's ledger charged the whole marginal, 9,803 instructions, for the routine,
+with no deduction for the harness loop (about 5 instructions per iteration, which its walk
+loop's own 30 instructions of loop control in its 270-instruction every-step row also covered;
+its squaring step therefore carried that control twice, which can only overstate the cost). Its
+squaring step was 9,803 + 270 = 10,073 instructions = 0.50365 units of 20,000. This package
+charges the kernels/sqr.s count instead, 6,786 + 226 = 7,012 (proof.md section 5).
+
+5. Which limbs the routine returns
+----------------------------------
+This section is an argument from the blst source, not a measurement: the harness image could
+not be rebuilt for this revision, so the limb equality below was not run.
+The walk reads its decision bits from the stored Montgomery limbs of a GT element. Every
+primitive that the call tree above executes returns a fully reduced residue in [0, p):
+  * the double-width reduction tail, build/elf/mul_mont_384-armv8.S, __redc_tail_mont_384
+    (lines 1336-1372): accumulate the upper half, subtract the modulus (subs/sbcs, last
+    sbcs with the carry word), then csel ..., lo selects the difference unless it borrowed;
+  * the end of __mul_mont_384 (same file, lines 457-824, the subs/sbcs block and the
+    csel ..., lo group ending at line 818): the same conditional subtraction after the final
+    accumulation;
+  * __add_mod_384 (add_mod_384-armv8.S, label at line 42, falling through to
+    __add_mod_384_ab_are_loaded at line 50) and __sub_mod_384 (same file, label at line 530): add and
+    conditionally subtract the modulus (a trial subtraction and csel ..., lo), or subtract and add the
+    modulus back under a borrow mask, so the result is again in [0, p); __add_mod_384x384 (line 40
+    of mul_mont_384-armv8.S) and __sub_mod_384x384 (line 122) do the same for the upper half of a
+    double-width value, keeping it below p * 2^384;
+Every operand that enters those sequences is itself in [0, p) (inputs are stored values;
+double-width values are kept below p * 2^384 by the x384 add/sub routines), so a single
+conditional subtraction gives the unique representative in [0, p). A field element therefore
+has exactly one stored limb vector x * 2^384 mod p. blst_fp12_cyclotomic_sqr(a) and
+blst_fp12_mul(a, a) both return the element a^2 for a in the cyclotomic subgroup (the
+Granger-Scott map of src/fp12_tower.c lines 630-660 and the dense product agree there), each
+coordinate fully reduced, so their output limbs are identical.
