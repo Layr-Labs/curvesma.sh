@@ -1,0 +1,51 @@
+{
+ "purpose": "Cost-ledger repricing of the unroll8 package (same kernel, counts, meter): 'this_revision' records the unroll8 checks and counts; the flag-carry per-build record and the superseded c2b498ec per-site record are retained with the work (see *_retained_off_package).",
+ "this_revision": {
+  "change": "both blocks hold eight copies of the step (gen10.py U=8): backward entry tree BLOOP_X8 on x23 bits 6-8 (copy j processes w=-j mod 8), forward FLOOP entered at copy 2 with counter B",
+  "md5": {
+   "B2^20_A2^20": "b5dea6c8c9c9cdc0d68624a66a44469a",
+   "B2^20_A2^24": "e1c11077ec5c31b297742918cd221935",
+   "B2^16_A2^16": "57eb6d318f750dd66fd3188e76bd8bf6",
+   "B2^16_A2^20": "973f55cb69bd19265cbc50201b85c241"
+  },
+  "static": {
+   "copies_equal_flag_carry_copy": "forward 119, plain backward 570, anchor backward 575, slow set 30 instructions, 8 copies each",
+   "batch_step": "11,602 instructions at A=2^20 and 2^24, then 5 or 3 never-executed nops; 34 immediates differ",
+   "b_cc_sites_flag_live": 88,
+   "loop_control_saving_per_round": "3B/2-5"
+  },
+  "rounds": {
+   "B2^20_A2^20": {
+    "input2_round5_clean_fixed": 658022010,
+    "input1_round7_clean_fixed": 658022010,
+    "meter_per_walk_step_range": [
+     22.4099,
+     22.422
+    ],
+    "charged_plain_fixed": 658022038
+   },
+   "B2^16_A2^16": {
+    "plain_round2_fixed": {
+     "input1": 41164409,
+     "input2": 41164409
+    },
+    "flag_carry_kernel": 41262708,
+    "difference": 98299
+   },
+   "B2^16_A2^20": {
+    "plain_round2_fixed": {
+     "input1": 41164409,
+     "input2": 41164409
+    },
+    "anchor_round64_fixed_clean": {
+     "input1": 41492092,
+     "input2": 41492092
+    },
+    "anchor_minus_plain": 327683
+   }
+  },
+  "dumps_vs_flag_carry_build": "the five dump and stress configs of flag_carry_revision, both input sets: stdout and stderr identical"
+ },
+ "previous_revision_retained_off_package": "The c2b498ec per-site frequency record (5221 bytes) is retained with the work, not in this package; this revision's per-step meter means (22.409-22.422, this_revision.rounds) and the flag-carry record below carry the charged comparison.",
+ "flag_carry_revision_retained_off_package": "The flag-carry per-build record (4173 bytes: generator, static path, builds, compiled diff, flag liveness, a20/a24, counting, rounds, callgrind, exactness) is retained with the work; the unroll8 record above (identical stdout/stderr on the five dump and stress configs, both input sets, plus this kernel's own QEMU rounds and meter means 22.409-22.422) carries the charged comparison."
+}

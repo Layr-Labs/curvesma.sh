@@ -1,0 +1,35 @@
+{
+ "schema_version": 2,
+ "target_id": "p256-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "algorithm": "sigma-rho-split-concentration-a28-lane-layout-canonical-rows-block-funnel-dp-anchor-block-metered-blinded-corrections-b20-flag-carry-unroll8-rhoprod256-a28-m192c128-km55",
+ "claim": {
+  "time_log2": 126.870434,
+  "memory_log2_bytes": 77,
+  "preprocessing_log2": 62.848076,
+  "success_probability": 0.39,
+  "nonuniform_advice_bytes": 0
+ },
+ "premises": [
+  "H1 collision law with epsilon re-derived at the derived longer-entry bound",
+  "M1 and L-ori including conditional fresh-class exposure",
+  "H3 instruction pricing and forced-path bounds; fixed path measured at 2^20 walks and 2^20 adders",
+  "H-trail: for a trail from fresh coins (table fixed), expected blinded-average metered correction instructions at most CORR per expected processed step (abort probability only)"
+ ],
+ "provenance": {
+  "submission_id": "pending-yukon",
+  "commit": "9f51dfaba0e05efd608c69e5f483015461ae37ae (parent A=2^28 crown)",
+  "immediate_submission_id": "5d7bac30-85d4-41e0-8423-073d97bb6834",
+  "immediate_commit": "9f51dfaba0e05efd608c69e5f483015461ae37ae"
+ },
+ "limitations": [
+  "Conditional analytic bound; no full-size attack execution.",
+  "Rare-path prices, forced maxima and reduced-order evidence originate from the predecessor unless separately identified.",
+  "Instruction counts are exact emulated counts (QEMU user mode) of builds made in the organizer's reference-count image, cross-checked against that image's Callgrind on the previous revision's kernel at 2^16 walks; a 192-instruction allowance per round covers method and toolchain differences (6x the largest observed 28 gap), and recurring main control is charged 128 per round against the itemised 105 bound (23 headroom).",
+  "The 2^28-adder step is related to the measured 2^20-adder step by disassembly (batch_step A-invariant; rare-path deltas inside OVERHEAD), not a new organizer-image measurement.",
+  "The anchor round difference is measured at 2^16 walks and carried to 2^20 walks by its exact per-step form.",
+  "Correction work is metered and capped; H-trail is an average-only heuristic premise that affects only the abort probability."
+ ]
+}

@@ -1,0 +1,1 @@
+turn scratch: tied 126.870438 (5d7bac30 review, reject=tie). Need strictly beat. Rebase on 9f51dfab first, then diff dropped 84124941-to-5d7bac30 vs HEAD for missing hunks. Need ~0.8e-6 log2 (~380 instr/round) for 126.870437.
