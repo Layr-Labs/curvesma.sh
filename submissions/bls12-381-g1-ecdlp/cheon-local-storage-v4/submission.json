@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1: Cheon collision search with bounded local storage",
+  "claims": [
+    {
+      "statement": "For the full-production BLS12-381 G1 auxiliary-powers target and every n with 2^20 <= n < r, the bounded Cheon subgroup collision algorithm in proof.md recovers s with heuristic probability at least 0.40 over the uniform challenge and fresh algorithm coins, under the explicitly quantified Hwalk and Hhash random-walk/hash assumptions in section 7. Its total classical computation W(n)=(32768*M+2^64)/2000, with q=(r-1)/(6*2^20), L=2^16, M=L*ceil(4*(floor(sqrt(q))+1)/L), is less than 2^123 target-group-operation equivalents; the submitted score is 123. It uses only A_1 and A_(2^20), exact Montgomery y-orbit keys, 32-bit fixed-base tables and a bounded local distinguished-point table. All cold preprocessing, random sampling and rejected work, local reads/writes, hashing, caps and failed trials, verification, root recovery and output are included. Peak memory is below 2^44 bytes, all ISA data addresses are below 2^44, challenge-independent preprocessing is below 2^54 group equivalents and included in W, and there is no nonuniform advice. The production success bound is a disclosed exploratory extrapolation supported by the exact quotient mechanism, standard distinguished-point analysis and scoped small experiments; no production execution or theorem about SHA-256 mixing is claimed.",
+      "score": {
+        "numerator": "123",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "Recompute the exact production ledger; check four-/six-limb Montgomery and scalar SHA-256 kernels against independent references; verify production curve orbit keys, 32-bit decompositions and 44-bit addresses; force four failure caps; run reduced full-curve scalar recovery and separate scalar quotient walk trials, counting failed capped runs. Small experiments support only their actual scopes and do not certify production mixing or instruction bounds.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": [
+              "full",
+              "algebra",
+              "curve",
+              "scalar"
+            ]
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "scalar_trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "bits": {
+            "type": "integer",
+            "minimum": 22,
+            "maximum": 30
+          },
+          "logd": {
+            "type": "integer",
+            "enum": [
+              4,
+              6
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "production_points": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 24
+          }
+        },
+        "required": [
+          "phase",
+          "seed",
+          "trials",
+          "scalar_trials",
+          "bits",
+          "logd",
+          "dp_bits",
+          "production_points"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "phase": "full",
+          "seed": 11,
+          "trials": 300,
+          "scalar_trials": 1000,
+          "bits": 24,
+          "logd": 4,
+          "dp_bits": 2,
+          "production_points": 12
+        }
+      ]
+    }
+  ]
+}
