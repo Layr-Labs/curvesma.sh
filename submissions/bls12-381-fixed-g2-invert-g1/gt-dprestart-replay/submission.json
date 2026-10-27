@@ -1,0 +1,129 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class rho with a cyclotomic-squaring branch, trails restarted at distinguished points and exponents recovered by replay",
+ "claims": [
+  {
+   "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (compute g=e(P0,Q); solve z=g^x by distinguished-point Pollard rho on the 12-element Frobenius classes of GT in the van Oorschot-Wiener trail form: every trail runs from a fresh uniform start g^alpha0 z^beta0 to its first distinguished point, where (F, alpha0, beta0) is appended to the report log and the walk begins a new trail; 2^20 walks round-robin on one processor, R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key, a Granger-Scott cyclotomic-squaring branch taken iff T mod 64 < 37 with branch, multiplier and distinguished-point bits read from the stored class invariant T=Re(c_0), deterministic fruitless-cycle escapes, hard caps on reports, stuck-walk restarts and matcher pairs, no per-step exponent bookkeeping (the exponents of a matched pair are recovered by replaying its two trails), and a pre-debit work meter whose walk-phase budget leaves the setup bound and a reserved stopping allowance; output P=[x]P0 and verify e(P,Q)=z) succeeds, in the ideal model, with probability at least 0.39 using at most 2^125.111 total dense-Fp12-multiplication equivalents (C=20,000) on every run, including setup, pairings, table construction, walk starts and fresh starts, distinguished-point handling, cycle handling, detection delay, matching (sort, duplicate removal, replays and pair checks), output and verification. A multiply step is charged 16,578 instructions (the 14,402-instruction table-multiply kernel, 2,014 of key work and 162 of every-step bookkeeping) and a squaring step 6,939 (the 6,777-instruction squaring kernel and 162), 0.55027265625 units per step on average; the nominal ledger is below 2^125.0856 and 2^125.111 is the least thousandth that also covers a 2-percentage-point drop of the squaring fraction. Peak memory is below 2^63 bytes; preprocessing is at most 2^31 units and is included; nonuniform advice is 0 bytes. The success bound relies on the standard random-mapping heuristic for rho walks adjusted for the branch mix (effective class count N/(1-s^2-(1-s)^2/R)), with model success 0.4005, at least 0.3904 after the 0.01 allowed for heuristic H1+ (no percentage-point drift of the walk statistics, and the caps) and the small loss terms of proof.md section 4; it is supported by toy-field experiments of this trail discipline and by the production branch rule run in the real BLS12-381 GT. No production-size run is claimed.",
+   "score": {
+    "numerator": "125111",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "proof.md",
+    "proof-impl.md",
+    "evidence.md",
+    "experiment.py",
+    "flags_check.py",
+    "measure/README.md",
+    "measure/results.tsv",
+    "measure/disassembly-audit.txt",
+    "kernels/gen.py",
+    "kernels/emu.py",
+    "kernels/model.py",
+    "kernels/check.py",
+    "kernels/check_kernels.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "frobenius-rho-measured-squaring-checks",
+   "source": "experiment.py",
+   "purpose": "Part A: BLS12-381 GT identities (Re(c_0) across the 12 conjugates, Frobenius formula, 4-multiplication key, distinctness, canonical representative, Granger-Scott squaring counts, r-1 factorisation). Part C: the production branch rule (T mod 64, low table-index bits) on real GT for 2,000 steps per rule vs explicit Frobenius. Part B: the complete algorithm (trails restarted at distinguished points, cycle escapes, a report log of (F, alpha0, beta0) records, heapsort matcher, replay of both trails of every matched pair with a check that the replay ends at the recorded class, pair budget, collision solving) in a toy field vs the branch-adjusted random-mapping law. Part E: pair-collision law. Part D: read measure/, assert the blst marginals and kernel prices, recompute the ledger, caps, cap inequality, matcher worst case, stopping allowance and non-walk sum. Part S: the bounded sampler. flags_check.py: the multiword compares/increments under AArch64 NZCV. Toy scale only; no production costs.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "q": {
+      "type": "integer",
+      "enum": [
+       67,
+       139,
+       163,
+       211,
+       379
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 1024
+     },
+     "branch_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "sq_cut": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 8
+     },
+     "walks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+     },
+     "production_steps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6000
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "pair_samples": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 60000
+     }
+    },
+    "required": [
+     "q",
+     "trials",
+     "R",
+     "branch_bits",
+     "sq_cut",
+     "dp_bits",
+     "walks",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "q": 67,
+     "trials": 40,
+     "R": 64,
+     "branch_bits": 6,
+     "sq_cut": 37,
+     "dp_bits": 3,
+     "walks": 4,
+     "seed": 1,
+     "production_checks": 2,
+     "production_steps": 2000,
+     "pair_samples": 30000
+    }
+   ]
+  }
+ ]
+}
