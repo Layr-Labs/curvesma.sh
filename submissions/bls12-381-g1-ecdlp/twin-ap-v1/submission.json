@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: Cheon with twin-output steps on a three-term-progression walk list",
+  "claims": [
+    {
+      "statement": "For uniform secret s in Z_r*, given T=[s]P0 and A_i=[s^i]P0 for i=1..n with n>=2^20: Cheon's d=2^20 reduction to z=s^d in the subgroup H of order m=(r-1)/2^20, solved by a baby-step/giant-step whose records are [a s]P0 and [a' s']A_d with a, a' disjoint sets of 2^56 H-primes N = 1+2kF in (2^211, 2^212), each with a deterministic Pocklington primality certificate over a fixed certified prime F (about 2^107) and s, s' in a shared twin walk list S inside [2^210, 2^210+2^100+2^45). Each twin step computes P+G (one batched incomplete affine addition, the reference operation) and P-G from the same lane inverse (2M+1S+5 add/sub, listed 1427 instructions), so one step yields two records (charged 2000+1760 instructions per step); the list is built once so that u-g, u, u+g are all in H at every step (density 2^-40 per candidate, the full scan of at most 2^100 integers charged; the list is challenge-independent, so its fitting under its caps is a deterministic consequence of heuristic H2), and a short-interval lemma (Delta^2 < 2^210) with the multiplier primes makes the ratios pairwise distinct as rationals off the diagonal (their behaviour modulo r is heuristic H1). Records are keyed by 192 bits of the stored Montgomery residue of y (no conversion; full reduction charged). Routing to 2^80 owner nodes over two 40-bit hops, with all communication specified as one-sided puts by a network interface into dedicated single-producer 1-slot rings per (sender, link), receiver-written in-order credit words, a single-writer arrival queue with tagged data and credit entries, suspend/resume backpressure with FIFO per-destination waiter lists, at most one episode per record per hop and charged per record (no polling, latched events), end-of-side flags with status pass 1 as the baby-to-giant barrier, an acyclic layered progress argument, and a price of 144 instructions per block per link with the interface's byte copy charged as instructions; bucket matching, caps, key-retaining candidates, linear chain re-walk, six mu6 candidates per pair, 20 square roots and a 2^11-scalar-multiplication root-of-unity search follow the promoted entry 0a45ddb2. K = 6N^2/m = 0.4944 with N = 2^115.6279 records per side; heuristic success 0.39006 under H1-H4, claimed 0.390 after failure terms. Total work W = 120978838170235926864674667888925213 reference units at C=2000 (records at 2000+1760 instructions per twin step of two records, list construction, certified multipliers, gap tables, fallback reserve, segment and strand starts, node setup, comparisons, candidate handling and re-walk at the cap, status collection, communication and data distribution, Lemma 1 and output); log2 W = 116.542238032 < 116.542239 (60-digit check), valid for every n >= 2^20. Peak memory 2^122.3223 bytes (exact itemised sum, asserted as an integer inequality), preprocessing at most 2^115.5456 units (exact integer sum of every pre-giant row including the baby fallback reserve and first status pass, rounded up and asserted as an integer inequality; included in W), no advice.",
+      "score": {
+        "numerator": "116542239",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ledger-h2-and-toy",
+      "source": "evidence.py",
+      "purpose": "Mode ledger recomputes every size, cap, tail, memory sum and the exact score from integers (with a 60-digit log check). Mode h2 applies the twin-list rule to integers near 2^210 with H replaced by the 2^k-th powers modulo the real r (k=3,4), and samples the low 8 bits of the character logs of u, u+g, u-g on the real r to test their independence. Mode ec runs Algorithm B end to end on a small j=0 curve (twin list built by the same rule, Pocklington-certified multipliers, keys from Montgomery residues, twin steps P+G and P-G from one shared inverse checked against independent scalar multiplications, bucket matching, key-retaining candidates, one linear re-walk per chain, six-candidate check, d-th root). Toy scale only, one process and no routing; it does not establish production cost or production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "ledger",
+              "ec",
+              "h2",
+              "all"
+            ],
+            "maxLength": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 2000
+          }
+        },
+        "required": [
+          "mode",
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 2026,
+          "trials": 400
+        }
+      ]
+    }
+  ]
+}
