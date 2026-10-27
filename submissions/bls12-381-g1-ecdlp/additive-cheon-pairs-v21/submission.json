@@ -1,0 +1,327 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp: additive Cheon with planned pair walks, a measured side-output kernel and synchronous wave transport",
+ "claims": [
+  {
+   "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the algorithm in proof.md recovers s with heuristic success probability at least 0.392 (required 0.39) over the uniform challenge and fresh algorithm coins. It is Cheon's attack in the subgroup H of 2^20-th powers (d = 2^20 divides r-1, 6d divides r-1, A_d is read; only A_1 and A_d are used). Baby and giant scalars are products a*b in H with a a prime of (2^76, 2^76 + 2^70] taken in increasing order and b a class integer <= 2^76 with chi(b) = -chi(a). Each class list is planned offline into three-term progressions (x-g, x, x+g) with g <= 2^44 = 16 d^2 (depth cap 2^14, tree cap 2^20, restart segments of 2^25 entries, handed to lanes greedily in plan order so every lane finishes within one segment of the others), and the walk computes [a(x+g)]Q = P+T as the reference batched incomplete affine addition (2000 instructions) and [a(x-g)]Q = P-T, with its orbit key, by one AArch64 function sharing the lane inverse, measured at 1127 instructions per lane in the organizers' Callgrind pipeline (blst routines verbatim, self-checked against blst's exported API and genuine curve points; measure/); the planned pair fraction is at least f = 0.98 (heuristic H4). Generating nodes run 2^16 lanes over one base and one gap table with one batched inversion per round. Records are 40 bytes (192-bit truncated U-orbit key, 128-bit chain id), matched in direct-mapped head arrays chained through pools at 2^60 owner nodes. Transport is a synchronous wave protocol over a cluster whose only inter-node mechanism is a store into a write-mapped per-link receive buffer plus a doorbell interrupt: two charged hops (generating node -> relay -> owner), every word stored by the sender and loaded by the receiver at every hop, preallocated per-link buffers and count words at fixed caps for both parities of a double buffering, one global barrier per wave through an explicit fan-in-2^10 tree with every wake, sweep and release charged, no credits, no retries, no polling; a cap overflow is a counted run failure (H3 tails); candidates and replies travel the same links in two further rounds; candidates are resolved by one bounded re-walk of each record's plan segment and at most 96 scalar tests, all charged at the 2^44 cap; an explicit allowance of 8 instructions per point is a ledger row. Total work W(2^20) is at most 2^116.380350 target-group-operation equivalents (exact score 116380350/1000000), including both walks and their gap tables, restarts, padding, matching and comparisons, transport words and barriers, plan construction and distribution, the character sieves and base search, candidate handling, the d-th root, the mu_d search and input access. Preprocessing (challenge-independent work) is at most 2^115.3798 units and is included. Peak memory is at most 2^121.5854 bytes, every per-node total below 2^63 bytes; there is no nonuniform advice. Heuristics, all disclosed in proof.md with toy evidence at its stated scope: H1 (coverage |R|/m >= 1 - e^{-K} - 0.0005 at the realized K >= 0.5, supported by an exact census of the construction on toy primes up to m = 2^32 in which every modular and rational coincidence is measured, never excluded by size), H2 (character equidistribution and the class/base bounds, affecting only charged terms and buffer bounds, with a stop-and-fail rule), H3 (keys as uniform strings, with every cap and tail bounded and overflow counted as failure), H4 (pair fraction >= 0.98), H5 (Poisson-like candidate multiplicity, with the total-candidate tails at the exact unconditional mean and the per-run true-hit multiplicity Markov-bounded at its conditional mean 1.28). This is an analytic bound with a measured kernel and itemised instruction counts, not a full-size execution.",
+   "score": {
+    "numerator": "116380350",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "One run with five parts. (1) ledger: recomputes every cost term of proof.md section 6 from exact integers, the exact score with its boundary assert, the preprocessing and memory inequalities (every per-node total below 2^63 bytes), the success inequality with every failure term, and the production algebra identities; arithmetic only. (2) planner: the offline pairing planner of proof.md section 3 (depth and tree-size caps) on real chi-class lists of toy primes at the production degree parameter GMAX = 16 d^2; reports pair fraction, cycle and size rejections, dependency depth and tree size against the caps (evidence for H4). (3) ec: the whole algorithm on a toy j = 0 curve with 2 not in H: planned paired walk with the shared-inversion pair formula, ordered disjoint bases, truncated-key bucket matching with false matches counted, bounded re-walk, six-z resolution, d-th root and mu_d scan; success against prediction, every recovered scalar verified, every sampled collision event checked against the exact coverage of the independently reconstructed emitted sets. (4) proto: the section-4 synchronous wave transport at toy scale: per-link receive buffers with caps and double buffering, relays, owners, a fan-in barrier tree with worst-case wakes and sweeps, candidate and reply rounds; asserts exact delivery, the buffer discipline (read exactly in the wave after the write), candidate resolution, cap overflow as a run failure, and that the simulated instruction total (the listing applied to counted events) equals the ledger's closed form; three key patterns. (5) census: the exact coverage |R|/m of the construction on a toy prime at the production scaling rule, with the exact multiplicity diagnostic (evidence for H1 and H5). Toy parts are evidence at toy/simulation scope only; the kernel price is measured separately (measure/).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8
+     },
+     "planner": {
+      "type": "object",
+      "properties": {
+       "specs": {
+        "type": "array",
+        "maxItems": 16,
+        "items": {
+         "type": "object",
+         "properties": {
+          "d": {
+           "type": "integer",
+           "minimum": 2,
+           "maximum": 256
+          },
+          "logX2": {
+           "type": "integer",
+           "minimum": 10,
+           "maximum": 21
+          },
+          "seed": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 1000000
+          },
+          "classes": {
+           "type": "integer",
+           "minimum": 1,
+           "maximum": 32
+          }
+         },
+         "required": [
+          "d",
+          "logX2",
+          "seed"
+         ],
+         "additionalProperties": false
+        }
+       }
+      },
+      "required": [
+       "specs"
+      ],
+      "additionalProperties": false
+     },
+     "ec": {
+      "type": "object",
+      "properties": {
+       "bits": {
+        "type": "integer",
+        "minimum": 18,
+        "maximum": 28
+       },
+       "logd": {
+        "type": "integer",
+        "minimum": 2,
+        "maximum": 8
+       },
+       "K": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 8
+       },
+       "trials": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2000
+       },
+       "seed": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000
+       },
+       "keybits": {
+        "type": "integer",
+        "minimum": 8,
+        "maximum": 32
+       },
+       "nodebits": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 8
+       },
+       "headbits": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 8
+       },
+       "head_cap": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4096
+       },
+       "cand_cap": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 1048576
+       },
+       "logX2": {
+        "type": "integer",
+        "minimum": 10,
+        "maximum": 20
+       },
+       "logG": {
+        "type": "integer",
+        "minimum": 8,
+        "maximum": 22
+       },
+       "spotchecks": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100
+       }
+      },
+      "required": [
+       "bits",
+       "logd",
+       "K",
+       "trials",
+       "seed",
+       "keybits",
+       "nodebits",
+       "headbits",
+       "head_cap",
+       "cand_cap",
+       "logX2",
+       "logG",
+       "spotchecks"
+      ],
+      "additionalProperties": false
+     },
+     "census": {
+      "type": "object",
+      "properties": {
+       "m_bits": {
+        "type": "integer",
+        "minimum": 12,
+        "maximum": 24
+       },
+       "k": {
+        "type": "integer",
+        "minimum": 2,
+        "maximum": 16
+       },
+       "K": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 8
+       },
+       "seed": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 7
+       },
+       "window": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4
+       },
+       "multiplicity": {
+        "type": "boolean"
+       }
+      },
+      "required": [
+       "m_bits",
+       "k",
+       "K",
+       "seed"
+      ],
+      "additionalProperties": false
+     },
+     "proto": {
+      "type": "object",
+      "properties": {
+       "gen_bits": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+       },
+       "s_bits": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 3
+       },
+       "t_bits": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4
+       },
+       "u_bits": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4
+       },
+       "lanes": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16
+       },
+       "waves": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 8
+       },
+       "steps": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 32
+       },
+       "cap1": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65536
+       },
+       "cap2": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65536
+       },
+       "capc": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4096
+       },
+       "fanin": {
+        "type": "integer",
+        "minimum": 2,
+        "maximum": 64
+       },
+       "seed": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000
+       }
+      },
+      "required": [],
+      "additionalProperties": false
+     }
+    },
+    "required": [
+     "mode",
+     "planner",
+     "ec",
+     "census"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "planner": {
+      "specs": [
+       {
+        "d": 16,
+        "logX2": 15,
+        "seed": 0,
+        "classes": 8
+       }
+      ]
+     },
+     "ec": {
+      "bits": 23,
+      "logd": 5,
+      "K": "0.50",
+      "trials": 60,
+      "seed": 2026,
+      "keybits": 18,
+      "nodebits": 5,
+      "headbits": 6,
+      "head_cap": 64,
+      "cand_cap": 4096,
+      "logX2": 13,
+      "logG": 12,
+      "spotchecks": 6
+     },
+     "census": {
+      "m_bits": 21,
+      "k": 4,
+      "K": "0.50",
+      "seed": 0,
+      "multiplicity": true
+     },
+     "proto": {
+      "gen_bits": 3,
+      "s_bits": 1,
+      "t_bits": 2,
+      "u_bits": 2,
+      "lanes": 4,
+      "waves": 3,
+      "steps": 6,
+      "cap1": 96,
+      "cap2": 96,
+      "fanin": 4,
+      "seed": 2026
+     }
+    }
+   ]
+  }
+ ]
+}
