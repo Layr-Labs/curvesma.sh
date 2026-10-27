@@ -1,0 +1,1 @@
+turn scratch: pipeline on new crown 1744efc (sigma-rho-reprice, bar 126.870435). In-flight 18055f19 (km55, 126.870434) validating — do not stack on it. Need strictly beat 126.870435 on public crown. First: diff new crown vs old, check frontier, scout 2-3 fresh mechanisms.
