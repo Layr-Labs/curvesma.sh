@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Special Tower Number Field Sieve (STNFS) over h(Y) = Y^6 - 2Y^3 + 2 with Barbulescu-Duquesne + Murphy-alpha yield and unfiltered M^T D M Block-Wiedemann",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT on BLS12-381, the Special Tower Number Field Sieve (STNFS) attack in proof.md computes g = e(P, Q0) in GT, recovers a in [0, r) satisfying g^a = z in F_{p^12}^* using the degree-6 tower h(Y) = Y^6 - 2*Y^3 + 2 with f_y(X) = X^12 - 2*y*X^10 + 2*y^3*X^6 + y^5*X^2 + 2*y^3 - 2 and g_y(X) = X^2 - u*y at parameters A = 1360 and B = 2^67.500, and returns Q = [a]Q0 in G2 satisfying e(P, Q) = z. Because w^12 - 2*w^6 + 2 = h(w^2) is the irreducible defining polynomial of F_{p^12} and p == 3 (mod 8), h(Y) is provably irreducible modulo p and Norm_{F_{p^6}/F_p}(u*y) = 2*u^6 is a quadratic non-residue modulo p, so g_y(X) = X^2 - u*y is provably irreducible over F_{p^6} and X^(p^6) = -X. Under the four standard STNFS heuristics explicitly listed in Section 6 of proof.md (Barbulescu-Duquesne mean-norm Dickman smoothness shifted by Guillevic-Singh's exact Murphy alpha, Poisson relation yield, rectangular M^T D M sparse kernel rank over core ideals of norm <= 2^55, and 12-dimensional proper-subfield single-norm LLL smoothing + special-q descent), the attack succeeds with probability at least 0.40 over uniform challenges and fresh algorithm coins using at most 2^129.300000 total target-group-operation equivalents (normalized by C = 20,000 scalar AArch64 instructions per reference dense F_{p^12} multiplication, corresponding to at most 2^143.565389 scalar AArch64 instructions, charging unfiltered flt = 1 rectangular M^T D M Block-Wiedemann linear algebra over R_rows = 1.25 * SP_orb rows with the machine-verified deterministic worst-case row weight bound of 245 prime-ideal columns and 40 derived Schirokauer unit columns per row). Peak memory is at most 2^78.000000 bytes; preprocessing is at most 2^129.300000 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes (2^0 bytes) and is included in memory.",
+      "score": {
+        "numerator": "1293",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-v4-bd-alpha-yield-and-deterministic-ledger",
+      "source": "experiment.py",
+      "purpose": "Machine-check sequential Frobenius powers Y^(p^1)..Y^(p^6) mod (p, h(Y)) for Rabin irreducibility and (u*y)^((p^6-1)/2) == -1 mod (p, h(y)), verify gcd(r, p^6 - 1) == 1 for single-norm proper-subfield smoothing, compute exact 1/zeta_{K_h}(2) and exact local root counts for alpha(f_y, h, B0) and alpha(g_y, h, B0) across all ideal degrees d in {1, 2, 3, 6} and bad primes, evaluate the Barbulescu-Duquesne + Murphy-alpha yield at A = 1360 and B = 2^67.500, verify the deterministic primorial row-weight bound (<= 245 distinct prime ideals + 40 Schirokauer columns per row), and audit the complete instruction and memory ledgers.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "alpha_prime_bound": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 2000
+          },
+          "mc_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "A": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 5000
+          },
+          "B_log2_milli": {
+            "type": "integer",
+            "minimum": 50000,
+            "maximum": 80000
+          }
+        },
+        "required": [
+          "alpha_prime_bound",
+          "mc_samples",
+          "seed",
+          "A",
+          "B_log2_milli"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "alpha_prime_bound": 1000,
+          "mc_samples": 3000,
+          "seed": 42,
+          "A": 1360,
+          "B_log2_milli": 67500
+        }
+      ]
+    }
+  ]
+}
