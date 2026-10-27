@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "twin-ap-v3",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 116.413622,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 122.3223,
+    "preprocessing_log2": 115.4153,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 coverage: the 6N^2(1-1/(2L)) fractions a s/(u a' s'), pairwise distinct as rationals by Lemma 4 (multipliers are proven primes via Pocklington certificates), hit z like independent uniform elements of H modulo r (toy at d=2^7: 0.378 at 2000 trials vs 0.3762 predicted)",
+    "H2 twin density: c in H and 2u-c in H behave as independent events of probability 2^-20 each for nearby integers, so twin gaps are geometric with mean 2^40 (list rule checked on the real r at levels 2^3, 2^4; low 8 bits of character logs of u, u+g, u-g sampled for independence). The list is challenge-independent: a failure of H2 would fail every challenge.",
+    "H3 key bits: 192-bit parity keys of the stored Montgomery residue of y behave as independent uniform strings across mu6 orbits (toy chi-square 31.55 vs 31)",
+    "H4 multiplier supply: the progression 1+2kF holds about 2^58.8 H-primes against 2^57 needed (prime-density heuristic; primality itself is proven by Pocklington certificates; a shortfall fails deterministically)"
+  ],
+  "limitations": [
+    "Analytic bound; no full-size run. The side output P-G is a measured fused AArch64 kernel (1093 Callgrind instructions per lane with the organizers' pinned pipeline, measure/; correctness by self-checks and Lemma 2a, not formal verification); the walk overhead, key handling and communication remain itemised instruction counts.",
+    "The side output P-G is charged 1099 instructions (1093 measured + 6 for keeping the lane inverse); 1436 are charged per twin step including walk overhead, two records' handling and delivery, 1.0309x the listing; only the lane inverse is shared with the reference addition.",
+    "Memory is exponential (2^122.3223 bytes); generating nodes need 2^51.44 bytes (gap table and 2^40 send buffers), within a 52-bit address space.",
+    "Matching stage and caps follow 0a45ddb2 with 2^80 owner nodes and two 40-bit hops; communication is specified (one-sided puts into dedicated 1-slot rings, credit words, single-writer arrival queue, FIFO suspend/resume with at most one episode per record per hop, end-of-side flags) and priced at 144 instructions per block per link plus 8 per record per hop for suspension."
+  ],
+  "lane": "exploratory"
+}
