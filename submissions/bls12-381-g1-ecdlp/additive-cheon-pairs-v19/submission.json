@@ -1,0 +1,279 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: additive Cheon with planned pair walks and native-offset cluster matching",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the algorithm in proof.md recovers s with heuristic success probability at least 0.398 (required 0.39) over the uniform challenge and fresh algorithm coins. It is Cheon's attack in the subgroup H of 2^20-th powers (d = 2^20 divides r-1, 6d divides r-1, A_d is read; only A_1 and A_d are used). Baby and giant scalars are products a*b in H with a a prime of (2^76, 2^76 + 2^70] taken in increasing order and b a class integer <= 2^76 with chi(b) = -chi(a). One algorithmic change over the one-addition-per-point architecture: each class list is planned offline into three-term progressions (x-g, x, x+g) with g <= 2^44 = 16 d^2, and the walk computes [a(x+g)]Q = P+T and [a(x-g)]Q = P-T from the stored midpoint P = [ax]Q and the table entry T = [ag]Q with one shared field inversion, priced as one reference addition plus three extra field multiplications: 2000 + 3*383 = 3149 instructions for two points plus charged second-formula arithmetic; the planned pair fraction is at least f = 0.98 (heuristic H4, measured 0.9815-0.9862 on real toy class lists at matched ratios). Records are 32-byte truncated 192-bit U-orbit keys, matched in direct-mapped head arrays chained through pools at 2^60 owner nodes, moved through a 512-ary folded-Clos fabric (at most 7 hops; per-hop switch control\ncharged 32 scalar instructions per block; both endpoint copies charged; the payload's\nbackplane movement is the model's one declared axiom \u2014 the same abstraction the accepted\nfrontier family's FIFO posts use) via relays that sit at the fabric's own stages (every\nreceiver has exactly 2^10 senders) using dedicated per-pair receive rings in which every word has exactly\none writer (sender-written ring slots and sequence words, receiver-written credit words); a\ntargeted software-generated interrupt wakes the receiver, whose handler sweeps its 2^10\nsequence words and drains every pair that advanced (wakes and sweeps are charged ledger\nrows), so correctness never depends on identifying the interrupting sender; drained blocks\nreturn credits through a receiver-owned cumulative counter (written only by the handler;\nthe sender keeps a private post count and never writes it) and targeted credit-return\ninterrupts, so a blocked sender sleeps and is woken at most once per drained block, with no\nunbounded retries, no shared read-modify-write and no polling anywhere;\nplan segments (32 MiB = 2^20 entries of 32 bytes, single destination each) stream through one relay layer with their\nwakes and directory sweeps charged; the sender pays the block stores and post control, the\nreceiver the wake, sweep, reads and credit returns, with the memory-ordering barriers\ncharged; no remote-memory instruction, no device work, no\nlocks or atomics, every byte written and read exactly once and charged, and an idle node\nexecutes nothing until its interrupt; candidates are resolved by one bounded linear re-walk of each chain and at most 96 scalar tests, all charged. Total work W(2^20) is at most 2^116.545097 target-group-operation equivalents (exact score 116545097/1000000), including both walks and their gap tables, matching and comparisons, transport, plan construction and streaming, the character sieves and base search, candidate handling, the d-th root, the mu_d search and input access. Preprocessing (challenge-independent work) is at most 2^115.5623 units and is included. Peak memory is at most 2^122.6439 bytes; there is no nonuniform advice. Heuristics, all disclosed in proof.md with toy evidence at its stated scope: H1 (coverage |R|/m >= 1 - e^{-K} - 0.0005 at the realized K >= 0.51, supported by an exact census of the construction on toy primes up to m = 2^32 in which every modular and rational coincidence is measured, never excluded by size; the census machinery is validated against independent brute-force field arithmetic), H2 (character equidistribution, affecting only charged small terms, with a stop-and-fail rule), H3 (keys as uniform strings, with every cap and tail bounded and overflow counted as failure), H4 (pair fraction >= 0.98), H5 (Poisson-like candidate multiplicity, with the total-candidate tails at the exact unconditional mean N^2/2^192 + N^2/M and the per-run true-hit multiplicity Markov-bounded at its conditional mean 1.28, supported by an exact second-moment census diagnostic that reads 1.000 at k = 12). This is an analytic bound with itemised instruction counts, not a full-size execution.",
+      "score": {
+        "numerator": "116545097",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One run with five parts. (1) ledger: recomputes every cost term of proof.md section 6 from exact integers, the exact score with its boundary assert, the preprocessing and memory inequalities, the success inequality with every failure term, and the production algebra identities; arithmetic only. (2) planner: the offline pairing planner of proof.md section 3 on real chi-class lists of toy primes at the production degree parameter GMAX = 16 d^2, sweeping the list span; reports pair fraction, cycle rejections, dependency depth against the cap (evidence for H4). (3) ec: the whole algorithm on a toy j = 0 curve with 2 not in H: planned paired walk with the shared-inversion pair formula, ordered disjoint bases, truncated-key bucket matching with false matches counted, bounded re-walk, six-z resolution, d-th root and mu_d scan; success against prediction, every recovered scalar verified, every sampled collision event checked against the exact coverage of the independently reconstructed emitted sets. (4) proto: the section-4 transport protocol under an adversarial scheduler \u2014 32 producers x 16 blocks through dedicated depth-8 rings, sequence words and credit words, wake-only interrupts with coalescing on the 16 shared interrupt ids, sweep-based handlers, a receiver-owned cumulative credit counter with sender-private post counts and sleeping senders woken by credit-return interrupts; 60 schedules, every record delivered exactly once with one credit check per post and no futile retries (and the same simulation detects both rejected flaw classes: the shared-counter queue records 2841 partial-id reads, and identify-by-interrupt-source loses 15360 blocks when producers exceed the 16 interrupt ids). (5) census: the exact coverage |R|/m of the construction on a toy prime at the production scaling rule, with the exact multiplicity diagnostic (evidence for H1 and H5). Toy parts are evidence at toy/simulation scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8
+          },
+          "planner": {
+            "type": "object",
+            "properties": {
+              "specs": {
+                "type": "array",
+                "maxItems": 16,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "d": {
+                      "type": "integer",
+                      "minimum": 2,
+                      "maximum": 256
+                    },
+                    "logX2": {
+                      "type": "integer",
+                      "minimum": 10,
+                      "maximum": 21
+                    },
+                    "seed": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000000
+                    },
+                    "classes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 32
+                    }
+                  },
+                  "required": [
+                    "d",
+                    "logX2",
+                    "seed"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "specs"
+            ],
+            "additionalProperties": false
+          },
+          "ec": {
+            "type": "object",
+            "properties": {
+              "bits": {
+                "type": "integer",
+                "minimum": 18,
+                "maximum": 28
+              },
+              "logd": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 8
+              },
+              "K": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              },
+              "trials": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2000
+              },
+              "seed": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              },
+              "keybits": {
+                "type": "integer",
+                "minimum": 8,
+                "maximum": 32
+              },
+              "nodebits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "headbits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "head_cap": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4096
+              },
+              "cand_cap": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1048576
+              },
+              "logX2": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 20
+              },
+              "logG": {
+                "type": "integer",
+                "minimum": 8,
+                "maximum": 22
+              },
+              "spotchecks": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "bits",
+              "logd",
+              "K",
+              "trials",
+              "seed",
+              "keybits",
+              "nodebits",
+              "headbits",
+              "head_cap",
+              "cand_cap",
+              "logX2",
+              "logG",
+              "spotchecks"
+            ],
+            "additionalProperties": false
+          },
+          "census": {
+            "type": "object",
+            "properties": {
+              "m_bits": {
+                "type": "integer",
+                "minimum": 12,
+                "maximum": 24
+              },
+              "k": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 16
+              },
+              "K": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              },
+              "seed": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              "window": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4
+              },
+              "multiplicity": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "m_bits",
+              "k",
+              "K",
+              "seed"
+            ],
+            "additionalProperties": false
+          },
+          "proto": {
+            "type": "object",
+            "properties": {
+              "producers": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 64
+              },
+              "blocks": {
+                "type": "integer",
+                "minimum": 4,
+                "maximum": 256
+              },
+              "schedules": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2000
+              },
+              "seed": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "mode",
+          "planner",
+          "ec",
+          "census"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "planner": {
+            "specs": [
+              {
+                "d": 16,
+                "logX2": 15,
+                "seed": 0,
+                "classes": 8
+              }
+            ]
+          },
+          "ec": {
+            "bits": 23,
+            "logd": 5,
+            "K": "0.51",
+            "trials": 60,
+            "seed": 2026,
+            "keybits": 18,
+            "nodebits": 5,
+            "headbits": 6,
+            "head_cap": 64,
+            "cand_cap": 4096,
+            "logX2": 13,
+            "logG": 12,
+            "spotchecks": 6
+          },
+          "census": {
+            "m_bits": 21,
+            "k": 4,
+            "K": "0.51",
+            "seed": 0,
+            "multiplicity": true
+          },
+          "proto": {
+            "producers": 32,
+            "blocks": 16,
+            "schedules": 60
+          }
+        }
+      ]
+    }
+  ]
+}

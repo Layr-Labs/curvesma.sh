@@ -1,0 +1,626 @@
+# bls12-381-g1-ecdlp: additive Cheon with planned pair walks and two-hop bucket matching 
+
+**Claimed time_log2 = 116.545097** (exact rational 116545097/1000000 in lowest terms; an upper
+bound on log2 W(2^20), recomputed from exact integers by `evidence.py` mode `ledger`, which also
+asserts the production algebra identities below). Heuristic success at least 0.398 (required
+0.39): 1 - e^{-K} = 0.399504 at the realized K = 6N^2/m >= 0.51, minus the 0.0005 coverage
+allowance of H1, a 2^-20 modelling budget, a 4*2^-40 cap budget (the union of the cap tails
+below, carried by H3 and H5) and the 2^-112.9 diagonal event, leaving 0.399003, claimed 0.398. Peak memory
+2^122.6439 bytes with every node counted at its full itemised allocation; every per-node
+structure is below 2^63 bytes, so every byte offset is a native 64-bit quantity. No advice.
+Preprocessing at most 2^115.5623 units, included in W. Every cost, size and failure figure is
+rounded up, every success figure rounded down, by the script.
+
+This is the construction of the rejected submission `additive-cheon-pairs-v1` (20a8ca63) with
+every defect of its review repaired, and no premise inherited from it: the pair operation is
+priced 2000 + 3*383 = 3149 instructions per two points plus charged second-formula arithmetic
+(the reviewer's own accounting, replacing the invalid 9M = 3000 scaling); the candidate-defined
+global-address machine is replaced by an explicit bounded cluster model with no
+remote-memory instruction, adapted from the bucket-matching architecture of the competing
+frontier family (whose submissions' published accounting I mirror; no acceptance of theirs is
+used as a premise here); the coverage argument no longer excludes modular coincidences by
+integer size — H1 below is an explicit heuristic supported by an exact census of the
+construction on toy primes, in which every modular and rational coincidence is measured, not
+excluded; the experiment selects primes deterministically in increasing order and emits exactly
+the sets the probability statement uses; and no prior submission is used as a proof premise.
+The useful core of the earlier work is kept: cheap point generation from planned three-term
+progressions with one shared inversion per two points, and the six-element symmetry key
+min(y, p-y).
+
+Cost accounting. Work is the sum of instructions executed over all processors
+(tracks/docs/COST_MODEL.md, classical-group-work-v2). Cluster model, stated so that every charge
+below has a data path: nodes with private memory and no remote-memory instruction; the only
+communication is posting a 4 KiB block of records into a dedicated per-pair ring of the
+receiver (the realization in section 4: every word single-writer, notification by targeted
+software-generated interrupt); filling the block and the post are charged to the sender, the
+wake and the read to the receiver; a node with nothing to do executes no instructions. Wall
+time is not claimed.
+
+## 1. Problem and reduction
+
+BLS12-381 G1, order r, powers A_i = [s^i]P0, i = 1..n. At the scoring n = 2^20 let d = 2^20.
+Since v_2(r-1) = 32 (asserted), d | r-1 and 6d | r-1, so m = (r-1)/d = 2^234.857089... is a
+multiple of 6 (asserted). H = {x^d} has order m, t := s^d is uniform on H and A_d = [t]P0 is an
+input. Only T = A_1 and A_d are read, so the same W applies to every n >= 2^20.
+
+Let lambda = x^2 - 1 mod r with x the curve parameter; then lambda^2 + lambda + 1 = 0 mod r and
+lambda^m = 1 (both asserted), so U = {+-1, +-lambda, +-lambda^2} is the sixth-root subgroup and
+lies in H. On this curve [lambda](x, y) = (beta x, y) and [-1](x, y) = (x, -y), so the six
+points [u]Q, u in U, have y-coordinates +-y(Q), and min(y, p-y) is an exact key for the U-orbit
+of any finite point. The production implementation stores Montgomery y = y*2^384 mod p; on
+stored residues the negation map is Y -> p - Y, so min(Y, p - Y) and its low 192 bits are an
+exact orbit key of the stored value with no normal-form conversion. The toy exercises the min
+rule on affine y; the stored-form rule follows from the residue identity, which is the only
+claim made for it.
+
+Recovery of s from t is the standard two-step, both charged: (i) twenty Tonelli-Shanks square
+roots in F_r give one s0 with s0^d = t; (ii) s = s0*omega^i for one of the d roots of unity
+omega = g^((r-1)/d); write i = i0 + 2^10 i1, compute the 2^10 points [s0 omega^{i0}]P0 and the
+2^10 points [omega^{-2^10 i1}]T, sort the first by x and look the second up in it, one scalar
+multiplication each. Charged at 2^24 units per run in the ledger (the listing: 20 square roots
+at 2369 F_r multiplications each, 2^11 scalar multiplications at 2^12 units, 3*2^10 products,
+2^11 comparisons of 48-byte x-coordinates at 64 instructions).
+
+## 2. Algorithm
+
+Parameters: K = 0.51; N per side = the least integer with 6N^2 >= K m, N = 2^115.6503; X2 = 2^76
+(the class integers b); GMAX = 2^44 = 16 d^2 (the pair-gap and table bound); base interval
+I = (2^76, 2^76 + 2^70]; f = 0.98, the claimed minimum pair fraction (H4).
+
+1. **Characters and class lists** (challenge independent). chi : F_r^* -> Z/d, chi(x) = x^m
+   projected by a fixed generator of mu_d, has kernel H (and chi(2) != 0: 2^m has order 2^16 on
+   this r; the script asserts 2^m != 1). Sieve the primes q <= X2, compute chi(q) for each (one
+   235-bit exponentiation, 366 multiplications at 383 instructions, plus a Pohlig-Hellman
+   logarithm in mu_{2^20} (bit-by-bit, about 400 squarings), charged together at 400000 instructions =
+   200 units each), then chi(b) for all b <= X2 by multiplicativity into a 20-bit array. The
+   class list L_c = {b in [1, X2] : chi(b) = c}, in increasing order, has about X2/d = 2^56
+   elements (H2); the exact lengths are computed by the sieve.
+2. **Planning** (challenge independent, section 3). For each class c a plan produces every
+   element of L_c exactly once: each element is a root (one addition from the previous root) or
+   one child of a pair (x-g, x, x+g) with midpoint x and gap g <= GMAX.
+3. **Base primes**. Sieve I and compute chi(a) for its primes in increasing order. The baby side
+   takes them in order until its N elements are emitted; the giant side continues with the next
+   primes. A base a of character chi(a) walks the plan of class -chi(a), so every emitted scalar
+   a*b lies in H. Baby and giant base sets are disjoint, and a > X2 >= b, so a is the unique
+   prime factor of a*b above X2: (a, b) is recovered from the product by one factorisation.
+4. **Baby walk.** For each base a in order: Q_a = [a]P0 by scalar multiplication; the table
+   T[k] = [k]Q_a for 2 <= k <= GMAX is built in 2^12 strands by repeated addition (T[2] by one
+   doubling, strand starts by scalar multiplication); the plan is executed, emitting the record
+   (192-bit truncated key, 64-bit chain id) for every point. The whole baby side completes before
+   any giant chain starts.
+5. **Giant walk.** The same with Q_{a'} = [a']A_d, emitting nothing: each giant record is routed
+   to the owner of its key and compared against the stored baby records there.
+6. **Collision.** A truncated-key match is a candidate (key, id, id'), appended at the owner node.
+   After the giant side, the status tree collects candidate counts; if the global count exceeds
+   2^44 the run outputs fail. Otherwise each candidate's two chains are re-walked once, linearly,
+   from their starts by their generating nodes (tables rebuilt, all charged), collecting the at
+   most 4 positions per chain whose key equals the retained key; a fifth is a failure. The at
+   most 16 pairs of kept positions give at most 96 values z = u*b/g, each tested by [z]P0 = A_d.
+   On a hit, section 1 recovers s. A wrong candidate never yields a wrong answer: every scalar
+   is verified against A_d and then T before output.
+
+**The pair operation.** For P = (x1, y1) and T = (x2, y2) with x1 != x2, both P+T and P-T need
+the single inverse delta = (x2 - x1)^{-1}, provided by Montgomery's trick shared across the
+round. Beyond one reference addition (6M = 2000 instructions: 3M formula + 3M batch share, with
+the reference's own field additions inside the A = 0 normalization), the second formula needs
+three field multiplication/squaring operations, priced at the supplied 383-instruction count:
+**pair arithmetic = 2000 + 3*383 = 3149 instructions for two points**. The second formula's
+field additions and subtractions are not part of the reference's A = 0 convention and are
+charged separately (section 5).
+
+**Incomplete additions are safe.** Every point is a multiple of Q = Q_a != O. For a pair with
+midpoint x and gap g: the children are list elements, so 0 < g < x and x + g <= X2 < r; neither
+x = g nor x = -g mod r. For a root step u -> v = u + gap with gap <= GMAX: u = -gap would force
+v = 0; u = gap means v = 2u, but chi(2) != 0, so chi(v) != chi(u) and v would not be in the
+class. The table's k = 2 step is the one doubling. The giant side is the same with
+Q = [a't]P0 != O. The toy asserts a non-zero denominator at every step.
+
+## 3. The planner
+
+Fix a class list L = (b_0 < ... < b_{l-1}), l ~ 2^56. (i, j), i < j, is a pair with midpoint k if
+b_k - b_i = b_j - b_k = g, 1 <= g <= GMAX. **Edges:** for each u in L, the class members v in
+(u, u + 2 GMAX] with u = v mod 2 whose midpoint (u+v)/2 is in L; under H2 an element lies in
+about 2 GMAX/d^2 = 32 such pairs as a child. **Matching:** greedy by increasing degree, each
+pair accepted only if it creates no cycle (parent chain walk, at most D = 2^14 steps) and no
+depth overflow (depth(k) + 1 + max(height(i), height(j)) <= D with never-lowered heights, so the
+check only over-rejects). No augmenting paths and no unmatching during matching; only the final
+root-chain pass demotes (an element more than GMAX past the last root has its predecessor
+demoted), so depths only increase during matching (at most l*D updates) and only decrease after.
+Consecutive roots are at most GMAX apart. **Emission:** list order; each root, then its subtree
+depth-first, so the midpoint of a pair is always on the current path; the ancestor stack holds at
+most 2D + 1 = 2^15 + 1 points, asserted by the toy census. A plan entry is 32 bytes: kind, gap
+(45 bits, covering g = GMAX), source and two destination slots (16 bits each, covering the
+2^15 + 1 stack), and the list indices of the one or two elements produced (57 bits each); the
+spare bits cover control. The plan of class c is challenge independent, shared by every base of
+character -c on both sides, and is streamed entry by entry from a storage node through the block
+protocol into a ring at the generating lane that uses it.
+
+The planner cost (window scan 2^24 tests per element at 16 instructions, matching with bounded
+ancestor checks, emission 64) is a ledger row at 2^93.037 units — ten orders below the records
+row — and every access names its data path (section 5). The pair fraction f_c is known before
+any group operation; the claim uses f = 0.98 for every class (H4).
+
+## 4. Matching and transport
+
+**Owner and relay nodes.** The 60-bit owner key is split (t, u) = (30, 30) as before, and each
+t-slice is further split by the sender: a generating node scatters its records into send blocks
+of 128 records (4 KiB) keyed (t, s), where s is the low 10 bits of the sender's node id, and
+posts them to the hop-1 relay R1(t, s). There are 2^40 relays R1, and each receives from only
+the 2^10 generating nodes whose id matches its s — a fan-in of 2^10, not 2^20. The relay
+re-scatters by u and posts to the owner (t, u); each owner receives from only the 2^10 relays
+R1(t, .) — again a fan-in of 2^10. Two routing hops, and every receiver in the record path has
+exactly 2^10 senders. Within an owner, baby records are inserted into a direct-mapped head
+array of 2^58 slots (8-byte links; byte offsets below 2^61) indexed by key bits 60..117,
+chained through a pool of 2^57 32-byte records (byte offsets below 2^62; 2.55 x the mean load
+2^55.63): a pool record stores key bits 118..191 (74 bits), the 64-bit chain id and a 57-bit
+link; the at most 64 records per slot are counted in a separate byte array. Giant records are
+not stored: each reads its head slot and compares its 74 remaining key bits with each pooled
+record on the chain (7 instructions per comparison). An equal key appends (full 192-bit key,
+both chain ids, 40 B) to the node's candidate list of 2^16 slots; a 2^16+1st candidate fails
+the node. Comparisons are charged per node up to 1.01 x the mean, all 2^60 owners: the row is
+2^105.157 units.
+
+**Communication realization (no candidate-defined primitive; no shared writable memory).**
+Each (sender, receiver) pair has a dedicated, statically allocated ring of eight 4 KiB blocks
+in the receiver's memory, a sequence word (sender-written, in the pair's ring page) and a
+credit word in the sender's own memory (written only by the sender's credit-handler; the
+receiver returns credits as routed blocks, below).
+These are the only protocol words, and each has exactly one writer; the sender's private
+credit counters are written only by the sender's own credit-handler (the returns arrive as
+routed blocks, below), and the per-link router rings are written only by their single
+upstream.
+
+**Delivery is a 512-ary folded-Clos fabric of router nodes.** The cluster's nodes are wired
+in a multistage network; a route from any node to any other resolves the 60-bit key space
+in at most 7 hops. The relays of the record path are distinct nodes attached at the
+fabric's stages (the hop-1 relay terminates the stage that resolves the t digits, so the
+scatter and the routing meet at the same node; the 2^40 relay class and the 2^56 router
+class are disjoint, the relays holding the per-sender rings and re-scatter staging that
+pure routers do not), and each hop's SWITCH CONTROL is charged as scalar work: 32 instructions per
+4 KiB block (header parse, route decision from the stage's 512-entry table, link-credit
+update — the tables are written once at initialisation, charged in the init row). The
+payload's movement through a hop's switch backplane is the cluster model's one declared
+physical axiom: the same abstraction the competing frontier family's accepted model uses
+for its FIFO posts, except that we additionally charge per-hop control and both endpoint
+copies where that model charges only the endpoints. No store ever targets another node's
+memory; no cross-node interrupt exists; the only uncharged thing in the cluster is the wire
+and backplane movement of payloads, declared here as the single axiom and priced around at
+both endpoints and every hop's control.
+
+A post is: check the pair's credit word (one load, in the sender's round bookkeeping),
+fill its own block (2 stp per record's 32 bytes, the copy row), a data barrier (dmb, 1), store
+the pair's sequence word with the new count (1), a second barrier (dmb, 1), and hand the block to its uplink router with one credit-checked descriptor store to the
+router's per-link ring (the same single-writer sequence-word discipline as everything
+else, charged with the post control); the block then traverses the fabric to the
+destination pair's ring, and the final router stores the pair's sequence word and raises
+the destination node's LOCAL software-generated interrupt — a standard GIC SGI within the
+destination's own socket — each socket holds one endpoint node and the final router of
+its uplink, so the SGI's source core id is the router's id on that one link — sourced by
+that router. The receiver's handler is entered on the interrupt (wake and
+dispatch charged 2^8 instructions per posted block, the ledger row: an idle node executes
+nothing in between — no polling), and then — because no interrupt architecture identifies one
+sender among 2^10 at the needed scale — the handler does not rely on the interrupt's source at
+all: it SWEEPS its 2^10 pairs' sequence words (2^11 instructions per wake, a ledger row),
+drains every pair whose sequence word advanced (reading each record's 32 bytes, 2 ldp per
+record, the read row), and returns one credit word store per block. The sweep is bounded by
+the fan-in, is charged at every wake, and its correctness does not depend on which sender
+raised the interrupt: interrupt coalescing across senders is then harmless (the handler drains
+everything pending at handling time), and a sender's own successive interrupts coalescing is
+safe because the sweep drains from the sequence word. The handler is the receiver's only
+thread, so all receiver-side state is single-threaded, and credit is written only by the
+handler (one writer). Ordering: the sender's block stores and sequence store precede its
+interrupt store behind a barrier; the handler's sequence-word load is followed by a load
+barrier (dmb) before its block loads, and its block loads are followed by a barrier before
+its credit stores (both charged in the receive control) — so the handler never reads a
+sequence (or block) the sender has not fully written, and the sender never reuses a slot
+the receiver is still reading.
+
+Backpressure uses a receiver-owned cumulative credit counter with sender-local
+consumption state — no shared read-modify-write exists anywhere. The credit word of a pair
+is a monotone counter in the sender's own memory, written only by the sender's own
+credit-handler: the receiver never writes remote memory — it BATCHES its credit returns
+(512 eight-byte counters per 4 KiB block) and routes each batch back to the sender
+through the network like any other block (charged in the network-hops row); on arrival
+the sender's local handler applies the batch to its counters (512 adds) and wakes the
+corresponding sleepers through local SGIs (charged with the wake row). The sender keeps a private count of its posts and may post while
+its count minus the counter is below eight; it never writes the counter. Slot reuse is
+safe exactly when the counter exceeds the sender's count minus eight, which is the same
+condition, so the ring discipline and the credit condition coincide. A sender whose post
+finds the condition false performs exactly one load (the check) and then sleeps, or, if it
+has its own lane work, continues that and leaves the block staged; it is woken only by the
+credit-return interrupt and performs one recheck per wake. The total number of credit
+checks is therefore at most one per post attempt plus one per drained block — the wake row
+is charged 2^9 per posted block for the receiver's wake and handler, the sender's
+credit-return wake and its single recheck — so no unbounded retry loop or polling exists
+anywhere; the `proto` toy of section 8 implements exactly these state transitions (the
+producer only reads the counter and updates its private count; the handler only writes the
+counter) and counts both quantities under the adversarial scheduler: 30,720 checks for
+30,720 blocks, exactly one per post, no futile retries.
+
+Plan streaming uses the same derived mechanism. The plans are sharded into sequential
+32 MiB segments of 2^20 entries (32 bytes each); a segment has a single destination (the
+generating node whose wave assignment streams that class — the assignment is
+challenge-independent and computed in the planning phase), so no scatter is needed. The
+storage nodes push segments through one relay layer P(g, s''), keyed by the destination
+generating node g and the storage node's low 10 id bits (2^30 relays): a relay receives
+from its 2^20 storage senders (per-sender rings of eight 32 MiB segments, 2^20 x 2^28 =
+2^48 B per relay) and forwards to its single destination g (no re-scatter); a generating
+node receives plan segments from its 2^10 relays (rings 2^10 x 2^28 = 2^38 B). Wakes (2^8
+per segment at each of the two receivers) and directory sweeps (the relay sweeps its 2^20
+storage sequence words, 2^21, and the generating node its 2^10 relay words, 2^11, per
+wake) are charged in the plan-stream ledger row, at worst one wake per segment; the
+per-entry charge of section 5 covers the sequential copy and the lane's ring writes, and
+the credits use the same receiver-owned counters and credit-return interrupts.
+
+The candidate return path reuses the forward relays. The delivering relay R1(t, s) stamps its
+10-bit s into the spare bits of every pool record it delivers (t is the owner's own key
+field); a giant record's relay is identified the same way at comparison time — the giant
+block is compared in the ring it arrived on, so the owner knows which relay carried each of
+its two records without any giant-side storage. The owner posts the candidate block back to
+the baby record's relay and to the giant record's relay (two forwardings, both charged), and
+each relay posts to the destination generating node read from the chain id. The baby-side
+generating node g(id) is the combiner: both nodes re-walk their chain, each keeps at most 4
+positions, and g(id') sends its at most 4 kept giant values to g(id) as one 168-byte block
+(40 B header plus 4 x 32 B) through the same ring-and-sweep mechanism; g(id) then holds at
+most 4 values on each side, forms the at most 16 pairs and tests the six z of each. The ring
+allocations follow the possible sender sets: an R1 relay holds per-generating-node forward
+rings (2^10 x 8 x 4 KiB = 2^25 B) and per-owner return rings (2^30 x 8 x 4 KiB = 2^45 B);
+a generating node holds per-R1 return rings (2^40 x 8 x 4 KiB = 2^55 B) and kept-value rings
+for the other generating nodes (2^20 x 8 x 4 KiB = 2^37 B); an owner holds per-relay rings
+(2^10 x 8 x 4 KiB). All are below the per-node bound and asserted by the ledger. The sweeps
+are directory-based and phase-dependent: during the record phases a relay wake sweeps its
+2^10 generating-node pairs (the forward directory), and during the return phase — which the
+status tree orders strictly after both record phases complete, so no record wake can arrive
+after a candidate wake — a relay wake sweeps its 2^30 owner pairs, a generating node its
+2^40 relay pairs, and the combiner its 2^20 kept-value pairs; all of these sweeps are charged
+per candidate-block wake in the return-wakes ledger row (2^36.3 x 2 blocks at most 2^44
+candidates, so the row is negligible), and the forward sweeps are the section-5 row. No
+receiver's directory exceeds what its rings allocate.
+
+Each node communicates only through its uplink into the fabric; there are no window
+mappings, no remote page-table entries and no global address space. The routing tables at
+the stages map 512-ary key digits to output links (written once at initialisation and
+charged in the init row). Every interrupt is a local SGI within one socket.
+
+Every ring is credit-bounded (at most eight blocks in flight per pair, credits returned with
+the block's completion), every frame is a fixed 4 KiB, and no node polls: a node with no
+pending interrupt executes nothing. Partial blocks are flushed at the end of each side,
+charged. The routing graph is acyclic (key digits strictly advance per hop), so no deadlock is
+possible; the 4*2^-40 budget covers the union of queue, termination and cap tails (the leading
+terms: comparisons 2^-40, re-walk repeats 2^-45, false matches 2^-47).
+
+## 5. Instruction listing per point (AArch64 scalar, 64-bit registers)
+
+**Pair op, two points** (the walk items beyond the fixed 3149 arithmetic; listed 219):
+
+| item | instructions |
+| --- | ---: |
+| plan entry decode (4 loads, kind, gap, slots, indices) | 8 |
+| load midpoint P (6 ldp, 2 address) | 8 |
+| load T[g] (6 ldp, 2 address, 3 index) | 12 |
+| batch-inversion lane buffers (6 per record, 2 records) | 12 |
+| second formula's modular adds/subs: 4 six-limb operations at ~12 each with borrow correction | 48 |
+| store two points (12 stp, 2 address) | 14 |
+| F_p inversion shared by the round of 2^12 lane ops, 232864/2^12 = 57 | 57 |
+| lane control and loop | 10 |
+| key extraction, 2 x 25 (p - y: 13, compare and select: 12) | 50 |
+| **listed** | **219** |
+| charged | **243** |
+
+The 48 is listed for four six-limb operations (negation-sum, two subtractions with conditional
+correction, final subtraction); charged 72 within the 243 as margin for operand spills.
+
+**Root op, one point** (gap stream read 5, table address 2, T[gap] load 12, load/store point 14,
+batch buffers 6, inversion 57, loop 5, key 25; listed 126, charged 183).
+
+**Record transport, per record** (blocks of 128 records, 4 KiB): scatter at 2 hops (block
+index, slot, bounds) 24; transport copy of 32 bytes at 2 hops (4 ldp/stp pairs plus addressing
+per hop) 12; post and receive control amortised over 128 records (credit check, two dmb, sequence
+store, SGI at the sender; receive-side load barrier and credit return at the receiver) 3 — the
+wake and the receiver's 2^11-instruction sweep are charged as their own ledger rows, one per
+posted block at worst; insert (head load, count check, link write, record store
+with the 10-bit relay stamp in its spare bits, head update) 12 at the baby side, lookup fixed
+cost 6 at the giant side. Listed 51, charged 58.
+
+**Plan streaming**, per entry: storage-node read and post 6, transport copy 6, ring write at the
+lane 3 (the lane's read of the entry is the 8 of the pair/decode listings); charged 15 per entry,
+0.51 entries per point.
+
+**Gap tables** are charged by their own ledger rows (2^60.65 bases x 2^44 additions at 2000 + 100,
+plus one inversion per round of 2^12 strand additions and the strand starts), not amortised into
+the records row.
+
+**Per point, both sides.** Arithmetic f*3149/2 + (1-f)*2000 = 1583.01 at f = 0.98. Everything
+else (walk bookkeeping 122.73 — which already contains the key extraction and the round's
+inversion share — record transport 50, plan stream 7.65) listed 180.38, charged x1.15 = 207.44.
+**Total 1790.45 instructions per point; the records row is 2N x 1790.45.**
+
+## 6. Ledger (units of 2000 instructions; every row an exact integer ceiling; the script recomputes each and asserts the totals)
+
+| term | log2 units |
+| --- | ---: |
+| records: 2N x 1790.45 instructions | 116.491 |
+| receiver sweeps (2^11 per wake) | 110.685 |
+| owner and relay init (heads, counts, rings, routing tables) | 110.204 |
+| wake and handler dispatch | 108.685 |
+| network hop control (records, candidates, credits) | 107.495 |
+| plan-stream wakes and sweeps | 105.715 |
+| comparisons | 105.157 |
+| gap tables | 104.721 |
+| network hop control (plan segments) | 102.520 |
+| candidate re-walks | 101.109 |
+| gap-table inversions | 99.514 |
+| planning | 93.037 |
+| table strand starts | 84.650 |
+| chi of primes <= X2 | 78.252 |
+| per-base setup | 74.235 |
+| chi sieve + class lists | 72.678 |
+| chi of base primes | 72.252 |
+| plan storage write | 71.034 |
+| candidate return wakes and sweeps | 68.363 |
+| base window sieve | 66.034 |
+| status tree | 62.707 |
+| candidate z tests | 62.586 |
+| Lemma 1 + io | 44.000 |
+| sieving primes sieve | 43.122 |
+| candidate forwarding | 40.034 |
+| **W** | **116.545097** |
+
+W = 2^116.5450969... units; the score is ceil(10^6 log2 W)/10^6 = 116.545097 = 116545097/1000000
+(the script computes log2 W to 80 decimal digits and asserts the 10^-6 grid point is more than
+10^-20 away, so the ceiling is exact). For context, the same budgets with every point computed as
+a root (no pair ops) give 2^116.816418; the pair trick is worth 0.3032 bits. Preprocessing (the
+baby half of the records row, the baby tables, the lists, characters, plans, sieves, owner init
+and the first status pass) is at most 2^115.5623 units, included. Memory, every node at its full
+itemised allocation: 2^60 owner nodes at 2^62.64 B (head links, counts, pool, per-relay rings, candidate
+list), 2^56 router nodes at 2^30 B (link rings, routing tables, code), 2^40 relay nodes at
+2^45.2 B (send staging, generating-node rings, owner return rings), 2^30 plan relays at
+2^48 B, 2^20 generating nodes at 2^62.6 B plus candidate receive areas, per-R1 return rings
+(2^55 B), plan rings (2^38 B) and kept-value rings (2^37 B), and 2^30 storage nodes holding lists, plans and sieving
+primes at their shares: 2^122.6439 bytes in all, with the per-structure offset bounds of section 4 asserted by the
+script. Charge accounting: the key extraction is inside the pair/root
+bookkeeping of section 5 (nowhere else); the gap tables, their inversions and strand starts are
+only the four table rows; the walk inversions are the per-point share (57 per pair op at the 2^12-lane rounds) inside
+the records row; the re-walk inversions are inside the re-walk row; candidate forwarding and
+re-walking are separate from the records row. Each instruction is charged exactly once across
+these categories.
+
+## 7. Success probability
+
+Steps 1-3 of section 2 are challenge independent; the run fails and outputs no scalar if the base
+searches come up short (H2) or the plan breaks the gap bound (never observed; the walk checks its
+gaps and stops before any chain starts). The algorithm succeeds exactly when t lies in
+R = U * {b/g} over the emitted sets B, G (|B| = |G| = N) and no cap breaks. Because t is uniform
+on H and R is a fixed set (the lists do not depend on the challenge), Pr[t in R] = |R|/m exactly.
+
+**H1 (coverage).** |R|/m at the production construction is at least 1 - e^{-K} - 0.0005, with
+K = 6N^2/m >= 0.51, so at least 0.399004. Support:
+
+- *Exact census of the construction.* `evidence.py` mode `census` builds the construction on toy
+  primes r = 6 c 2^k + 1 (c odd, smooth, deterministic; skips r with 2 in H_t) at the predeclared
+  scaling N = ceil(sqrt(K m/6)), class-size target e = round(N^0.4843), X2 = d e, bases = the
+  primes of (X2, X2 + X2^0.921] in order, each walking its full class list, the last base partial
+  so each side emits exactly N — the production shape. It computes chi for every b <= X2 by a
+  Pohlig-Hellman dlog sieve, forms the emitted sets, and marks the U-coset of every ratio
+  (a b)/(a' b') in a byte array of m/6: the count is exact, with every modular and rational
+  coincidence included, no sampling. The marking was validated against direct field arithmetic
+  (an independent brute-force reconstruction of R) on 18 primes at m up to 2^18.5, agreeing to
+  10^-9. The census rows:
+
+| toy m | d_t = 2^k | primes | mean diff | lowest | repeat frac (uniform value) |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 2^24.0 | 2^4 | 8 | -0.028615 | -0.059002 | 0.273 (0.217) |
+| 2^24.0 | 2^8 | 8 | -0.002269 | -0.007363 | 0.221 (0.217) |
+| 2^24.0 | 2^12 | 8 | -0.000201 | -0.000834 | 0.217 (0.217) |
+| 2^24.0 | 2^16 | 8 | -0.000051 | -0.000381 | 0.217 (0.217) |
+| 2^26.0 | 2^4 | 8 | -0.029485 | -0.043529 | 0.275 (0.217) |
+| 2^26.0 | 2^8 | 8 | -0.003670 | -0.008165 | 0.224 (0.217) |
+| 2^26.0 | 2^12 | 8 | -0.000148 | -0.000335 | 0.217 (0.217) |
+| 2^26.0 | 2^16 | 8 | +0.000050 | -0.000028 | 0.217 (0.217) |
+| 2^28.0 | 2^4 | 8 | -0.026865 | -0.050595 | 0.269 (0.217) |
+| 2^28.0 | 2^8 | 8 | -0.003045 | -0.013193 | 0.223 (0.217) |
+| 2^28.0 | 2^12 | 8 | -0.000240 | -0.000412 | 0.217 (0.217) |
+| 2^28.0 | 2^16 | 8 | +0.000038 | -0.000003 | 0.217 (0.217) |
+| 2^30.0 | 2^4 | 8 | -0.027476 | -0.045332 | 0.271 (0.217) |
+| 2^30.0 | 2^8 | 8 | -0.008283 | -0.037778 | 0.233 (0.217) |
+| 2^30.0 | 2^12 | 8 | -0.000194 | -0.000411 | 0.217 (0.217) |
+| 2^30.0 | 2^16 | 8 | -0.000011 | -0.000068 | 0.217 (0.217) |
+| 2^32.0 | 2^4 | 8 | -0.025991 | -0.031271 | 0.268 (0.217) |
+| 2^32.0 | 2^8 | 8 | -0.007463 | -0.036635 | 0.231 (0.217) |
+| 2^32.0 | 2^12 | 8 | -0.000236 | -0.000414 | 0.217 (0.217) |
+| 2^32.0 | 2^16 | 8 | -0.000012 | -0.000034 | 0.217 (0.217) |
+Top-window control (products a*b near r, maximal modular wraparound):
+
+| toy m | d_t | primes | mean diff | lowest |
+| ---: | ---: | ---: | ---: | ---: |
+| 2^26.0 | 2^8 | 4 | -0.002824 | -0.004590 |
+| 2^26.0 | 2^12 | 4 | -0.000289 | -0.000403 |
+| 2^28.0 | 2^8 | 4 | -0.001502 | -0.001665 |
+| 2^28.0 | 2^12 | 4 | -0.000248 | -0.000441 |
+| 2^30.0 | 2^12 | 4 | -0.000196 | -0.000219 |
+
+  The deficit shrinks with the toy degree. Empirically, across the measured rows the mean deficit
+  is roughly proportional to ln(X2)/d_t — an empirical ansatz, not a derivation: the k = 4 rows
+  (driver about 0.35-0.4) measure means -0.026 to -0.029 (worst -0.059); the k = 8 rows (driver
+  about 0.04) means -0.002 to -0.008 with worst rows to -0.038 (the small-d rows drift with m;
+  every k >= 12 row is flat in m); the k = 12 rows (driver about 0.003) have means -0.00015 to
+  -0.00024 and worst -0.00083, at the smallest m; the k = 16 rows (driver about 0.0002, four
+  times production's) have means within +-0.00005 of zero and worst -0.00038. Production has
+  d = 2^20 with driver ln(2^76)/2^20 = 5.0e-5 per pair, 60 times below the k = 12 driver and
+  4.4 times below the k = 16 driver. A *top-window control* reruns the census with the base
+  window placed at (r/X2, r/X2 + (r/X2)^0.921] instead, so that the products a*b are near r and
+  the ratio cross-products wrap modulo r as much as they can; its rows are reported alongside and
+  sit at the same deficits as the low-window rows at the same (m, k), so the measured trend does
+  not depend on the window height. The analytic bound on the production rational-repeat rate
+  (E[gcd]-based, 2*(6/pi^2)(ln X2 + 0.15)/d < 1.1e-4 per pair) is consistent with the ansatz; it
+  bounds the literal-equality repeats, which unique factorisation does constrain, and no modular
+  coincidence is excluded anywhere. The repeat-fraction diagnostic shows the k >= 12 maps are
+  uniform-like: the measured fraction of pairs hitting an already-marked coset is within 0.01 of
+  the value 1 - (1 - e^{-K})/K that independent uniform draws would give (0.2167 at K = 0.51),
+  while the k = 4 rows sit well above it. H1 remains a heuristic: the census reaches m = 2^32 at
+  k = 12 (X2 = 2^18.9, against production m = 2^234.86, X2 = 2^76, and products a*b = 2^152 below
+  r = 2^254.9 while the toy products sit near or below r depending on the window), so the
+  production statement is the explicit 0.0005 allowance. Driver-scaled to production (the ansatz
+  applied to the worst row of every k), no measured worst row exceeds -0.0001, five times inside
+  the allowance; the claim's 0.398 tolerates a coverage deficit up to 0.0015 before the other
+  terms, and the required 0.39 is robust to a shortfall of 0.0095, nineteen times the allowance.
+- *End-to-end agreement.* The ec toy of section 8 checks, every trial, whether the sampled t lies
+  in the exactly-enumerated R of its emitted sets, and every observed candidate/miss event agrees.
+
+**H2 (equidistribution).** The characters of the primes of I and of the integers b <= X2 spread
+evenly over Z/d, so class lists have about 2^56 elements and the walks need about 2^59.65 bases
+per side. The interval I = (2^76, 2^76 + 2^70] holds about 2^64.3 primes by the PNT in intervals
+(Rosser-Schoenfeld bounds; the sieving charge covers all 2^70 + 2^43 integers), a 12 x margin
+over the 2^60.65 bases charged. Exact class lengths and base counts are computed by the sieves at
+runtime; a shortage stops the run before any chain starts and is a failure event under H2, which
+excludes it. Toy evidence: the class lengths of the ec toy's 32 classes and the census's class
+counts at every scale. H2 affects only charged small terms, never the sets.
+
+**H3 (keys).** The 192-bit keys of the 2N records behave as independent uniform strings across
+U-orbits: sharding and head occupancy are binomial, and a cross-orbit key equality has
+probability 2^-192. Support: the toy's occupancy chi-square matches the binomial expectation
+(scaled statistic about 1), and its comparison and false-match counts match the model. Tails
+under H3, each already multiplied by the number of nodes or slots: a head slot above 64 records
+is Poisson(0.196) below 2^-340 over all 2^118 slots; the node baby-count Chernoff and the
+comparison-count Bernstein bounds are below 2^-40 over all nodes (the 1.01 cap is charged as the
+maximum); false key matches have mean N^2/2^192 = 2^39.26 against the 2^44 cap, Chebyshev below
+2^-47 under H3; a re-walk chain carrying one key twice is L^2/2^193 < 2^-81, and one key at more
+than 4 steps is below 2^-45 over all chains; the generating nodes' candidate receive areas
+(mean forwarded load 2^20.3 per node against the 2^24 slots, cap-checked) carry tails inside the
+same budget. The success line subtracts 4*2^-40 for the union of these.
+
+**Diagonal event.** If t = u a/a' for base primes a, a' of the same character (chi(a) = chi(a')),
+then at every common position b the baby and giant points share an orbit, so one base pair gives
+more than 2^44 true matches and the run outputs fail at the candidate-count check (which precedes
+any forwarding). These t form at most 6 (2^59.65)^2 = 2^121.9 elements of H, so the event has
+probability below 2^-112.9. Off the diagonal, the true-match multiplicity is carried by H5, not
+by H1.
+
+**H5 (candidate multiplicity).** For a uniform t in R, the number nu(t) of emitted pairs whose
+ratio lies in t's coset — the number of candidates a true hit produces. Two means enter, in the correct
+directions: the expected total candidate count is E[#false] + E[nu(t)] = N^2/2^192 + N^2/M
+= 2^39.26 + 0.51, the exact unconditional mean of the sum, and the cap tails for the total are
+evaluated at it; the multiplicity of the true hit itself, given that t is covered, has
+conditional mean N^2/(M * coverage) <= 1.28 at the claimed coverage, and the per-run budget of
+2^20 true matches is Markov-bounded by it (Pr[nu > 2^20 | covered] <= 1.28/2^20 < 2^-19.6). and the total candidate count is
+Poisson-like with mean N^2/M + N^2/2^192. Support: the census's multiplicity diagnostic counts
+nu exactly (no sampling) and reports the second-moment ratio
+sum(nu^2)/(T + T^2/M) (the value 1.000 for independent uniform pairs):
+
+| toy m | d_t | primes | energy ratio (1.000 = independent) |
+| ---: | ---: | ---: | ---: |
+| 2^22 | 2^4 | 4 | 1.2061 (worst 1.2766) |
+| 2^24 | 2^8 | 4 | 1.0236 (worst 1.0425) |
+| 2^24 | 2^12 | 4 | 1.0009 (worst 1.0026) |
+| 2^26 | 2^8 | 4 | 1.0222 (worst 1.0377) |
+| 2^26 | 2^12 | 4 | 1.0009 (worst 1.0016) |
+| 2^28 | 2^12 | 4 | 1.0019 (worst 1.0025) |
+tracking the same ln(X2)/d driver as H1 (production's driver is 60 times below k = 12's); the
+ec toy's candidate counts match the false-plus-true model at every size run. Under H5's Poisson-like
+multiplicity, the 2^20 true-match budget inside the 2^44 cap, the per-node 2^16 candidate
+slots and the 2^24 receive areas carry tails below 2^-40 each, and the union is subtracted as
+4*2^-40; the distribution-free fallback is the Markov bound 2^-19.6 above, and even replacing
+every 2^-40 by it leaves the floor at 0.399002, still above the claimed 0.398.
+
+**Claimed success, under H1-H5:** 0.399504 - 0.0005 - 2^-20 - 4*2^-40 - 2^-112.9 = 0.399003,
+claimed **0.398** (margin 0.008 over the required 0.39). The failure budget covers: base-search
+shortage (H2), no collision (1 - e^{-K} and the H1 allowance), sharding and comparison caps
+(H3), false truncated-key matches and candidate caps (H3), diagonal events, re-walk key repeats
+and cap overflows, queue and termination tails. Every cap, abort and failure path is charged at
+its maximum in the ledger.
+
+## 8. Evidence (`evidence.py`, standard library)
+
+`ledger`: every number of section 6 from exact integers, the exact score with the boundary
+assert, the preprocessing and memory inequalities, the success inequality with every failure term,
+and the production algebra identities (v_2(r-1) = 32, 6 | m, lambda = x^2 - 1 with
+lambda^2 + lambda + 1 = 0 mod r, lambda^m = 1, chi(2) != 0). Arithmetic only; 0.03 s.
+
+`planner`: the plan of section 3 on real chi-class lists of toy primes at the production degree
+parameter GMAX = 16 d^2, sweeping the span; evidence for H4 (f) and the planner bounds:
+
+| d | span/2GMAX | classes | list lengths | min f | mean f | max depth (cap 2^14) |
+| ---: | ---: | ---: | --- | ---: | ---: | ---: |
+| 16 | 4.0 | 8 | 1993-2119 | 0.9815 | 0.9845 | 71 |
+| 16 | 16.0 | 8 | 8095-8328 | 0.9839 | 0.9861 | 110 |
+| 16 | 64.0 | 8 | 32565-33065 | 0.9847 | 0.9862 | 125 |
+| 64 | 1.0 | 8 | 1962-2091 | 0.9686 | 0.9721 | 90 |
+| 64 | 4.0 | 8 | 8144-8220 | 0.9859 | 0.9883 | 128 |
+| 64 | 16.0 | 8 | 32636-33002 | 0.9861 | 0.9874 | 269 |
+
+The measured f rises with the span ratio X2/(2 GMAX) (production value 2^31) and with d; every
+deficit source (boundary ~ GMAX/span, cycle rejections ~ 1/d, demotions ~ GMAX/span) vanishes at
+the production ratios, and the claim (f = 0.98) sits 0.0015 below the smallest measured value
+at span/2GMAX >= 4. The depth cap (2^14) never bound in any toy run (maximum depth seen 269 at d = 64), and it
+is enforced deterministically by the planner: no probabilistic claim about depth is made
+anywhere, the stack bound (2D + 1 points) is asserted on every emitted plan, and cap rejections
+are counted and charged in the planner row. As a rough sanity check (not a premise): if chain
+lengths were geometric with mean 1/(1 - f) = 50, the maximum over l = 2^56 elements would be
+about 50 * ln(2^56) = 1950, far below the cap; the claim f >= 0.98 nevertheless remains a
+disclosed extrapolation from the measured sizes.
+
+`ec`: Algorithm A end to end on a j = 0 curve y^2 = x^3 + c over F_p with prime order
+r = 6 c' 2^5 + 1 and 2 not in H_t: real class lists, the planner, the paired walk with the
+shared-inversion pair formula, bases in increasing order with disjoint baby/giant sets, truncated
+keys binned into 32 x 64 buckets, insert/probe with false matches counted, candidates retained,
+the bounded linear re-walk of both chains, the at most 4x4 cross pairs, the six z tested against
+A_d, the d-th root and the root-of-unity scan. Differences from the production procedure (the
+toy is not the production at small size): one process, so nothing is routed, posted or polled;
+toy tables are built by scalar multiplication; the occupancy, pool and comparison caps are
+compared with the model instead of enforced as run failures; the re-walk cap is enforced and
+counted. Hosted (the declared 60-trial run, seed 2026): success 0.45 against 0.4017 predicted;
+every recovered scalar correct; every sampled collision event agrees with the exact coverage of
+the emitted sets, recomputed independently from the plan's emission order; comparisons 9.8
+against 9.4 model; occupancy chi-square scaled 0.9842; 4.62 field multiplications per element
+against 6 for the reference walk. Offline rows at larger sizes and other seeds:
+
+| toy | bases (baby+giant) | size/side | pair frac | K_eff | predicted | trials | success | comps (model) | mults/el (ref 6) | all scalars correct |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| r=2^25.7 | 2+2 | 383 | 0.8921 | 0.5125 | 0.401 | 400 | 0.395 | 72.7 (71.6) | 4.625 | yes |
+| r=2^25.9 | 2+2 | 408 | 0.8879 | 0.512 | 0.4007 | 400 | 0.3675 | 81.4 (81.3) | 4.592 | yes |
+| r=2^25.3 | 2+2 | 334 | 0.8975 | 0.5127 | 0.4011 | 400 | 0.3975 | 55.1 (54.5) | 4.653 | yes |
+| r=2^22.8 | 1+1 | 139 | 0.8833 | 0.5136 | 0.4017 | 1000 | 0.408 | 10.1 (9.4) | 4.619 | yes |
+| r=2^23.0 | 1+1 | 147 | 0.8926 | 0.5105 | 0.3998 | 1000 | 0.394 | 10.9 (10.6) | 4.571 | yes |
+| hosted (r=2^22.8) | 1+1 | 139 | 0.8833 | 0.5136 | 0.4017 | 60 | 0.45 | 9.8 (9.4) | 4.619 | yes |
+
+`proto`: the section-4 transport protocol under an adversarial scheduler. Each of 32
+producers publishes 16 blocks (4 records each) through its dedicated depth-8 ring, sequence
+word and credit word; the scheduler interleaves the producers arbitrarily (a stalled producer
+is simply not picked) and wakes the receiver on the 16 shared interrupt ids with coalescing.
+The submitted design — the interrupt is only a wake, the handler sweeps all its pairs'
+sequence words, credit is single-writer and a credit-blocked sender sleeps until its
+credit-return interrupt — delivers every record exactly once: across 60 schedules and
+30,720 blocks, 0 delivery violations, 30,720 credit checks (exactly one per post, no
+futile retries) and 30,267 wakes. The same simulation on two rejected designs shows it detects both flaw
+classes: the reserve-then-publish shared-counter queue records 2,841 partial-id reads, and
+identification-by-interrupt-source (assuming the acknowledge register names the sender) loses
+15,360 blocks outright once producers exceed the 16 software-interrupt ids. One process, so
+the interrupt and memory-ordering steps are modelled as the event ordering they constrain,
+not executed; evidence at simulation scope.
+
+
+`census`: section 7's exact count at any toy size and K the input names, with the optional
+top-window control and the optional exact multiplicity diagnostic of H5. Hosted rows (m = 2^21, k = 4) show the method and the small-m deficit; the
+offline table above carries the trend. Larger sizes (m above 2^30, or the production
+m = 2^234.86) do not fit the hosted budget; H1 remains a heuristic supported by the census.
+
+## 9. W(n), limitations, context
+
+The algorithm reads only A_1 and A_d, so W(n) = W(2^20) = 2^116.545097 for every 2^20 <= n < r;
+nothing is claimed for smaller n. Analytic bound, no full-size run; the instruction counts are
+itemised, not measured on hardware. The cluster model is mine, not a rule of the challenge.
+H1-H5 are disclosed heuristics with their support and extrapolations stated; the census reaches
+m = 2^32 at k = 12 and at k = 16, against production 2^234.86; the ln(X2)/d trend is
+an empirical ansatz; the planner fraction is measured at span ratios up to 64 against production
+2^31; the ec toy is 2^22.8 in size. Memory is exponential, as in any BSGS-form Cheon attack.
+Nothing here is a practical break: the attack is 2^116.5 work and 2^122.6 storage against a
+255-bit group order.
+
+Negative results from my own search, not claimed: two-for-one P+Q/P-Q inside the H-prime walk
+list (three-term progressions of H-primes are too rare at density 2^-20); x-only or projective
+steps (no saving against the batched affine reference); three-output triplet formulas
+(common-y-denominator: the scalar children leave H, and 14M/3 > 9M/2 per output); implicit
+x-bundles as intersection detection (coefficient hashing has counterexamples over F_101 and
+roots cost more than the explicit pair); a second routing hop on the frontier's 2^84-owner
+layout (send blocks do not fit a 2^40 B node — mine uses 2^60 owners so they do); fewer than 192
+key bits (false matches break the 2^44 cap below 2^188).
