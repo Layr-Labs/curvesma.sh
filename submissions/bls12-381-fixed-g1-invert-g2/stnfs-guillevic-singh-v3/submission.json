@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Special Tower Number Field Sieve (STNFS) over h(Y) = Y^6 - 2Y^3 + 2 with unfiltered Block-Wiedemann and 9x relation oversampling",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT on BLS12-381, the Special Tower Number Field Sieve (STNFS) attack in proof.md computes g = e(P, Q0) in GT, recovers a in [0, r) satisfying g^a = z in F_{p^12}^* using the degree-6 tower h(Y) = Y^6 - 2*Y^3 + 2 with f_y(X) = X^12 - 2*y*X^10 + 2*y^3*X^6 + y^5*X^2 + 2*y^3 - 2 and g_y(X) = X^2 - u*y at parameters A = 1024 and B = 2^65.316, and returns Q = [a]Q0 in G2 satisfying e(P, Q) = z. Because w^12 - 2*w^6 + 2 = h(w^2) is the irreducible defining polynomial of F_{p^12} and p == 3 (mod 8), h(Y) is provably irreducible modulo p and Norm_{F_{p^6}/F_p}(u*y) = 2*u^6 is a quadratic non-residue modulo p, so g_y(X) = X^2 - u*y is provably irreducible over F_{p^6} and X^(p^6) = -X. Under the STNFS smoothness, sparse-rank, and special-q descent heuristics disclosed and empirically calibrated in proof.md and experiment.py, the attack succeeds with probability at least 0.40 over uniform challenges and fresh algorithm coins (with an oversampling ratio lambda_orb / SP_orb >= 8.5 that preserves P(RF >= SP_orb) > 0.40 even under an 80% / 5x systematic downward error in mean smoothness probability) using at most 2^124.510000 total target-group-operation equivalents (normalized by C = 20,000 scalar AArch64 instructions per reference dense F_{p^12} multiplication, corresponding to at most 2^138.788940 scalar AArch64 instructions, charging unfiltered flt = 1 Block-Wiedemann linear algebra without merge-filtering assumptions). Peak memory is at most 2^76.000000 bytes; preprocessing is at most 2^124.510000 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes (2^0 bytes) and is included in memory.",
+      "score": {
+        "numerator": "12451",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-v3-tower-calibration-and-ledger",
+      "source": "experiment.py",
+      "purpose": "Machine-check Rabin irreducibility of h(Y) = Y^6 - 2Y^3 + 2 mod p and non-residuosity (u*y)^((p^6-1)/2) == -1 mod (p, h(y)) on the exact 381-bit BLS12-381 prime p, verify exact integer norms via K_2 = Q(i) against the 3 complex conjugate-pair embeddings, observe simultaneous (N_f, N_g) smooth relations on a scaled instance to calibrate Murphy's E-function, run Algorithm 6.1 with ideal coprimality at A = 1024 and B = 2^65.316 using a strictly positive Dickman rho integral solver, and audit the unfiltered (flt = 1) instruction and memory ledgers.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "alpha_prime_bound": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 2000
+          },
+          "mc_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "A": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 5000
+          },
+          "B_log2_milli": {
+            "type": "integer",
+            "minimum": 50000,
+            "maximum": 80000
+          }
+        },
+        "required": [
+          "alpha_prime_bound",
+          "mc_samples",
+          "seed",
+          "A",
+          "B_log2_milli"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "alpha_prime_bound": 1000,
+          "mc_samples": 4000,
+          "seed": 42,
+          "A": 1024,
+          "B_log2_milli": 65316
+        }
+      ]
+    }
+  ]
+}
