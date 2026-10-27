@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: lockstep six-class (negation + GLV) Pollard rho in G1, fraction-domain canonicalisation, sparse checkpoints at R = 2^40",
+  "claims": [
+    {
+      "statement": "For a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with success probability at least 0.39, and on every run its total work is at most 2^126.1868 batched-affine-G1-addition equivalents (C=2,000 instructions), enforced by a global work meter that charges every action at an upper-bound price before execution and halts with failure at 2^126.1868. The algorithm is one sequential program running distinguished-point Pollard rho with M=2^22 walks in lockstep batches (one Montgomery inversion per batch, one global 128-bit batch index t) on the (r-1)/6 classes of G1 under negation and phi(x,y)=(beta*x,y)=[lambda], lambda=0xac45a4010001a40200000000ffffffff; class key K = y if y is even, else p-y (bit 0 identically 0; the twist sign is bit 0 of y); R=2^40 twisted table (h = bits 1..40 of K), distinguished probability 2^-73 (limb 1 of K zero, tested by one cbz per step, and bits 55..63 of limb 0 zero, tested in a separately priced branch), trail cap 20*2^73 checked in refresh batches. The canonical twist index is decided exactly in 64-bit fraction arithmetic (proof.md section 1.1): est1 = L' from 12 limb products of x by floor(2^448*beta/p), est0 = 9X + umulh(X, Dfrac) from the top limb X of x, est2 = -(est0+est1) mod 2^64 (because x+beta*x+beta^2*x = 0 mod p, the three fractions 2^64*v_j/p sum to 2^64 or 2^65), with errors in [0,11.85), [0,12.125) and their sum, and an exact one-multiplication fallback (a separately metered action) when L' >= 2^64-14, est2 < 31 or the gap is below 41 (every listed instruction is checked for AArch64 encodability in experiment.py). Each ordinary step is one batched affine addition plus at most 72.0561 instructions (72 listed AArch64 instructions: rows 1-5 of the canonicalisation loop with G resident in registers, the addition's operand traffic, loop control; plus a share below 0.0561 of the per-batch inversion work); test batches (t = 0 mod 256) add 3 instructions per walk (limb-0 compare with the checkpoint; an invalid checkpoint has limb 0 = 1), refresh batches (t = 0 mod 2^14) add 12 (limb 2 of K, the cap test, storing limbs 0-2 of K as checkpoint), so the phase-1 rate is at most 1.0360342755859375 units per operation. A detected repeat (192-bit match) means the walk is on a cycle of F; the detect action traverses it synchronously with unbatched operations (119 units each), doubles the member of its minimum-full-key class (a class map; no cancellation can close a cycle through doublings since the order of 2 mod r is 2^250.86) and re-runs the arrival, so trails meeting a common class reunite (merging lemma); cycles of length <= 64 are detected within 2^15 batches. Fresh uniform trail coefficients and the start batch index are stored; collisions are solved by replaying both trails with the same batch-index schedule with coefficients reduced mod r and x=(e_2-e_1)/(f_1-f_2) mod r verified before output. Phase 1 runs ceil(S_ops/2^22) full batches, S_ops=1.005*S0, S0=sqrt(2N'ln(1/0.6097)), N'=((r-1)/6)*R/(R-1), and 1.0360342755859375*(S_ops+2^22) < 2^126.186773; phase 2 completes open trails at the unbatched price; reports go to an append-only log (capacity 2^54.35 records of 128 bytes, 2.16 times the mean) indexed by a linear-probing table of 2^57 16-byte slots (load <= 0.159; home slot from limb 2 of K, fingerprint limb 3; at most 256 probes per lookup, exceeded with probability < 2^-359 per lookup by a Chernoff run-length bound; expected probes < 3.02), and log overflow, the probe cap and more than 8 processed matches are failures. Peak memory below 2^62.3 bytes, every array below 2^63 bytes (64-bit addressable); preprocessing (jump table 2^52, index initialisation 2^46.4, first 2^22 starts) below 2^52.03 units plus sampling, capped at 2^56 by the meter and included in the total; no advice. Heuristic H1: within S_ops class arrivals of all trails (all arrivals counted, including repeats inside fruitless cycles before detection and trail starts) the first inter-trail collision has occurred with probability at least 1-exp(-(S_ops/1.005)^2/(2N'))=0.3903 (random-mapping law with a 0.5% slowdown allowance; toy slowdowns scale with mean trail length/sqrt(N) and the lockstep-schedule sweep of proof.md section 6 extrapolates to a production intercept inside the allowance); the partition, distinguished, limb-0, index and fingerprint bits of K are pseudo-random; apart from detected fruitless cycles of length <= 64, a trail returns to a class it visited earlier at most with the random-mapping self-collision probability per trail; the canonical twist index of a new class is uniform on the 6 units and independent of its partition index, and beta*x mod p is equidistributed along the walk (these affect only the cycle and fallback rates, hence only the meter's early-halt probability, below 0.0000034). Success is at least 0.3903 - 0.0000034 - 2^-18 - 1.1e-7 > 0.39029. Supported by toy-curve experiments with the lockstep production schedule; no production-size run.",
+      "score": {
+        "numerator": "1261868",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "lockstep-glv-class-rho-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on BLS12-381 G1, check the GLV pair, orbit size 6 and unit action, the parity class key, the canonical member, the fraction-domain canonical-index rule of proof.md section 1.1 against the exact rule on random and adversarial near-tie inputs together with its error bounds, rows 1-3 of the section-5 listing executed instruction by instruction with NZCV flags (merged fallback branch against the OR of tests A-C, j against the exact rule), rows 4, 4' and 5 limb by limb (key limbs 0-1 and 0-2, parity, h = bits 1..40, distinguished test, table address 8h+4s+j at 256-byte slots, invalid checkpoint marker), an operand-range (encodability) check of every listed instruction with negative controls, the twisted-step identity, the doubling class map, the multiplicative order of 2 mod r, table entries, coefficient tracking on production steps and recovery of a planted x from two production trails forced to merge. Part B: run the complete lockstep pipeline of proof.md (M walks, global test batches every k and refresh batches every 64k batches, synchronous traversal and doubling escape, cap at refresh batches, distinguished classes and restarts, phase-1 budget of ceil(1.005*S0/M) batches, phase 2, report log with its linear-probing index and probe cap, 8-match cap, replay re-walks from (a, b, start batch), verification) on a toy curve y^2=x^3+4 over F_q and report T_c against the random-mapping model and the pipeline success rate. Toy scale only. The cost block prints the section-5 ledger, per-batch work, prices, cycle rates, hard and random extras, the claim's headroom and success bounds, with exact-fraction checks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30",
+              "q34"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              256,
+              1024,
+              2048,
+              16384
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "k_test": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              4
+            ]
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "dump": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q26",
+          "trials": 5000,
+          "R": 2048,
+          "dp_bits": 2,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 14,
+          "walks": 16,
+          "k_test": 1
+        }
+      ]
+    }
+  ]
+}
