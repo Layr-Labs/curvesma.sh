@@ -1,0 +1,532 @@
+# callgrind format
+version: 1
+creator: callgrind-3.24.0
+pid: 34
+cmd:  /work/cyc2 65 0 0
+part: 1
+
+
+desc: I1 cache:
+desc: D1 cache:
+desc: LL cache:
+
+desc: Timerange: Basic block 0 - 365495
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 637215
+
+
+ob=(5) /work/cyc2
+fl=(107) ???
+fn=(510) __mul_by_1_mont_384
+0 120120
+
+fn=(532) __add_mod_384x384
+0 26325
+
+fn=(528) sub_mod_384x384
+0 9750
+cfn=(508) __sub_mod_384x384
+calls=12292 0
+0 42900
+0 6825
+
+fn=(578) cyclotomic_sqr_fp12
+0 17
+cfn=(580) sqr_fp4
+calls=316 0
+0 2727
+0 8
+cfn=(580)
+calls=316 0
+0 2727
+0 4
+cfn=(580)
+calls=316 0
+0 2727
+0 7
+cfn=(494) sub_mod_384x
+calls=316 0
+0 76
+0 5
+cfn=(492) add_mod_384x
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(494)
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(494)
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(538) mul_by_1_plus_i_mod_384x
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 7
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 8
+cfn=(449) main'2
+calls=1 0
+0 627394
+
+fn=(579) cyclotomic_sqr_fp12'2
+0 1088
+cfn=(580)
+calls=127 0
+0 174528
+0 512
+cfn=(580)
+calls=127 0
+0 174528
+0 256
+cfn=(580)
+calls=127 0
+0 174528
+0 448
+cfn=(494)
+calls=127 0
+0 4864
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 384
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(494)
+calls=127 0
+0 4864
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 384
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(494)
+calls=127 0
+0 4864
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 384
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(538)
+calls=127 0
+0 4864
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 448
+cfn=(492)
+calls=127 0
+0 4992
+0 384
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 384
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 320
+cfn=(492)
+calls=127 0
+0 4992
+0 512
+
+fn=(592) blst_fp12_cyclotomic_sqr
+0 1
+cfn=(578)
+calls=1 0
+0 637190
+
+fn=(593) blst_fp12_cyclotomic_sqr'2
+0 64
+cfn=(579)
+calls=64 0
+0 626944
+
+fn=(448) main
+cob=(1) /usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1
+cfi=(108) ./elf/../sysdeps/aarch64/dl-trampoline.S
+cfn=(401) _dl_runtime_resolve'2
+calls=0 38
+0 637215
+
+fn=(449)
+0 128
+cfn=(593)
+calls=32 0
+0 313504
+0 194
+cfn=(593)
+calls=32 0
+0 313504
+0 64
+
+fn=(494)
+0 1755
+cfn=(496) __sub_mod_384
+calls=2455 0
+0 5070
+0 1170
+cfn=(496)
+calls=2455 0
+0 5070
+0 1755
+
+fn=(496)
+0 11830
+
+fn=(506) __mul_384
+0 189540
+
+fn=(492)
+0 10530
+cfn=(476) __add_mod_384
+calls=11091 0
+0 31590
+0 7020
+cfn=(476)
+calls=11091 0
+0 31590
+0 10530
+
+fn=(512) __redc_tail_mont_384
+0 21060
+
+fn=(538)
+0 650
+cfn=(496)
+calls=571 0
+0 1690
+0 650
+cfn=(476)
+calls=571 0
+0 1365
+0 585
+
+fn=(430) __blst_cpuid
+fi=(110) ./csu/../csu/libc-start.c
+cob=(2) /usr/lib/aarch64-linux-gnu/libc.so.6
+cfi=(110)
+cfn=(407) __libc_start_main@@GLIBC_2.34'2
+calls=0 350
+144 637215
+fe=(107)
+
+fn=(508)
+0 42900
+
+fn=(534) redc_mont_384
+0 10140
+cfn=(510)
+calls=7381 0
+0 120120
+0 780
+cfn=(512)
+calls=7381 0
+0 21060
+0 7020
+
+fn=(394) (below main)
+cob=(1)
+cfi=(108)
+cfn=(400) _dl_runtime_resolve
+calls=0 38
+0 637215
+
+fn=(530) add_mod_384x384
+0 5850
+cfn=(532)
+calls=7492 0
+0 26325
+0 4095
+
+fn=(552) sqr_382x
+0 30420
+cfn=(506)
+calls=3993 0
+0 94770
+0 2340
+cfn=(506)
+calls=3993 0
+0 94770
+0 17550
+
+fn=(580)
+0 3705
+cfn=(552)
+calls=1329 0
+0 79950
+0 975
+cfn=(552)
+calls=1329 0
+0 79950
+0 1365
+cfn=(492)
+calls=1329 0
+0 15210
+0 1170
+cfn=(528)
+calls=1329 0
+0 11895
+0 975
+cfn=(530)
+calls=1329 0
+0 12090
+0 975
+cfn=(530)
+calls=1329 0
+0 12090
+0 975
+cfn=(530)
+calls=1329 0
+0 12090
+0 1365
+cfn=(534)
+calls=1329 0
+0 39780
+0 1365
+cfn=(534)
+calls=1329 0
+0 39780
+0 780
+cfn=(552)
+calls=1329 0
+0 79950
+0 975
+cfn=(528)
+calls=1329 0
+0 11895
+0 975
+cfn=(528)
+calls=1329 0
+0 11895
+0 975
+cfn=(528)
+calls=1329 0
+0 11895
+0 975
+cfn=(528)
+calls=1329 0
+0 11895
+0 1365
+cfn=(534)
+calls=1329 0
+0 39780
+0 1365
+cfn=(534)
+calls=1329 0
+0 39780
+0 1560
+
+fn=(476)
+0 64545
+
+ob=(1)
+fl=(2) ./elf/./elf/rtld.c
+fn=(2) _dl_start
+fi=(1) ./elf/../sysdeps/aarch64/dl-start.S
+cfi=(97) ./elf/./elf/dl-init.c
+cfn=(356) _dl_init
+calls=0 81
+68 637215
+fe=(2)
+
+fl=(97)
+fn=(356)
+fi=(1)
+cob=(5)
+cfi=(107)
+cfn=(394)
+calls=0 0
+74 637215
+fe=(97)
+
+fl=(1)
+fn=(0) (below main)
+cfi=(2)
+cfn=(2)
+calls=0 519
+32 637215
+
+fl=(108)
+fn=(400)
+cob=(2)
+cfi=(110)
+cfn=(406) __libc_start_main@@GLIBC_2.34
+calls=0 242
+100 637215
+
+fn=(401)
+cob=(2)
+cfi=(116) ./stdlib/../stdlib/strtol.c
+cfn=(452) strtol
+calls=0 116
+100 637215
+
+ob=(2)
+fl=(116)
+fn=(452)
+cfi=(117) ./stdlib/../stdlib/strtol_l.c
+cfn=(454) ____strtol_l_internal
+calls=0 238
+117 637215
+
+fn=(453) strtol'2
+cfi=(117)
+cfn=(455) ____strtol_l_internal'2
+calls=0 238
+117 1274430
+
+fl=(110)
+fn=(406)
+cfi=(111) ./stdlib/./stdlib/cxa_atexit.c
+cfn=(408) __cxa_atexit
+calls=0 67
+312 637215
+
+fn=(407)
+cfi=(112) ./csu/../sysdeps/nptl/libc_start_call_main.h
+cfn=(438) (below main)
+calls=0 29
+350 637215
+cob=(5)
+cfi=(107)
+cfn=(430)
+calls=0 0
+145 637215
+
+fl=(112)
+fn=(438)
+cob=(5)
+cfi=(107)
+cfn=(448)
+calls=0 0
+58 637215
+
+fl=(117)
+fn=(454)
+fi=(107)
+cfi=(116)
+cfn=(453)
+calls=0 116
+0 637215
+fe=(117)
+
+fn=(455)
+fi=(107)
+cfi=(116)
+cfn=(453)
+calls=0 116
+0 637215
+fi=(107)
+cob=(5)
+cfi=(107)
+cfn=(592)
+calls=1 0
+0 637191
+fi=(107)
+0 24
+fe=(117)
+
+fl=(111)
+fn=(410) __internal_atexit
+fi=(110)
+cfi=(110)
+cfn=(407)
+calls=0 145
+144 637215
+fe=(111)
+
+fn=(408)
+cfn=(410)
+calls=0 36
+68 637215
+
+totals: 637215
