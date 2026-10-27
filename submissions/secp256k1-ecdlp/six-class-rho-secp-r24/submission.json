@@ -1,0 +1,152 @@
+{
+ "version": 1,
+ "title": "Six-class secp256k1 rho at 125.9019: a 2^24-row partition table and checkpoint period 512 on 673640e's kernels",
+ "claims": [
+  {
+   "statement": "For a uniform full-production secp256k1 input Q=[x]P, the classical cold six-class negation-plus-GLV parallel Pollard-rho attack of proof.md and upstream-proof.md halts on every run with total work at most 2^125.9019 target-group-operation equivalents under classical-group-work-v2 (C=1000). It is bradcush's 673640e (125.9025) with its kernels, loops, arrival rows, prices (ordinary step 575.046875 + 25391/2^20 = 575.0711 instructions, executed at exactly these counts in the declared run) unchanged, and these changes: the partition table has R = 2^24 rows instead of 2^20 (the arrival's single BFI writes bits 0..24 of the key into bits 9..33 of the slot base; table 2^34 bytes, built for below 2^37.1 units, charged); the checkpoint period is 512 instead of 256; the fruitless 2-cycle rate therefore falls to 1/(6R) = 2^-26.585 and the expected random meter extras to 2^98.134 units, so the Markov headroom is h = 0.000051 and the H1 floor p0 = 0.3900512; the shipped hazard census (census_hz.py, unchanged) is extended with a 512-table run of the production walk at R = 2^24 and period 512 (kappa_eff = 1.00002 +/- 0.00012), so by 673640e's two-standard-error rule kappa = 1.0003 (proof.md section 5.2). Recovery probability is greater than 0.3900512 - 0.000051 - 1.1e-7 = 0.39000009 and therefore at least 0.39 under the disclosed H1 heuristic. Peak memory is below 2^72 bytes; preprocessing is capped at 2^59 units, charged and included; nonuniform advice is zero. Exact ledger: S_ops = 1.0003*S0 = 2^126.6997981, phase 1 = 2^125.901610, hard extras = 2^111.608777, allowance = 2^112.3936, W_ledger = 2^125.9018060 < 2^125.9019; Markov ratio 0.000028989 < 0.000051; certificate.py checks W^10000 < 1000^10000*2^1259019 and W^10000 > 1000^10000*2^1259018 exactly. No prior acceptance, review verdict or official score is a premise. This is an analytic heuristic bound, not a practical break.",
+   "score": {
+    "numerator": "1259019",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "proof.md",
+    "upstream-proof.md",
+    "experiment.py",
+    "certificate.py",
+    "census_hz.py",
+    "census-hz-q29.json",
+    "README.md",
+    "kernels/a64.py",
+    "kernels/arrive.s",
+    "kernels/secp_fe.s",
+    "kernels/secp_loops.s",
+    "kernels/secp_tests.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-six-class-rho-kernels-evidence",
+   "source": "experiment.py",
+   "purpose": "Part A: production secp256k1 checks of the walk identities and the canonical-index rule; Part B: a scaled toy pipeline of the checkpoint-only walk (even-y key, per-trail anchor phases) on subgroups of y^2=x^3+7, with node routing and a long-trail trap test; kernels: Python limb ports of the field kernels against big integers, and the shipped unrolled loops (with their rare exits, on constructed inputs that enter every stub), emitter wrappers and arrival rows executed by an AArch64 interpreter (kernels/a64.py) against affine secp256k1, a bit-exact model and the exact canonical rule, with instruction counts and the ledger of proof.md recomputed. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q25",
+       "q29"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "nodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q25",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 5,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 12,
+     "pipeline": true,
+     "kernels": true
+    }
+   ]
+  }
+ ]
+}
