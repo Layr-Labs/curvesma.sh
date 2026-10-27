@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+submissions/bls12-381-g1-ecdlp/hprime-bucket-k049512-splitovh153149-cmp7-cap1004-fixw3-heads34-v1
