@@ -1,0 +1,35 @@
+{
+ "schema_version": 2,
+ "target_id": "p256-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "algorithm": "sigma-rho-split-concentration-a28-lane-layout-canonical-rows-block-funnel-dp-anchor-block-metered-blinded-corrections-b20-flag-carry-unroll8-adders28-km3e6-rhoprod256-method192",
+ "claim": {
+  "time_log2": 126.870434,
+  "memory_log2_bytes": 77,
+  "preprocessing_log2": 62.848077,
+  "success_probability": 0.39,
+  "nonuniform_advice_bytes": 0
+ },
+ "premises": [
+  "H1 collision law with epsilon re-derived at A=2^28 (epsilon=10/A+288/A^2+768/A^3=3.725291e-8)",
+  "M1 and L-ori including conditional fresh-class exposure",
+  "H3 instruction pricing and forced-path bounds; fixed path measured at 2^20 walks and 2^20 adders, per-step instruction count A-invariant (batch_step identical at ADDER_BITS 20 and 28; see evidence/adder-invariance.json)",
+  "H-trail: for a trail from fresh coins (table fixed), expected blinded-average metered correction instructions at most CORR per expected processed step (abort probability only)"
+ ],
+ "provenance": {
+  "submission_id": "pending-yukon",
+  "commit": "1744efc8d89a45466302b27c6a6797d659d901ef (parent sigma-rho-reprice crown)",
+  "immediate_submission_id": "568194c1-c530-4a2c-a11b-4b7bb96a0401",
+  "immediate_commit": "1744efc8d89a45466302b27c6a6797d659d901ef",
+  "note": "One applied figure changes on mpjunior92's sigma-rho-reprice: applied main-round method allowance 192 (crown historically 512). Clean resubmission of the rejected 192 revision with every 512 cost assertion rewritten as explicitly historical."
+ },
+ "limitations": [
+  "Conditional analytic bound; no full-size attack execution.",
+  "Applied cost-ledger figures in this claim: RHO_COST 2^11->256 and METHOD_ALLOWANCE 192 (the crown historically applied 1024->512; this revision applies 192 uniformly \u2014 no figure here uses 512). Each is independently validated elsewhere and recomputed consistently here.",
+  "Per-step instruction count A-invariant (batch_step=11,618 at ADDER_BITS 20 and 28, GCC 13.3.0; see evidence/adder-invariance.json); PLAIN_FIXED=658022038 carried unchanged.",
+  "The A=2^28 step is related to the measured 2^20-adder step by disassembly, not a new organizer-image measurement.",
+  "Correction work metered and capped; H-trail average-only premise affects only the abort probability."
+ ]
+}
