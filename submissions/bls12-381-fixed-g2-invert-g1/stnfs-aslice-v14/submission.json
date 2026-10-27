@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "STNFS v14: window-sieved descent, lean record routing, 16-block LA, one consistent 123-bit ledger",
+  "claims": [
+    {
+      "statement": "For the full production bls12-381-fixed-g2-invert-g1 challenge, recover P in G1 satisfying e(P,Q)=z for the exact supplied nonidentity Q, including P=infinity for z=1, with success at least 0.39 over uniform Q,z and fresh coins, under the explicitly supported exploratory hypotheses H1-H5 of proof.md, DESCENT.md and STORAGE.md (modelled success >=0.599: main phase >=0.9 and Markov abort <=2^-4.58 at the charged 2^117-unit descent cap). Total classical work, across all processors and every preprocessing, failure, restart, transfer, random choice, verification and output, is metered at W<=2^123 dense-Fp12-multiplication equivalents with fixed C=20,000 scalar instructions. The score is 123/1. Use the fixed-Q reduction g=e(P0,Q), two individual GT logs and their ratio, over the v13 tower (h, f, g unchanged and re-verified). The fundamental domain, A^2=2^21, theta=1/2, B=2^69, X2=2^63, slacks (292,220), width 8, alpha (5,1), excess 1.3 are unchanged; NEW in v14: (i) certified block selection at cut 1285 keeps 0.808 of cells and 0.962 of yield (measured over all 2401 pool rows, stats14.json); (ii) lean record routing: per-line bounded buffers, fixed 1 MiB record pages with 128-bit ordinals, two-level 2^23 page directories, 20 instructions per retained record plus 8 per cell (apply/recovery charged separately at 7.00/7.003 per record) (STORAGE.md, executable reference store14.py), replacing the fourteen-level 256-per-record protocol; (iii) linear algebra with 16 vector blocks of <=2^61 bytes, four-hop five-limb partial sums and 88 instructions/entry; (iv) the window-sieved descent of DESCENT.md: every node including the boot is a bucket-sieved special-q lattice node with certified c-space envelope screens (72c+96 / 12c+6log2|u|+17, measured retained fraction 0.999), per-(prime,root pair) hit-lattice walks (PAIR_SETUP 2^24.8 measured sound LLL), SIEVE_CELL 2^21.64 measured instructions per cell (2946 Ir/leaf measured x the smallest measured leaves-per-hit 254 at the mass-weighted prime, the production-regime extrapolation disclosed as an unverified optimistic sensitivity and the worst measured end disclosed), a bounded child window (k in {2,3,4,6} primes above the 2^69 sieve bound, 96-bit residual slack), ECM on survivors' residuals, conditional child means, MIN_RELS 8 and the honest full-schedule ECM-per-trial control at every bin; the toy relation differential exhibits true relations through the full survivor path with zero false credits and exact children. The recurrence gives two-log work 2^110.42 units at the measured anchor; H5 x128 gives expectation <2^117.42; the metered cap is 2^119 (Markov abort <=2^-1.58). Supplied bounded production experiments support the norm envelopes, the node mechanics (two toy differentials: 0 functional mismatches, 0 false negatives, 0 false credits, 0 child violations; true relations through the full survivor path), the block-selection curve and the ledger. Peak aggregate distributed storage <=2^81 bytes, all bounded objects individually addressed. Preprocessing is paid once for this challenge with no future-target amortization, free oracles or advice. This is an analytic exploratory claim, not a full production execution.",
+      "score": {
+        "numerator": "123",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "STORAGE.md",
+        "KERNELS.md",
+        "measurements12.txt",
+        "stats14.json",
+        "descent_sieve.c",
+        "measurements14.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence14.py",
+      "purpose": "One stdlib-only credential-free run: exact field and tower checks; canonical-pool regeneration and verification; the yield/retention/block-selection ledger with lean routing; the filtering simulation; the window-sieved descent DP with the ECM control; the toy differential of the descent node mechanics (congruence functionals, scores, threshold, survivors, children); the degree-1 ideal count; the la kernel check; and the production audit: an amortised mu_r generator, a certified boot lattice at scale 32, an actual special-q ideal at 260 bits with exact cf/cg maxima against the envelopes, the store14 protocol boundary checks and the exact five-dimensional enclosing-volume line bound. These tests support only their stated scope; no production smoothness or success is claimed.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 300
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 25,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}

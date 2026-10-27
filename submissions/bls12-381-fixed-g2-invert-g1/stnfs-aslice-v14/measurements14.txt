@@ -1,0 +1,14 @@
+# descent_sieve.c 12991 B; gcc 12.2 -O3 -fno-tree-vectorize -fno-tree-loop-distribute-patterns; linux/arm64 callgrind 3.19; differential Ir
+setup p=1048583 Ir/pair=11629110 log2=23.471
+setup p=1099511677727 Ir/pair=20967654 log2=24.322
+setup p=4611686018427387847 Ir/pair=30055841 log2=24.841
+setup-double-decisions p=1048583 Ir/pair=412372 log2=18.65 (experimental build, numerically unsound at p~2^62)
+walk p=1048583 k=16 w=7 Ir/hit=749325 log2=19.515 leaves/hit=254.3 Ir/leaf=2946.8
+walk p=1099511677727 k=16 w=21 Ir/hit=2053552 log2=20.970 leaves/hit=702.5 Ir/leaf=2923.2
+walk p=4611686018427387847 k=64 w=75 Ir/hit=4966771 log2=22.244 leaves/hit=1663.3 Ir/leaf=2986.1
+walkc p=65537 k=2 w=3 Ir/prefix=1166.3 log2=10.188
+walkc p=1048583 k=1 w=3 Ir/prefix=1144.3 log2=10.160
+walkc per-hit at p=1048583 k=16 = (p/33)*1166.3 = 37060761 log2=25.143
+zero Ir/cell=0.313
+scan Ir/cell=5.000
+apply Ir/record=11.0
