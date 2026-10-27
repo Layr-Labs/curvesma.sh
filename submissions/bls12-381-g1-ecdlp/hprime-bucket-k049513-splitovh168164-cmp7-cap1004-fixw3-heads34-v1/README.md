@@ -1,0 +1,1 @@
+hprime-bucket-k049513-splitovh168164-cmp7-cap1004-fixw3-heads34-v1: split charged overhead trimmed one rung to baby 168 / giant 164 (each 21 above its listed walk) on the split flush-5 crown at K = 0.49513.
