@@ -1,0 +1,427 @@
+# callgrind format
+version: 1
+creator: callgrind-3.24.0
+pid: 29
+cmd:  /work/cyc2 1 0 0
+part: 1
+
+
+desc: I1 cache:
+desc: D1 cache:
+desc: LL cache:
+
+desc: Timerange: Basic block 0 - 338354
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 9823
+
+
+ob=(5) /work/cyc2
+fl=(107) ???
+fn=(448) main
+cob=(1) /usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1
+cfi=(108) ./elf/../sysdeps/aarch64/dl-trampoline.S
+cfn=(401) _dl_runtime_resolve'2
+calls=0 38
+0 9823
+
+fn=(449) main'2
+0 2
+
+fn=(494) sub_mod_384x
+0 27
+cfn=(496) __sub_mod_384
+calls=2263 0
+0 78
+0 18
+cfn=(496)
+calls=2263 0
+0 78
+0 27
+
+fn=(496)
+0 182
+
+fn=(506) __mul_384
+0 2916
+
+fn=(492) add_mod_384x
+0 162
+cfn=(476) __add_mod_384
+calls=9939 0
+0 486
+0 108
+cfn=(476)
+calls=9939 0
+0 486
+0 162
+
+fn=(512) __redc_tail_mont_384
+0 324
+
+fn=(538) mul_by_1_plus_i_mod_384x
+0 10
+cfn=(496)
+calls=507 0
+0 26
+0 10
+cfn=(476)
+calls=507 0
+0 21
+0 9
+
+fn=(430) __blst_cpuid
+fi=(110) ./csu/../csu/libc-start.c
+cob=(2) /usr/lib/aarch64-linux-gnu/libc.so.6
+cfi=(110)
+cfn=(407) __libc_start_main@@GLIBC_2.34'2
+calls=0 350
+144 9823
+fe=(107)
+
+fn=(508) __sub_mod_384x384
+0 660
+
+fn=(534) redc_mont_384
+0 156
+cfn=(510) __mul_by_1_mont_384
+calls=6613 0
+0 1848
+0 12
+cfn=(512)
+calls=6613 0
+0 324
+0 108
+
+fn=(394) (below main)
+cob=(1)
+cfi=(108)
+cfn=(400) _dl_runtime_resolve
+calls=0 38
+0 9823
+
+fn=(530) add_mod_384x384
+0 90
+cfn=(532) __add_mod_384x384
+calls=6916 0
+0 405
+0 63
+
+fn=(552) sqr_382x
+0 468
+cfn=(506)
+calls=3417 0
+0 1458
+0 36
+cfn=(506)
+calls=3417 0
+0 1458
+0 270
+
+fn=(580) sqr_fp4
+0 57
+cfn=(552)
+calls=1137 0
+0 1230
+0 15
+cfn=(552)
+calls=1137 0
+0 1230
+0 21
+cfn=(492)
+calls=1137 0
+0 234
+0 18
+cfn=(528) sub_mod_384x384
+calls=1137 0
+0 183
+0 15
+cfn=(530)
+calls=1137 0
+0 186
+0 15
+cfn=(530)
+calls=1137 0
+0 186
+0 15
+cfn=(530)
+calls=1137 0
+0 186
+0 21
+cfn=(534)
+calls=1137 0
+0 612
+0 21
+cfn=(534)
+calls=1137 0
+0 612
+0 12
+cfn=(552)
+calls=1137 0
+0 1230
+0 15
+cfn=(528)
+calls=1137 0
+0 183
+0 15
+cfn=(528)
+calls=1137 0
+0 183
+0 15
+cfn=(528)
+calls=1137 0
+0 183
+0 15
+cfn=(528)
+calls=1137 0
+0 183
+0 21
+cfn=(534)
+calls=1137 0
+0 612
+0 21
+cfn=(534)
+calls=1137 0
+0 612
+0 24
+
+fn=(476)
+0 993
+
+fn=(510)
+0 1848
+
+fn=(532)
+0 405
+
+fn=(528)
+0 150
+cfn=(508)
+calls=11332 0
+0 660
+0 105
+
+fn=(578) cyclotomic_sqr_fp12
+0 17
+cfn=(580)
+calls=316 0
+0 2727
+0 8
+cfn=(580)
+calls=316 0
+0 2727
+0 4
+cfn=(580)
+calls=316 0
+0 2727
+0 7
+cfn=(494)
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(494)
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(494)
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(538)
+calls=316 0
+0 76
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 7
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 6
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 5
+cfn=(492)
+calls=316 0
+0 78
+0 8
+cfn=(449)
+calls=1 0
+0 2
+
+fn=(592) blst_fp12_cyclotomic_sqr
+0 1
+cfn=(578)
+calls=1 0
+0 9798
+
+ob=(1)
+fl=(2) ./elf/./elf/rtld.c
+fn=(2) _dl_start
+fi=(1) ./elf/../sysdeps/aarch64/dl-start.S
+cfi=(97) ./elf/./elf/dl-init.c
+cfn=(356) _dl_init
+calls=0 81
+68 9823
+fe=(2)
+
+fl=(97)
+fn=(356)
+fi=(1)
+cob=(5)
+cfi=(107)
+cfn=(394)
+calls=0 0
+74 9823
+fe=(97)
+
+fl=(1)
+fn=(0) (below main)
+cfi=(2)
+cfn=(2)
+calls=0 519
+32 9823
+
+fl=(108)
+fn=(400)
+cob=(2)
+cfi=(110)
+cfn=(406) __libc_start_main@@GLIBC_2.34
+calls=0 242
+100 9823
+
+fn=(401)
+cob=(2)
+cfi=(116) ./stdlib/../stdlib/strtol.c
+cfn=(452) strtol
+calls=0 116
+100 9823
+
+ob=(2)
+fl=(116)
+fn=(452)
+cfi=(117) ./stdlib/../stdlib/strtol_l.c
+cfn=(454) ____strtol_l_internal
+calls=0 238
+117 9823
+
+fn=(453) strtol'2
+cfi=(117)
+cfn=(455) ____strtol_l_internal'2
+calls=0 238
+117 19646
+
+fl=(110)
+fn=(406)
+cfi=(111) ./stdlib/./stdlib/cxa_atexit.c
+cfn=(408) __cxa_atexit
+calls=0 67
+312 9823
+
+fn=(407)
+cfi=(112) ./csu/../sysdeps/nptl/libc_start_call_main.h
+cfn=(438) (below main)
+calls=0 29
+350 9823
+cob=(5)
+cfi=(107)
+cfn=(430)
+calls=0 0
+145 9823
+
+fl=(112)
+fn=(438)
+cob=(5)
+cfi=(107)
+cfn=(448)
+calls=0 0
+58 9823
+
+fl=(117)
+fn=(454)
+fi=(107)
+cfi=(116)
+cfn=(453)
+calls=0 116
+0 9823
+fe=(117)
+
+fn=(455)
+fi=(107)
+cfi=(116)
+cfn=(453)
+calls=0 116
+0 9823
+fi=(107)
+cob=(5)
+cfi=(107)
+cfn=(592)
+calls=1 0
+0 9799
+fi=(107)
+0 24
+fe=(117)
+
+fl=(111)
+fn=(410) __internal_atexit
+fi=(110)
+cfi=(110)
+cfn=(407)
+calls=0 145
+144 9823
+fe=(111)
+
+fn=(408)
+cfn=(410)
+calls=0 36
+68 9823
+
+totals: 9823
