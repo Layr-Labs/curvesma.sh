@@ -1,0 +1,186 @@
+{
+ "purpose": "Blinding-product repricing of the unroll8 flag-carry package (same kernel, counts, meter): 'this_revision' records the unroll8 checks and counts; 'flag_carry_revision' is that package's record, kept for its scope in its own wording; the superseded c2b498ec per-site record is retained with the work (see previous_revision_retained_off_package).",
+ "this_revision": {
+  "change": "both blocks hold eight copies of the step (gen10.py U=8): backward entry tree BLOOP_X8 on x23 bits 6-8 (copy j processes w=-j mod 8), forward FLOOP entered at copy 2 with counter B",
+  "md5": {
+   "B2^20_A2^20": "b5dea6c8c9c9cdc0d68624a66a44469a",
+   "B2^20_A2^24": "e1c11077ec5c31b297742918cd221935",
+   "B2^16_A2^16": "57eb6d318f750dd66fd3188e76bd8bf6",
+   "B2^16_A2^20": "973f55cb69bd19265cbc50201b85c241"
+  },
+  "static": {
+   "copies_equal_flag_carry_copy": "forward 119, plain backward 570, anchor backward 575, slow set 30 instructions, 8 copies each",
+   "batch_step": "11,602 instructions at A=2^20 and 2^24, then 5 or 3 never-executed nops; 34 immediates differ",
+   "b_cc_sites_flag_live": 88,
+   "loop_control_saving_per_round": "3B/2-5"
+  },
+  "rounds": {
+   "B2^20_A2^20": {
+    "input2_round5_clean_fixed": 658022010,
+    "input1_round7_clean_fixed": 658022010,
+    "meter_per_walk_step_range": [
+     22.4099,
+     22.422
+    ],
+    "charged_plain_fixed": 658022038
+   },
+   "B2^16_A2^16": {
+    "plain_round2_fixed": {
+     "input1": 41164409,
+     "input2": 41164409
+    },
+    "flag_carry_kernel": 41262708,
+    "difference": 98299
+   },
+   "B2^16_A2^20": {
+    "plain_round2_fixed": {
+     "input1": 41164409,
+     "input2": 41164409
+    },
+    "anchor_round64_fixed_clean": {
+     "input1": 41492092,
+     "input2": 41492092
+    },
+    "anchor_minus_plain": 327683
+   }
+  },
+  "dumps_vs_flag_carry_build": "the five dump and stress configs of flag_carry_revision, both input sets: stdout and stderr identical"
+ },
+ "flag_carry_revision": {
+  "generator": "measurement/gen10.py with FCARRY=True writes bloop_branchy.h and floop.h; with FCARRY=False it reproduces the previous revision's two headers byte for byte (each plus the generator's one-line comment). Text diff: exactly 6 sites per copy (iw Lq1, inv Lp2, lam Lq4, lambda^2 Lp5, y3' Lp9, PRE Lq12).",
+  "static_common_path": {
+   "backward_block": {
+    "previous": 511,
+    "this": 506
+   },
+   "forward_block": {
+    "previous": 110,
+    "this": 109
+   },
+   "per_walk_step_saving": 6,
+   "per_round_saving_formula": "6*B-7 (5*(B-1) backward + (B-2) forward)"
+  },
+  "builds": {
+   "image": "curvesma-reference-count, GCC 14.2.0-19, -O3 -fno-tree-vectorize -mgeneral-regs-only -static",
+   "md5": {
+    "B2^20_A2^20": "487534014aa3fb7c07c24d7f7a72ae19",
+    "B2^20_A2^24": "35663a6ef2063a90bccab236360a8691",
+    "B2^16_A2^16": "862817dc8caa70203066f35bc97a4136",
+    "B2^16_A2^20": "035541cd71c2c81e31a3840af27be37c",
+    "previous_B2^20_A2^20": "da97afdfb5cb8ced7dbe0a446cd826cf",
+    "previous_B2^16_A2^16": "a6eead379d5e6619526a8821391f5a29"
+   }
+  },
+  "compiled_diff_vs_previous": "batch_step at B=2^20, A=2^20 (address-normalised): 22 adc ..,xzr,xzr removed, 22 cbz -> b.cc (2 forward copies, 10 plain and 10 anchor backward copies), 2 trailing alignment nops gone; every other instruction identical. step_rare, rare_anchor, rare_2cycle, add_single, finv, new_trail, dp_restart: same instruction counts, differences only in address immediates.",
+  "flag_liveness": "on every build (B=2^20 at A=2^20 and 2^24, B=2^16 at A=2^16 and 2^20): all 22 b.cc sites have the product's top adcs immediately before; on every control-flow path from the branch (19 to 116 instructions) x13 (x11 at lambda^2) is written before any read. Previous revision's build: 0 such sites.",
+  "a20_vs_a24_build": "batch_step 3,639 instructions at A=2^20; at A=2^24 the same 3,639 plus 6 trailing alignment nops; 10 instructions differ, all extr/ubfiz/and immediates",
+  "counting": "QEMU 8.2.2 user mode, -d in_asm,exec,nochain, TB sizes x executions, -dfilter main..read_fe-1 and add_single..end of batch_step (from nm); round = cumulative(n) - cumulative(n-1); FIXED = round - meter increase",
+  "rounds": {
+   "B2^20_A2^20": {
+    "input2_round5_clean_fixed": 659594869,
+    "input1_rounds2_to_5_round_minus_meter": [
+     659759409,
+     659759383,
+     659759431,
+     659677150
+    ],
+    "input1_two_cycles_per_round_2_to_5": [
+     2,
+     2,
+     2,
+     1
+    ],
+    "previous_kernel_input2_round5_clean_fixed": 665886318,
+    "previous_minus_this_cumulative_rounds_4_and_5": [
+     25165796,
+     31457245
+    ],
+    "per_round_difference": 6291449,
+    "meters_equal_to_previous": true,
+    "meter_per_walk_step_range": [
+     22.4099,
+     22.4375
+    ],
+    "charged_plain_fixed": 659594897,
+    "charged_note": "previous revision's declared 665,886,346 minus 6,291,449; 28 above this image's count"
+   },
+   "B2^16_A2^16": {
+    "plain_round2_fixed": {
+     "input1": 41262708,
+     "input2": 41262708
+    },
+    "previous_kernel_input1": 41655917,
+    "difference": 393209
+   },
+   "B2^16_A2^20": {
+    "plain_round2_fixed": {
+     "input1": 41262708,
+     "input2": 41262708
+    },
+    "anchor_round64_fixed_clean": {
+     "input1": 41590391,
+     "input2": 41590391
+    },
+    "anchor_minus_plain": 327683,
+    "equals": "5*(2^16-1)+8"
+   }
+  },
+  "callgrind_on_this_kernel": {
+   "tool": "valgrind 3.24.0 callgrind (organizer image), --collect-atstart=no, harness toggles",
+   "binary": "B2^16_A2^16 build md5 862817dc8caa70203066f35bc97a4136",
+   "input": 1,
+   "Ir_n1": 42730422,
+   "Ir_n2": 85459279,
+   "round2": 42728857,
+   "qemu_round2_same_binary": 42728857,
+   "equal": true
+  },
+  "exactness": {
+   "dumps_vs_previous_build": {
+    "configs": [
+     "n=8 (2^16 adders)",
+     "2^4 adders DP 8 n=600",
+     "2^6 adders DP 6 8-bit filters n=600",
+     "2^10 adders DP 12 cap 1 period n=300",
+     "2^16 adders n=64"
+    ],
+    "input_sets": 2,
+    "stdout_and_stderr_identical": true,
+    "n8_md5": {
+     "input1": "21027ff2",
+     "input2": "0c80311a"
+    }
+   },
+   "backward_block": {
+    "cases": 240000,
+    "seeds": [
+     1,
+     2
+    ],
+    "mismatch_vs_previous_block": 0,
+    "mismatch_vs_bignum_model": 0,
+    "path_counts_seed1": {
+     "lam_noncanonical": 12462,
+     "inv_slow": 12078,
+     "inv_slow_subtracting": 12000,
+     "sq_slow": 12450,
+     "y3m_slow": 12445
+    },
+    "path_counts_seed2": {
+     "lam_noncanonical": 12437,
+     "inv_slow": 12066,
+     "inv_slow_subtracting": 12000,
+     "sq_slow": 12429,
+     "y3m_slow": 12423
+    }
+   },
+   "forward_block": {
+    "runs": 6000,
+    "steps_per_run": 62,
+    "mismatch_vs_previous_block": 0,
+    "mismatch_vs_bignum_model": 0
+   }
+  }
+ },
+ "previous_revision_retained_off_package": "The c2b498ec per-site frequency record (5221 bytes) is retained with the work, not in this package; this revision's per-step meter means (22.409-22.422, this_revision.rounds) and the flag-carry record below carry the charged comparison."
+}
