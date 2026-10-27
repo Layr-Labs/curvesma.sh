@@ -1,0 +1,60 @@
+# dsieve16.c (shipped source) measurements: linux/arm64 Debian 12 container, gcc 12.2.0 -O3 -fno-tree-vectorize -fno-tree-loop-distribute-patterns -std=c99, valgrind 3.19.0 callgrind Ir; driver kernel/measure16.sh.
+######## checks: correctness at production widths, exact ball counts ########
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+valgrind-3.19.0
+== correctness: brute-force set equality (R<=4), rank bijection, record verification ==
+RESULT PASS p=1031 R=4 seed=7 swaps=132 cert=1 hits=12959 leaves=12960 nodes=20580 expected=12915.15 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=1031 R=4 seed=8 swaps=97 cert=1 hits=12923 leaves=12924 nodes=19857 expected=12915.15 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=65537 R=4 seed=7 swaps=115 cert=1 hits=193 leaves=194 nodes=644 expected=203.18 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=1048583 R=4 seed=7 swaps=210 cert=1 hits=10 leaves=11 nodes=98 expected=12.70 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=4194319 R=4 seed=9 swaps=164 cert=1 hits=2 leaves=3 nodes=51 expected=3.17 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=307 R=3 seed=5 swaps=95 cert=1 hits=1582 leaves=1583 nodes=3333 expected=1563.19 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=1099511627791 R=4 seed=11 swaps=271 cert=1 hits=0 leaves=1 nodes=12 expected=0.00 badrec=0 brute=MATCH rank=BIJECTION
+== correctness at production widths: every record unranked and verified; hits vs volume/p ==
+RESULT PASS p=1048583 R=10 seed=9 swaps=169 cert=1 hits=655328 leaves=655329 nodes=470722 expected=655354.32 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=1099511627791 R=24 seed=9 swaps=282 cert=1 hits=22276 leaves=22277 nodes=35326 expected=22287.65 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=1099511627791 R=32 seed=9 swaps=282 cert=1 hits=702234 leaves=702235 nodes=640545 expected=702047.69 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=4611686018427388039 R=64 seed=9 swaps=450 cert=1 hits=653 leaves=654 nodes=2048 expected=684.14 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=4611686018427388039 R=96 seed=9 swaps=450 cert=1 hits=88494 leaves=88495 nodes=101052 expected=88729.70 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=96 seed=9 swaps=493 cert=1 hits=683 leaves=684 nodes=1941 expected=693.20 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=128 seed=9 swaps=493 cert=1 hits=21940 leaves=21941 nodes=29996 expected=21880.82 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=96 seed=10 swaps=515 cert=1 hits=682 leaves=683 nodes=1590 expected=693.20 badrec=0 brute=skipped rank=skipped
+== exact ball counts: R = 4..192 computed by `count`; every half count equals CELLS in descent16.py / ball_counts in stats16.json and lies inside its volume bracket ==
+######## walk / apply / scan ########
+== (b) enumeration per hit: units = hits (target method, same reps/seed; setups cancel) ==
+walk p=1048576 R=96 targets=65536..262144 reps=1 hits 65536->262144 leaves 65537->262145 nodes 1234->5404 : 287.4 Ir/hit, leaves/hit 1.000, nodes/hit 0.021
+walk p=1099511627776 R=96 targets=65536..262144 reps=1 hits 65536->262144 leaves 65537->262145 nodes 6298->28474 : 305.0 Ir/hit, leaves/hit 1.000, nodes/hit 0.113
+walk p=4611686018427387904 R=96 targets=16384..65536 reps=1 hits 16384->65536 leaves 16385->65537 nodes 13411->63727 : 426.5 Ir/hit, leaves/hit 1.000, nodes/hit 1.024
+walk p=4611686018427387904 R=64 targets=256..1024 reps=1 hits 256->664 leaves 257->665 nodes 413->1746 : 718.1 Ir/hit, leaves/hit 1.000, nodes/hit 3.267
+walk p=1048576 R=12 targets=262144..1048576 reps=1 hits 262144->1048576 leaves 262145->1048577 nodes 91255->427831 : 344.7 Ir/hit, leaves/hit 1.000, nodes/hit 0.428
+walk p=1099511627776 R=24 targets=4096..16384 reps=1 hits 4096->16384 leaves 4097->16385 nodes 4280->20853 : 466.9 Ir/hit, leaves/hit 1.000, nodes/hit 1.349
+== (b') full enumerations (no target): per hit = (Ir(reps2)-Ir(reps1))/(hits2-hits1), includes one setup per rep ==
+fullwalk p=590295810358705651712 R=96 reps=1..3 hits 707->2163 nodes 1951->5987 : 47233.5 Ir/hit incl. 2 setups, nodes/hit 2.772
+fullwalk p=590295810358705651712 R=128 reps=1..3 hits 21833->65542 nodes 29661->90856 : 2025.7 Ir/hit incl. 2 setups, nodes/hit 1.400
+fullwalk p=4611686018427387904 R=64 reps=1..3 hits 664->1988 nodes 1746->5258 : 46340.3 Ir/hit incl. 2 setups, nodes/hit 2.653
+fullwalk p=1099511627776 R=24 reps=1..3 hits 22166->66789 nodes 30123->101551 : 1385.3 Ir/hit incl. 2 setups, nodes/hit 1.601
+== (c) apply per record and scan per cell (R=4 ball, 13.3M half cells) ==
+apply: records 223849 Ir 2905535114 -> 2921652306 : 9.00 Ir/record
+scan: cells 13315520 Ir 2970098105 -> 3236408537 : 5.000 Ir/cell
+######## large radii (R = 160, 192), same toolchain ########
+== checks at R = 160, 192 (p = 2^69): every record verified ==
+RESULT PASS p=590295810358705651741 R=160 seed=9 swaps=493 cert=1 hits=318329 leaves=318330 nodes=286683 expected=318387.56 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=192 seed=9 swaps=493 cert=1 hits=2839153 leaves=2839154 nodes=1890634 expected=2838677.63 badrec=0 brute=skipped rank=skipped
+== (b) enumeration per hit at R = 192 ==
+walk p=590295810358705651712 R=192 targets=65536..262144 reps=1 hits 65536->262144 leaves 65537->262145 nodes 31417->135021 : 367.1 Ir/hit, leaves/hit 1.000, nodes/hit 0.527
+walk p=4611686018427387904 R=160 targets=65536..262144 reps=1 hits 65536->262144 leaves 65537->262145 nodes 19375->85070 : 333.3 Ir/hit, leaves/hit 1.000, nodes/hit 0.334
+== (b') full enumeration at R = 160 ==
+fullwalk p=590295810358705651712 R=160 reps=1..3 hits 318282->955049 nodes 277537->861421 : 516.8 Ir/hit incl. 2 setups, nodes/hit 0.917
+######## v19 radii, same image and flags ########
+== check at R = 224 (p = 2^69): every record verified ==
+RESULT PASS p=590295810358705651741 R=224 seed=9 swaps=493 cert=1 hits=18051918 leaves=18051919 nodes=9521561 expected=18049633.78 badrec=0 brute=skipped rank=skipped
+== (b) enumeration per hit, p = 2^69, targets 65536..262144, seed 9 ==
+walk p=2^69 R=160 targets=65536..262144: 410 Ir/hit (Ir 1447849438 -> 1528618712)
+walk p=2^69 R=192 targets=65536..262144: 363 Ir/hit (Ir 2453985863 -> 2525355199)
+walk p=2^69 R=224 targets=65536..262144: 346 Ir/hit (Ir 3858166964 -> 3926365203)
+== exact half counts R = 224..384 (integer-point recurrence, CRT) ==
+224 10654623198171176305341831664
+256 52897551248440914796084637156
+288 217401149762189752879411886484
+320 769748406668707279529221545272
+384 6863095027560050329435265332068
