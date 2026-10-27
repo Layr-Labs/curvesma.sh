@@ -1,0 +1,566 @@
+# callgrind format
+version: 1
+creator: callgrind-3.24.0
+pid: 79
+cmd:  /work/cyc2 1 0 1
+part: 1
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: LL cache: 
+
+desc: Timerange: Basic block 0 - 338883
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 23017
+
+
+ob=(5) /work/cyc2
+fl=(107) ???
+fn=(394) (below main)
+cob=(1) /usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1
+cfi=(108) ./elf/../sysdeps/aarch64/dl-trampoline.S
+cfn=(400) _dl_runtime_resolve
+calls=0 38 
+0 23017
+
+fn=(510) __mul_by_1_mont_384
+0 1848
+
+fn=(532) __add_mod_384x384
+0 1395
+
+fn=(526) mul_382x
+0 774
+cfn=(506) __mul_384
+calls=2387 0 
+0 2916
+0 72
+cfn=(506)
+calls=2387 0 
+0 2916
+0 72
+cfn=(506)
+calls=2387 0 
+0 2916
+0 126
+cfn=(508) __sub_mod_384x384
+calls=2387 0 
+0 792
+0 36
+cfn=(508)
+calls=2387 0 
+0 792
+0 72
+cfn=(508)
+calls=2387 0 
+0 792
+0 180
+
+fn=(528) sub_mod_384x384
+0 550
+cfn=(508)
+calls=11372 0 
+0 2420
+0 385
+
+fn=(506)
+0 8748
+
+fn=(492) add_mod_384x
+0 216
+cfn=(476) __add_mod_384
+calls=9945 0 
+0 648
+0 144
+cfn=(476)
+calls=9945 0 
+0 648
+0 216
+
+fn=(512) __redc_tail_mont_384
+0 324
+
+fn=(574) mul_fp12
+0 19
+cfn=(540) mul_fp6x2
+calls=36 0 
+0 6184
+0 6
+cfn=(540)
+calls=36 0 
+0 6184
+0 6
+cfn=(492)
+calls=36 0 
+0 78
+0 6
+cfn=(492)
+calls=36 0 
+0 78
+0 6
+cfn=(492)
+calls=36 0 
+0 78
+0 5
+cfn=(492)
+calls=36 0 
+0 78
+0 8
+cfn=(492)
+calls=36 0 
+0 78
+0 8
+cfn=(492)
+calls=36 0 
+0 78
+0 5
+cfn=(540)
+calls=36 0 
+0 6184
+0 6
+cfn=(528)
+calls=36 0 
+0 61
+0 8
+cfn=(528)
+calls=36 0 
+0 61
+0 8
+cfn=(528)
+calls=36 0 
+0 61
+0 8
+cfn=(528)
+calls=36 0 
+0 61
+0 7
+cfn=(528)
+calls=36 0 
+0 61
+0 7
+cfn=(528)
+calls=36 0 
+0 61
+0 6
+cfn=(528)
+calls=36 0 
+0 61
+0 8
+cfn=(528)
+calls=36 0 
+0 61
+0 7
+cfn=(528)
+calls=36 0 
+0 61
+0 7
+cfn=(528)
+calls=36 0 
+0 61
+0 5
+cfn=(528)
+calls=36 0 
+0 61
+0 5
+cfn=(528)
+calls=36 0 
+0 61
+0 7
+cfn=(534) redc_mont_384
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 8
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 8
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 5
+cfn=(528)
+calls=36 0 
+0 61
+0 5
+cfn=(530) add_mod_384x384
+calls=36 0 
+0 62
+0 5
+cfn=(530)
+calls=36 0 
+0 62
+0 6
+cfn=(530)
+calls=36 0 
+0 62
+0 6
+cfn=(530)
+calls=36 0 
+0 62
+0 7
+cfn=(530)
+calls=36 0 
+0 62
+0 7
+cfn=(530)
+calls=36 0 
+0 62
+0 7
+cfn=(530)
+calls=36 0 
+0 62
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 7
+cfn=(534)
+calls=36 0 
+0 204
+0 8
+cfn=(449) main'2
+calls=1 0 
+0 2
+
+fn=(508)
+0 4796
+
+fn=(534)
+0 156
+cfn=(510)
+calls=6613 0 
+0 1848
+0 12
+cfn=(512)
+calls=6613 0 
+0 324
+0 108
+
+fn=(592) blst_fp12_mul
+0 1
+cfn=(574)
+calls=1 0 
+0 22990
+
+fn=(448) main
+cob=(1)
+cfi=(108)
+cfn=(401) _dl_runtime_resolve'2
+calls=0 38 
+0 23017
+
+fn=(449)
+0 2
+
+fn=(530)
+0 310
+cfn=(532)
+calls=6938 0 
+0 1395
+0 217
+
+fn=(430) __blst_cpuid
+fi=(110) ./csu/../csu/libc-start.c
+cob=(2) /usr/lib/aarch64-linux-gnu/libc.so.6
+cfi=(110)
+cfn=(407) __libc_start_main@@GLIBC_2.34'2
+calls=0 350 
+144 23017
+fe=(107)
+
+fn=(476)
+0 1296
+
+fn=(540)
+0 66
+cfn=(526)
+calls=252 0 
+0 2076
+0 18
+cfn=(526)
+calls=252 0 
+0 2076
+0 21
+cfn=(526)
+calls=252 0 
+0 2076
+0 21
+cfn=(492)
+calls=252 0 
+0 234
+0 21
+cfn=(492)
+calls=252 0 
+0 234
+0 18
+cfn=(526)
+calls=252 0 
+0 2076
+0 21
+cfn=(528)
+calls=252 0 
+0 183
+0 18
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 24
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 21
+cfn=(530)
+calls=252 0 
+0 186
+0 15
+cfn=(492)
+calls=252 0 
+0 234
+0 15
+cfn=(492)
+calls=252 0 
+0 234
+0 15
+cfn=(526)
+calls=252 0 
+0 2076
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 18
+cfn=(528)
+calls=252 0 
+0 183
+0 21
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 15
+cfn=(492)
+calls=252 0 
+0 234
+0 15
+cfn=(492)
+calls=252 0 
+0 234
+0 15
+cfn=(526)
+calls=252 0 
+0 2076
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(528)
+calls=252 0 
+0 183
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 15
+cfn=(530)
+calls=252 0 
+0 186
+0 24
+
+ob=(1)
+fl=(2) ./elf/./elf/rtld.c
+fn=(2) _dl_start
+fi=(1) ./elf/../sysdeps/aarch64/dl-start.S
+cfi=(97) ./elf/./elf/dl-init.c
+cfn=(356) _dl_init
+calls=0 81 
+68 23017
+fe=(2)
+
+fl=(97)
+fn=(356)
+fi=(1)
+cob=(5)
+cfi=(107)
+cfn=(394)
+calls=0 0 
+74 23017
+fe=(97)
+
+fl=(1)
+fn=(0) (below main)
+cfi=(2)
+cfn=(2)
+calls=0 519 
+32 23017
+
+fl=(108)
+fn=(400)
+cob=(2)
+cfi=(110)
+cfn=(406) __libc_start_main@@GLIBC_2.34
+calls=0 242 
+100 23017
+
+fn=(401)
+cob=(2)
+cfi=(116) ./stdlib/../stdlib/strtol.c
+cfn=(452) strtol
+calls=0 116 
+100 23017
+
+ob=(2)
+fl=(116)
+fn=(452)
+cfi=(117) ./stdlib/../stdlib/strtol_l.c
+cfn=(454) ____strtol_l_internal
+calls=0 238 
+117 23017
+
+fn=(453) strtol'2
+cfi=(117)
+cfn=(455) ____strtol_l_internal'2
+calls=0 238 
+117 46034
+
+fl=(110)
+fn=(406)
+cfi=(111) ./stdlib/./stdlib/cxa_atexit.c
+cfn=(408) __cxa_atexit
+calls=0 67 
+312 23017
+
+fn=(407)
+cfi=(112) ./csu/../sysdeps/nptl/libc_start_call_main.h
+cfn=(438) (below main)
+calls=0 29 
+350 23017
+cob=(5)
+cfi=(107)
+cfn=(430)
+calls=0 0 
+145 23017
+
+fl=(112)
+fn=(438)
+cob=(5)
+cfi=(107)
+cfn=(448)
+calls=0 0 
+58 23017
+
+fl=(117)
+fn=(454)
+fi=(107)
+cfi=(116)
+cfn=(453)
+calls=0 116 
+0 23017
+fe=(117)
+
+fn=(455)
+fi=(107)
+cfi=(116)
+cfn=(453)
+calls=0 116 
+0 23017
+fi=(107)
+cob=(5)
+cfi=(107)
+cfn=(592)
+calls=1 0 
+0 22991
+fi=(107)
+0 26
+fe=(117)
+
+fl=(111)
+fn=(410) __internal_atexit
+fi=(110)
+cfi=(110)
+cfn=(407)
+calls=0 145 
+144 23017
+fe=(111)
+
+fn=(408)
+cfn=(410)
+calls=0 36 
+68 23017
+
+totals: 23017
