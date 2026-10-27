@@ -1,0 +1,49 @@
+# dsieve16.c (shipped source) on linux/arm64 Debian 12: gcc (Debian 12.2.0-14+deb12u1) 12.2.0, valgrind-3.19.0, -O3 -fno-tree-vectorize -fno-tree-loop-distribute-patterns -std=c99; callgrind Ir, differential
+== correctness: brute-force set equality and rank bijection (R <= 4); every record unranked and verified (congruence, ball, sign, no duplicates) ==
+RESULT PASS p=1031 R=4 seed=7 swaps=132 cert=1 hits=12959 leaves=12960 nodes=20580 expected=12915.15 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=1031 R=4 seed=8 swaps=97 cert=1 hits=12923 leaves=12924 nodes=19857 expected=12915.15 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=65537 R=4 seed=7 swaps=115 cert=1 hits=193 leaves=194 nodes=644 expected=203.18 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=1048583 R=4 seed=7 swaps=210 cert=1 hits=10 leaves=11 nodes=98 expected=12.70 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=4194319 R=4 seed=9 swaps=164 cert=1 hits=2 leaves=3 nodes=51 expected=3.17 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=307 R=3 seed=5 swaps=95 cert=1 hits=1582 leaves=1583 nodes=3333 expected=1563.19 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=1099511627791 R=4 seed=11 swaps=271 cert=1 hits=0 leaves=1 nodes=12 expected=0.00 badrec=0 maxowner_bits=0.00 brute=MATCH rank=BIJECTION
+RESULT PASS p=1048583 R=10 seed=9 swaps=169 cert=1 hits=655328 leaves=655329 nodes=470722 expected=655354.32 badrec=0 maxowner_bits=0.00 brute=skipped rank=skipped
+RESULT PASS p=1099511627791 R=24 seed=9 swaps=282 cert=1 hits=22276 leaves=22277 nodes=35326 expected=22287.65 badrec=0 maxowner_bits=14.44 brute=skipped rank=skipped
+RESULT PASS p=1099511627791 R=32 seed=9 swaps=282 cert=1 hits=702234 leaves=702235 nodes=640545 expected=702047.69 badrec=0 maxowner_bits=19.42 brute=skipped rank=skipped
+RESULT PASS p=4611686018427388039 R=64 seed=9 swaps=450 cert=1 hits=653 leaves=654 nodes=2048 expected=684.14 badrec=0 maxowner_bits=31.42 brute=skipped rank=skipped
+RESULT PASS p=4611686018427388039 R=96 seed=9 swaps=450 cert=1 hits=88494 leaves=88495 nodes=101052 expected=88729.70 badrec=0 maxowner_bits=38.44 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=96 seed=9 swaps=493 cert=1 hits=683 leaves=684 nodes=1941 expected=693.20 badrec=0 maxowner_bits=38.43 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=128 seed=9 swaps=493 cert=1 hits=21940 leaves=21941 nodes=29996 expected=21880.82 badrec=0 maxowner_bits=43.42 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=96 seed=10 swaps=515 cert=1 hits=682 leaves=683 nodes=1590 expected=693.20 badrec=0 maxowner_bits=38.44 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=160 seed=9 swaps=493 cert=1 hits=318329 leaves=318330 nodes=286683 expected=318387.56 badrec=0 maxowner_bits=47.28 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=192 seed=9 swaps=493 cert=1 hits=2839153 leaves=2839154 nodes=1890634 expected=2838677.63 badrec=0 maxowner_bits=50.44 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=224 seed=9 swaps=493 cert=1 hits=18051918 leaves=18051919 nodes=9521561 expected=18049633.78 badrec=0 maxowner_bits=53.11 brute=skipped rank=skipped
+== R = 256 (p = 2^69), first 2^24 records of the enumeration, each verified; indices above 2^94 ==
+RESULT PASS p=590295810358705651741 R=256 seed=9 swaps=493 cert=1 hits=16777216 leaves=16777217 nodes=6506924 expected=89611937.47 badrec=0 maxowner_bits=55.42 brute=skipped rank=skipped
+== (b) enumeration + rank + record per hit: targets t1 -> t2 on one lattice (setups cancel) ==
+walk p=1048576 R=96 hits 65536->262144 Ir 333169322->392546584 : 302.0 Ir/hit
+walk p=1099511627776 R=96 hits 65536->262144 Ir 342367938->404508231 : 316.1 Ir/hit
+walk p=4611686018427387904 R=96 hits 16384->65536 Ir 339307032->361408499 : 449.7 Ir/hit
+walk p=4611686018427387904 R=64 hits 256->653 Ir 120654516->120969449 : 793.3 Ir/hit
+walk p=1048576 R=12 hits 262144->1048576 Ir 104748003->392406280 : 365.8 Ir/hit
+walk p=1099511627776 R=24 hits 4096->16384 Ir 26370252->32638143 : 510.1 Ir/hit
+walk p=590295810358705651712 R=160 hits 65536->262144 Ir 1448309800->1530455328 : 417.8 Ir/hit
+walk p=590295810358705651712 R=192 hits 65536->262144 Ir 2454446225->2527191815 : 370.0 Ir/hit
+walk p=590295810358705651712 R=224 hits 65536->262144 Ir 3858627326->3928201819 : 353.9 Ir/hit
+== (b') full enumerations, reps 1 -> 3 (per hit including two setups) ==
+fullwalk p=590295810358705651712 R=96 hits 683->2079 Ir 335233869->402037620 : 47853.7 Ir/hit
+fullwalk p=590295810358705651712 R=128 hits 21940->65795 Ir 756456896->842733602 : 1967.3 Ir/hit
+fullwalk p=590295810358705651712 R=160 hits 318329->954604 Ir 1554992920->1879573269 : 510.1 Ir/hit
+fullwalk p=1099511627776 R=24 hits 22276->66865 Ir 35747752->94858847 : 1325.7 Ir/hit
+== (c) apply per record, scan per cell (R = 4 ball, reps 1 -> 2) ==
+apply: records 51037 Ir 621497040->621956381 : 9.00 Ir/record
+scan: cells 13315520 Ir 687615337->754192945 : 5.000 Ir/cell
+== (d) LLL + certificate per (p, root pair), p = 2^69, reps 1 -> 3 ==
+setup: Ir 32626151->98706184 : 2^24.98 Ir/pair
+== exact ball counts: R = 4..192 by `count` (v16 run), equal to CELLS in descent16.py and inside the volume brackets; R = 224, 256 by `count` on this build ==
+R=224 half=10654623198171176305341831664 log2half=93.1055 inside=1
+R=256 half=52897551248440914796084637156 log2half=95.4172 inside=1
+== R = 288..384: 12-dimensional integer-point recurrence (CRT over four 30-bit primes; reproduces count at R = 16, 192, 224, 256) ==
+R=288 half=217401149762189752879411886484
+R=320 half=769748406668707279529221545272
+R=384 half=6863095027560050329435265332068
