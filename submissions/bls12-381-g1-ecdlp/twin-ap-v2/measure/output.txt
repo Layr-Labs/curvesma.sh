@@ -1,0 +1,16 @@
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+80a325b8b66aec5fd203cdf3be76d437f9fd41a43a74fede5940b9b831f4fad0  /work/bls_field
+d862cd5a80ca6fa31dc86e44aa1df840e150de9ff1b0020ce0e2938b14b39420  /work/fp_ops
+d512f4d9af9384cfff31212ad1562349db5cb513ff9e90ed7a08e15eb2604fe1  /work/side_output
+/work/bls_field : Ir(4096)=1568788 Ir(8192)=3137556 per-iteration=383 remainder=0
+/work/fp_ops mul : Ir(4096)=1569581 Ir(8192)=3138349 per-iteration=383 remainder=0
+/work/fp_ops sqr : Ir(4096)=1332014 Ir(8192)=2663214 per-iteration=325 remainder=0
+/work/fp_ops add : Ir(4096)=226094 Ir(8192)=451374 per-iteration=55 remainder=0
+/work/fp_ops sub : Ir(4096)=221998 Ir(8192)=443182 per-iteration=54 remainder=0
+/work/side_output lanes : Ir(4096)=5443636 Ir(8192)=10887220 per-iteration=1329 remainder=0
+/work/side_output call : Ir(4096)=5554202 Ir(8192)=11108378 per-iteration=1356 remainder=0
+/work/side_output exported : Ir(4096)=5611544 Ir(8192)=11223064 per-iteration=1370 remainder=0
+selfcheck ok: 8192 lanes match the exported API, 16 curve pairs match P + (-G)
+selfcheck ok: 8192 lanes match the exported API, 16 curve pairs match P + (-G)
+reproduced: organizers' bls_field totals and the 1329-instruction side output; self-checks passed
