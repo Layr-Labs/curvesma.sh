@@ -1,0 +1,184 @@
+# callgrind format
+version: 1
+creator: callgrind-3.24.0
+pid: 134
+cmd:  /work/fpmul 65 0
+part: 1
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: LL cache: 
+
+desc: Timerange: Basic block 0 - 22834
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 24915
+
+
+ob=(5) /work/fpmul
+fl=(107) ???
+fn=(462) blst_fp_mul
+0 390
+cfn=(458) mul_mont_384
+calls=65 0 
+0 24050
+
+fn=(394) (below main)
+cob=(1) /usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1
+cfi=(108) ./elf/../sysdeps/aarch64/dl-trampoline.S
+cfn=(400) _dl_runtime_resolve
+calls=0 38 
+0 24915
+
+fn=(460) __mul_mont_384
+0 22165
+
+fn=(448) main
+cob=(1)
+cfi=(108)
+cfn=(401) _dl_runtime_resolve'2
+calls=0 38 
+0 24915
+
+fn=(430) __blst_cpuid
+fi=(110) ./csu/../csu/libc-start.c
+cob=(2) /usr/lib/aarch64-linux-gnu/libc.so.6
+cfi=(110)
+cfn=(407) __libc_start_main@@GLIBC_2.34'2
+calls=0 350 
+144 24915
+fe=(107)
+
+fn=(458)
+0 1105
+cfn=(460)
+calls=67 0 
+0 22165
+0 780
+
+ob=(1)
+fl=(2) ./elf/./elf/rtld.c
+fn=(2) _dl_start
+fi=(1) ./elf/../sysdeps/aarch64/dl-start.S
+cfi=(97) ./elf/./elf/dl-init.c
+cfn=(356) _dl_init
+calls=0 81 
+68 24915
+fe=(2)
+
+fl=(1)
+fn=(0) (below main)
+cfi=(2)
+cfn=(2)
+calls=0 519 
+32 24915
+
+fl=(108)
+fn=(400)
+cob=(2)
+cfi=(110)
+cfn=(406) __libc_start_main@@GLIBC_2.34
+calls=0 242 
+100 24915
+
+fn=(401)
+cob=(2)
+cfi=(116) ./stdlib/../stdlib/strtol.c
+cfn=(452) strtol
+calls=0 116 
+100 24915
+
+fl=(97)
+fn=(356)
+fi=(1)
+cob=(5)
+cfi=(107)
+cfn=(394)
+calls=0 0 
+74 24915
+fe=(97)
+
+ob=(2)
+fl=(111) ./stdlib/./stdlib/cxa_atexit.c
+fn=(410) __internal_atexit
+fi=(110)
+cfi=(110)
+cfn=(407)
+calls=0 145 
+144 24915
+fe=(111)
+
+fn=(408) __cxa_atexit
+cfn=(410)
+calls=0 36 
+68 24915
+
+fl=(117) ./stdlib/../stdlib/strtol_l.c
+fn=(454) ____strtol_l_internal
+fi=(107)
+cfi=(116)
+cfn=(453) strtol'2
+calls=0 116 
+0 24915
+fe=(117)
+
+fn=(455) ____strtol_l_internal'2
+0 25
+fi=(107)
+cob=(5)
+cfi=(107)
+cfn=(462)
+calls=1 0 
+0 376
+0 320
+fi=(107)
+cob=(5)
+cfi=(107)
+cfn=(462)
+calls=64 0 
+0 24064
+0 130
+
+fl=(112) ./csu/../sysdeps/nptl/libc_start_call_main.h
+fn=(438) (below main)
+cob=(5)
+cfi=(107)
+cfn=(448)
+calls=0 0 
+58 24915
+
+fl=(116)
+fn=(452)
+cfi=(117)
+cfn=(454)
+calls=0 238 
+117 24915
+
+fn=(453)
+cfi=(117)
+cfn=(455)
+calls=0 238 
+117 24915
+
+fl=(110)
+fn=(406)
+cfi=(111)
+cfn=(408)
+calls=0 67 
+312 24915
+
+fn=(407)
+cfi=(112)
+cfn=(438)
+calls=0 29 
+350 24915
+cob=(5)
+cfi=(107)
+cfn=(430)
+calls=0 0 
+145 24915
+
+totals: 24915
