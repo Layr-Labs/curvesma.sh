@@ -1,0 +1,32 @@
+{
+ "schema_version": 2,
+ "target_id": "p256-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "algorithm": "sigma-rho-split-concentration-a24-lane-layout-canonical-rows-lean-loads-block-hoisted-constants-funnel-dp-anchor-block-anchor-release-4000",
+ "claim": {
+  "time_log2": 127.007263,
+  "memory_log2_bytes": 77,
+  "preprocessing_log2": 62.848069,
+  "success_probability": 0.39,
+  "nonuniform_advice_bytes": 0
+ },
+ "premises": [
+  "H1 collision law with epsilon re-derived at the derived longer-entry bound",
+  "M1 and L-ori including conditional fresh-class exposure",
+  "H3 instruction pricing and forced-path bounds, for the fused step measured at 2^16 adders"
+ ],
+ "provenance": {
+  "submission_id": "778628fb-264e-4865-9413-f934795125ab",
+  "commit": "1fcbf53a4ad4fde2a73cc8cd0c7d1511c7b584e0"
+ },
+ "limitations": [
+  "Conditional analytic bound; no full-size attack execution.",
+  "Production arithmetic and reduced-order evidence originate from the predecessor unless separately identified.",
+  "The 2^24-adder step is compared with the measured 2^16-adder step by disassembly, not measured.",
+  "The anchor block is measured on seed 1; the ledger retains 160,560 of the predecessor's conservative derived anchor margin per round (4,000 of the double-covered in-anchor escape allowance released).",
+  "The 40-byte lane stride costs 3 instructions in the plain round; it is measured, not derived.",
+  "The anchor price leaves rare escapes in, and the reserve meters rare work: a deliberate conservative overlap."
+ ]
+}
