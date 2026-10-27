@@ -1,0 +1,200 @@
+{
+ "about": "census_hz.py results; args per entry; N q29=29824400 q25=5593903; errors: max of Poisson and table-spread s.e.",
+ "runs": {
+  "walk_q29_r20_dp5": {
+   "args": "--curve q29 --R 1048576 --dp 5 --trials 12800 --seed 91001",
+   "tables": 512,
+   "merges": 26113323,
+   "rho": 1.00048,
+   "rho_se": 0.00027,
+   "kappa_eff": 0.99976,
+   "kappa_se": 0.00014,
+   "waste": 0.000144
+  },
+  "walk_q29_r21_dp5": {
+   "args": "--curve q29 --R 2097152 --dp 5 --trials 1600 --seed 91001",
+   "tables": 64,
+   "merges": 3258697,
+   "rho": 0.99874,
+   "rho_se": 0.00086,
+   "kappa_eff": 1.00063,
+   "kappa_se": 0.00043,
+   "waste": 0.000115
+  },
+  "walk_q29_r20_dp3": {
+   "args": "--curve q29 --R 1048576 --dp 3 --trials 1600 --seed 95001",
+   "tables": 64,
+   "merges": 3260775,
+   "rho": 0.99912,
+   "rho_se": 0.00061,
+   "kappa_eff": 1.00044,
+   "kappa_se": 0.0003
+  },
+  "walk_q29_r20_dp7": {
+   "args": "--curve q29 --R 1048576 --dp 7 --trials 1600 --seed 95001",
+   "tables": 64,
+   "merges": 3256727,
+   "rho": 0.99971,
+   "rho_se": 0.00114,
+   "kappa_eff": 1.00015,
+   "kappa_se": 0.00057
+  },
+  "walk_q29_r16_dp5": {
+   "args": "--curve q29 --R 65536 --dp 5 --trials 1600 --seed 96001",
+   "tables": 64,
+   "merges": 3258944,
+   "rho": 0.9996,
+   "rho_se": 0.00084,
+   "kappa_eff": 1.0002,
+   "kappa_se": 0.00042
+  },
+  "walk_q29_r11_dp5": {
+   "args": "--curve q29 --R 2048 --dp 5 --trials 400 --seed 96001",
+   "tables": 16,
+   "merges": 800858,
+   "rho": 1.001,
+   "rho_se": 0.00199,
+   "kappa_eff": 0.9995,
+   "kappa_se": 0.00099
+  },
+  "walk_q25_r16_dp5": {
+   "args": "--curve q25 --R 65536 --dp 5 --trials 400 --seed 97001",
+   "tables": 16,
+   "merges": 811399,
+   "rho": 1.00202,
+   "rho_se": 0.00186,
+   "kappa_eff": 0.99899,
+   "kappa_se": 0.00093
+  },
+  "walk_q25_r20_dp5": {
+   "args": "--curve q25 --R 1048576 --dp 5 --trials 1600 --seed 97001",
+   "tables": 64,
+   "merges": 3245714,
+   "rho": 1.00035,
+   "rho_se": 0.00087,
+   "kappa_eff": 0.99982,
+   "kappa_se": 0.00043
+  },
+  "ideal_dp3": {
+   "args": "--pure --curve q29 --dp 3 --trials 400 --seed 93001",
+   "tables": 16,
+   "merges": 815722,
+   "rho": 0.99972,
+   "rho_se": 0.00111,
+   "kappa_eff": 1.00014,
+   "kappa_se": 0.00055
+  },
+  "ideal_dp5": {
+   "args": "--pure --curve q29 --dp 5 --trials 12800 --seed 93001",
+   "tables": 512,
+   "merges": 26095238,
+   "rho": 0.99976,
+   "rho_se": 0.00028,
+   "kappa_eff": 1.00012,
+   "kappa_se": 0.00014
+  },
+  "ideal_dp7": {
+   "args": "--pure --curve q29 --dp 7 --trials 400 --seed 93001",
+   "tables": 16,
+   "merges": 818029,
+   "rho": 1.00389,
+   "rho_se": 0.00267,
+   "kappa_eff": 0.99806,
+   "kappa_se": 0.00133
+  },
+  "tc_walk_dp3": {
+   "args": "--curve q29 --R 1048576 --dp 3 --seed 98001",
+   "tables": 32,
+   "merges": 32000,
+   "rho": 0.99738,
+   "rho_se": 0.00676,
+   "kappa_eff": 1.00131,
+   "kappa_se": 0.00339,
+   "tc_slowdown": 0.0007,
+   "tc_slowdown_se": 0.00294,
+   "own_trail_shift": 0.00102,
+   "mean_H": 1.00262,
+   "P[H<=ln 1/(1-0.39)]": 0.39356
+  },
+  "tc_walk_dp5": {
+   "args": "--curve q29 --R 1048576 --dp 5 --seed 92001",
+   "tables": 32,
+   "merges": 32000,
+   "rho": 0.99734,
+   "rho_se": 0.00558,
+   "kappa_eff": 1.00133,
+   "kappa_se": 0.0028,
+   "tc_slowdown": 0.0067,
+   "tc_slowdown_se": 0.00292,
+   "own_trail_shift": 0.00453,
+   "mean_H": 1.00266,
+   "P[H<=ln 1/(1-0.39)]": 0.38841
+  },
+  "tc_walk_dp7": {
+   "args": "--curve q29 --R 1048576 --dp 7 --seed 98001",
+   "tables": 32,
+   "merges": 32000,
+   "rho": 1.01037,
+   "rho_se": 0.00745,
+   "kappa_eff": 0.99485,
+   "kappa_se": 0.00367,
+   "tc_slowdown": 0.01571,
+   "tc_slowdown_se": 0.00291,
+   "own_trail_shift": 0.01855,
+   "mean_H": 0.98973,
+   "P[H<=ln 1/(1-0.39)]": 0.39375
+  },
+  "tc_ideal_dp3": {
+   "args": "--pure --curve q29 --dp 3 --seed 94001",
+   "tables": 32,
+   "merges": 32000,
+   "rho": 0.9867,
+   "rho_se": 0.00552,
+   "kappa_eff": 1.00672,
+   "kappa_se": 0.00281,
+   "tc_slowdown": 0.00615,
+   "tc_slowdown_se": 0.00296,
+   "own_trail_shift": 0.00102,
+   "mean_H": 1.01348,
+   "P[H<=ln 1/(1-0.39)]": 0.39116
+  },
+  "tc_ideal_dp5": {
+   "args": "--pure --curve q29 --dp 5 --seed 94001",
+   "tables": 32,
+   "merges": 32000,
+   "rho": 1.00525,
+   "rho_se": 0.00573,
+   "kappa_eff": 0.99738,
+   "kappa_se": 0.00284,
+   "tc_slowdown": 0.00115,
+   "tc_slowdown_se": 0.00293,
+   "own_trail_shift": 0.00453,
+   "mean_H": 0.99478,
+   "P[H<=ln 1/(1-0.39)]": 0.39344
+  },
+  "tc_ideal_dp7": {
+   "args": "--pure --curve q29 --dp 7 --seed 94001",
+   "tables": 32,
+   "merges": 32000,
+   "rho": 1.00003,
+   "rho_se": 0.00762,
+   "kappa_eff": 0.99998,
+   "kappa_se": 0.00381,
+   "tc_slowdown": 0.01783,
+   "tc_slowdown_se": 0.00294,
+   "own_trail_shift": 0.01855,
+   "mean_H": 0.99997,
+   "P[H<=ln 1/(1-0.39)]": 0.39097
+  },
+  "walk_q29_r22_dp5": {
+   "args": "--curve q29 --R 4194304 --dp 5 --trials 400 --seed 91001",
+   "tables": 16,
+   "merges": 817659,
+   "rho": 1.00252,
+   "rho_se": 0.00198,
+   "kappa_eff": 0.99874,
+   "kappa_se": 0.00099,
+   "waste": 0.000168
+  }
+ }
+}
