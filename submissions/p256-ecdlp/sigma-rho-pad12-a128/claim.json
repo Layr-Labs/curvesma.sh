@@ -1,0 +1,36 @@
+{
+ "schema_version": 2,
+ "target_id": "p256-ecdlp",
+ "cost_model": "classical-group-work-v2",
+ "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605",
+ "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+ "algorithm": "sigma-rho-split-concentration-a28-lane-layout-canonical-rows-block-funnel-dp-anchor-block-metered-blinded-corrections-b20-flag-carry-unroll8-adders28-km3.1e6-rhoprod256-method128-pad12-c128-batchinv4",
+ "claim": {
+  "time_log2": 126.870324,
+  "memory_log2_bytes": 77,
+  "preprocessing_log2": 62.848076,
+  "success_probability": 0.39,
+  "nonuniform_advice_bytes": 0
+ },
+ "premises": [
+  "H1 collision law with epsilon re-derived at A=2^28 (epsilon=10/A+288/A^2+768/A^3=3.725291e-8)",
+  "M1 and L-ori including conditional fresh-class exposure",
+  "H3 instruction pricing and forced-path bounds; fixed path measured at 2^20 walks and 2^20 adders, per-step instruction count A-invariant (batch_step identical at ADDER_BITS 20 and 28; see evidence/adder-invariance.json)",
+  "H-trail: for a trail from fresh coins (table fixed), expected blinded-average metered correction instructions at most CORR per expected processed step (abort probability only)"
+ ],
+ "provenance": {
+  "submission_id": "pending-yukon",
+  "commit": "1744efc8d89a45466302b27c6a6797d659d901ef (parent sigma-rho-reprice crown)",
+  "immediate_submission_id": "568194c1-c530-4a2c-a11b-4b7bb96a0401",
+  "immediate_commit": "1744efc8d89a45466302b27c6a6797d659d901ef",
+  "note": "Five changes on mpjunior92's sigma-rho-reprice: CORR pad 2^-10->2^-12 (Hoeffding rescale validated by 13143ba), method 512->128 applied (128 accepted in aburan28 907a4a8), control 256->128, (tau,kM) (4943005,3e6)->(4943002,3.1e6), and the fixed-path batch inversion replaced by a 4-bit window (finv_w, 11,011 fewer measured instructions per round; same arithmetic, rare-path finv untouched)."
+ },
+ "limitations": [
+  "Conditional analytic bound; no full-size attack execution.",
+  "Applied figures in this claim: Q_MAIN_PAD 2^-12 (Hoeffding rescale at A=2^28, DELTA_TABLE=4exp(-32) identical), METHOD_ALLOWANCE 128, MAIN_CONTROL base 128, CORR 22.429608, KM 3100000, tau 4943002/1e7, PLAIN_FIXED 658011027 (crown historically 2^-10/512/192/256/3e6/4943005; no figure here uses the historical values). Each leg independently validated elsewhere and recomputed consistently here.",
+  "Per-step instruction count A-invariant for the shared batch_step (11,618 instructions at ADDER_BITS 20 and 28, GCC 13.3.0; see evidence/adder-invariance.json); PLAIN_FIXED=658011027 is the crown's 658,022,038 less the 11,011 measured for finv_w at B=2^16 with the identical meter.",
+  "The finv_w saving is an Ir count difference between two builds of meter-identical rounds in the organizer image (GCC Debian 14.2.0-19, valgrind-3.24.0, linux/arm64); the baseline build reproduces the published 41,164,409 exactly, and the operand-level arithmetic is unchanged (byte-identical walk tables over rounds 1-3).",
+  "The A=2^28 step is related to the measured 2^20-adder step by disassembly, not a new organizer-image measurement.",
+  "Correction work metered and capped; H-trail average-only premise affects only the abort probability."
+ ]
+}

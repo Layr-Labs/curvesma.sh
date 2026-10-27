@@ -1,0 +1,32 @@
+--- a/measurement/step.c
++++ b/measurement/step.c
+@@ -81,6 +81,20 @@
+     for (int i = 254; i >= 0; i--) {
+         k_sqr(&acc, &acc);
+         if ((PM2[i >> 6] >> (i & 63)) & 1) k_mul(&acc, &acc, a);
++    }
++    *r = acc;
++}
++
++static __attribute__((noinline)) void finv_w(fe *r, const fe *a) {
++    fe tab[8], a2;
++    tab[0] = *a;
++    k_sqr(&a2, a);
++    for (int i = 1; i < 8; i++) k_mul(&tab[i], &tab[i-1], &a2);
++    fe acc = tab[7];
++    for (int w = 62; w >= 0; w--) {
++        for (int j = 0; j < 4; j++) k_sqr(&acc, &acc);
++        int d = (int)((PM2[w >> 4] >> ((w & 15) * 4)) & 15);
++        if (d) k_mul(&acc, &acc, &tab[(d - 1) >> 1]);
+     }
+     *r = acc;
+ }
+@@ -298,7 +312,7 @@
+     k_subb_bl(&DP[B - 1].d, &L[B - 1].sel->x, &Wc[B - 1].x);
+     k_subm(&acc, &L[B - 1].sel->x, &Wc[B - 1].x, &DP[B - 1].pre);
+     if (fis_zero(&acc)) { exceptional++; abort(); }
+-    finv(&S[0], &acc);
++    finv_w(&S[0], &acc);
+     int w0 = B - 1;
+ #define RUN_BLOCK(TEXT, AFLAG) do { \
+         register uint64_t i0 __asm__("x19") = S[0].v[0], i1 __asm__("x20") = S[0].v[1]; \

@@ -1,0 +1,16 @@
+{
+  "subject": "fixed-path batch inversion finv -> finv_w (4-bit window) at the one call in batch_step; rare-path finv, add_single, f_single, escape, step_rare, rare_*, new_trail, dp_restart untouched",
+  "patch": "measurement/finvw.patch",
+  "patch_sha256": "54659a35741fd7666ee8709b7281da955b8a410d0db24c985666562dc1b28c5c",
+  "base_step_c_sha256": "8a9f17afa4971c2e479919ab8c470c8d7aeed8310da5b4724bcc0077e3dcd599",
+  "toolchain": ["gcc (Debian 14.2.0-19) 14.2.0", "valgrind-3.24.0", "linux/arm64"],
+  "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only -static",
+  "method": "callgrind --collect-atstart=no, Ir between harness toggles; round = cum(n)-cum(n-1); FIXED = round - meter delta",
+  "inputs": "2^16 table + 2^16 walk + 1,024 spare valid P-256 points; identical file for both builds",
+  "baseline": {"B": 65536, "A": 16, "ir1": 42634273, "m1": 1469844, "ir2": 42633347, "m2": 2938782, "fixed2": 41164409, "published": 41164409, "mismatch": 0},
+  "patched": {"B": 65536, "A": 16, "ir1": 42623262, "m1": 1469844, "ir2": 42622336, "m2": 2938782, "fixed2": 41153398, "saving": 11011},
+  "b20": {"fixed_before": 658022010, "fixed_after": 658010999, "ledger_plain_fixed": 658011027, "offset_kept": 28,
+          "note": "finv_w is noinline and B-free, so the per-round saving is the same at B=2^20"},
+  "correctness": "byte-identical walk tables after rounds 1,2,3 (round 3: two_cycles=1, unbatched=2); meters 1469844/2938782/4402628 identical",
+  "limits": "Ir, not time; no rare-path price is re-derived here"
+}
