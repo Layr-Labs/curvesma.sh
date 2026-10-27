@@ -1,0 +1,114 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp-plain: six-class (negation + GLV) parallel Pollard rho in G1, global work meter, truncated-product canonicalisation",
+ "claims": [
+  {
+   "statement": "For a uniform challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with success probability at least 0.39, and on every run its total work is at most 2^126.2053 batched-affine-G1-addition equivalents (C=2,000 instructions), enforced by a global work meter that charges every action at an upper-bound price before execution and halts with failure at 2^126.2053. The algorithm is parallel distinguished-point Pollard rho (2^22 walks, distinguished probability 2^-64, trail cap 20*2^64) on the (r-1)/6 classes of G1 under negation and phi=[lambda], lambda=0xac45a4010001a40200000000ffffffff; class key K = the even one of y and p-y (bit 0 identically 0; twist sign is bit 0 of y); canonical twist index from a truncated 12-multiply fixed-point product (exact fallback on near-ties, separately metered; section 1.1); R=2^22 twisted table (2^33 bytes; h is bits 1..22 of K, address 16h+4s+j at the same 6 listed instructions) so each step is one batched affine addition plus at most 98.0561 instructions (98 AArch64-listed, cap test folded into the every-64th refresh since L_max is a multiple of 64, plus a share below 0.0561 of the per-batch inversion work, charged without allowance; the refresh is a separately metered 0.0055-unit action ending with the shared cap test); cycles of F of length <=64 detected by a period-64 checkpoint alone and escaped by doubling the cycle's minimum class under one fixed total order (192-bit fingerprints, limbs 0-2 of K; a class map; no cancellation through doublings since ord(2 mod r)=2^250.86), so trails meeting a common class reunite; collisions solved by re-walking with coefficients mod r and x=(e_2-e_1)/(f_1-f_2) verified before output. Phase 1 stops when a hard operation counter reaches S_ops=1.005*S0 (S0=sqrt(2N'ln(1/0.6097)), steps 1.04902805, traversals 1.06252805, doublings 1.50152805, (1.04902805+0.0055/64)*(S_ops+2^44)<2^126.20487 with overshoot below 2^44, N'=((r-1)/6)*R/(R-1)); phase 2 completes open trails; report capacity 2^63.25 and 8 processed matches are caps counted as failure. Peak memory below 2^72 bytes; preprocessing at most 2^57.2 units, enforced by a meter sub-cap and included in the total; no advice. Heuristic H1: within S_ops class arrivals of all trails the first inter-trail collision has occurred with probability at least 1-exp(-(S_ops/1.005)^2/(2N'))=0.3903 (random-mapping law with 0.5% slowdown allowance; toy extrapolation +0.24% +- 0.18%); the meter's early-halt probability is below 0.000062 (below 0.00019 if cycle rates triple; Markov), the partition/distinguished bits of K are pseudo-random, and apart from detected fruitless cycles a trail returns to a past class at most with the random-mapping rate L_max^2/(2N) per trail; the canonical twist of a new class is uniform and independent of its partition index, and beta*x mod p is equidistributed (these affect only the meter's early-halt probability); supported by toy-curve experiments; no production-size run.",
+   "score": {
+    "numerator": "1262053",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "proof.md",
+    "experiment.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "glv-class-rho-fastcanon-checks",
+   "source": "experiment.py",
+   "purpose": "Part A: on BLS12-381 G1, check the GLV pair, orbit size 6 and unit action, the parity class key (one key per class, bit 0 zero, bijection with |y|), canonical member, the section-5 row-4/row-5 limb rule (limbs 0-2, borrow chain, h, distinguished test, table address 16h+4s+j) against the exact K mod 2^192 on random, boundary and distinguished-key y, the section-1.1 truncated-product canonical index against the exact rule (random and adversarial near-tie inputs), the merged fallback branch of rows 2-3 at flag level against the OR of the three section-1.1 tests, twisted-step and doubling class maps, the order of 2 mod r, table entries, coefficient tracking, and recovery of a planted x from two merged production trails. Part B: run the section-2 algorithm on a toy curve y^2=x^3+4 over F_q and report class visits to the first inter-trail collision against the random-mapping model; pipeline=true applies the scaled production rules (phase-1 budget, phase 2, report capacity, 8-match cap) and reports success. Toy scale only; canon_random/canon_stress set section-1.1 check counts; toy=false skips Part B. The cost block prints section 5's ledger and the claim's success bounds, with exact-fraction checks.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q26",
+       "q30",
+       "q34"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048,
+       16384
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q26",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 3,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 14,
+     "pipeline": true
+    }
+   ]
+  }
+ ]
+}
