@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "twin-ap-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 116.538356,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 123.3242,
+    "preprocessing_log2": 115.5428,
+    "success_probability": 0.396,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 coverage: the 6N^2(1-1/(2L)) fractions a s/(u a' s'), pairwise distinct as rationals by Lemma 4 (multipliers are proven primes via Pocklington certificates), hit z like independent uniform elements of H modulo r (toy at d=2^7: 0.378 at 2000 trials vs 0.3762 predicted)",
+    "H2 twin density: c in H and 2u-c in H behave as independent events of probability 2^-20 each for nearby integers, so twin gaps are geometric with mean 2^40 (list rule checked on the real r at levels 2^3, 2^4; low 8 bits of character logs of u, u+g, u-g sampled for independence). The list is challenge-independent: a failure of H2 would fail every challenge.",
+    "H3 key bits: 192-bit parity y-keys behave as independent uniform strings across mu6 orbits (toy chi-square 30.38 vs 31)"
+  ],
+  "limitations": [
+    "Analytic bound; no full-size run. Instruction counts itemised, not measured on hardware, except the blst multiplication price.",
+    "The side output P-G is charged 1427 listed instructions (1700 charged per twin step including walk overhead and two records' handling, 1.0198x the listing); only the lane inverse is shared with the reference addition.",
+    "Memory is exponential (2^123.3242 bytes); generating nodes need 2^51 bytes for a 2^44-entry gap table.",
+    "Matching stage, caps and cluster model are those of the promoted entry 0a45ddb2."
+  ],
+  "lane": "exploratory"
+}
