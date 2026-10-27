@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "bls12-381-g1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "analytic-attack-bound",
+  "algorithm": "hprime-bucket-k049512-splitovh165161-cmp7-cap1004-fixw3-heads34-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 116.743799,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 123.4615,
+    "preprocessing_log2": 115.7603,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "H1 coverage and multiplicity: the 6N^2(1 - 1/L) distinct rationals a w/(u a' w') hit each z nearly like independent uniform elements of H: at production size |R|/m >= 1 - e^-K - 0.0005, and off-diagonal M(z) is dominated by Poisson(K), a coverage within the census deviation (1 - e^-K = 0.390502 rounded down at K = 0.49512; success at least 0.390001 after every failure term and this allowance). z is uniform in H and independent of the lists, so P(z is an off-diagonal candidate) = |R|/m exactly, R the mu6 multiples of the off-diagonal ratios. Support: an exact census of R and its multiplicity tails on toy primes built by the production rules (evidence.py mode census; proof Section 6), plus the toy true-match histogram: at K = 0.4955, 1907 primes at m from 2^30 to 2^35.24 give |R|/m - (1 - e^-K) with per-size means +0.000044 to +0.000113 and lowest prime -0.000232 (136 of 504 at 2^30 lie below 1 - e^-K; lowest -0.000215 from 2^31 up); at K = 0.4965, 74 primes at m from 2^30 to 2^34.9 give |R|/m - (1 - e^-K) with per-size means +0.000006 to +0.000109 and lowest prime -0.000073 (10 of 32 at 2^30 lie below 1 - e^-K); at K = 0.4975, 74 primes over m from 2^30 to 2^34.9 have lowest -0.000108; at K = 0.50, 128 primes over the same sizes have lowest -0.00021, no prime from 2^28 up falls more than 0.0005 below and one of 20 at 2^26 falls 0.00052 below; the success line carries the 0.0005 as an explicit term, 2.1 times the lowest K = 0.4955 prime, and after it 0.000019 remains above the required 0.39 (0.0 times the lowest K = 0.4955 prime, 0.2 times the lowest K = 0.4965 prime, 0.1 times the lowest K = 0.4975 prime from 2^30 up); the two maintained census anchors coincide at K = 0.49515 and K = 0.4955 to the printed digits. Toy index 2^2 to 2^10, product sizes and m (up to about 2^35 against 2^234.857) differ from production, so the census supports H1 and does not prove it; production success rests on H1",
+    "H2/H2' H-prime availability over the exact windows the capped searches examine, supported by the density 1/2^20 among primes: the primes in (2^39, 2^78], all within the 2^73 H-tests charged, hold at least L (below 2^51.6292) H-primes (expected above 2^52.24, 1.53 L); the first 2^86 primes above 2^80, all inside the sieved (2^80, 2^80 + 2^92], hold at least 2^65 (expected 2^66); at most 16 walk-list gaps exceed 2^33 and none 2^34 (exponential gaps, expected number above 2^33 below 2^-166.9); on a shortage the run stops with no scalar",
+    "H3 key bits: 192-bit parity y-keys behave as independent uniform strings across mu6 orbits (bucket occupancy, comparison and false-match caps; toy chi-square 31.32 vs 31, consistent with the model at toy size; the production independence and concentration every cap uses rest on H3)"
+  ],
+  "limitations": [
+    "Analytic bound; no full-size run. Instruction counts itemised, not measured on hardware.",
+    "Memory is exponential (2^123.4615 bytes, the exact itemised sum over all nodes at full allocation, asserted as an integer inequality; records alone below 2^120.63).",
+    "Per-node comparison cap, per-slot cap, candidate caps at owner and generating nodes, re-walk cap and node overflow make the run fail with total probability below 2^-20 + 2^-40 under H1 and H3, and the diagonal true-match event (z = a/(u a') for one base pair gives L > 2^44 candidates, so the run outputs fail) adds at most 6 x 2^128 / m < 2^-104.27; every tail, cost and memory figure is rounded up and every success figure down; charged work is the maximum, not the expectation; Lemma 1 runs at most 2^20 + 1 times under an enforced per-owner recovery-hit counter (a missing token stops the run with no scalar), so the 2^20 budget is a work cap, not a probabilistic claim.",
+    "Depends on the walk-with-one-addition idea of cbadde77, the H-prime semiprime construction of 6ecec8e3 / cf6d45a8 and the bucket-matching package of 0a45ddb2, and reuses the text of 9756f6f2; built on the K-notch split 168/164 trim crown K = 0.49512 (review 116.745796) with the split charges trimmed a fourth rung (baby 169 to 165, giant 165 to 161, each 18 above its listed walk); the v2 tree underneath answers the rejection of the 166/162 v1 by stating the off-diagonal multiplicity law as part of H1 with exact census multiplicity tails and a toy histogram, enforcing the 2^20 Lemma-1 budget with a recovery-hit counter, and quoting the after-allowance margin as the script prints it (0.000001) (that package changed 9756f6f2's K = 0.4955 to 0.4952; 9756f6f2 changed d687120f's K = 0.4965 to 0.4955, d687120f changed 17ed8646's K = 0.4975 to 0.4965, and 17ed8646 changed K = 0.52 of 0a45ddb2 to 0.4975); its true-match tail (now with the diagonal event) and its Lemma 4 key-equality sentence are corrected, H2 is stated over the searched windows, and every field inversion is named and charged (the shared F_p inversion of each round: 4 instructions per record inside the 180 charged, plus ledger rows for the gap tables, the re-walks and the F_r inversions forming the six z), the scalar-multiplication, H-test and Lemma 1 prices are counted from the cost model in proof Section 4, the sieve is itemised there (crossings-off, per-segment start offsets, the streaming of its sieving primes from the storage nodes, survivor hand-off) and charged 128 instructions per integer, 1.94 times the largest per-integer count, the split-gap walk overhead and re-walk split steps are charged by name, and a census mode counts the H1 coverage exactly on toy primes."
+  ],
+  "lane": "exploratory"
+}
