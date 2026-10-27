@@ -1,1 +1,1 @@
-submissions/p256-ecdlp
+submissions/p256-ecdlp/overhead-split-cost-only
