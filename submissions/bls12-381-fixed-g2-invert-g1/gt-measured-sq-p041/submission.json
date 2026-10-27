@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g2-invert-g1: Frobenius-class rho with a cyclotomic-squaring branch priced by measured straight-line kernels, P_model=0.41",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity Q in G2 and uniform z in GT, the algorithm in proof.md (compute g=e(P0,Q); solve z=g^x by distinguished-point Pollard rho with 2^20 walks advanced round-robin on one processor on the 12-element Frobenius classes of GT with R=1024 twisted multipliers, a 4-Fp-multiplication canonical-conjugate key, a Granger-Scott cyclotomic-squaring branch with nominal heuristic probability 37/64 (a step squares iff the 6-bit branch field T mod 64 is below 37; branch, multiplier and distinguished-point bits read from the free class invariant T=Re(c_0), so the squaring update needs no keys; the 12 keys are computed on multiply steps and at distinguished points only), deterministic fruitless-cycle escapes, and hard caps on reports, restarts and matcher pairs, and a pre-debit work meter whose walk-phase budget leaves a reserved stopping allowance (so the work bound holds on every run); output P=[x]P0 and verify e(P,Q)=z) succeeds, in the ideal model, with probability at least 0.39 using at most 2^125.238 total dense-Fp12-multiplication equivalents (C=20,000), including setup, pairings, table construction, walk starts, distinguished-point handling, cycle handling, detection delay, matching (the sort, duplicate removal and pair checks), output and verification. The table multiply is a fixed-multiplier kernel of 15,492 executed instructions (0.7746 units), below the 20,000-instruction reference operation; the 54 Karatsuba pre-sums it stores per table entry (2,592 bytes) are built in the charged table construction, inside its 2^20.2-unit item; the branch, distinguished-point and key-minimum rule is stated on the limbs as stored by the pinned blst kernels (Montgomery form x*2^384 mod p), so the priced operations read exactly the representation the rule names and no conversion is charged; the squaring branch is priced at the executed count of the straight-line kernel kernels/sqr.s, 7,226 scalar instructions per call (branch-free scalar AArch64; kernels/gen.py, emu.py and check_kernels.py regenerate and check it; measured blst baseline 9,803 in measure/), plus 226 instructions of bookkeeping carried by every step (213 itemised, with the step call/return frame recounted at 8: bl + ret with three stp/ldp of the callee-saved pair and x30, plus 8 for the 192-bit work meter, which runs its full 3-word pre-debit compare against its threshold before every step and then adds the step charge, and 5 for the 2-word stuck-walk counter: adds/adc, then a mov of 5120 into a register, a cmp of its high word with it and a branch, exact because 20/theta = 5120 * 2^64), so a squaring step is 7,452 instructions (0.3726 unit); multiply steps are 15,492 kernel + 226 + 2,119 key = 17,837 instructions (0.89185 unit); the walk costs 0.59165859375 units per step, the ledger total is below 2^125.2123853 and the submitted bound 2^125.238 is the least thousandth that also covers a 2-percentage-point drop of the squaring fraction at these prices. Before every charged action of the walk phase (a step, an escape, a report, a switch, a walk start or restart) the meter is compared with a threshold that leaves room for that action's largest charge; the action runs only if the meter is below the threshold (a carry-only 192-bit compare, cmp/sbcs/sbcs/b.hs, which branches exactly when the meter is at or above it), and the meter then adds its charge. The walk-phase budget is 2^125.238 units minus the 2^31-unit setup bound and a reserved stopping allowance below 2^53.55 units that covers matching at its worst case, output, verification and halting, so setup, walk phase and stopping phase together do at most 2^125.238 units on every run, an inequality experiment.py checks on integers. The meter's bookkeeping at walk starts (below 2^11.04 units) and restarts (below 2^27.04 units) and the 600-instruction switches between 2^63-step chunks (below 2^58.65 units) are charged; restarts are capped once at 2^36 against an expected count below 2^27.30, counted per gap between consecutive reports (the stuck-walk counter is reset at every report, a 4-instruction charge inside the 4,000-instruction report item, and at every start and restart), and the meter pays for the whole cap; a run past the cap is a cap failure inside the 0.01 allowance. The distinguished-point rate is theta = 2^-72 (a class is distinguished iff bits 16 to 87 of T are zero; the fingerprint is bits 88 to 215), and the report cap 2^55 bounds reports, so every address, index and report count fits one native 64-bit word; the stuck-walk threshold 20/theta = 20*2^72 and the work meter are the only multiword counters, with their carry chains priced. Reports are appended to a log of exactly 2^55 slots of 80 bytes with no pointer field (2^61.322 bytes, below 2^63; no sharding and no multiword address), addressed by the one-word report counter; reaching the cap fails the run, a cap failure inside the 0.01 allowance. Matching runs once, after the walk phase: an in-place heapsort of the whole record (at most 54 x 2^55 + 57 levels at 132 instructions, below 2^53.53 units), one adjacent comparison per record for exact duplicates, and every pair inside each run of equal fingerprints under a hard budget of 2^16 pairs whose overflow fails the run (the expected number of false-key pairs is at most 2^-19 by linearity of expectation, so Markov gives 2^-35), halting at the first pair whose candidate verifies. The sort, dedup and scan read only slots a report wrote, so the log needs no initialisation (an operating system's zero-fill of its fresh 2 MiB pages on first write is charged inside the 4,000-instruction report item, 13 instructions per record), and no report is dropped before the cap. Peak memory is below 2^63 bytes; preprocessing is at most 2^31 units (the setup items) and is included; nonuniform advice is 0 bytes. Every fresh scalar modulo r (the table's two per multiplier, and (alpha,beta) at each walk start and restart) is drawn by one bounded sampler in the ideal model (the ChaCha20 keystream, in the 64-bit-counter/64-bit-nonce state layout, is assumed indistinguishable from an ideal random source; no total-variation or independence bound on the sampled scalars is claimed). An attempt takes 255 bits from one 64-byte block, charged 2,300 instructions (itemised: 80 quarter-rounds, feed-forward, 16-word loads/stores, 64-bit counter adds/adc, address set-up, spill margin; 1,270 in all), and accepts the four-word draw X iff X < r by a carry-only compare (20 instructions); an attempt's fixed maximum is 2,320 instructions and a sample's is R_MAX=256 attempts, 593,920 instructions = 29.696 units. X is 255 bits and 2^254<r<2^255, so acceptance is above 1/2; after 256 rejects the sampler returns the fixed residue 1 (the exhaustion rule), with probability at most 2^-256 per sample and 2^-218.99 over a run's below 2^37.01 samples under the ideal-source model, carried as an exhaustion allowance of 2^-218.99 in the success budget. The seed and state are initialised in setup inside the 2^31-unit bound; the table item charges its 2,048 draws and each start and restart its two (59.392 units; a start's 1,080.4 stays inside its 2^10.1-unit bound), so every sampling action has a fixed maximum. The success bound relies on the standard random-mapping heuristic for rho walks, adjusted for the branch mix (effective class count N/(1-s^2-(1-s)^2/R)), with model success 0.41 (at least 0.3999 after the 0.01 for H1+ and small terms) against the required 0.39, supported by toy-field experiments and by running the production branch rule with a 16-entry table and no distinguished-point test in the real BLS12-381 GT; the threshold ending the walk phase early and the firing of the caps are covered by the heuristic H1+ (no percentage-point drift of the branch, cycle and report statistics over the run) with a budget of 0.01 of success probability; no production-size run is claimed.",
+      "score": {
+        "numerator": "125238",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "appendix.md",
+        "evidence.md",
+        "experiment.py",
+        "flags_check.py",
+        "measure/README.md",
+        "measure/results.tsv",
+        "measure/disassembly-audit.txt",
+        "kernels/gen.py",
+        "kernels/emu.py",
+        "kernels/model.py",
+        "kernels/check.py",
+        "kernels/check_kernels.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-measured-squaring-checks",
+      "source": "experiment.py",
+      "purpose": "Part A: on real BLS12-381 GT elements check Re(c_0) across the 12 conjugates, the Frobenius formula, the 4-multiplication key formula, distinctness of the 12 keys, the canonical representative, the Granger-Scott formula with its operation counts (9 Fp2 squarings, 34 Fp2 additions) against the dense product, and the factorisation of r-1. Part C: at R = 16, exercise the branch (T mod 64) and low 4 table-index bits of the step rule in the real GT for 2,000 steps per rule against explicit Frobenius arithmetic; no DP predicate and no R = 1024 table. Part B: run the complete algorithm (cycle escapes, reports in a log, the heapsort matcher, adjacent dedup and the pair budget, collision solving) in a small field with the same tower shape and compare first-collision times with the branch-adjusted random-mapping law. Part E: sample classes, apply one step and count image coincidences to test the pair-collision law. Part D: read measure/results.tsv (and any shipped Callgrind records), assert the blst marginals 383, 22,996 and 9,803, charge the kernels (15,492 and 7,226; checked by kernels/check_kernels.py), and recompute the ledger, the cap inequality, the drift table, the matcher worst case and stopping allowance, the walk budget, the report and meter charges, the preprocessing bound and the non-walk sum. Part B also reports the mean-charge fluctuation. Toy scale only; no production costs. Part S exercises the bounded sampler and prints its 2,320-instruction attempt and 593,920-instruction sample maxima; flags_check.py executes the multiword compares and increments of proof.md 0-i, 0-ii and 0-iv under AArch64 NZCV semantics.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "integer",
+            "enum": [
+              67,
+              139,
+              163,
+              211,
+              379
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "R": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 1024
+          },
+          "branch_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "sq_cut": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 60000
+          }
+        },
+        "required": [
+          "q",
+          "trials",
+          "R",
+          "branch_bits",
+          "sq_cut",
+          "dp_bits",
+          "walks",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "q": 67,
+          "trials": 40,
+          "R": 64,
+          "branch_bits": 6,
+          "sq_cut": 37,
+          "dp_bits": 3,
+          "walks": 4,
+          "seed": 1,
+          "production_checks": 2,
+          "production_steps": 2000,
+          "pair_samples": 30000
+        }
+      ]
+    }
+  ]
+}
