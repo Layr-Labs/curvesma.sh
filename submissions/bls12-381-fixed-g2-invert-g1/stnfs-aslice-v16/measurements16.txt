@@ -1,0 +1,57 @@
+# dsieve16.c (shipped source) measurements: linux/arm64 Debian 12 container, gcc 12.2.0 -O3 -fno-tree-vectorize -fno-tree-loop-distribute-patterns -std=c99, valgrind 3.19.0 callgrind Ir; driver kernel/measure16.sh.
+######## checks: correctness at production widths, exact ball counts ########
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+valgrind-3.19.0
+== correctness: brute-force set equality (R<=4), rank bijection, record verification ==
+RESULT PASS p=1031 R=4 seed=7 swaps=132 cert=1 hits=12959 leaves=12960 nodes=20580 expected=12915.15 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=1031 R=4 seed=8 swaps=97 cert=1 hits=12923 leaves=12924 nodes=19857 expected=12915.15 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=65537 R=4 seed=7 swaps=115 cert=1 hits=193 leaves=194 nodes=644 expected=203.18 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=1048583 R=4 seed=7 swaps=210 cert=1 hits=10 leaves=11 nodes=98 expected=12.70 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=4194319 R=4 seed=9 swaps=164 cert=1 hits=2 leaves=3 nodes=51 expected=3.17 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=307 R=3 seed=5 swaps=95 cert=1 hits=1582 leaves=1583 nodes=3333 expected=1563.19 badrec=0 brute=MATCH rank=BIJECTION
+RESULT PASS p=1099511627791 R=4 seed=11 swaps=271 cert=1 hits=0 leaves=1 nodes=12 expected=0.00 badrec=0 brute=MATCH rank=BIJECTION
+== correctness at production widths: every record unranked and verified; hits vs volume/p ==
+RESULT PASS p=1048583 R=10 seed=9 swaps=169 cert=1 hits=655328 leaves=655329 nodes=470722 expected=655354.32 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=1099511627791 R=24 seed=9 swaps=282 cert=1 hits=22276 leaves=22277 nodes=35326 expected=22287.65 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=1099511627791 R=32 seed=9 swaps=282 cert=1 hits=702234 leaves=702235 nodes=640545 expected=702047.69 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=4611686018427388039 R=64 seed=9 swaps=450 cert=1 hits=653 leaves=654 nodes=2048 expected=684.14 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=4611686018427388039 R=96 seed=9 swaps=450 cert=1 hits=88494 leaves=88495 nodes=101052 expected=88729.70 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=96 seed=9 swaps=493 cert=1 hits=683 leaves=684 nodes=1941 expected=693.20 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=128 seed=9 swaps=493 cert=1 hits=21940 leaves=21941 nodes=29996 expected=21880.82 badrec=0 brute=skipped rank=skipped
+RESULT PASS p=590295810358705651741 R=96 seed=10 swaps=515 cert=1 hits=682 leaves=683 nodes=1590 expected=693.20 badrec=0 brute=skipped rank=skipped
+== exact ball counts ==
+R=4 N12=26631041 half=13315520 log2half=23.6666 vol=2.2402e+07 lower=2.4727e+04 upper=1.6799e+09 inside=1
+R=6 N12=3146718929 half=1573359464 log2half=30.5512 vol=2.9066e+09 lower=4.8775e+07 upper=6.0968e+10 inside=1
+R=8 N12=95964034121 half=47982017060 log2half=35.4818 vol=9.1759e+10 lower=4.9099e+09 upper=9.6387e+11 inside=1
+R=10 N12=1374386800585 half=687193400292 log2half=39.3219 vol=1.3353e+12 lower=1.3625e+11 upper=9.0793e+12 inside=1
+R=12 N12=12147113355505 half=6073556677752 log2half=42.4657 vol=1.1905e+13 lower=1.8339e+12 upper=6.0033e+13 inside=1
+R=14 N12=76828986203257 half=38414493101628 log2half=45.1267 vol=7.5701e+13 lower=1.5518e+13 upper=3.0690e+14 inside=1
+R=16 N12=380116957079129 half=190058478539564 log2half=47.4334 vol=3.7584e+14 lower=9.5040e+13 upper=1.2903e+15 inside=1
+R=20 N12=5509008632114353 half=2754504316057176 log2half=51.2907 vol=5.4692e+15 lower=1.8444e+15 upper=1.4818e+16 inside=1
+R=24 N12=49011062732522401 half=24505531366261200 log2half=54.4440 vol=4.8764e+16 lower=1.9849e+16 upper=1.1253e+17 inside=1
+R=28 N12=311221307351833865 half=155610653675916932 log2half=57.1107 vol=3.1007e+17 lower=1.4411e+17 upper=6.3718e+17 inside=1
+R=32 N12=1543819205183546001 half=771909602591773000 log2half=59.4212 vol=1.5395e+18 lower=7.8952e+17 upper=2.8979e+18 inside=1
+R=40 N12=22442663943623315937 half=11221331971811657968 log2half=63.2829 vol=2.2402e+19 lower=1.3170e+19 upper=3.7257e+19 inside=1
+R=48 N12=199990805943320926681 half=99995402971660463340 log2half=66.4385 vol=1.9974e+20 lower=1.2851e+20 upper=3.0564e+20 inside=1
+R=56 N12=1271232746729169245705 half=635616373364584622852 log2half=69.1067 vol=1.2701e+21 lower=8.7114e+20 upper=1.8305e+21 inside=1
+R=64 N12=6310070767899388397993 half=3155035383949694198996 log2half=71.4181 vol=6.3056e+21 lower=4.5367e+21 upper=8.6875e+21 inside=1
+R=80 N12=91800195901815998572929 half=45900097950907999286464 log2half=75.2809 vol=9.1759e+22 lower=7.0563e+22 upper=1.1865e+23 inside=1
+R=96 N12=818387013976719167102025 half=409193506988359583551012 log2half=78.4371 vol=8.1813e+23 lower=6.5756e+23 upper=1.0139e+24 inside=1
+R=112 N12=5203355377931476614897097 half=2601677688965738307448548 log2half=81.1057 vol=5.2022e+24 lower=4.3148e+24 upper=6.2540e+24 inside=1
+R=128 N12=25832313322328337592160657 half=12916156661164168796080328 log2half=83.4174 vol=2.5828e+25 lower=2.1932e+25 upper=3.0348e+25 inside=1
+######## walk / apply / scan ########
+== (b) enumeration per hit: units = hits (target method, same reps/seed; setups cancel) ==
+walk p=1048576 R=96 targets=65536..262144 reps=1 hits 65536->262144 leaves 65537->262145 nodes 1234->5404 : 287.4 Ir/hit, leaves/hit 1.000, nodes/hit 0.021
+walk p=1099511627776 R=96 targets=65536..262144 reps=1 hits 65536->262144 leaves 65537->262145 nodes 6298->28474 : 305.0 Ir/hit, leaves/hit 1.000, nodes/hit 0.113
+walk p=4611686018427387904 R=96 targets=16384..65536 reps=1 hits 16384->65536 leaves 16385->65537 nodes 13411->63727 : 426.5 Ir/hit, leaves/hit 1.000, nodes/hit 1.024
+walk p=4611686018427387904 R=64 targets=256..1024 reps=1 hits 256->664 leaves 257->665 nodes 413->1746 : 718.1 Ir/hit, leaves/hit 1.000, nodes/hit 3.267
+walk p=1048576 R=12 targets=262144..1048576 reps=1 hits 262144->1048576 leaves 262145->1048577 nodes 91255->427831 : 344.7 Ir/hit, leaves/hit 1.000, nodes/hit 0.428
+walk p=1099511627776 R=24 targets=4096..16384 reps=1 hits 4096->16384 leaves 4097->16385 nodes 4280->20853 : 466.9 Ir/hit, leaves/hit 1.000, nodes/hit 1.349
+== (b') full enumerations (no target): per hit = (Ir(reps2)-Ir(reps1))/(hits2-hits1), includes one setup per rep ==
+fullwalk p=590295810358705651712 R=96 reps=1..3 hits 707->2163 nodes 1951->5987 : 47233.5 Ir/hit incl. 2 setups, nodes/hit 2.772
+fullwalk p=590295810358705651712 R=128 reps=1..3 hits 21833->65542 nodes 29661->90856 : 2025.7 Ir/hit incl. 2 setups, nodes/hit 1.400
+fullwalk p=4611686018427387904 R=64 reps=1..3 hits 664->1988 nodes 1746->5258 : 46340.3 Ir/hit incl. 2 setups, nodes/hit 2.653
+fullwalk p=1099511627776 R=24 reps=1..3 hits 22166->66789 nodes 30123->101551 : 1385.3 Ir/hit incl. 2 setups, nodes/hit 1.601
+== (c) apply per record and scan per cell (R=4 ball, 13.3M half cells) ==
+apply: records 223849 Ir 2905535114 -> 2921652306 : 9.00 Ir/record
+scan: cells 13315520 Ir 2970098105 -> 3236408537 : 5.000 Ir/cell

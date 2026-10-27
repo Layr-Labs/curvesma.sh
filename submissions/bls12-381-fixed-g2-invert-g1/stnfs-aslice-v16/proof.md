@@ -1,0 +1,163 @@
+# STNFS over a special tower: 2^123.5 reference units
+
+Track bls12-381-fixed-g2-invert-g1. One reference unit is a dense F_p12
+multiplication at C = 20,000 scalar AArch64 instructions. No auxiliary powers,
+advice, smaller targets, future-target amortization or prior results are used.
+
+## Claim
+
+The algorithm below returns P with e(P,Q) = z for the exact supplied nonidentity
+Q (P = infinity for z = 1) with success at least 0.39 over uniform
+full-production challenges and fresh coins; the modelled success is 0.895. A
+global instruction meter bounds all work, including preprocessing, failures,
+restarts, transfers, verification and output, by **2^123.5 units**; the score
+is **247/2**. The ledger (section 8) totals 2^122.708. Distributed storage is at
+most 2^81 bytes in individually bounded, explicitly addressed objects. The
+claim is analytic and exploratory: the standard NFS heuristics H1-H5 (section 9)
+are used with the measurements and checks cited, and no full-size run is made.
+
+Numbers in this package have one source: `model16.py` and `descent16.py` with
+`config.json` and `stats16.json`; `evidence16.py` recomputes every figure below.
+
+## 1. Reduction
+
+Let g = e(P0, Q) (pinned convention `pairing(Q, P0)`). Q has prime order r and e
+is nondegenerate, so g generates mu_r in F_p12^*, z = g^a for a unique a mod r,
+and P = [a]P0. Both logarithms log z and log g are computed against one shared
+relation and linear-algebra phase; a = log z / log g mod r. Orbit-12 Pollard rho
+would need 2^125.96 group operations.
+
+## 2. Tower, polynomials, automorphism ([0], [0b], [0c])
+
+K_h = Q[y]/h, h = y^6 + y^3 + y^2 - y - 1: Disc(h) = 58673 = 23 x 2551 is
+squarefree, so O_h = Z[y]; h is irreducible mod p. f = x^12 - 2y x^10 + 2y^3 x^6
++ y^5 x^2 + (1 + y - y^2 - y^3) (the BLS12 characteristic polynomial composed
+with x^2/y) and g = x^2 + |u| y with u = -0xd201000000010000. [0b] checks that
+(u y)^((p^6-1)/2) = -1 in F_p6, so g is irreducible over F_p6 and
+F_p[y,x]/(h, g) = F_p12; [0] checks Res_y(h, f(x^2 -> u y)) = 0 mod p. The map
+x -> -x is the Frobenius^6 conjugation sigma; it pairs (a, b) with (a, -b) and
+log sigma(P) = -log P, so candidates and unknowns are both quotiented by sigma.
+Murphy alpha is charged at (5, 1) (rounded up from 4.868, 0.844).
+
+## 3. Relation collection
+
+Candidates are (a, b) in O_h^2 with a - bx B-smooth on both sides, B = 2^69. The
+factor base is the relative-degree-1 prime ideals over K_h of norm <= B on both
+sides; U = 2^63.451 sigma-orbits (indices fit 64 bits).
+
+**Region and fundamental domain.** Two exact rational forms Q_a, Q_b
+(`config.json`); A^2 = 2^21, theta = 1/2; eligible a: a5 > 0, Q_a(a) <= A^2/2;
+half-slice b5 >= 1, Q_b(b) <= A^2 - Q_a(a). The canonical a of each unit class
+is the least of its exact HNF key class in (Q_a, lex) order, so each relation
+orbit of <units, sigma> has exactly one point in the domain; non-primitive pairs
+are excluded by an exact HNF test. `lattice_count_bounds.py` certifies counts
+within [0.98, 1.02] of the volumes; the model scales work by 2601/2500 and yield
+by 2401/2500. The canonical list costs 2^90 units.
+
+**Pool.** 20,000 uniform eligible pairs from seeded indices (`pool12-*.b85`),
+2,401 canonical rows with exact norms, primitivity flags and certified
+norm-bound statistics. [2] regenerates sampled indices from their seeds and
+verifies every stored field.
+
+**Sieve, thresholds, cofactorisation.** Line sieve for p in [2^8, 2^20), record
+walk for p in [2^20, 2^63) (`slice12.c`), primes in [2^63, 2^69] taken by ECM
+within the slacks (292, 220). Certified per-block bounds (`embedding_bounds.py`:
+rational Rouche root disks, outward-rounded intervals, 64-cell blocks of width
+128) give thresholds T = lower - 16 x slack, which imply retention of every
+B-smooth cell with omitted mass below slack, and bound survivors' cofactors by
+slack + 8 bits. Survivors get exact norms, trial division below 2^20 and ECM
+(B1 = 5 x 10^4, 99% per prime, measured 367.76-instruction Montgomery
+multiplication in `ecm12.c`): 2^40.1 instructions per survivor.
+
+**Block selection.** Blocks with certified bound log2 N_f + log2 N_g > 1285 are
+not sieved; their bound evaluation, layout and setup are still charged. Over all
+2,401 rows (113,342 blocks) the cut keeps 0.8078 of cells and 0.9617 of yield.
+
+**Yield ([4]).** rels = (va/20000) vb (2401/2500) sum over canonical primitive
+rows of w rho(u_f) rho(u_g) r_f r_g 0.99^(lambda_f + lambda_g), with Dickman rho
+(checked against an independent 300-digit integrator to u = 64), retentions r
+from the finite Euler-product threshold model (`threshold_model.py`; calibrated
+on exact smooth integers at B = 2^10..2^14) and the ECM miss. Retained relations
+2^64.162 against 1.3 U = 2^63.830: margin 0.332 bits (pool SE 0.118).
+
+**Cost ([5]).** 541.7 instructions per cell over 2^127.389 cells: all-cell bounds,
+layout and setups, plus 0.8078 x the kept-cell line path, record walk, routing
+(36 per record, 8 per cell; STORAGE.md), apply 7.00, recovery 7.003, scan, zero
+and cofactorisation. Relation collection: **2^122.1826 units**.
+
+## 4. Filtering and linear algebra
+
+Purge, clique removal and Markowitz merge with coefficients bounded by 255,
+simulated on the production occurrence profile (`filtsim.py`; scale 2^17 table
+embedded, [6] reruns scale 2^12): N/U = 0.0538 at weight 100; the model charges
+N = 2 x 0.0538 x U = 2^60.2341. Block Wiedemann with <= 82 Schirokauer columns
+as right-hand sides: 3N products at 96 instructions per entry (STORAGE.md;
+`la_mac.s` inner loop of 33, [10]): **2^120.9943 units**. Dropped excess rows
+validate the solution.
+
+## 5. Main-phase success
+
+The main phase succeeds when the relations reach the excess and the filtered
+matrix yields the factor-base logarithms. The yield margin is 0.332 bits
+(2.8 pool SE) above the 1.3 excess, the matrix dimension carries a factor-2 pad,
+and filtering at excess 1.2-1.8 is stable in the simulation ([6]). Under H1-H3
+the main phase succeeds with probability >= 0.9 within its charged budget; a
+validated solve is checked on the dropped rows before any logarithm is used.
+
+## 6. Individual logarithms
+
+DESCENT.md specifies the descent: a boot by ECM trials on a ball of a certified
+p^6 lattice, then special-q nodes that sieve an exact lattice ball with the
+measured `dsieve16.c` kernel, take relations with a two-tier window of children
+and recurse with backtracking. The shipped plan (96 nodes and the boot) gives
+expected two-log work **2^104.486 units** ([7]). The descent meter caps both logs
+at 2^112 units, so Markov gives P(cap reached) <= 2^-7.51.
+
+## 7. Success
+
+Success >= 0.9 x (1 - 2 x 2.6e-5 - 2^-7.51) = **0.895** >= 0.39 (main phase,
+two boots, descent cap). Uniform power randomization of the targets makes both
+individual-log tasks distributed as the sampled production targets for every Q
+and z. The final pairing check rejects any incorrect P.
+
+## 8. Ledger
+
+| component | log2 units |
+|---|---:|
+| relation collection | 122.1826 |
+| linear algebra | 120.9943 |
+| both individual logarithms (metered cap) | 112 |
+| canonical a list | 90 |
+| Schirokauer maps | 88 |
+| factor base, roots, ideals | 72 |
+| filtering streams, generator, misc | 80 |
+| verification and output | 11 |
+
+total_log2W_full_ledger = **122.708328**, under the 123.5 claim by 0.792 bits.
+With every sieve constant x1.5, relation collection is 2^122.7675 ([5]) and the
+total stays below the claim. Nothing is amortized.
+
+## 9. Heuristics
+
+- H1 smoothness: Dickman/Murphy with alpha (5, 1) on exact sampled norms.
+- H1' retention: the Euler-product threshold model, calibrated on exact smooth
+  integers.
+- H2 region: the uniform pool with exact flags and certified count bounds.
+- H3 matrix: filtering on the production occurrence profile with dimension pad 2.
+- H4 kernel cost: measured instruction counts (KERNELS.md) at production widths
+  and the itemised allowances of STORAGE.md.
+- H5 descent: the semismooth lower sums and Poisson finite-tree recurrence of
+  DESCENT.md, supported by 61,440 production ball norms, 8 certified boot
+  lattices, unit-mate counts and complete toy descents.
+
+## 10. Memory and attribution
+
+Storage <= 2^81 bytes: per-chunk 4 GiB sum arrays, paged records, 20 vector
+blocks of <= 2^62 bytes, the sparse matrix in paged blocks, 2^78 bytes of
+canonical staging, <= 1024 Wiedemann vectors. Nothing pairing-specific is used
+(final-exponentiation preimages, Miller inversion and Cheon-type methods need
+data this track does not provide).
+
+Algorithm, models, kernels and package: Gautam Botrel with Claude Code and
+Codex. Polynomial selection and alpha follow
+Guillevic-Singh; filtering follows CADO-NFS.
