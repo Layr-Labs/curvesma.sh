@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/six-class-rho-secp-negy-p2x128-arr64-p1x256-anch8-1259024

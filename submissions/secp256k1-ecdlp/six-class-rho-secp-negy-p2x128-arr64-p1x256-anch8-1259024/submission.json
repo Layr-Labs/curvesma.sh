@@ -1,0 +1,152 @@
+{
+ "version": 1,
+ "title": "Six-class secp256k1 rho at 125.9024: pass 1 by 256, pass 2 by 128 and a 64-pair arrival loop at kappa = 1.0002",
+ "claims": [
+  {
+   "statement": "For a uniform full-production secp256k1 input Q=[x]P, the classical cold six-class negation-plus-GLV parallel Pollard-rho attack of proof.md and upstream-proof.md halts on every run with total work at most 2^125.9024 target-group-operation equivalents under classical-group-work-v2 (C=1000). It builds on the 125.9025 crown (kappa = 1.0002 from the shipped hazard census, proof.md section 5.2, h = 0.000203 and p0 = 0.3902033, all unchanged; kaankolcu's 4595bad7 kernels with pass 2 storing -(W + T); pass 2 unrolled 128 times; arrival loop of 32 pairs) with three changes: pass 1 unrolled 256 times (25,474 instructions per 256 walks = 99.5078125 per walk); the arrival loop widened to 64 pairs per TBZ (1/128 per walk); the anchor variant at 8 instructions per anchor (K2/K3 only, counter in a register). The ordinary step is 99.5078125 + 444.515625 + 31.0078125 + 25,711/2^20 = 575.0558 instructions; doubling 741.0558, traversal 608.0558. S_ops = 1.0002*S0 = 2^126.7000183; phase 1 = 2^125.901792, hard = 2^112.103669, extras = 2^102.128185, allowance = 2^114.394418, W_ledger = 2^125.9023888 < 2^125.9024. Markov ratio 0.000198506 < 0.000203; success >= 0.3902033 - 0.000203 - 1.1e-7 = 0.39000019 > 0.39.",
+   "score": {
+    "numerator": "1259024",
+    "denominator": "10000"
+   },
+   "evidence": [
+    "proof.md",
+    "upstream-proof.md",
+    "experiment.py",
+    "certificate.py",
+    "census_hz.py",
+    "census-hz-q29.json",
+    "README.md",
+    "kernels/a64.py",
+    "kernels/arrive.s",
+    "kernels/secp_fe.s",
+    "kernels/secp_loops.s",
+    "kernels/secp_tests.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-six-class-rho-kernels-evidence",
+   "source": "experiment.py",
+   "purpose": "Part A: production secp256k1 checks of the walk identities and the canonical-index rule; Part B: a scaled toy pipeline of the checkpoint-only walk (even-y key, per-trail anchor phases) on subgroups of y^2=x^3+7, with node routing and a long-trail trap test; kernels: Python limb ports of the field kernels against big integers, and the shipped unrolled loops (with their rare exits, on constructed inputs that enter every stub), emitter wrappers and arrival rows executed by an AArch64 interpreter (kernels/a64.py) against affine secp256k1, a bit-exact model and the exact canonical rule, with instruction counts and the ledger of proof.md recomputed. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q25",
+       "q29"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+     },
+     "R": {
+      "type": "integer",
+      "enum": [
+       4,
+       8,
+       16,
+       64,
+       256,
+       1024,
+       2048
+      ]
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 15
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "classes": {
+      "type": "integer",
+      "enum": [
+       1,
+       2,
+       6
+      ]
+     },
+     "pipeline": {
+      "type": "boolean"
+     },
+     "canon_random": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+     },
+     "canon_stress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+     },
+     "toy": {
+      "type": "boolean"
+     },
+     "long_trails": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400
+     },
+     "long_len": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 16384
+     },
+     "long_escape_add": {
+      "type": "boolean"
+     },
+     "nodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "curve",
+     "trials",
+     "R",
+     "dp_bits",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "q25",
+     "trials": 2000,
+     "R": 2048,
+     "dp_bits": 5,
+     "seed": 1,
+     "production_checks": 2,
+     "seconds": 12,
+     "pipeline": true,
+     "kernels": true
+    }
+   ]
+  }
+ ]
+}
