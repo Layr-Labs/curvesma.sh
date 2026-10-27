@@ -1,0 +1,37 @@
+# Callgrind executed-instruction totals, one row per measurement.
+# routine  offset  n  Ir_total  gt_member
+# Instrument: callgrind-3.24.0, collection toggled around the call loop only (CALLGRIND_ZERO_STATS +
+# CALLGRIND_TOGGLE_COLLECT in the harness), so Ir_total is the work of n contiguous calls plus the
+# harness's own loop and call control (20 instructions, the same at n=1 and n=65).
+# Per-call marginal = (Ir(n=65) - Ir(n=1))/64; it is what COST_MODEL.md counts ("call and loop work").
+# gt_member is the program's own blst_fp12_in_group() result printed after the loop (cyc2), 1 = still in GT.
+cyc-sqr	0	1	9823	1
+cyc-sqr	0	65	637215	1
+cyc-sqr	3	1	9823	1
+cyc-sqr	3	65	637215	1
+cyc-sqr	101	1	9823	1
+cyc-sqr	101	65	637215	1
+cyc-sqr	1009	1	9823	1
+cyc-sqr	1009	65	637215	1
+cyc-sqr	4001	1	9823	1
+cyc-sqr	4001	65	637215	1
+fp12-mul	0	1	23017	1
+fp12-mul	0	65	1494761	1
+fp12-mul	3	1	23017	1
+fp12-mul	3	65	1494761	1
+fp12-mul	101	1	23017	1
+fp12-mul	101	65	1494761	1
+fp12-mul	1009	1	23017	1
+fp12-mul	1009	65	1494761	1
+fp12-mul	4001	1	23017	1
+fp12-mul	4001	65	1494761	1
+fp-mul	0	1	403	-
+fp-mul	0	65	24915	-
+fp-mul	3	1	403	-
+fp-mul	3	65	24915	-
+fp-mul	101	1	403	-
+fp-mul	101	65	24915	-
+fp-mul	1009	1	403	-
+fp-mul	1009	65	24915	-
+fp-mul	4001	1	403	-
+fp-mul	4001	65	24915	-
