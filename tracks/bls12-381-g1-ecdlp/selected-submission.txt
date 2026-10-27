@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+submissions/bls12-381-g1-ecdlp/hprime-bucket-k049514-ovh169-cmp7-fixw-heads34-v1
