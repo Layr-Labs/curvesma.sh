@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: additive Cheon with planned pair walks (P+T and P-T from one inversion)",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 G1 target with auxiliary powers and every n with 2^20 <= n < r, the deterministic algorithm in proof.md recovers s with heuristic success probability at least 0.399 (required 0.39) over the uniform challenge. The algorithm is Cheon's p-1 baby-step/giant-step in the subgroup H of 2^20-th powers (d = 2^20 divides r-1, A_d is read). Baby and giant sets are small integers a*b in H (a a prime in (2^76, 2^76 + 2^70], b <= 2^76 in the character class -chi(a)), as in the accepted earlier submission cbadde77, with one change: each class list is paired offline into three-term progressions (x-g, x, x+g) with g <= 2^44, and the walk computes [a(x+g)]Q = P+T and [a(x-g)]Q = P-T from P = [ax]Q and T = [ag]Q with one shared field inversion, so a pair of points costs 9M instead of 12M under the reference 6M convention (3M batched inversion share, 3M per formula). The planned fraction of pair-derived points is at least f = 0.98 (heuristic H4); the remaining points are roots computed by one reference addition each. The 6-element symmetry {+-1, +-lambda, +-lambda^2} is used through the hash key min(y, p-y). Total work W(n) = W(2^20) is at most 2^116.580443 target-group-operation equivalents (exact score 116580443/1000000), including both walks, the distributed hash-table inserts and lookups with 48-byte records and their block-transfer protocol, walk bookkeeping, the per-round field inversions, the per-prime tables and scalar multiplications, the character precomputation and sieves, the offline planning and plan streaming, candidate verification, the d-th root, the mu_d search and input checks. Preprocessing (challenge-independent work) is at most 2^115.5847 and is included. Peak memory is at most 2^122.2354 bytes; there is no nonuniform advice. Heuristics, all disclosed in proof.md with toy evidence at its stated scope: H1 (the product set U*B*G^-1 has random-like coincidences apart from a bounded repeated-rational loss below 2^-14), H2 (characters of the primes used and of the integers b <= 2^76 are equidistributed over Z/d, affecting only the number of primes needed, charged at twice the expectation with at least 2x slack), H3 (hash keys behave as uniform strings for sharding, probing and false matches, with a 2^20 candidate cap whose overflow is counted as failure), H4 (the offline planner pairs at least 98 percent of every class list at the production degree parameter GMAX/d^2 = 16; measured 99.3 to 99.4 percent on real class lists of a toy prime). This is an analytic bound, not a full-size execution.",
+      "score": {
+        "numerator": "116580443",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "One run with four parts. (1) ledger: recomputes every cost term of proof.md section 5 from exact integers and rationals, the exact score rounded up to 10^-6, the preprocessing and memory bounds rounded up, the success bound rounded down, and the same-budget cost without the pair trick; this checks arithmetic only, not the per-operation budgets. (2) planner_census: the offline pairing planner of proof.md section 3 on real chi-class lists of a toy prime at the production degree parameter GMAX/d^2 = 16, reporting the pair fraction, cycle rejections, root demotions, maximum dependency depth and stack (toy evidence for H4). (3) toy_attack: the whole algorithm on a toy j=0 curve with 2 not in H, executing the shared-inversion pair formula, the planner, the canonical-y table, the collision step, the d-th root and the mu_d search; success rate against 1-exp(-K), field multiplications per element, every recovered scalar checked. (4) coverage: exact |U*B*G^-1|/m for random sets, the smallest integers in H and the product construction at X2/d = 64 and 256 against 1-exp(-K) (toy evidence for H1/H2). The toy parts are evidence at toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "K": {"type": "string", "minLength": 1, "maxLength": 8},
+          "f_min": {"type": "string", "minLength": 1, "maxLength": 8},
+          "logX2_census": {"type": "integer", "minimum": 12, "maximum": 18},
+          "census_classes": {"type": "integer", "minimum": 1, "maximum": 16},
+          "atk_bits": {"type": "integer", "minimum": 18, "maximum": 26},
+          "atk_logd": {"type": "integer", "minimum": 2, "maximum": 6},
+          "atk_logX2": {"type": "integer", "minimum": 10, "maximum": 15},
+          "atk_logG": {"type": "integer", "minimum": 8, "maximum": 14},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 1500},
+          "cov_bits": {"type": "integer", "minimum": 20, "maximum": 27},
+          "cov_logd": {"type": "integer", "minimum": 2, "maximum": 8},
+          "seed": {"type": "integer", "minimum": 0, "maximum": 1000000}
+        },
+        "required": ["K", "f_min", "logX2_census", "census_classes", "atk_bits", "atk_logd", "atk_logX2", "atk_logG", "trials", "cov_bits", "cov_logd", "seed"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "K": "0.51",
+          "f_min": "0.98",
+          "logX2_census": 17,
+          "census_classes": 2,
+          "atk_bits": 24,
+          "atk_logd": 5,
+          "atk_logX2": 13,
+          "atk_logG": 12,
+          "trials": 700,
+          "cov_bits": 26,
+          "cov_logd": 6,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
