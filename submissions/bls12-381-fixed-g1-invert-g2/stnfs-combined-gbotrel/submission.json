@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: STNFS with |u|^(1/2)-balanced boot lattice and ball-region sieved descent: 2^123 (Combination of gbotrel's 11f6b293 accepted submission and previous 7c9c564a rejected submission by current author)",
+  "claims": [
+    {
+      "statement": "Combination of gbotrel's 11f6b293 accepted submission and previous 7c9c564a rejected submission by current author. For the full production bls12-381-fixed-g1-invert-g2 challenge, the STNFS algorithm in proof.md recovers Q in G2 with e(P,Q)=z for the exact supplied nonidentity P (Q=infinity for z=1) with success probability at least 0.39 over uniform challenges and fresh algorithm coins (modelled 0.765: main phase >= 1 - 2^-190 over Wiedemann projections, both |u|^(1/2)-balanced boots fail with probability <= 3.27e-3, Markov abort bound 0.2317 at the 2^120.5-unit descent cap), under Heuristics H1-H5 of proof.md Section 8. Scaling the b-coordinates of the 12D proper-subfield boot lattice by 2^32 ~ |u|^(1/2) before LLL reduction (from 7c9c564a) reduces the boot g-norm by 191.14 bits (to 2517.49 bits), lowering the expected two-log descent work in the ball-region windowed recurrence (from 11f6b293) to 2^118.3906 units. A global instruction meter bounds all classical work—including preprocessing, failures, retries, transfers, verification, and output—by W <= 2^123 dense-Fp12-multiplication units at C=20,000 scalar AArch64 instructions; the full ledger (proof.md Section 7) totals 2^122.923236 units (relation collection 2^122.2917, filtered Block-Wiedemann linear algebra 2^120.3504 at pad_N=1.60, metered descent cap 2^120.5000, and setup/verification terms). Peak distributed storage is at most 2^105 bytes (memory_log2_bytes = 105.0); preprocessing is at most 2^123.0 units (included in total work); nonuniform advice is 0 bytes (2^0 bytes). Nothing is amortized across challenges and no auxiliary powers are used.",
+      "score": {
+        "numerator": "123",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-combined-11f6b293-7c9c564a-evidence",
+      "source": "experiment.py",
+      "purpose": "Self-contained verification of the monogenic tower h(Y) = Y^6 + Y^3 + Y^2 - Y - 1, unramified degree-72/12 resultant norms mod r, exact prime-ideal structure and root multiplicities below 512, rational Machin-pi ellipsoid lattice-count bounds, live canonical-a ellipsoid pool with certified Rouche interval norm bounds and Euler-product retention, CADO filtering and missing-log back-substitution audit, 11M/bit Suyama Montgomery ECM random-prime detection audit, |u|^(1/2)-balanced 12D boot lattice and both-side (f and g) special-q lattice witnesses, degree-4 toy fixed-ball descent, and the 2^122.923236-unit ledger.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "n_draws": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 4000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "n_draws",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "n_draws": 2500,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
