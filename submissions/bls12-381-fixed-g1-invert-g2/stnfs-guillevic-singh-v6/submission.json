@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Special Tower Number Field Sieve (STNFS) over h(Y) = Y^6 - 2Y^3 + 2 with live 12D LLL special-q basis sampling, Suyama Montgomery ECM, supremum-bounded descent, and unfiltered M^T D M Block-Wiedemann",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT on BLS12-381, the Special Tower Number Field Sieve (STNFS) attack in proof.md computes g = e(P, Q0) in GT, maps g and z into F_p[y, X]/(y^6 - 2*y^3 + 2, X^2 - u*y) via the verified F_p-algebra isomorphism iota: w^2 -> y, w -> s^(-1)*X where s = u^((p+1)/4) mod p in F_p^* satisfies s^2 == u mod p, recovers a in [0, r) satisfying g^a = z at parameters A = 1360 and B = 2^67.500, and returns Q = [a]Q0 in G2 satisfying e(P, Q) = z. Under the four standard STNFS heuristics explicitly listed in Section 6 of proof.md (Barbulescu-Duquesne + Guillevic-Singh Murphy-alpha and direct joint Dickman smoothness, Poisson relation yield, rectangular M^T D M sparse kernel rank over active columns occurring >= 2 times in M, and 12-dimensional proper-subfield single-norm LLL smoothing + 3-level special-q descent calibrated on live LLL-reduced special-q bases), the attack succeeds with probability at least 0.40 over uniform challenges and fresh algorithm coins using at most 2^137.300000 total target-group-operation equivalents (normalized by C = 20,000 scalar AArch64 instructions per reference dense F_{p^12} multiplication, corresponding to at most 2^151.575799 scalar AArch64 instructions, charging 12D bucket/line sieving, unfiltered flt = 1 rectangular M^T D M Block-Wiedemann linear algebra over R_rows = 2.0 * SP_orb rows with the supremum-verified deterministic row weight bound of 285 entries per row, and concrete 39-limb CIOS Montgomery ECM + 3-level special-q descent over 45,258 supremum-bounded nodes). Peak memory is at most 2^78.000000 bytes; preprocessing is at most 2^137.300000 target-group-operation equivalents and is included in total work; nonuniform advice is 0 bytes (2^0 bytes) and is included in memory.",
+      "score": {
+        "numerator": "1373",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-v6-live-lll-ecm-supremum-descent-and-ledger",
+      "source": "experiment.py",
+      "purpose": "Machine-check Frobenius powers Y^(p^1)..Y^(p^6) mod (p, h(Y)), non-residuosity (u*y)^((p^6-1)/2) == -1, and the explicit F_p-algebra isomorphism iota; validate a working projective Suyama-curve Montgomery ECM implementation; compute exact 1/zeta_{K_h}(2) and exact local root counts for alpha(f_y, h, B0) and alpha(g_y, h, B0); evaluate both BD+alpha and direct joint smoothness yields at A = 1360 and B = 2^67.500; construct and 100-digit-Decimal LLL-reduce actual 12D special-q bases at 165, 122, and 89 bits, sample vectors to verify Q | N_g(a,b) and measure residual norms, bound branching b_max via unconditional triangle-inequality suprema, compute active-column survival probability P_all_active, and audit the complete instruction and memory ledgers.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "alpha_prime_bound": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 2000
+          },
+          "mc_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "A": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 5000
+          },
+          "B_log2_milli": {
+            "type": "integer",
+            "minimum": 50000,
+            "maximum": 80000
+          }
+        },
+        "required": [
+          "alpha_prime_bound",
+          "mc_samples",
+          "seed",
+          "A",
+          "B_log2_milli"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "alpha_prime_bound": 1000,
+          "mc_samples": 3000,
+          "seed": 42,
+          "A": 1360,
+          "B_log2_milli": 67500
+        }
+      ]
+    }
+  ]
+}
