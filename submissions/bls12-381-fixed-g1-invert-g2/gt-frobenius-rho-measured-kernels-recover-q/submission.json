@@ -1,0 +1,149 @@
+{
+ "version": 1,
+ "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class rho in GT with lazily evaluated steps (prefix-product trie, 3,457-instruction key kernel by Winograd's inner-product identity, one 12,735-instruction multiplication per six steps)",
+ "claims": [
+  {
+   "statement": "For uniform nonidentity P in G1 and uniform z in GT, the algorithm in proof.md (compute g=e(P,Q0) by the pinned pairing(Q0,P), so g != 1 for every nonidentity P; solve z=g^x by distinguished-point Pollard rho on the 12-element Frobenius classes of GT in the van Oorschot-Wiener trail form with exponents recovered by replay, with the multiply-only R=32 adding walk evaluated lazily: each walk keeps an explicit base y and a node of a precomputed prefix-product trie of depth 6 over the 384 twisted multipliers, its current element is y*Pi_node, the class key of that element is computed from the w^1 coefficient c_1(y*Pi_node)=sum_k y_k gamma_k(Pi_node) by the 3,457-instruction straight-line kernel lazy.s, which uses Winograd's inner-product identity over Fp2 (9 Fp products per step instead of 18, the node's cross term stored and the base's computed once by the 3,074-instruction root.s at the root), and the base is made explicit by one 12,735-instruction multiplication mul.s every sixth step; multiplier index (bits 0..63), distinguished-point bits (64..149) and 128-bit fingerprint (150..277) are read from the key minimum K; 2-cycle and checkpoint escapes square the smaller-key class with the 6,786-instruction kernel sqr.s; a pre-debit 192-bit work meter, report log, matcher, sampler and caps; output Q=[x]Q0 in G2, or infinity when z=1, and verify e(P,Q)=z for the supplied P) succeeds, in the ideal model, with probability at least 0.39 using at most 2^123.896 total dense-Fp12-multiplication equivalents (C=20,000) on every run, including setup (the table and the 2^51.51-leaf trie), the two pairings (each charged 2^14 units), walk and fresh starts, distinguished-point handling, escapes, detection delay, matching (sort, dedup, replays, pair checks), the output [x]Q0 (at most 12,809 units) and verification. A complete block of six steps is charged 34,132 instructions (root step 3,244, lazy step 3,627, lazy step with the flush 16,380; 170 of every-step work each), c=34,132/120,000 units per step, and a partial block less per step; fruitless-cycle waste is charged as eps=0.0237922 (above 1.24 times its H2 rate per useful iteration: 2-cycles at 1/384 per step, all other cycles up to length 64 at 3.45e-5, longer useless walks computed at 2^-122.6 per step and charged at 2^-121). The ledger is 2^123.89581 and 2^123.896 is the least thousandth above it; a run has at most 2^125.710 iterations because every block of iterations, with the escape or report that ends it, is charged at least c per iteration. Peak memory is at most 2^63.29 bytes, every array below 2^63; preprocessing is at most 2^52.21 units and is included; nonuniform advice is 0 bytes. The success bound relies on the random-mapping heuristic for rho walks with the conservative correction 1/(1-1/R) (model success 0.4005 at S=2^125.67559), at least 0.39041 after the computed loss terms of proof.md section 4: a single declared 0.01 for H1+ (the realized fruitless-cycle waste X, escapes at their full charge, stays within 0.04075 steps per useful iteration, above 2.12 times its H2 rate; the work threshold, which by an asserted inequality cannot end the walk phase before the S-th useful iteration and its detection window while X <= eps S, then costs at most that 0.01); and, for each of the three caps (report 2^55, restart 2^20, pair budget 2^4), its Markov bound expectation/cap, which holds for any dependence structure and is at most 2^-15.29, 2^-15.25 and 2^-23 from the asserted expectations below 2^39.710, below 2^4.75 and below 2^-19; plus the restart cap's worst case below 3.27e-5, detection failure 3.88e-11, a collision inside one trail 1e-6 and the sampler allowance below 2.14e-22. No concentration inequality and no independence across iterations, trails or records is assumed anywhere. H2 models bits 0..277 of K as a random function of the class (278 bits, below the 2^251.27 classes) and the indices and twists as independent uniform, which sets per-step rates only; it is supported by the emulated kernels, the production lazy walk run step by step against an eager walk in the real BLS12-381 GT with distinguished points, records, fresh starts and replay of every record, statistics of the bits of K on production classes, and by a toy-field census of the complete algorithm at this model point, eight rows registered before any count at this package's charges was read (the seeds of earlier censuses of the same walk; 0.4201 +- 0.00384 over 16,550 runs against 0.4005, four standard errors below it 0.4047), which measures the threshold and waste part only, not any cap, and whose count omits the distinguished-point and cycle-detecting iterations, about 1.9% of it at its densest rows. No production-size run is claimed.",
+   "score": {
+    "numerator": "15487",
+    "denominator": "125"
+   },
+   "evidence": [
+    "proof.md",
+    "proof-impl.md",
+    "evidence.md",
+    "experiment.py",
+    "cycles.py",
+    "reduction.py",
+    "flags_check.py",
+    "kernels/gen_lazy.py",
+    "kernels/gen.py",
+    "kernels/model.py",
+    "kernels/emu.py",
+    "kernels/check.py",
+    "kernels/check_lazy.py",
+    "kernels/check_kernels.py",
+    "kernels/harness.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "lazy-trie-rho-kernels-walk-reduction-ledger",
+   "source": "experiment.py",
+   "purpose": "Part A: BLS12-381 GT identities (Frobenius, the 12-key formula against explicit conjugates, canonical representative, orders, Granger-Scott). Part K: generate the four straight-line kernels in memory and run them in the shipped emulator on real GT elements against a big-integer reference (counts 12,735 / 6,786 / 3,457 / 3,074 on every call; mul.s also in the trie-construction orientation). Part C: the production lazy walk (R=32, trie depth 6) in the real GT with every key from emulated root.s/lazy.s and every flush and escape from emulated mul.s/sqr.s, with distinguished points at a test density, records, fresh starts, compared at every step with an eager walk, and every record replayed from its start pair to the same fingerprint with its canonical pair verified. Part G: statistics of the bits of K read by the rule on production classes. Part B: the complete algorithm (trails, report log, heapsort matcher, replay, escapes, meter) in toy fields, with the census count of evidence.md. Part E: pair-collision law. Part F: exact fruitless-cycle bounds at R=32. Part R (reduction.py): g = e(P,Q0) by the pinned pairing(Q0,P) counted operation by operation, g in GT and g != 1, Q = [x]Q0 in G2 with its counted hard maximum, Q in G2, e(P,Q) = z and the identity target. Part D: the ledger, caps, block lemma, threshold inequality, drift tolerance and claim on exact integers and fractions. Part S: the bounded sampler; flags_check.py: multiword compares under AArch64 NZCV. No production costs are measured by running the attack.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "q": {
+      "type": "integer",
+      "enum": [
+       67,
+       139,
+       163,
+       211,
+       379
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2000
+     },
+     "R": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 1024
+     },
+     "branch_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "sq_cut": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 8
+     },
+     "walks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+     },
+     "production_steps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1200
+     },
+     "kernel_cases": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "pair_samples": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 60000
+     },
+     "dump": {
+      "type": "boolean"
+     },
+     "production_dp_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+     },
+     "stat_classes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 20000
+     }
+    },
+    "required": [
+     "q",
+     "trials",
+     "R",
+     "branch_bits",
+     "sq_cut",
+     "dp_bits",
+     "walks",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "q": 67,
+     "trials": 30,
+     "R": 32,
+     "branch_bits": 6,
+     "sq_cut": 0,
+     "dp_bits": 4,
+     "walks": 4,
+     "seed": 2,
+     "production_checks": 2,
+     "production_steps": 240,
+     "production_dp_bits": 4,
+     "kernel_cases": 2,
+     "pair_samples": 15000,
+     "stat_classes": 3000
+    }
+   ]
+  }
+ ]
+}
