@@ -1,0 +1,43 @@
+== eval17 certified block evaluation, callgrind Ir (methodology identical to measurements12.txt section C:
+   "blocks minus per-case setups, divided by evaluations per rep")
+
+Environment (disclosed, differs from the shipped v12 measurement environment):
+  linux/arm64 Ubuntu 24.04.1 LTS, aarch64 (AWS Graviton3, r7g.medium), GCC 13.3.0,
+  valgrind/callgrind 3.22.0. The shipped baseline (nbound12) was re-measured under THIS
+  environment for an apples-to-apples differential; the shipped package's own numbers
+  (measurements12.txt: Debian 12, GCC 12.2, 5,833.0 Ir/eval) are cited for reference.
+  Stream: eval17-vec64.txt, the 2,401 regenerated canonical pool rows, production
+  configuration L0=64 W=128; evaluations/rep = 6,003; density 0.04232 (bit-identical to
+  the shipped pool, EVAL17.md section 5).
+
+== callgrind summaries (Ir)
+  eval17_bench bench 1/3 reps:          135982544 283074192   (design, aborts on)
+  eval17_bench bench 1/3 reps, aborts: 141454071 299488613   (A/B: aborts disabled)
+  eval17_bench bench 1/3 reps, g-only:  119828974 234646892   (probe: f side never computed)
+  eval17_bench benchsetup 1/3:          112030954 211407056
+  nbound12 explore 1/3:                 150778532 327427902
+  nbound12 benchsetup 1/3:              112278315 212206655
+
+== per block evaluation (blocks minus per-case setups, divided by evaluations per rep)
+  eval17 design:    (283074192-135982544) - (211407056-112030954)  / (2*6003) =  3974.3 Ir
+  eval17 no-abort: (299488613-141454071) - (211407056-112030954)  / (2*6003) =  4885.5 Ir
+  eval17 g-only:    (234646892-119828974) - (211407056-112030954) / (2*6003) =  1286.2 Ir
+  early-abort saving over the stream: 911.2 Ir/eval mean (15.28% g-aborts, 14.73% f-aborts)
+  nbound12 under this environment:
+                    (327427902-150778532) - (212206655-112278315) / (2*6003) =  6390.4 Ir
+                    (shipped reference: 5833.0 on Debian 12 / GCC 12.2; toolchain delta +9.55%)
+
+== charged constant and the differential that justifies it
+  eval17 / nbound12 under identical conditions: 3974.3 / 6390.4 = 0.622  (37.8% cheaper)
+  C_NB_EVAL charged in this package: 4000 (measured 3974.3, rounded up;
+  the shipped package charged 5900 against its measured 5833.0).
+  Per-cell ledger effect (model16 evaluate): the threshold path was
+  5900 * 0.0423 + NB_ROW/NB_SLICE = 252.5 of 541.7 instr/cell;
+  now 4000 * 0.0423 + 2.8 = 172.0 -> per-cell 461.2 -> relation collection 2^121.95
+  (from 2^122.1826; -0.24 bits before the B=2^68 joint re-optimization).
+
+== reproducibility
+  All binaries compiled cc -O2 -std=c11 (-Wall -Wextra clean for eval17*); runs repeated
+  once, deterministic streams; callgrind outputs archived as *.cg alongside this file on
+  the measurement host; the bench driver and differential protocol are eval17_bench.c
+  (nbound12-compatible modes) and the vector regeneration is eval17_validate.py.
