@@ -1,0 +1,411 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <valgrind/callgrind.h>
+#include "p256_field.h"
+#include "p256_sub.h"
+#include "p256_fused.h"
+#include "bloop_branchy.h"
+#include "floop.h"
+#include <sys/mman.h>
+
+
+#ifndef ADDER_BITS
+#define ADDER_BITS 16
+#endif
+#define NA (1 << ADDER_BITS)
+#ifndef B
+#define B 65536
+#endif
+#define ANCHOR_PERIOD 64
+#define MAX_CYCLE 64
+#ifndef DP_BITS
+#define DP_BITS 60
+#endif
+#define SPARES 1024
+#ifndef CAP_PERIODS
+#define CAP_PERIODS (1ULL << DP_BITS)
+#endif
+#ifndef FILTER_MASK
+#define FILTER_MASK (~0ULL)
+#endif
+#if DP_BITS + ADDER_BITS <= 64
+#define IS_DP(kl, p) ((((kl) >> ADDER_BITS) & ((1ULL << DP_BITS) - 1)) == 0)
+#define IS_DP1 IS_DP
+#else
+#define IS_DP(kl, p) (((kl) >> ADDER_BITS) == 0 && \
+                      ((p)->x.v[1] & ((1ULL << (DP_BITS + ADDER_BITS - 64)) - 1)) == 0)
+#define IS_DP1(kl, p) (((((kl) >> ADDER_BITS) | \
+                         ((p)->x.v[1] << (64 - ADDER_BITS))) & \
+                        ((1ULL << DP_BITS) - 1)) == 0)
+#endif
+
+typedef struct { fe x, y; } pt;
+
+static const fe P = {{0xffffffffffffffffULL, 0x00000000ffffffffULL, 0, 0xffffffff00000001ULL}};
+static const fe ZERO = {{0}};
+static const uint64_t PM2[4] = {0xfffffffffffffffdULL, 0x00000000ffffffffULL, 0, 0xffffffff00000001ULL};
+
+static pt T[NA];
+static pt T2[NA][2];
+#define T2_BASE (1ULL << 40)
+static pt WA[B], WB[B];
+static pt *W = WA, *WN = WB;
+typedef struct { fe d, pre; } dpre;
+static char dp_mem[2 * B * sizeof(dpre)];
+#define DP_SIZE ((uintptr_t)B * sizeof(dpre))
+typedef struct { _Alignas(32) const pt *sel; uint64_t anchor, tper; } lane;
+static lane L[B];
+static pt SPARE[SPARES];
+static fe RHOS[64];
+#define RING_K 4
+static uint64_t ring[B][RING_K];
+static int ring_n[B], ring_pos[B];
+static uint64_t loops;
+static uint64_t two_cycles, long_cycles, dps, exceptional, unbatched;
+static uint64_t abandoned, next_spare, ahead_dps;
+static uint64_t fix_meter;
+
+static inline int feq(const fe *a, const fe *b) { return memcmp(a->v, b->v, sizeof a->v) == 0; }
+static inline int fis_zero(const fe *a) { return (a->v[0] | a->v[1] | a->v[2] | a->v[3]) == 0; }
+static inline int fcmp(const fe *a, const fe *b) {
+    for (int i = 3; i >= 0; i--) {
+        if (a->v[i] != b->v[i]) return a->v[i] < b->v[i] ? -1 : 1;
+    }
+    return 0;
+}
+
+static __attribute__((noinline)) void finv(fe *r, const fe *a) {
+    fe a2, t[8], acc;
+    k_sqr(&a2, a);
+    t[0] = *a;
+    k_mul(&t[1], &a2, a);
+    k_mul(&t[2], &t[1], &a2);
+    k_mul(&t[3], &t[2], &a2);
+    k_mul(&t[4], &t[3], &a2);
+    k_mul(&t[5], &t[4], &a2);
+    k_mul(&t[6], &t[5], &a2);
+    k_mul(&t[7], &t[6], &a2);
+    acc = t[7];
+    for (int i = 62; i >= 0; i--) {
+        k_sqr(&acc, &acc);
+        k_sqr(&acc, &acc);
+        k_sqr(&acc, &acc);
+        k_sqr(&acc, &acc);
+        int nib = (int)((PM2[i >> 4] >> ((i & 15) * 4)) & 15);
+        if (nib) k_mul(&acc, &acc, &t[(nib - 1) >> 1]);
+    }
+    *r = acc;
+}
+
+static inline uint64_t key_lo(const pt *p) { return p->x.v[0]; }
+
+static inline const pt *select_adder(const pt *p) {
+    return &T2[p->x.v[0] & (NA - 1)][p->y.v[0] & 1];
+}
+
+static inline const pt *select_adder1(const pt *p) {
+    uint64_t i = p->x.v[0] & (NA - 1);
+    __asm__("" : "+r"(i));
+    return &T2[i][p->y.v[0] & 1];
+}
+
+static int point_is_dp(const pt *p) {
+    uint64_t k = key_lo(p);
+    return IS_DP(k, p);
+}
+
+static uint64_t dp_digest;
+static void record_dp(const pt *p) {
+    for (int i = 0; i < 4; i++) dp_digest = dp_digest * 1099511628211ULL + p->x.v[i];
+}
+
+static __attribute__((noinline)) void new_trail(int w, pt *nw, uint64_t *kl, const pt **sel) {
+    *nw = SPARE[next_spare++ % SPARES];
+    *kl = key_lo(nw);
+    *sel = select_adder(nw);
+    L[w].anchor = ~0ULL;
+    L[w].tper = 0;
+    ring_n[w] = ring_pos[w] = 0;
+}
+
+static inline void esc_seen(int w, uint64_t kl) {
+    int n = ring_n[w] < RING_K ? ring_n[w] : RING_K;
+    for (int i = 0; i < n; i++)
+        if (ring[w][i] == kl) { loops++; return; }
+    ring[w][ring_pos[w]] = kl;
+    ring_pos[w] = (ring_pos[w] + 1) % RING_K;
+    ring_n[w]++;
+}
+
+static __attribute__((noinline)) void dp_restart(int w, pt *nw, uint64_t *kl, const pt **sel) {
+    record_dp(nw);
+    new_trail(w, nw, kl, sel);
+}
+
+static int pt_eq(const pt *a, const pt *b) { return feq(&a->x, &b->x) && feq(&a->y, &b->y); }
+
+static int add_single(pt *r, const pt *a, const pt *b) {
+    fe num, den, lam, t, x3, y3;
+    unbatched++;
+    if (feq(&a->x, &b->x)) {
+        if (!feq(&a->y, &b->y) || fis_zero(&a->y)) return 0;
+        fe three = {{0}};
+        k_sqr(&num, &a->x);
+        k_add(&t, &num, &num);
+        k_add(&num, &num, &t);
+        three.v[0] = 3;
+        k_to(&three, &three);
+        k_sub(&num, &num, &three);
+        k_add(&den, &a->y, &a->y);
+    } else {
+        k_sub(&num, &b->y, &a->y);
+        k_sub(&den, &b->x, &a->x);
+    }
+    finv(&den, &den);
+    k_mul(&lam, &num, &den);
+    k_sqr(&x3, &lam);
+    k_sub(&x3, &x3, &a->x);
+    k_sub(&x3, &x3, &b->x);
+    k_sub(&t, &a->x, &x3);
+    k_mul(&y3, &lam, &t);
+    k_sub(&y3, &y3, &a->y);
+    r->x = x3;
+    r->y = y3;
+    return 1;
+}
+
+static int f_single(pt *r, const pt *a) { return add_single(r, a, select_adder(a)); }
+
+static int escape(pt *r, const pt *cyc, int len) {
+    int m = 0;
+    for (int i = 1; i < len; i++)
+        if (fcmp(&cyc[i].x, &cyc[m].x) < 0) m = i;
+    pt c = cyc[m];
+    if (c.y.v[0] & 1) k_sub(&c.y, &ZERO, &c.y);
+    return add_single(r, &c, &c);
+}
+
+static inline int same_class(const pt *a, const pt *b) { return feq(&a->x, &b->x); }
+
+static __attribute__((noinline)) void rare_anchor(int w, pt *nw, uint64_t *kl, const pt **sel, int *dp) {
+    pt cyc[MAX_CYCLE + 1], s;
+    int len = 1;
+    cyc[0] = *nw;
+    if (!f_single(&s, nw)) { exceptional++; abort(); }
+    while (!same_class(&s, nw) && len <= MAX_CYCLE) {
+        if (point_is_dp(&s)) {
+            *nw = s;
+            *kl = key_lo(nw);
+            *dp = 1;
+            ahead_dps++;
+            break;
+        }
+        cyc[len++] = s;
+        if (!f_single(&s, &s)) { exceptional++; abort(); }
+    }
+    if (!*dp && same_class(&s, nw)) {
+        if (!escape(nw, cyc, len)) { exceptional++; abort(); }
+        long_cycles++;
+        *kl = key_lo(nw);
+        *sel = select_adder(nw);
+        *dp = IS_DP(*kl, nw);
+        if (!*dp) esc_seen(w, *kl);
+    }
+}
+
+static __attribute__((noinline)) void step_rare(int w, pt *nw, int anchor_now) {
+    uint64_t kl = key_lo(nw);
+    const pt *sel = select_adder(nw);
+    int dp = IS_DP1(kl, nw);
+    if (!dp && (kl & FILTER_MASK) == L[w].anchor)
+        rare_anchor(w, nw, &kl, &sel, &dp);
+    if (dp) {
+        dps++;
+        dp_restart(w, nw, &kl, &sel);
+    } else if (anchor_now) {
+        L[w].anchor = kl & FILTER_MASK;
+        if (++L[w].tper > CAP_PERIODS) {
+            abandoned++;
+            new_trail(w, nw, &kl, &sel);
+        }
+    }
+    L[w].sel = sel;
+}
+
+#if DP_BITS + ADDER_BITS <= 64
+#define BL_DP "tst x3,#%c[dpf]\n"
+#define BL_DPF (((1ULL << DP_BITS) - 1) << ADDER_BITS)
+#else
+#define BL_DP "extr x8,x4,x3,#%c[ab]\ntst x8,#%c[dpf]\n"
+#define BL_DPF ((1ULL << DP_BITS) - 1)
+#endif
+#if FILTER_MASK == ~0ULL
+#define BL_F "x3"
+#define BL_FM ""
+#else
+#define BL_F "x10"
+#define BL_FM "and x10,x3,#%c[fm]\n"
+#endif
+#define BL_INV(S) "ccmn x22,x28,#10,ne\nb.hs Lz0" S "_%=\nLq0" S "_%=:\n"
+#define BL_EXIT "2:\nadds x15,x19,#1\nsbcs x16,x20,x28\nsbcs x17,x21,xzr\nsbcs x1,x22,x29\ncsel x19,x15,x19,hs\n" \
+    "csel x20,x16,x20,hs\ncsel x21,x17,x21,hs\ncsel x22,x1,x22,hs\nmov x0,#1\n"
+#define BL_TAIL_P(S) "ldr x6,[x26,#8]\nstp x3,x4,[x25,#16]\n" BL_FM BL_DP "ccmp " BL_F ",x6,#4,ne\n" BL_INV(S) \
+    "ubfiz x9,x3,#7,#%c[ab]\nbfi x9,x0,#6,#1\norr x9,x9,#0x10000000000\nstr x9,[x26],#-32\n"
+#define BLOOP "str x29,[sp,#-16]!\nmov w28,#-1\nmov x29,#0xffffffff00000001\n" BLOOP_X8(BL_TAIL_P) "tst x23,#%c[dm]\nb.ne 1b\nmov x0,#0\nb 3f\n" BLOOP_SLOW_B BL_EXIT "3:\nldr x29,[sp],#16\n"
+
+#if CAP_PERIODS == (1ULL << 60)
+#define BL_CAP "tbnz x12,#60,2f\n"
+#else
+#define BL_CAP "cmp x12,#%c[cap]\nb.hs 2f\n"
+#endif
+#define BL_TAIL_A(S) "ldp x6,x12,[x26,#8]\nstp x3,x4,[x25,#16]\n" BL_FM \
+    BL_CAP BL_DP "ccmp " BL_F ",x6,#4,ne\n" BL_INV(S) \
+    "ubfiz x9,x3,#7,#%c[ab]\nbfi x9,x0,#6,#1\norr x9,x9,#0x10000000000\nadd x12,x12,#1\n" \
+    "stp " BL_F ",x12,[x26,#8]\nstr x9,[x26],#-32\n"
+#define BLOOPA "str x29,[sp,#-16]!\nmov w28,#-1\nmov x29,#0xffffffff00000001\n" BLOOP_X8(BL_TAIL_A) "tst x23,#%c[dm]\nb.ne 1b\nmov x0,#0\nb 3f\n" BLOOP_SLOW_B BL_EXIT "3:\nldr x29,[sp],#16\n"
+
+_Static_assert(B % 8 == 0 && B >= 16, "eight-copy blocks");
+static __attribute__((noinline)) void batch_step(uint64_t t) {
+    fe acc, S[4];
+    S[3].v[0] = 0xffffffff, S[3].v[1] = 0xfffffffe;
+    dpre *DP = (dpre *)(((uintptr_t)dp_mem + DP_SIZE - 1) & ~(DP_SIZE - 1));
+    pt *Wc = W, *Wn = WN;
+    const int anchor_now = t % ANCHOR_PERIOD == 0;
+    const fe *rho = &RHOS[t & 63];
+    k_subb_bl(&DP[0].d, &Wc[0].x, &L[0].sel->x);
+    k_mul(&DP[1].pre, &DP[0].d, rho);
+    {
+        register uint64_t p0 __asm__("x19") = DP[1].pre.v[0], p1 __asm__("x20") = DP[1].pre.v[1];
+        register uint64_t p2 __asm__("x21") = DP[1].pre.v[2], p3 __asm__("x22") = DP[1].pre.v[3];
+        register uintptr_t xl __asm__("x23") = (uintptr_t)&L[1].sel, xc __asm__("x24") = (uintptr_t)&Wc[1];
+        register uintptr_t xd __asm__("x25") = (uintptr_t)&DP[1];
+        register uint64_t xn __asm__("x26") = B, xm __asm__("x27") = 0;
+        __asm__ volatile("str x29,[sp,#-16]!\nmov w28,#-1\nmov x29,#0xffffffff00000001\n" FLOOP "ldr x29,[sp],#16\n"
+            : "+r"(p0), "+r"(p1), "+r"(p2), "+r"(p3), "+r"(xl), "+r"(xc), "+r"(xd), "+r"(xn), "+r"(xm)
+            :
+            : "x1", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11", "x12", "x13", "x14", "x15", "x16", "x17",
+              "x0", "x2", "x18", "x30", "x28", "cc", "memory");
+        fix_meter += xm;
+        DP[B - 1].pre = (fe){{p0, p1, p2, p3}};
+    }
+    k_subb_bl(&DP[B - 1].d, &Wc[B - 1].x, &L[B - 1].sel->x);
+    k_subm(&acc, &Wc[B - 1].x, &L[B - 1].sel->x, &DP[B - 1].pre);
+    {
+        fe dy, q;
+        k_sub(&dy, &L[B - 1].sel->y, &Wc[B - 1].y);
+        k_mul(&q, &dy, &DP[B - 1].pre);
+        DP[B - 1].pre = q;
+    }
+    if (fis_zero(&acc)) { exceptional++; abort(); }
+    finv(&S[0], &acc);
+    int w0 = B - 1;
+#define RUN_BLOCK(TEXT, AFLAG) do { \
+        register uint64_t i0 __asm__("x19") = S[0].v[0], i1 __asm__("x20") = S[0].v[1]; \
+        register uint64_t i2 __asm__("x21") = S[0].v[2], i3 __asm__("x22") = S[0].v[3]; \
+        register uintptr_t pd __asm__("x23") = (uintptr_t)&DP[B - 1], pc __asm__("x24") = (uintptr_t)&Wc[B - 1].y; \
+        register uintptr_t pn __asm__("x25") = (uintptr_t)&Wn[B - 1].y + 16, pl __asm__("x26") = (uintptr_t)&L[B - 1].sel; \
+        register uint64_t t2 __asm__("x27") = 0; \
+        register uint64_t rare __asm__("x0"); \
+        for (;;) { \
+            __asm__ volatile(TEXT : "+r"(i0), "+r"(i1), "+r"(i2), "+r"(i3), "+r"(pd), "+r"(pc), "+r"(pn), "+r"(pl), "+r"(t2), "=&r"(rare) \
+                : [ab] "i"(ADDER_BITS), [dm] "i"(DP_SIZE - 1), [dpf] "i"(BL_DPF), [fm] "i"(FILTER_MASK), [cap] "i"(CAP_PERIODS) \
+                : "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11", "x12", "x13", "x14", "x15", "x16", \
+                  "x17", "x18", "x28", "x30", "cc", "memory"); \
+            if (!rare) break; \
+            int w = (int)((pl - (uintptr_t)&L[0].sel) / sizeof(lane) & (B - 1)); \
+            step_rare(w, &Wn[w], AFLAG); \
+            pl -= sizeof(lane); \
+            if (w == 1) break; \
+        } \
+        S[0].v[0] = i0; S[0].v[1] = i1; S[0].v[2] = i2; S[0].v[3] = i3; fix_meter += t2; \
+        w0 = 0; \
+    } while (0)
+    if (!anchor_now) RUN_BLOCK(BLOOP, 0); else RUN_BLOCK(BLOOPA, 1);
+#undef RUN_BLOCK
+    for (int w = w0; w >= 0; w--) {
+        const pt *R = L[w].sel;
+        pt *nw = &Wn[w];
+        k_mul(&S[1], &S[0], rho);
+        k_lxy(S, &R->x, &Wc[w].x, &nw->x);
+        uint64_t kl = key_lo(nw), f = kl & FILTER_MASK;
+        const pt *sel = select_adder1(nw);
+        if (__builtin_expect(IS_DP1(kl, nw) | (f == L[w].anchor) |
+                             (anchor_now && L[w].tper >= CAP_PERIODS), 0)) {
+            step_rare(w, nw, anchor_now);
+            continue;
+        }
+        if (anchor_now) {
+            L[w].anchor = f;
+            L[w].tper++;
+        }
+        L[w].sel = sel;
+    }
+    W = Wn;
+    WN = Wc;
+}
+
+static void read_fe(FILE *f, fe *r) {
+    char hex[65];
+    if (fscanf(f, "%64s", hex) != 1 || strlen(hex) != 64) { fprintf(stderr, "bad input\n"); exit(2); }
+    fe a;
+    for (int i = 0; i < 4; i++) {
+        char limb[17];
+        memcpy(limb, hex + 16 * (3 - i), 16);
+        limb[16] = 0;
+        a.v[i] = strtoull(limb, NULL, 16);
+    }
+    k_to(r, &a);
+}
+
+static void print_fe(const fe *a) {
+    fe t;
+    k_from(&t, a);
+    for (int i = 3; i >= 0; i--) printf("%016llx", (unsigned long long)t.v[i]);
+}
+
+int main(int argc, char **argv) {
+    if (argc < 3) { fprintf(stderr, "usage: step <inputs> <batch-steps> [dump|single]\n"); return 2; }
+    FILE *f = fopen(argv[1], "r");
+    if (!f) return 2;
+    for (int i = 0; i < NA; i++) { read_fe(f, &T[i].x); read_fe(f, &T[i].y); }
+    for (int w = 0; w < B; w++) { read_fe(f, &W[w].x); read_fe(f, &W[w].y); }
+    for (int i = 0; i < SPARES; i++) { read_fe(f, &SPARE[i].x); read_fe(f, &SPARE[i].y); }
+    for (int i = 0; i < 64; i++) RHOS[i] = SPARE[(i * 17 + 5) % SPARES].x;
+    fclose(f);
+    for (int i = 0; i < NA; i++) {
+        T2[i][0] = T2[i][1] = T[i];
+        k_sub(&T2[i][1].y, &ZERO, &T[i].y);
+    }
+    if (mmap((void *)T2_BASE, sizeof T2, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED_NOREPLACE, -1, 0) != (void *)T2_BASE) { fprintf(stderr, "T2 map\n"); return 2; }
+    memcpy((void *)T2_BASE, T2, sizeof T2);
+    for (int w = 0; w < B; w++) {
+        L[w].sel = select_adder(&W[w]);
+        L[w].anchor = ~0ULL;
+        L[w].tper = 0;
+    }
+    int n = atoi(argv[2]);
+    if (argc > 3 && strcmp(argv[3], "single") == 0) {
+        CALLGRIND_ZERO_STATS;
+        CALLGRIND_TOGGLE_COLLECT;
+        for (int i = 0; i < n; i++) {
+            if (!f_single(&W[i % B], &W[i % B])) { exceptional++; abort(); }
+        }
+        CALLGRIND_TOGGLE_COLLECT;
+        fprintf(stderr, "unbatched=%llu\n", (unsigned long long)unbatched);
+        return 0;
+    }
+    CALLGRIND_ZERO_STATS;
+    CALLGRIND_TOGGLE_COLLECT;
+    for (int t = 1; t <= n; t++) batch_step((uint64_t)t);
+    CALLGRIND_TOGGLE_COLLECT;
+    fprintf(stderr, "walk_steps=%llu two_cycles=%llu long_cycles=%llu dps=%llu ahead_dps=%llu abandoned=%llu exceptional=%llu unbatched=%llu dp_digest=%016llx loops=%llu fix_meter=%llu\n",
+            (unsigned long long)n * B, (unsigned long long)two_cycles, (unsigned long long)long_cycles,
+            (unsigned long long)dps, (unsigned long long)ahead_dps, (unsigned long long)abandoned, (unsigned long long)exceptional,
+            (unsigned long long)unbatched, (unsigned long long)dp_digest, (unsigned long long)loops, (unsigned long long)fix_meter);
+    if (argc > 3) {
+        for (int w = 0; w < B; w++) { print_fe(&W[w].x); printf(" "); print_fe(&W[w].y); printf("\n"); }
+    }
+    return 0;
+}
