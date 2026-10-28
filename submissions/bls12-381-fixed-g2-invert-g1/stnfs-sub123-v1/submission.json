@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "title": "STNFS in F_p12 at 2^122.6 (stnfs-sub123-v1)",
+  "claims": [
+    {
+      "statement": "For the full production bls12-381-fixed-g2-invert-g1 challenge, the STNFS algorithm of this package recovers P in G1 with e(P,Q) = z for the exact supplied nonidentity Q (P = infinity for z = 1) with success at least 0.39 over uniform challenges and fresh algorithm coins (modelled 0.394, the floor of the claimed cap by construction at a 1.5x model-error allowance on the descent expectation: main phase >= 1 - 2^-190 over the Wiedemann projections, both boots within their measured bounds, Markov P(abort) <= 0.606 at the 2^120.58-unit descent cap with E = 2^119.272), under the disclosed NFS heuristics (H3's discriminant half verified exactly by integer-identity resultant certificates; the class-number half the standard disclosed hypothesis; smoothness heuristics at measured scope). A global meter bounds all classical work, including preprocessing, failures, transfers, storage, verification and output, by W <= 2^122.6 dense-Fp12-multiplication units at C = 20,000 scalar AArch64 instructions; the ledger totals 2^122.5993 (recomputed in-sandbox as 2^122.5995): relation collection 2^122.1230 (B = 2^68, per-cell 460.03 instructions with the certified evaluator re-charged at C_NB_EVAL = 4,000 from a measured 3,974.3 Ir/evaluation under callgrind on linux/arm64, bit-identical survivor sets on all 2,401 pool rows), linear algebra 2^117.7434 (N = 2^58.6087 = pad 1.4 x N/U 0.049049 x U, the ratio the three-seed 2^16..2^19 filtering sweep's 2^19 maximum, at the reference C_ENTRY = 96 and BW = 3), descent cap 2^120.58 (E = 2^119.272 at SLACK = 80, retention min 0.8591, worst node loss 1.83e-4, 3-sigma-inflated 1.85e-4; UDUP = 0.35 charged 1.9x below the worst 3-sigma lower bound 0.667 of twelve production-geometry re-measurements, worst run 0.7402 +- 0.073, mean 0.82), remaining components <= 2^90.3. Memory and storage follow the reference per-object bounded layout with priced transfers and injective 64-bit addressing; nothing is amortised over future targets.",
+      "score": {
+        "numerator": "613",
+        "denominator": "5"
+      },
+      "evidence": [
+        "evidence17.py",
+        "MEASUREMENTS17.txt",
+        "eval17.c",
+        "retain17.py",
+        "h3_evidence.py",
+        "model16.py",
+        "descent16.py",
+        "ecm16.py",
+        "retain16.py",
+        "filtsim.py",
+        "threshold_model.py",
+        "ideal_canonical.py",
+        "lattice_count_bounds.py",
+        "embedding_bounds.py",
+        "common12.py",
+        "config.json",
+        "la_mac.s",
+        "stats16.b85",
+        "pool12-1.b85",
+        "pool12-2.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence17.py",
+      "purpose": "Recomputes in-sandbox the tower and H3 discriminant certificates and toy unit ranks, the pool, the measurement parse, the relation-collection and linear-algebra ledger at the claimed operating point (B = 2^68, C_NB_EVAL = 4000, pad 1.4), the exact bad-prime retention laws and loss integral, the descent expectation and cap, the success chain, and prints the total ledger 2^122.5995 (ledger 2^122.5993) with per-section PASS markers and a final JSON ledger line; the output's quoted_offline list states the in-sandbox versus quoted-offline evidence split.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": ["samples", "seed"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 16,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
