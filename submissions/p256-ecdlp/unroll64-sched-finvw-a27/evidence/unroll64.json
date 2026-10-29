@@ -1,0 +1,19 @@
+{
+  "scope": "Recorded finite organizer-image instruction counts for the 64-copy blocks; not a production execution or a proof of collision probabilities.",
+  "environment": "curvesma-reference-count (gcc Debian 14.2.0-19, valgrind 3.24.0, linux/arm64); -O3 -fno-tree-vectorize -mgeneral-regs-only -static; one fixed input file per batch size for both builds.",
+  "arm_columns": ["B", "ADDER_BITS", "t0", "arm", "base8", "n64", "delta"],
+  "paired_rows": [
+    [65536, 16, 0, "skip", 39078092, 39049424, -28668],
+    [65536, 16, 32, "plain", 39209148, 39180480, -28668],
+    [65536, 16, 63, "anchor", 39404721, 39376053, -28668],
+    [1048576, 20, 0, "skip", 624902498, 624443750, -458748],
+    [1048576, 20, 32, "plain", 627003174, 626544426, -458748],
+    [1048576, 20, 63, "anchor", 630148397, 629689649, -458748]
+  ],
+  "model": "delta = 4*B/8 - 4*B/64 - 4, including the four-instruction net entry-tree cost; B=65536 gives -28668 and B=1048576 gives -458748.",
+  "checks": {
+    "correction_meters": "identical within every pair",
+    "dump_check": "n=1 (skip) and n=64 (plain and anchor) walk dumps are byte-identical between base8 and n64",
+    "trampoline": "the 2^60 cap uses tbz to a local trampoline followed by a wide b 2f; the normal path is one instruction"
+  }
+}
