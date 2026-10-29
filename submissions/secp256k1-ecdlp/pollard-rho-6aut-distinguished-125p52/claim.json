@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "e4db9d7804258c184139beb4a740d751b7f298e1fbbb62b98947f6542aad2043",
+  "cost_model_sha256": "28e49e2edbc41fa4dfa6c05fa1a66cfeb8b28579a5b59af88d9bf672b7dcd987",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "pollard-rho-optimization",
+  "algorithm": "pollard-rho-6aut-glv-distinguished-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 125.52,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 38,
+    "preprocessing_log2": 14.21,
+    "success_probability": 0.45,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "r-adding walk as random mapping (Teske 2000); bias <=5% overhead",
+    "6-automorphism rep 6-to-1 regular (Fouque PKC 2014); negligible exceptions",
+    "distinguished theta=2^-32 uniform Bernoulli hash of x",
+    "GLV k=k1+k2*lambda sqrt(2) reduction (Sica-Guillevic)",
+    "4-way partition uniformity (Kuhn-Struik 2001)"
+  ],
+  "limitations": [
+    "Analytic; no full-size execution or independent qualification.",
+    "Pollard rho heuristic extrapolated from toy groups; uncertainty disclosed.",
+    "ARM re-measure 171 vs 179 not changing C=1000; conservative.",
+    "18-core summed work; 128GB distinguished table required."
+  ],
+  "lane": "exploratory"
+}

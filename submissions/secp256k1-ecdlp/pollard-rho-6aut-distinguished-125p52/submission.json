@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: Pollard rho with 6-automorphism, GLV and distinguished points",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) with Q=[x]P on secp256k1, the Pollard rho distinguished-point algorithm with secp256k1 6-automorphism (beta), GLV 2-D decomposition (lambda), 4-way partition and r-adding walk (1024 table) described in proof.md recovers x with probability at least 0.45 using at most 2^125.52 total target-group-operation equivalents (H+R/1000, C=1000), including preprocessing, distinguished table maintenance, all trials and verification. Peak memory is at most 2^38 bytes; preprocessing is at most 2^14.17 group equivalents and is included in total; nonuniform advice is at most 2^0 bytes. This is a classical cold attack summed over 18 ARM cores with no uncharged advice or quantum steps; heuristics are stated with support and limitations.",
+      "score": {
+        "numerator": "3138",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-pollard-rho",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check Pollard rho with negation/automorphism simulation and distinguished points on small additive cyclic groups (orders 101, 1009). Verifies walk correctness, rep canonicalization, distinguished collision resolution and last-block handling at toy scale; does not establish production cost or security.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
