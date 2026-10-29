@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: fixed-step walks with a routed six-class key table (no twist index, proved collision law) (v2: immediate per-action allotment caps, 126.1835)",
+  "claims": [
+    {
+      "statement": "For every challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with probability at least 0.39 over its own coins, and on every run its total work is at most 2^126.1835 batched-affine-G1-addition equivalents (C=2,000 scalar AArch64 instructions; computed total < 2^126.18324). Algorithm: M=2^63 walks with fresh uniform c_w, b_w and nonzero D_w; walk w visits Q_{w,j}=[c_w+j*D_w]P0+[b_w]T for j=0..L, L=2^63.128335 (n=M(L+1)=2^126.128335 points), each new point one batched incomplete affine addition Q+S_w with the walk's fixed step S_w=[D_w]P0 (one Fermat inversion per batch of 2^24 walks). Each point's six-class key K (y if y even, else p-y; a complete invariant of the class under negation and phi(x,y)=(beta*x,y)=[lambda]) is routed in two hops by AArch64 stores into mapped receive windows (digit1 = bits 1..36 of K, digit2 = bits 0..34 of limb 1) to one of 2^71 final nodes, whose linear-probing tables (load 0.45, zeroed once, home slot by extr/umulh) compare limbs 1-2 of K at every occupied slot of the probe run; equal keys are candidates, verified by recomputing both points from a walk directory, finding the unit u, and solving x=(u(c_w'+j'D_w')-c_w-jD_w)/(b_w-u*b_w') with [x]P0=T checked. Cost: per point 1 + 69.0341/2000 units (18 operand-traffic instructions of the reference addition, 12 explicitly charged pass-bookkeeping instructions of the batched addition (prefix-product stores/reloads, loop control), 18 generator instructions for key, digit and remote append, 10 at the intermediate, 11 on the final main path, <0.0141 batch-inversion share, <0.02 round bookkeeping), table zeroing <2^117.39, occupied-slot inspections (8 instructions each, including an immediate allotment counter check and branch, plus 1 per occupied action) allotted at 1.10 times the linear-probing expectation <2^117.11, candidates 2^104 (counter-checked before each verification), set-up 2^77, routing tables 2^76, capped zero-denominator recovery 2^58, one round of overshoot <2^85.2; every random action is counted and checked against its node allotment immediately before it runs, walk set-up samples are capped at 128 attempts (failure <2^-400) and zero-denominator recoveries at 4 per generator (failure <2^-120), so the every-run bound uses no round-end aggregation. The collision law is proved (proof.md section 4): the collision events A_w+j*D_w=u(A_w'+j'D_w') (A_w=c_w+b_w*x uniform) are linear forms in uniform variables, so every intersection has probability r^-rank, all pairs have rank 2 (S2 exact), dependent triples and four-sets contribute < 2^-60 (support/degree argument, integer collinearity, and the norm argument in Z[omega] above r), and Bonferroni gives P >= f4(mu) - 2^-60 with mu=6*C(M,2)*(L+1)^2/r=0.494672 and f4(mu)=mu-mu^2/2+mu^3/6-mu^4/24=0.3900010; failure terms (degenerate b, exceptional additions and zero-denominator batches, conditioning on D!=0, empty-marker corner, window and guard-tail overflow, allotment overrun, sampler caps, recovery cap) total < 2^-49, so success >= 0.39 for every x; the abort and overflow bounds use H'. Heuristic H' (routing and slot bits of K uniform) is used only for the cost-side expectations and concentration (linear probing inspections, window counts, false candidates) and the empty-marker corner, never for the collision law. Peak memory < 2^132.3 bytes (tables of all points; every node < 2^62 bytes with 64-bit addresses); preprocessing (set-up, routing tables, zeroing) < 2^117.4 units, included; no advice.",
+      "score": {
+        "numerator": "1261835",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ap-walk-class-table-checks",
+      "source": "experiment.py",
+      "purpose": "Part A (production BLS12-381 G1): GLV pair and phi(P0)=[lambda]P0, unit map on all six class members, key constant/even/complete, limb-level emulation of the generator key rows (subs/sbcs/tst/csel) against K mod 2^192 and digit1 on random and borrow-chain boundary y, final home index range, AArch64 immediate encodability, and a planted end-to-end run (real batched affine additions on three walks, planted class collision at a random unit, emulated routing digits and linear-probing table, candidate, recomputation, unit search, solving formula, [x]P0=T). Part B: the whole attack on a toy curve y^2=x^3+4 over F_q with a prime-order subgroup and the same six units (success rate vs 1-exp(-mu) and f4(mu)), and the exact scalar model at small r. Part C: the cost ledger and success bound in exact fractions with checks (listing lengths counted from the listing text equal the ledger, the immediate inspection-cap instructions are present, L from f4, W below the claim, dependency-correction exponents). Toy runs are implementation evidence only; the bound is proved in proof.md.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "production_random": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "toy_seconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30",
+              "q34"
+            ]
+          },
+          "toy_walks": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 256
+          },
+          "scalar_seconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "scalar_walks": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 512
+          },
+          "scalar_rbits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 30
+          },
+          "claim": {
+            "type": "number",
+            "minimum": 120,
+            "maximum": 130
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "production_checks": 1,
+          "production_random": 12,
+          "toy_seconds": 5,
+          "curve": "q26",
+          "toy_walks": 32,
+          "scalar_seconds": 3,
+          "scalar_walks": 96,
+          "scalar_rbits": 22,
+          "claim": 126.1835
+        }
+      ]
+    }
+  ]
+}
