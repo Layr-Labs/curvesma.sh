@@ -1,0 +1,141 @@
+{
+ "version": 1,
+ "title": "P-256 sigma rho: 128-copy batched blocks, provisional",
+ "claims": [
+  {
+   "statement": "Conditional draft bound for uniform full-size P-256 Q=[x]P under H1, M1/L-ori, H3 and H-trail, using the construction and resources in proof.md, with C=1000 scalar AArch64 instructions per reference operation. The proposed bound is 2^126.731330 units, success at least 0.39 under the disclosed hypotheses, peak memory below 2^77 bytes and preprocessing below 2^84.961190 units; no advice. This draft builds on 0d3c6e77 and changes its 64-copy forward and backward blocks to 128 copies. It proposes a conservative 32,760-instruction clean-round saving and charges three additional instructions per external exit via OVERHEAD and EXIT_EXTRA. The ledger calculation passes internally, conditional on these proposed savings and coverage. No 128-copy binary or full-size attack has been executed, the control and finishing-phase assumptions require review, and the predecessor measurements are not measurements of this revision.",
+   "score": {
+    "numerator": "12673133",
+    "denominator": "100000"
+   },
+   "evidence": [
+    "proof.md",
+    "predecessor-proof.md",
+    "accounting.py",
+    "claim.json",
+    "evidence/anchor-schedule.json",
+    "evidence/sign-law.json",
+    "measurement/p256_field.h",
+    "measurement/p256_fused.h",
+    "measurement/p256_sub.h",
+    "experiment.py",
+    "combined.py",
+    "measurement/step.c",
+    "measurement/bloop_branchy.h",
+    "measurement/floop.h",
+    "measurement/gen55.py",
+    "probability.md",
+    "evidence/unroll64.json",
+    "unroll.md",
+    "CONTROL-ANALYSIS.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "accounting-and-procedure",
+   "source": "combined.py",
+   "purpose": "Recompute the revised full production cost ledger (including the correction charge, its meter slack and abort term) and order certificate, then run the inherited complete reduced-order procedure, with checkpoint-only cycle detection and the small-key adder key rule at toy scale (adder_key_shift 2: adders redrawn until key < p>>2; shift 4 exceeded the runner's time limit; no y window), at tau=0.4943, the production value on its 0.0001 grid, retaining failures and replay checks. The two results have distinct scopes; neither establishes production mixing.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "bits": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 28
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 80
+     },
+     "adder_bits": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 11
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 6
+     },
+     "walks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+     },
+     "tau_e4": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 6000
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+     },
+     "curve": {
+      "type": "string",
+      "enum": [
+       "a3"
+      ],
+      "maxLength": 2
+     },
+     "filter_bits": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 64
+     },
+     "check_all_replays": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "escape": {
+      "type": "string",
+      "enum": [
+       "double"
+      ],
+      "maxLength": 6
+     },
+     "adder_key_shift": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     }
+    },
+    "required": [
+     "bits",
+     "trials",
+     "adder_bits",
+     "dp_bits",
+     "walks",
+     "tau_e4",
+     "seed",
+     "curve",
+     "filter_bits",
+     "check_all_replays",
+     "escape",
+     "adder_key_shift"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "a3",
+     "bits": 28,
+     "trials": 80,
+     "seed": 2801,
+     "adder_bits": 11,
+     "dp_bits": 5,
+     "walks": 16,
+     "tau_e4": 4943,
+     "filter_bits": 64,
+     "check_all_replays": 1,
+     "escape": "double",
+     "adder_key_shift": 2
+    }
+   ]
+  }
+ ]
+}
