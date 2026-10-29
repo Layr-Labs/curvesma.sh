@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "title": "Six-class secp256k1 rho with 256-walk product groups at 125.834449",
+  "claims": [
+    {
+      "statement": "A conditional analytical bound for the full-production secp256k1 ECDLP under classical-group-work-v2 (C=1000): the six-class parallel rho procedure in proof.md and upstream-proof.md halts on every run within 2^125.834449 target-group-operation equivalents and, under disclosed heuristics H1, C and P1, recovers the exponent with probability at least 0.39000001. It builds on b14e7c12 and its listed dependencies. The forward product and reverse update loops use 256-walk groups, while pass1 and fused loop A remain 128-walk groups. Their main-path prices are 169.50390625 and 337.50390625 instructions per walk, and the ordinary-step price is 34849/64 + 1155/256 + 26333/2^23 instructions. The fixed round charge conservatively includes 127 loop A and 255 each of product and reverse-update tail walks. The work bound is unconditional on C and P1; success remains heuristic. The shipped experiment and certificate describe their checks and limitations in evidence.md. This is an analytical bound, not a practical recovery implementation.",
+      "score": {
+        "numerator": "125834449",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "kernels.md",
+        "evidence.md",
+        "upstream-proof.md",
+        "experiment.py",
+        "certificate.py",
+        "census_hz.py",
+        "census-hz-q29.json",
+        "census.md",
+        "census_corr.py",
+        "census-corr.json",
+        "census_p1.py",
+        "census-p1.json",
+        "kernels/a64.py",
+        "kernels/arrive.s",
+        "kernels/secp_fe.s",
+        "kernels/secp_loops.s",
+        "kernels/secp_fuse.s"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-six-class-rho-kernels-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production secp256k1 checks of the walk identities and the canonical-index rule. Part B: a scaled toy pipeline of the walk of proof.md 5.1 on subgroups of y^2=x^3+7 with node routing, and a check that the (1, 256) and production compare rules reach the same endpoints. Kernels (evidence.md items 1-9): limb ports against big integers; the shipped loops, both copies of loop A and the arrival rows run by an AArch64 interpreter (kernels/a64.py) against affine secp256k1, big-integer dx and the exact canonical rule, every stub entered and every returned borrow count checked; counts and the ledger recomputed; both census rules recomputed from census-corr.json and census-p1.json, each with a run prefix re-walked. The toy run does not meter production instructions or implement 2^23 concurrent walks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q25",
+              "q29"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q25",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 15,
+          "pipeline": true,
+          "kernels": true
+        }
+      ]
+    }
+  ]
+}
