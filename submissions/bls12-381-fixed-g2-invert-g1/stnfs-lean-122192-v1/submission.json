@@ -1,0 +1,50 @@
+{
+"version": 1,
+"title": "STNFS with a ball-region sieved descent: 2^122.192",
+"claims": [
+{
+"statement": "For the full production bls12-381-fixed-g2-invert-g1 challenge, the STNFS algorithm of proof.md returns P in G1 with e(P,Q)=z for the supplied nonidentity Q with success at least 0.39 (modelled 0.4200, directed-rounding bound 0.4199, proof.md section 7) under heuristics H1-H5 (proof.md section 9). A global meter bounds all classical work by W <= 2^122.192 dense-Fp12-multiplication units at C=20,000 instructions; the ledger (proof.md section 8) totals 2^122.191732. Relation collection keeps the accepted frontier's 2601/2500 work and 2401/2500 yield brackets; its f-side ECM cofactor slack is 295 bits (surviving f-side cofactors bounded by 303) and its g-side slack is 225 bits (surviving g-side cofactors bounded by 233), with the per-survivor two-side ECM charged by the package's explicit ecm16.py schedule at 99% per prime (2^37.5177 and 2^37.5150 per side, 2^38.5165 per survivor including the norm and trial-division charges). Retained yield is 2^64.252, which is 0.422 bits above 1.3 U and above the model's 0.30-bit feasibility floor. The descent's missing-log input is a supported lower value, not the pool mean: LOG2_RELS = 64.134 = floor(pool estimate 2^64.2517 - one standard error 2^0.1175), so every missing-log figure is priced 0.118 bits below the 2,401-row pool mean (0.176 bits below the raw mean before the 2401/2500 yield bracket); evidence16.py sets this value and checks LOG2_RELS <= log2_rels - yield_se_log2 (the rels_input check). The boot keeps 9 relations instead of 16, so its charged failure probability is psi^9 = 8.102e-03 with psi = 0.58562 (charged twice, once per boot); with the same 62-node plan the two-log expectation is 2^118.171 units and the metered cap is 2^119.034 units, above it (Markov abort <= 2^-0.862, exact 2^-0.8625). The modelled success 0.4200 keeps a 0.030 margin over the 0.39 floor, which absorbs a 2x increase in the boot failure term, a 5.4% increase in the modelled two-log expectation, or a 2x error in any single small term. Relation collection is 2^121.7703 units at 407.0 instructions per cell; the record path is charged at the package's own measured argument h = 2 cells/p (measurements12.txt section B), log2h = log2(2S) - lp, guarded by evidence16.py check [5b]. The certified norm-bound per-block charge is the measured marginal 1,508.2 instructions (measurements12.txt); linear algebra uses block sizes (26,5), per-entry charges 88/97 (the package's 88-instruction component sum and the measured 97-instruction bw_full loop), and the filtering/LA pad 1.61, whose charged ratio 1.61 x 0.0471 = 0.07585 still exceeds the worst measured 2^12 filtering seed ratio 0.0757. Preprocessing per instance is at most 2^122.192 units and is included in the total; no external advice is assumed. Storage is at most 2^105 bytes. Nothing is amortized across challenges. Analytic exploratory claim, not a full-size run.",
+"score": {
+"numerator": "122192",
+"denominator": "1000"
+},
+"evidence": [
+"proof.md",
+"DESCENT.md"
+]
+}
+],
+"experiments": [
+{
+"id": "evidence",
+"source": "evidence16.py",
+"purpose": "Recomputes the certificates, rho, pool, ledger, filtering, descent plan with retention model and ECM schedules, toys and audit; prints total_log2W_full_ledger and modelled_success.",
+"input_schema": {
+"type": "object",
+"properties": {
+"samples": {
+"type": "integer",
+"minimum": 8,
+"maximum": 64
+},
+"seed": {
+"type": "integer",
+"minimum": 0,
+"maximum": 1000000
+}
+},
+"required": [
+"samples",
+"seed"
+],
+"additionalProperties": false
+},
+"initial_inputs": [
+{
+"samples": 16,
+"seed": 1
+}
+]
+}
+]
+}
