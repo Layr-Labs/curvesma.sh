@@ -1,0 +1,45 @@
+Lane-loop side-output kernel (side_lanes.S) measured in the organizers' pipeline.
+Date: 2026-10-30. Host: Docker Desktop on Apple silicon (native linux/arm64, no emulation).
+Image: scripts/reference_costs/Dockerfile (Debian GCC 14.2.0-19, Valgrind 3.24.0).
+blst: f7a88067ed98385ebc6cf41ccecf21ead706a5b7, built as in scripts/reference_costs/run.sh.
+Harness compiled with -O3 -fno-tree-vectorize -mgeneral-regs-only. Counter: Callgrind event Ir,
+collection toggled around ONE side_lanes(args, n) call over n lanes, price = (Ir(8192) - Ir(4096)) / 4096.
+Script: run_measure_lanes.sh (verbatim output below, trimmed to the relevant lines).
+
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+80a325b8b66aec5fd203cdf3be76d437f9fd41a43a74fede5940b9b831f4fad0  /work/bls_field
+691f4f8879e6796fc801a2b8892e86d0ec16a1bebc0cf7b0cf8a7d42f58afd32  /m/side_lanes.S
+acf3dc6d432ef0ed61bc821e41238fdcecee477c5f0fa6861a017e1787735f79  /m/side_lanes_kernel.c
+7e365a013868e78ea081a956d799f404672d232a908f149f90cf29d4cf4c1145  /m/gen_side_lanes.py
+
+== bls_field 4096
+==32== Collected : 1568788
+==32== I   refs:      1,568,788
+== bls_field 8192
+==35== Collected : 3137556
+==35== I   refs:      3,137,556
+== side_lanes 4096
+check1 lanes=4096 mismatches=0
+check2 lazy-operand products=600000 mismatches=0
+check3 curve-point pairs=64 mismatches=0
+selfcheck ok
+==38== Collected : 4407354
+==38== I   refs:      4,407,354
+== side_lanes 8192
+check1 lanes=8192 mismatches=0
+check2 lazy-operand products=600000 mismatches=0
+check3 curve-point pairs=64 mismatches=0
+selfcheck ok
+==41== Collected : 8814650
+==41== I   refs:      8,814,650
+
+price = (8814650 - 4407354) / 4096 = 1076.0 instructions per lane (kernel including its own lane loop).
+Static check: objdump of the measured binary, .Llane .. b.ne = 1076 instructions, straight-line.
+Breakdown: inlined blst bodies __mul_mont_384 340 x 2, __sqr_384 98, __mul_by_1_mont_384 153
+(= 931; each the verbatim body minus its ret); driver 145 (lane loop 7, t 12, mu set-up 2,
+mu spill 3, square set-up 1, p reload 3 + mov 1, V 9, x' 47, x' stores 3, w 12, y' set-up 2,
+y' subtraction 23, y' stores 3, key 17).
+
+Predecessor comparison, same image (re-run of the v23 package's run_measure.sh):
+== side_kernel 4096   Collected : 4616213   (v23 measurement.log: 4616213) -> 1127 per lane
