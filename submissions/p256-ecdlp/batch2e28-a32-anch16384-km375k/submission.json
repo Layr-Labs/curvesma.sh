@@ -1,0 +1,136 @@
+{
+ "version": 1,
+ "title": "P-256 sigma rho: 2^28-lane batches with 512-copy jump-table blocks on the A=2^32 kernel and a 16384-step anchor period",
+ "claims": [
+  {
+   "statement": "For uniform full-size P-256 Q=[x]P, the cold classical algorithm in proof.md recovers x with probability at least 0.39 under the disclosed H1 (extended to the small-key y-window adder table), M1/L-ori conditional fresh-exposure, H3 pricing and H-trail (average correction count per trail, with the fold model for dy) premises. Total charged work is at most 2^126.728706 units at C=1000 scalar AArch64 instructions/unit. This is a conditional analytic bound, not an executed full-size attack. A=2^32, K=2^32, tau=0.4943077, residual Markov factor 375000, batches of 2^28 walks. The 2^28 batch is a pure amortization of the per-round control: the 512-copy block bodies and all field, correction and tail terms are the measured 2^20-lane per-lane terms unchanged, while the 256-instruction wrapper, the 1,024-instruction per-round allowance and the 2^11 fixed blinding-product allowance are spread over 2^28 lanes; the 8*2^16-per-global-round draws are not amortized (a global round now spans 2^4 batches, so RHO_COST is 8*2^16/2^4+2^11=34,816 per batch round and 8*2^16/K per step unchanged). Adders have Montgomery x in [2^192,2^231) and y within p/2 +- 2^-8 p, at most 2^40 fresh trials per adder with worst-case work charged. The deferred-tests field-step map is unchanged, but distinguished points have canonical key < 2^196, theta=2^196/p, tested by one top-limb tst rather than extr and tst. Trail endpoints therefore change. The slot is (key >> 32) mod C, uniform on 2^164 inputs under M1 before reduction, and DP_MAX=2*ceil(S*theta)+2*K. The A=2^32 adder table is a recomputed retune, not a rescaling: two-cycle rate 2^-33, longer-entry rate 4.065758e-20, epsilon=32836/A+49248/A^2+131328/A^3=7.645227e-6, slot shift 32 with M=2^164 and DELTA_HASH<2.9464e-8, DELTA_EXCEPTIONAL=2^-95 (N_DP_EXPOSURES*A/N<2^-95) and DELTA_ADDER_CLASS=1.7748e-29; the table charge grows to 2^89.961189 units and the storage to 2^39 bytes for both signs (2^40 bytes with the block's second copy), both inside the reported totals. The DP path skips the anchor comparison, as described in proof.md. The fix block preserves the canonical top limb through the y fix and re-runs the correct predicate. Three fixed/rare-path changes: (i) `finv` is 4-bit windowed (253 squarings and 39 multiplications instead of 255 and 127), saving 11,814 instructions per round; (ii) the 2^52 anchor cap takes one `tbz x12,#52` on the normal path and a local wide-branch trampoline on the cap path, so anchor rounds add 3*(2^28-1)+9 = 805,306,373 instructions (3 per processed step), (iii) every unbatched rare-path addition shares `finv`, so F_MAX falls 41,190 -> 29,376 and wL 2,789,700 -> 2,021,790. A fourth change raises the anchor period from 64 to 16384: rounds with t mod 16384 = 0 compare against the old anchor and then rewrite it, rounds with 1 <= t mod 16384 <= 16334 use a tail without the anchor load and comparison, and rounds with 16335 <= t mod 16384 <= 16383 retain the plain comparison. The skip tail removes `ldr x6` and `ccmp` per copy, 2*(2^28-1)-2 = 536,870,908 instructions per skip round (2 per processed step), and the arm dispatch is charged +3 plain, +2 skip and -1 anchor. Every cycle of length l<=64 has a positive multiple among the 50 tested offsets 16335..16384 because 16384 mod l < 50 for every l<=64 (maximum 49, at l=55); the resulting at most 2P-1=32767 persistent steps are charged as 2P+64=32832 states in epsilon. CAP_PERIODS=2^52 keeps the per-trail cap at 16384*2^52=2^66 steps and the one-instruction cap test is `tbz x12,#52`. An escape depends on the cycle's classes, and replays and the reduced-order experiment retain every-step comparisons, so they test a superset of the live schedule. The backward block holds 512 labelled copies entered through a 512-entry signed-offset jump table (six instructions per block call, once per round); the forward block is entered by a direct branch to copy 2 and runs B-2 steps, so each end test runs once per 512 lanes. The measured 128-copy term 4*2^20/8 - 4*2^20/128 - 3 = 491,517 instructions per 2^20-walk round (15*2^20/32 - 3, on all three arms) extends analytically by 4*(2^20/128 - 2^20/512) = 24,576 per round; the six-instruction dispatch is charged unchanged, and a local trampoline keeps the 2^52 cap test (tbz to a nearby label, then a wide b 2f) in range and adds no instruction on the normal path. Fixed plain work is charged 154,896,754,179 instructions per 2^28-walk round (the measured 605,065,449 per 2^20 lanes held per lane); the anchor arm adds 3*(2^28-1)+9-1 = 805,306,372 and the skip arm subtracts 2*(2^28-1)-2 = 536,870,908 instructions per 2^28-lane round (3 and 2 per step), both plus the unchanged 1,024-instruction allowance per round. C_COMMON is at most 575.041797, CORR at most 14.210693, total step charge at most 589.255521 instructions. The referenced branchy.json checkpoints are in the base submissions; this package omits that file for the 256 KiB limit. The shorter fix path receives no correction credit: xy_fix stays charged 47 against the measured 45, C_MAX stays 123, exits charged 13. Measurements are organizer-image emulated instruction counts, not production success evidence: both seeds show -(B-1) per round, anchors fall by the same amount; 2.4M compiled-tail cases agree with exact models, and paired anchor-skip measurements at B=2^16 (rounds 1, 33, 64) and B=2^20 (round 1) reproduce the arm model exactly, and the 128-copy rows reproduce the size-dependent reduction 15B/32 - 3 on all three arms (30,717 instructions at B=2^16, 491,517 at B=2^20), with identical correction meters and byte-identical walk dumps; the 128 -> 512 extension is the analytic block-count term above, not a new measurement. All preprocessing, failures, restarts, table initialization, lookup, transfers, replay, verification and output are included. Peak memory below 2^77 bytes, preprocessing at most 2^89.961190 units, zero nonuniform advice. Conditional success lower bound exceeds 0.39000025 (approximately 0.390000388); the full production collision and correction premises remain heuristics. Inherited reduced-order experiments retain the old DP predicate and support only their disclosed scope, not the new production predicate. probability.md replaces the selected-merge tail by a 1.3e-6 all-abandonment envelope and derives report overflow from distinct first exposures; the small-failure bucket is 2^-59, not the old unallocated 2^-20. These use the shared per-class M1 environment, common-phase continuation, worst-case rare debits and first-duplicate termination.",
+   "score": {
+    "numerator": "63364353",
+    "denominator": "500000"
+   },
+   "evidence": [
+    "proof.md",
+    "predecessor-proof.md",
+    "accounting.py",
+    "evidence/anchor-schedule.json",
+    "measurement/p256_field.h",
+    "measurement/p256_fused.h",
+    "measurement/p256_sub.h",
+    "experiment.py",
+    "combined.py",
+    "measurement/step.c",
+    "measurement/bloop_branchy.h",
+    "measurement/floop.h",
+    "probability.md",
+    "unroll.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "accounting-and-procedure",
+   "source": "combined.py",
+   "purpose": "Recompute the revised full production cost ledger (including the correction charge, its meter slack and abort term) and order certificate, then run the inherited complete reduced-order procedure, with checkpoint-only cycle detection and the small-key adder key rule at toy scale (adder_key_shift 2: adders redrawn until key < p>>2; shift 4 exceeded the runner's time limit; no y window), at tau=0.4943, the production value on its 0.0001 grid, retaining failures and replay checks; the toy keeps the inherited 64-round anchor period, since its per-walk budget (about 719 steps) is far below 16384, so the toy tests the procedure and collision statistics, not the production period. The two results have distinct scopes; neither establishes production mixing.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "bits": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 28
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 80
+     },
+     "adder_bits": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 11
+     },
+     "dp_bits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 6
+     },
+     "walks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+     },
+     "tau_e4": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 6000
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+     },
+     "curve": {
+      "type": "string",
+      "enum": [
+       "a3"
+      ],
+      "maxLength": 2
+     },
+     "filter_bits": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 64
+     },
+     "check_all_replays": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "escape": {
+      "type": "string",
+      "enum": [
+       "double"
+      ],
+      "maxLength": 6
+     },
+     "adder_key_shift": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+     }
+    },
+    "required": [
+     "bits",
+     "trials",
+     "adder_bits",
+     "dp_bits",
+     "walks",
+     "tau_e4",
+     "seed",
+     "curve",
+     "filter_bits",
+     "check_all_replays",
+     "escape",
+     "adder_key_shift"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "curve": "a3",
+     "bits": 28,
+     "trials": 80,
+     "seed": 2801,
+     "adder_bits": 11,
+     "dp_bits": 5,
+     "walks": 16,
+     "tau_e4": 4943,
+     "filter_bits": 64,
+     "check_all_replays": 1,
+     "escape": "double",
+     "adder_key_shift": 2
+    }
+   ]
+  }
+ ]
+}
