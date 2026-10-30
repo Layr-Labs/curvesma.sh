@@ -1,0 +1,5 @@
+# stnfs-lean-theta44-122036
+
+STNFS for bls12-381-fixed-g1-invert-g2 (reduction g=e(P,Q0), output Q=[a]Q0): W <= 2^122.036 reference units (score 122.036); ledger <= 2^122.03544 (every stated bound directed-rounded and checked by `declared_bounds`). The lean sister-track model on the theta = 11/25 uniform sub-region of its theta = 1/2 pool: exact certified lattice-count products at radius >= 960 (0.973829196 yield, 1.025288457 work), an explicit 2.00-SE canonical-work allowance 1.0540 (incidence-inclusive SE <= 2.697%, [4a]), cofactor slacks (297, 228) with the explicit ecm16 schedule, descent input LOG2_RELS = 64.134 and mean norms 748.5/498.9, five descent-plan entries re-optimised for these inputs, instruction meter 2^118.84 and an explicit special-q node counter capped at 2^27.3 nodes (E[N] <= 2^17.66 by counts16.py); norm-bound charge 1,508.2, LA charges 88/97, block sizes (26,5).
+proof.md is the entry point (DESCENT.md, STORAGE.md, KERNELS.md); `evidence16.py`
+(stdlib only) recomputes every figure in the verifier's sandbox.
