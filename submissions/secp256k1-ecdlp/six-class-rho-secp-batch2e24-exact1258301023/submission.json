@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "title": "Six-class secp256k1 rho at 125.8301023: high-orbit table rows and a 2^24-lane batch on the 125.831797 package",
+  "claims": [
+    {
+      "statement": "For uniform production secp256k1 Q=[x]P, the classical cold six-class negation-plus-GLV parallel rho algorithm in proof.md and upstream-proof.md stops on every run within 2^125.8301023 target-group-operation equivalents under classical-group-work-v2 (1000 AArch64 instructions per unit). Under disclosed heuristic H1, correction-borrow premise C and 2-cycle premise P1, its recovery probability is at least 0.39000001. For each fresh trail of length L, C bounds expected dx, dy, u borrow counts by (QDX+2^-10)E[L], (1/2+2^-11)E[L], (1/2+2^-11)E[L] with QDX=4686/2^14; P1 bounds expected caught 2-cycles by E[L]/(4R). Parameters: M=2^24 walks in one batch on one processor, R=2^26, kappa=1.00009, p0=0.39001172, h=0.0000116. The batch is 2^24 (batch.md): the per-walk bodies, row rule and correction model are unchanged; the per-batch fixed work (one inversion, the loop/meter prologues, the account and the zero test) is amortized over twice as many walks, so SHARE = 24,552/2^24 instead of 24,552/2^23. The pointer sentinel moves to bit 27, the meter immediates double, and the in-progress correction term n*CORR*L_max = 2^94.28 requires Lambda_p = 2^95 (a prepaid hard row, not executed work). Memory <2^72 bytes; preprocessing capped at 2^59 units and included; no advice. The direct base is bradcush's AI-valid 8f733826 (125.831797), on c8a6819e, ccb89656, 7680a8ca, 671caf26, 59498c9a, b14e7c12 and 34a30cf5. The row-rule change is: a drawn row is kept only when its orbit x-values x, bx, b^2x sum to 2p, and is replaced by its orbit member of least x. Columns then hold large x-values and column 0 the row's least, so dx = x_T - x_W borrows at model rate 0.285834 (census in proof.md 5.4) instead of 1/2. CORR falls from 37798701/2^23 to 32413728/2^23 (rho'=1056/2^23 at lambda=2^-85, range bound 9-CORR); the table build is metered under 2^41 units. The row rule itself changes no kernel or count; the batch change moves only the sentinel bit, the meter immediates and the batch-size constants. certificate.py recomputes the step, the ledger and the claim exactly; experiment.py executes the kernels and re-checks the census. No prior acceptance, review outcome or score is a premise. This is an analytic heuristic bound, not a practical break.",
+      "score": {
+        "numerator": "1258301023",
+        "denominator": "10000000"
+      },
+      "evidence": [
+        "proof.md",
+        "batch.md",
+        "evidence.md",
+        "upstream-proof.md",
+        "experiment.py",
+        "certificate.py",
+        "census_hz.py",
+        "census-hz-q29.json",
+        "census.md",
+        "census_corr.py",
+        "census-corr.json",
+        "census_p1.py",
+        "census-p1.json",
+        "kernels/a64.py",
+        "kernels/arrive.s",
+        "kernels/secp_fe.s",
+        "kernels/secp_loops.s",
+        "kernels/secp_fuse.s"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-six-class-rho-kernels-evidence",
+      "source": "experiment.py",
+      "purpose": "Check production identities, a time-limited toy pipeline, interpreter execution of the shipped kernels and exits against reference arithmetic, counts, ledger and census rules. This is not a production-scale attack; evidence.md describes limitations.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q25",
+              "q29"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q25",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 15,
+          "pipeline": true,
+          "kernels": true
+        }
+      ]
+    }
+  ]
+}
