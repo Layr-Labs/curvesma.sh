@@ -1,0 +1,77 @@
+{
+ "input": {
+  "seed": 20261030,
+  "trials": 100000,
+  "control_trials": 20000,
+  "curve_trials": 1000,
+  "seconds": 1500,
+  "kernels": false
+ },
+ "seconds": 384.3,
+ "C_toy": {
+  "q": 33556867,
+  "r": 33563419,
+  "multi_node_grid": {
+   "nodes": 74,
+   "grid": [
+    4,
+    4
+   ],
+   "leaves": 2368,
+   "trials": 100000,
+   "success": 0.39182,
+   "se": 0.00154,
+   "cross_node_success": 0.38849,
+   "mean_colliding_pairs": 0.499,
+   "mu_cross": 0.494435,
+   "mu_all_pairs": 0.500997,
+   "poisson": 0.39008,
+   "twin_model": 0.34131,
+   "twin_and_shared_b_model": 0.31322,
+   "chen_stein_b1_b2_at_this_scale": 0.0134
+  },
+  "control_one_pool_b_per_X": {
+   "nodes": 1,
+   "grid": [
+    28,
+    42
+   ],
+   "leaves": 2352,
+   "trials": 20000,
+   "success": 0.3423,
+   "se": 0.00336,
+   "cross_node_success": 0.0,
+   "mean_colliding_pairs": 0.4917,
+   "mu_cross": 0.494248,
+   "mu_all_pairs": 0.494248,
+   "poisson": 0.38997,
+   "twin_model": 0.33759,
+   "twin_and_shared_b_model": 0.30974,
+   "chen_stein_b1_b2_at_this_scale": null
+  },
+  "control_one_pool_shared_b": {
+   "nodes": 1,
+   "grid": [
+    28,
+    42
+   ],
+   "leaves": 2352,
+   "trials": 20000,
+   "success": 0.314,
+   "se": 0.00328,
+   "cross_node_success": 0.0,
+   "mean_colliding_pairs": 0.4987,
+   "mu_cross": 0.494248,
+   "mu_all_pairs": 0.494248,
+   "poisson": 0.38997,
+   "twin_model": 0.33759,
+   "twin_and_shared_b_model": 0.30974,
+   "chen_stein_b1_b2_at_this_scale": null
+  },
+  "curve_pipeline_vs_logs": {
+   "trials": 1000,
+   "identical_outcomes": 1000,
+   "curve_successes": 385
+  }
+ }
+}
