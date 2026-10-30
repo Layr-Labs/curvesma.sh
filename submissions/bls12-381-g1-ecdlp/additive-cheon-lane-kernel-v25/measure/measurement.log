@@ -1,0 +1,44 @@
+Lane-loop side-output kernel side_lanes (v25: square kept in registers) measured in the organizers' pipeline.
+Date: 2026-10-30. Host: Docker Desktop on Apple silicon (native linux/arm64, no emulation).
+Image: scripts/reference_costs/Dockerfile (Debian GCC 14.2.0-19, Valgrind 3.24.0).
+blst: f7a88067ed98385ebc6cf41ccecf21ead706a5b7, built as in scripts/reference_costs/run.sh.
+Harness compiled with -O3 -fno-tree-vectorize -mgeneral-regs-only. Counter: Callgrind event Ir,
+collection toggled around ONE side_lanes(args, n) call over n lanes, price = (Ir(8192) - Ir(4096)) / 4096.
+Script: run_measure_lanes.sh (output below, trimmed to the relevant lines).
+
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+80a325b8b66aec5fd203cdf3be76d437f9fd41a43a74fede5940b9b831f4fad0  /work/bls_field
+558c22bb9aae367e75767908ba80c5fdc3ef686f999630e2cf0debb210b946eb  /m/side_lanes.S
+acf3dc6d432ef0ed61bc821e41238fdcecee477c5f0fa6861a017e1787735f79  /m/side_lanes_kernel.c
+11510107dd3a8a4ad50cabb2f0dd9da1b54fd22056708768052cc2329d8e56e7  /m/gen_side_lanes.py
+
+== bls_field 4096
+==32== Collected : 1568788
+==32== I   refs:      1,568,788
+== bls_field 8192
+==35== Collected : 3137556
+==35== I   refs:      3,137,556
+== side_lanes 4096
+check1 lanes=4096 mismatches=0
+check2 lazy-operand products=600000 mismatches=0
+check3 curve-point pairs=64 mismatches=0
+selfcheck ok
+==38== Collected : 4345914
+==38== I   refs:      4,345,914
+== side_lanes 8192
+check1 lanes=8192 mismatches=0
+check2 lazy-operand products=600000 mismatches=0
+check3 curve-point pairs=64 mismatches=0
+selfcheck ok
+==41== Collected : 8691770
+==41== I   refs:      8,691,770
+
+price = (8691770 - 4345914) / 4096 = 1061.0 instructions per lane (kernel including its own lane loop).
+Static check: objdump of the measured binary, .Llane .. b.ne = 1061 instructions, straight-line.
+Breakdown: blst bodies __mul_mont_384 340 x 2 (verbatim minus ret), __sqr_384 92 (minus ret and
+6 result stores), __mul_by_1_mont_384 150 (minus ret and 3 input loads, registers renamed) = 922;
+driver 139 (lane loop 6, t 12, mu set-up 2, mu spill 3, p reload 3, V 6, x' 47, x' stores 3,
+w 12, y' set-up 2, y' subtraction 23, y' stores 3, key 17).
+
+Earlier runs in the same image: v24 side_lanes 4407354 / 8814650 -> 1076; v23 side_fused 4616213 (n=4096) -> 1127.
