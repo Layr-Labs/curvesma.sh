@@ -1,0 +1,50 @@
+{
+ "version": 1,
+ "title": "STNFS at theta=455/1000 with the descent relation input one standard error below the computed yield (64.00), boot retune, pad 1.61, full-field charge 100, a metered descent cap and block-Wiedemann 26x5: 2^122.272",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g1-invert-g2 challenge, the STNFS algorithm of proof.md returns Q in G2 with e(P,Q)=z for the supplied nonidentity P with success at least 0.39 (modelled 0.3926, displayed directed bound 0.3923, proof.md section 7) under heuristics H1-H5 (proof.md section 9). The relation-collection region is theta=455/1000 on the A^2=2^21 lattice (a uniform sub-region of the certified sampled pool), with exact certified lattice-count products at radius 976 of 0.974253611 (yield) and 1.024869209 (work), leaving the point-estimate relation margin at 0.3004 bits (above the model's 0.30 floor). The sampled relation-collection work carries an 11.69% canonical-work allowance equal to 4.50 incidence-inclusive standard errors (2.597%) of the total-work estimator over the 1806 contributing draws of the 20000-draw pool, computed in the experiment. The two-log descent model is evaluated with the conservative relation-count input Pm.LOG2_RELS = floor(100*(log2_rels - 1.00*yield_se))/100 = 64.00, one pool standard error (0.1268 bits) below the run's log2_rels=64.1303, and the experiment checks this inequality against the 1-SE lower value. Block-Wiedemann block sizes are m=26, n=5 (linear algebra 2^119.4682). The expected two-log work is 2^118.757 and the meter is 2^119.555, so the success bound charges Markov P(cap reached) <= 2^-0.797 and repeated ideals <= 2^-5.13. A global meter bounds all classical work by W <= 2^122.272 dense-Fp12-multiplication units at C=20,000 instructions; the ledger (proof.md section 8) totals 2^122.271234. No operation is dropped. Preprocessing per instance is at most 2^122.272 units and is included in the total; no external advice is assumed. Storage is at most 2^105 bytes. Nothing is amortized across challenges. Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "122272",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence16.py",
+   "purpose": "Recomputes the certificates, rho, pool and its theta=455/1000 uniform sub-region, exact certified lattice-count products at radius 976, the incidence-inclusive total-work standard error and the charged 4.50-SE allowance, the ledger, filtering, the block-Wiedemann parameters, the descent plan with retention model and ECM schedules, toys and audit; derives the descent relation-count input one pool standard error below the computed yield (64.00) and checks it against that 1-SE lower value; prints total_log2W_full_ledger, work_se_total, modelled_success and within_claim.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "samples": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
