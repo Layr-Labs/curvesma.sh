@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp-plain
+submissions/bls12-381-g1-ecdlp-plain/lockstep-q39002-k10028-12618295
