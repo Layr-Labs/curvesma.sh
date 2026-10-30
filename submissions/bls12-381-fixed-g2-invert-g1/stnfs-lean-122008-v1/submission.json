@@ -1,0 +1,50 @@
+{
+ "version": 1,
+ "title": "STNFS with a ball-region sieved descent: 2^121.999",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g2-invert-g1 challenge, the STNFS algorithm of proof.md returns P in G1 with e(P,Q)=z for the supplied nonidentity Q with success at least 0.39 (declared 0.4489 = 0.975 x 0.4604, proof.md sections 3 and 7) under heuristics H1-H5 and the disclosed H6 relation input (section 9). A global meter bounds all classical work by W <= 2^121.999 dense-Fp12-multiplication units at C=20,000 instructions; the ledger (section 8) totals 2^121.998532. Relation collection keeps the frontier's 2601/2500 work and 2401/2500 yield brackets, at slacks 293 (f, cofactors <= 301 bits) and 226 (g, <= 234 bits), each side priced by the explicit ecm16.py schedule at 99% (2^37.5177 / 2^37.5150), so the per-survivor norm/trial-division/ECM charge is 2^39.5754. Trial division covers every prime below 2^34.5 at a charged 400 instructions per prime (pi(2^34.5) <= 2^34.5/(ln 2^34.5 - 1.1) = 2^29.988, Rosser-Schoenfeld), so the trial-division term is 2^38.6320 per survivor. Retained yield 2^64.247, 0.417 bits above 1.3 U. The line sieve covers p in [2^8,2^40) and the record walk p in [2^40,2^63); every line-sieved hit with p >= 2^34.5 is emitted as a record and charged 36 routing + 7.00 apply + 7.003 recovery per record (1.2044 records/cell), so factors above trial division are recovered and divided out before ECM (section 3, check [5d]). The amount of main-phase work is itself charged, not assumed: the relation-collection instruction count is a sample mean over the 2,401 observed canonical pool rows with relative standard error 0.013848, and the ledger charges 2^121.4630 + 1.96 x 0.013848 bits = 2^121.5022; the residual 1-0.975 tail is multiplied into the success, so main-phase work exhaustion is a charged failure mode (check [4], work_bound). The descent input is LOG2_RELS = 64.123 = floor(2^64.2473 - 1.05 x 0.1176), an epistemic haircut; no yield-survival probability is charged, and the declared success is conditional on the fixed production supply reaching it (H6). The boot keeps 10 relations (psi^10 = 8.51e-03, psi = 0.62086, charged twice); two-log expectation 2^118.074, metered cap 2^119.05 (directed Markov 2^-0.976; exact 0.5082246). The charged boot term 2 phi = 1.70e-02 is small against the margin: with phi 4x the model value the declared success is still 0.3991 >= 0.39 (section 7 sensitivity, recomputed by [7]). Linear algebra (26,5) blocks at 88/97 per entry, pad 1.61. Preprocessing is inside the total; no external advice, nothing amortized. Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "121999",
+    "denominator": "1000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence16.py",
+   "purpose": "Recomputes the certificates, rho, pool, ledger, filtering, descent plan with retention model and ECM schedules, toys and audit; prints total_log2W_full_ledger and modelled_success.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "samples": 16,
+     "seed": 1
+    }
+   ]
+  }
+ ]
+}
