@@ -1,0 +1,222 @@
+// ---------------------------------------------------------------- driver
+// void side_fused(uint64_t out[15], const uint64_t P[12],
+//                 const uint64_t T[12], const uint64_t inv[6]);
+// P = (x1, y1), T = (x2, y2) as fully reduced Montgomery residues (blst layout,
+// six 64-bit limbs each), inv = 1/(x2 - x1) (Montgomery residue, fully reduced).
+// Computes mu = (y1 + y2) inv, x' = mu^2 - x1 - x2, y' = mu (x' - x1) - y1,
+// i.e. P - T = (x', y'), and the orbit key: low 192 bits of min(y', p - y').
+// out[0..5] = x', out[6..11] = y', out[12..14] = key.
+// Lazy reductions: t = y1 + y2 in [0, 2p) and w = x' + p - x1 in (0, 2p) are
+// multiplied unreduced (Lemma 2a of proof.md: blst's word-serial Montgomery
+// multiplication with a < 4p, b < p returns the fully reduced product).
+.globl	side_fused
+.type	side_fused,%function
+.align	5
+side_fused:
+	stp	x29,x30,[sp,#-128]!
+	add	x29,sp,#0
+	stp	x19,x20,[sp,#16]
+	stp	x21,x22,[sp,#32]
+	stp	x23,x24,[sp,#48]
+	stp	x25,x26,[sp,#64]
+	stp	x27,x28,[sp,#80]
+	sub	sp,sp,#144		// [sp,#0..95] 768-bit square, [sp,#96..143] mu
+
+	adrp	x4,.Lsk_consts
+	add	x4,x4,:lo12:.Lsk_consts
+	ldp	x5,x6,[x4]
+	ldp	x7,x8,[x4,#16]
+	ldp	x9,x10,[x4,#32]
+	ldr	x4,[x4,#48]		// n0 = -1/p mod 2^64
+	stp	x4,x0,[x29,#96]		// sk_mul_mont_384 reloads (n0, out) from here
+	stp	x1,x2,[x29,#112]	// P, T
+
+	// t = y1 + y2, lazy in [0, 2p)
+	ldp	x11,x12,[x1,#48]
+	ldp	x13,x14,[x1,#64]
+	ldp	x15,x16,[x1,#80]
+	ldp	x19,x20,[x2,#48]
+	ldp	x21,x22,[x2,#64]
+	ldp	x23,x24,[x2,#80]
+	adds	x11,x11,x19
+	adcs	x12,x12,x20
+	adcs	x13,x13,x21
+	adcs	x14,x14,x22
+	adcs	x15,x15,x23
+	adc	x16,x16,x24
+
+	// mu = t * inv  (a = t < 2p, b = inv < p: fully reduced result)
+	mov	x2,x3
+	ldr	x17,[x2]
+	bl	sk_mul_mont_384		// mu in x11..x16; x4 = n0, x2 = out
+	stp	x11,x12,[sp,#96]
+	stp	x13,x14,[sp,#112]
+	stp	x15,x16,[sp,#128]
+
+	// mu^2 = redc(sqr_384(mu))  (blst's sqr_mont_384 path)
+	mov	x0,sp
+	bl	sk_sqr_384		// 768-bit product at [sp]; clobbers x1, x5..x10
+	adrp	x1,.Lsk_consts
+	add	x1,x1,:lo12:.Lsk_consts
+	ldp	x5,x6,[x1]
+	ldp	x7,x8,[x1,#16]
+	ldp	x9,x10,[x1,#32]
+	mov	x1,sp
+	bl	sk_mul_by_1_mont_384	// x11..x16 = low half reduced; x4 = n0 untouched
+	ldp	x19,x20,[x1,#48]	// blst's __redc_tail_mont_384 without its stores
+	ldp	x21,x22,[x1,#64]
+	ldp	x23,x24,[x1,#80]
+	adds	x11,x11,x19
+	adcs	x12,x12,x20
+	adcs	x13,x13,x21
+	adcs	x14,x14,x22
+	adcs	x15,x15,x23
+	adcs	x16,x16,x24
+	adc	x25,xzr,xzr
+	subs	x19,x11,x5
+	sbcs	x20,x12,x6
+	sbcs	x21,x13,x7
+	sbcs	x22,x14,x8
+	sbcs	x23,x15,x9
+	sbcs	x24,x16,x10
+	sbcs	xzr,x25,xzr
+	csel	x11,x11,x19,lo
+	csel	x12,x12,x20,lo
+	csel	x13,x13,x21,lo
+	csel	x14,x14,x22,lo
+	csel	x15,x15,x23,lo
+	csel	x16,x16,x24,lo
+
+	// x' = (mu^2 - x1) - x2, two full modular subtractions
+	ldp	x0,x1,[x29,#112]	// P, T
+	ldp	x19,x20,[x0]
+	ldp	x21,x22,[x0,#16]
+	ldp	x23,x24,[x0,#32]
+	subs	x11,x11,x19
+	sbcs	x12,x12,x20
+	sbcs	x13,x13,x21
+	sbcs	x14,x14,x22
+	sbcs	x15,x15,x23
+	sbcs	x16,x16,x24
+	sbc	x3,xzr,xzr
+	and	x25,x5,x3
+	and	x26,x6,x3
+	and	x27,x7,x3
+	and	x28,x8,x3
+	and	x17,x9,x3
+	and	x3,x10,x3
+	adds	x11,x11,x25
+	adcs	x12,x12,x26
+	adcs	x13,x13,x27
+	adcs	x14,x14,x28
+	adcs	x15,x15,x17
+	adc	x16,x16,x3
+	ldp	x25,x26,[x1]
+	ldp	x27,x28,[x1,#16]
+	ldp	x17,x3,[x1,#32]
+	subs	x11,x11,x25
+	sbcs	x12,x12,x26
+	sbcs	x13,x13,x27
+	sbcs	x14,x14,x28
+	sbcs	x15,x15,x17
+	sbcs	x16,x16,x3
+	sbc	x3,xzr,xzr
+	and	x25,x5,x3
+	and	x26,x6,x3
+	and	x27,x7,x3
+	and	x28,x8,x3
+	and	x17,x9,x3
+	and	x3,x10,x3
+	adds	x11,x11,x25
+	adcs	x12,x12,x26
+	adcs	x13,x13,x27
+	adcs	x14,x14,x28
+	adcs	x15,x15,x17
+	adc	x16,x16,x3
+	stp	x11,x12,[x2]		// x2 = out: x'
+	stp	x13,x14,[x2,#16]
+	stp	x15,x16,[x2,#32]
+
+	// w = x' + p - x1, lazy in (0, 2p)   (x19..x24 still hold x1)
+	adds	x11,x11,x5
+	adcs	x12,x12,x6
+	adcs	x13,x13,x7
+	adcs	x14,x14,x8
+	adcs	x15,x15,x9
+	adc	x16,x16,x10
+	subs	x11,x11,x19
+	sbcs	x12,x12,x20
+	sbcs	x13,x13,x21
+	sbcs	x14,x14,x22
+	sbcs	x15,x15,x23
+	sbc	x16,x16,x24
+
+	// y' = mu * w - y1  (a = w < 2p, b = mu < p: fully reduced product)
+	add	x2,sp,#96
+	ldr	x17,[x2]
+	bl	sk_mul_mont_384		// x11..x16 = mu w; x2 = out
+	ldr	x0,[x29,#112]		// P
+	ldp	x19,x20,[x0,#48]
+	ldp	x21,x22,[x0,#64]
+	ldp	x23,x24,[x0,#80]
+	subs	x11,x11,x19
+	sbcs	x12,x12,x20
+	sbcs	x13,x13,x21
+	sbcs	x14,x14,x22
+	sbcs	x15,x15,x23
+	sbcs	x16,x16,x24
+	sbc	x3,xzr,xzr
+	and	x25,x5,x3
+	and	x26,x6,x3
+	and	x27,x7,x3
+	and	x28,x8,x3
+	and	x17,x9,x3
+	and	x3,x10,x3
+	adds	x11,x11,x25
+	adcs	x12,x12,x26
+	adcs	x13,x13,x27
+	adcs	x14,x14,x28
+	adcs	x15,x15,x17
+	adc	x16,x16,x3
+	stp	x11,x12,[x2,#48]	// y'
+	stp	x13,x14,[x2,#64]
+	stp	x15,x16,[x2,#80]
+
+	// key = low 192 bits of min(y', p - y')
+	subs	x19,x5,x11
+	sbcs	x20,x6,x12
+	sbcs	x21,x7,x13
+	sbcs	x22,x8,x14
+	sbcs	x23,x9,x15
+	sbc	x24,x10,x16
+	subs	xzr,x11,x19		// lo (borrow) iff y' < p - y'
+	sbcs	xzr,x12,x20
+	sbcs	xzr,x13,x21
+	sbcs	xzr,x14,x22
+	sbcs	xzr,x15,x23
+	sbcs	xzr,x16,x24
+	csel	x11,x11,x19,lo
+	csel	x12,x12,x20,lo
+	csel	x13,x13,x21,lo
+	stp	x11,x12,[x2,#96]
+	str	x13,[x2,#112]
+
+	add	sp,sp,#144
+	ldr	x30,[x29,#8]
+	ldp	x19,x20,[x29,#16]
+	ldp	x21,x22,[x29,#32]
+	ldp	x23,x24,[x29,#48]
+	ldp	x25,x26,[x29,#64]
+	ldp	x27,x28,[x29,#80]
+	ldr	x29,[sp],#128
+	ret
+.size	side_fused,.-side_fused
+
+.section .rodata
+.align	4
+.Lsk_consts:	// BLS12-381 p (six little-endian 64-bit limbs) and n0 = -1/p mod 2^64
+	.quad	0xb9feffffffffaaab, 0x1eabfffeb153ffff
+	.quad	0x6730d2a0f6b0f624, 0x64774b84f38512bf
+	.quad	0x4b1ba7b6434bacd7, 0x1a0111ea397fe69a
+	.quad	0x89f3fffcfffcfffd, 0
+.section .note.GNU-stack,"",%progbits
