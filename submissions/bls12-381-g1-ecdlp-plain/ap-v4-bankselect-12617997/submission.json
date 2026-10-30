@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: fixed-step walks with a routed six-class key table (no twist index, proved collision law) (v6: charged bank-select address space, multiplicity-aware inspection moments, multiplicity-weighted Chebyshev candidate tail, 126.17997)",
+  "claims": [
+    {
+      "statement": "For every challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with probability at least 0.39 over its own coins, and on every run its total work is at most 2^126.17997 batched-affine-G1-addition equivalents (C=2,000 scalar AArch64 instructions; computed total < 2^126.179968). Algorithm: M=2^63 walks with fresh uniform c_w, b_w and nonzero D_w; walk w visits Q_{w,j}=[c_w+j*D_w]P0+[b_w]T for j=0..L, L=2^63.128335 (n=M(L+1)=2^126.128335 points), each new point one batched incomplete affine addition Q+S_w with the walk's fixed step S_w=[D_w]P0 (one Fermat inversion per batch of 2^24 walks). Each point's six-class key K (y if y even, else p-y; a complete invariant of the class under negation and phi(x,y)=(beta*x,y)=[lambda]) is routed in two hops by AArch64 stores into mapped receive windows (digit1 = bits 1..36 of K, digit2 = bits 0..34 of limb 1) to one of 2^71 final nodes, whose direct-bucket tables (2^57 eight-byte heads each, global load 0.2733, zeroed once, home bucket by extr/umulh) hold 40-byte (next,K1,K2,walk id,j) entries in per-node arenas and scan every bucket chain comparing limbs 1-2 of K; equal keys are candidates, verified by recomputing both points from a walk directory, finding the unit u, and solving x=(u(c_w'+j'D_w')-c_w-jD_w)/(b_w-u*b_w') with [x]P0=T checked. The three table passes are each unrolled 128x, so loop control costs 2/128 per point (the accepted P-256 convention). Cost: per point 1 + 69.080882/2000 units (18 operand-traffic instructions of the reference addition, 12 explicitly charged pass-bookkeeping instructions of the batched addition (prefix-product stores/reloads, loop control), generator 16 + 2/128 for key, digit and remote append, intermediate 8 + 2/128, final main path 11 + 2/128, one bank-register store + one dsb per hop (4 instructions per point), <0.0141 batch-inversion share, <0.02 round bookkeeping), table zeroing <2^116.10, chain comparisons charged 11 instructions each and allotted at 1.10 times E[X]=n(n-1)/(2*2^128)=2^123.257 by one global 128-bit counter (high-word cap 2^59.394, checked before every comparison), multiplicity-aware bound conditioned on the class partition (X=X_same+X_distinct, E[X_distinct]<=(n^2-sum c^2)/(2S)<=n(n-1)/(2S)=2^123.257, three-class covariance exactly 0, Var<=c_max^2 E[X] with c_max<=16 except with probability <2^-1810, so Var<=256 E[X]) and Chebyshev overrun <2^-108.61 with the 2^30 forced same-class comparisons charged, candidates capped at 2^90 verifications = 2^104 units by a second global 128-bit counter (mean false candidates 2^87.26; multiplicity-weighted Chebyshev on Z=sum_{a<b} c_a c_b 1[F_a=F_b]: E[Z]<=(n^2-sum c^2)/(2*2^164)<=2^87.2567, Var[Z]<=c_max^2 E[Z]<=256 E[Z] with the cross-class covariance exactly zero, so P(Z>=2^90-2^30)<2^-84.27, and Markov P(X_same>=2^30)<=0.4947/2^30=2^-31.02, hence P(Y>=2^90)<2^-31.01, set-up 2^77, routing tables 2^76, capped zero-denominator recovery 2^58, padded window tails 2^113, banked 64-bit address space: one bank-register store + one dsb per hop charged as bank_select=4 instructions/point, plus 2^113.1 node-visit selects = 2^102.3 units inside the 2^104-unit address_mapping term (2^64-byte virtual space = 2^62 B local region + 2^61.4 B window; the bank is selected afresh per remote store, nothing cached; section 6), one round of overshoot <2^85.2; every random action is counted and checked against the global allotment immediately before it runs, walk set-up samples are capped at 128 attempts (failure <2^-371) and zero-denominator recoveries at 4 per generator (failure <2^-120), so the every-run bound uses no round-end aggregation. The collision law is proved (proof.md section 4): the collision events A_w+j*D_w=u(A_w'+j'*D_w') (A_w=c_w+b_w*x uniform) are linear forms in uniform variables, so every intersection has probability r^-rank, all pairs have rank 2 (S2 exact), dependent triples and four-sets contribute < 2^-60 (support/degree argument, integer collinearity, and the norm argument in Z[omega] above r), and Bonferroni gives P >= f4(mu) - 2^-60 with mu=6*C(M,2)*(L+1)^2/r=0.494672 and f4(mu)=mu-mu^2/2+mu^3/6-mu^4/24=0.3900010; failure terms (degenerate b, exceptional additions and zero-denominator batches, conditioning on D!=0, arena/window overflow, global inspection overrun <2^-108.7, candidate overrun <2^-31.01, sampler caps <2^-371, recovery cap) total < 2^-30.99, so success >= 0.39 for every x; the abort and overflow bounds use H'. Heuristic H' (routing and bucket bits of K uniform) is used only for the cost-side expectations and concentration (chain comparisons with multiplicity-aware moments, window counts, false candidates, arena occupancy), never for the collision law. Peak memory < 2^132.3 bytes including a 2^76 B address-table allowance (2^131 B heads + 1.05 n * 40 B arenas; every bank < 2^61.4 B and every load/store address is 64-bit); preprocessing (set-up, routing tables, zeroing) < 2^116.2 units, included; no advice.",
+      "score": {
+        "numerator": "12617997",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ap-v4-chained-table-checks",
+      "source": "experiment.py",
+      "purpose": "Part A (production BLS12-381 G1): GLV pair and phi(P0)=[lambda]P0, unit map on all six class members, key constant/even/complete, limb-level emulation of the generator key rows against K mod 2^192 and digit1 on random and borrow-chain boundary y, final home index range, AArch64 immediate encodability, chained-insert link consistency, and a planted end-to-end run. Part B: the whole attack on a toy curve and the exact scalar model at small r. Part C: the ledger in exact fractions with checks: multiplicity-aware inspection moments (X_same<2^30 at 2^-2^30*29, X_distinct with three-class covariance exactly 0 and Var<=256 E[X], class multiplicity <=16 at 2^-1810, Chebyshev overrun <2^-100), the multiplicity-weighted Chebyshev candidate tail (E[Z]<=2^87.257, Var[Z]<=256 E[Z], <2^-84.27) and the same-class Markov term (<2^-31.02), the 128-bit counters, the 2^90-verification/2^104-unit candidate cap, the bank-select charge (4 instructions per point) and node-visit selects, the 128x unroll accounting, the 1.05 arena margin, L from f4, W below the claim and the dependency-correction exponents. Toy runs are implementation evidence only; the bound is proved in proof.md.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "production_random": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "toy_seconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q26",
+              "q30",
+              "q34"
+            ]
+          },
+          "toy_walks": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 256
+          },
+          "scalar_seconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "scalar_walks": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 512
+          },
+          "scalar_rbits": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 30
+          },
+          "claim": {
+            "type": "number",
+            "minimum": 120,
+            "maximum": 130
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "claim": 126.17997,
+          "curve": "q26",
+          "production_checks": 1,
+          "production_random": 12,
+          "scalar_rbits": 22,
+          "scalar_seconds": 3,
+          "scalar_walks": 96,
+          "seed": 1,
+          "toy_seconds": 5,
+          "toy_walks": 32
+        }
+      ]
+    }
+  ]
+}
