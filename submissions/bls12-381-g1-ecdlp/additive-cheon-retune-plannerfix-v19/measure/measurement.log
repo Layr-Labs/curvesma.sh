@@ -1,0 +1,40 @@
+Fused side-output kernel (side_fused.S) measured in the organizers' pipeline.
+Date: 2026-10-27. Host: Docker Desktop on Apple silicon (native linux/arm64, no emulation).
+Image: scripts/reference_costs/Dockerfile (python:3.12-slim@sha256:a6e34c59..., Debian GCC 14.2.0-19, Valgrind 3.24.0).
+blst: f7a88067ed98385ebc6cf41ccecf21ead706a5b7, built as in scripts/reference_costs/run.sh
+(server.c with -O3 -fno-builtin -fPIC -fno-tree-vectorize -mgeneral-regs-only, build/assembly.S).
+Harnesses compiled with -O3 -fno-tree-vectorize -mgeneral-regs-only. Counter: Callgrind event Ir,
+collection toggled around the lane loop, price = (Ir(8192) - Ir(4096)) / 4096.
+
+sha256 of the inputs (printed by run_measure.sh inside the container):
+  80a325b8b66aec5fd203cdf3be76d437f9fd41a43a74fede5940b9b831f4fad0  /work/bls_field   (= the published binary_sha256 of the organizers' bls_field)
+  f335d673b229601ffb661db0052112c3cbba2429b79f6f23834e6c70fe00bebd  /m/side_fused.S
+  337611cb190861786ea4a8bb9470cf5b42fce48fbbc8681f80685a09ba64a6ee  /m/side_kernel.c
+  3f0bdfcc89d0a56e1d03090dae94d134387bdb04db41a02457cd003aa0dd54ec  /m/gen_side_fused.py
+
+== bls_field 4096          Collected : 1568788      (published measurement.json: 1568788)
+== bls_field 8192          Collected : 3137556      (published: 3137556)  -> 383 per blst_fp_mul, pipeline reproduced
+== side_kernel 4096        Collected : 4616213
+   check1 lanes=4096 mismatches=0
+   check2 lazy-operand products=600000 mismatches=0
+   check3 curve-point pairs=64 mismatches=0
+   selfcheck ok
+== side_kernel 8192        Collected : 9232405
+   check1 lanes=8192 mismatches=0
+   check2 lazy-operand products=600000 mismatches=0
+   check3 curve-point pairs=64 mismatches=0
+   selfcheck ok
+
+price = (9232405 - 4616213) / 4096 = 1127.0 instructions per lane (kernel + C lane loop).
+
+Breakdown from objdump -d of the measured binary (every instruction of each routine executes exactly once
+per call; the routines are straight-line, no loops; alignment nops excluded):
+  side_fused driver            181   (prologue/epilogue 17, constants 6, frame stores 2, t = y1+y2 12,
+                                      mu call setup 2, mu spill 3, square setup/reloads 7, redc tail 23,
+                                      x' two modular subtractions 45, x' stores 3, w 12, y' call setup 2,
+                                      y' subtraction 23, y' stores 3, key 17, bl x4)
+  sk_mul_mont_384 (blst)       341 x 2
+  sk_sqr_384 (blst)             99
+  sk_mul_by_1_mont_384 (blst)  154
+  C lane loop (pointer advances, compare, branch, call)  11
+  total                       1127
