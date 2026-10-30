@@ -1,0 +1,112 @@
+{
+ "version": 1,
+ "title": "bls12-381-g1-ecdlp-plain: distributed fixed-step walks with a 64-bit-local class table (no bank selector; 2^71 table servers + 2-level network, shared 128-bit atomic counters) and production-bit H' evidence; 126.18013 ledger",
+ "claims": [
+  {
+   "statement": "For every challenge T=[x]P0 in BLS12-381 G1 (T=infinity returns 0), the algorithm in proof.md outputs x with probability at least 0.39 over its own coins, and on every run its total work is at most 2^126.18013 batched-affine-G1-addition equivalents (C=2,000 scalar AArch64 instructions; computed total = 2^126.1801271). Algorithm: M=2^63 walks with fresh uniform c_w, b_w and nonzero D_w; walk w visits Q_{w,j}=[c_w+j*D_w]P0+[b_w]T for j=0..L, L=2^63.128335 (n=M(L+1)=2^126.128335 points), each new point one batched incomplete affine addition Q+S_w with the walk's fixed step S_w=[D_w]P0. Distribution (this package REPLACES the rejected 128-bit MMIO bank-selector of v8/v9; there is no selector, no dsb, no bank window and no address_mapping term): 2^37 generator nodes each hold 2^26 walk records locally (600 B/record) and advance them in lockstep with one Montgomery-batched inversion per batch of 2^26 points (235,000 instructions per batch); 2^71 table-server nodes each own a local 2^61.284-byte bank, so every head word, arena offset and next pointer is an ordinary 64-bit local address and no device is stipulated. Work is summed over processors; memory is reported but not scored. Per point, 70 scalar instructions, itemised: generator 41 = 18 reference-operation operand-traffic instructions (6 ldp current point, 6 ldp step point, 6 stp new point) + 12 explicitly charged batched-addition pass-bookkeeping instructions (3 stp + 3 ldp prefix product, 2x(cmp,b.ne), 2 spare) + 2 record loads (ldp x0,x1 and ldp x2,x22, the latter reloading the walk-id locator every point) + 7 key canonicalisation (subs/sbcs/sbcs, tst, 3 csel) + 2 ubfx digits; message 4 = 3 stp of the 56-byte (K1,K2,w,j,digit1,digit2) payload/descriptor into the outgoing queue slot + add of the queue pointer by 56; network 6 = 2 levels x (load the destination descriptor, load the forwarding entry, branch); receive 6 = 2 ldp of the 32-byte key/locator payload + add of the inbox pointer + wrap compare + wrap branch + wrap move; server insert 13 = umulh home from K2, add of the head-cell address, header ldp of bump/arena end, add of the new bump, cmp, b.hs arena guard, head ldr, link str next, str new head, stp K1K2, stp w,j, str bump, cbz. Loop control is 2 instructions on the generator and 2 on the server, each unrolled 128x, so 4/128 per point; batch-inversion share 235000/2^26 = 0.0035; dispatch allowance 0.002. Per point total 70.03675177288055; step price 1.0350183758864402. Table: S_tot=2^128 eight-byte head slots (2^57 per server, zeroed once at 0.500244 instructions/head = 2^116.03492 units), 40-byte (next,K1,K2,walk id,j) entries, 1.05 arena margin. The home is floor(K2*S_node/2^64) by umulh; the new entry is linked before the scan (next=old head, head=new, bump published), and only then is the saved old chain scanned with the 9-instruction common path (head load, local count, block test, key compare, chain step) plus 4 block-path instructions per 2^16 comparisons and 3 carry-path instructions per 2^64 comparisons, comparing (K1,K2); equal keys are candidates, verified by recomputing both points from the walk directory, finding the unit u and solving x=(u(c_w'+j'D_w')-c_w-jD_w)/(b_w-u b_w'), with [x]P0=T checked. Each candidate is priced at 2^14 units and capped at 2^90 by a 128-bit counter (2^104 units); the inspection count is capped at 1.005 E[X] by a second 128-bit counter in shared memory: each table server keeps a 64-bit local comparison count (1 adds per comparison) and every 2^16 comparisons adds its block to the shared low word with one atomic ldadd, resetting the local word and testing the returned value for a low-word wrap (4 instructions per 2^16); the unique server that observes a wrap adds 1 to the shared high word with a second ldadd and aborts when the new high word reaches cap_hi = 692151372792945841 = 2^59.2639 (3 instructions per 2^64). The counter lags by at most 2^71 partial blocks = 2^87 comparisons, which is inside the allotment. Multiplicity-aware inspection moments conditioned on the class partition: X=X_same+X_distinct, E[X_same]<=6C(n,2)/r=0.4947 (Markov P(X_same>=2^30)<=2^-31.02), E[X_distinct]<=n(n-1)/(2S)=2^123.2567, the three-class covariance is exactly 0 and Var[X_distinct]<=c_max^2 E[X] with c_max<=8 except with probability <2^-771, so Var<=64 E[X]; the effective cap has slack 2^115.6128 and Chebyshev gives P(X_distinct>cap-2^30)<2^-101.97, hence inspection overrun <2^-31.015. Candidate tail without comparison independence: Z=sum_{a<b} c_a c_b 1[F_a=F_b] over 164-bit class fingerprints (K1||K2||digit1); E[Z]<=C(n,2)2^-164=2^87.2567, cross-class covariance exactly 0, Var[Z]<=c_max^2 E[Z]<=64 E[Z]=2^93.2567, so P(Z>=2^90-2^30)<2^-86.28 and with the same-class Markov term P(Y>=2^90)<2^-31.01. Collision law proved (proof.md section 4): the collision events A_w+jD_w=u(A_w'+j'D_w') are linear forms in uniform variables, every intersection has probability r^-rank, all pairs have rank 2, dependent triples/four-sets contribute <2^-60 (support/degree, integer collinearity and the norm argument), and Bonferroni gives P>=f4(mu)-2^-60 with mu=6C(M,2)(L+1)^2/r=0.494672 and f4(mu)=0.3900010. Failure terms (degenerate b, exceptional additions and zero-denominator batches, conditioning D!=0, arena overflow 2^-400, inspection overrun 2^-31.015, candidate overrun 2^-31.01, sampler caps 2^-371.44, recovery cap 2^-120, dependent sets 2^-60) total <2^-30.99, so success >=0.39 for every x; the abort and overflow bounds use H'. Heuristic H' (routing and bucket bits of K behave as uniform) is disclosed and used only for cost-side expectations/concentration, never for the collision law; Part A2 supplies production-bit consistency evidence on real BLS12-381 G1 AP walks (64 walks x 33 points = 2112 real subgroup points, exact production extraction): max |z|=2.35 over 199 key/routing bit-balance tests, max pairwise 2x2 chi-square 4.844 over 64 tests, Poisson occupancy chi2 2.91/5.97 at S=2^6/2^10, truncated 164-bit fingerprint collisions within |z|<1.89 over 15 high/middle/low slice tests at b=12..20, and within-walk vs cross-walk collision rates at b=16 consistent with 2^-16 (0 vs 0.516 expected within, 25 vs 33.5 cross). This is consistency evidence on a scaled sample, not a proof of H'. Extras: walk set-up 2^77, network/queue set-up 2^90, server headers 2^76, candidates 2^104, capped zero-denominator recovery 2^58, output 2^20 (sum 2^104.000088). Total W = n*(1+70.03675177288055/2000) + 2^116.03492 + 2^115.46801 + 2^104.000088 = 2^126.1801271 < 2^126.18013. Peak memory < 2^132.284 bytes (2^131 B heads + 2^71 server banks of 2^61.284 B, 2^37 generator record stores, queue rings); every bank is below 2^61.4 B, so every access is a 64-bit local address and every per-server instruction is an ordinary scalar AArch64 instruction. Preprocessing (set-up, header initialisation, head zeroing) is included; no advice.",
+   "score": {
+    "numerator": "12618013",
+    "denominator": "100000"
+   },
+   "evidence": [
+    "proof.md",
+    "experiment.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "ap-v10-distributed-checks",
+   "source": "experiment.py",
+   "purpose": "Part A (production BLS12-381 G1): GLV pair and phi(P0)=[lambda]P0, unit map on all six class members, key constant/even/complete, limb-level emulation of the generator key rows against K mod 2^192, digit1, digit2 and the 71-bit routing id on random and borrow-chain boundary y, final home index range, AArch64 immediate encodability, chained-prepend link consistency, a register-lifetime/data-flow emulation of the split distributed listings (GEN_key, MSG, NET, RCV, SRV_insert, F: p limbs preserved, per-point walk-id and arena-end loads, link-before-scan, head-cell offset 32, locator recovery), and a planted end-to-end run. Part A2: production-bit H' consistency evidence on real G1 AP walks (64 walks x 33 points = 2112 real subgroup points), bit balance over the 199 key/routing bits, pairwise bit chi-square, Poisson table occupancy at S=2^6/2^10, truncated 164-bit fingerprint collision counts on high/middle/low slices for b=12..20, and within-walk vs cross-walk rates at b=16; this is consistency evidence, not a proof of H'. Part B: the whole attack on a toy curve and the exact scalar model at small r. Part C: the ledger in exact fractions with checks: the 70-instruction per-point sum, the 1.0350183758864402 step price, zeroing 2^116.03492, the 1.005 inspection allotment 2^115.46801 and its multiplicity-aware Chebyshev/Markov tail <2^-31.01, the multiplicity-weighted candidate tail <2^-86.27 plus the same-class Markov term (<2^-31.01 total), the shared 128-bit atomic inspection and candidate counters, the 128x two-sided unroll accounting, the 1.05 arena margin and its charged guard, the 2^63-byte per-server bank bound, the no-selector/no-dsb/no-movk listing checks, W below the claim and the dependency-correction exponents. Toy and Part A2 runs are evidence only; the bound is proved in proof.md.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "production_checks": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "production_random": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     },
+     "toy_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 15
+     },
+     "curve": {
+      "type": "string",
+      "enum": [
+       "q26",
+       "q30",
+       "q34"
+      ]
+     },
+     "toy_walks": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 256
+     },
+     "scalar_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 15
+     },
+     "scalar_walks": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 512
+     },
+     "scalar_rbits": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 30
+     },
+     "claim": {
+      "type": "number",
+      "minimum": 120,
+      "maximum": 130
+     },
+     "a2_walks": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 128
+     },
+     "a2_steps": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     }
+    },
+    "required": [
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "claim": 126.18013,
+     "curve": "q26",
+     "production_checks": 1,
+     "production_random": 12,
+     "scalar_rbits": 22,
+     "scalar_seconds": 3,
+     "scalar_walks": 96,
+     "seed": 1,
+     "toy_seconds": 5,
+     "toy_walks": 32,
+     "a2_walks": 64,
+     "a2_steps": 32
+    }
+   ]
+  }
+ ]
+}
