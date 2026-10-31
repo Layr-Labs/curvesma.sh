@@ -1,0 +1,52 @@
+{
+ "version": 1,
+ "title": "Six-leaf range-local scan with charged 184-bit candidates",
+ "claims": [
+  {
+   "statement": "For uniform production secp256k1 Q=[x]P, the cold six-leaf range-local stored-leaf algorithm in proof.md recovers x with success at least 0.3900000001 under the explicitly stated scalar-machine/ideal-coin conventions, with total work on every run at most 2^125.3627089731889 target-operation equivalents at C=1000 instructions. All preprocessing, transfers, coordination, failures, enlarged partial-key candidate processing and final scalar verification are charged. q1=145286868, q2=2^25, six leaves per incidence, 2^72 nodes; the scan compares K2 only inside d4 ranges and uses the complete 184-bit false-match accounting with capacities 2^28/2^29/2^30. Peak memory is at most 2^135.9988 bytes; preprocessing at most 2^110.2061 units is included. No free advice, future amortization or quantum operation is used. The complete source argument is supplied as baseline-proof.md and all changes are proved in proof.md. No prior verdict or finite test substitutes for the production argument. The exact ledger R_total=54693502841425447228313361754291507822592 instructions yields a bound below the declared score. No production execution or human approval is claimed.",
+   "score": {
+    "numerator": "1253627089731889",
+    "denominator": "10000000000000"
+   },
+   "evidence": [
+    "baseline-proof.md",
+    "certificate.py",
+    "experiment.py",
+    "full_range_experiment.py",
+    "kernels/a64.py",
+    "kernels/leaf.s",
+    "kernels/route.s",
+    "kernels/scan_ranges.s",
+    "kernels/secp_fe.s",
+    "proof.md",
+    "research_scan.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "six-leaf-range-scan",
+   "source": "full_range_experiment.py",
+   "purpose": "Production-field six-leaf/inversion checks, 4x4 routing with every delivery, exact path-count models, full-cap cases, 1200 isolated range-scanner cases, toy collision controls and exact cost/success arithmetic. No production-scale attack.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 2
+    }
+   ]
+  }
+ ]
+}
