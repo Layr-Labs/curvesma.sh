@@ -1,0 +1,1 @@
+Prepared candidate, not yet submitted. The complete local pipeline passes; final-byte rerun is required after proof/manifest edits. Exact underlying model attribution remains unresolved. Earlier two-leaf candidate was overtaken and not submitted. This port uses the latest six-leaf source and adds the new range-local scan. No hosted score is claimed.
