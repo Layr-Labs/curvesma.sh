@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "title": "P-256 paired stored-leaf search with inlined address-specialized arithmetic",
+  "claims": [
+    {
+      "statement": "For the exact protected full-production P-256 target Q=[x]P, the cold classical paired stored-leaf algorithm in proof.md returns the canonical scalar x with probability at least 0.39 over uniform challenges and fresh independent coins, under the explicitly supplied scalar-instruction machine and ideal-coin conventions. Its total work is at most 2^126.53 target-operation units at C=1000, including preprocessing, capped failures, all routing and coordination, resolution, verification and output. Peak memory is below 2^136 bytes, preprocessing below 2^118 units and included, and nonuniform advice is zero. The construction uses the order-two negation quotient only, q1=188761551, q2=2^27, 2^72 nodes, exact canonical Montgomery P-256 arithmetic, and paired X+Y/X-Y outputs from one batch inverse. The rational collision/cap bound exceeds 0.3901; no random-walk or NFS smoothness hypothesis is used. This is an analytical computation claim with astronomical memory, not a production run or a physical feasibility claim. The complete field, probability, cost and memory arguments and their implementation evidence are supplied.",
+      "score": {
+        "numerator": "12653",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "source-background.md",
+        "success_probe.py",
+        "p256_fields.s",
+        "p256_inv.s",
+        "pair_batch.s",
+        "pair_keys.s",
+        "route.s",
+        "field_check.py",
+        "routing_check.py",
+        "toy_recovery.py",
+        "a64.py",
+        "inline_witness.py",
+        "pair_batch_reference.s"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "field-pairs",
+      "source": "field_check.py",
+      "purpose": "Run independent field and pair checks, full batch inversion, metadata and capacity controls, small complete two-hop routing, actual toy scalar recovery, and exact probability/cold-work/layout consequences. Test scope is distinguished from the production proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 3,
+          "samples": 1000
+        }
+      ]
+    }
+  ]
+}
