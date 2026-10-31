@@ -1,0 +1,1 @@
+Prepared candidate; not submitted. Requires final-byte full isolated checks and external review confirmation. The new sixteen-comparison scanner is a deterministic implementation improvement, not a tighter decimal declaration. All production assumptions remain explicit.
