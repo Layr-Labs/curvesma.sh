@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "title": "Stored x-only leaf birthday search on secp256k1 at 125.5653158: bulk-synchronous transport, delivery charged as executed dlv, unrolled routing and grouping loops, backward pass without the R spill",
+  "claims": [
+    {
+      "statement": "For uniform production secp256k1 Q=[x]P, the classical cold stored-leaf birthday search of proof.md recovers x with probability at least 0.3900001 over the challenge and fresh algorithm coins, with no heuristic: the Chen-Stein method on cross-node leaf pairs bounds P(no collision), and drops, caps and the enumerated inline-carry sites of the kernels (section 3.4) are charged failure rows, while RNDR, the ideal coin source, adds none (section 6). On every run its total work is at most 2^125.5653158 target-group-operation equivalents (1000 AArch64 instructions per unit). Machine (section 2.1): 2^72 nodes, each with one processor and a memory below 2^64 bytes, whose links deliver a message's four words at the address its sender stored and keep no flags, rings or counters. Beyond its sender's instructions, every message's charge includes 8 instruction-equivalents at each hop: its delivery as route.s dlv (three LDPs of the message, two STPs at the address, RET: 6), which the experiment executes for every message of its 4 x 4 run, and its port's in-flight count (2). Hop 1, hop 2 and grouping are charged 20.5, 20.25 and 23.5 per record, the unrolled loops' control included; certificate.py gives at most 455.6583 instructions per leaf and the claim 125.5653158. Peak memory at most 2^135.9988 bytes; preprocessing at most 2^111.0354 units, included; no advice; certificate.py checks that the work, memory and preprocessing figures are the least 7- or 4-decimal values at or above their exact values, and that 0.3900001 is below the success bound. The bound is for the machine of section 2.1. Lineage: package 8f733826 (field rows, fe_inv, class row, a64.py); no prior acceptance or score is a premise. This is an analytic bound, not a practical break.",
+      "score": {
+        "numerator": "1255653158",
+        "denominator": "10000000"
+      },
+      "evidence": [
+        "proof.md",
+        "certificate.py",
+        "experiment.py",
+        "census-toy.json",
+        "kernels/a64.py",
+        "kernels/leaf.s",
+        "kernels/route.s",
+        "kernels/secp_fe.s"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-stored-leaf-kernels-and-toy",
+      "source": "experiment.py",
+      "purpose": "Run the leaf kernels on production points, and the emit, both hops (each message delivered by executing dlv) and the grouping on a 4 x 4 machine, against exact references; check the arithmetic sites of section 3.4; compare the counts of the leaf, inversion, transport, delivery and grouping kernels with certificate.py; run the q25 toy and certificate.py. Budget-limited parts run stated minimums. Not a production-scale attack.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200000
+          },
+          "control_trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50000
+          },
+          "curve_trials": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 15
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "trials": 6000,
+          "control_trials": 1000,
+          "curve_trials": 100,
+          "seconds": 15
+        }
+      ]
+    }
+  ]
+}
