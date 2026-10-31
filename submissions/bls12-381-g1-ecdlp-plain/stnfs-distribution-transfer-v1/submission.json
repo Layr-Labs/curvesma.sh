@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "Distribution-preserving cold STNFS transfer to bls12-381-g1-ecdlp-plain",
+  "claims": [
+    {
+      "statement": "For the production bls12-381-g1-ecdlp-plain target, the algorithm in proof.md returns the canonical scalar x for uniform T=[x]P0, with success at least 0.39 conditional on all inherited, explicitly disclosed H1-H5 heuristics in source-core.md. Total cold classical work, including preprocessing, both logs, all failures and the new wrapper, is bounded by 2^125.36 target-operation units at C=2000. Peak storage is below 2^106 bytes, preprocessing is bounded by the full total, no external advice or cross-target amortization is assumed. The complete inherited core evidence is supplied; no prior review verdict is a premise. This is an analytic exploratory claim, not a full-size run. The numerical conversion and distribution argument do not establish the inherited kernel or NFS premises. The entire inherited core cost is multiplied by 101/100 as a conservative implementation-price reserve, without lowering any failure allowance.",
+      "score": {
+        "numerator": "3134",
+        "denominator": "25"
+      },
+      "evidence": [
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "proof.md",
+        "source-core.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "combined_evidence.py",
+      "purpose": "Recomputes the certificates, rho, pool and its theta=87/200 uniform sub-region, exact certified lattice-count products at radius >= 955, the incidence-inclusive total-work standard error and the charged 2.00-SE allowance (1.0549), the ledger, filtering, the block-Wiedemann parameters, the descent plan with retention model and ECM schedules, the expected special-q node count (counts16.py) with the node-counter and repeat terms, toys and audit, the in-package Murphy alpha check [14]; checks every stated bound against its unrounded value (declared_bounds); prints total_log2W_full_ledger, work_se, modelled_success and within_claim. Then checks target-transfer arithmetic and finite bijections, which do not validate the inherited production heuristics.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 64,
+          "seed": 2
+        }
+      ]
+    }
+  ]
+}
