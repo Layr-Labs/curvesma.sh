@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "secp256k1 Frobenius-keyed six-leaf search with paired-comparison range scanning",
+  "claims": [
+    {
+      "statement": "For the exact full-production uniform secp256k1 challenge Q=[x]P, the cold classical six-leaf stored-search algorithm in proof.md recovers the canonical scalar x with probability at least 0.390000001 over challenges and fresh independent ideal coins, under the explicitly specified base-AArch64 FEAT_RNG/FEAT_LSE and addressed-interconnect conventions. Total computation on every run is at most 2^125.305501298248 reference units at C=1000 scalar instructions/unit, including cold preprocessing, generator construction, sampling, arithmetic, all processors and deliveries, grouping, capped failures, resolution, verification, coordination and output. Peak memory is at most 2^135.9988 bytes; preprocessing at most 2^110.2061 units is included; nonuniform advice is zero. Parameters are 2^72 nodes, q1=145286868 and q2=2^25, producing six leaves x(phi^t(X)+/-Y) per incidence with the Frobenius-scaled class key supplied by predecessor eb0aea59-ada9-4fb6-8e22-a176136ec8b9. Its analytic Chen-Stein, usefulness, arithmetic-defect, wrong-index and cap-loss argument is reproduced in full; no prior verdict is a premise. The new paired CMP/CCMP scanner preserves every range-local K2 adjacency and abort position. Its universal bound is 51n/16+24b+8(CAND_CAP+1)+2, with 184-bit partial-match accounting and candidate/request/relay caps 2^28,2^29,2^30 unchanged. All non-scanner work remains charged. The exact ledger is 52567159767662919722560258889819496644608 instructions, at most 380.5637 per leaf. Rational intervals certify the stated decimal ceiling. The Frobenius key, six-leaf construction and other inherited contributions are credited to their sources; no novelty, physical feasibility, production execution or independent mathematical certification is claimed.",
+      "score": {
+        "numerator": "15663187662281",
+        "denominator": "125000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "certificate.py",
+        "experiment.py",
+        "toy.py",
+        "census-toy.json",
+        "kernels/a64.py",
+        "kernels/leaf.s",
+        "kernels/route.s",
+        "kernels/secp_fe.s"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-stored-leaf-kernels-and-toy",
+      "source": "experiment.py",
+      "purpose": "Run the six-leaf kernels on production points, with every leaf's Frobenius class key against B times its canonical x, and the emit, both hops (each message delivered by executing dlv) and the grouping (with scan_ranges) on a 4 x 4 machine, against exact references; check the arithmetic sites of section 3.4, including both key paths; compare the counts of the leaf, inversion, transport, delivery and grouping kernels with certificate.py; run the q25 toy (toy.py) with six leaves per incidence and certificate.py. Budget-limited parts run stated minimums. Not a production-scale attack.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200000
+          },
+          "curve_trials": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 15
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "trials": 6000,
+          "curve_trials": 100,
+          "seconds": 15
+        }
+      ]
+    }
+  ]
+}
