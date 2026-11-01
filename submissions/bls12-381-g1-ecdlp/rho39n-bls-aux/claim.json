@@ -1,0 +1,37 @@
+{
+  "algorithm": "parallel-batched-rho39-bls-aux-v14",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 106.0,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 127.69,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "shared-function-random-mapping",
+      "statement": "Posited exploration law for one fixed r=64 r-adding walk with uniform table and wrapping residues from P uniform starts: (i) pooled birthday P(no collision) <= exp(-(63/64)T'(T'-1)/2q) charging only distinct-partition pairs; (ii) single-walk self-collision <= L^2/2q; (iii) distinguished indicators independent Bernoulli(2^-32) and bucket bits [32,131) i.i.d. uniform across distinct exploration points; (iv) solved-collision degeneracy <= 2/q via residue mixing.",
+      "support": "Teske large-r analysis/experiments (uniform-table wrapping regime), Harris quantitative form, van Oorschot-Wiener pooling model, 112-bit record computation (Bos et al.) validating the birthday constant, same-regime toys; C0=0.65 sizes for modeled 0.4775 vs claimed 0.3995 (19% margin), absorbing constant-factor error. Bounded sampling cutoffs; abort analysis rigorous given the posit. No hash function or hash heuristic exists."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device, as is the baseline's larger table.",
+    "Beats the generic BSGS control via batched parallel rho at the 0.39 threshold; not novel cryptanalysis.",
+    "Supersedes v13: bounded sampling cutoffs (24 attempts, 2-round start setup), dependence-aware abort (walk cycling + per-point Bernstein), posited exploration law, C0=0.65 robustness bump; claim 127.69."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "bls12-381-g1-ecdlp",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602"
+}
