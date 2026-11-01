@@ -1,0 +1,37 @@
+{
+  "algorithm": "parallel-gt-rho39-mirror-v4",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 108.0,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 127.48,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "shared-function-random-mapping",
+      "statement": "One fixed r=64 r-adding walk function in GT with a uniform table and wrapping residues from P uniform starts matches uniform random sampling with the 63/64 distinct-partition merge factor for the birthday bound, merged-suffix tail steps sample distinguished points at density 2^-32, distinguished-key c0 bits above the window are uniform for bucketing, and a solved collision is degenerate with probability 1/r.",
+      "support": "Standard-regime construction matching Teske's analyzed r-adding walks (r=64, uniform table, wrapping residues by the lazy-reduction lemma, uniform starts) with van Oorschot-Wiener parallel distinguished points; reproduced Teske+Harris analysis in proof.md; record computations confirm predictions at scale; degeneracy quantified at 1/r; table occupancy by balls-in-bins over walk randomness. Multiplicative-notation toy experiments confirm merging and recovery end to end. No hash function or hash heuristic exists."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device.",
+    "Best-known-attack analysis via the admissible GT reduction, not novel cryptanalysis.",
+    "Supersedes v3: hash-free bit-sliced table (c0 bits [32,131)), deterministic caps, no re-salt rebuild; R recomputed, claim 127.48 unchanged."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9"
+}
