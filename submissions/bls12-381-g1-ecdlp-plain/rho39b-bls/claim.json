@@ -1,0 +1,37 @@
+{
+  "algorithm": "parallel-batched-rho39-v2-bls-plain",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 104.59,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 127.57,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "multi-walk-random-mapping",
+      "statement": "The combined walk-phase points across P independent r-adding walks match uniform random sampling for the birthday bound, and tail steps sample distinguished points at density 2^-32.",
+      "support": "Pollard 1978; Teske 1998/2001 analysis and EC experiments for r-adding walks; standard parallel-rho setting; multi-walk toy-curve experiments in experiment.py confirm the predicted success rates."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device, as is the baseline's larger table.",
+    "Beats the generic BSGS control via batched parallel rho at the 0.39 threshold; not novel cryptanalysis.",
+    "Ports the batch-corrected parallel-rho analysis to BLS12-381 G1; not novel cryptanalysis."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514"
+}
