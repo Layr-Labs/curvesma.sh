@@ -1,0 +1,1 @@
+P-256 compact-grid fused candidate v15. Complete claim: proof.md and submission.json. Fourier-capacity refinement: FOURIER_CAPACITY.md. Run the declared protected chain_check.py experiment. New source requires exact-version external review before publication. Earlier submitted versions are unchanged.
