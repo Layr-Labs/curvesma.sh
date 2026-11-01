@@ -1,0 +1,42 @@
+{
+  "algorithm": "parallel-batched-rho39-v4-bls-aux",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 106.0,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 127.52,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "shared-function-random-mapping",
+      "statement": "One fixed r-adding walk function from P fresh starts matches uniform random sampling for the birthday bound, and merged-suffix tail steps sample distinguished points at density 2^-32.",
+      "support": "Pollard 1978; Teske 1998/2001 analysis and EC experiments for r-adding walks; standard parallel-rho-with-distinguished-points setting; shared-function toy-curve experiments confirm merging and recovery end to end."
+    },
+    {
+      "name": "conservative-degeneracy-bound",
+      "statement": "Each walk-phase collision is degenerate ((da,db)=(0,0) as integers) with probability at most 2^-80.",
+      "support": "Unreduced 32-bit-start coefficient sums have per-coordinate spread >= 2^90 (estimate ~2^-180 per collision, 2^100 margin); zero degenerate solves in 4000+ toy recoveries; union bound over <0.52 expected collisions gives <2^-79 total."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device, as is the baseline's larger table.",
+    "Beats the generic BSGS control via batched parallel rho at the 0.39 threshold; not novel cryptanalysis.",
+    "Supersedes v3: r=64 partitions with 63/64 merge-factor sizing, 64-bit starts, specified open-addressing table with rehash analysis."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "bls12-381-g1-ecdlp",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "7efc64c4327d983a9dcd2e26eee449aba20039000d368a451b7e58f61192b602"
+}
