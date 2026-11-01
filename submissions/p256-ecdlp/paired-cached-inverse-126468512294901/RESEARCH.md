@@ -1,0 +1,1 @@
+Successor to immutable v3, stacking validated inverse reuse and dead-store elimination. Complete amended proof/ledger supplied. Final isolated checks and external exact-version review required. No publication authorized.
