@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "title": "P256 redundant fused arithmetic and absolute differences",
+  "claims": [
+    {
+      "statement": "For the protected full-production P-256 target, the complete cold stored-leaf algorithm in proof.md recovers the scalar with probability at least0.39 under the stated ideal-coin scalar-instruction machine. At q1=188730254,q2=2^27 and2^72 nodes, the exact total is111905090986539276610513689812999210008576 instructions, below2^126.395543277191 units at C=1000. All cold construction, sampling and failed caps, representation-filter loss, both transport hops and finishing deliveries, grouping, resolution, verification and output are included. Forward, backward and emission bounds are132n+11,665n+9 and33n+12; inverse remains conservatively charged39479. The unconditional representation-filter collision loss is bounded byGamma*2^227/r^2 and is included in the exact success lower bound above0.3900000022346073. Memory below2^136 bytes, preprocessing below2^118 units included in total, no auxiliary powers and no nonuniform advice. This is an analytical bound with finite implementation checks, not production execution or formal certification.",
+      "score": {
+        "numerator": "126395543277191",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "prior_inline_witness.py",
+        "RESEARCH.md",
+        "pair_keys.s",
+        "differential_check.py",
+        "scanner_check.py",
+        "COLD_ACCOUNTING.md",
+        "a64.py",
+        "pair_inline_reference.s",
+        "pair_batch.s",
+        "cold_accounting_check.py",
+        "route.s",
+        "p256_fields.s",
+        "chain_check.py",
+        "p256_fields_reference.s",
+        "proof.md",
+        "scan_ranges.s",
+        "fused.s",
+        "pair_batch_reference.s",
+        "chain_witness.py",
+        "toy_recovery.py",
+        "edge_check.py",
+        "success_probe.py",
+        "source-background.md",
+        "p256_inv.s",
+        "README.md",
+        "routing_check.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "register-and-scan-checks",
+      "source": "chain_check.py",
+      "purpose": "Run independent field and pair checks, full batch inversion, metadata and capacity controls, small complete two-hop routing, actual toy scalar recovery, and exact probability/cold-work/layout consequences. Test scope is distinguished from the production proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 97,
+          "samples": 1000
+        }
+      ]
+    }
+  ]
+}

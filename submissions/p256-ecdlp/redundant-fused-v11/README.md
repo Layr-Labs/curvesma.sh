@@ -1,0 +1,1 @@
+P-256 redundant fused arithmetic candidate v11. Complete claim and limits: proof.md and submission.json. Run the protected declared chain_check.py experiment. Every changed version requires new external review; no submission authorization is inherited. Original canonical reference bodies are retained for audit.
