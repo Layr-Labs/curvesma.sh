@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "title": "Alternative orbit-min key with resident branch products: secp256k1 cold-work bound125.252273153078",
+  "claims": [
+    {
+      "statement": "For uniform full-production secp256k1 Q=[x]P, the classical cold stored-leaf algorithm in proof.md, KEY_LEMMA.md and LEDGER_EVIDENCE.md recovers x with probability at least0.390000001 over the challenge and fresh algorithm coins. Total work on every run is at most2^125.252273153078 target-group-operation equivalents, C=1000 scalar AArch64 instructions. Exact ledger50663039813835494157123632379974059556864instructions includes all preprocessing, failures, metered arithmetic, two-hop transport, grouping, candidate recovery and output verification. Peak memory<=2^135.9988bytes, preprocessing<=2^110.1472units included, advice0. New key=min(Bx,Dx,-Ax) modp with bounded classifier-window errors; caps and success parameters are unchanged. This is an exploratory analytic bound, not a production execution or formal certificate.",
+      "score": {
+        "numerator": "125252273153078",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KEY_LEMMA.md",
+        "LEDGER_EVIDENCE.md",
+        "certificate.py",
+        "experiment.py",
+        "sites.py",
+        "toy.py",
+        "census-toy.json",
+        "kernels/a64.py",
+        "kernels/leaf.s",
+        "kernels/route.s",
+        "kernels/secp_fe.s",
+        "PROVENANCE.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-stored-leaf-kernels-and-toy",
+      "source": "experiment.py",
+      "purpose": "Execute finite production-width arithmetic/classifier/rare-path and16-node routing checks against independent models, exact instruction formulas and the complete numeric ledger. The new classifier proof is supplied separately; small experiments do not establish production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200000
+          },
+          "curve_trials": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2000
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 15
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "trials": 6000,
+          "curve_trials": 100,
+          "seconds": 15
+        }
+      ]
+    }
+  ]
+}
