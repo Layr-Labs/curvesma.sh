@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "title": "STNFS with nested 384-cell quadrature and 1/1024 Dickman brackets: 121.9996",
+  "claims": [
+    {
+      "statement": "For the full production bls12-381-fixed-g1-invert-g2 target, the complete STNFS algorithm in proof.md and DESCENT.md with the numerical refinement in REFINEMENT.md returns Q satisfying e(P,Q)=z for the exact supplied nonidentity P, with success at least 0.391663 (and hence at least 0.39) under disclosed heuristics H1-H5. It computes two GT logarithms and returns Q=[a]Q0, handling z=1 directly. All classical work is bounded by a global meter at 2^121.9996 dense-Fp12-multiplication equivalents, C=20,000 instructions, with an upper-rounded complete ledger below 2^121.99951. The physical lattice plan, polynomials, prime windows, relation region theta=87/200, factor-base bound, work allowance1.0549, filtering, kernels and target remain those of the cited source. Nested lower sums use384 cells, rho brackets use1/1024, iA indices scale by8, TRUNC=0, and retention uses the same global mesh. Expected two-log work is bounded by2^117.9578; the two-log meter is2^118.6803. Markov abort probability is below0.60604634 and the retained conservative0.6060858. Other retained upper bounds are boot failure1.9830e-4 per log, expected nodes2^17.66, node abort2^-9.64 and repeats2^-10.70, with2/r statistical distance charged. All preprocessing, failed attempts, advice construction, arithmetic, transfers, sorting, verification and output are included; nothing is amortized over other targets. Numerical-certificate construction receives an extra2^50-unit allowance. Memory is at most2^105 bytes. The source smoothness and production extrapolations remain explicit heuristics; no favorable finite-density correction or unsupported independence of whole logarithms is asserted. Analytic exploratory claim, not a full-size run.",
+      "score": {
+        "numerator": "1219996",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "REFINEMENT.md",
+        "refinement.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "refinement_audit",
+      "source": "audit_refinement.py",
+      "purpose": "Bounded audit of recorded full-recurrence evidence, upward-rounded ledger and success, unchanged prime-window endpoints, and nonzero lower/upper integration controls. Does not rerun the full recurrence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "required": []
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "full_evidence",
+      "source": "evidence16.py",
+      "purpose": "Optional full recomputation of certificates, region, ledger, retention, ECM, refined descent and declared bounds. A longer local diagnostic may be needed on emulated hardware; not run by the bounded initial audit.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
