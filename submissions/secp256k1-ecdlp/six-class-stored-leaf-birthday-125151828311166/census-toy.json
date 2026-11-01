@@ -1,0 +1,37 @@
+{
+ "input": {
+  "seed": 20261030,
+  "trials": 100000,
+  "curve_trials": 1000,
+  "seconds": 1500,
+  "kernels": false
+ },
+ "seconds": 161.8,
+ "C_toy": {
+  "q": 33556867,
+  "r": 33563419,
+  "multi_node_grid": {
+   "nodes": 25,
+   "grid": [
+    4,
+    4
+   ],
+   "leaves_per_incidence": 6,
+   "leaves": 2400,
+   "trials": 100000,
+   "success": 0.3953,
+   "se": 0.00155,
+   "cross_node_success": 0.39027,
+   "mean_colliding_pairs": 0.51452,
+   "mu_cross": 0.494252,
+   "mu_all_pairs": 0.514632,
+   "poisson": 0.38997,
+   "chen_stein_b1_b2_at_this_scale": 0.04071
+  },
+  "curve_pipeline_vs_logs": {
+   "trials": 1000,
+   "identical_outcomes": 1000,
+   "curve_successes": 394
+  }
+ }
+}
