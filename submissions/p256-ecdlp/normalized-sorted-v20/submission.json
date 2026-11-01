@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "title": "P256 normalized signed generators and sorted direction-specialized arithmetic",
+  "claims": [
+    {
+      "statement": "For the protected full-production P256 target, the complete classical cold algorithm in proof.md and its accompanying proof documents recovers the scalar with probability at least0.39, with total104863639869181146494799537812703505547264scalar instructions below2^126.3017821342194 target-group-operation equivalents at C1000. q1=377460923,q2=2^28,N=2^70. All cold normalization, sorting, search, generation, raw-label exceptions, failed caps, both hops, release acknowledgments, grouping, row-specific signed scalar resolution, verification and output are charged. Peak memory below2^136bytes; preprocessing below2^118units included; advice0 and no auxiliary powers. This is an analytical bound under the stated ideal-coin/blocking-port scalar machine, not production execution or a formal certificate.",
+      "score": {
+        "numerator": "1263017821342194",
+        "denominator": "10000000000000"
+      },
+      "evidence": [
+        "COLD_ACCOUNTING.md",
+        "FILTER_FREE.md",
+        "FOURIER_CAPACITY.md",
+        "NORMALIZATION.md",
+        "README.md",
+        "RECEIVER_PROTOCOL.md",
+        "RESEARCH.md",
+        "a64.py",
+        "chain_check.py",
+        "chain_witness.py",
+        "cold_accounting_check.py",
+        "differential_check.py",
+        "edge_check.py",
+        "fused.s",
+        "metadata_check.py",
+        "p256_fields.s",
+        "p256_fields_reference.s",
+        "p256_inv.s",
+        "pair_batch.s",
+        "pair_batch_reference.s",
+        "pair_inline_reference.s",
+        "pair_keys.s",
+        "proof.md",
+        "route.s",
+        "routing_check.py",
+        "scanner_check.py",
+        "source-background.md",
+        "success_probe.py",
+        "toy_recovery.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "register-and-scan-checks",
+      "source": "chain_check.py",
+      "purpose": "Run independent field and pair checks, full batch inversion, metadata and capacity controls, small complete two-hop routing, actual toy scalar recovery, and exact probability/cold-work/layout consequences. Test scope is distinguished from the production proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 97,
+          "samples": 1000
+        }
+      ]
+    }
+  ]
+}
