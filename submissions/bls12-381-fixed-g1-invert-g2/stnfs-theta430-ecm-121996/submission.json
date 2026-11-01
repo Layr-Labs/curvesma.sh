@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "title": "STNFS theta=43/100 with an expanded ECM schedule grid and disclosed alpha extrapolation: 2^121.996",
+  "claims": [
+    {
+      "statement": "For the full production bls12-381-fixed-g1-invert-g2 challenge, conditional on the explicitly stated smoothness, sampling, matrix and descent heuristics H1-H5 in proof.md (including the changed relation-collection Murphy-alpha extrapolation (5.03, 0.60)), the described STNFS algorithm returns Q in G2 with e(P,Q)=z for the exact supplied nonidentity P in G1 with success at least 0.39 and total classical work at most 2^121.996 dense-Fp12-multiplication equivalents (20,000 scalar instruction equivalents per unit). Compute g=e(P,Q0), descend both g and z against one per-instance relation/matrix computation, recover a with z=g^a and output Q=[a]Q0; the identity target returns infinity. All preprocessing, trials, failures, memory transfers, verification and output are charged once per challenge without future-target amortization. The theta=43/100 subregion, ECM wheel set (210,2310,30030,510510), integer B1 exponents 10 through 36, and canonical-work allowance 1.05575 give a modeled complete ledger <=2^121.9959. Model relation yield >=2^64.130, feasibility margin >=0.300 bits, incidence-inclusive work standard error <=0.02788, relation collection <=2^121.534, and linear algebra <=2^119.3685. Descent uses alpha (5.03,1), LOG2_RELS=64.130 and mean norm inputs 748.2/498.9 bits; its two-log expectation is <=2^118.122, with instruction cap 2^118.845, explicit node counter 2^27.3 and expected node count <=2^17.665. The modeled success is at least 0.39 after Markov, counter, repeat and boot-failure deductions. Storage is at most 2^105 bytes. Heuristic support is limited: the 20,000-draw fixed pool and truncated alpha sums do not establish production yield or an upper bound on the omitted prime tail. The alpha and yield assumptions are explicitly material to this conditional exploratory claim; it is not a demonstrated production attack or a claim of platform acceptance.",
+      "score": {
+        "numerator": "121996",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "validation.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence16.py",
+      "purpose": "Recompute field certificates, sample pool, theta=43/100 lattice count products, relation and work estimates, expanded ECM schedules, linear algebra, the two-log descent and special-q node count, finite-sample modeling allowance, and every declared numerical bound. Report checks_ok, total_log2W_full_ledger and modelled success. Alpha checking uses stored p<=2000 sums and selected prime checks; it does not bound the infinite prime tail.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 16,
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
