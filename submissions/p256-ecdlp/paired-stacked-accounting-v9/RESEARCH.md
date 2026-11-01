@@ -1,0 +1,1 @@
+Development successor to tested postindex v6 and submitted cached-inverse v5. Stacks own secp64-record scanner and an independently itemized conservative cold allowance. Full affected protected replay pending; no publication or review claim. Preserve v6 and prior immutable packages.
