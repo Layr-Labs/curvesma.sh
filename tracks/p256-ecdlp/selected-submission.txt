@@ -1,1 +1,1 @@
-submissions/p256-ecdlp
+submissions/p256-ecdlp/compact-grid-fused-126333525286457
