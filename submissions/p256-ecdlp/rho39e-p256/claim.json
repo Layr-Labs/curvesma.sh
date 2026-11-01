@@ -1,0 +1,37 @@
+{
+  "algorithm": "parallel-batched-rho39-v5-p256",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 105.59,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 128.146,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "shared-function-random-mapping",
+      "statement": "One fixed r=64 r-adding walk function from P fresh starts matches uniform random sampling with the 63/64 distinct-partition merge factor for the birthday bound, and merged-suffix tail steps sample distinguished points at density 2^-32.",
+      "support": "Pollard 1978; Teske 1998/2001 analysis and EC experiments for r-adding walks; standard parallel-rho-with-distinguished-points setting; shared-function toy-curve experiments confirm merging and recovery end to end."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device, as is the baseline's larger table.",
+    "Beats the generic BSGS control via batched parallel rho at the 0.39 threshold; not novel cryptanalysis.",
+    "Supersedes v4: per-walk coefficient offsets plus strictly positive increments make every collision non-degenerate by integer-range layout (no degeneracy heuristic); 128-bit table hash with global rehash cap."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "p256-ecdlp",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "802d2350d1804b19fcf0e1f6d80d816862e966625710abfa2b4244ca764aa605"
+}
