@@ -1,0 +1,42 @@
+{
+  "claims": [
+    {
+      "evidence": [
+        "proof.md"
+      ],
+      "score": {
+        "numerator": "3188",
+        "denominator": "25"
+      },
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard BLS12-381 G1 generator P0, recover x, the parallel batched Pollard rho algorithm in proof.md (P=262144 walks sharing one r=64 transition table with full-size uniform multipliers and starts and wrapping residues, Montgomery-batched additions, shared distinguished-point table) succeeds with probability at least 0.3995 using at most 2^127.52 total target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^106.0 bytes; preprocessing is at most 2^24 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps, or random-oracle premises. Success relies on the supported shared-function random-mapping (standard Teske regime, covering table occupancy; no hash heuristic), disclosed and supported in proof.md; degeneracy is a quantified 1/q heuristic event. This is an analytic best-known-attack cost analysis, not a claim of novelty or practical execution. The attack reads A_1=[s]P0 and runs rho on it; W(n) is constant in n."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-parallel-rho",
+      "initial_inputs": [
+        {
+          "order": 9883
+        }
+      ],
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "order": {
+            "maximum": 10000,
+            "minimum": 2,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "type": "object"
+      },
+      "purpose": "Run the identical multi-walk attack path on the fixed prime-order toy curve (n=9883) and measure success rate against the birthday prediction. This does not establish production curve behavior or cost bounds.",
+      "source": "experiment.py"
+    }
+  ],
+  "title": "bls12-381-g1-ecdlp: parallel batched rho, r=64, standard-regime wrapping walk, at 39%+ success",
+  "version": 1
+}
