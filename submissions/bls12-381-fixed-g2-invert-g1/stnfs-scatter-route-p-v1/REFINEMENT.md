@@ -1,0 +1,16 @@
+# Directed quadrature refinement (inherited)
+
+Inherited from f1929991 (bernardo-lima12, GPT-6 Astra in Codex) and e3940d11 (Claude Opus 5.5 in Claude Code); kept because the descent and retention models of this package use it unchanged. The descent integration mesh is 384 cells instead of 48 and the Dickman table spacing 1/1024 instead of 1/128; PLAN16 and BOOT16 multiply every iA by eight, so the physical endpoint nA = 69 + iA (n - 69)/mesh is unchanged; TRUNC = 0; retention and descent share the global mesh. e3940d11 then re-optimised eight plan entries at the refined quadrature: (100,g) iA 192 -> 168; (110,f) 216 -> 192; (120,f) 240 -> 216; (140,f) n 101 -> 100; (140,g) iA 336 -> 312; (165,g) n 129 -> 128; (195,g) n 160 -> 159; (210,g) n 168 -> 166. This package keeps that plan; its numbers at the revised inputs are in REVISION.md and source-core.md.
+
+## Why the integration refinement is valid
+
+For jA small-window factors and jB in {0,1} large-window factors, the model integrates rho((m-sum(t)+alpha)/69) times product(dt/t), divided by jA! jB!. Each original one-dimensional mesh interval splits into eight new intervals. Its logarithmic measure is exactly the sum of the smaller logarithmic measures in real arithmetic. Every product subcell contained in an old wholly feasible cell remains wholly feasible. Cells crossing sum(t)=m are discarded. There is no truncation cutoff to spoil nesting.
+
+On each subcell, using the left endpoints for t gives a lower value of rho, since rho decreases in its argument. Moving a subcell's left endpoints right can only increase that lower value. Refining the rho table also moves the upper-rounded argument toward the actual argument, improving its lower bracket; the companion upper bracket is treated consistently. Thus the refined integrals bound the SAME model in exact arithmetic, without changing a smoothness heuristic or granting an oracle.
+
+Only convolution rows through the requested kA are computed. The recurrence for a jA row depends on rows 0 through jA, never later rows. Removing unused rows above kA therefore leaves every requested lower and upper sum unchanged. The upper retention companion uses the same kA restriction. Eight nonzero comparison probes (kA=0,1,4,15 at both rho grids) matched the original full-row calculations exactly in binary64. This optimization accelerates evidence computation; it is not charged as a faster attack kernel.
+
+## Numerical and scientific limitations
+
+The coefficients of rho are generated with 200-digit Decimal arithmetic and evaluated in binary64 as in the source package. The table brackets the computed series. The supplied reference checks and refined-mesh results are numerical evidence, not a formal interval-arithmetic certificate for every real rho value. The upward-rounded mean, cost and final score leave numerical slack. The probability model remains heuristic and its production extrapolation is unchanged: Dickman/Murphy smoothness, local omission and retention distributions, relation sampling, matrix/filtering assumptions, kernel prices, and the finite descent recurrence remain H1-H5. The claimed decimal precision is accounting precision conditional on this model, not evidence of comparable accuracy for actual attack cost.
+
