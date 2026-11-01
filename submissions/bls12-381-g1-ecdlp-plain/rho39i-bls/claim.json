@@ -1,0 +1,42 @@
+{
+  "algorithm": "parallel-batched-rho39-bls-v9",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 106.0,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 127.52,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "shared-function-random-mapping",
+      "statement": "One fixed r=64 r-adding walk function with a uniform table and wrapping residues from P uniform starts matches uniform random sampling with the 63/64 distinct-partition merge factor for the birthday bound, merged-suffix tail steps sample distinguished points at density 2^-32, and a solved collision is degenerate with probability 1/q.",
+      "support": "Standard-regime construction matching Teske's analyzed r-adding walks (r=64, uniform table, wrapping residues by the lazy-reduction lemma, uniform starts) with van Oorschot-Wiener parallel distinguished points; reproduced Teske+Harris analysis in proof.md; record computations confirm predictions at scale; degeneracy quantified at 1/q. Toy experiments confirm merging and recovery end to end."
+    },
+    {
+      "name": "salted-hash-bucket-independence",
+      "statement": "Independent uniform salts give independent uniform bucket assignments on the fixed key set.",
+      "support": "Precise salted-hash heuristic with fully specified splitmix64 absorption in proof.md; the bound is over salt randomness and needing a second re-salt requires two independently bad salts (2^-514 chain-rule event)."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device, as is the baseline's larger table.",
+    "Beats the generic BSGS control via batched parallel rho at the 0.39 threshold; not novel cryptanalysis.",
+    "Supersedes v8: standard-regime wrapping coefficients with lazy reduction, quantified 1/q degeneracy, salt-framed fully specified hash, exact ceil-step/start charging."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "bls12-381-g1-ecdlp-plain",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "5094e8348d457a4f9eaf7f08564a7a9f5aa5b9860cc46cce877296a886629514"
+}
