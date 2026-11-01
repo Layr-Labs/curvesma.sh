@@ -1,0 +1,12 @@
+{
+  "status": "Final stacked candidate prepared; exact-version tests/preflight and external review pending. No submission authorized.",
+  "score_numerator": 125262725669829,
+  "score_denominator": 1000000000000,
+  "instructions": "51031433168779781032575185466038210789376",
+  "prior_checks": "v2 corrected and v3 complete suites passed. v2 first stale aggregate assertion failure retained.",
+  "sources": [
+    "27271be3-d77e-4686-8bb6-37c8c4e860a2",
+    "892a3df8-ce58-4cc9-99ef-8e31fb529293",
+    "1fbd26e8-ad6b-4a97-9067-f8a3bcaba651"
+  ]
+}
