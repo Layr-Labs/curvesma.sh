@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "Secp256k1 two-fraction key with two-phase direct full-record bucketing",
+  "claims": [
+    {
+      "statement": "For uniform full-production secp256k1 Q=[x]P, the complete cold classical algorithm in proof.md and DIRECT_PROTOCOL.md recovers x with probability at least0.390000001. Total46944787124746853008406832072376781373440 scalar instructions are below2^125.142304476874 target-group-operation equivalents at C1000. N=2^72,q1=145289002,q2=2^25. All preprocessing, scalar draws, rare arithmetic and key meters, label errors, failures, two-phase transport, receiver release acknowledgments, grouping, aggregate exchanges, resolution, verification and output are charged. Peak memory below2^136bytes, preprocessing below2^111units included, no advice or auxiliary powers. The explicit ordered blocking-port/resident receiver scalar machine is an analytical construction, not a production execution or physical throughput measurement.",
+      "score": {
+        "numerator": "125142304476874",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "DIRECT_PROTOCOL.md",
+        "RESEARCH.md",
+        "certificate.py",
+        "experiment.py",
+        "kernels/a64.py",
+        "kernels/leaf.s",
+        "kernels/route.s",
+        "kernels/secp_fe.s",
+        "probe_direct.py",
+        "proof.md",
+        "routing_check.py",
+        "sites.py",
+        "toy.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "direct-integration",
+      "source": "probe_direct.py",
+      "purpose": "Check unchanged frontier arithmetic and changed two-phase direct routing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 97
+        }
+      ]
+    }
+  ]
+}
