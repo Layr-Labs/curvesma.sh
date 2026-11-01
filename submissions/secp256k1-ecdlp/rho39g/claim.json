@@ -1,0 +1,42 @@
+{
+  "algorithm": "parallel-batched-rho39-v7",
+  "baseline_kind": "best-known-attack-analysis",
+  "claim": {
+    "memory_log2_bytes": 105.59,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 24,
+    "success_probability": 0.3995,
+    "time_log2": 128.146,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [
+    {
+      "name": "shared-function-random-mapping",
+      "statement": "One fixed r=64 r-adding walk function from P fresh starts matches uniform random sampling with the 63/64 distinct-partition merge factor for the birthday bound, and merged-suffix tail steps sample distinguished points at density 2^-32.",
+      "support": "Pollard 1978; Teske 1998/2001 analysis and EC experiments for r-adding walks; standard parallel-rho-with-distinguished-points setting; shared-function toy-curve experiments confirm merging and recovery end to end."
+    },
+    {
+      "name": "hash-bucket-independence",
+      "statement": "The 128-bit slot hash assigns distinct table keys to independent uniform buckets.",
+      "support": "Standard heuristic for splitmix64-class non-cryptographic hashes; single re-salt fallback bounds the damage from any deviation (second failure is a 2^-257 union event)."
+    }
+  ],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution or independent qualification.",
+    "Success relies on the supported multi-walk random-mapping heuristic.",
+    "Instruction budgets are conservative analytic upper bounds, not measured assembly.",
+    "The 2^98-entry table is an analytic device, as is the baseline's larger table.",
+    "Beats the generic BSGS control via batched parallel rho at the 0.39 threshold; not novel cryptanalysis.",
+    "Supersedes v6: segmented 16-byte node pointers, 17-instruction node budget, precomputation as attack-phase work (preprocessing 2^24), explicit hash heuristic, revisit deduplication."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "secp256k1-ecdlp",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086"
+}
