@@ -1,0 +1,42 @@
+{
+  "claims": [
+    {
+      "evidence": [
+        "proof.md"
+      ],
+      "score": {
+        "numerator": "12765",
+        "denominator": "100"
+      },
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT, input P and z, recover Q in G2 with e(P,Q)=z, the parallel Pollard-rho-in-GT algorithm in proof.md (one pairing to form g=e(P,Q0), P=4096 walks sharing one r=64 transition table with full-size uniform multipliers and starts and wrapping residues, dense Fp12 multiplications, shared distinguished-point table, G2 scalar mult, verification pairing) succeeds with probability at least 0.3995 using at most 2^127.65 total target-group-operation equivalents, including preprocessing and verification. Peak memory is at most 2^108.0 bytes; preprocessing is at most 2^24 target-group-operation equivalents and is included in total work; nonuniform advice is at most 2^0 bytes and is included in memory. This is a classical cold attack with no uncharged advice, quantum steps, or random-oracle premises. Success relies on the supported posited exploration law (pooled birthday with conservative merge factor, per-point labels, mixing degeneracy; no hash heuristic), the only heuristic, disclosed and supported in proof.md; degeneracy is a quantified (<= 2/r) heuristic event. This is an analytic best-known-attack cost analysis, not a claim of novelty or practical execution."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-parallel-rho",
+      "initial_inputs": [
+        {
+          "order": 9883
+        }
+      ],
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "order": {
+            "maximum": 10000,
+            "minimum": 2,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "type": "object"
+      },
+      "purpose": "Run the identical multi-walk attack path in multiplicative notation on a fixed prime-order toy subgroup (n=9883) and measure success rate against the birthday prediction. This does not establish production behavior or cost bounds.",
+      "source": "experiment.py"
+    }
+  ],
+  "title": "bls12-381-fixed-g1-invert-g2: parallel rho in GT, r=64, standard-regime wrapping walk, at 39%+ success",
+  "version": 1
+}
