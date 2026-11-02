@@ -1,0 +1,1 @@
+k2 1014 exact, fixed calls funded; pool-cap/head-index/cap explicit; allowance 2; H4 floor 49/50 (no H6); F_PRE 39/40; 33-bit segments; stratified-serial abort EFRAC 81/100 (section 8); KT=24757/50000; 10^-15 grid. Bases: 9c1b2d5d, a38cb931, 49e06a3d, c5eeef54, 2ed74a2c, c9a42c57 (repaired). Score 116157101456605786/10^15, success 0.39, mem <2^121.5854 B, pre <2^115.3068.
