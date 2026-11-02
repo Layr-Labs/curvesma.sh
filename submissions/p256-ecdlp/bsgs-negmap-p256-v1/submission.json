@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "title": "p256-ecdlp: plain deterministic negation-map BSGS with a complete cold-work ledger",
+  "claims": [
+    {
+      "statement": "For the protected P-256 parameters: the deterministic signed-window baby-step/giant-step algorithm in proof.md builds the table of [j]P0 for j in [0,2^127) keyed by affine x-coordinate, sorts it, giant-steps Q-[c]P0 by -[s]P0 for h=2^128 iterations with s=2^128-1, reconstructs a=i*s+c+j or i*s+c-j from the guaranteed hit (h*s=2^256-2^128 exceeds n-1, so every scalar is covered including x=0), and outputs the scalar verified by [a]P0=Q, so every challenge is answered correctly with success exactly 1.0 (hence at least 0.39), using less than 2^(291/2) total target-group-operation equivalents, including preprocessing, routed memory access, sorting and verification. No reference operation is counted (H=0): every field operation (6-limb CIOS Montgomery multiplication, Fermat inversion), every complete affine point step with its own inversion, all memory routing and control are charged through explicit analytic scalar AArch64 instruction bounds, and the total instruction count is divided by the protected C=1000. Preprocessing is less than 2^(291/2) equivalents and is included in total work; peak memory is less than 2^150 bytes; nonuniform advice is 0 bytes. There is no heuristic, randomness, retry, hash table or quantum step. This is an analytic conservative accounting control, not a claim of novelty or practical execution.",
+      "score": {
+        "denominator": "2",
+        "numerator": "291"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-negmap-bsgs-p256",
+      "source": "experiment.py",
+      "purpose": "Exhaustively check the signed-window coverage/sign logic on small additive groups and the full algorithm (sort, giant stepping, sign decision, reconstruction, verification) on small P-256-shape curves y^2=x^3-3x+b over prime-order subgroups with real x-coordinate keys; execute the counted 6x64-bit CIOS Montgomery multiplication and the Fermat chain on the real P-256 prime and check P0 has order n; check the exact integer full-coverage (h*s above n-1) and ledger inequalities with the real n. Finite scope only; does not establish production cost or security.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all",
+              "additive",
+              "curve",
+              "kernel",
+              "ledger"
+            ]
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all"
+        }
+      ]
+    }
+  ]
+}

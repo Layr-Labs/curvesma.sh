@@ -1,1 +1,1 @@
-submissions/p256-ecdlp
+submissions/p256-ecdlp/bsgs-negmap-p256-v1
