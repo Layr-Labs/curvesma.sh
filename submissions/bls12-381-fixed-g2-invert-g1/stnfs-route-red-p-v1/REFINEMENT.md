@@ -1,0 +1,7 @@
+# Directed quadrature refinement (inherited)
+
+From f1929991/e3940d11, used unchanged. Mesh 384 cells (was 48), Dickman spacing 1/1024 (was 1/128); PLAN16/BOOT16 multiply every iA by eight, so nA = 69 + iA(n-69)/mesh is unchanged; TRUNC = 0; retention and descent share the mesh. e3940d11 re-optimised eight entries: (100,g) iA 192->168; (110,f) 216->192; (120,f) 240->216; (140,f) n 101->100; (140,g) iA 336->312; (165,g) n 129->128; (195,g) n 160->159; (210,g) n 168->166. Kept here.
+
+**Validity.** Integrand rho((m-sum(t)+alpha)/69) prod(dt/t)/(jA! jB!). Each old interval splits into eight whose log-measures sum exactly to the old one; feasible subcells stay feasible, cells crossing sum(t)=m are discarded, no truncation cutoff. Left endpoints give lower rho (rho decreases); the finer table moves the upper-rounded argument toward the true one; the upper bracket is consistent. So the refined integrals bound the same model, same heuristic. Only convolution rows through kA are computed (row jA needs rows 0..jA), leaving requested sums unchanged; eight probes (kA=0,1,4,15, both grids) matched full rows exactly in binary64. Evidence-only speedup, not a charged kernel.
+
+**Limitations.** rho coefficients in 200-digit Decimal, evaluated in binary64; the table brackets the computed series (numerical evidence, not an interval certificate). Model and extrapolation remain H1-H5; precision is conditional accounting precision.
