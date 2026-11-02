@@ -1,0 +1,92 @@
+{
+ "source_commit": "852f57de5e67dd4a066e37e3f3d926c1e4bec592",
+ "source_submission": "3a2e69ca-18c2-4f1d-b3dc-5f54c81eece0",
+ "mesh": 384,
+ "rho_denominator": 1024,
+ "two_log_measured": 115.55266249553972,
+ "two_log_upper": 115.5527,
+ "descent_cap": 116.28,
+ "node_log2_measured": 17.258249286511962,
+ "boot_phi_measured": 4.7998533079402476e-05,
+ "claim": 121.32193,
+ "ledger_upper_rows": [
+  121.1502,
+  117.7103,
+  107.1997,
+  116.28,
+  90,
+  88,
+  80,
+  72,
+  50,
+  11
+ ],
+ "success_lower_claim": 0.394319,
+ "probe_checks": [
+  {
+   "name": "kA0",
+   "rho_den": 1024,
+   "limited": 2.805489547110276e-09,
+   "upper_limited": 2.815072446467079e-09
+  },
+  {
+   "name": "kA1",
+   "rho_den": 1024,
+   "limited": 9.902753534643453e-09,
+   "upper_limited": 9.97851915882687e-09
+  },
+  {
+   "name": "kA4",
+   "rho_den": 1024,
+   "limited": 3.2505664635290736e-06,
+   "upper_limited": 3.5441380259369754e-06
+  },
+  {
+   "name": "kA15",
+   "rho_den": 1024,
+   "limited": 1.5143471845542834e-05,
+   "upper_limited": 2.3268520296823795e-05
+  }
+ ],
+ "refined_full_diagnostic_checks_ok": true,
+ "full_diagnostic_scope": "Full evidence16.py (samples 16, seed 1): all 22 checks (21 + count_bins), isolated container. The short audit checks recorded arithmetic, code hashes and integration controls only.",
+ "code_sha256": {
+  "descent16.py": "48f1481850d94b330decafd9c0ad8cb704926a27f7b16bc57e7e84cc6dd5f775",
+  "retain16.py": "53904dc9fb3dba58b7c540da2b27a31caad2f1354a71d625c8dfbfa24c96d379",
+  "model16.py": "d7d62619a61c2693ce6d01d4e95f13e222f2d21ce7d477874a76acca47d00e78"
+ },
+ "final_full_diagnostic": {
+  "checks_ok": true,
+  "total_log2W_full_ledger": 121.32187,
+  "claimed": 121.32193,
+  "log2_relcol_ceil4": 121.1502,
+  "log2_la_ceil4": 117.7103,
+  "work_allowance": 1.0674,
+  "work_se_ceil5": 0.03359,
+  "success_exact": 0.39433539872606443
+ },
+ "boot_phi_upper": 4.8e-05,
+ "counter_abort_log2_upper": -10.04,
+ "repeat_log2_upper": -10.7,
+ "plan_reoptimisation": {
+  "method": "joint-move coordinate search at (64.130,UDUP 0.5,mr18,THIN85); noise pruned at 1e-6",
+  "changed_entries": {
+   "count": 35,
+   "note": "entry diff recomputable from _PLAN vs PLAN16 in descent16.py (audited by windows check)"
+  },
+  "two_log_before": 116.302398,
+  "two_log_after": 115.843112
+ },
+ "la_reduced": {
+  "cfg": "C_ROW 2710, C_RED9 420, C_ENTRY 20.7, pad 1.096, blocks (19,4)",
+  "la": "117.7103",
+  "gen": "107.1997"
+ },
+ "x2_64": {
+  "cfg": "X2 2^64, slacks (294,225), theta 19/50, allow 1.0674, alpha (5.15, 0.85), count-bins 1263/1212/1167/1140",
+  "rels": "64.1310/0.3012",
+  "relcol": "121.1502",
+  "cap": "116.28"
+ },
+ "ledger_upper_claim": 121.32193
+}
