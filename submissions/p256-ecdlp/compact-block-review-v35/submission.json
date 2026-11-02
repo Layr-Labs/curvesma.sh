@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "title": "Compact P256 fixed-block range search v35: 512-record blocks, tight scalar/scanner bounds",
+  "claims": [
+    {
+      "statement": "For the protected full-production P256 target, the complete cold classical algorithm in proof.md and supporting documents recovers the scalar with probability at least0.39 using at most102646540532385489526210910423437212123136 scalar instruction equivalents, below2^126.270952611238617008 group units at C1000. q1=377468911,q2=2^28,N=2^70. Includes all construction, normalization, range-tree control, capped carry/failure costs, fixed block-window transport with transaction-bound ACK events, grouping, explicit resolution, verification and output. Peak memory below2^136bytes; preprocessing below2^118units included; no advice or auxiliary powers. Analytical bound under the stated ideal-coin and blocking-port machine, not production execution or formal certification.",
+      "score": {
+        "numerator": "126270952611238617008",
+        "denominator": "1000000000000000000"
+      },
+      "evidence": [
+        "a64.py",
+        "block.s",
+        "chain_witness.py",
+        "cold_accounting_check.py",
+        "fixed_layout.py",
+        "fused.s",
+        "keys_reference.s",
+        "merge.s",
+        "merge_check.py",
+        "native_tree.py",
+        "p256_fields.s",
+        "p256_fields_reference.s",
+        "p256_inv.s",
+        "pair_batch_reference.s",
+        "pair_inline_reference.s",
+        "phase4.s",
+        "probe.py",
+        "proof-appendices.md",
+        "proof.md",
+        "range_keys.s",
+        "range_ledger.py",
+        "range_witness.py",
+        "raw_differential.py",
+        "resolution_check.py",
+        "route.s",
+        "routing_check.py",
+        "scalar_check.py",
+        "scanner_check.py",
+        "search.s",
+        "search_check.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "range-tree",
+      "source": "probe.py",
+      "purpose": "Check direction/carry-specialized assembly and descriptor invariants.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 97
+        }
+      ]
+    }
+  ]
+}
