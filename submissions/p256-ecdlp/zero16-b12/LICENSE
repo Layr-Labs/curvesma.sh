@@ -1,0 +1,7 @@
+SPDX-License-Identifier: Apache-2.0 OR ISC OR MIT-0
+
+This package derives from P256 submission afe25e18
+(backward-unroll-review-v47), which carries the full license texts,
+including for the s2n-bignum-derived scalar-multiply code. No license
+terms are changed; this file is shortened for the 262144-byte submission
+archive cap. See the submission note for provenance.
