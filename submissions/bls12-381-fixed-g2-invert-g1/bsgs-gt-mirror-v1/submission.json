@@ -1,0 +1,47 @@
+{
+  "claims": [
+    {
+      "evidence": [
+        "proof.md"
+      ],
+      "score": {
+        "denominator": "2",
+        "numerator": "287"
+      },
+      "statement": "For the protected BLS12-381 parameters, challenge (Q nonidentity G2, z in GT) and pinned G1 generator P0: D=e(P0,Q) has exact order r and generates GT. The deterministic baby-step/giant-step algorithm in proof.md builds the table of D^j for j in [0,2^128) keyed by canonical Fp12 coefficient list, sorts it, giant-steps z by D^(-m) for h=2^128 iterations, reconstructs a'=i*m+j from the guaranteed hit (m*h=2^256 above r), outputs P=[a']P0 and verifies D^(a')=z, so every challenge is answered correctly with success exactly 1.0 (hence at least 0.39), using less than 2^(287/2) total target-group-operation equivalents, including preprocessing, the single Miller pairing, routed memory access, sorting and verification. No reference operation is counted (H=0): every Fp12/Fp2/Fp operation (schoolbook Fp12 multiplication, 6-limb CIOS Montgomery multiplication, Fermat inversion), every G1/G2 point step with its own inversion, all memory routing and control are charged through explicit analytic scalar AArch64 instruction bounds, and the total instruction count is divided by the protected C=20000. Preprocessing is less than 2^(287/2) equivalents and is included in total work; peak memory is less than 2^150 bytes; nonuniform advice is 0 bytes. There is no heuristic, randomness, retry, negation map or quantum step. This is an analytic conservative accounting control, not a claim of novelty or practical execution."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-plain-bsgs-gt-mirror",
+      "initial_inputs": [
+        {
+          "mode": "all"
+        }
+      ],
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "enum": [
+              "all",
+              "additive",
+              "group",
+              "kernel",
+              "ledger"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "type": "object"
+      },
+      "purpose": "Exhaustively check the plain-BSGS coverage/reconstruction logic on small additive groups and the full algorithm (sort, giant stepping, reconstruction, D^(a')=z verification) on small prime-order multiplicative groups with canonical keys; execute the counted 6x64-bit CIOS Montgomery multiplication and the Fermat chain on the real BLS12-381 prime, check P0 has order r, check the schoolbook Fp12 multiply/reduce kernel, Fp2 inversion, and that the pinned Q0 lies on the G2 twist with order r; check the exact integer full-coverage (m*h above r) and ledger inequalities with the real r. Finite scope only; does not establish production cost or security.",
+      "source": "experiment.py"
+    }
+  ],
+  "title": "bls12-381-fixed-g2-invert-g1: plain deterministic BSGS discrete log in GT with a complete cold-work ledger",
+  "version": 1
+}

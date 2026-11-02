@@ -1,0 +1,29 @@
+{
+  "algorithm": "bsgs-gt-mirror-v1",
+  "baseline_kind": "deterministic-plain-bsgs",
+  "claim": {
+    "memory_log2_bytes": 150,
+    "nonuniform_advice_log2_bytes": 0,
+    "preprocessing_log2": 143.5,
+    "success_probability": 1.0,
+    "time_log2": 143.5,
+    "time_unit": "target-group-operations"
+  },
+  "cost_model": "classical-group-work-v2",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "heuristics": [],
+  "lane": "exploratory",
+  "limitations": [
+    "Analytic construction; no full-size execution, AArch64 binary/trace or built routing hardware.",
+    "All work is charged in instructions divided by C=20000 (H=0); field-kernel counts are analytic, not compiler measurements.",
+    "Loose conservative upper bound, not an optimized or best-known attack estimate; schoolbook Fp12, no endomorphism, no negation map, generous Miller envelope.",
+    "The astronomical memory is mandatory; acceptance would mean exploratory plausible_not_refuted only."
+  ],
+  "proof": "proof.md",
+  "review_status": "pending",
+  "schema_version": 2,
+  "submission_state": "ready",
+  "target_id": "bls12-381-fixed-g2-invert-g1",
+  "target_profile": "production-v2",
+  "target_profile_sha256": "c18402d08303b68d536a4c1ea2241420f04455e7e90b970cf9310d12374788a9"
+}
