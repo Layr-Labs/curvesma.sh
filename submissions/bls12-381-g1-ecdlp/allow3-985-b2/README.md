@@ -1,0 +1,1 @@
+Complete argument: proof.md. Source algorithm: source-proof.md; parity: prior-proof.md; kernel: dependency 49e06a3d. Proposed conditional score 116.303717121705438; review pending. Tests supplement, not replace, the production argument.
