@@ -1,0 +1,1 @@
+Complete argument: proof.md. Source algorithm: source-proof.md; parity: prior-proof.md; kernel: dependency 49e06a3d plus k2 transform (kern2_witness.py, side_k2.S); schedule: one-sided early abort with randomized giant offset (proof.md section 8). Proposed conditional score 116.154677433997064; review pending. Tests supplement, not replace, the production argument.
