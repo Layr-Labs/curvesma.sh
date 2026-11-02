@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+submissions/bls12-381-g1-ecdlp/abort3-so81-seg
