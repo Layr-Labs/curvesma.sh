@@ -1,0 +1,106 @@
+# Exact kernel body and retuned coverage budget for the powers-of-tau target
+
+## Complete claim and source scope
+
+For the protected BLS12-381 powers-of-tau target, at n=2^20, the supplied paired class-walk Cheon construction has total work at most 2^116.296996305267676 G1-reference units (C=2000), conditional on the explicitly disclosed H1-H6 of source-proof.md and section 6 below. The exact score is 116296996305267676/1000000000000000. Success is at least 0.39 under those hypotheses. Memory remains below 2^121.5854 bytes, preprocessing below 2^115.3059 units and included in total work, and advice is zero. Only A_1 and A_(2^20) are accessed, with all accesses charged; the same bound W(n) applies for 2^20<=n<r. No claim is made for smaller n, and no auxiliary powers are transferred to an ordinary track.
+
+The complete algorithm, uniform-challenge reduction, class sieves, paired walk, planner, bounded transport, collision handling, root recovery, verification and H1-H5 support are in source-proof.md, the immutable source argument from submission 9c1b2d5d-98fb-42a4-99ab-593f6406a59f, commit d0a6e4cfea64902889b71847dbc4409709b073fc. prior-proof.md supplies the published parity-key amendment a38cb931-1c42-4bc2-b209-c429ce92dfb1. Declared dependency 49e06a3d-e5c5-4fb4-8302-2106dc93104a supplies the lazy-fused body design restated in section 1, with retained artifacts (lazy_witness.py, native_check.py, measure/side_lanes.S); only its amendment prose is omitted, for the byte budget. The rejected 0.985 attempt 8d7d6d7c is cited for its H4-mean ladder design only (remeasured independently by h6_ladder.py); its H6 reasoning is replaced by section 6. Ancestor-only Callgrind build/run recipes are omitted for the budget and retained in ancestor packages; all machine-audited kernel artifacts and the measurement log are included. The direct file base is this line's k2/allowance-2 package (b3; 2ed74a2c-49c8-4881-9c77-874292e75f48), which supplies the kernel, H6 measurement, explicit rows, aggregate bounds, 33-bit repair, retuned budget and grid, retained verbatim; its conceptual base is c5eeef54-4766-47d0-a0cd-4429cd61b2a1. This document changes only the allowance level (2 to 1, section 3, with the (v) pass-control tightening) and numerical displays. Predecessors' old constants and totals are historical, not additional claims.
+
+The source uses r as protected, d=2^20 dividing r-1, m=(r-1)/d, six-element GLV/negation classes, and minimum pair fraction 49/50. The coverage target is K=6N^2/m>=24757/50000 (0.49514). N=64239578809815195260251725009983698 is the least integer satisfying the retuned budget. The scheme and all failure checks are unchanged. No previous hosted decision proves H1-H6.
+
+## 1. Exact k2 kernel body (1014) with explicit fixed-call row
+
+The side-output body is charged at 1014 instructions worst-path, proven by a composed exact source transform (kern2_witness.py) from the measured kernel measure/side_lanes.S to side_k2.S (asserted byte equality), differentially audited against whole-integer field arithmetic (native_check.py, 458 lanes, both branches of both fused blocks). Fixed calls are funded through a separate, nonoverlapping ledger row.
+
+The side call is issued at most once per round per base, so (BASES+2)*LANE_OPS bounds the invocations (the 49e06a3d call bound, retained). Each invocation costs at most 512 instructions including call preparation and return (deliberately larger than the 36 fixed function instructions of the native audit). The ledger adds an exact row of 512*(BASES+2)*LANE_OPS = 1066509928891664157045105880989696 instructions, split evenly between preprocessing and online work; the even split is asserted exact. This row is in the instruction total; fixed-call funding draws on no per-output slack, no allowance capacity, and no padding conservatism.
+
+The first transform stage is restated from 49e06a3d. Let p be the base-field prime and R=2^384>8p. For a,b<2p, word-serial Montgomery reduction returns S=(ab+qp)/R with q<R, hence S<4p^2/R+p<2p, and the word accumulator stays below a+p<3p<R; so the first product (a=y1+y2<2p, b=inv<p) skips its final conditional subtraction, yielding mu<2p, while the square keeps its normalization and stays canonical. The second product takes both operands below 2p with raw output S<2p. For the final y, D=S-y1 lies in (-p,2p); one carry branch adds p once (negative case) or conditionally subtracts p once (nonnegative case), replacing 13+23 instructions by at most 23. The second stage (k2, new) saves 11 more per lane on the worst path: (T1, -2) the two `mov x17,xzr` zeroings are dropped and the consuming `adc x4,x17,xzr` becomes `adc x4,xzr,xzr` (x17 is dead: reloaded next; adc sets no flags either way); (T2, -2) n0 is pinned in x18 across each Montgomery product (x18 is untouched inside both products, asserted), deleting 10 n0 reloads at the cost of 4 cursor spill/restore plus 2 n0 loads plus 2 x4 restores through the documented-unused frame slot [x29,#112], with epilogues restoring the cursor early; (T3, -6) the x' normalization (D in (-2p,2p)) goes branchy, `b.hs` over the +2p adds, replacing sbc plus 6 ands (worst path 28 vs 34; the nonnegative path saves 12); (T4, -1) the lane-head out spill is deleted and out loads cursor-relative [x18,#-32] (same count as the frame loads they replace). The audit asserts byte-identical x', y' and parity keys on all 458 lanes (edge values 0, 1, p-1, p-2, R; 300 randoms; 32 genuine curve points), the composed byte derivation, per-group saving in [37n+5neg, 43n+5neg] with the T3 path model (extras in multiples of 6), and the worst-path bound cn<=1014n+512.
+
+A pair costs 2000+1014+53=3067 instructions for two points; a root costs 2050. The primary 2000 reference charge is retained untouched, including its batch-inversion amortization. Pair bookkeeping (53) and root bookkeeping (50), including seven-instruction worst-path parity keys, and the average record transport 81/2 are unchanged. With the pooled pair fraction F=197/200 of section 6, the weighted per-point charge is 632699/400 = 1581.7475 instructions.
+
+## 2. Retuned coverage budget
+
+The success floor is 1-exp(-K)-0.0005-2^-20-4*2^-40-2^-111, where K=6N^2/m is realized coverage and the subtracted terms are the H1 allowance, the modelling budget, the H3/H5 cap-tail union, and the diagonal event (source-proof.md section 7). The H1 allowance (0.0005) and every other term are retained exactly; only the target K changes, from 619/1250 (0.4952) to 24757/50000 (0.49514).
+
+At K=0.49514 the exact floor is 1-exp(-0.49514)-0.0005-2^-20-4*2^-40-2^-111 = 0.39001347..., asserted by evidence.py to exceed 0.39001. The declared success remains 0.39, with arithmetic margin 0.000013. This margin is pure exact arithmetic on 1-exp(-K); no heuristic allowance was narrowed. N is the least integer with 6N^2>=KT*m (asserted both directions), so realized K is minimal feasible and no coverage is wasted.
+
+## 3. Explicit pool-cap charge and allowance 1
+
+The source charges an 8-instructions-per-point allowance row for unlisted bookkeeping, naming its largest known residual: the owner pool-cap compare, two instructions per baby record (source-proof.md section 5.2). The base charges it explicitly: every baby record is inserted once into its owner's pool, and the insert path performs one pool-counter bound compare plus its not-taken branch (subs/cmp plus b.hi, two instructions), for an exact row of N*2 = 128479157619630390520503450019967396 instructions. Giant records only read their head slot and walk the chain (REC_LOOK); they never insert and need no pool-cap check. The pool-cap row sits entirely in the baby phase and is included in preprocessing in full.
+
+With the pool-cap residual and the head-index combine explicit, and pass control tightened below 2^112.1 ((v) below), the allowance row drops from 2 to 1 instruction per point (2N*1 = 128479157619630390520503450019967396), removing 2N instructions while keeping the dominant residuals auditable.
+
+Aggregate residual bounds, retained from the base (verdicts cited as procedural context only). (i) Pool-cap compares: charged exactly (N x 2 above), residual zero. (ii) Primary-key reloads: zero. The side kernel stores the key to the record slot and the generator reloads it with the listed ldp+ldr pair (side records; loop control for main records); the key then travels inside the 40-byte record through already-charged loads, and no listing reloads a key anywhere else. (iii) Head-index word combine: charged exactly. The specified 57-bit index (key bits 60..116) straddles two 64-bit words on the stated record layout, so one extraction cannot produce it; the least sequence is lsr plus bfi (two instructions where the listing charges one). Every baby insert and giant lookup performs exactly one extraction: 2N = 128479157619630390520503450019967396 instructions, split exactly N baby (preprocessing) and N giant (online). The index is consumed by the head load on the next instruction, so no re-extraction path exists and the residual beyond the new row is zero. (iv) Comparison-cap enforcement: charged exactly by one down-counter check per comparison (cmp_cap x OWNERS = 25085181676799471785259757490667520, online only, no preprocessing term); the listed per-comparison loop control is retained, so any overlap double-charges conservatively. (v) Plan, batch and output pass control: below 2^112.1 instructions, over 23x below the retained margin. Rows with listed loop control (walk, transport, comparison, restart rows) need nothing further. Owner-init loops no longer dominate: the per-owner 2^56-stp stream is unrolled 2^20-fold (one shared 2^20-stp body, 4 MiB of instruction text under the analytical memory conventions; setup inside the listed +64 per owner; identical stp count), so owner-init control is 2^60 owners x (2 x 2^36 + 2), below 2^98 including the outer owner loop. All other bulk rows (plan distribution, planner scans and traversals, sieves, candidate delivery/tests, barriers, table strands, root recovery) charge below 2^109 instructions in sum; every loop iteration at every nesting level performs at least one charged operation with at most subs+b.ne control per level, and at most four levels, so their aggregate control is below 8x the charged sum (below 2^112). Total (v) is below 2^112.1 against the retained 1 x 2N = 128479157619630390520503450019967396 (2^116.63). With (i)-(v) bounded or charged, the retained allowance covers only purely-unknown misses.
+
+## 4. Exact complete ledger
+
+The unchanged source dimensions, quotas and capped schedules are evaluated by evidence.py at (KT, F, KERNEL). Every row is an exact integer, including rounding at the original locations. The complete instruction total is 204133503422948946895632900521062861095, divided by 2000 for W. Preprocessing is 102693373665765461399202641401122100863 instructions, included. Its baby-phase transport is charged at 45 per record rather than the combined 40.5 average, and its baby-phase walk part at the conservative floor F_PRE=39/40 of section 6, not at the pooled F.
+
+- base interval sieve, characters, assignment: 14778874133111650197864576 instructions.
+- candidate delivery and replies: 5770237022568448 instructions.
+- candidate re-walks: 1257895200023828017403475787776 instructions.
+- candidate tests: 13858116485374300651520 instructions.
+- character sieve, class lists, their transfer: 30225869176339564179694288896 instructions.
+- comparison cap enforcement: 25085181676799471785259757490667520 instructions.
+- comparisons at the per-owner cap: 175596271737596302496818302434672640 instructions.
+- gap tables: 127161744382312499152959732592009770 instructions.
+- global barriers (wakes, sweeps, releases): 6630756600764919022560032736 instructions.
+- head-index word combine: 128479157619630390520503450019967396 instructions.
+- listing allowance: 1 instructions per point: 128479157619630390520503450019967396 instructions.
+- owner initialisation: 83076749736557315843464236105728000 instructions.
+- owner pool-cap compares: 128479157619630390520503450019967396 instructions.
+- padding ops at the pair price: 51107595818557983790688362836262912 instructions.
+- per-wave link words, memory barriers: 15209023373991571020430912520192 instructions.
+- plan distribution (copy tree): 121734115224496661965030475956224 instructions.
+- planner (scans, matching, emission): 487728773955200596712816258318336 instructions.
+- planner descendant traversals (adjacency lists): 10161011842454401296372011630592 instructions.
+- records: 2N points: 203221586366956321129830030810458378705 instructions.
+- root recovery and input distribution: 73872550223301050368 instructions.
+- segment restarts (scalar multiplications): 62741744178240868946713197064620000 instructions.
+- side-output fixed calls: 1066509928891664157045105880989696 instructions.
+- table strand starts and base points: 7657983763737776997925928960000 instructions.
+
+Memory and all per-node layout assertions are retained: total below 2^121.5854 bytes and every node below 2^63 bytes. No free precomputation, future-target amortization or wall-clock parallel discount is introduced. The exponentially large node/memory assumptions are analytical accounting conventions, not feasible hardware resources.
+
+The score grid is 10^-15: evidence.py reports the least fifteen-decimal ceiling 116296996305267676/1000000000000000 of the exact log2 W = 116.2969963052676757... (90-digit Decimal enclosure; the on-grid assertion holds). log_bound.py encloses ln(x) by 64 rational terms of 2*sum(t^(2j+1)/(2j+1)), t=(x-1)/(x+1), and bounds the remaining positive geometric tail. It similarly encloses ln2 and divides in the safe direction. Applied to the exact total/2000, it proves the declared fifteen-decimal ceiling.
+
+## 5. Success and honest limitations
+
+The actual points, canonical stored keys, all routing and candidate decisions, and recovered scalars are identical to the preceding algorithm. Neither the allowance repricing nor the (v) tightening changes any source success event or cap distribution; N is unchanged from the file base. H1-H5 keep their definitions, evidence and failure budgets from source-proof.md section 7 and its planner sections; H6 is defined in section 6. The allowance change is exact accounting with a stated residual enumeration. Those hypotheses remain extrapolations requiring review.
+
+The recomputed floor is 1-exp(-0.49514)-0.0005-2^-20-4*2^-40-2^-111 > 0.39001347, and the declared success is only 0.39. This is conditional on the disclosed model, not an empirical production success rate or reviewer-confidence statement. All failures and capped work remain in the complete ledger.
+
+The full combined test reruns the production-parameter integer ledger, planner controls, reduced-order curve recovery, synchronous transport including overflow controls, toy census, and 12142 parity-key cases, plus the 458-lane native audit. Tests exercise finite cases only; the algebra and accounting above carry the production extrapolation. No full-size attack is run and no previous judgment is used as proof.
+
+## 6. Pooled pair fraction 197/200: H4 class mean plus jointly measured H6 weighting
+
+The scored records row prices all 2N emitted points at the pooled pair fraction F=197/200. Two premises. First, the production class-mean pair fraction is at least 0.9862 (H4 mean). Second, the production selected-base-weighted pooled fraction is at least 0.985 (new disclosed H6). The per-class floor 49/50 of source H4 is retained alongside both, and bounds the worst case.
+
+H4 mean. The shipped planner was run at production degree parameter GMAX=16d^2 on real chi-class lists (h6_ladder.py mean-only specs, rerunnable; the declared hosted integrated run recomputes two small joint specs (h6_hosted output) and the table below is quoted from the same code offline, as with the source planner tables):
+
+| d | span X2/2GMAX | classes | mean f | min f |
+| --- | --- | --- | --- | --- |
+| 16 | 16.0 | 4 | 0.98651 | 0.98601 |
+| 32 | 8.0 | 4 | 0.98689 | 0.98589 |
+| 64 | 4.0 | 2 | 0.98646 | 0.98502 |
+| 128 | 4.0 | 2 | 0.98776 | 0.98751 |
+
+Every row sits above 0.9862; the source tables show the same level (0.9861 at d=16 span 16, 0.9874 at d=64 span 16) with means rising in span and in d (uncapped controls 0.9794, 0.9834, 0.9858, 0.9859, 0.9879 at d=8..128). Production (span 2^31, d=2^20) lies far beyond every measured row along both rising trends, and every deficit source (boundary GMAX/span, cycle 1/d, demotions) vanishes at the production ratios. H4-mean is the disclosed extrapolation that the measured level and trends continue; the production run is infeasible and is not claimed.
+
+H6 (joint weighting measurement). Production emitted-point weights depend jointly on class lengths, counts of selected base primes of the opposite character, and the final partial walks. h6_ladder.py measures exactly this joint process at toy scale: real chi-class lists, the shipped planner on every class, bases as consecutive primes above X2 in order, baby taking the first N_t elements and giant the next (last base partial), each base walking the plan of its opposite-character class. Twenty-two joint specs (d=8..128, 7..25 walked classes, 20..54 bases, uncapped plus production-ratio-capped max_tree=d controls) decompose pooled-minus-class-mean into selection, length-weighting, base-count-weighting and partial-walk steps. The full 22-row table is reproduced by `python3 h6_ladder.py < offline-specs.json` (about 100 seconds, standard library); summary:
+
+- pooled-minus-walked-mean over all 22 rows: range [-0.00185, +0.00282], mean +0.00015;
+- pooled-minus-class-mean over all 22 rows: range [-0.00214, +0.00233], mean +0.00040;
+- in the 15 rows with at least 12 walked classes, |pooled-minus-walked-mean| <= 0.00050;
+- the 3 rows above 0.0005 all walk at most 8 classes with up to 31% of emitted weight on a single class;
+- length-weighting step over all 22 rows: range [-0.00001, +0.00057], nonnegative in 20 of 22 rows (the other two are -0.00001, rounding-scale);
+- base-count step: [-0.00133, +0.00191]; partial-walk step: [-0.00089, +0.00091];
+- capped controls (cap binding, fractions 0.82-0.94): weighting deltas -0.00043, +0.00023, +0.00282, same scale.
+
+Production weights are at least 10^4x more diffuse than the most concentrated measured row: one class contributes at most 2^42 bases x 2^57 elements = 2^99 of N ~= 2^115.63 emitted points per side, i.e. max single-class weight 2^-16.6, against 1/7 in the worst measured row; all 2^20 classes are walked (about 2^39 bases per character per side), so the selection step vanishes. The measured deltas center on zero with spread shrinking in diffuseness and no systematic negative component across 22 diverse fixed weightings. The H6 margin, 0.9862-0.985=0.0012, covers 2.4x the worst drag measured at production-like diffuseness (0.00050). The partial-walk contribution is additionally bounded analytically: at most one remainder per side, under 2^57 elements each, with pair-fraction deficit under 0.3 against N ~= 2^115.63 points, i.e. under 2^-60 pooled drag. Adversarial alignment of weights with low-fraction classes would break H6, but is measured-absent and mechanism-opposed (H2 equidistribution over 2^20 diffuse classes); this residual risk is disclosed, not hidden.
+
+Phase-safe accounting. The combined records row is exactly linear in F (2N x (F x PAIR/2 + (1-F) x ROOT + 81/2)), so the pooled H6 bound covers any baby/giant split with no per-phase fraction asserted for the scored total. Preprocessing is funded separately and conservatively: its baby-phase walk part uses F_PRE=39/40=0.975, below the retained H4 per-class floor, with no weighting claim at all (102693373665765461399202641401122100863 instructions, below 2^115.3059 units).
+
+## 7. Segment-index encoding repair (33 bits)
+
+The source specifies a 32-bit segment index in the record chain id (source-proof.md section 4.2) while allowing classes with up to 2^33 segments (section 3 under the H2 length bounds), so the index overflows on long classes. This package amends the encoding explicitly (verdict cited as procedural context only): the segment-index field is 33 bits in both the pool record (62-bit base index + 33-bit segment index + 56-bit link = 226 of 256 bits, within the 31 spare bits) and the 128-bit transport chain id (62-bit base index + 33-bit segment index + spare = 95 of 128 bits). The segment directory already holds 2^33+1 eight-byte entries and needs no change, and the 62-bit base index needs no change (at most 2^61.6 bases). The repair costs zero instructions: stores write the same words, loads read the same words, and the candidate re-walk's index extract widens an immediate only (ubfx width 32 to 33, still one instruction); record sizes, memory, and all occupancy and cap analysis are unchanged.
