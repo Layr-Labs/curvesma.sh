@@ -1,0 +1,1 @@
+Complete argument: proof.md. Source algorithm: source-proof.md; parity: prior-proof.md; kernel: dependency 49e06a3d plus k6 transform (kern2_witness.py, side_k2.S); record path: proof.md s9+s10. Proposed conditional score 116.288165593475777; review pending. Tests supplement, not replace, the production argument.
