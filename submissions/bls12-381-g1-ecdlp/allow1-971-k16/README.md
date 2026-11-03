@@ -1,0 +1,1 @@
+Argument: proof.md. Source: source-proof.md; kernel: measure/side_lanes.S (971, s1; measurement.log, kernel_check.py, key_check.py); records: s9-s12+s14; restarts: s15 exact (side_k2.S bodies, smx_audit.py). Score 116.273989279233769; review pending. Tests supplement the production argument.
