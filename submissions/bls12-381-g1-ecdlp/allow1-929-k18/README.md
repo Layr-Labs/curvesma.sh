@@ -1,0 +1,1 @@
+Argument: proof.md. Source: source-proof.md; kernel: measure/side_lanes.S (929, s1; derive_k929.py, measurement.log, kernel_check.py, nocarry_witness.py, key_check.py); records: s9-s12+s14; planner augmentation + per-class floor: s16 (planner.py); restarts: s13. Score 116.250186384421741; review pending. Tests supplement the production argument.
