@@ -1,0 +1,58 @@
+{
+ "version": 1,
+ "title": "Recover P by STNFS on a directly sampled region: 121.400000",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g2-invert-g1 target, the STNFS algorithm of proof.md returns P with e(P,Q)=z for the exact supplied Q with success at least 0.39 under the disclosed heuristics H1-H5, and all classical work is bounded by 2^121.400000 dense-Fp12 units (ledger: proof.md section 8). Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "121400000",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "refinement_audit",
+   "source": "audit_refinement.py",
+   "purpose": "Bounded audit: code hashes, quadrature parameters and integration controls, and the upward-rounded ledger and success from refinement.json. Does not rerun the full recurrence.",
+   "input_schema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false,
+    "required": []
+   },
+   "initial_inputs": [
+    {}
+   ]
+  },
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Optional full recomputation of pool, region, yield, ledger, filtering, retention, ECM, descent and declared bounds (about 10 s natively).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
