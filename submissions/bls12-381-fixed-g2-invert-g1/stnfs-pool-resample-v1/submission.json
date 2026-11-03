@@ -1,0 +1,88 @@
+{
+ "version": 1,
+ "title": "Recover P by STNFS on a directly sampled region: 121.400000",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g2-invert-g1 target, the complete STNFS algorithm of proof.md and DESCENT.md returns P in G1 with e(P,Q)=z for the exact supplied nonidentity Q (P = infinity for z = 1), with success at least 0.392624 (hence at least 0.39) under the disclosed heuristics H1-H5. It maps g = e(P0,Q) and z into the core tower by an explicit field isomorphism, computes two GT logarithms against one relation and linear-algebra phase, and returns P = [a]P0 after checking e(P,Q) = z. Relation collection is on the theta = 2/5 region, sampled directly by a 32,000-draw pool (3,907 canonical rows), with a 1.0334 canonical-work allowance (2.00 SE): <= 2^121.2492 units at a 0.4766-bit relation margin. Linear algebra <= 2^117.5157, generator <= 2^107.1997, two-log meter 2^116.3915 (expected <= 2^115.6681). All classical work, including preprocessing, failures, field conversion, pairings, verification and output, is bounded by a global meter at 2^121.400000 dense-Fp12 units (C = 20,000 instructions); the upper-rounded ledger rows sum to less than that. Nothing is amortized; no advice. Memory at most 2^105 bytes. Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "121400000",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md",
+    "STORAGE.md",
+    "REFINEMENT.md",
+    "refinement.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "refinement_audit",
+   "source": "audit_refinement.py",
+   "purpose": "Bounded audit: code hashes, quadrature parameters and integration controls, and the upward-rounded ledger and success from refinement.json. Does not rerun the full recurrence.",
+   "input_schema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false,
+    "required": []
+   },
+   "initial_inputs": [
+    {}
+   ]
+  },
+  {
+   "id": "unit_entry_fraction",
+   "source": "unit_entries.py",
+   "purpose": "Rerun the package's filtering simulation (filtsim.py) to mean weight 100 and report the fraction of row weight carried by +-1 entries (against the charged 0.88) and U/N. Optional (the hosted initial run is the bounded audit). Evidence at its scale only; production is extrapolated (H4u, H3).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "log2U",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  },
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Optional full recomputation of pool, region, yield, ledger, filtering, retention, ECM, descent and declared bounds (about 10 s natively).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
