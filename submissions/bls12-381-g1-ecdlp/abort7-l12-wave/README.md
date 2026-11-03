@@ -1,0 +1,1 @@
+Argument: proof.md. Source: source-proof.md; parity: prior-proof.md; kernel: 49e06a3d + k2 transform (kern2_witness.py, side_k2.S); schedule: stratified-serial abort, L=4096, corrected waves (proof 8). Score 116.157807533101552; review pending. Tests supplement the argument.
