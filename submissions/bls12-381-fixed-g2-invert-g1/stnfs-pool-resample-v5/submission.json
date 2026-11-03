@@ -1,0 +1,53 @@
+{
+ "version": 1,
+ "title": "STNFS for recover-P: 120.994900",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g2-invert-g1 target, the STNFS algorithm of proof.md returns P with e(P,Q)=z for the exact supplied Q with success at least 0.39 under the heuristics of proof.md section 9, and all classical work is bounded by 2^120.994900 dense-Fp12 units (ledger: proof.md section 8). Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "1209949",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Recomputes pool, region, yield, cost, ledger, linear algebra, descent and every declared bound; quick=true skips [6], [6b], [11], [11b], [12] (listed); quick=false runs them.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "quick": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "samples": 8,
+     "seed": 1,
+     "quick": true
+    }
+   ]
+  }
+ ]
+}
