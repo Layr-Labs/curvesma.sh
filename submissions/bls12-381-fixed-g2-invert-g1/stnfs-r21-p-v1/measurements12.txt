@@ -1,0 +1,59 @@
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+valgrind-3.19.0
+== slice12 check (paths/apply/scan/recover vs brute force)
+check log2pts=18 gs=0: cells=222594 f/g digests MATCH | survivors 1 (ref 1) recovered records 1 (ref 1) MATCH
+check log2pts=20 gs=1: cells=922823 f/g digests MATCH | survivors 3 (ref 3) recovered records 3 (ref 3) MATCH
+check log2pts=22 gs=2: cells=3794958 f/g digests MATCH | survivors 11 (ref 11) recovered records 11 (ref 11) MATCH
+check log2pts=22 gs=0: cells=3794958 f/g digests MATCH | survivors 11 (ref 11) recovered records 11 (ref 11) MATCH
+check log2pts=24 gs=3: cells=15511016 f/g digests MATCH | survivors 37 (ref 37) recovered records 37 (ref 37) MATCH
+check log2pts=20 gs=4: cells=922823 f/g digests MATCH | survivors 3 (ref 3) recovered records 3 (ref 3) MATCH
+== slice12 barrett / recentre
+barrett: 1220000 reductions, 0 mismatches
+recentre: coset membership failures 0
+== nbound31 check (replay of the Python reference vectors, W=128)
+cases=2401 reps=1 rows=2401 points=151140 evaluations=6509 leaves=4455 rejected=0 mismatches=0 ref_weighted_density=0.045127218854
+== ecm12 check
+mont_mul (5 limbs): 20000 products, 0 mismatches
+== LINE path per update, setups included (h=cells/K/p)
+line p=257: Ir 801031310 -> 824681352, hits 981955 -> 1963351, Ir per unit 24.10
+line p=4099: Ir 781284654 -> 785113324, hits 123285 -> 246341, Ir per unit 31.11
+line p=65537: Ir 784343086 -> 791116334, hits 77184 -> 153880, Ir per unit 88.31
+line p=1048583: Ir 792460820 -> 807358278, hits 48339 -> 96287, Ir per unit 310.70
+== LINE path setup per (pair, line, coset)
+setup_line p=65537: Ir 73847755 -> 171495602, units 100000 -> 300000, Ir per unit 488.24
+== RECORD path per hit (h=2cells/p)
+record p=257: Ir 800829313 -> 824278978, hits 522274 -> 1044530, Ir per unit 44.90
+record p=65537: Ir 780768765 -> 783984892, hits 40961 -> 82082, Ir per unit 78.21
+record p=8388617: Ir 779359170 -> 781104900, hits 6395 -> 12934, Ir per unit 266.97
+record p=67108879: Ir 781584498 -> 785305881, hits 3873 -> 7840, Ir per unit 938.08
+record p=268435459: Ir 784306225 -> 790780268, hits 2743 -> 5644, Ir per unit 2231.66
+== APPLY per record
+apply p=65537: Ir per record 7.00
+== per-(slice, pair) setup6
+setup6 p=1048583: Ir 65665231 -> 147038877, units 100000 -> 300000, Ir per unit 406.87
+setup6 p=9223372036854775783: Ir 63017744 -> 137832734, units 100000 -> 300000, Ir per unit 374.07
+== per cell: zero pass
+zero_cells: Ir per cell 0.625
+build (whole program incl. allocation, layout, first zero pass) Ir per suffix-box entry 27.27, per cell 12.325; rows 4124308 entries 28509425
+== per cell: scan, block length 16 and 4
+scan block=16: Ir per cell 9.313 survivors 0
+scan block=4: Ir per cell 13.250 survivors 0
+== per record: recover
+recover: Ir per record 7.003 (records 38187)
+
+== nbound31 measurements (bench=setups+blocks)
+bench 1/3 reps: 126097646 248685660 ; benchsetup 1/3: 116066002 219020512 ; evaluations/rep 6509
+per block evaluation: 1508.2 Ir ((bench3 - bench1) - (setup3 - setup1)) / (2 x 6509)
+per-a + per-row setups per case: 21439.9 Ir
+== ecm12 mont_mul Ir per product
+mont_mul: 367.76 Ir per product
+benchrow (setup_a once per case, row_setup reps times) Ir 1/5 reps: 116060438 157281992 (2401 rows per rep)
+per-row setup (row_setup): 4292.1 Ir
+== R3 record route end to end (route_bench.c; qemu-aarch64 whole-program instructions at n and 2n records)
+== R3 mode <pages> <mode> <n> <Ir at n> <Ir at 2n>; modes: 0 source, 2 +append, 3 +apply, 1 +route
+R3 mode p16 0 262144 2565122 4924418
+R3 mode p16 2 262144 2565118 4924414
+R3 mode p16 3 262144 4924425 9643017
+R3 mode p16 1 262144 7021799 13837780
+R3 mode p16 1 65536 1909945 3613885
+R3 mode p10 1 65536 1912182 3618499
