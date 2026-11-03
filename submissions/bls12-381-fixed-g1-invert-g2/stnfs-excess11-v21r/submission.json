@@ -1,0 +1,94 @@
+{
+ "version": 1,
+ "title": "STNFS: 120.522000",
+ "claims": [
+  {
+   "statement": "The STNFS algorithm of proof.md solves the full production bls12-381-fixed-g1-invert-g2 target with success at least 0.39 under the heuristics of proof.md section 9, with all classical work, preprocessing included, at most 2^120.522000 dense-Fp12 units (ledger: proof.md section 8).",
+   "score": {
+    "numerator": "120522000",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Recomputes certificates, region, yield, cost, linear algebra, descent, ledger and every declared bound (about 10 s). Region metrics come from the hash-checked pool_summary.json; pool=\"full\" regenerates all 19,765 pool rows and recomputes them (under 1 minute). quick=false adds the [6], [11], [11b], [12] audits.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "quick": {
+      "type": "boolean"
+     },
+     "mode": {
+      "type": "string",
+      "enum": [
+       "audits"
+      ]
+     },
+     "pool": {
+      "type": "string",
+      "enum": [
+       "summary",
+       "full"
+      ]
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "samples": 8,
+     "seed": 1,
+     "quick": true
+    }
+   ]
+  },
+  {
+   "id": "toy_dependence",
+   "source": "toy_descent.py",
+   "purpose": "Scaled two-sided special-q descent with the production rules; measures node failure / NB model, retry ratio and between-table boot variance (DESCENT.md, dependence margins). The quoted figures use tables=72, workers=8, boot_rels=150 (offline, about 3 min on 8 cores); smaller inputs run single-process in the sandbox.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "tables": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 72
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "tables",
+     "seed"
+    ]
+   },
+   "initial_inputs": []
+  }
+ ]
+}
