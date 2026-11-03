@@ -1,0 +1,89 @@
+{
+ "source_commit": "852f57de5e67dd4a066e37e3f3d926c1e4bec592",
+ "source_submission": "57598408-1ea6-4675-b0fb-cbcd88c4abfa",
+ "mesh": 384,
+ "rho_denominator": 1024,
+ "two_log_measured": 113.24122322,
+ "two_log_upper": 113.242,
+ "descent_cap": 113.975,
+ "node_log2_measured": 16.320744619743188,
+ "boot_phi_measured": 8.719346351256128e-05,
+ "claim": 121.083537139968,
+ "ledger_upper_rows": [
+  120.9254,
+  117.7103,
+  107.1997,
+  113.975,
+  90,
+  88,
+  80,
+  72,
+  50,
+  11
+ ],
+ "success_lower_claim": 0.3952,
+ "probe_checks": [
+  {
+   "name": "kA0",
+   "rho_den": 1024,
+   "limited": 2.805489547110276e-09,
+   "upper_limited": 2.815072446467079e-09
+  },
+  {
+   "name": "kA1",
+   "rho_den": 1024,
+   "limited": 9.902753534643453e-09,
+   "upper_limited": 9.97851915882687e-09
+  },
+  {
+   "name": "kA4",
+   "rho_den": 1024,
+   "limited": 3.2505664635290736e-06,
+   "upper_limited": 3.5441380259369754e-06
+  },
+  {
+   "name": "kA15",
+   "rho_den": 1024,
+   "limited": 1.5143471845542834e-05,
+   "upper_limited": 2.3268520296823795e-05
+  }
+ ],
+ "refined_full_diagnostic_checks_ok": true,
+ "full_diagnostic_scope": "Full evidence16.py (samples 16, seed 1): all 23 checks; the audit checks recorded arithmetic, code hashes and integration controls.",
+ "code_sha256": {
+  "descent16.py": "0803439b3a3c1d9f5cbc95c604ce95fde62cc7e19d21232fc82a79dcc42131c7",
+  "retain16.py": "53904dc9fb3dba58b7c540da2b27a31caad2f1354a71d625c8dfbfa24c96d379",
+  "model16.py": "0209f69f48687cf59244f505e831233c9ce764b1b581e7136a43ebd2181b4be6"
+ },
+ "final_full_diagnostic": {
+  "checks_ok": true,
+  "claimed": 121.083537139968,
+  "log2_relcol_ceil4": 120.9254,
+  "log2_la_ceil4": 117.7103,
+  "work_allowance": 1.0263,
+  "work_se_ceil5": 0.01314
+ },
+ "boot_phi_upper": 0.001,
+ "counter_abort_log2_upper": -10.97,
+ "repeat_log2_upper": -10.7,
+ "plan_reoptimisation": {
+  "method": "v17: coordinate search with joint moves at BOOT_RELS 12, LOG2_RELS 63.834; mu >= 18, phi <= 0.05, psi <= 0.8, boot phi <= 1.8e-4; boot frozen; diffs vs the v16 plan",
+  "changed_entries_vs_v16": "75f iA44>46; 90f iA44>45; 90g iA36>37; 95f kA2>3,thin0>1; 95g iA22>23; 105f iA17>18; 105g iA15>16; 120g n95>96; 135f n94>95,R384>320; 135g n109>110,iA30>29; 140f R384>320; 150f iA34>35,R320>288; 150g iA42>41; 155f iA29>27; 155g iA27>26,R288>320",
+  "two_log_after": 113.241223
+ },
+ "ledger_upper_claim": 121.083537139968,
+ "ledger_rows_sum_log2_decimal70": "121.0835371399679719",
+ "unjudged_parent": "2eb03b74-a6f2-49bc-89cc-add27e6c63f7 (v16; judgment null)",
+ "relation_input": {
+  "floor": 63.94,
+  "se": 0.0529,
+  "input": 63.834,
+  "rule": "floor - 2 SE"
+ },
+ "boot": {
+  "BOOT_RELS": 12,
+  "MIN_RELS_nodes": 18,
+  "phi_measured": 8.719346351256128e-05,
+  "phi_upper": 0.001
+ }
+}
