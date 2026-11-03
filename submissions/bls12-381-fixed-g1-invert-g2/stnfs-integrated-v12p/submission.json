@@ -1,0 +1,79 @@
+{
+ "version": 1,
+ "title": "STNFS on a fresh 40,000-draw pool: 121.313000",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g1-invert-g2 target, the STNFS algorithm of proof.md and DESCENT.md returns Q with e(P,Q)=z for the exact supplied nonidentity P with success at least 0.39 (modelled >= 0.391889) under the heuristics H1-H5 of proof.md section 9, and a global meter bounds all classical work, preprocessing included and nothing amortized, by 2^121.313000 dense-Fp12 units (C = 20,000 instructions); the ledger is proof.md section 8. Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "121313000",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Recomputes certificates, pool, region, yield, cost, ledger, linear algebra, descent and every declared bound. quick=true skips the supporting audits [6], [6b], [11], [11b], [12] (listed as skipped) to fit the 20 s run; quick=false runs them (about 30 s).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "quick": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "samples": 8,
+     "seed": 1,
+     "quick": true
+    }
+   ]
+  },
+  {
+   "id": "unit_entry_fraction",
+   "source": "unit_entries.py",
+   "purpose": "Rerun the package's filtering simulation (filtsim.py) to mean weight 100 and report the fraction of row weight carried by +-1 entries (against the charged 0.88) and U/N. Optional (the hosted initial run is the bounded audit). Evidence at its scale only; production is extrapolated (H4u, H3).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "log2U",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
