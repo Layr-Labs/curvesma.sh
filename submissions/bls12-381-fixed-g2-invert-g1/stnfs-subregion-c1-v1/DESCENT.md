@@ -1,0 +1,287 @@
+# Descent
+
+`descent16.py` is the model and the shipped plan; [7] evaluates it, [7c], [7r],
+[7s], [11], [11b] and [12] check its inputs. 1 unit = 20,000 instructions.
+Inputs of this revision: LOG2_RELS = 63.91 (the sub-region pool estimate minus
+two pool standard errors, section "Inputs"), mean norms 743.4/498.9 (at or
+below the sub-region's relation-weighted means), UDUP = 0.25, kernel charges
+SIEVE_HIT = 850 and BOUND_CELL = 2,000 (KERNELS.md).
+
+## Targets and boot
+
+Each target T is replaced by T' = T^e, e uniform in [1, r), log T = log T'/e
+mod r: uniform on nonidentity mu_r (distance 1/r from uniform on all mu_r;
+identity z handled directly; success charges 2/r). The boot lattice
+{(a, b) in Z^12 : a B + b A = 0 in F_p[y]/h} has determinant p^6; its LLL basis is
+certified exactly (Gram determinant p^12, Lovasz conditions; [11]). The boot
+element has a single (g-side) norm. The boot enumerates the radius-4 ball
+(2^23.67 points, one of each +- pair), computes each norm and runs the
+`ecm16.py` schedule for 193.71-bit primes: a relation has every prime <= 2^215,
+<= 16 in (2^69, 2^193.71], <= 1 in (2^193.71, 2^215]. An exhausted ball draws a
+fresh exponent and certified lattice (2^36 each). Distinct relations credit
+UDUP = 0.25, as at nodes. It stops at 16 distinct relations: 2^61.33 trials of
+2^67.01 instructions over 2^37.66 lattices, tried in turn; failure needs all
+16 to fail. With 16 relations spread over 2^37.66 lattices, two kept relations
+come from the same lattice (same exponent e) with probability at most
+C(16, 2) 2^-37.66 = 2^-30.75, charged as a failure ([7]); otherwise the 16 kept
+relations are functions of 16 independent uniform exponents.
+
+## Nodes
+
+A node is a special-q ideal (l bits, side f/g) with lattice L_q (det q,
+LLL-reduced). Its region is the radius-R integer ball in the reduced basis,
+one point per +- pair; exact half counts are in `stats16.b85` (recomputed for
+R <= 8 by [7]). A **sieve** node enumerates every p in [2^8, 2^69] and every
+relative-degree-one root pair on the ball (`dsieve16`, KERNELS.md); records go
+to the owners' 2^40-entry score arrays; every primitive cell gets a certified
+upper bound on both norms (72 + 12 linear forms in double precision, outward
+rounding; ~1,500 instructions, charged 2,000; the forms' roots have certified
+enclosures, [7r]); cells with residual mass (log2 bound minus score, minus
+log2 q on the special-q side) <= T = kA nA + kB n + 96 on both sides survive
+(exact norms, trial division, ECM); non-primitive cells repeat c / gcd(c)'s
+relation and are skipped. A relation has every residual prime <= 2^n per
+side, at most kA in (2^69, 2^nA] and at most kB <= 1 in (2^nA, 2^n]; these
+window primes are the children, each charged at the most expensive bin at or
+below its window.
+
+## Yield and survivors
+
+Per cell, the two-window semismooth probability
+
+  P = sum_{jA <= kA, jB <= kB} 1/(jA! jB!) int rho((m - sum t + alpha)/69) prod dt/t
+
+is a lower sum (exact mesh weights, rho at left endpoints, cells crossing sum t
+= m dropped). Norm sizes m come from measured offset bins over 61,440 exact
+ball norms on 160 production special-q lattices (10 sizes 72-300 bits, both
+sides, 6 radii): cf sextile maxima paired with the overall cg maximum, shifted
+by the worst sampled per-(ideal, radius) mean minus the pooled mean (cf +23, cg
++6); boot norms from 3,072 exact norms on 8 certified boot lattices (p90 + 4,
+p99 + 4). mu = cells x P x UDUP x detection x retention (ECM detection 1 -
+0.001 x expected factors). Survivors per cell use (T/69) rho((m - T)/69) per
+side at each bin's lowest norms (previous sextile's raw cf max, cg min -54.56,
+margins (23, 6), special-q at the bin's upper edge).
+
+**Unit duplicates (UDUP = 0.25).** Associates eps (a - b x), eps a unit of O_h,
+give the same relation, so raw relations are credited at UDUP distinct
+relations each. The charge is set by the relation-conditioned measurement of
+41025889 (method and seeds there; reproducible from `descent_witness.py`): on
+24 production special-q lattices (72, 95, 150 and 200 bits, both sides, three
+seeds each) 300 ball points at R = 384 were stratified by norm quintile; each
+quintile's distinct/raw (mean of 1/(1 + mates) under the 840 units with
+coefficients in [-2, 2]^6) was weighted by the quintile's share of the
+semismooth probability in the node's own window (relations concentrate in the
+small-norm quintile, which carries 82-98% of the relation mass and has the most
+mates). The relation-weighted distinct/raw is 0.283-0.751 over the 24 lattices
+(mean 0.440, median 0.454), against 0.78-0.80 for the unconditioned ball mean
+([11] repeats 8 points). Extending the unit set from 500 to 840 units changed the
+unconditioned statistic by +0.008 (1a449d81), so larger units rarely map ball
+points into the ball. The charge 0.25 is below every one of the 24
+relation-weighted values (13% below the smallest); the increase to 0.4 of
+1a449d81 is not used.
+
+## Factor-base ideals without a logarithm
+
+Under the main-phase occurrence model (`filtsim.py`: 2^63.91 relations, the
+sub-region estimate minus two standard errors), an ideal of norm q = 2^(69 t)
+on side s occurs with probability 2 kappa_s(t)/q, kappa_s(t) = rho(u_s - t)/
+rho(u_s), u_s from the mean norms 743.4/498.9 (at or below the sub-region's
+relation-weighted means 743.45/498.93; [4] checks them; smaller u gives fewer
+occurrences, the conservative direction). Occurrences are Poisson(lambda_s(b)).
+An ideal that occurs at most twice is a singleton or a clique pair for the
+filter; the model counts it missing with probability P(Poisson <= 2) times a
+**calibration cover c(lambda)**: purge followed by back-substitution recovers
+the logarithm of most such ideals (a removed relation whose other ideals are
+known gives the removed ideal's logarithm), and [6b] measures the fraction
+still missing per lambda band. Sixteen `filtsim.missing_recon` runs at this
+revision's means (seeds 1-3 at 2^12, 2^13, 2^14, 2^15 and 2^16, seed 1 at
+2^17; excess 1.2, signed sigma-quotient system) give measured/model ratios
+
+band [1, 2): max ratio 0.1145 (mean 0.098), cover 0.18; [2, 3): 0.1046
+(0.083), 0.16; [3, 5): 0.1020 (0.077), 0.16; [5, 8): 0.1285 (0.075), 0.20;
+>= 8: 0.3586 (0.073; single ideals), uncalibrated (c = 1); 456-8,200 ideals per
+band and run,
+with no trend over the scales (band [1, 2) maxima 0.1145, 0.111, 0.106, 0.109,
+0.098 at 2^12..2^16). The covers are 1.5 x the maximum ratio rounded up; lambda
+< 1 and lambda >= 8 keep the uncalibrated model (c = 1). [7c] reruns the
+measurement at the reviewer's seed at 2^12 and checks each band against its
+cover with a three-sigma binomial allowance. The calibration is load-bearing
+and part of H5 (see Inputs).
+A relation of an m-bit side then carries on average sum_b kappa(m/69, b/69)
+ln((b+0.1)/b) c(lambda_s(b)) P(Poisson <= 2) missing ideals (1/10-bit bands b <
+69): 0.14-0.23 per f side and 0.13-0.20 per g side over the shipped nodes, 0.50 at
+the boot's 2709-bit norm. Each node takes one option:
+
+- **discard**: relations containing a missing ideal are rejected, multiplying
+  mu by exp(-missing); bins (69, 75] through (90, 95] always discard (forced in
+  code: THIN_MAX = 90); bins from (95, 100] up use the searched flag;
+- **descend**: each missing ideal Q (a prime ideal of norm <= 2^69) is a
+  further child, sieved **in its own lattice L_Q as an ordinary prime special-q
+  node**; its norms are at most those of the base bin (69, 75] on either side,
+  so it is charged the larger base-bin work and failure probability of the two
+  sides. Base-bin nodes discard, so the recursion closes. No composite Q q'
+  lattices are used (the Q q' construction of f34f63d9 is withdrawn).
+
+Repeated missing ideals. A missing ideal Q descended twice would repeat the
+same deterministic node, so its two visits are not independent trials. The
+descent keeps an explicit node counter over both logarithms and aborts past
+N_MAX = 2^27.3 nodes (counted as a failure), so at most 2^27.3 missing-log
+children run. The probability that two of them are the same ideal is at most
+C(2^27.3, 2) times the largest probability that one missing-log visit is one
+given ideal: per 1/10-bit band the weight of one ideal is kappa(u, b/69) 2^-b
+c(lambda) P(Poisson <= 2) over the band total (`descent16.miss_weight_log2`,
+both sides, main-phase norms), largest 2^-63.51, so the repeat probability is
+at most 2^-9.91, charged in full ([7]). Ordinary special-q repeats are charged
+the same way (all N_MAX nodes in the smallest bin of 2^70.3 ideals, with 2^6 for
+the 1/p weighting within a bin): 2^-10.70.
+
+Cascading removal can also lose ideals with >= 3 occurrences: 0-7 per run out
+of 3,000-25,000 in the same [6b] runs, inside the calibrated model.
+
+## Retention and cofactorisation
+
+**Counted cells.** A cell is counted only if base-primitive (for every p and
+irreducible h of H mod p, a and b not both divisible by (p, h)); other cells
+repeat (a - b theta)/pi's relation up to p's free relation. Base-primitive
+fraction prod (1 - p^-2 deg h) = 0.9100 (exact degrees for p < 2^9). Cells
+divisible by a relative-degree-one ideal above a base prime of degree >= 2
+with p >= 2^8 are excluded by ordinary fractions 0.9523/0.9919 (f/g, disjoint).
+The factor base holds every prime ideal of norm <= 2^69 above p < 2^8 plus the
+degree-one ideals above p in [2^8, 2^69].
+
+**Omitted mass and relation-conditioned loss.** A counted cell is rejected only
+when one side's omitted factor-base mass X exceeds s = 96 - 1 (bound gap <
+2e-11 bits) - m/128 (score rounding). X sums independent local contributions
+(whole valuation at p < 2^8, excess powers at p >= 2^8), each with one local
+bound: at a prime P of the base field with residue field F_q a base-primitive
+cell has v_P >= j with probability at most min(1/q, mu q^-ceil(j/mu)) per root
+of multiplicity mu (Hensel; q^-j for simple roots), independently over primes
+(CRT); root multiplicities and ramification for p < 2^9 are tabulated
+(`retain16.structure`, `stats16.b85`, recomputed by [11b]); above 2^9 excess
+powers are bounded per dyadic block, with the remainders (`_REM`, `_DOWN`,
+`block_omitted_total`) charged at 1.0 (retain16 docstrings). Means 3.35 (f)
+and 7.67 (g) bits, P(X > 96) = 1.5e-12 (f) and 2.5e-10 (g) per cell. Under H1
+a cell with omitted mass x is semismooth with probability Pss(m - x),
+increasing in x; the lost fraction A/(A + B) (A = P(X > s, smooth), B = P(X
+<= s, smooth)) is bounded by num/den with num = sum_{x > s} P_up(X = x)
+Pss_hi(m - x) >= A and den = Pss_lo(m) (1 - P_up(X > s)) <= B
+(`ss_upper2`/`ss_lower2`, 64-bit grid in x, the node's largest norms).
+Retention = (1 - loss_f - loss_g) x base-primitive x (1 - ordinary exclusions).
+The plan charges every sieve node the pinned floor RET_FLOOR = 0.8592 and
+the boot the pinned counted fraction COUNTED = 0.8592; [11c] (part=losses)
+recomputes the exact value at every shipped node (minimum 0.859250, largest
+one-side loss < 1e-5) and the counted fraction (0.859251) and checks both.
+
+**ECM schedule (`ecm16.py`).** Suyama-form Montgomery curves, cheapest (B1,
+B2/B1) grid point (log2 B1 = 10..36, B2/B1 in 1/10/20/30/100/300) with wheel
+30030; stage-1 x-only ladder (11 mults/bit), stage-2 cross products (3/pair),
+one binary gcd per stage. Per-curve success P1 is the Dickman lower sum on the
+curve order corrected for non-powersmooth orders; curves = ceil(ln 0.001 /
+ln(1 - P1)) at 367.76 (L/5)^2 per mult. [12] prints node/boot schedules and
+matches P1 on random 36/40-bit primes.
+
+## Recurrence and success (H5)
+
+Distinct relations per node are negative binomial (mean mu, shape r): r = 0.5
+for effective windows of <= 1 prime (base nodes (bin (69, 75)) have empty
+windows), r = 1 otherwise. Shapes come from toy-ball fits (empty-window rows
+in `stats16.b85`, printed by [11b]): one-prime windows fit 0.60, two/three-prime
+1.86-12.2; of 12 empty-window configs, all with mean >= 7.4 show 0-4 ideals
+without a relation vs 5.4-12.4 predicted at r = 0.5.
+
+A child subtree fails with probability phi; phi(node) = max((1 + mu (1 -
+psi)/r)^-r, 0.02), psi = window sum of the children's phi; a node tries at most
+1/(1 - psi) relations on average. Node work = own sieve/ECM work + 1/(1 - psi)
+x children's work. The plan requires mu >= 16, phi <= 0.05, psi <= 0.8
+everywhere ([7] checks). The three steps of this recurrence rest on different
+grounds, stated separately:
+
+1. **psi is a union bound.** A relation's subtree fails when any of its
+   children (at most 2 kA + 2 kB window primes, both sides counted at the
+   window maximum, plus its missing-log ideals) fails; P(union) <= sum of the
+   children's failure probabilities, each taken at the worst bin at or below
+   the child's window, with no assumption on how the children's failures
+   depend on each other.
+2. **Boot: the 16 kept relations are independent trials.** Each comes from
+   its own ball of its own exponent e_i (shared balls: 2^-30.75, charged).
+   A relation's subtree is a deterministic function of its child ideals, the
+   factor-base logarithm table, and fresh ECM coins; the child ideals of the 16
+   relations are functions of 16 independent uniform exponents. The table is
+   shared, but it is fixed once the main phase has run: conditional on the
+   table, the 16 subtrees are independent and P(all 16 fail) is the product of
+   the 16 conditional failure probabilities. Each conditional probability is
+   bounded by psi evaluated on the realized table, and the realized table
+   differs from the model only through the realized per-band missing
+   fractions: an ideal can be missing only where lambda < 8, i.e. in the
+   1/10-bit bands above 2^66.3, each holding more than 2^57.9 ideals, so a
+   realized fraction deviates from its expectation by a relative 2^-26 or less
+   (binomial) and the bound psi^16 holds with a relative slack below
+   16 x 2^-26 < 2^-22; the charged boot failure carries a relative margin
+   of 2^-16 above the model value (`TABLE_SLACK`).
+   Distinct subtrees that reach the same special-q or the same missing-log
+   ideal are the one coupling that survives conditioning; both are charged as
+   failures in full (2^-10.70 and 2^-9.91 above).
+3. **Within a node (H5a, the residual heuristic).** The relations of one
+   node are distinct lattice points of one ball; the thinning mu (1 - psi) and
+   the 1/(1 - psi) retry count take their children's subtree successes as
+   independent marks on the relation count. This is the independence of the
+   factorisations of distinct cells that every relation-count estimate in NFS
+   uses, including the main phase's yield (H1), applied to the children's
+   descents, which are functions of those factorisations. What is measured in
+   its support: (a) the distinct relations of one node do not share
+   children except through the repeat events charged above; (b) the per-node
+   relation counts of toy balls fit the negative-binomial shapes used; (c) the
+   norm bins are the worst sextile over 160 production lattices (10 sizes,
+   both sides, 6 radii), so lattice-to-lattice variation in yield is absorbed
+   into mu rather than assumed away; (d) the missing-log table enters a node
+   only through deterministic rejection (bins up to (90, 95]) or through
+   prime-lattice children charged at the base bin, so it opens no stochastic
+   channel between the relations of one node.
+
+**Headroom and sensitivity.** The meter is set for modelled success 0.40, so
+at the shipped meter the expected two-log work may exceed its model value by
+0.024 bits (1.7%) before the success bound reaches 0.39, and
+the boot failure may rise to 0.00725 (from 0.002136832). The work
+recurrence compounds 1/(1 - psi) over the tree depth, so E[W] rises quickly
+with psi: the charged negative-binomial shapes (0.5/1) are 17% and 46% below
+the toy fits (0.60/1.86), which is where the model's conservatism against that
+sensitivity sits; [7s] prints the recurrence at the fitted shapes, at the
+relation estimate and at one standard error, and at UDUP = 0.283 (the smallest
+measured relation-weighted value).
+
+The descent keeps a special-q node counter over both logs and aborts past
+N_MAX = 2^27.3 nodes (counted failure); E[N] <= 2^17.80 (`counts16.py`, with
+missing-log children at the base bin), so P(abort) <= 2^-9.50 (Markov).
+
+## Inputs ([4], [7s])
+
+LOG2_RELS = 63.91 is the sub-region pool estimate 2^64.0913 (proof.md section
+3) minus two pool standard errors (2 x 0.0894 = 0.1788 bits), floored to 2 decimals;
+[4] checks log2_rels - 2 SE >= 63.91. The same relation count feeds the
+missing-log rates, the descent work and the success bound, so the
+two-standard-error allowance is propagated through all three. Without the
+calibration (c = 1) the f34f63d9 plan at these inputs and prime-lattice children
+has two-log work 2^117.97 (offline), about 1.6 bits above the shipped plan: the
+calibration is what makes the shipped meter possible.
+
+## The shipped plan
+
+62 nodes (bins (69, 75) plus 5-bit bins 75-225, both sides) and the boot (n1
+= 215, nA = 193.71, kA = 16, R = 4, 16 relations), chosen by coordinate search
+over (n, iA, kA, kB, R, discard) of every entry and of the boot (singles, pairs,
+(R, n, kA) triples), minimising the metered cap E - log2(success budget) at
+success 0.40 under the three plan conditions, from the UDUP = 0.25 plan of
+f34f63d9 (101 accepted moves at this revision's inputs; offline driver). Quadrature: mesh 384, rho
+spacing 1/1024 (left-endpoint lower sums). At the inputs above: min mu
+28.9, max phi 0.0393, max psi 0.681 (boot 0.681); all 62 nodes sieve at
+R = 192..384. One log <= 2^129.611 instructions; **two logs <= 2^116.3229
+units**. The meter stops the descent at 2^117.078 units (Markov: E[W]/cap <=
+0.592468). P(a boot fails) <= 0.002136832 ([7]). Success >= 1 - 2 x 0.002136832 -
+0.592468 - 2^-9.50 - 2^-10.70 - 2^-9.91 - 2^-30.75 - 2^-48 - 2^-192 - 2/r
+>= 0.400237 (proof.md section 7).
+
+## Supporting measurements ([11], [11b], [12])
+
+Fresh lattices at 150/260 bits stay in the node bins (offline, 20 per size), the
+certified boot lattice in the boot bins; [11] re-samples points per run; [11b]
+recomputes the prime-ideal table, residue valuation samples, certified cell
+bounds and the empty-window toys; [12] the ECM schedules and toy detections.
