@@ -1,0 +1,1 @@
+Complete argument: proof.md (one change on base-proof.md = submission bc91c5ff: measured 972-instruction side-output kernel). Source algorithm: source-proof.md; parity: prior-proof.md. Kernel: measure/ (Callgrind record, generator, harness), kernel_check.py (a64 interpretation, path enumeration). Proposed conditional score 116.278095107168921; review pending.
