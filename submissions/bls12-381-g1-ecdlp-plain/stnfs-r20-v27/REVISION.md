@@ -1,0 +1,11 @@
+# Revision ledger (every change; newest last)
+
+| rev | claim | changes (files) |
+|---|---|---|
+| d605c287 base | 124.54867006906127 | recover-Q v13 port: thin-node Bonferroni terms, merged boot lattice, miss-node fix (`descent16.py`, `model16.py`, `proof.md`, `DESCENT.md`) |
+| A1-A5 | 124.220662069061269 (R19) | A1 thin-node Bonferroni fix; A2 S-model 0.41 + cap 115.0703 (drop H5'/rho); A3 UDUP 2.26 + H4u; A4 measured Linf; A5 PEAK side consts. Files: `descent16.py`, `model16.py`, `audit_g1.py`, `evidence16.py`, `descent_witness.py`, `proof.md`, `DESCENT.md`, `STORAGE.md`, `KERNELS.md`, `REVISION.md` |
+| B1-B6 | 124.216030069061269 (R19b) | B1 prime special-q missing logs (H5''); B2 shared-missing-set Chebyshev; B3 2^-40 slack row; B4 occupied-owner recount; B5 N/U >= 2^15 gate; B6 15-decimal claim. Files: `descent16.py`, `model16.py`, `audit_g1.py`, `evidence16.py`, `filtsim.py`, `proof.md`, `DESCENT.md`, `source-core.md`, `submission.json`, `REVISION.md` |
+| C1-C3 | (same, R19b) | C1 indentation/docstring minify (AST-identical); C2 `roots_modp` shared; C3 byte-cap fit. Files: all `*.py` |
+| D1 | 124.228323069061269 (R20, this) | H5c purge-loss domination bound (R19b was rejected on H5c: ideals with >= 3 occurrences were assumed to keep their logarithm with no production-regime argument). Missing rate m_I^+ = P(occ<=2)+extra(lam_I) with extra = R1+BBAR.VI+RHO.R1+merge (DESCENT.md); rigorous band brackets (9-pt grid + local |f''| remainder, exact corners for delta/beta/o2); cascade ds* = 0.2881 and BBAR = 0.5381 by verified fixed-point certificates; cap 2^115.64; evidence [6c] (masses, mu +18.2%/+10.3%, bracket/grid/maxw checks) and [6d] (toy domination 15.090 vs 0); RHO = 1e-2 (14x over pooled toy rate). Claim +0.012294 (domination cost), success 0.411903. Files: `descent16.py`, `model16.py`, `audit_g1.py`, `evidence16.py`, `filtsim.py`, `proof.md`, `DESCENT.md`, `source-core.md`, `submission.json`, `REVISION.md`, `README.md`, `STORAGE.md`, `KERNELS.md`, `field-map.md`, `config.json` |
+
+`config.json` keeps used keys only; `CELLS` keeps R <= 8, 96, and plan radii; `poly_roots_count` folded into `roots_modp` (identical `nbar`); dead `Ederiv`/`scaled_log`/`convolution`/`suffix_entries` removed. All numbers refreshed from build output ([6]/[6b]/[7]/[11]/[11b]/[12] rerun).

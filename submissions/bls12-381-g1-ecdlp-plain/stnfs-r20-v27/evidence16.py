@@ -1,0 +1,638 @@
+"""GT-core check suite (stdlib only)"""
+import base64, json, lzma, math, os, sys, time
+from decimal import Decimal, localcontext
+from fractions import Fraction as F
+from random import Random
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_DIR = os.path.join(_HERE, "files") if os.path.exists(os.path.join(_HERE, "files", "model16.py")) else _HERE
+sys.path.insert(0, _DIR)
+import common12 as C
+import model16 as M
+import descent16 as DS
+import store16
+from threshold_model import Retention, primes_upto
+import ideal_canonical as IC
+import lattice_count_bounds as LCB
+import embedding_bounds as EB
+import filtsim
+P = 4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559787
+U = C.U
+H = C.H
+LN2 = math.log(2)
+CLAIM = 120.904953   # GT-core ledger bound (C = 20,000)
+# ---- Murphy alpha ----
+import retain16 as RT
+ALPHA_PMAX = 2000
+ALPHA_F, ALPHA_G = 4.868096, 0.545620   # python3 evidence16.py --alpha
+def alpha_contrib(p):
+	"""Expected p-adic valuation of f and g over the prime ideals above p..."""
+	vf = vg = 0.0
+	for d1, e, mf, mg in RT.structure(p):
+		q = float(p ** d1)
+		for side, mults in enumerate((mf, mg)):
+			v = 0.0
+			for mu in mults:
+				if mu == 1: v += q / (q * q - 1.0)
+				elif p == 2: v += mu / (q - 1.0)
+				else: v += 1.0 / (q + 1.0)
+			if side == 0: vf += d1 * v
+			else: vg += d1 * v
+	t = math.log(p) / math.log(2.0)
+	return t * (1.0 / (p - 1.0) - vf), t * (1.0 / (p - 1.0) - vg)
+def alpha_sweep(pmax):
+	af = ag = 0.0
+	for p in RT.primes(2, pmax):
+		a, b = alpha_contrib(p); af += a; ag += b
+	return af, ag
+DECLARED = {'ledger': ('<=', 120.904953), 'relcol': ('<=', 120.76182), 'la': ('<=', 117.034782), 'log2_rels': ('>=', 64.1571),
+	'margin': ('>=', 0.3273), 'work_se': ('<=', 0.01560), 'two_log': ('<=', 114.78010), 'markov': ('<=', 0.550990),
+	'log2_EN': ('<=', 18.491), 'over': ('<=', -7.20), 'rep': ('<=', -7.52), 'boot_phi': ('<=', 1.2429e-02),
+	'success': ('>=', 0.411902)}
+_REPORT = []
+T0 = time.time()
+def load_stats():
+	import lzma, base64
+	return json.loads(lzma.decompress(base64.b85decode(open(os.path.join(_DIR, "stats16.b85")).read())))
+def say(*args):
+	line = " ".join(str(a) for a in args)
+	_REPORT.append(line)
+	print(line, file=sys.stderr, flush=True)
+def f6_mulp(A, B):
+	return [c % P for c in C.mul([c % P for c in A], [c % P for c in B])]
+def f6_pow(A, n):
+	r, base = [1], [c % P for c in A]
+	while n:
+		if n & 1:
+			r = f6_mulp(r, base)
+		base = f6_mulp(base, base)
+		n >>= 1
+	return (r + [0] * 6)[:6]
+def check_resultant():
+	F0 = [0] * 6
+	for d, c in C.TERMS:
+		term = (c + [0] * 6)[:6]
+		for _ in range(d // 2):
+			term = C.mul(term, [0, -U])
+		F0 = [x + y for x, y in zip(F0, term)]
+	r = C.norm(F0)
+	ok = r != 0 and r % P == 0
+	say(f"[0] Res {r.bit_length()}b 0modp {'ok' if ok else 'FAIL'}")
+	return ok
+def check_tower():
+	yp = f6_pow([0, 1], P)
+	cur, ok_irr = [0, 1, 0, 0, 0, 0], True
+	for k in range(1, 7):
+		acc = [0] * 6
+		for coef in reversed(cur):
+			acc = f6_mulp(acc, yp)
+			acc[0] = (acc[0] + coef) % P
+		cur = acc
+		is_y = cur == [0, 1, 0, 0, 0, 0]
+		if (k in (1, 2, 3) and is_y) or (k == 6 and not is_y):
+			ok_irr = False
+	uy = f6_mulp([(-U) % P], [0, 1])
+	chi = f6_pow(uy, (P ** 6 - 1) // 2)
+	ok_sq = chi == [P - 1, 0, 0, 0, 0, 0]
+	say(f"[0b] h-irred {'ok' if ok_irr else 'FAIL'}; (uy)^((p^6-1)/2)=-1 {'ok' if ok_sq else 'FAIL'}")
+	cert = IC.field_certificate(P)
+	ok_c = cert['squarefree'] and cert['irreducible_mod_p'] and cert['maximal_power_basis'] and cert['discriminant'] == 58673
+	say(f"[0c] Disc={cert['discriminant']}{cert['discriminant_factors']} O_h=Z[y] {'ok' if ok_c else 'FAIL'}")
+	return ok_irr and ok_sq and ok_c
+def check_rho_and_semismooth():
+	ref = {2: 0.30685281944, 3: 0.048608388, 4: 0.0049109256, 6: 1.9649696e-5, 8: 3.2320693e-8, 10: 2.7701718e-11}
+	err = max(abs(DS.rho_series(u) - v) / v for u, v in ref.items())
+	ok_br = all(DS.rho_lo(u) <= DS.rho_series(u) <= DS.rho_hi(u) + 1e-300 for u in (1.5, 2.3, 7.7, 15.2, 33.3, 41.0))
+	rows, h = DS.window_rows(80.0, 69.0, 48, 48)
+	ok_w = abs(sum(rows[(1, 0)]) - math.log(80 / 69)) < 1e-12
+	say(f"[1] rho ref{err:.1e} {'ok' if err < 1e-6 else 'FAIL'}; brack {'ok' if ok_br else 'FAIL'}; wtsum "
+		f"{'ok' if ok_w else 'FAIL'}")
+	return err < 1e-6 and ok_br and ok_w
+def uniform_half_ellipsoid(q, inverse_q, radius2, rng):
+	cap = []
+	for j in range(6):
+		c = F(radius2) * inverse_q[j][j]
+		cap.append(math.isqrt(c.numerator // c.denominator))
+	while True:
+		a = [rng.randrange(-c, c + 1) for c in cap[:-1]] + [rng.randrange(1, cap[-1] + 1)]
+		if C.quadratic(q, a) <= radius2:
+			return a, C.quadratic(q, a)
+def regenerate(cfg, seed, index):
+	qa, da, ia = C.integer_metric(cfg['matrix_a']); qb, db, ib = C.integer_metric(cfg['matrix_b'])
+	A2, theta = cfg['production_A_squared'], F(cfg['production_theta'])
+	rng = Random(f"v11-production-ideal-key:{seed}:{index}")
+	a, aq = uniform_half_ellipsoid(qa, ia, int(A2 * theta * da), rng)
+	b, bq = uniform_half_ellipsoid(qb, ib, (A2 - F(aq, da)) * db, rng)
+	return a, b, aq, bq
+def coprime_pair(a, b):
+	da, db = C.norm(a), C.norm(b)
+	d = math.gcd(da, db)
+	if d == 1:
+		return True
+	rows = [C.mul(v, [0] * i + [1]) for v in (a, b) for i in range(6)]
+	key = IC.row_hnf(rows, d)
+	return all(key[i][i] == 1 for i in range(6))
+def verify_pool(cfg, pool, samples, disks):
+	qa, da, ia = C.integer_metric(cfg['matrix_a']); qb, db, ib = C.integer_metric(cfg['matrix_b'])
+	A2 = cfg['production_A_squared']
+	index = {(r['seed'], r['index']): r for r in pool}
+	n_can = n_prim = 0; bad = []
+	t0 = time.time()
+	for i in range(samples):
+		a, b, aq, bq = regenerate(cfg, 33, i)
+		can, work, witness = IC.canonical_a(a, cfg['matrix_a'], 100000)
+		row = index.get((33, i))
+		if can != (row is not None):
+			bad.append(('canonical flag', i, can)); continue
+		if not can:
+			continue
+		n_can += 1
+		qa_frac = F(aq, da) / A2
+		if round(qa_frac * 65536) != round(row['qa'] * 65536):
+			bad.append(('Q_a', i)); continue
+		nf, ng = C.norms(a, b)
+		if abs(math.log2(nf) - row['nf']) > 1 / 16 or abs(math.log2(ng) - row['ng']) > 1 / 16:
+			bad.append(('norms', i)); continue
+		if coprime_pair(a, b) != row['primitive']:
+			bad.append(('primitive', i)); continue
+		n_prim += row['primitive']
+		radius = (A2 - F(aq, da)) * db
+		t = sum(qb[0][j] * b[j] for j in range(1, 6))
+		c = sum(qb[j][k] * b[j] * b[k] for j in range(1, 6) for k in range(1, 6)) - radius
+		iv = C.integer_interval(qb[0][0], t, c)
+		blo = (b[0] // 64) * 64; lo, hi = max(iv.start, blo), min(iv.stop - 1, blo + 63)
+		if 16 * max(1, (iv.stop - iv.start) // 16) != row['rlen'] or hi - lo + 1 != row['blen']:
+			bad.append(('row/block length', i)); continue
+		est = EB.NormBounds(a, disks)
+		leaves = est.adaptive_row(a, b[1:], lo, hi, singleton_policy='reject', width=128)
+		at = [l for l in leaves if l[0] <= b[0] <= l[1]][0]
+		rej = isinstance(at[2], dict)
+		if est.counts['block_evaluations'] != row['evals'] or len(leaves) != row['leaves'] or rej != row['rejected']:
+			bad.append(('nbound statistics', i)); continue
+		if not rej:
+			(fl, fu), (gl, gu) = at[2]
+			if not (fl <= 16 * math.log2(nf) <= fu and gl <= 16 * math.log2(ng) <= gu):
+				bad.append(('bound does not contain the exact norm', i)); continue
+	say(f"[2] regen({time.time()-t0:.1f}s):{n_can}c {n_prim}p {'ok' if not bad else 'FAIL ' + str(bad[:3])}")
+	return not bad, n_can
+def nbar(lo_bits, hi_bits):
+	ps = [q for q in primes_upto(2 ** hi_bits) if q >= 2 ** lo_bits]
+	tot = 0
+	rng = Random(1)
+	for p in ps:
+		for s in sorted(set(roots_modp(H, p, rng))):   # the roots of h mod p
+			tot += len(roots_modp([1 + s - s * s - s ** 3, 0, s ** 5, 0, 0, 0, 2 * s ** 3, 0, 0, 0, -2 * s, 0, 1], p, rng)) + \
+				len(roots_modp([U * s, 0, 1], p, rng))
+	return tot / len(ps), len(ps)
+def _asm(name):
+	"""kernel listings: kernels_asm.b85 = base85(lzma(text))"""
+	t = lzma.decompress(base64.b85decode("".join(open(os.path.join(_DIR, "kernels_asm.b85")).read().split()))).decode()
+	return t.split("@@ " + name + "\n")[1].split("\n@@ ")[0].splitlines()
+def check_la_kernel(name="la_mac.s", start="LBB9_3:"):
+	on, body = False, []
+	for ln in _asm(name):
+		s = ln.strip()
+		if s.startswith(start):
+			on = True; continue
+		if on:
+			if s.startswith("LBB") or (s.startswith(";") and "bb." in s):
+				break
+			if s and not s.startswith(";") and not s.startswith("."):
+				body.append(s.split()[0])
+	return len(body), [m for m in body if m.startswith("b.") or m == "b"]
+def check_la_func(fn):
+	"""static count of a loop-free function"""
+	L = [x.strip() for x in _asm("la_mac.s")]
+	i = L.index(fn + ":") + 1; n, seen, fwd, calls = 0, set(), True, []
+	while i < len(L) and not L[i].startswith(("_", ";")):
+		x = L[i]; i += 1
+		if x.startswith("LBB"): seen.add(x[:-1])
+		elif x:
+			n += 1; fwd = fwd and x.split()[-1] not in seen
+			if x.split()[0] == "bl": calls.append(x.split()[-1])
+	return n, fwd, calls
+def la_row_tail(k=None):
+	"""row tail with k active owners and one 9-limb reduction (STORAGE.md)"""
+	k = k or M.LA_OWNERS
+	f = {k: check_la_func(k) for k in ("_send_pair", "_combine", "_finish", "_reduce9", "_fold9", "_reduce6")}
+	ok = all(v[1] for v in f.values()) and f["_finish"][2] == ["_fold9", "_reduce6"] and f["_reduce9"][2] == ["_fold9", "_reduce6"] \
+		and not any(f[k][2] for k in ("_send_pair", "_combine", "_fold9", "_reduce6"))
+	sub = f["_fold9"][0] + f["_reduce6"][0]
+	row = (k - 1) * (f["_send_pair"][0] + 18) + (k - 1) * (f["_combine"][0] + 2) + f["_finish"][0] + sub + 2 + 10 * k + 40 + 168
+	red9 = f["_reduce9"][0] + sub + 2
+	return row, red9, {k: v[0] for k, v in f.items()}, ok
+def ball_counts_check():
+	"""exact N_12(R^2) for R <= 8 against CELLS"""
+	import functools
+	@functools.lru_cache(None)
+	def Nd(d, s):
+		if s < 0:
+			return 0
+		if d == 0:
+			return 1
+		r = math.isqrt(s)
+		return sum(Nd(d - 1, s - x * x) for x in range(-r, r + 1))
+	ok = True
+	for R in (4, 6, 8):
+		n12 = Nd(12, R * R)
+		ok &= (n12 - 1) // 2 == DS.CELLS[R]
+	V12 = math.pi ** 6 / 720
+	for R, half in DS.CELLS.items():
+		n = 2 * half + 1
+		ok &= V12 * (R - math.sqrt(3)) ** 12 <= n <= V12 * (R + math.sqrt(3)) ** 12
+	return ok
+def roots_modp(poly, p, rng):
+	poly = [c % p for c in poly]
+	while poly and poly[-1] == 0:
+		poly.pop()
+	if len(poly) <= 1:
+		return []
+	def pmod(a, m):
+		a = a[:]
+		inv = pow(m[-1], -1, p)
+		while len(a) >= len(m):
+		  if a[-1]:
+		    z = a[-1] * inv % p; s = len(a) - len(m)
+		    for j, v in enumerate(m):
+		      a[s + j] = (a[s + j] - z * v) % p
+		  a.pop()
+		  while a and a[-1] == 0:
+		    a.pop()
+		return a
+	def pmul(a, b, m):
+		r = [0] * (len(a) + len(b) - 1)
+		for i, x in enumerate(a):
+		  if x:
+		    for j, y in enumerate(b):
+		      r[i + j] = (r[i + j] + x * y) % p
+		return pmod(r, m)
+	def powmod(a, e, m):
+		r = [1]
+		while e:
+		  if e & 1:
+		    r = pmul(r, a, m)
+		  a = pmul(a, a, m); e >>= 1
+		return r
+	xp = powmod([0, 1], p, poly)
+	xp = xp + [0] * max(0, 2 - len(xp)); xp[1] = (xp[1] - 1) % p
+	a, b = poly, pmod(xp, poly)
+	while b and any(b):
+		a, b = b, pmod(a, b)
+	if not a or not any(a):
+		return []
+	inv = pow(a[-1], -1, p); g = [x * inv % p for x in a]
+	def split(g):
+		if len(g) <= 1:
+		  return []
+		if len(g) == 2:
+		  return [(-g[0] * pow(g[1], -1, p)) % p]
+		while True:
+		  c = [rng.randrange(p) for _ in range(len(g) - 2)] + [rng.randrange(1, p), 1]
+		  t = powmod(c, (p - 1) // 2, g)
+		  t = t + [0] * max(0, 1 - len(t)); t = [(t[0] - 1) % p] + t[1:]
+		  h = pmod(t, g) if len(t) >= len(g) else t
+		  aa, bb = g, h
+		  while bb and any(bb):
+		    aa, bb = bb, pmod(aa, bb)
+		  if aa and 1 < len(aa) < len(g):
+		    iv = pow(aa[-1], -1, p); hh = [x * iv % p for x in aa]
+		    qq = g[:]; v = [0] * (len(g) - len(hh) + 1)
+		    for k in range(len(v) - 1, -1, -1):
+		      v[k] = qq[k + len(hh) - 1]
+		      for j, x in enumerate(hh):
+		        qq[k + j] = (qq[k + j] - v[k] * x) % p
+		    assert not any(qq)
+		    return split(hh) + split(v)
+	return sorted(split(g))
+def repeat_bound(dres):
+	"""[7] counter; window repeats; shared-set missing-log repeats..."""
+	import counts16
+	Pm = DS.P(); EN, _ = counts16.expected_nodes(Pm, dres)
+	pmin = min(math.log2(2 * (2 ** DS.log2li(b[1]) - 2 ** DS.log2li(b[0]))) for b in dres['bins'])
+	over = math.ceil((math.log2(EN) - M.NODE_CAP_LOG2) * 100) / 100
+	nd = list(dres['DET'].values()) + dres['miss']; q = lambda m: math.ceil(4 * m / 69.0)
+	uf, ug, ub = max(q(d['nf']) for d in nd), max(q(d['ng']) for d in nd), q(dres['boot']['m'])
+	N2 = 2.0 ** (M.NODE_CAP_LOG2 + 1); kb = 2 * int(Pm.MIN_RELS)
+	pairs = (N2 * N2 / 2 * (DS.miss_pair(uf, uf, Pm.LOG2_RELS, Pm.MAIN_UF) + DS.miss_pair(ug, ug, Pm.LOG2_RELS, Pm.MAIN_UG))
+		+ kb * (N2 + kb) * DS.miss_pair(ub, max(ub, ug), Pm.LOG2_RELS, Pm.MAIN_UG))
+	types = {('f', d['nf']) for d in nd} | {('g', d['ng']) for d in nd} | {('g', dres['boot']['m'])}
+	tail = max(DS.miss_tail(Pm, s, m) for s, m in types) + math.log2(len(types)); tailc = max(tail, -30.0)
+	win = 2 * M.NODE_CAP_LOG2 - 1 + 6 - pmin
+	sh = dres['boot']['shared_log2']
+	dres['rep_parts'] = dict(window=win, miss_pairs=math.log2(pairs), tail=tail, tail_charged=tailc, shared_lattice=sh, types=len(types))
+	coll = math.ceil(math.log2(2 ** win + pairs + 2 ** tailc + 2 ** sh) * 100) / 100
+	return math.log2(EN), over, coll, pmin
+def audit(rng_seed=31001, dres=None):
+	import descent_witness as W
+	assert (W.P ** 6 - 1) % W.R != 0 and ((W.P ** 12 - 1) // W.R) % W.R != 0
+	rng = Random(rng_seed)
+	while True:
+		x = ([rng.randrange(W.P) for _ in range(6)], [rng.randrange(W.P) for _ in range(6)])
+		if any(x[0] + x[1]):
+			break
+	w0 = W.pow12(x, (W.P ** 12 - 1) // W.R)
+	tt = rng.randrange(1, W.R)
+	z = W.pow12(w0, tt)
+	B, swaps = W.lll(W.boot_basis(z))
+	bst = W.boot_ball_stats(z, B, rng_seed + 1, points=6, radii=(96,))
+	boot_bins_max = max(x[1] for x in DS.P.BOOT_BINS)
+	sq = []
+	Pm = DS.P()
+	cfmax = max(b[1] for b in Pm.QBINS); cgmax = max(b[2] for b in Pm.QBINS)
+	env_ok = True
+	for bits, side, seed in ((260, 'f', 13300),):
+		r = W.specialq_ball_stats(bits, side, seed, points=6, radii=(96,))
+		for st_ in r['stats']:
+			env_ok &= st_['cf_max'] <= cfmax and st_['cg_max'] <= cgmax
+		sq.append(dict(bits=bits, side=side, seed=seed, swaps=r['swaps'], stats=[{k: (round(v, 2) if isinstance(v, float) else v) for k, v in s.items()} for s in r['stats']]))
+	# relation-weighted unit duplicates
+	units = W.gen_units(8)
+	nb_, iAb_, kAb_, _ = DS.BOOT16
+	tb = W.unit_mates(B, rng_seed + 33, 4, 48, units, boot=True)['triples']
+	sb_all = [DS.ss_lower2(lng, Pm.LX, float(nb_), iAb_, kAb_, 1, Pm.MESH, Pm.ALPHA_G, Pm.TRUNC) / m for _, lng, m, hb in tb]
+	sb_cert = [x if hb <= 8 else 0.0 for x, (_, _, _, hb) in zip(sb_all, tb)]
+	q_, _, _, _, nB, _ = W.specialq_lattice(225, 'g', Random(rng_seed + 31)); lq_ = math.log2(q_)
+	n_, iA_, kA_, kB_, R_, _ = DS.PLAN16[(220, 'g')]
+	tn = W.unit_mates(nB, rng_seed + 32, R_, 16, units)['triples']
+	sn_all = [DS.ss_lower2(lnf, Pm.LX, float(n_), iA_, kA_, kB_, Pm.MESH, Pm.ALPHA_F, Pm.TRUNC) * DS.ss_lower2(lng - lq_, Pm.LX, float(n_), iA_, kA_, kB_, Pm.MESH, Pm.ALPHA_G, Pm.TRUNC) / m for lnf, lng, m, hb in tn]
+	sn_cert = [x if hb <= 8 else 0.0 for x, (_, _, _, hb) in zip(sn_all, tn)]
+	bkey = [k for k in dres['DET'] if k[0][0] == 220 and k[1] == 'g'][0]
+	relw = dict(units=len(units), units_ok=len(units) == 2442, boot=(sum(sb_all) / len(sb_all)) / 2.0 ** dres['boot']['pr_log2'], boot_cert=(sum(sb_cert) / len(sb_cert)) / 2.0 ** dres['boot']['pr_log2'],
+				boot_cert_frac=sum(1 for t in tb if t[3] <= 8) / len(tb), node220g=(sum(sn_all) / len(sn_all)) / 2.0 ** dres['DET'][bkey]['pr_log2'], node_cert=(sum(sn_cert) / len(sn_cert)) / 2.0 ** dres['DET'][bkey]['pr_log2'],
+				node_cert_frac=sum(1 for t in tn if t[3] <= 8) / len(tn))
+	# sub-bin domination on fresh cells
+	pts = []
+	for bits, side, sd in ((100, 'g', rng_seed + 11), (220, 'f', rng_seed + 12)):
+		r2 = W.specialq_ball_stats(bits, side, sd, points=24, radii=(192, 384))
+		pts += r2['cells']
+	mq = []   # missing-log sizes, first-bin radii
+	for bits, side, sd in ((45, 'f', rng_seed + 13), (68, 'g', rng_seed + 14)):
+		mq += W.specialq_ball_stats(bits, side, sd, points=24, radii=(320, 384))['cells']
+	pts += mq
+	pts.sort(key=lambda t: t[0]); nq = len(Pm.QBINS_SUB); npts = len(pts)
+	cf_ok = all(sum(1 for t in pts if t[0] <= Pm.QBINS_SUB[k][0]) >= (k + 1) * npts / nq - 1e-9 for k in range(nq))
+	cg_gap = min(Pm.QBINS_SUB[k][1] - max(t[1] for t in pts[k * npts // nq:(k + 1) * npts // nq]) for k in range(nq))
+	sub = dict(cells=npts, cf_quantiles_ok=cf_ok, cg_gap_min=round(cg_gap, 2), cf_raw_max=round(max(t[0] for t in pts), 2), cg_raw_max=round(max(t[1] for t in pts), 2),
+			   miss_cells=len(mq), miss_raw_max=(round(max(t[0] for t in mq), 2), round(max(t[1] for t in mq), 2)))
+	return dict(boot=dict(swaps=swaps, stats=[{k: (round(v, 2) if isinstance(v, float) else v) for k, v in s.items()} for s in bst],
+						 within_model_bins=all(s['cg_max'] <= boot_bins_max for s in bst)),
+				specialq=sq, specialq_within_bins=env_ok,
+				relw=relw,
+				subbins=sub,
+				storage=store16.check())
+def check_fields():
+	"""[13] r unramified in K_f, K_g"""
+	import retain16 as RT, descent_witness as W
+	R = W.R; Hr = [x % R for x in H]
+	def res(a, b):
+		"""Res(a, b) over F_r by the Euclidean recurrence."""
+		a = RT._trim([x % R for x in a]); b = RT._trim([x % R for x in b]); s = 1
+		while b and len(b) > 1:
+			da, db = len(a) - 1, len(b) - 1; rem = RT.pmod(a, b, R)
+			if not rem:
+				return 0
+			s = s * (-1) ** (da * db) * pow(b[-1], da - (len(rem) - 1), R) % R; a, b = b, rem
+		return s * pow(b[0], len(a) - 1, R) % R if b else 0
+	def norm_poly(terms, deg):
+		"""N_{K_h/Q}(s(X)) mod r"""
+		n = 6 * deg + 1; xs = list(range(n))
+		ys = [res(Hr, [sum(c[i] * pow(k, d, R) for d, c in terms if i < len(c)) % R for i in range(6)]) for k in xs]
+		for j in range(1, n):
+			for i in range(n - 1, j - 1, -1):
+				ys[i] = (ys[i] - ys[i - 1]) * pow(xs[i] - xs[i - j], -1, R) % R
+		poly = [ys[-1]]
+		for i in range(n - 2, -1, -1):
+			poly = [(-xs[i] * poly[0] + ys[i]) % R] + [(poly[k - 1] - xs[i] * poly[k]) % R for k in range(1, len(poly))] + [poly[-1]]
+		return poly
+	out = {}
+	for name, terms, deg in (('f', C.TERMS, 12), ('g', RT.G_TERMS, 2)):
+		poly = norm_poly(terms, deg)
+		out['deg_' + name] = len(poly) - 1
+		out['sqf_' + name] = poly[-1] == 1 and len(poly) == 6 * deg + 1 and len(RT.pgcd(poly, RT.pderiv(poly, R), R)) == 1
+	out['unramified'] = out['sqf_f'] and out['sqf_g']
+	out['disc_h'] = C.norm([-1, 2, 3, 0, 0, 6])                     # |disc h| = |N(h'(y))|
+	out['sig'] = signatures()
+	return out
+def signatures():
+	"""[13] Sturm counts; sigma-odd unit rank"""
+	def tr(p):
+		while p and p[-1] == 0: p = p[:-1]
+		return p
+	def sturm(p):
+		s = [tr([F(c) for c in p])]; s.append([i * c for i, c in enumerate(s[0])][1:])
+		while len(s[-1]) > 1:
+			a, b = s[-2][:], s[-1]
+			while len(a) >= len(b):
+				q = a[-1] / b[-1]; d = len(a) - len(b); a = tr([x - q * b[i - d] if i >= d else x for i, x in enumerate(a)][:-1])
+			if not a: break
+			s.append([-x for x in a])
+		return s
+	def ch(s, x):
+		v = [t for t in (sum(c * x ** i for i, c in enumerate(q)) for q in s) if t]
+		return sum((a > 0) != (b > 0) for a, b in zip(v, v[1:]))
+	nre = lambda p, B=F(10) ** 60: (lambda s: ch(s, -B) - ch(s, B))(sturm(p))
+	sh = sturm(H); ys = []
+	def iso(a, b):
+		n = ch(sh, a) - ch(sh, b)
+		if n == 1 and b - a < F(1, 10 ** 30): ys.append((a + b) / 2)
+		elif n: iso(a, (a + b) / 2); iso((a + b) / 2, b)
+	iso(F(-10), F(10))
+	rf = rfp = rg = 0
+	for y in ys:
+		fx = [0] * 13
+		for d, c in C.TERMS: fx[d] = sum(F(ci) * y ** i for i, ci in enumerate(c))
+		rf += nre(fx); rfp += nre(fx[0::2]); rg += nre([U * y, 0, 1])
+	rk = lambda n, r1: r1 + (n - r1) // 2 - 1
+	return dict(f=(rf, 36 - rf // 2), fp=(rfp, 18 - rfp // 2), g=(rg, 6 - rg // 2), odd=rk(72, rf) - rk(36, rfp) + rk(12, rg) - rk(6, len(ys)))
+def h5c_cert():
+	"""[6c] H5c production masses, mu ratios, lam-bracket + grid checks, from code"""
+	lr,uf,ug=DS.P.LOG2_RELS,DS.P.MAIN_UF,DS.P.MAIN_UG
+	M=DS.h5c_m(lr,uf,ug);dp,bb,da,bn=M['dpp'],M['bbar'],M['dall'],M['bun']
+	mu={};dx=-1e9
+	for um in (uf,ug):
+		tab=DS.h5c_tab(lr,um);mp=DS.h5c_mp(lr,uf,ug,um)[1]
+		for u4 in (4,8,12):
+			o=0.0
+			for b,(w,lo,hi) in zip(DS.BANDS,tab):
+				o+=DS.kappa(u4/4.0,(b+0.02)/69.0)*math.log((b+0.02)/b)*DS.pois2(lo)
+			mu[(um,u4)]=DS.miss_side(u4,lr,um)/o
+		for b,(w,lo,hi) in zip(DS.BANDS,tab):
+			g=max(DS.h5c_extra(lo+(hi-lo)*i/64,dp,bb,da,bn) for i in range(65))
+			dx=max(dx,g-(mp[b]-DS.pois2(lo)))
+	kr=max(DS.kappa(um,(b+0.02)/69.0)/DS.kappa(um,b/69.0) for um in (uf,ug) for b in DS.BANDS)
+	mw=max(2*DS.kappa(um,(b+0.02)/69.0)/2**b for um in (uf,ug) for b in DS.BANDS)
+	return dict(M=M,mu=mu,kr=kr,dx=dx,mw=mw,ok=kr<1.014 and dx<=1e-12 and mw<=2**-35)
+def h5c_toy(seed,o):
+	"""[6d] H5c toy domination: extra(lam) vs measured occ>=3 losses (1 seed, 2^12)"""
+	lam=[x*o['Rp'] for x in o['w']]
+	Mt=DS.h5c_masses([(x,l,l) for x,l in zip(o['w'],lam)],1-(o['kept']+o['r1'])/o['Rp'])
+	n3=pred=meas=0
+	for i in range(2*(2**12//2)):
+		if o['occ'][i]>=3 and lam[i]>=1:
+			n3+=1;pred+=DS.h5c_extra(lam[i],Mt['dpp'],Mt['bbar'],Mt['dall'],Mt['bun']);meas+=0 if o['known'][i] else 1
+	return dict(n3=n3,pred=pred,meas=meas,ok=pred>=meas and pred/n3<=0.03)
+def main():
+	cfg_in = json.load(sys.stdin) if not sys.stdin.isatty() else {}
+	samples = int(cfg_in.get("samples", 16)); seed = int(cfg_in.get("seed", 1))
+	say(f"evidence: stnfs s={samples} seed={seed}")
+	ok0 = check_resultant(); ok0b = check_tower(); ok1 = check_rho_and_semismooth()
+	cfg = json.load(open(os.path.join(_DIR, "config.json")))
+	hdr, pool = M.load_pool(open(os.path.join(_DIR, "pool40k.b85")).read())
+	n_total = sum(hdr['samples'].values())
+	disks = EB.root_disks()
+	ok2, n_can = verify_pool(cfg, pool, samples, disks)
+	theta_pool = F(cfg['production_theta']); theta_reg = F(cfg['production_theta_region'])
+	assert theta_reg <= theta_pool == M.OP['theta']
+	pool_reg = [r for r in pool if r['qa'] <= float(theta_reg)]
+	n_eff = n_total * float((theta_reg / theta_pool) ** 3)
+	rmin = math.isqrt(int(theta_reg * cfg['production_A_squared']))
+	corr = LCB.correction(cfg, rmin)
+	geo = M.Geometry(cfg, theta_reg, F(corr['safe_yield_factor']), F(corr['safe_work_population_factor']))
+	say(f"[3] th={theta_reg}(p{theta_pool}) a{rmin}; va2^{math.log2(geo.va):.3f} vb2^{math.log2(geo.vb):.3f}; cp"
+		f"{float(corr['safe_yield_factor']):.9f}/{float(corr['safe_work_population_factor']):.9f}@R>={rmin}; "
+		f"{len(pool_reg)}/{len(pool)}r eff{n_eff:.3f}/{n_total}")
+	op = M.OP
+	retain = Retention(int(op['lb']), int(op['lx2']), prime_min=M.P_MIN, step=.25, max_bits=850, tilt=.05)
+	cost = Retention(850, int(op['lx2']), prime_min=M.P_MIN, step=.25, max_bits=851, tilt=.005)
+	t0 = time.time()
+	e = M.evaluate(pool_reg, n_eff, geo, op, retain, cost, return_work=True)
+	# [4a] incidence-inclusive work SE
+	wc = e['work_contribs']; ncan = len(wc); mw = sum(wc) / ncan
+	sw = math.sqrt(sum((x - mw) ** 2 for x in wc) / (ncan - 1))
+	cond_se = sw / math.sqrt(ncan) / mw
+	pcan = ncan / n_total
+	work_se = math.sqrt(cond_se ** 2 + (1 - pcan) / ncan)
+	allow_need = 1 + M.WORK_SE_K * work_se
+	ok_allow = M.CANON_WORK_ALLOWANCE >= allow_need
+	say(f"[4a] workSE{100*work_se:.3f}% allow{M.CANON_WORK_ALLOWANCE:.4f}>={allow_need:.5f} {'ok' if ok_allow else 'FAIL'}")
+	ok_relmeans = e['nf_rel'] >= 69 * DS.P.MAIN_UF and e['ng_rel'] >= 69 * DS.P.MAIN_UG   # descent missing-log inputs
+	# descent may not assume more relations than this model...
+	ok_rels_input = e['log2_rels'] >= DS.P.LOG2_RELS
+	say(f"[4] B=2^{op['lb']:.0f} X2=2^{op['lx2']:.0f}; rel{e['nf_rel']:.1f}/{e['ng_rel']:.1f} "
+		f"rels2^{e['log2_rels']:.3f} need2^{e['log2_need']:.3f} marg{e['margin']:.3f}>={M.MARGIN}({'feas' if e['feasible'] else 'INFEAS'}) SE{e['yield_se_log2']:.3f}b; "
+		f"LR {DS.P.LOG2_RELS:.3f}<=sup {e['log2_rels']:.4f} {'ok' if ok_rels_input else 'FAIL'} ({time.time()-t0:.1f}s)")
+	la = M.linear_algebra(e['log2_U'], op['excess'])
+	say(f"[5] 2^{e['log2_population']:.3f}cells relcol2^{e['log2_relcol']:.4f}u; N=2^{la['log2_N']:.4f}; LA2^{la['log2_la']:.4f}u")
+	t0 = time.time()
+	Us, res = filtsim.run(op['lb'], e['nf_mean'] / op['lb'], e['ng_mean'] / op['lb'], op['excess'],
+						 seed, 12, kmax=64, targets=(300,), verbose=False)
+	r100 = res[300]
+	say(f"[6] filt: N/U={1/r100[0]:.4f}@wt{r100[3]:.0f}(max|c|{r100[2]}); "
+		"2^17:" + ";".join(f"{ex}:" + ",".join(f"({s},{un:.2f},{n},{mc})" for (s, un, n, mc, w) in v)
+								 for ex, v in sorted(M.FILT_TABLE.items())))
+	t0 = time.time()
+	o6d={};rec = filtsim.missing_recon(seed,_out=o6d)
+	ok_rec = all(mf <= md for (lo, hi, n, mf, md, h3) in rec)
+	say(f"[6b] misslog: "
+		+ ";".join(f"[{lo:g},{hi:g}):{n},{mf:.4f},{md:.4f},{h3}" for (lo, hi, n, mf, md, h3) in rec) + f" {'ok' if ok_rec else 'FAIL'}")
+	t0=time.time();c6=h5c_cert();h6d=h5c_toy(seed,o6d);m6=c6['M']
+	say(f"[6c] h5c: d={m6['delta']:.4f} b={m6['beta']:.4f} o2={m6['o2']:.4f} ds={m6['ds']:.4f} o3={m6['o3']:.4f} muc={m6['muc']:.4f} casc={m6['casc']:.4f} dpp={m6['dpp']:.4f} r1m={m6['r1mass']:.4f} vim={m6['vimass']:.4f} bbar={m6['bbar']:.4f} dall={m6['dall']:.4f}; mu+ " + " ".join(f"{'fg'[um==DS.P.MAIN_UG]}{u4}:{c6['mu'][(um,u4)]:.4f}" for um in (DS.P.MAIN_UF,DS.P.MAIN_UG) for u4 in (4,8,12)) + f"; kap {c6['kr']:.5f}<1.014 grid {c6['dx']:.1e}<=1e-12 maxw {c6['mw']:.2e}<=2^-35 {'ok' if c6['ok'] else 'FAIL'}")
+	say(f"[6d] h5c toy: n={h6d['n3']} pred={h6d['pred']:.3f} meas={h6d['meas']} rate={h6d['pred']/h6d['n3']:.4f}<=0.03 {'ok' if h6d['ok'] else 'FAIL'}")
+	t0 = time.time()
+	ok_counts = ball_counts_check()
+	import retain16 as RT0
+	RT0.load_table(load_stats())
+	Pm = DS.P()
+	dres = DS.evaluate(Pm, DS.PLAN16, DS.BOOT16)
+	two_log = dres['two_log_units']
+	bt = dres['boot']
+	cap = M.DESCENT_CAP
+	markov = 2 ** (two_log - cap)
+	log2_EN, over, coll, pmin = repeat_bound(dres); OVER = 2.0 ** over; REP = 2.0 ** coll
+	kap_ok = all(DS.kappa(u, a + b) <= DS.kappa(u, a) * DS.kappa(u, b) * (1 + 1e-12) for u in (4, 8, 16, 24, 32, 40) for a in (0.58, 0.79, 1.0) for b in (0.58, 0.79, 1.0))   # H5m support
+	p_desc = 1 - 2 * bt['phi'] - markov - OVER - REP
+	p_main = 1.0 - 2.0 ** (la['log2_N'] + 2 - 254)
+	success = p_main * p_desc
+	rows = DS.report(dres)
+	sv = [dres['DET'][k] for k in dres['DET'] if dres['DET'][k]['how'] == 'sieve']
+	hmax = max(DS.CELLS[d['R']] for d in sv)
+	ok_width = hmax < 1 << 103 and (hmax - 1) >> 40 < 1 << 63 and all(16 * max(d['nf'], d['ng']) < 1 << 16 for d in sv)
+	mu_min = min(r['mu'] for r in rows); psi_max = max(max(r['psi'] for r in rows), bt['psi'])
+	say(f"[7] {len(rows)}n mu>={math.floor(mu_min*10)/10:.1f} psi<={math.ceil(psi_max*1000)/1000:.3f}; "
+		f"1log2^{bt['one_log_log2']:.3f} 2log2^{two_log:.3f}; "
+		f"miss W<=2^{math.log2(max(x['W'] for x in dres['miss'])):.3f} phi<={max(x['phi'] for x in dres['miss']):.4f}; rep win2^{dres['rep_parts']['window']:.2f} pairs2^{dres['rep_parts']['miss_pairs']:.2f} tail2^{dres['rep_parts']['tail']:.2f}({dres['rep_parts']['types']}t ch2^{dres['rep_parts']['tail_charged']:.0f}) bootlat2^{dres['rep_parts']['shared_lattice']:.2f}; "
+		f"cap2^{cap:g} Mk<=2^{math.ceil((two_log-cap)*1000)/1000:.3f} Pboot<{math.ceil(bt['phi']*1e7)/1e7:.2e} E[N]2^{log2_EN:.2f} abort2^{over:.2f} rep2^{coll:.2f} succ{math.floor(success*10000)/10000:.4f}flr {'ok' if ok_width and ok_counts else 'FAIL'}")
+	nb, np_ = nbar(8, 12)
+	say(f"[9] nbar {np_}p: {nb:.3f}<=2.02")
+	ok9 = nb <= M.NBAR * 1.01
+	la_n, la_br = check_la_kernel()
+	tail, red9, tail_n, tail_ok = la_row_tail()
+	say(f"[10] tail {tail_n} {tail}<={M.C_ROW:.0f} red9 {red9}<={M.C_RED9:.0f} {'ok' if tail_ok else 'FAIL'}")
+	nu_ok = all(max(M.SCALE_NU[a]) >= max(M.SCALE_NU[b]) for a, b in zip(sorted(M.SCALE_NU), sorted(M.SCALE_NU)[1:])) and M.ratio_N_over_U(1.3) * M.PAD_N >= max(max(v) for k, v in M.SCALE_NU.items() if k >= 15)
+	say(f"[10] N/U max: " + ", ".join(f"2^{k} {max(v):.4f}" for k, v in sorted(M.SCALE_NU.items())) + f"; charged {M.ratio_N_over_U(1.3) * M.PAD_N:.5f}>=2^15..: {nu_ok}")
+	say(f"[10] group loop: {la_n} instr {la_br} {'ok' if la_n == 33 and la_br == ['b.ne'] else 'MISMATCH'}")
+	bw_n, bw_br = check_la_kernel("bw_dot.s"); bf_n, bf_br = check_la_kernel("bw_dot.s", "LBB1_2:")
+	say(f"[10] bw_full loop: {bf_n} (charged {M.C_FULL:.0f}) {'ok' if bf_n == 97 and bf_n <= M.C_FULL and bf_br == ['b.ne'] else 'MISMATCH'}")
+	t0 = time.time()
+	au = audit(dres=dres)
+	ok11 = au['boot']['within_model_bins'] and au['specialq_within_bins']
+	ok11s = au['subbins']['cf_quantiles_ok'] and au['subbins']['cg_gap_min'] >= 0
+	ok11r = au['relw']['units_ok'] and au['relw']['boot'] >= 0.3 and au['relw']['node220g'] >= 1.0 and au['relw']['boot_cert'] >= 0.25 and au['relw']['node_cert'] >= 0.25
+	say(f"[11] bootlat{au['boot']['swaps']}sw {'ok' if au['boot']['within_model_bins'] else 'FAIL'}; "
+		+ ";".join(f"{s['side']}@2^{s['bits']}" for s in au['specialq'])
+		+ f" bins {'ok' if au['specialq_within_bins'] else 'FAIL'}; E[shat/m]/P({au['relw']['units']}u):boot{au['relw']['boot']:.2f}(c{au['relw']['boot_cert']:.2f}) 220g{au['relw']['node220g']:.2f}(c{au['relw']['node_cert']:.2f}) {'ok' if ok11r else 'FAIL'}; "
+		f"subbins{au['subbins']['cells']}c cfq{'ok' if au['subbins']['cf_quantiles_ok'] else 'FAIL'} cggap{au['subbins']['cg_gap_min']}b misslat{au['subbins']['miss_cells']}c {'ok' if ok11s else 'FAIL'}")
+	import descent_witness as W
+	import ecm16 as EC
+	t0 = time.time(); st = load_stats()
+	nb = st['nb_empty_window']
+	rr = [(b, s_, R_) + W.retention(b, s_, R_, seed + b, 40) for b, s_, R_ in [(b, s_, dres['DET'][(bb, s_)]['R']) for b, s_ in ((69, 'g'), (150, 'g')) for bb in dres['bins'] if bb[0] == b]]
+	nb_ok = all(z <= zp for b_, s_, R_, lb_, m_, r_, z, zp in nb['rows'] if m_ >= 7.4)
+	tab = st['prime_structure']['table']
+	special = [p for p in RT.primes(2, 512) if any(e != 1 or any(m != 1 for m in mf + mg) for d1, e, mf, mg in tab[str(p)])]
+	spot = sorted(set([p for i, p in enumerate(RT.primes(2, 512)) if i % 7 == seed % 7] + special))
+	ok_tab = len(tab) == len(RT.primes(2, 512)) and all(RT.structure(p) == tab[str(p)] for p in spot)
+	sample = {}
+	for p in (2, 23):
+		rs = W.residue_valuations(p, 400, seed + p)
+		for side in 'fg':
+			bound = 1 - RT.local_pdf(p, tab[str(p)], side, False, True).get(0, 0.0)
+			frac = 1 - rs[side].get(0, 0) / rs['n']
+			sample[f"{p}{side}"] = (round(frac, 4), round(bound, 4), frac <= bound + 3 * math.sqrt(bound * (1 - bound) / rs['n']) + 1e-12)
+	ok_sample = all(v[2] for v in sample.values())
+	ok11b = nb_ok and all(x[3] for x in rr) and ok_tab and ok_sample
+	say(f"[11b] idealtab{len(spot)}p {'ok' if ok_tab else 'FAIL'}; "
+		"residues:" + ",".join(f"{k}{v[0]}/{v[1]}" for k, v in sample.items()) + f" {'ok' if ok_sample else 'FAIL'}"
+		f";|N|:" + ";".join(f"{b}{s_}R{R_}:{ok_} gap{g:.1e}b" for b, s_, R_, ok_, g, k in rr)
+		+ ";emptywin:" + ";".join(str(tuple(x)) for x in nb['rows'])
+		+ f" {'ok' if nb_ok else 'FAIL'}")
+	t0 = time.time()
+	toyecm = EC.toy(60, seed, sizes=((36, 1024, 50), (40, 2048, 50)))
+	ok12 = all(t['empirical'] >= t['model_corrected'] - 2 * math.sqrt(t['model_corrected'] * (1 - t['model_corrected']) / t['trials']) for t in toyecm)
+	say(f"[12] ECM toys:"
+		+ ";".join(f"({t['bits']},{t['trials']},{t['empirical']:.3f},{t['model_corrected']:.3f})" for t in toyecm)
+		+ f" {'ok' if ok12 else 'FAIL'}")
+	t0 = time.time(); fl = check_fields()
+	say(f"[13] sqfree {'ok' if fl['unramified'] else 'FAIL'}; "
+		f"sig{fl['sig']['f']}/{fl['sig']['fp']}/{fl['sig']['g']} odd{fl['sig']['odd']}={M.N_SM} {'ok' if fl['sig']['odd'] == M.N_SM else 'FAIL'}")
+	ok13 = fl['unramified'] and fl['sig']['odd'] == M.N_SM
+	t0 = time.time(); al_s = {p: alpha_contrib(p) for p in (2, 19, 23)}
+	ok_alpha = op['alpha_f'] >= ALPHA_F and op['alpha_g'] >= ALPHA_G and DS.P.ALPHA_G >= ALPHA_G and DS.P.ALPHA_F >= ALPHA_F and all(round(v[0], 3) >= 0 for v in al_s.values())
+	say(f"[14] alpha (p<={ALPHA_PMAX}): ({ALPHA_F:.6f},{ALPHA_G:.6f})<=({op['alpha_f']},{op['alpha_g']}) {'ok' if ok_alpha else 'FAIL'}; "
+		f"p2/19/23: " + ",".join(f"{p}:({v[0]:.6f},{v[1]:.6f})" for p, v in sorted(al_s.items())) + f" ({time.time()-t0:.1f}s)")
+	tot = M.total_log2(e['log2_relcol'], la['log2_la'], cap, la['log2_gen'])
+	say(f"ledger: relcol{e['log2_relcol']:.4f} LA{la['log2_la']:.4f} cap{cap:g}(exp{two_log:.3f})")
+	say(f"total_log2W_full_ledger = {tot:.6f} (claimed {CLAIM:.6f}: {'ok' if tot <= CLAIM else 'EXCEEDS CLAIM'}); "
+		f"reserve {CLAIM - tot:.3f} bits")
+	# stated bounds vs UNROUNDED values
+	vals = dict(ledger=tot, relcol=e['log2_relcol'], la=la['log2_la'], log2_rels=e['log2_rels'], margin=e['margin'],
+				work_se=work_se, two_log=two_log, markov=markov, log2_EN=log2_EN, over=math.log2(OVER), rep=math.log2(REP),
+				boot_phi=bt['phi'], success=success)
+	dec_ok = {k: (vals[k] <= v if op == '<=' else vals[k] >= v) for k, (op, v) in DECLARED.items()}
+	dec_ok['work_factor'] = 894 ** 12 * 10 ** 9 <= 892 ** 12 * 1027240121 and float(corr['safe_work_population_factor']) <= 1.027240121  # (894/892)^12 <= 1.027240121
+	ok_declared = all(dec_ok.values())
+	say("declared bounds (unrounded value vs stated bound): " + "; ".join(f"{k} {vals[k]!r} {op} {v} {'ok' if dec_ok[k] else 'FAIL'}" for k, (op, v) in DECLARED.items()))
+	checks = dict(resultant=ok0, tower=ok0b, rho_semismooth=ok1, pool=ok2, nbar=ok9, la_loop=la_n == 33 and bf_n == 97 and bf_br == ['b.ne'] and check_la_kernel('la_mac.s', 'LBB9_1:') == (11, ['b.ne']) and tail_ok and tail <= M.C_ROW and red9 <= M.C_RED9 and nu_ok and M.C_ENTRY >= 4 + 3 + M.UNIT_FRAC_CHARGED * 11 + (1 - M.UNIT_FRAC_CHARGED) * 33,
+				 ball_counts=ok_counts and ok_relmeans, rels_input=ok_rels_input, work_allowance=ok_allow, declared_bounds=ok_declared, alpha_ok=ok_alpha, missing_logs=ok_rec, h5c_cert=c6['ok'], h5c_toy=h6d['ok'], record_widths=ok_width, descent_plan_feasible=mu_min >= Pm.MIN_RELS and psi_max <= Pm.PSI_MAX and max(r['phi'] for r in rows) <= 0.05 and coll <= -4,
+				 audit=ok11, subbins=ok11s, udup_relw=ok11r, kappa_submult=kap_ok, retention=ok11b, ecm=ok12, fields=ok13, feasible=e['feasible'], within_claim=tot <= CLAIM, success_ok=success >= 0.39)
+	say(f"done in {time.time()-T0:.1f}s; checks: {checks}")
+	print(json.dumps({"checks_ok": all(checks.values()), "checks": checks,
+					 "total_log2W_full_ledger": math.ceil(tot * 1000000) / 1000000, "claimed": CLAIM,
+					 "log2_relcol_ceil4": math.ceil(e['log2_relcol'] * 10000) / 10000, "log2_rels_floor4": math.floor(e['log2_rels'] * 10000) / 10000,
+					 "margin_bits_floor4": math.floor(e['margin'] * 10000) / 10000, "work_se_ceil5": math.ceil(work_se * 100000) / 100000, "work_allowance": M.CANON_WORK_ALLOWANCE, "yield_se_log2": round(e['yield_se_log2'], 4), "log2_N": round(la['log2_N'], 4),
+					 "log2_la_ceil4": math.ceil(la['log2_la'] * 10000) / 10000, "descent_two_logs_log2_units_ceil4": math.ceil(two_log * 10000) / 10000,
+					 "descent_cap": cap, "markov_abort": markov, "log2_expected_nodes_ceil4": math.ceil(log2_EN * 10000) / 10000, "node_cap_log2": M.NODE_CAP_LOG2, "counter_abort": OVER, "repeat": REP, "success_exact": success, "modelled_success_floor4": math.floor(success * 10000) / 10000,
+					 "descent_nodes": len(rows), "descent_boot_log2": round(bt['one_log_log2'], 3)}), flush=True)
+if __name__ == "__main__":
+	if "--alpha" in sys.argv:
+		print(json.dumps(dict(zip(("alpha_f", "alpha_g"), alpha_sweep(ALPHA_PMAX))), sort_keys=True)); sys.exit(0)
+	main()
