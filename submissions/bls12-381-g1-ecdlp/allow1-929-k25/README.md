@@ -1,0 +1,1 @@
+Argument: proof.md. Source: source-proof.md; kernel s1 (measure/side_lanes.S 929, derive_k929.py, measurement.log, kernel_check.py, nocarry_witness.py, key_check.py); records s9-s12/s17/s19/s21/s22 (INS12 executed by a64.py); pool-cap s18; planner floor s16 (planner.py); restarts s15 (smx_audit.py); side-call price s20. Score 116.245387910103757.
