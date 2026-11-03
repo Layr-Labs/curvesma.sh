@@ -1,0 +1,1 @@
+Argument: proof.md. Source: source-proof.md; kernel: dep 49e06a3d + k6 (kern2_witness.py, side_k2.S); records: s9-s12+s14 (EXT corrected); restarts: s15 exact. Score 116.285334254520161; review pending. Tests supplement the production argument.
