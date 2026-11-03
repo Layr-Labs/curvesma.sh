@@ -1,0 +1,36 @@
+Side-output kernel side_lanes (full x', y' and parity key; worst lane path 971 by enumeration, kernel_check.py) measured in the organizers' pipeline.
+Date: 2026-11-02. Host: Docker Desktop on Apple silicon (native linux/arm64). Image: scripts/reference_costs/Dockerfile.
+blst f7a88067ed98385ebc6cf41ccecf21ead706a5b7 built as in scripts/reference_costs/run.sh; harness -O3 -fno-tree-vectorize -mgeneral-regs-only.
+Callgrind Ir toggled around ONE side_lanes(args, n) call; price = (Ir(8192) - Ir(4096)) / 4096. Script: run_measure.sh.
+
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+80a325b8b66aec5fd203cdf3be76d437f9fd41a43a74fede5940b9b831f4fad0  /work/bls_field
+ba448d6b7d1623febeae2c4b9b9e7f343232e1651639d1c3cc5cde9e709f355a  /work/side_lanes.S
+c17e2b0491b362975fa6ad9d7df649ba219f45b33864016b7b22d8f4bc8f8161  /m/side_kernel.c
+fc2a3235877874ce2d6f6df85cccb21525bba4de53dfb37a1fa2b56c83ab903e  /m/gen_side_lanes.py
+== bls_field 4096
+15211616071610104105
+==32== Collected : 1568788
+== bls_field 8192
+8369970923098871492
+==35== Collected : 3137556
+== side_kernel 4096
+44908408673235127
+check1 lanes=4096 mismatches=0
+check2 lazy-operand products=1000000 (a<4.15p, b<1.21p) mismatches=0
+check3 curve-point pairs=64 mismatches=0
+check4 edge-x lanes=4096 mismatches=0
+selfcheck ok
+==38== Collected : 3948433
+== side_kernel 8192
+10004195953597444643
+check1 lanes=8192 mismatches=0
+check2 lazy-operand products=1000000 (a<4.15p, b<1.21p) mismatches=0
+check3 curve-point pairs=64 mismatches=0
+check4 edge-x lanes=8192 mismatches=0
+selfcheck ok
+==41== Collected : 7900745
+
+Note: gen_side_lanes.py was later edited in docstring/comments only (bounds text); its output side_lanes.S is byte-identical (sha ba448d6b... above).
+price = (7900745 - 3948433) / 4096 = 964.920 instructions per lane (mean over the harness lanes); charged: worst path 971.
