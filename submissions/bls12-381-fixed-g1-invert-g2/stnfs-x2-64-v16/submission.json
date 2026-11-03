@@ -1,0 +1,88 @@
+{
+ "version": 1,
+ "title": "STNFS with 150k pool, both-bars alpha (5.15, 0.85), theta 2881/8000, slacks (295, 226), UDUP 0.65, pr sub-bins, reopt plan, charged-pr UDUP support: 121.086571550796",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g1-invert-g2 target, the complete STNFS algorithm in proof.md and DESCENT.md with the REFINEMENT.md refinements, 99.9% ECM, X2 = 2^64, theta = 2881/8000 collection on a 150,000-draw pool (proof.md), the measured record route and the STORAGE.md/row_tail.c kernels returns Q satisfying e(P,Q)=z for the exact supplied nonidentity P, with success at least 0.3966 (and hence at least 0.39) under disclosed heuristics H1-H5 (with H4u: at least 88% of the filtered matrix row weight is +-1 entries). It computes two GT logarithms and returns Q=[a]Q0, handling z=1 directly. All classical work is bounded by a global meter at 2^121.086571550796 dense-Fp12 units, C=20,000 instructions; the upper-rounded ledger rows sum to 2^121.0865715507957 (70-digit decimal arithmetic), 2.9e-13 bits below the declared 2^121.086571550796. ECM succeeds with 99.9% per prime; X2 = 2^64; theta=2881/8000 (6628 rows, a-radius 869) with slacks (295, 226), allowance 1.0263, alpha (5.15, 0.85), primes in [2^63, 2^64) charged twice, records routed at 10.01 each and re-read at 7.003: collection <= 2^120.9254 units. The polynomials, factor-base bound, filtering, kernels and target remain those of the cited source; the 62-node descent plan of REFINEMENT.md/refinement.json (coordinate search with joint moves, 45 entries differ from the base plan, boot unchanged) is evaluated at UDUP = 0.65 and THIN_MAX 85. Linear algebra (STORAGE.md, row_tail.c: 20.7 instructions per sparse entry, 2,710 per row for six-limb transfers, combination and the reduction mod r, 97 per dense term, 420 per further 9-limb reduction, N = 1.096 x 0.0471 U, Block Wiedemann blocks (19, 4)) is <= 2^117.7103 units, generator <= 2^107.1997. Descent integrates pr over 24+10 measured norm sub-bins (charged boost capped 4x nodes / 1.5x boot) and credits UDUP = 0.65 distinct relations per raw relation: the 52-cell relation-weighted campaign (uniform cells) gives E[shat/m] >= 4.70 x (nodes) / 1.06 x (R=4 boot) the sextile pr at its lower confidence endpoints, hence >= 1.175 x (nodes) / 0.7067 x (boot) the charged pr, both above 0.65; nine 400-point cells at the re-optimised regimes read >= 5.5 against the charged pr; the live [11] check tests 1.175 and 0.7067 against the charged pr. Nodes with q <= 2^90 discard relations touching an ideal without a log; the boot keeps 18 relations. Expected two-log work is bounded by 2^113.610; the two-log meter is 2^114.343; Markov abort probability is <= 0.6016516. Other upper bounds are boot failure 3.600e-04 per log, expected nodes 2^16.08, node abort 2^-11.22 and repeats 2^-10.70, with 2/r statistical distance charged. All preprocessing, failed attempts, advice, arithmetic, transfers, sorting, verification and output are included; nothing amortized. Numerical-certificate construction receives an extra 2^50-unit allowance. Memory is at most 2^105 bytes. Source smoothness and production extrapolations stay explicit heuristics. Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "121086571550796",
+    "denominator": "1000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "STORAGE.md",
+    "DESCENT.md",
+    "REFINEMENT.md",
+    "refinement.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "refinement_audit",
+   "source": "audit_refinement.py",
+   "purpose": "Bounded audit of recorded full-recurrence evidence, upward-rounded ledger and success, unchanged prime-window endpoints, and nonzero lower/upper integration controls. Does not rerun the full recurrence.",
+   "input_schema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false,
+    "required": []
+   },
+   "initial_inputs": [
+    {}
+   ]
+  },
+  {
+   "id": "unit_entry_fraction",
+   "source": "unit_entries.py",
+   "purpose": "Rerun the package's filtering simulation (filtsim.py) to mean weight 100 and report the fraction of row weight carried by +-1 entries (against the charged 0.88) and U/N. Optional (the hosted initial run is the bounded audit). Evidence at its scale only; production is extrapolated (H4u, H3).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "log2U",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  },
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Optional full recomputation of certificates, region, ledger, retention, ECM, descent and declared bounds (about 50 s natively; longer when emulated).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
