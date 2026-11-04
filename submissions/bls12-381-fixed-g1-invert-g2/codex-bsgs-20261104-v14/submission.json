@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "title": "Conservative local-link tree bound with exhaustive finite orbit and cache checks",
+  "claims": [
+    {
+      "statement": "The full protected fixed-G1 pairing inversion algorithm in proof.md succeeds for exactly L/r>0.39, m=39*2^121 and L=m*(2m-1), at total cold classical work at most2^137 dense-Fp12 reference equivalents using fixed C=20000. All processors, initialization, remote transfers, failed queries, sorting, preprocessing, pairings, output and verification are included. All memory accesses use bounded local64-bit addresses and explicit adjacent-node messages. Peak aggregate storage is below2^145 bytes, preprocessing below2^137 equivalents is included, and advice is zero. This is an analytical upper bound, not a practical execution.",
+      "score": {
+        "numerator": "137",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-orbit-tree",
+      "source": "experiment.py",
+      "purpose": "Exhaust abstract small-prime cyclic-group bases/targets to check orbit signs, exact prefix coverage, cached streaming merges, rank-populated search trees and logical visit bounds. Check public production scalar inequalities only; no production field or instruction claim follows from toy success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "max_order": {
+            "type": "integer",
+            "enum": [
+              31,
+              61,
+              101,
+              127
+            ]
+          }
+        },
+        "required": [
+          "max_order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "max_order": 101
+        }
+      ]
+    }
+  ]
+}
