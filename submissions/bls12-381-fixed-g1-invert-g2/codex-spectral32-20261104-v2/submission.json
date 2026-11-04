@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "Stronger finite spectral bound for fixed-G1 pairing inversion",
+  "claims": [
+    {
+      "statement": "The concrete analytic algorithm in proof.md solves the full protected supplied-P problem with probability at least 0.395 under its sole disclosed SHA-256 random-function heuristic, within 2^(263/2) dense Fp12 reference equivalents at C=20000, including cold preprocessing, all failures, transfers, checks and output. Peak storage is below 2^33 bytes; nonuniform advice is zero. The finite idealized probability proof and all inherited scalar accounting are integral evidence. This is an exploratory heuristic claim, not an unconditional SHA theorem or practical execution.",
+      "score": {
+        "numerator": "263",
+        "denominator": "2"
+      },
+      "evidence": [
+        "proof.md",
+        "collision-proof.md",
+        "compression-proof.md",
+        "kernel-audit.md",
+        "kernel-excerpts.txt",
+        "blst-LICENSE.txt",
+        "brent-proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
