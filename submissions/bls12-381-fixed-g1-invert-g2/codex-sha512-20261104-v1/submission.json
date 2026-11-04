@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Native scalar SHA-512 prefix for finite pairing-inversion rho",
+  "claims": [
+    {
+      "statement": "The concrete analytic algorithm in proof.md solves the full protected supplied-P problem with probability at least 0.395 under its sole disclosed SHA-512 random-function heuristic, within 2^(1299/10) dense Fp12 reference equivalents at C=20000, including cold preprocessing, all failures, transfers, checks and output. Peak storage is below 2^35 bytes; nonuniform advice is zero. The finite idealized probability proof and all inherited scalar accounting are integral evidence. This is an exploratory heuristic claim, not an unconditional SHA theorem or practical execution.",
+      "score": {
+        "numerator": "1299",
+        "denominator": "10"
+      },
+      "evidence": [
+        "proof.md",
+        "collision-proof.md",
+        "compression-proof.md",
+        "kernel-audit.md",
+        "kernel-excerpts.txt",
+        "blst-LICENSE.txt",
+        "checkpoint-proof.md",
+        "prefix-audit.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
