@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Six-limb Montgomery GT prefix BSGS with explicit wide-product costs",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 pairing inversion challenge, the prefix BSGS algorithm in proof.md returns a valid G2 preimage with success probability exactly 2^254/r, greater than 1/2 and hence greater than 0.39, over the prescribed independently uniform P and z. Total cold classical computation is at most 2^138 dense-Fp12 reference equivalents at C=20000, charging successful and failed searches in full. Peak memory is below 2^145 bytes, preprocessing below 2^138 reference equivalents is included, and nonuniform advice is zero bytes. This is an analytical upper bound, not practical production execution.",
+      "score": {
+        "numerator": "138",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
