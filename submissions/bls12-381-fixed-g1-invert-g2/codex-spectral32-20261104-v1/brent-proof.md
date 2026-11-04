@@ -1,0 +1,11 @@
+# Deterministic power-of-two checkpoint lemma
+
+Reference for the cycle-detection design:Richard P. Brent,An improved Monte Carlo factorization algorithm,BIT20(1980),176-184,section2,https://maths-people.anu.edu.au/~brent/pd/rpb051i.pdf . The following finite bound is established directly;no reported average-case speedup or random-mapping assumption is imported.
+
+The controller in proof.md places anchors at trajectory indices0,1,3,7,...,2^k-1. After the anchor at2^k-1,it compares every next state through index2^(k+1)-1 before moving the anchor. Thus that block has length2^k. Checking equality before the anchor update is essential. The coefficient state is copied with its group element.
+
+Let the deterministic trajectory have tail mu>=0 and cycle length lambda>=1,so its first repeat is at tau=mu+lambda. Let H be a power of two with H>=L>=tau. The block anchored at H-1 starts in the cycle,since mu<=L-1<=H-1. Its length H is at least lambda. Therefore the state at index H-1+lambda equals that anchor and will be compared before the next checkpoint update. If no earlier equality occurs,detection occurs there,by H+L-1=K. This argument is deterministic and also covers mu=0,lambda=1 and boundary equality. The algorithm itself does not know mu or lambda and need not reconstruct them.
+
+At any detected equality,the later coefficient state differs from the anchor by the sum of coefficients of the intervening d>0 jumps. Since d<=K<r,the jump-count vector is nonzero modulo r. Conditional uniformity of v_j then makes the denominator uniform. Group invariants give the exact exponent when it is nonzero. No extra traversal to locate the cycle entry or calculate a second relation is required. The only attack-state memory consists of current,anchor,counters and the ordinary local jump table.
+
+Every iteration computes one full walk transition,one full comparison and bounded counters. Anchor copies at block ends are charged in the same per-step bookkeeping allowance,not amortized for free. All work even beyond the favorable first-repeat event is cut off at K and paid. The first-repeat success probability from collision-proof.md transfers directly;it is not an assumed distribution for Brent's average runtime.
