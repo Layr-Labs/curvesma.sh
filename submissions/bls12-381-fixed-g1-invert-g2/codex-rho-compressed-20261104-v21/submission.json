@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "Compressed norm-one rho at bound134 with finite collision analysis",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 pairing inversion problem,the concrete algorithm in proof.md has success at least0.395 under the sole disclosed heuristic that its fully charged,domain-separated SHA-256 computations behave as random functions for uniform challenges. collision-proof.md gives a finite idealized probability proof,without an assumed mean-collision bound. Deterministic total cold classical work,including all preprocessing,SHA computations,failed trials,pairings,output and verification,is at most2^134 dense-Fp12 reference equivalents at fixed C=20000. Peak storage<2^30 bytes,preprocessing below2^134 equivalents is included,and advice is zero. Every access is within ordinary local64-bit memory. This is an exploratory heuristic production-success claim,not an unconditional fixed-SHA theorem or a practical execution. compression-proof.md gives the injective norm-one walk encoding and fully charged scalar computation.",
+      "score": {
+        "numerator": "134",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "collision-proof.md",
+        "experiment.py",
+        "kernel-excerpts.txt",
+        "blst-LICENSE.txt",
+        "compression-proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-compressed-large-table-rho",
+      "source": "experiment.py",
+      "purpose": "Check the65536-adding recurrence,Floyd recovery,invariant and first-repeat relation in tiny prime-field subgroups,and exact public production probability/accounting inequalities. Toy audit dictionary is not in production;does not certify fixed-SHA idealization or instruction counts. Also enumerate a finite quadratic norm-one group to check sign encoding and verify the production norm divisibility identity. The production cutoff is ceil(24ceil(sqrt(r))/5);the finite lower moment bound is132 and upper second moment330.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "max_order": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 3000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          }
+        },
+        "required": [
+          "max_order",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "max_order": 1000,
+          "trials": 1
+        }
+      ]
+    }
+  ]
+}
