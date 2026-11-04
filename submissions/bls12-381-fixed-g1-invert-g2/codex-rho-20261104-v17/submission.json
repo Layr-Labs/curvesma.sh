@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "title": "Bounded local-memory32-adding rho with disclosed hash and collision heuristics",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 pairing inversion target,the algorithm in proof.md has success at least0.49 under the explicitly disclosed and supported H1 hash-pseudorandomness and H2 mean-first-repeat heuristics. Its deterministic total cold computation,including every cutoff/sampling/denominator failure,preprocessing,SHA evaluation,pairing,output and verification,is at most2^136 dense-Fp12 reference equivalents at fixed C=20000. Peak memory<2^30 bytes,preprocessing below2^136 equivalents is included,and advice is zero. All accesses are local64-bit addresses. This is a heuristic exploratory upper bound,not an unconditional production success proof.",
+      "score": {
+        "numerator": "136",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py",
+        "kernel-excerpts.txt",
+        "blst-LICENSE.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho",
+      "source": "experiment.py",
+      "purpose": "Check bounded32-adding Floyd recurrence,recovery,invariants and actual first-repeat statistics in small safe-prime subgroups; audit dictionary is toy-only. Does not certify BLS mixing,hash idealization,or production instruction prices.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "max_order": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 6000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 32
+          }
+        },
+        "required": [
+          "max_order",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "max_order": 3000,
+          "trials": 16
+        }
+      ]
+    }
+  ]
+}
