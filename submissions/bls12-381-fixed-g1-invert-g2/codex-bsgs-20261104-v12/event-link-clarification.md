@@ -1,0 +1,5 @@
+# Local wakeups for the specified queues
+
+Use one active AArch64 core per isolated device; any other cores are held reset. A neighboring queue endpoint pulses only the receiver device's EVENTI input after its ready-flag write becomes visible. The flag/MMIO write is in the charged hop protocol. The physical point-to-point event wire carries no address search or algorithmic computation. Device-local events are not forwarded onto other links; remote tree nodes stay asleep. All queue/window storage remains in the stated per-node allocation.
+
+ARM Cortex-A53 Technical Reference Manual, section 2.4.3, documents external-agent EVENTI wakeups for WFE: https://documentation-service.arm.com/static/6040c321ee937942ba301626 . This is the concrete endpoint implementation of the addressed events assumed in proof.md. Ordered flag loads/stores and a bounded stale-event retest fit the existing flag/control allowances; a serialized link has only its one request/response event. Startup clears initial event state in its charged node initialization. No global SEV broadcast or interrupt-handler execution is used by the protocol.
