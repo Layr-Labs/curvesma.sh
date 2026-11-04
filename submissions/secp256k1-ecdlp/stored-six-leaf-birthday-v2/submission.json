@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "stored six-leaf birthday search on secp256k1, v2: 127.622149460486554",
+  "claims": [
+    {
+      "statement": "For uniform production secp256k1 Q=[x]P, the classical cold stored six-leaf birthday search of proof.md recovers x with probability at least 0.393 over the challenge and fresh algorithm coins. Each (X_k,Y_l) pair yields six x-coordinates from one batched inversion via the cube-root automorphism; leaves are inserted into a 2^129-head chained bucket table that never evicts, and the first equal x-coordinate is resolved by the linear equations (m2-m1)+(q2-q1)x=0 and (m2+m1)+(q2+q1)x=0 modulo r, then verified by [x]P=Q. The exact total is T=261875638209572245311438656203789745853447 scalar AArch64 instruction equivalents, so W=T/1000=2^127.622149460486554 and the claim 63811074730243279/500000000000000 is the least 15-decimal value at or above log2 W, bracketed on both sides. Success uses the dependent-collision pairing: every cross-index collision forces a partner leaf pair, so the bound is P(no collision)<=exp(-mu/2) with mu=S(S-1)/r=1.0, giving 0.393469. Peak memory is 2^134.32 bytes (2^132 for heads, 2^134.6 for records, plus axes and buffers), reported and not scored. The orbit-Poisson step is the only heuristic; the six-leaf algebra, the resolution and the [x]P=Q check are exact. ledger.py re-derives and brackets the claim; experiment.py re-checks the six-leaf formulas, the reused Y axis, the chained table and resolution on y^2=x^3+7 over F_127.",
+      "score": {
+        "numerator": "63811074730243279",
+        "denominator": "500000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "ledger.py",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stored-six-leaf-toy-v2",
+      "source": "experiment.py",
+      "purpose": "On y^2=x^3+7 over F_127 (prime order 127): confirm phi(x,y)=(beta x,y) is multiplication by lambda; draw the Y axis once and reuse it for every X; insert leaves into a chained bucket table with no overwrite; resolve a collision through the two linear equations and verify [x]P=Q. Toy scale only; it establishes neither production success nor production cost.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000000
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "trials": 3
+        }
+      ]
+    }
+  ]
+}
