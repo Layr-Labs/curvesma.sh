@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Adjacent-node merge/search-tree orbit BSGS with audited scalar kernels",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 pairing inversion problem, the adjacent-node tree algorithm in proof.md returns a valid G2 preimage with success exactly L/r>0.39, m=39*2^121 and L=m*(2m-1). Total cold classical work, summing all processors and charging initialization, every transfer, failed query, merge/search operation, preprocessing, pairings, output and verification, is at most 2^131 dense-Fp12 reference equivalents at fixed C=20000. All loads/stores use bounded local 64-bit addresses and all inter-node messages are explicitly counted. Peak total memory is below 2^145 bytes; preprocessing below 2^131 equivalents is included; nonuniform advice is zero bytes. This is an analytical upper bound, not a practical production attack.",
+      "score": {
+        "numerator": "131",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "kernel-excerpts.txt",
+        "blst-LICENSE.txt"
+      ]
+    }
+  ],
+  "experiments": []
+}

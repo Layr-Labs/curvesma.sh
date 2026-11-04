@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Conjugate-orbit indexed tower BSGS with exact 41-percent success coverage",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 pairing inversion problem, the conjugate-orbit algorithm in proof.md returns a valid G2 preimage for exactly L/r of prescribed uniform targets, where m=39*2^121 and L=m*(2m-1), rigorously greater than 0.39. Total cold classical computation, including failed searches, all preprocessing, pairings, output and verification, is at most 2^132 dense-Fp12 reference equivalents at C=20000. Peak memory is below 2^145 bytes; preprocessing below 2^132 equivalents is included in total; nonuniform advice is zero bytes. This is an analytical upper bound, not a practical production attack.",
+      "score": {
+        "numerator": "132",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
