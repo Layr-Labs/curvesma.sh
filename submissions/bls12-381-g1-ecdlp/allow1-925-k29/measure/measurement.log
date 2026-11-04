@@ -1,0 +1,45 @@
+Counted-X side_lanes, 925 mean charge (932 worst path), measured in the organizers' pipeline.
+2026-11-04. Docker Desktop on Apple silicon (linux/arm64). Image scripts/reference_costs/Dockerfile, --network none.
+blst f7a88067 built as in run.sh; harness -O3 -fno-tree-vectorize -mgeneral-regs-only.
+Ir toggled around ONE side_lanes(args, n) call; price = (Ir(8192) - Ir(4096)) / 4096. run_measure.sh byte-identical to k27r1; side_kernel.c adds check6.
+
+cc (Debian 14.2.0-19) 14.2.0
+valgrind-3.24.0
+80a325b8b66aec5fd203cdf3be76d437f9fd41a43a74fede5940b9b831f4fad0  /work/bls_field
+fbb226adc909f63f944a403bb8cb76848a1eef2bef65ca3191453e9a221b1f93  /m/side_lanes.S
+444ebf5bc3d8ebb16e9a000bcaacb0cf0235dcfd2acfcafbe4e2a1b266e19f44  /m/side_kernel.c
+a77edd46a30a79d4e0bc6e186069adc7562ed73d6632e444f2fcf91597535c72  /m/run_measure.sh
+== bls_field 4096
+15211616071610104105
+==30== Collected : 1568788
+== bls_field 8192
+8369970923098871492
+==33== Collected : 3137556
+== side_kernel 4096
+9677289808338966036
+check6 xcount lanes=4096 expensive=1647 permille=402 counter=1647 mismatches=0
+check1 lanes=4096 mismatches=0
+check3 curve-point pairs=64 mismatches=0
+check6b xcount edge-x lanes=4096 expensive=4096 permille=1000 counter=4096 mismatches=0
+check4 edge-x lanes=4096 mismatches=0
+check6c xcount extreme lanes=4096 expensive=2496 permille=609 counter=2496 mismatches=0
+check5 extreme-operand lanes=4096 mismatches=0
+selfcheck ok
+==36== Collected : 3785191
+== side_kernel 8192
+5491673982737259237
+check6 xcount lanes=8192 expensive=3352 permille=409 counter=3352 mismatches=0
+check1 lanes=8192 mismatches=0
+check3 curve-point pairs=64 mismatches=0
+check6b xcount edge-x lanes=8192 expensive=8192 permille=1000 counter=8192 mismatches=0
+check4 edge-x lanes=8192 mismatches=0
+check6c xcount extreme lanes=8192 expensive=4980 permille=607 counter=4980 mismatches=0
+check5 extreme-operand lanes=8192 mismatches=0
+selfcheck ok
+==39== Collected : 7570606
+
+calibration = (3137556 - 1568788) / 4096 = 383 per blst_fp_mul (published value and binary hash).
+price = (7570606 - 3785191)/4096 = 924.174/lane (harness mean); charged: capped mean 925.
+Counted-lane output hashes equal the k27r1 record's (9677289808338966036, 5491673982737259237): K3 preserves outputs bit for bit on hardware. Ir delta over k27r1: (3785415 - 3780300)/4096 = 5115/4096 = 3 x (3352 - 1647)/4096 (three counting instructions per expensive lane; +10 fixed cancels).
+Checks (after the counted region): 1 every counted lane vs blst API with y' = mu(x' - x2) + y2 (lanes 0..624 cover {0, 1, p-1, p-2, random} per coordinate; y2 = 0 -> 1); 3 64 genuine G1 pairs vs affine P + (-T); 4 x1 = x2 = 0 lanes (X >= 2p); 5 largest operands (t = 2p - 2, inv = p - 1 odd lanes, w up to 2p - 1); 6 (new) counter vs independent exact Montgomery recomputation of X >= p: 1647/1647, 3352/3352 counted; 4096/4096, 8192/8192 all-expensive edge-x; 2496/2496, 4980/4980 extreme.
+Harness rates (0.402/0.409 counted, 1.000 edge-x, 0.609/0.607 extreme) exceed the 0.30 cap rate by design ([0, 2^380) range, not residues): they evidence the mechanism (mean 924.174 < 925, margin 0.826; counter exact), not H-new. Harness source and script identified by hash above.
