@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "Unrolled dense field and SHA scalar implementation audit",
+  "claims": [
+    {
+      "statement": "The concrete analytic algorithm in proof.md solves the full protected supplied-P problem with probability at least 0.395 under its sole disclosed SHA-512 random-function heuristic, within 2^(5179/40) dense Fp12 reference equivalents at C=20000, including cold preprocessing, all failures, transfers, checks and output. Peak storage is below 2^35 bytes; nonuniform advice is zero. The finite idealized probability proof and all inherited scalar accounting are integral evidence. This is an exploratory heuristic claim, not an unconditional SHA theorem or practical execution.",
+      "score": {
+        "numerator": "5179",
+        "denominator": "40"
+      },
+      "evidence": [
+        "proof.md",
+        "collision-proof.md",
+        "compression-proof.md",
+        "kernel-audit.md",
+        "kernel-excerpts.txt",
+        "blst-LICENSE.txt",
+        "checkpoint-proof.md",
+        "prefix-audit.md",
+        "universal-proof.md",
+        "compressor-audit.md",
+        "arithmetic_audit.py",
+        "dense-sha-audit.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "bounded-arithmetic-audit",
+      "source": "arithmetic_audit.py",
+      "purpose": "Check scalar reduction identities, aligned limb and digit reconstruction, Horner evaluation, prime certificate and public score/collision inequalities. Does not establish production success or instruction counts.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "samples": {
+            "type": "integer",
+            "minimum": 32,
+            "maximum": 1024
+          }
+        },
+        "required": [
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "samples": 64
+        }
+      ]
+    }
+  ]
+}
