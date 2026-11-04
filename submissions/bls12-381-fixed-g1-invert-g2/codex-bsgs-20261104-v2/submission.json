@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Deterministic GT BSGS with explicit Montgomery limb accounting",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion problem, the deterministic algorithm in proof.md returns a valid G2 preimage for every valid challenge, success probability 1, with total cold classical computation at most 2^142 dense-Fp12 reference equivalents at C=20000. Peak memory is below 2^145 bytes; preprocessing below 2^142 reference equivalents is included in total; nonuniform advice is zero bytes. This is an analytical upper bound, not a practical production attack.",
+      "score": {
+        "numerator": "142",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
