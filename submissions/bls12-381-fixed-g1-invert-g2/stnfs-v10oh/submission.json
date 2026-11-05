@@ -1,0 +1,100 @@
+{
+ "version": 1,
+ "title": "STNFS v10oh: overhead kernels (scan2, unrolled apply/recover) on v10: 119.575703324024",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g1-invert-g2 target, the complete STNFS algorithm of proof.md, DESCENT.md and STORAGE.md returns Q with e(P,Q)=z for the exact supplied nonidentity P (Q=[a]Q0 from two GT logarithms; z=1 handled directly) with success at least 0.39 over uniform challenges and fresh coins under the disclosed heuristics H1-H5, and all classical work is bounded by a global meter at 2^119.575703324024 dense-Fp12 units (C=20,000 instructions); upper-rounded ledger rows sum to 2^119.575703324023046. Relation collection (v8's sieve, box-shared certified norm bounds, band strip charged at each row's norm size and f-first early abort; v10oh overhead kernels (scan2 with fused zeroing, apply/recovery 5.76 per record; measurements-oh.txt), slice layout charged per suffix-box entry at the measured 28.17 Ir plus 2^21 per slice; v9 prices the line path at the public slice12 line walk measured on random (p, s) pairs by points per coset h (table (18.81, 17.2), (13.82, 24.1), (9.82, 38.99), (5.82, 88.32), (1.83, 352.1) Ir per update, each entry at least the larger of the single-pair base point and the pooled cost plus 2 SE of the random-pair group at or below its h; cap 17.2 for h >= 2^18.81), and primes in [2^63, 2^64) on the measured wide12.c path (record table of the public slice12 x 1.01, setup6w, wide lattices a 2^70.6 row)): excess 1.05, theta=2326/8000 sized on pool B (seeds 7-10) and judged once on a fresh pool D (seeds 41-44, 656,000 draws; pre-registered rule), retained relations >= 2^63.6016 (0.0798 bits above 1.05 U, pool SE 0.0177), 99.9% ECM, X2=2^64, slacks (295, 226), work priced on pools B, C, D with allowance 1.0047 = 1 + 2 SE rounded up: <= 2^119.293799631 units. Linear algebra: filtering at excess 1.05, purge target 1e-4 U (64 runs, 2^12..2^18), N(300)/U charged 0.03943 = the larger of mean + 2 SE at 2^17 and 2^18, rounded up: N = 2^58.7868 < 8 x 2^56 (eight owners, row tail counted 1,424, charged 1,430); unit share charged 0.87 (below every measured value), Krylov 13.21 and Horner 20.9 per entry, 97 per dense term, 420 per reduction, 60 per projection term, blocks (28, 5): <= 2^116.981242966 units; generator <= 2^107.555167552. Descent (v7 plan, sub-bin yields, lazy evaluation) at the judged pool's inputs (relations 63.566 = estimate minus 2 SE, mean norms 740.8/499.4): expected two-log work <= 2^112.4402; meter 2^113.156048; Markov abort <= 0.6088472; boot failure 1.475e-05 per log, expected nodes 2^15.70, node abort 2^-11.60, repeats 2^-10.70, 2/r charged. Preprocessing, failures, transfers, verification and output are included; nothing amortized; memory at most 2^105 bytes. Analytic exploratory claim, not a full-size run.",
+   "score": {
+    "numerator": "119575703324024",
+    "denominator": "1000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "STORAGE.md",
+    "DESCENT.md",
+    "refinement.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "refinement_audit",
+   "source": "audit_refinement.py",
+   "purpose": "Bounded audit of recorded full-recurrence evidence, upward-rounded ledger and success, unchanged prime-window endpoints, nonzero lower/upper integration controls, and the lazy-cofactorisation bound against a simulation. Does not rerun the full recurrence.",
+   "input_schema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false,
+    "required": []
+   },
+   "initial_inputs": [
+    {}
+   ]
+  },
+  {
+   "id": "unit_entry_fraction",
+   "source": "unit_entries.py",
+   "purpose": "Rerun the package's filtering simulation (filtsim.py, purge target 1e-4 U) at relation excess 1.05 (default; optional 'excess') and pool D's mean norms to mean weight 100, 200 or 300 (default 300) and report the fraction of row weight carried by +-1 entries (against the charged 0.87) and U/N. Optional (the hosted initial run is the bounded audit). Evidence at its scale only; production is extrapolated (H4u, H3).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "weight": {
+      "type": "integer",
+      "enum": [
+       100,
+       200,
+       300
+      ]
+     },
+     "excess": {
+      "type": "number",
+      "minimum": 1.0,
+      "maximum": 1.3
+     }
+    },
+    "required": [
+     "log2U",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  },
+  {
+   "id": "full_evidence",
+   "source": "evidence16.py",
+   "purpose": "Optional full recomputation of certificates, pools (replay of a block of judged-pool draws, region sums of pools B, C, D, the sizing rule), box bounds, region, ledger (v9 line table, wide-prime path and per-entry slice layout against the shipped callgrind logs, early abort, the mean + 2 SE filtering charge, weight-300 LA with five-vector Krylov kernels, eight-owner row tail), retention, ECM, lazy descent (with a simulation) and declared bounds (about 1.5 minutes natively).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "samples": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [
+     "samples",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
