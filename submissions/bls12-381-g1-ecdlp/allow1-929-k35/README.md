@@ -1,0 +1,1 @@
+Argument: proof.md (s26-s28 batch round: batch_audit.py). Source: source-proof.md. Kernel s1: measure/side_lanes.S, measurement.log, kernel_check.py, nocarry_witness.py, key_check.py. Ledger evidence.py; log log_bound.py; checks combined_lazy.py. Score 116.146756838953367.
