@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Straight-line dense arithmetic with finite sorted-checkpoint inversion",
+  "claims": [
+    {
+      "statement": "The complete analytic algorithm in proof.md solves the production supplied-P pairing inversion problem with success at least 0.39 under its sole disclosed SHA-256 idealization, total cold work below 2^(3231/25) dense Fp12 equivalents at fixed C=20000, peak storage below 2^35 bytes, and zero nonuniform advice. All setup, failures, arithmetic, lookup, insertion, hashing, transfers, verification and G2 output are charged. This is an exploratory heuristic bound, not practical execution.",
+      "score": {
+        "numerator": "3231",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "kernel-excerpts.txt",
+        "NOTICE.txt"
+      ]
+    }
+  ],
+  "experiments": []
+}
