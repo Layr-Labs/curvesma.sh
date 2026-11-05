@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "title": "Randomized-base GT transfer, revised STNFS core (LA pad 1.08, line sieve to 2^47.75 with trial division below 2^20 and band strip, 99.9% ECM with f-first early abort, slack 60, descent re-searched, merge weight 300, 7-owner LA tail, fresh-sample work estimator, per-row widths): 124.278670069061269",
+  "claims": [
+    {
+      "statement": "For the production bls12-381-g1-ecdlp-plain target, the algorithm in proof.md returns the canonical scalar x for uniform T=[x]P0 (infinity included) with success at least 0.39 (modelled lower bound (1-2^-128) x 0.390320 - 2^-48), conditional on the disclosed H1-H5 (with H4u) of source-core.md. It maps T to z=e(T,Q0) against a freshly randomized base g=e(P0,Q0)^b (exactly the uniform nonidentity-base, independent-target input distribution), converts both into the STNFS tower by the charged field map of field-map.md, computes a=log_g(z) with the GT STNFS core and returns ba mod r after checking [ba]P0=T. The core is the recover-Q core of submission e3940d11 with the revisions of REVISION.md: 99.9% per-prime ECM with f-first early abort (q_f <= 0.0017), line sieve 2^11..2^47.75 with trial division below 2^20 and the survivor band strip, record walk to 2^64 with [2^63, 2^64) at measured wide-prime prices (x1.01; WIDE1), sub-region theta=24700/65536 (1015 rows; certified count products 0.986745/1.012095) sized so the descent's 2^63.97 relations hold at a 1-SE lower yield bound with a collection guard, slacks (297, 233) with per-row certified bound widths, chunk-scatter record routing at 10.3 instructions per record, exact logged kernel prices with a 0.01 lookup shift, linear algebra fully priced as in our recover-Q 711418d3 (block Wiedemann (22, 4), 20.7 per sparse entry under H4u, 1,320 per row tail, matrix pad 1.08 under H3), canonical-work allowance 1.04432 (>= 1 + 2.00 SE) on the ratio work estimator with a fresh 100k-draw sample (5072/42865), descent inputs 745.9/498.9 with boot + plan re-searched at slack 60 and a two-log meter 2^118.3128; its upper-rounded complete ledger is below 2^120.9553 dense-Fp12 units (C=20,000) with success at least 0.390320. Total classical work, including all preprocessing, both logarithms, failures, the field map, pairings, sampling, verification and output, is 10 x (1001/1000) x 2^120.9553 + 2^80/2000 < 2^124.278670069061269 G1 reference units (C=2,000); the 1001/1000 reserve covers sub-half-ulp quoted-decimal residuals (collection 1.000016x, ledger 1.000013x; machine-checked). Peak storage below 2^106 bytes; no advice and no amortization. Analytic exploratory claim, not a full-size run.",
+      "score": {
+        "numerator": "124278670069061269",
+        "denominator": "1000000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "REVISION.md",
+        "source-core.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "g1_audit",
+      "source": "audit_g1.py",
+      "purpose": "Fast run ({}): recomputes region, per-row widths, per-row count certificates, yield/margin, work SE/allce, ECM schedules, LA kernels/prices, N/U trend, exact prices, table shape, shift coverage, residuals, recovery, success, ledger, G1 conversion and bijections. {\"descent\": true} also reruns descent, node counter and repeats (~10 s). {\"unit_entries\": [k, seed]} measures H4u at scale 2^k. {\"source\": name} prints a kernels_asm.b85 section.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent": {
+            "type": "boolean"
+          },
+          "unit_entries": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "row_tail.c",
+              "la_mac.s",
+              "bw_dot.s",
+              "measurements12.txt",
+              "wide12.c",
+              "wide12.txt"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
