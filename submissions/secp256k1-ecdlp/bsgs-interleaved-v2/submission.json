@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: interleaved-chain BSGS with metered batch inversion",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. The construction in proof.md uses m=2^128 baby indices and h=2^128-1 giant indices, advanced as W=2^16 independent affine chains in lockstep so that one Montgomery batch inversion per round serves all 65536 denominators of that round. The batch cost is charged in full at 3(W-1)+512 multiplications per round, i.e. 3.008 multiplications per step, and is added to the 3M incomplete-affine formula rather than replacing it. Each step is metered at 1160 AArch64 instruction equivalents (537 formula, 538 batch inversion, 85 hash/probe/store/address/index/loop), so the total is at most (2^129-1)*1160 < 2^139.1799 instructions and the score is at most 2^129.2141 target-group-operation equivalents at C=1000. Preprocessing is the 2^128 baby steps at 2^128.21 units and is included in the total; nonuniform advice is 0 bytes. Peak memory is 2^129 slots at 48 bytes, 2^134.59 bytes. Success probability is 1 for every valid Q: the search is exhaustive over the m baby and h giant indices with no randomness, restart schedule, birthday premise or collision-dependency assumption, and the b=0 and Q=infinity cases are handled explicitly. This is a deterministic generic search costed under classical-group-work-v2, not a new cryptanalytic technique, not a best-known-attack estimate, and not a full-size execution.",
+      "score": {
+        "numerator": "1292141",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-interleaved-bsgs",
+      "source": "experiment.py",
+      "purpose": "Check at toy scale that the interleaved-chain schedule and the one-batch-inversion-per-round construction recover the scalar on every instance of y^2=x^3+7 over a small prime field, including the b=0 giant-chain point-at-infinity case, and that the round's batched inversion matches independent per-element inversion. This does not establish production cost, memory, timing or behaviour at 2^128 steps.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 100003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "prime",
+          "trials",
+          "width"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 10007,
+          "trials": 16,
+          "width": 16
+        }
+      ]
+    }
+  ]
+}
