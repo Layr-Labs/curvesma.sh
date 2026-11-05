@@ -1,0 +1,26 @@
+"""eleven active vector owners (N < 11 x 2^56): allocation and row-tail formula checks (STORAGE.md)."""
+import math
+ACTIVE_OWNERS = 11
+C_ROW = 1750.0
+def install(model):
+		# Keep the block width, Wiedemann blocks and all other prices unchanged.
+		assert model.C_ROW == C_ROW
+		assert (model.BW_M, model.BW_N) == (28, 5)
+		model.C_ROW = C_ROW
+def check(model, result):
+		# The production bound log2(N) < 59.4594 implies N < ACTIVE_OWNERS x 2^56.
+		# The operational allocation test is also applied to the actual model N.
+		owners = math.ceil(2 ** result['log2_N'] / (1 << 56))
+		row = (
+				(ACTIVE_OWNERS - 1) * (15 + 18) + (ACTIVE_OWNERS - 1) * (62 + 2)
+				+ 92 + 180 + 183 + 2
+				+ 10 * ACTIVE_OWNERS + 40 + 168
+		)
+		return (
+				owners <= ACTIVE_OWNERS
+				and result['log2_N'] < 59.4594
+				and row == 1745
+				and row <= model.C_ROW == C_ROW
+				and (model.BW_M, model.BW_N) == (28, 5)
+				and result['log2_la'] <= 118.270853811
+		)
