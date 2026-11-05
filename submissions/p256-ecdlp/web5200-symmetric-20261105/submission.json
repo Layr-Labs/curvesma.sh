@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "P-256 symmetric interval BSGS: exact half-coverage and a cold 64-bit work certificate",
+  "claims": [
+    {
+      "statement": "For a uniform full-production P-256 challenge Q=[x]P with scalar x in 0..r-1 and exact protected parameters, the deterministic symmetric interval baby-step/giant-step algorithm in proof.md recovers the scalar with probability (2^255+1)/r > 1/2, hence >=0.39. With m=h=2^127 it uses at most 2^151 total classical target-group-operation equivalents under classical-group-work-v2, C=1000 scalar 64-bit AArch64 instruction equivalents per unit, counting all preprocessing, unsuccessful inputs, routing, memory transfers, sorting, lookup, arithmetic, verification and output. Its peak storage including distributed routing nodes and code is at most 2^144 bytes; preprocessing is at most 2^151 units and is included in total work; searched nonuniform advice is zero (log2(max(1,advice_bytes))=0). The storage implementation assumes the fixed bounded-degree classical tree with local memory-mapped directional mailboxes and blocking receive events specified in arithmetic.md; all processors, bootstrap, sends, receives, wakeups and coordination are charged in the same scalar instruction total, with no free global scheduler or wide-address primitive. The complete resource certificate is arithmetic.md. The target is uniform and unrestricted; the algorithm explicitly fails outside its proved coverage. No full-size execution, practical break, historical novelty, heuristic assumption, quantum step, new record, free global memory addressing or uncharged advice is claimed.",
+      "score": {
+        "numerator": "151",
+        "denominator": "1"
+      },
+      "evidence": [
+        "arithmetic.md",
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [],
+  "checks": []
+}
