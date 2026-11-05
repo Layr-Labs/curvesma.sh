@@ -1,0 +1,1 @@
+k32: batch-round walk without reference additions (s26) on validated k31 78c29cd4. Claim and argument: proof.md (sections 1-26). Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Score 116159372416477905/10^15, success 0.39, mem <2^122.0004 B, pre <2^115.1739.
