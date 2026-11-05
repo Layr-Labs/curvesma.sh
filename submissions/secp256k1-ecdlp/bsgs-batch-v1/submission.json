@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: batched-inversion BSGS with a hash-indexed table",
+  "claims": [
+    {
+      "statement": "For the protected production-v2 secp256k1 target and uniform x in [0,r), input Q=[x]P for the fixed standard generator P, the deterministic baby-step/giant-step algorithm in proof.md recovers x with probability 1 (above the required 0.39) using at most 2^128.35 total target-group-operation equivalents under classical-group-work-v2, where C=1000 and the 5x52 field multiplication costs the measured 179 instructions. The ledger uses incomplete affine addition at 3M with Montgomery batch inversion amortised below 0.01M per addition, and an open-addressing hash table instead of a sorted table, so each of the (2^129 - 1) group operations is charged at most 620 instruction equivalents. Peak memory is 2^133.32 bytes (2^128 table entries at 40 bytes) and nonuniform advice is 0 bytes; the table is built from the public generator inside the run and its whole cost is included in the total. Preprocessing is the 2^128 baby-step additions, reported as log2 = 127.31, and is already inside the submitted total rather than deducted. There is no randomness, no retry, no oracle and no work amortised over future targets. This is an implementation-cost improvement over the organizer's generic accounting control, not a new cryptanalytic technique and not an estimate of the best known attack.",
+      "score": {
+        "numerator": "2567",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-bsgs-batch-inversion",
+      "source": "experiment.py",
+      "purpose": "Check at toy scale that the deterministic baby-step/giant-step recovery used in proof.md recovers the scalar on every generated instance of y^2=x^3+7 over a small prime field, and that Montgomery batch inversion returns exactly the per-element inverses. This is evidence about correctness of the construction only; it does not establish production cost, memory, timing or behaviour at 2^128 steps.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 100003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "prime",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 10007,
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}
