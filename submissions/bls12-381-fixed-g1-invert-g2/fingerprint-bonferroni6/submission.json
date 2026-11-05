@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "Finite Bonferroni horizon and capped fingerprint checkpoints",
+  "claims": [
+    {
+      "statement": "The analytic algorithm and complete work accounting in proof.md and fingerprints.md solve the full supplied-P pairing inversion task with probability at least0.39 under the sole disclosed SHA512 random-function idealization,within2^(6437/50) reference dense Fp12 equivalents at fixed C=20000. Peak storage<2^35 bytes,nonuniform advice zero. Every outcome is work-capped;all setup,failed probes,hashes,lookups,transfers,verification and G2 output are charged. This is not a demonstrated production attack or unconditional SHA theorem.",
+      "score": {
+        "numerator": "6437",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "fingerprints.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
