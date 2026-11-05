@@ -1,0 +1,61 @@
+{
+ "version": 1,
+ "title": "52-bit-VA flipped-grid stored-leaf birthday search on secp256k1 at 124.440123840974845: soispoke 17a007c8 plus 64-byte LS64 lines for the fractions and for e_j, acc",
+ "claims": [
+  {
+   "statement": "For uniform production secp256k1 Q=[x]P, the classical cold grouped stored-leaf birthday search of proof.md on a 52-bit-VA generator/relay/home machine recovers x with probability at least 0.390000001 over the challenge and fresh algorithm coins (Chen-Stein on cross-generator leaf pairs with per-chain random start and step; drops, caps, wrong class indices, label errors, the carry sites of section 3.4 and the fixup meter's cap are charged failure rows; success.md). Its expected total work is at most 2^124.440123840974845 target-group-operation equivalents (1000 scalar AArch64 instructions per unit; at most 208.6430 per leaf), E-averaged over 160 Y-chain groups that stop at the first resolving group, with every walk, joint K3 hit, exact-carry key path and defect row charged by history-conditional domination (success.md 6.6); the worst case on every run, 2^176.807579 instructions, is disclosed. Each of 2^68 generators holds 256 permanent X's with unified 8x32-bit slot-interleaved tables in TTBR0 [2^48, 2^51) and 43-bit beta tables in TTBR1 [2^64-2^51, 2^64), streaming 2^17-element Y-chains across X-pair partial-fraction inverses (C1b, fwd 77.13 with e_j and acc stored as one ST64B line), split u/v (C2), LD64B lookups (C4a) and one ST64B per fraction line and one LD64B of the e_j, acc line in the pair entries and the 1/D_1 spill as one ST64B (Normal Non-cacheable; bwd 1137.25) and 5-instruction emits (keys 132.5); 2^42 relays and 2^83 homes (47-bit hash buckets, 256-byte DC ZVA BS=6) synchronize via store-release messages, DMB ISH, 128-bit/STADDL received counters and two-wave link barriers (sections 2, 4). Peak memory at most 2^135.2301 bytes; preprocessing at most 2^116.0470 units, included; no advice; every kernel instruction has an A64 encoding (LLVM assembles all three kernels, and its disassembly has the same instruction counts a64.py runs); certificate.py checks every declared figure. This package is soispoke 17a007c8 (declared; judged valid at 124.448751886343643) plus the 64-byte line changes of proof.md section 0 (kaankolcu 319b0ed4, judged valid at 124.442841076498146, and 849b9a2a's fwd/W2SE8 line, both declared, and this package's 1/D_1 spill). 17a007c8 built on soispoke ae21db39 and 45552a5c, kaankolcu 38df975c, 8c3852be, 2af6aeef, e8c1f92c, f0d01922, aburan28 c3e0530e, 7516608f, 9a4da1ce, eb58c3c4, pepedesigner 22e3cf05 and our 3ff1b1a5 and 7f4f73d0 (declared dependencies; proof.md 9; kaankolcu d6de3906 credited, not declared, as it was never published); no prior acceptance or score is a premise. An analytic bound, not a practical break.",
+   "score": {
+    "numerator": "24888024768194969",
+    "denominator": "200000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "success.md",
+    "certificate.py",
+    "experiment.py",
+    "machine.py",
+    "sites.py",
+    "kernels/a64.py",
+    "encoding_fuzz.py",
+    "kernels/leaf.s",
+    "kernels/route.s",
+    "kernels/secp_fe.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-stored-leaf-kernels",
+   "source": "experiment.py",
+   "purpose": "Verifies yround Y-chain generation, C1b/C2/C4a/8x32b leaf kernels against bit-exact models and affine curve addition, 3.4 error/fixup sites and unified tbld (sites.py), 52-bit-VA 4x4x16 generator/relay/home machine with two-wave completion and LS64/VA52/encoding-form mutant rejections (machine.py), and every kernel count against certificate.py.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 15
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 1,
+     "seconds": 12
+    }
+   ]
+  }
+ ]
+}
