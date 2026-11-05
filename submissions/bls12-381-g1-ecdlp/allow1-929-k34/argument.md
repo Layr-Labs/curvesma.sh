@@ -1,0 +1,1 @@
+k34: exact round share and unrolled batch loops (s28) on validated k33 4a631be0. Claim and argument: proof.md (sections 1-28). Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Score 116148707722412430/10^15, success 0.39, mem <2^122.0004 B, pre <2^115.1631.
