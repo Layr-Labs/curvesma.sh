@@ -1,0 +1,1 @@
+Argument: proof.md s1-s31 (s30 leaves, keys, planner; s31 table beta keys in batch_audit.py), source-proof.md. Kernel: measure/, kernel_check.py, nocarry_witness.py. Ledger evidence.py; log log_bound.py; checks combined_lazy.py. Score 115.914743675243857.

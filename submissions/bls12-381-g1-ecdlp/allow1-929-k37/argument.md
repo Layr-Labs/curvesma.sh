@@ -1,0 +1,1 @@
+k37b: table beta keys (s31), N_b/N_g = 23/20, on k36c 7d05e008. Argument: proof.md s1-s31, source-proof.md (9c1b2d5d). Score 115914743675243857/10^15, success 0.39, mem <2^122.0004 B, pre <2^114.9245.
