@@ -1,0 +1,1 @@
+Argument: proof.md s1-s32, source-proof.md. Kernel: measure/, kernel_check.py (s32 esum_text), nocarry_witness.py. Ledger evidence.py; log log_bound.py; checks combined_lazy.py. Score 115.909555199003031.

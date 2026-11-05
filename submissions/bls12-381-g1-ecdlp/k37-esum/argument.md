@@ -1,0 +1,1 @@
+k37e: shared x-sum e = v2 - x1 (s32) on validated k37b eafa8bff. Argument: proof.md s1-s32, source-proof.md (9c1b2d5d). Score 115909555199003031/10^15, success 0.39, mem <2^122.0004 B, pre <2^114.9192.
