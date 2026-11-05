@@ -1,0 +1,61 @@
+{
+ "version": 1,
+ "title": "52-bit-VA flipped-grid stored-leaf birthday search on secp256k1 at 124.448751886343643: tabled X, streamed Y, C1b/C2/C4a LS64 lookups",
+ "claims": [
+  {
+   "statement": "For uniform production secp256k1 Q=[x]P, the classical cold grouped stored-leaf birthday search of proof.md on a 52-bit-VA generator/relay/home machine recovers x with probability at least 0.390000001 over the challenge and fresh algorithm coins (Chen-Stein on cross-generator leaf pairs with per-chain random start and step; drops, caps, wrong class indices, label errors, the carry sites of section 3.4 and the fixup meter's cap are charged failure rows; success.md). Its expected total work is at most 2^124.448751886343643 target-group-operation equivalents (1000 scalar AArch64 instructions per unit; at most 209.8945 per leaf), E-averaged over 160 Y-chain groups that stop at the first resolving group, with every walk, joint K3 hit, exact-carry key path and defect row charged by history-conditional domination (success.md 6.6); the worst case on every run, 2^176.807579 instructions, is disclosed. Each of 2^68 generators holds 256 permanent X's with unified 8x32-bit slot-interleaved tables in TTBR0 [2^48, 2^51) and 43-bit beta tables in TTBR1 [2^64-2^51, 2^64), streaming 2^17-element Y-chains across X-pair partial-fraction inverses (C1b, fwd 78.38), split u/v (C2), LD64B lookups (C4a, bwd 1144.77) and 5-instruction emits (keys 132.5); 2^42 relays and 2^83 homes (47-bit hash buckets, 256-byte DC ZVA BS=6) synchronize via store-release messages, DMB ISH, 128-bit/STADDL received counters and two-wave link barriers (sections 2, 4). Peak memory at most 2^135.2301 bytes; preprocessing at most 2^116.0470 units, included; no advice; every instruction has an A64 encoding (a64.py rejects any that does not; LLVM assembles all three kernels); certificate.py checks every declared figure. Built on soispoke ae21db39 and 45552a5c, kaankolcu 38df975c, 8c3852be, 2af6aeef, e8c1f92c, f0d01922, aburan28 c3e0530e, 7516608f, 9a4da1ce, eb58c3c4, pepedesigner 22e3cf05 and our 3ff1b1a5 (declared dependencies; proof.md 9; kaankolcu d6de3906 credited, not declared, as it was never published); no prior acceptance or score is a premise. An analytic bound, not a practical break.",
+   "score": {
+    "numerator": "124448751886343643",
+    "denominator": "1000000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "success.md",
+    "certificate.py",
+    "experiment.py",
+    "machine.py",
+    "sites.py",
+    "kernels/a64.py",
+    "encoding_fuzz.py",
+    "kernels/leaf.s",
+    "kernels/route.s",
+    "kernels/secp_fe.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-stored-leaf-kernels",
+   "source": "experiment.py",
+   "purpose": "Verifies yround Y-chain generation, C1b/C2/C4a/8x32b leaf kernels against bit-exact models and affine curve addition, 3.4 error/fixup sites and unified tbld (sites.py), 52-bit-VA 4x4x16 generator/relay/home machine with two-wave completion and LS64/VA52/encoding mutant rejections (machine.py), and every kernel count against certificate.py.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 15
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 1,
+     "seconds": 12
+    }
+   ]
+  }
+ ]
+}
