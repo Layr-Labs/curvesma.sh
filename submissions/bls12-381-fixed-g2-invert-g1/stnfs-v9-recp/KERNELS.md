@@ -1,0 +1,72 @@
+# Kernels and measurements
+
+All counts are callgrind Ir on linux/arm64 (Debian 12, GCC 12.2 -O3
+-fno-tree-vectorize -fno-tree-loop-distribute-patterns, valgrind 3.19) by the
+differential method (two runs differing only in the measured unit), with each
+kernel's correctness checks logged alongside its counts. The C kernels (`dsieve16`,
+`slice12`, `ecm12`, `nbound31`) are described here; the shipped logs are the
+evidence: `measurements12.txt`, `measurements12x.txt`, `wide12.c` and `wide12.txt` are sections of
+`kernels_asm.b85` (base85 of lzma text). The large raw `dsieve16` log (`measurements16.txt`) is omitted from
+this archive for size; its counts and checks are summarized in the table below.
+
+## Descent sieve: `dsieve16`
+
+Builds the determinant-p hit lattice of a root-pair functional (p < 2^70), LLL-reduces
+and certifies it exactly (congruences, Bareiss determinant = p), enumerates the ball
+||c||^2 <= R^2 (Schnorr-Euchner, exact leaf test), sign-canonicalises and ranks each
+hit (exact lexicographic ball index) and emits (owner = index >> 40, offset, 16 log2 p)
+records; owners stay below 2^62.44 at R = 384 (`tables` refuses half counts >= 2^103).
+Its `check` passed: set equality and rank bijection with brute force for R <= 4;
+every record unranked and verified at p = 2^20..2^69, R = 10..224 (18,051,918 at
+R = 224) and the first 2^24 at R = 256; the split is audited per node ([7]).
+
+| measured | Ir | charged |
+|---|---:|---:|
+| enumeration + rank + record, per hit (p = 2^20..2^69, R = 12..224) | 302-793 | 1000 |
+| transfer to the owner, per hit (four radix passes) | (STORAGE.md) | 84 |
+| apply, per record | 9.00 | 9 |
+| SIEVE_HIT total | | 1100 |
+| scan, per cell | 5.000 | 5 |
+| zero, per cell | | 1 |
+| certified per-cell norm bound, both sides (DESCENT.md) | ~1,500 | 2,400 |
+| LLL + certificate per (p, root pair), p = 2^69 | 2^24.98 | 2^25.1 |
+
+At p = 2^69 the per-hit cost decreases with the radius (417.8, 370.0, 353.9 Ir
+at R = 160, 192, 224: fewer enumeration nodes per hit, the rank is 12 lookups at
+every radius); the 1000 charge is 2.8x the R = 224 value and covers R up to 384.
+A complete (p, root pair) at p = 2^69, R = 96 measures 47,853.7 Ir per hit
+including two setups over 1,396 hits (2^24.99 per setup, below PAIR_SETUP). Workers hold the
+index tables (2^34.34 bytes at R = 384, STORAGE.md); `apply` runs at R = 4; the
+`realloc` record buffer belongs to the harness, production streams records to
+owners (STORAGE.md).
+
+## Main phase: `slice12`, `ecm12`, `kernels_asm.b85` (listings; logs `measurements12.txt`, `measurements12x.txt`, `wide12.txt`)
+
+Line and record paths of the relation sieve (line path for p < 2^48, record walk above; per-update costs by h, the points
+per coset), apply 7.00, recovery 7.003 per record; layout 12.325, zero 0.625, scan 8 per cell; certified norm bounds
+(1,508.2 per evaluation, 4,600 per row, 17,500 per slice; `embedding_bounds.py`, `nbound31`); five-limb Montgomery
+multiplication 367.76 Ir; the LA kernels of STORAGE.md (listings counted by [10]): the constants of `model16.py`.
+
+**Record walk below 2^63 (`slice12g`, 2c2ce2ab).** Exact adjugate recentring; all checks MATCH brute force. Record
+44.67 / 77.42 / 250.54 / 810.82 / 1711.20 Ir per hit (p = 257 ... 268435459), setup6 406.87 / 374.07: `REC_TAB`.
+
+**Line path (v9): the public `slice12` line walk (0bbca0b2).** `measurements12x.txt` (same container, flags and
+differential method) holds (i) its base table on the 2^26 slice, one (p, s) per point: 24.098 / 31.113 / 88.313 / 310.700
+at h = 2^13.82 / 2^9.82 / 2^5.82 / 2^1.82; (ii) random-pair groups: each seed draws 4 pairs (prime q in [p, p + p/8], s
+uniform) and walks random cosets over all lines of a 2^26-2^32 slice; 3-8 seeds per group. Single pairs scatter (at
+2^9.8 random pairs average 35.85 against the base point 31.11), so each entry of `LINE_TAB` is the larger of (i) and the
+pooled cost + 2 SE of the group at or below its h, and h >= 2^18.81 is capped at **17.2** >= the bounds of the
+three cap groups (p ~ 26 / 84 / 257 on 2^28 / 2^30 / 2^32 slices, pooled 17.04 / 16.62 / 16.29,
+falling with p); linear in log2 h between entries (costs are convex in log2 h). Single pairs at h 2^19-2^22 cost
+less (16.95, 16.14, 15.01). [k] recomputes every quotient from raw Ir and hits and checks the table against every
+group. The bench adds a line-range argument and the multi-pair mode (diffs in the log); the walk is the public code.
+
+**Primes in [2^63, 2^64) (v9; v8 charged them twice).** Only the long long basis and the k = 64 Barrett reciprocal
+break. `wide12.c`, appended to the public slice12 in its own text section (its object code unchanged), adds
+`prepare_pair_w` (int128 LLL, abort unless all entries < 2^40, then the unchanged `lll()`; unreachable, since a nonzero
+x with sum x_i s^i = 0 mod p has ||x|| > 2^9.5, so Minkowski bounds the last minimum below 2^28) and `setup6w`
+(Moller-Granlund reciprocal). `wide12.txt`: reductions exact; 200 wide pairs at three slice sizes certified (congruence,
+|det| = p), planted hits, digests, survivors and records MATCH brute force. setup6w 141.00 Ir (within the setup6
+charge); the record walk per coset at three wide p is within 2.17 Ir of 611.17 at 2^63 - 25 (same code), so wide primes
+pay the public record table `REC_TAB_W` (44.901 / 78.211 / 266.972 / 938.085 / 2231.664) x 1.01; empty cosets and apply x 1.01.
+Wide factor-base lattices (<= 5,615,924 Ir per (p, s)) are a 2^70.6 ledger row.
