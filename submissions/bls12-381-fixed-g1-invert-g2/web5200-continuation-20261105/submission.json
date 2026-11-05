@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2 / complete analytic construction",
+  "claims": [
+    {
+      "statement": "For the protected bls12-381-fixed-g1-invert-g2 target, given the exact supplied nonidentity P and independently uniform z in GT, the deterministic GT-BSGS algorithm with m=h=2^127 recovers a in [0,2^254) when z=e(P,Q0)^a and returns Q=[a]Q0 in G2, preserving the supplied fixed argument. It verifies e(P,Q)=z on all 12 coefficients. For each supplied nonidentity point the exact success probability is 2^254/r>1/2, hence the joint probability also exceeds 0.39; z=1 returns infinity. The complete worst-case cold work is W<2^151 target-group-operation equivalents under classical-group-work-v2 with C=20000, from R<2^165 scalar 64-bit instructions and H=0. Peak total storage is below 2^146 bytes; preprocessing is included in W and has the same bound; searched advice is zero. All parsing, arithmetic, exact pairing, subgroup checks, point output, sorting, lookups, transfers, failures, bootstrap and coordination are charged in the reproduced evidence. Standard bilinearity/nondegeneracy of the protected reduced BLS pairing and its prime-order group premises are used explicitly. The compact canonical input (<4096 bytes), fixed reset-loader and error-free bounded local-mailbox/blocking-event interface are explicit assumptions, not authenticated deployment facts; expanded wire spelling L adds the stated 128L+2^16 parsing bound. No auxiliary powers, random-oracle or cryptanalytic heuristic, physical execution, novelty, leading record, free wide addressing or previous acceptance is claimed.",
+      "score": {
+        "numerator": "151",
+        "denominator": "1"
+      },
+      "evidence": [
+        "arithmetic.md",
+        "pairing-kernels.md",
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [],
+  "checks": []
+}
