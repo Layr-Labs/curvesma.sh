@@ -1,0 +1,1 @@
+k33: lazy batch round (s27: reflected difference, unreduced inverses) on validated k32 34256b51. Claim and argument: proof.md (sections 1-27). Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Score 116150343001282494/10^15, success 0.39, mem <2^122.0004 B, pre <2^115.1648.
