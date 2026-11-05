@@ -1,0 +1,1 @@
+k36: x-only leaves, beta-triple giant lookups, leaf planner, N_b/N_g = 27/20 (s30) on validated k35 cbfacf97. Claim and argument: proof.md (sections 1-30). Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Score 116019089947141448/10^15, success 0.39, mem <2^122.0004 B, pre <2^115.0399.
