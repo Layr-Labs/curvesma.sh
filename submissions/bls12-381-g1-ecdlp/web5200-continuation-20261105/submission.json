@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp / complete analytic construction",
+  "claims": [
+    {
+      "statement": "For every integer n with 1<=n<r in the protected BLS12-381 auxiliary-powers target, with nonzero s uniform in 1..r-1, T=[s]P0=A_1 and A_i=[s^i]P0 honestly supplied, the deterministic construction in proof.md returns the canonical scalar s with exact probability 2^254/(r-1)>1/2. It reads and validates the input stream then uses only T for signed-interval BSGS with m=2^127,h=2^126. Its total cold work is bounded by W(n)=[3*2^160+2^149+2^140+2^52+(n+1)*2^45]/2000 group-operation equivalents under classical-group-work-v2, including all preprocessing, input accesses, arithmetic, subgroup checking, routing, coordination, initialization, sorting, failed traversal, recovery and verification. At the mandated n=2^20, W(n)<2^152; the submitted score is the conservative log2 bound 152. Memory including input is at most M(n)=2^144+512(n+1) bytes and below 2^145 bytes at n=2^20. Preprocessing is included in W(n); searched advice is zero; no divisibility assumption on n is needed. The compact canonical input stream, fixed reset loader, bounded local mailboxes and error-free blocking event machine in the evidence are explicit interface assumptions, not authenticated deployment properties. Expanded input of L bytes has the separately stated normalization charge 128L+2^16. No cryptanalytic heuristic, free global lookup, auxiliary-power acceleration, production execution, novelty or record is claimed. All evidence is reproduced, without using prior acceptance as a premise.",
+      "score": {
+        "numerator": "152",
+        "denominator": "1"
+      },
+      "evidence": [
+        "arithmetic.md",
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [],
+  "checks": []
+}
