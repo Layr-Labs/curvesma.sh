@@ -1,0 +1,1 @@
+k33: stored x2 + p and exact round share (s27) on validated k32 34256b51 (batch round, s26). Claim and argument: proof.md (sections 1-27). Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Score 116156200607612276/10^15, success 0.39, mem <2^122.0004 B, pre <2^115.1707.
