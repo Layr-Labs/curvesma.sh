@@ -1,0 +1,1 @@
+k37: table beta keys (s31), N_b/N_g = 23/20, on k36c 7d05e008 (s30: x-only leaves, beta-triple giant lookups, leaf planner). Claim and argument: proof.md (sections 1-31). Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Score 115914743675243857/10^15, success 0.39, mem <2^122.0004 B, pre <2^114.9245.
