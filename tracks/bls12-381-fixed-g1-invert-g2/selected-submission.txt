@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g1-invert-g2
+submissions/bls12-381-fixed-g1-invert-g2/sha256-sorted-20261105-v3
