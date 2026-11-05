@@ -1,0 +1,1 @@
+k32: round-stopped giant phase (s26) on validated k31 78c29cd4. Claim: proof.md; expected total 116082260468297618/10^15 (score), every-run cap 116241971081086959/10^15. Source: source-proof.md (9c1b2d5d). Ledger: evidence.py. Log: log_bound.py. Checks: combined_lazy.py. Success 0.39, mem <2^122.0004 B, pre <2^115.2576.
