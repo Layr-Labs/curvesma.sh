@@ -1,0 +1,1 @@
+Argument: proof.md (s30 x-only leaves, beta keys, leaf planner; s26-s28 batch round: batch_audit.py). Source: source-proof.md. Kernel s1: measure/side_lanes.S, measurement.log, kernel_check.py (incl. s30 leaf kernel), nocarry_witness.py. Ledger evidence.py; log log_bound.py; checks combined_lazy.py. Score 116.019089947141448.
