@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1: exact signed-interval support and complete cold work",
+  "claims": [
+    {
+      "statement": "For the exact protected BLS12-381 G1 production target T=[x]P0, uniform scalar x in 0..r-1 including zero, the deterministic signed-interval BSGS construction in proof.md with m=2^127 and h=2^126 succeeds on exactly 2^254+1 scalars, so its success probability (2^254+1)/r exceeds 1/2 and 0.39. Under classical-group-work-v2 with C=2000, its worst-case total classical computation, including all cold preprocessing, failures, arithmetic, parsing, subgroup checking, sorting, lookup, storage initialization, transfers, coordination, scalar recovery, verification and output, is at most 2^152 target-group-operation equivalents. Peak memory including tables, distributed routing state, replicated code, buffers and processor state is at most 2^144 bytes. Preprocessing is included in total work and bounded by 2^152; searched advice is zero. The storage implementation assumes the explicitly specified bounded-degree tree with fixed local memory-mapped mailboxes and blocking receive events; all processor bootstrap, communication, waits and coordination are charged. No free global addressing or scheduler oracle is assumed. There are no cryptanalytic heuristics, quantum steps, auxiliary powers, experimental premises, production run, actual break, novelty or frontier improvement claimed. The complete supported construction and local machine assumption are in proof.md and arithmetic.md; prior acceptance is not a premise. The input-cost certificate uses the explicit compact canonical JSON representation in proof.md, fewer than 512 bytes per point, of the same unrestricted uniform scalar distribution. It does not claim constant-cost parsing of arbitrarily padded JSON; a wire representation of L bytes adds the separately stated 128L+2^16 instruction bound if normalization is required. That bounded transport convention, and the fixed local reset loader and blocking-event interface, are explicit interface assumptions, not authenticated platform properties.",
+      "score": {
+        "numerator": "152",
+        "denominator": "1"
+      },
+      "evidence": [
+        "arithmetic.md",
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [],
+  "checks": []
+}
