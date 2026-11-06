@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Scalar EXTR digits, direct constant terms and complete tighter preparation",
+  "claims": [
+    {
+      "statement": "The analytic supplied-P pairing inversion algorithm in proof.md has success at least 0.39 under its sole disclosed SHA-256 idealization. Total cold work H+R/20000 is below 2^(64031/500) reference dense Fp12 equivalents, with H=K reference multiplications and R<=9856*K+2^90 other scalar instructions. Peak memory is below 2^50 bytes, advice zero. All preprocessing, trials, lookup, transfers, verification and G2 output are charged. This is an analytic heuristic bound, not a production execution.",
+      "score": {
+        "numerator": "64031",
+        "denominator": "500"
+      },
+      "evidence": [
+        "collision-proof.md",
+        "compression-proof.md",
+        "compressor-audit.md",
+        "prefix-audit.md",
+        "proof.md",
+        "universal-proof.md",
+        "checkpoint-proof.md",
+        "horizon-audit.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
