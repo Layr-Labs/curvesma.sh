@@ -1,0 +1,101 @@
+# Storage and addressing
+
+Every object is individually bounded and addressed by (owner, local index);
+`store16.py` is the executable reference and [11] runs its checks.
+
+## Relation collection
+
+A segment is one line b5 = k of a slice; a line has at most 2^57.508 cells
+(`store16.line_cells_bound` at the full slice radius A^2, so it also bounds the region's (17/20) A^2 slices), so a cell index fits 58 bits. Rows are packed
+suffix-lexicographically (cell = row base + b0) with 16-byte row descriptors in
+2^16-entry pages.
+
+The record walk writes each record (cell: uint64, ideal: uint64) directly to
+the current 1 MiB page (2^16 records) of its chunk, chunk = cell >> 30 (chunk id
+< 2^29), through a 2^29-entry tail table (4 GiB): 7 instructions on the hot path (shift, tail load, add, paired store, page-end test and branch,
+tail store). A full page goes to the chunk's two-level page directory
+(128-bit record ordinals). Records of a chunk stay in emission order, so this
+is the same stable chunk order as the source's line buffer plus two-pass 16-bit
+radix sort (`store16.scatter` is checked against `store16.route`), with no
+line buffer and no radix passes. Each chunk owner applies its records into its
+2^30-entry uint32 sum array (4 GiB), scans it against the thresholds and
+recovers the survivors' records. Open pages hold at most 2^29 x 1 MiB = 2^49
+bytes per line in flight.
+
+Hot path (AArch64; x0 tail table, x1 cell, x2 ideal; page-full branch rare):
+
+```
+emit_hot:
+	lsr	x19, x1, #30
+	ldr	x9, [x0, x19, lsl #3]
+	add	x8, x9, #16
+	stp	x1, x2, [x9]
+	tst	x8, #0xfffff
+	b.eq	emit_page
+	str	x8, [x0, x19, lsl #3]
+emit_end:
+```
+
+Price per retained record, measured end to end: scatter
+at emission (7, above), page hand-off, the owner's copy of each page (16 bytes per
+record, 3 instructions) and its page walk into apply; executed-instruction count
+under qemu-aarch64 8.2.2 (gcc 13.3 -O3 -fno-tree-vectorize -mgeneral-regs-only),
+differential 2^18 -> 2^19 records: 26.0009 per record minus the source loop 7 and
+apply 9 = **10.0009** (37.2 per 2^16-record page), charged **10.01**.
+Plus **8 per cell** for row bookkeeping and sentinels; apply
+**5.76** and recovery **5.76** per record are separate terms (`slice12oh.c`); scan2 zeroes both sum arrays as it
+reads them, and each survivor's SENTINEL is cleared after recovery (8 instructions per survivor, charged in the scan row's
+per-leaf part). Recovery re-reads every record of every chunk (no gating).
+**Primes in [2^63, 2^64)** (5.5% of the record hits: ln(64/63)/ln(64/48)) run the wide path of KERNELS.md; their
+records use the same layout, routing and apply as every other record.
+**Primes in [2^56, 2^63) on a run** (KERNELS.md, rec7): a run's slices live together (one walk per (run, ideal) emits
+records into every slice's chunks): at most 2101 a-values, 2^78.57 cells, 4 bytes of sums and 0.575 expected 16-byte
+records per cell: below 2^82.3 bytes. The two 7-dim bases per ideal take < 2 KiB each: < 2^71.6 bytes.
+
+## Descent nodes
+
+A node's sieve emits records (u64 owner = index >> 40, u64 offset = index mod
+2^40, u16 16 log2 p; separate f and g streams; dsieve16 rec_t) to the owner,
+which adds into its two 2^40-entry uint16 score arrays (a score is at most
+16 x the norm size, below 2^16 at every node). All owners hold
+their arrays at once: a node of half count H uses 4H bytes, at R = 384
+(H < 2^102.44) 2^104.44 bytes over < 2^62.44 owners, offsets < 2^40. The kernel
+refuses any ball whose half count reaches 2^103; [7] audits every sieved node
+(largest score 32,709) and store16.check round-trips the split at the
+boundaries, including index 2^94. Records stream through and are not stored;
+the transfer is priced by the relation-collection rule at 64-bit owner ids:
+four 16-bit radix passes (64) + append 6 + flush 4 + directory 2 + dispatch 8
+= **84** per record, inside SIEVE_HIT (KERNELS.md). Enumeration runs on 2^40
+workers holding the exact ball index tables (12 x (R^2 + 1) x (2R + 1) x 16
+bytes = 2^34.34 bytes at R = 384, 2^74.4 in all). Nodes run one at a time, so
+the descent's peak is 2^104.44 + 2^74.4 < 2^105 bytes.
+
+## Linear algebra: superseding addressed layout
+
+The complete replacement is in seven-owner.md (the historical filename is
+retained for manifest compatibility). It specifies thirteen owners,2^55-entry
+blocks,192-byte stride, TWO local Krylov arrays, and an explicit direct indexed
+mailbox/reset interface separately from cryptanalytic H1-H5. Both arrays fit
+in3*2^62 bytes with more than2^61 reserved locally. Matrix entries are sharded
+by128-bit ENTRY ordinal, not fixed row size;301 is only the mean-entry bound.
+Row descriptors, dense rows, X, retained sequences and generator operands are
+separately backed and streamed through bounded buffers.
+
+The current prices are single-vector entry30.9, five-vector entry16.086,
+C_ROW6858, projection128, block dimensions(m,n)=(27,5), generator upper bound
+108.389731954 and LA upper bound117.684428298. They include the sixteen-entry
+hand-unrolled kernel with192-byte address calculation, extra batch calls,
+sparse/dense transfers, double buffering, headers, code and endpoint state.
+store16.la_check tests exactly this layout; the former14/20-owner check is removed.
+The same arithmetic kernels and all inherited H1-H5 premises are retained.
+See seven-owner.md for every new allowance and its explicit interface assumptions.
+
+## Aggregate
+
+Peak storage is at most 2^105 bytes (the largest descent node). The main phase
+stays below 2^83 bytes: a run's sum arrays and records (< 2^82.3), rec7 bases, active record pages, the stored
+relations (2^63.64 x <= 256 bytes = 2^71.7), the paged sparse matrix (2^58.69
+rows x 301 entries x 8 bytes < 2^71), the double-buffered Krylov blocks (2 x 2^58.69 x 192
+bytes < 2^68) and Horner/projection vectors (< 2^76), canonical-list staging 2^78 bytes.
+
+Current sparse entries are packed8-byte words, with55-bit local index and8-bit coefficient. The decoding and new prices are fully derived in seven-owner.md.
