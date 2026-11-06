@@ -1,0 +1,604 @@
+# Flipped-grid stored x-only leaf birthday search on secp256k1: permanent tabled X's, 2-D Y batches, six leaves per inverse, grouped hash-chain abort (124.431501518764035)
+
+**Claim.** For a uniform full-production secp256k1 input `Q = [x]P`, the classical cold algorithm below recovers x with probability at least 0.39 over the challenge and fresh coins; its expected total work is at most `time_log2 = 124.431501518764035 = 124431501518764035/10^15` target-group-operation equivalents (C = 1000 scalar AArch64 instructions per unit), and on every run at most R_worst = 2^188.604756 (disclosed). Peak memory is at most 2^135.9991 bytes; preprocessing, at most 2^116.1487 units, is included; no advice. `certificate.py` checks the declared figures: work, worst case, memory, preprocessing and work per leaf (207.6502) are the least multiples of 10^-15, 10^-6, 10^-4, 10^-4, 10^-4 at or above their exact values; 0.39 is below the certified success bound 0.3900000000833567 (least q1 = 145285144).
+
+**Reviewer's guide.** New here (3.1, 3.4, 7): the flipped grid (256 permanent X's with 1280 lookup tables, 2-D Y batches from ygen), fwd (76.6289 per incidence) and bwd (1140.7070) by lookups, carries by branch with weak-operand and lookup-fold sites, the ledger rows. From the fractions on (2.3, 3.2, 3.3, 4) code and arguments are our parent 5aacf299's, including the E-priced early abort (6.6, 7). Evidence: 8; credit and changes: 9 (the flipped grid, X-pair partial fractions, u/v split and lookups are soispoke's 7f4f73d0 and 17a007c8; our kernels, layout, tables, 2-D Y batches, proofs). **Not relied on:** heuristics, prior acceptance or score.
+
+## 2. The algorithm
+
+### 2.1 Machine
+
+2^72 nodes `(i, j)`, `0 <= i, j < 2^36`, each with a main processor and one delivery processor per message kind (dlv, hop-1 arrival h2s, hop-2 arrival dlvh), scalar AArch64: base set, FEAT_RNG, FEAT_LSE, `DC ZVA` (DCZID_EL0.BS = 6, a 256-byte block as on Fujitsu A64FX; DZP = 0, DZE = 1) on Normal memory, FEAT_LS64 (EnALS = 1). **Premises:** private memory < 2^64 bytes in one flat address space (as 38df975c's 2.1; the X tables alone are 1280 TiB), the LS64 locations, the DC ZVA block size. The ledger counts every processor's executed instructions (one step each) and each message's delivery and in-flight count; storage and wiring are free.
+- **Ports and links.** A port's 48-byte message block (destination word, address, four data words; the STP to +32 completes it) sends one record. Record blocks, one per destination d at `PB + 2^14 d` (PB = 2^50 column, 2^51 row), hold a header (destination word, address, byte count; at hop 2, p at +24) and k = 256 slots at +32n; the header's STP after the count word completes a k-record message, written by delivery code at its address (hop-1 column blocks go to the destination's h2s). Links keep no state but the message in flight.
+- **LS64 (premise).** `LD64B`/`ST64B Xt, [Xn]` move Xt..Xt+7 in one 64-byte access: t even, <= 22, no offset, Xn 64-byte aligned. Supported locations are IMPLEMENTATION DEFINED; here the link windows (Device), R2, pair entries, β and X tables (Normal Non-cacheable), nowhere else; R2 starts at 32 mod 64 so slot pairs of a block and of its R2 copy are both 64-byte aligned. `a64.py` asserts on every access Xt even and <= 22, an LD64B base outside Xt..Xt+7, alignment and the run's region list; `machine.py ls64_checks` ships a failing input per case (`ld64b_x21`, `ld64b_x24`, `ld64b_base_in_xt_range`, `ld64b_odd_slot`, `st64b_r2_misaligned`, `ld64b_outside_regions`, `st64b_into_window`) and dlvh, h2s mutants. `isa_checks` ships branch reach (`tbz_8191_ahead` loads; `tbz_8192_ahead`, `blo_2^18_ahead` rejected) and DC ZVA (`zva_aligned_normal` runs; `zva_misaligned`, `zva_device` rejected).
+- **Delivery is charged** as executed `route.s`: dlv 6 per one-record message, h2s (every hop-1 block), dlvh (4); dlvk is only part B's reference. Each runs as a loop on its delivery processor, its first window load waiting for a complete message; each h2s run then loads p from the node word at 2^48 - 168, written by the main processor for group g after group g - 1's last barrier's DSB (at set-up for g = 1).
+- **Completion and barriers.** A port counts messages in flight (charged 2 each); DSB completes once the node's stores are written and its ports' counts are zero, and nodes run it before a barrier. **No deadlock:** a main processor's completing store waits only for a delivery processor, h2s's row-port stores only for dlvh, which writes memory and never waits on a port. Barriers are a combining tree of epoch writes; a wait is an LDAXR/WFE loop that only a store into the awaited word wakes (this machine's event register).
+
+### 2.2 Leaves and records
+
+Node g draws uniform `b_g`, `a_j` (j < 256) in `[0, r)` and, per batch k < q1 = 145285144, `c_k, t_k, s_k` in `[1, r)`, `ρ_k` in `[1, p)` (t_k, s_k are batch coins; S alone is the leaf total). It stores `R_g = [b_g]Q`, the permanent `X_j = R_g + [a_j]P` and per batch `C_k, T_k, S_k = [c_k]P, [t_k]P, [s_k]P`; the batch's points are `Y_(m,n) = [c_k + m t_k + n s_k]P` (m < 16384, n < 8), point number u = 16384n + m. Incidence l = 256u + j < q2 = 2^25 pairs X_j with Y_u; its leaves are the x-coordinates of `φ^t(X_j) + s Y_u`, t in {0, 1, 2}, s = ±1: `n0 = 6 q1 q2` per node, `S = 2^72 n0 = 2^126.699274` in all. As φ = [λ], such a leaf is `[μ]P + [ν]Q`, `μ = λ^t a_j + s(c_k + m t_k + n s_k)`, `ν = λ^t b_g`. A point Z ≠ O has class `{±Z, ±φ(Z), ±φ²(Z)}`; its x-coordinates `{x, βx, β²x}` have canonical member `v* = min(x, βx mod p, β²x mod p)` and its **label** is `(comp(v*), comp(βv* mod p))`, `comp(v) = floor(2^100 v/p)` (3.3). A record is `[K2, K3, w2, w3]`: K2, K3 the top 64 bits of the two parts, `w2 = i | k<<36` (i the source's row, k the batch < 2^28), `w3 = d2 | c<<36 | l'<<39` with c = 2, l' = l for s = +1 and c = 4, l' = (l - 1) mod 2^25 for s = -1, bits 36..63 complemented (c = 5 or 3, `~l'`) on a j = 1 leaf (3.2): c decodes uniquely and w3 gives the sign, not t. d1, d2 are the parts' low 36 bits, `d4 = K3 mod 2^46`; a record's source at its home is `(w2 mod 2^36, j)`, j its arrival slot's index.
+
+### 2.3 Phases
+
+Pair slots hold `cap_p = 2^22 - 2^12` 32-byte records (a multiple of k): at hop 1 a node in row i writes only into slot i of R1 at each node of its column, at hop 2 a node in column j only into slot j of R2 at each node of its row. Each port has **LC** (next slot of d's record block; init3) and **RC** (sender's cursor in its pair slot at d; tinit) tables of 2^36 entries, the column port's LC at address 0 and the row port's at 2^39 (d's entry is also a destination word for d).
+- **0. Preprocessing:** program delivery, node state, coins, the 256 permanent X's (affine store), the 1280 X tables (tbld8), pair-entry X words, rows of β, LC/RC tables, hash-head zeroing (zero16384), hash-read cursors (init3), β tables (tbld); then Q is broadcast and R_g generated.
+- **1-5. Groups** g = 1..160 of contiguous batches ending at `floor(q1 (g/160)^(21/32))` (6.6), the loop first testing the latched stop flag, barriers between all phases. Per batch: C_k, T_k, S_k by the generator, ygen, fwd, fe_inv, bwd, keys. **Hops:** under per-group caps cap_pg = 2^20 - 2^11, keys emits each record into d1's column block, sent after slot k to `(d1, j)` at its RC cursor or dropped if that cursor is at or past the slot end (4); h2s forwards each record through the row port to `(own row, d2)` by the same rule into cumulative R2 slots; fin sends final blocks and writes final cursors (E1, `E2[j]` by group parity); dlvh copies each row block into R2 and joins its unjoined records (at or past the slot's previous final cursor F; list cap 2^28). **Resolution** (four count-exchange sub-phases; drops at 2^29 requests per source, 2^34 records per relay): a home sends two requests per new candidate to sources `(g_r, g_c)` via relay `(g_r, h_c)`, replies of <= 8 records return via `(h_r, g_c)`. The source reads X_j's affine point from its permanent store (5) and the batch coins, **regenerates** `Y_u` by the generator and copies the scalars (`REQ_SERVE = 2^10 + GEN_MUL`, 7); old groups serve identically. As w3 gives s but not t, the home forms each record's three possible leaves `[μ]P + [ν]Q`, tests the nine pairs in fixed order for a unit u with `L' = uL`, and with the first having `ν' - uν ≠ 0` outputs `x = (uμ - μ')/(ν' - uν) mod r` after checking `[x]P = Q`. **Stop:** a resolved x latches a stop flag, broadcast over 2 hops; all halt after the barrier outputting it (W_g).
+
+**Barriers** <= 2725 (4 pre, <= 17 per group, 1 output; 4096 allowed). **Caps** (fixups, pair slots, candidates, requests, relay records, coin retries) bound the worst case on every run; walks are uncapped; the E-ledger (7) averages group-granular work and the candidate and fixup counts.
+
+## 3. Leaf kernels (`kernels/leaf.s`; ygen in `kernels/secp_fe.s`)
+
+### 3.1 One batch
+
+A batch is one `(c_k, t_k, s_k)`: its 2^17 Y points against the 256 permanent X's, q2 = 2^25 incidences `l = 256u + j`, walked up by fwd and down by bwd, keys through 512-byte **pair entries** (entry l at SB + 512 l, SB a multiple of 2^35). With `a = x(X_j)`, `b = x(Y_u)`, `A_j = y(X_j)²`, `B = y(Y_u)²`, `D = B - A_j = b³ - a³`, incidences (j even, j + 1) of a point form a **pair** with `e = D_j D_(j+1)`. fwd stores e and acc_(i-1) in the pair's odd entry and forms `acc_i = acc_(i-1) e`, acc_(-1) = ρ_k; fe_inv gives `R = 1/acc_(H-1)`, H = q2/2; bwd, i = H-1..0, sets `inv_e = R acc_(i-1)`, `R <- R e`, splits inv_e into `1/D_j`, `1/D_(j+1)` and per incidence (inv = 1/D) forms `u = inv (y_Y - y_X)`, `v = inv (y_Y + y_X)` and twelve **fractions**, two of each **component** `α' = Ew`, `β'' = Fw`, `γ = Gw` (3.3), `E = b⁴ + 2a³b`, `F = a⁴ + 2ab³`, `G = 3a²b²`, w = u² (s = +1) or v² (s = -1). For t = 0, 1, 2 the leaves, like the components never formed, are
+
+    x(φ^t(X) + sY) = (α' - b) + β^t (β'' - a) + β^(2t) γ   (mod p).
+
+**Why.** With β³ = 1, `(b - β^t a) Q_t = D`, `Q_t = b² + β^t ab + β^(2t) a²`, so the slope of `φ^t(X) ± Y` is `Q_t u` (s = +, u = 1/(y_Y + y_X)) or `-Q_t v` (s = -, v = 1/(y_Y - y_X)); its square less the two x-coordinates is `Q_t² w - β^t a - b`, and `Q_t² = E + β^t F + β^(2t) G`. D ≠ 0 unless `Y = ±φ^t(X)` (3.4).
+
+**Lookups.** X_j's tables `(j, i)` at `TB0 + (8j + i) 2^40`, row t < 2^32 at +256t, slot k < 8 at +32k, hold the canonical `(c_i t 2^(32k) + add_i [k = 0]) mod p`: i = 0: c = 2a³; 1: c = 2a, add = a⁴; 2: c = a²; 3: c = y_X; for even j (`A = A_j`, `A' = A_(j+1)`) 4: c = -(A + A'), add = AA' - 7(A + A'); 5: c = A' - A. That is 4*256 + 2*128 = 1280 tables of 2^40 bytes, each built by tbld8 (92 + 96n instructions for rows 0..n-1, exact on canonical inputs; `x_tables` in `sites.py` checks every word, that nothing else is written, and the count). A **lookup of v** (32-bit windows v_k) adds the eight entries at row v_k, slot k: an integer sum of canonical values congruent to `c v + add`; slots 2h, 2h+1 share a 64-byte line, so an entry is one LD64B. With a base term (b⁴, B², a running value) a sum has at most nine terms below 2^256: AC4F/AC4 keep a carry count c <= 8 and **LF** folds `Z mod 2^256 + c C0`, adding C0 once more if that carries (3.4).
+
+**fwd, per pair (PFWD, 153).** With B = b³ + 7, `e = B² - (A + A')B + AA' = B² - (A + A') b³ + (AA' - 7(A + A'))`: EFWD adds B² (a Y-record word) and eight lookups of b³'s windows in table (j, 4), LF folds, ST64B stores (e, acc_(i-1)), P1X forms `acc_i` (rows of acc by SHX, e's limbs as multipliers, FDX).
+
+**bwd, per pair (BWDP, 2281).** LD64B of (e, acc_(i-1)); W2S (the rows of R serve `inv_e = R acc_(i-1)` and `R' = R e`; FDX folds); **C1BS**: `D_(j+1) = B - A_(j+1)` by FS, `1/D_j = D_(j+1) inv_e` (rows of D_(j+1), FDX), `1/D_(j+1) = 1/D_j + (A_(j+1) - A_j) inv_e` (as `D_j - D_(j+1) = A_(j+1) - A_j`; eight lookups of inv_e's windows in (j, 5), LF). Per incidence **INC**: **C2UV** `A = inv y_Y` (rows of y_Y in the Y-record, FDX), `L = inv y_X` (lookups in (j, 3), LF), `u = A - L` (FS), `v = A + L` (FADDW); SQ13, F5 (a square and its fold) give u², v²; **PAIRB** gives βu², βv² (six table entries `β t 2^(43i) mod p`, t the i-th 43-bit window of w, at `2^64 - 2^51 + 256t + 32i`, built by tbld, folded by C0 with the rare carry adding C0: two BLK0, 97 per incidence; windows 1-5 by one LD64B each, 7f4f73d0's idea); then E (b⁴ plus lookups of b in (j, 0)), F (b³ in (j, 1), slot 0 carrying a⁴), G (3b² in (j, 2)), each LF-folded, with its rows (SHX, SHX, SHXT: words 1..3 only) and four **truncated products** (TFP4X; 3.3) with the sixteen limbs of u², v², βu², βv², finalized with the correction words and stored.
+
+**Records** (offsets: `yrecord`, `xwords`). Y-record u (512 bytes at YR + 512u, written by ygen): fixup word and saved x30, B, B², b⁴, the rows `y 2^(64k) mod p`, `-T(b)`, `-T(βb)`, and for b, b³, 3b² the eight table offsets `256 v_k + 64 (k >> 1) + n 2^40` (n = 0, 1, 2). Pair entry l (X words written once per node): `-T(a)`, `-T(βa)`, `A_j`, the bases of tables (j, 0), (j, 3) and for even j (j, 3) again (a b³ offset's n = 1 makes it (j, 4)) and (j, 5); fwd writes e and acc_(i-1) at +0, +32 of the odd entry, bwd stages R' and `1/D_j` at +0, +32 of the even entry, the fractions lie at 5aacf299's offsets.
+
+**Y generation (ygen).** `ygen(YR, M, N, &C, &T, &S, scratch)` writes the Y-records of the M N points `Y(m, n) = C + mT + nS` at `YR + 512(nM + m)`: levels k = 0..⌈log2 M⌉-1 add `2^k T` to the first min(2^k, M - 2^k) points (one batched inversion), doubling the step with its own fe_inv; steps n = 1..N-1 add S to every point (one batched inversion per step: one fe_inv per M points). A sticky flag (x0) is set iff a tested value is 0: a batch's product of denominators or `y(F)` in a doubling (impossible: G has odd prime order). Branches depend only on (M, N), so the count is `A + B m + C n + D m n + E ceil(log2 m)`, (A, B, C, D, E) = `YG` = -23285, 5, 22598, 1606, 45680 (`certificate.py`): 211,380,571 at (16384, 8) (1612.71 per point), and `YGEN = YG(256, 512) + 3 GEN_MUL` = 224,351,473 per batch. Clean flag implies exact: induct over the additions; a nonzero product makes every denominator invertible, so the chord formula is exact. The ledger charges no test of the flag; a batch where it would be set is defective (3.4, `d_batch`).
+
+**Counts** (`certificate.py`): `fwd_count(q2) = 5 + 2452 q2/32 + q2/256` and `bwd_count(q2) = 6 + 18251 q2/16 + 5((q2 + 255)//256 - 1)` (16 PFWD, 8 BWDP per pass): 76.6289 and 1140.7070 per incidence, each plus 3, 4 or 5 per fixup; keys 3.2; fe_inv 22549.
+
+### 3.2 Key pass, emit and counts
+
+keys walks entries downwards, one sign at a time, loading its six fractions and forming its three leaves' W0, W1 by 26 two-word sums (the parent's 14 values mod 2^128). Each leaf's KEY index j comes from the top words F0 of W0, F1 of W1 and σ of `W0 + W1`: if F0 >= F1 it goes to block JH, where j = 2 if `F1 + σ` carries, else 1; otherwise j = 2 if `F0 + σ` carries, else 0. The j = 0 path emits (W0, W1); JH forms `N' = ~(W0 + W1) = (~σ, ~S)` and emits (W1, N'); JT emits (N', W0). The **emit** (6 instructions) takes d1 from the low word of the pair's first fraction, the slot by LDADD of 32 on d1's LC entry, and forms `w3 = d2' + (x3 << 30)`: x3 is entry + 128 at a sign +'s emits and entry - 256 at a sign -'s, so `x3 << 30` is `2<<36 | l<<39` or `4<<36 | (l - 1 mod 2^25)<<39` (complemented on j = 1: 2 -> 5, 4 -> 3; the four codes are distinct and give s). **Key paths.** The exact index is uniform on {0, 1, 2} for a leaf other than O, and a leaf takes JH or JT (1 more instruction; the sign's B is charged always) only if its exact index is 1 or 2 or it lies in W (3.3), probability <= `2/3 + 2 d_wj`; this work is E-priced in 6.6 like the walks, the worst case charges every leaf (7). Executed keys: 134.5 per incidence. bwd and keys end each pass with a test of bit 34 of the entry pointer, clear at every entry and set one entry below the block (`loop_ends_on_bit_34`, with the 156 emit TBZs on bit 13).
+
+### 3.3 The class label (truncated fraction products, the index, the paths)
+
+For v in [0, p) let `T(v) = floor(2^128 v/p)`, `comp(v) = T(v) >> 28`; for a leaf value x let `v_m = β^m x mod p`, `v* = min v_m` (index j = argmin; `β^m x` has index `j - m` and the same label). As `2^128 v/p = v/2^128 + C0 v/(2^128 p)`, `T(v) = (v >> 128) + e0`, e0 in {0, 1}. `T_m(c) = T(β^m c mod p)`.
+
+**Truncated products.** Let c be a stored E, F or G (below 2^256), its rows `R_k ≡ c 2^(64k)` (mod p) below 2^256 (`R_0 = c`, `R_(k+1) = SHX(R_k)`), M below 2^256 a multiplier with limbs `M_k`. Then `Z = Σ M_k R_k ≡ cM`, `Z < 2^322`, and for `z = Z mod p`, `T(z) ≡ floor(Z/2^128) + e` (mod 2^128), e in {0, 1}. TR0, TRK keep the words of columns 2 and 3 of each `M_k R_k`: `f = Σ lo(M_k r_k3) + hi(M_k r_k2) mod 2^64`, `s = Σ (lo(M_k r_k2) >> 3) + (hi(M_k r_k1) >> 3)` (below 2^64: eight terms below 2^61), `A = f 2^64 + 8s mod 2^128`. `floor(Z/2^128) - A ≡ c_low + d`: `c_low <= 7` the carry out of columns 0, 1, `d <= 56` the eight 3-bit parts the shifts drop. So **`T(z) - A` is in [0, 64]** for every such `R_k` and M; M = w estimates `T_0(cw)`, the component's V0, and `M = βw` estimates `T_1(cw)`, its V1.
+
+**Corrections and sums.** A sign's leaves are `L_t = α + β^t β' + β^(2t) γ`, `α = α' - b`, `β' = β'' - a`. bwd adds `-T_m(b) mod 2^128` to α''s `V_m` and `-T_m(a)` to β'''s (m = 0, 1), since `T_m(c - y) ≡ T_m(c) - T_m(y) - {0, 1}`; keys takes `U_m = V_m`, `U_2 = -U_0 - U_1`. The values `β^m c mod p` sum to 0, p or 2p, so `T_0 + T_1 + T_2 ≡ -k`, k in {0, 1, 2}, and U_2 errs by `-(T_0 - U_0) - (T_1 - U_1) - k`. As `β^m L_t` sums `β^m α`, `β^(m+t) β'`, `β^(m+2t) γ`, `T(v_m) ≡ T_m(α) + T_(m+t)(β') + T_(m+2t)(γ) + κ`, κ in {0, 1, 2}; so `W_m = U_m(α) + U_(m+t)(β') + U_(m+2t)(γ) mod 2^128` errs by its terms' errors plus κ, and `N' = ~(W_0 + W_1)` by `-(T(v_0) - W_0) - (T(v_1) - W_1) - k + 1`.
+
+Per t: γ's `U_0`, `U_1` are in [0, 64] and `U_2` in [-130, 0]; α''s and β'''s `U_0`, `U_1` in [-1, 64] and β'''s `U_2` in [-130, 2]; `W_0` is in [-2, 194], [-132, 130], [-131, 132] and `W_1` in [-2, 194], [-131, 132], [-132, 130] for t = 0, 1, 2; `N'` in [-389, 5], [-263, 264], [-263, 264]. Over t: `T(v_0) - W_0`, `T(v_1) - W_1` in [-132, 194] and `T(v_2) - N'` in [-389, 264]; the certificate ties D''s 1305 residues and the 654-unit widening to them.
+
+
+**The index.** KEY gives j = 2 if `min(F0, F1) + σ` carries, else 1 if F0 >= F1, else 0. Let `X_m = 2^64 v_m/p`; `X_0 + X_1 + X_2` is 2^64 or 2^65. The **window set** W is where (W1) X_0 or X_1 is below 1 or above `2^64 - 1`, (W2) X_2 is below 1 or above `2^64 - 4`, (W3) `|X_0 - X_1| < 2`, or (W4) `X_0 - X_2` or `X_1 - X_2` is in (-1, 4). **Exactness.** Outside (W1), `W_m = T(v_m) - e_m` without wrap and `a' = X_0 - F0`, `b' = X_1 - F1` lie in `[-132 2^-64, 1 + 195 2^-64)`; as `X_0 + X_1 + X_2 ≡ 0` (mod 2^64), outside (W2) `σ = 2^64 - X_2 - δ`, δ in `[-264 2^-64, 1 + 390 2^-64)`. Hence F0 >= F1 iff `X_0 - X_1 >= a' - b'` in (-2, 2); `F1 + σ` carries iff `X_1 - X_2 >= b' + δ`, `F0 + σ` iff `X_0 - X_2 >= a' + δ`; outside (W3), (W4) each test has the sign of the exact difference, so j = argmin v_m. A wrong index is a missed collision (`d_wj`, 6.4) or a false candidate (mass bound). **Rarity.** `X_m < 1` means `v_m < 2^192`, and `|X_i - X_j| < c` means `(β^i - β^j) x mod p` is below `c 2^192` or above `p - c 2^192`; these maps are bijections, so (W1)-(W4) hold for at most `4, 5, 4, 10` times `2^192` values of x, each of probability <= `2/(r-1)`: `d_wj <= 46 2^192/(r-1) < 2^-58.47` per leaf.
+
+**The paths.** A leaf of index j emits `(W_0, W_1)`, `(W_1, N')`, `(N', W_0)` for j = 0, 1, 2: bits 28..63 of each fraction are the digit (d1, d2), bits 64..127 the top word (K2, K3). With the index exact the pair is the class's label unless a fraction's error carries it across a block of 2^28: the **label-error set** D' is where `T(v_0) mod 2^28` or `T(v_1) mod 2^28` is in `[0, 194) ∪ [2^28 - 132, 2^28)`, or `T(v_2) mod 2^28` in `[0, 264) ∪ [2^28 - 389, 2^28)`. Outside W and D', a leaf of a batch without a deviation (3.4) emits its class's label. Each value of T is taken by at most 2^128 values of v, so D' has at most `1305 2^228` values of x: `d_lab < 2^-16.65` (6.4), a missed collision like `d_wj`; no leaf is dropped.
+
+**Mass bound.** Frobenius is `π = A + Bω`, `B = 0xe4437ed6010e88286f547fa90abfe4c3`, `A = 0x114ca50f7a8e2f3f657c1108d9d44cfd9`: `A² - AB + B² = p`, `Bβ ≡ A - B`, `(A - B)β ≡ -A` (mod p) (checked). So `Λ = {(v, u): u ≡ βv (mod p)}` has the basis `(B, A - B), (A - B, -A)` of determinant -p, and the disjoint translates of its half-open parallelogram (area p) at the points of Λ in a box of integer sides a, b lie in the box widened by A and 2A - B, so it holds at most `(a + A)(b + 2A - B)/p` of them. Fixing f of a label's 200 bits leaves `2^(200-f)` pairs of component values; a component value is an interval of at most 2^156 values of v (of βv mod p for the second) widened at each end by its fraction's error, at most 654 units of `p/2^128` in all. So on each path at most `2^(200-f)(2^156 + w + A)(2^156 + w + 2A - B)/p < (1 + 2^-17) 2^-f p` values of x give those bits (w the widening), whatever index KEY returns; with three paths and two points per x the emitted pair takes given values on f of its bits with probability at most `KB(f) = 6 2^(256-f)(1 + 2^-17)/(r-1)`.
+
+### 3.4 Arithmetic sites
+
+**Steps that can lose a carry.** A product on the rows of a weak b (below 2^256) uses `B_0 = b`, `B_(k+1) = SHX(B_k)`; the rows of an X constant, y_Y and β, and every lookup entry, are tabled exactly. RF and RA sum `Z < 2^322` exactly; a fold (FDX) keeps `(Z mod 2^256) + floor(Z/2^256) C0` mod 2^256; SQ13 forms a weak square `L + H C0` exactly and F5 folds it alike. Only SHX's last ADCS and the final ADC of FDX and F5 drop a carry; without one each returns a value below 2^256 congruent to the exact one:
+- **row shift** of `B = (b0, b1, b2, b3)`: lost iff `(B mod 2^192) + floor(b3 C0/2^64) >= 2^192`, needing `B mod 2^192 > 2^192 - 2^33`: at most 2^97 rows.
+- **fold** of `Z < 2^322`: lost iff `t >= 2^256`, needing `Z mod p = t - p` in `[C0, 2^66 C0)`.
+- **square fold**: lost iff its sum is at least 2^256, needing the true square in `[C0, C0² + 2C0)`.
+
+A fold returns a value `>= p` only when the true value is below C0: a multiplier so stored is still its value mod p (3.3 holds for every multiplier below 2^256); a row-shifted value (acc, R, E, F, G) so stored has its low 192 bits above `2^192 - 2^33`, in the bad set of its first row shift, which is charged. **Lookup folds are exact:** a sum is `low + c 2^256`, c <= 8; LF adds `c C0`, takes the carry out of limb 1 by branch and, on a carry past 2^256, adds C0 once more (which cannot carry again): below 2^256, congruent, bit-identical to the full chain; BLK0 likewise. **FS in C1BS** has canonical operands: exact. **In C2UV they do not:** A (a fold) and L (an LF) are below 2^256 and congruent to their true values but may be `>= p` (only when the true value is below C0), so `FS(A, L)` is wrong (by C0 mod p) iff `L > A + p` (needing `L >= p + 1` and A < C0) and `FADDW(A, L)` iff `A + L >= 2^257 - C0` (needing A and L both `>= p + 1`): defects of bad set C0 (`fs_weak_operands`, `faddw_weak_operands`). Every other operation is exact on its inputs (RF, RA; the truncated products; corrections and sums; KEY; the emit; tbld8; `fe_mul_f`, `fe_sqr_f` and so fe_inv, exact below 2^256); the generator, ygen, table constants, Y-record and pair-entry words, corrections, the resolver and `[x]P = Q` run on these with each coordinate brought below p before use: no sites (no point has x = 0: 7 is not a square mod p).
+
+**Distribution (marginals).** The other points of a batch fix Y_u (all share c_k, t_k, s_k), so the bound uses marginals: given the X's, Y_u is uniform on `G \ {O}` up to one point (c_k uniform), and a value of x_Y comes from at most 2 points, of y_Y at most 3. A site's true operand is a function of one incidence's point (`D`, `1/D`, `A`: 6 points per value; `u, v`: 3; `u², v², βu², βv²`: 6; `E, F, G`: 8; `e`, `inv_e`: 12) or a running product: acc starts at ρ_k uniform on `F_p^*`, so `acc_i = ρ_k Π e` is uniform on `F_p^*` while no `e = 0`, as are `R = 1/acc` and `R' = 1/acc_(i-1)` (1 point per value); acc_(-1) = ρ_k, not 1: no exemptions at l = 0. A run fails at a site with probability at most runs × bad values × points over r - 1. Degenerate cases: X_j = O (1/r per X, a whole-run row) and `D = 0`, i.e. `Y_u = ±φ^t(X_j)` (at most `6/(r-1)` per incidence), which zeroes an e and so acc (`d_zero_batch`); ygen fails only on a zero denominator, `YGEN_DEF = 2(M - 1 + M(N - 1))/r` (`C + mT = ±2^k T` in a start level, `Y(m, n-1) = ±S` in a step); two points of a batch may coincide or be negatives (`L_Y²/(r - 1)`), which 6.1-6.4's distinctness excludes. The first site of a batch whose predicate holds has exact operands, so a batch has a defect with probability at most `d_batch = D_SITES + 6 q2/(r - 1) + YGEN_DEF + L_Y²/(r - 1) < 2^-127.14` (`D_BATCH`; 6.4).
+
+**Rare carries by branch.** In SHX, SHXT the carry out of the first ADDS, in FDX, F5 the carry into limb 2, in FS the borrow of its C0 subtraction, in FADDW, BLK0, LF the carry out of limb 1 are rare. Each macro branches over its **fixup** (B.LO; B.HS for FS) unless that carry or borrow occurred; the fixup is the rest of the inline chain and `STADD x4, [sp]`. Where the branch is taken the skipped instructions would add or subtract 0, so every register equals the inline chain's on every input (and so does every deviation above); only the flags differ, and every path from the join sets them before reading or returns (`flags_dead_at_every_join`). A fixup adds 3 instructions (SHX, SHXT, FDX, F5), 4 (FS, FADDW) or 5 (BLK0, LF) and C0 to the word at [sp] (fwd's frame; bwd's Y-record word); each call returns it in x0, at most `28 q2 C0 < 2^63` (2^61.807). The driver adds x0/C0 to the node's count N and starts a batch only while `N <= 2^62 - 28 q2` (per pair 27 SHX, 6 of them SHXT, 6 FDX, 4 F5, 3 FS, 2 FADDW, 14 BLK-type), so N <= 2^62 on every run (R_worst: `5*2^62` per node); section 7's E-row charges 5 per expected fixup, `q1(E_FIX + 28 q2 d_batch)` per node.
+
+**How often.** A fixup needs a word in a small set. SHX, SHXT: the shifted row's low word above `2^64 - C0` (`C0 2^192` rows). FDX: output low 128 bits below `F C0 <= (2^66 + 1) C0`, rest nonzero (`F_w = (2^66 + 1) 2^128 C0` words). F5: output low 128 bits below 2^65 (2^193 words). FS: output low word at least `2^64 - C0`; FADDW: below C0 (`C0 2^192` words each). BLK0: the window sum (below 6p, t = sum >> 256 <= 5) has low 128 bits `>= 2^128 - t C0`: at most `15 C0 2^128` sums, each fixing w mod p (two words): `30 C0 2^128` words. LF: low 128 bits `>= 2^128 - c C0`: at most `Σ_(c<=8) c C0 2^128 = 36 C0 2^128` sums, each fixing the residue of the folded value (the sum is congruent to it, for canonical or weak lookup operands alike): `36 C0 2^128` values (`FIX_LF`), with the output's points per value. While no site of the batch up to this one has deviated, the row or output is a word below 2^256 congruent to the site's operand value (times `2^(64k)` for the k-th row), which determines it; so a site takes its fixup with probability at most its set's size times its points over r - 1. The 17 rows of `FIXUPS` and 11 of `SITES` are these sets and bad sets times the per-pair macro counts above (H = q2/2 pairs) and the points per value above (in `FIXUPS` inv_e and R' share 12, FS and FADDW of u, v take 3; the weak-operand defect rows 6). Summed (`E_FIX`), the expected number of fixups before the first deviation, hence of a batch without a defect, is at most `E_FIX`, and over a node's batches `q1 E_FIX < 2^28.68` (2^27.598).
+
+**The meter row.** A node stops early only if N exceeds `2^62 - 28 q2` at the start of a batch; with no batch defect N is the clean count, so by Markov this has probability at most `q1 E_FIX/(2^62 - 28 q2) + q1 d_batch < 2^-33.5` (`d_f`, 2^-34.402; a node-local row, 6.4).
+
+## 4. Transport and grouping (`kernels/route.s` and the emit)
+
+Per record, executed (charged): hop 1 emit 6 + flush 9/256 = 6.03515625 (6.04296875); hop 2 h2s 6 + (flush 9 + dlvh copy 531)/256 + 8/256 = 8.140625 (8.1484375); join 4; total 18.17578125 (18.19140625); walks (4.5 per visit), K2 verifications and listings are E-rows.
+
+Each executed count is its loop's instruction list in `route.s` or `leaf.s`; the charged count adds 2 per message per hop (in flight). A destination's full blocks number at most its records over k, cumulatively (prefix sums dominated, PHI decreasing); a dropped block costs 7 or 9, so 542 per k records bounds hop 2's row blocks. **Blocks and cursors.** Emit and h2s take a slot by LDADD of 32 on the LC entry (the absolute slot address, so bit 13 marks slot k: one TBZ, checked). The **flush** resets the LC entry to slot 1 and advances the RC cursor by 32k (LDADD) returning c; the block is sent if c is below the sender's slot end, else dropped (a hop-2 cursor stays at most its slot end; a hop-1 cursor passes it only by the node's own leaves, < 2^63.2, checked); fin sends the L records left if L > 0 and c is below end, and writes `min(c + 32L, end)`. **Keep lemma.** Cursors start at the slot base and move by 32k per block, `cap_p` is a multiple of k, so c and end are congruent mod 32k and c below end gives `c + 32k <= end`: a block is kept or dropped whole, and the records kept, their slot order and the final cursor match sending each record alone at its own cursor. A final block's k - L slots after its L records hold older records or none: at hop 1 the handler stops at count L; at hop 2 they land at or past the final cursor, where every later read stops, and the next group's first full block to d rewrites `[c, c + 32L)` with the same L records (below F). Also at cap_pg (a multiple of k, checked). **Hash table and join.** 2^58 head words at 2^61 and a packed next-array at 2^62 (16 bytes per R2 slot: next address, K2); bucket `K2 mod 2^58`, so same-key records meet without ordering. A hop-2 sender writes into header word 3 the address p of F, its slot's final cursor at the destination after the previous group; dlvh copies all k slots into R2 and joins exactly the records in [max(F, c), c + count). Within a group a sender's blocks to d cover disjoint ranges at or past F in any arrival order; across groups the barrier orders them and the only repeats (the previous final block's L records) come first, below F; so every record is joined once, and stale slots are copied, never joined. Heads and next fields hold entry addresses `E = (A>>1) + C` (never 0); costs: join 4 per record, walk 4.5 per visit, K2 check 5, listing 5, dlvh's copy `DLVHB`, `DLVHS` (certificate.py).
+
+**Chains, no sorting.** A home's records share d1, d2; records with equal (K2, d4), the 182 label bits, land in one bucket and form one arrival-order chain, each member linked on every run (walks are uncapped) to its most recent same-key predecessor. A class's records form one connected chain unless an **intruder**, a record with the same 182 bits not carrying the class's label, arrives between two members (6.4, 6.6); listed pairs of different classes are rejected by the resolver and charged by 6.4 through KB(182). With members `u_i Z` and Q coefficients `ν_i`, a pair is useless iff `ν_i/u_i = ν_j/u_j`, an equivalence relation, so a chain with a useful pair has a useful chain edge.
+
+## 5. Node layout and memory
+
+Every node uses the same addresses.
+
+Regions (`certificate.py` checks disjointness and each bound): below 2^52 (2^51.0111 used) the code, stack, barrier words, header, permanent X data (2^18.6439 bytes), scalars (2^34.1143), pair entries (2^34 bytes at a multiple of 2^35), Y-records and ygen scratch (2^26.0014), the transport tables and buffers; R1 at 2^52 (`32 cap_p 2^36 = 2^62.9986` bytes: per-group hop-1 slots, never written under fused arrival but kept and charged as a control; hash heads at 2^61; next-array at 2^62); R2 at R1's end + 32 (32 mod 64, LS64 pairs), ending at 2^63.998943; the X tables in `[TB0, TB0 + 2^51)`, TB0 = 0xffd0080000000000 (TiB-aligned, after R2, before the β tables: checked), 1280 tables; the β tables at 2^64 - 2^51 (tbld).
+
+So every node stays < 2^64 bytes, and the peak is `2^72 (fixed + |R1| + 32 + |R2| + 2^51 + 1280 TiB)` <= 2^135.9991 bytes (log2 135.9990545). A remote item is reached only by a message.
+
+## 6. Success (no heuristic)
+
+In `success.md`: 6.1 model, 6.2 Chen-Stein, 6.3 usefulness, 6.4 defect rows, 6.5 bound, 6.6 grouped abort (E1-E7).
+
+## 7. Ledger and claim
+
+Rows are scalar instruction counts: the executed counts of sections 3 and 4 and allowances itemized in `certificate.py`.
+- **Allowances** (itemized in `certificate.py` comments, each checked against itemized work): generator 645,410 per point (645,414 for a permanent X: its four affine-store STPs; used for C, T, S, R_g, the X's and each request); X set-up 65,536 per X; X tables 1280 tbld8 of 92 + 96*2^32 (527,765,581,450,240 per node); pair-entry X words 32 per entry; node set-up 2^20 (program <= 2^18 bytes: 43,399 kernel instructions expanded, 173,596 bytes, plus generator, resolver, phase control; 2^13 messages over 2 hops at 40); a message outside the hops 40 per hop; candidate 1,491,011 (745,505 itemized, charged at twice that plus 1; E-row one per listing, `ELIST + DEFL/5`; R_worst the 2^28 cap); request served `2^10 + GEN_MUL`, cap 2^29 per node (W row).
+- Count exchange `12*2^36 + 88*2^32` = 2^40.1293 per node and sub-phase; barrier 2^10; phase control 2^17; hash-head zeroing 1026 per 16384 words (zero16384: 512 `DC ZVA`, SUBS, B.NE; `a64.py` asserts 256-byte alignment: `zva_misaligned`; DC ZVA on Device memory faults: `zva_device`); hash-read cursors 4 per slot; rows of β 72; batch set-up 160 (<= 145 itemized, 5aacf299's header-copy term kept: conservative); inversion call 16; output 2^20; coins 64 per scalar (RNDR never fails): 4 per batch, 257 per node.
+
+Rows are per node times 2^72 except those with S, the Q broadcast, barriers and output; E-rows are PHI-weighted sums over groups; q1 = 145285144, MX = 256.
+
+| row (P: preprocessing; E: E-averaged; W: worst-case) | log2 instructions |
+| --- | ---: |
+| node set-up: 2^20 per node (P) | 92.0000 |
+| coins: (4 q1 + MX + 1)*64 (P) | 107.1143 |
+| permanent X's: MX*(GEN_MULX + XSETUP) (P) | 99.4394 |
+| X tables: tbld8, 1280 tables (P) | 120.9069 |
+| pair-entry X words: q2*ENTRY_X (P) | 102.0000 |
+| rows of beta: 72 (P) | 78.1699 |
+| row LC and RC tables (P) | 110.8074 |
+| hash-head zeroing: zero16384 (P) | 126.0028 |
+| hash-read-cursor init: init3 (P) | 110.0000 |
+| beta tables: tbld (P) | 121.7142 |
+| R_g generator | 91.2999 |
+| Q and stop broadcasts: (1 + G)*2*(2^36 + 2^72) messages at 40 | 85.6528 |
+| leaf work: sum_g PHI[g] (ygen with C, T, S, fwd, inv, bwd, keys w/o emits, batch set-up) (E) | 134.2624 |
+| arithmetic fixups: 5 per expected fixup (E; R_worst 2^62*5 per node) | 101.9201 |
+| key paths: sum_g PHI[g] s_g (PJ + 1/3) + DEFJ (E) | 126.4786 |
+| route work: sum_g PHI[g] (emits, arrival, row blocks, fin, column tables) (E) | 130.3371 |
+| group work: sum_g PHI[g] (join, main-pair walks, stop test) (E) | 128.8741 |
+| same-batch walks (E) | 28.0391 |
+| K2 verifications (E) | 120.9658 |
+| listings (E) | 76.3055 |
+| defective-run rows DEFV + DEFK2 + DEFL (E) | 62.2941 |
+| candidates: 1491011 per expected listing (E; R_worst 2^28*1491011) | 94.4914 |
+| requests served, each regenerating its Y point: 2^29*(2^10 + GEN_MUL) (W) | 120.3021 |
+| phase-4 count exchanges: sum_g PHI[g] (E) | 121.1604 |
+| barriers, phase control, output (W) | 94.0444 |
+| **expected total E** | **134.397286** |
+
+`E` is the exact `E_total` of `certificate.py`, at most 207.6502 per leaf; `W_E = E/1000`, log2 W_E = 124.4315015188. **The claim, 124.431501518764035, is the least multiple of 10^-15 with 2^claim >= W_E** (2^c enclosed by an exact series with interval bounds on ln 2). Rows marked P are preprocessing: their sum over 1000 has log2 116.1486675, declared as 2^116.1487. R_worst = 2^188.604756 is disclosed, not scored. **The score is the expected cost:** a run that never stops early (probability about e^-mu = 0.61, mu = 0.494318018) costs about 2^124.6523 units (the certificate's E with all PHI[g] = 1). **Premises:** DC ZVA and LD64B/ST64B count one step; no fallback pricing (STPs, LDP pairs) is recomputed, and the lookups are LD64B-heavy.
+
+## 8. Evidence
+
+`experiment.py` (`{"seed": 1, "seconds": 12}`). **Part A** (`flip_batch`: fwd, fe_inv, bwd, keys on batches of q2 = 32, 64, 288, crossing the Y switch at 256; `runs`): `fwd_stores_ok`, `fraction_mismatches` (bit-exact bwd model), `fractions_outside_bounds`, `identity_mismatches` (3.1's identity), R against 1/ρ, records against a bit-exact keys model (`wrong_index`, `keys_not_canonical`, `keys_formula_holds`, `loop_ends_on_bit_34`), `tfp_terms`, `class_rule`, `class_labels`, `window_batch`, `boundary_batch`, `fwd_bwd_formulas_hold`, `forced_fixups` (all 56 sites per pair, 16 pairs), ygen (three shapes, one with C = S: records against `yrecord`, counts against `ygen_count`), `site_checks` (`sites.py`: `window_sum_fold`, `lookup_fold`, weak FS/FADDW, `x_tables`, `beta_tables`), `sites_match_certificate`, `d_zero_batch`. **Part B** (`machine.py`): a 4 × 4 machine through `leaf.s` and `route.s` (`grouped_paths`: every record joined once); `ls64`, `isa`: 2.1. **Part D:** `counts_match_certificate`. **LLVM:** `clang -target aarch64-linux-gnu -march=armv8.7-a+ls64+lse` assembles the macro-expanded `leaf.s`, `route.s`, `secp_fe.s` with 0 errors and 25,796, 16,079, 1,524 instructions, `a64_load`'s counts. The 4 × 4 run is evidence at its own scope.
+
+## 9. Limitations and provenance
+
+- **Premises and scope:** the machine of 2.1; a forwarding network is not claimed. **Not executed:** the allowances of section 7, in-flight counts, ygen and tbld8 at production size, the production attack. The toy stop fires on a listed candidate; production stops only on a resolver-confirmed x, so the E-bound is conservative over the toy.
+- **Credit.** The flipped grid, X-pair partial fractions, the u/v split `A -/+ L`, E/F/G by lookups and the per-window β-table LD64B are soispoke's (7f4f73d0, rejected on a validator overclaim, and its valid refire 17a007c8). Our own: the kernels (fwd, bwd, keys, ygen, tbld8), layout, tables, 2-D Y batches, the weak-operand and lookup-fold analysis, the proofs (here, `success.md`). No prior verdict or score is a premise.
+- **Changes against 5aacf299** (claim 124.518679593960895; here 124.431501518764035, net -0.086851320350176): flipped grid; ygen batches; fwd, bwd by lookups; tbld8 and the X-table region; weak-operand and lookup-fold sites, marginals; four coins per batch, Y regenerated at the source; point-conditioning success proof. Its provenance (not a premise): ae21db39 (parent; kaankolcu's 38df975c), ob2, 66043fba, Galbraith-Wang-Zhang, Arratia-Goldstein-Gordon, 8c3852be, c3e0530e, 45552a5c, f0d01922 (aburan28's 7516608f), 900bc1be (Phoenix0075), 7f4f73d0.
+
+## 10. Kernel evidence excerpts
+
+
+The following macros are copied verbatim from the kernel listings of the base `de987687`; the full files are published there. They are the instruction-level accounting for the dominant certificate constants. Counts below are the certificate formulas, not timings.
+
+## Leaf kernels: PFWD=153 per pair, BWDP=2281 per pair
+
+```asm
+.macro PFWD
+	EFWD
+	st64b x20,[x3]
+	add x3,x3,#1024
+	P1X
+	.endm
+```
+
+```asm
+.macro BWDP
+	ld64b x16,[x3]
+	W2S
+	stp x0,x1,[x3,#-496]
+	stp x2,x24,[x3,#-512]
+	C1BS
+	INC
+	sub x3,x3,#512
+	ldp x0,x1,[x3,#32]
+	ldp x2,x5,[x3,#48]
+	INC
+	ldp x25,x26,[x3,#16]
+	ldp x27,x28,[x3],#-512
+	.endm
+```
+
+```asm
+.macro INC
+	C2UV
+	SQ13 x17,x18,x19,x20,x21,x22,x23,x24,x5,x6,x7,x8,x9
+	F5 x21,x22,x23,x24,x8,x21,x22,x9,x8
+	SQ13 x27,x28,x29,x30,x25,x26,x0,x2,x5,x6,x7,x8,x9
+	F5 x25,x26,x0,x2,x8,x25,x26,x9,x8
+	PAIRB
+	stp x0,x2,[sp,#464]
+	str x1,[sp,#480]
+	LKE
+	TFP4X
+	TOUTCX sp,240,256,320,336,128,144
+	LKF
+	TFP4X
+	TOUTCX x3,160,176,288,304,96,112
+	LKG
+	TFP4X
+	TFINS x11,x12
+	TFINS x13,x14
+	TFINS x15,x16
+	TFINS x17,x18
+	stp x12,x11,[x3,#256]
+	stp x16,x15,[x3,#272]
+	stp x14,x13,[x3,#64]
+	stp x18,x17,[x3,#80]
+	.endm
+```
+
+```asm
+.macro TOUTCX r,c,d,p,q,m,n
+	ldp x9,x10,[\r,#\c]
+	ldp x5,x6,[\r,#\d]
+	TFINC x11,x12,x9,x10
+	TFINC x13,x14,x9,x10
+	TFINC x15,x16,x5,x6
+	TFINC x17,x18,x5,x6
+	stp x12,x11,[x3,#\p]
+	stp x16,x15,[x3,#\q]
+	stp x14,x13,[x3,#\m]
+	stp x18,x17,[x3,#\n]
+	.endm
+```
+
+```asm
+.macro TFP4X
+	TROWX TR0,x21,x25,x29,x30,x10,x9,x6,x19
+	SHX x19,x5,x10,x6,x9
+	TROWX TRK,x22,x26,x27,x28,x9,x6,x5,x10
+	SHX x10,x19,x9,x5,x6
+	TROWX TRK,x23,x0,x7,x8,x6,x5,x19,x9
+	SHXT x10,x6,x19,x5
+	TROWX TRK,x24,x2,x1,x20,x5,x19,x10,x6
+	.endm
+```
+
+```asm
+.macro C1BS
+	ldp x13,x14,[sp,#16]
+	ldp x15,x16,[sp,#32]
+	ldp x17,x18,[x3,#192]
+	ldp x19,x20,[x3,#208]
+	FS x13,x14,x15,x16,x13,x14,x15,x16,x17,x18,x19,x20,x21
+	RF x9,x13,x14,x15,x16,x0,x1,x2,x5,x6,x7,x8
+	SHX x17,x13,x16,x14,x15
+	RA4 x10,x17,x13,x14,x15,x0,x1,x2,x5,x6,x18,xzr,x7,x8,x19,x20
+	SHX x16,x17,x15,x13,x14
+	RA4 x11,x16,x17,x13,x14,x0,x1,x2,x5,x6,x18,x18,x7,x8,x19,x20
+	SHX x15,x16,x14,x17,x13
+	RA4 x12,x15,x16,x17,x13,x0,x1,x2,x5,x6,x18,x18,x7,x8,x19,x20
+	FDX x0,x1,x6,x18,x0,x1,x7,x8,x2,x5
+	stp x0,x1,[x3,#-480]
+	stp x2,x5,[x3,#-464]
+	ldp x13,x14,[x3,#-128]
+	ldp x15,x16,[x3,#-112]
+	bfi x13,x9,#8,#32
+	ld64b x20,[x13]
+	AC4F x0,x1,x2,x5,x20,x21,x22,x23,x6
+	lsr x7,x9,#32
+	bfi x13,x7,#8,#32
+	ld64b x20,[x13]
+	AC4 x0,x1,x2,x5,x24,x25,x26,x27,x6
+	bfi x14,x10,#8,#32
+	ld64b x20,[x14]
+	AC4 x0,x1,x2,x5,x20,x21,x22,x23,x6
+	lsr x7,x10,#32
+	bfi x14,x7,#8,#32
+	ld64b x20,[x14]
+	AC4 x0,x1,x2,x5,x24,x25,x26,x27,x6
+	bfi x15,x11,#8,#32
+	ld64b x20,[x15]
+	AC4 x0,x1,x2,x5,x20,x21,x22,x23,x6
+	lsr x7,x11,#32
+	bfi x15,x7,#8,#32
+	ld64b x20,[x15]
+	AC4 x0,x1,x2,x5,x24,x25,x26,x27,x6
+	bfi x16,x12,#8,#32
+	ld64b x20,[x16]
+	AC4 x0,x1,x2,x5,x20,x21,x22,x23,x6
+	lsr x7,x12,#32
+	bfi x16,x7,#8,#32
+	ld64b x20,[x16]
+	AC4 x0,x1,x2,x5,x24,x25,x26,x27,x6
+	LF x0,x1,x2,x5,x6,x7
+	.endm
+```
+
+```asm
+.macro C2UV
+	ldp x13,x14,[sp,#112]
+	ldp x15,x16,[sp,#128]
+	RF x0,x13,x14,x15,x16,x17,x18,x19,x20,x21,x22,x23
+	ldp x13,x14,[sp,#144]
+	ldp x15,x16,[sp,#160]
+	RA4 x1,x13,x14,x15,x16,x17,x18,x19,x20,x21,x24,xzr,x22,x23,x25,x26
+	ldp x13,x14,[sp,#176]
+	ldp x15,x16,[sp,#192]
+	RA4 x2,x13,x14,x15,x16,x17,x18,x19,x20,x21,x24,x24,x22,x23,x25,x26
+	ldp x13,x14,[sp,#208]
+	ldp x15,x16,[sp,#224]
+	RA4 x5,x13,x14,x15,x16,x17,x18,x19,x20,x21,x24,x24,x22,x23,x25,x26
+	FDX x17,x18,x21,x24,x17,x18,x22,x23,x19,x20
+	ldp x9,x10,[x3,#352]
+	ldp x11,x12,[x3,#368]
+	bfi x9,x0,#8,#32
+	ldp x13,x14,[x9]
+	ldp x15,x16,[x9,#16]
+	lsr x7,x0,#32
+	bfi x9,x7,#8,#32
+	ld64b x22,[x9]
+	AC4F x13,x14,x15,x16,x26,x27,x28,x29,x6
+	bfi x10,x1,#8,#32
+	ld64b x22,[x10]
+	AC4 x13,x14,x15,x16,x22,x23,x24,x25,x6
+	lsr x7,x1,#32
+	bfi x10,x7,#8,#32
+	ld64b x22,[x10]
+	AC4 x13,x14,x15,x16,x26,x27,x28,x29,x6
+	bfi x11,x2,#8,#32
+	ld64b x22,[x11]
+	AC4 x13,x14,x15,x16,x22,x23,x24,x25,x6
+	lsr x7,x2,#32
+	bfi x11,x7,#8,#32
+	ld64b x22,[x11]
+	AC4 x13,x14,x15,x16,x26,x27,x28,x29,x6
+	bfi x12,x5,#8,#32
+	ld64b x22,[x12]
+	AC4 x13,x14,x15,x16,x22,x23,x24,x25,x6
+	lsr x7,x5,#32
+	bfi x12,x7,#8,#32
+	ld64b x22,[x12]
+	AC4 x13,x14,x15,x16,x26,x27,x28,x29,x6
+	LF x13,x14,x15,x16,x6,x7
+	FADDW x27,x28,x29,x30,x17,x18,x19,x20,x13,x14,x15,x16,x5
+	FS x17,x18,x19,x20,x17,x18,x19,x20,x13,x14,x15,x16,x5
+	.endm
+```
+
+```asm
+.macro LKE
+	ldr x1,[x3,#224]
+	ldp x5,x6,[sp,#80]
+	ldp x9,x10,[sp,#96]
+	ldp x0,x2,[sp,#272]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4F x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#288]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#304]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#320]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	LF x5,x6,x9,x10,x11,x12
+	ldp x0,x2,[sp,#464]
+	ldr x1,[sp,#480]
+	.endm
+```
+
+```asm
+.macro LKF
+	ldr x1,[x3,#224]
+	ldp x0,x2,[sp,#336]
+	add x0,x1,x0
+	ldp x5,x6,[x0]
+	ldp x9,x10,[x0,#16]
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4F x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#352]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#368]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#384]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	LF x5,x6,x9,x10,x11,x12
+	ldp x0,x2,[sp,#464]
+	ldr x1,[sp,#480]
+	.endm
+```
+
+```asm
+.macro LKG
+	ldr x1,[x3,#224]
+	ldp x0,x2,[sp,#400]
+	add x0,x1,x0
+	ldp x5,x6,[x0]
+	ldp x9,x10,[x0,#16]
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4F x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#416]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#432]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	ldp x0,x2,[sp,#448]
+	add x0,x1,x0
+	ld64b x12,[x0]
+	AC4 x5,x6,x9,x10,x12,x13,x14,x15,x11
+	add x2,x1,x2
+	ld64b x12,[x2]
+	AC4 x5,x6,x9,x10,x16,x17,x18,x19,x11
+	LF x5,x6,x9,x10,x11,x12
+	ldp x0,x2,[sp,#464]
+	ldr x1,[sp,#480]
+	.endm
+```
+
+Certificate counts: `fwd_count(q2)=5+2452*(q2//32)+q2//256` (16 PFWD per 32 incidences, 4 per pass); `bwd_count(q2)=6+18251*(q2//16)+5*((q2+255)//256-1)` (8 BWDP per 16 incidences, 3 per pass). Each PFWD is 153, each BWDP 2281, including the INC/TOUTCX/TFP4X macros above. Per incidence: fwd 76.6289, bwd 1140.7070.
+
+## Field inversion and Y generation: fe_inv=22549; ygen=211,380,571 at (16384,8)
+
+fe_inv is 255 squares and 127 multiplies with the 39479-instruction field-call allowance (certificate `INV=22549`; the multiply/square counts are in proof.md section 3). ygen cost is `A+B*YM+C*YN+D*YM*YN+E*ceil(log2 YM)` with (-23285,5,22598,1606,45680); at (256,16384,8) it is 211,380,571 for the 2^17 points (1612.71 per point), and `YGEN=+3*GEN_MUL=213,316,801` per batch.
+
+## Transport and LS64 delivery: dlv=6, h2s=6/record, dlvh=4, join=4/record, walk=4.5/visit
+
+```asm
+.macro HCHGI u,v,a,l
+	bfi x10,\u,#3,#58
+	swp x13,x11,[x10]
+	stp x11,\u,[x13],#16
+	cbz x11,8f
+9:
+	ldp x5,x6,[x11]
+	cmp x6,\u
+	b.eq 10f
+12:
+	cbz x5,8f
+	ldp x11,x6,[x5]
+	cmp x6,\u
+	b.eq 11f
+13:
+	cbnz x11,9b
+	b 8f
+10:
+	add x6,x15,x11,lsl #1
+	ldr x12,[x6,#8]
+	eor x12,x12,\v
+	tst x12,#0x3fffffffffff
+	b.ne 12b
+	cmp x3,x4
+	b.hs 8f
+	\l
+	stp x6,\a,[x3],#16
+	b 8f
+11:
+	add x6,x15,x5,lsl #1
+	ldr x12,[x6,#8]
+	eor x12,x12,\v
+	tst x12,#0x3fffffffffff
+	b.ne 13b
+	cmp x3,x4
+	b.hs 8f
+	\l
+	stp x6,\a,[x3],#16
+8:
+	.endm
+```
+
+```asm
+.macro H2B a,b,c,d
+	bfi x10,\d,#3,#36
+	ldadd x17,x11,[x10]
+	stp \a,\b,[x11]
+	stp \c,\d,[x11,#16]
+	tbz x11,#13,9f
+	sub x9,x11,#4080
+	sub x9,x9,#4080
+	str x9,[x10]
+	orr x4,x10,#0x80000000000
+	ldadd x18,x11,[x4]
+	cmp x11,x12
+	b.lo 8f
+	str x12,[x4]
+	b 9f
+8:
+	stp x18,x19,[x9,#-16]
+	stp x10,x11,[x9,#-32]
+9:
+	.endm
+```
+
+```asm
+.macro H2P
+	ld64b x20,[x1]
+	add x1,x1,#64
+	H2B x20,x21,x22,x23
+	H2B x24,x25,x26,x27
+	.endm
+```
+
+```asm
+.macro DLVP
+	ld64b x16,[x1]
+	add x1,x1,#64
+	st64b x16,[x2]
+	add x2,x2,#64
+	.endm
+```
+
+```asm
+.macro DLVS
+	ldp x16,x17,[x1],#32
+	ldp x18,x19,[x1,#-16]
+	stp x18,x19,[x2,#16]
+	stp x16,x17,[x2],#32
+	.endm
+```
+
+```asm
+.macro DLVHS
+	DLVS
+	HCHGI x16,x17,x12,LSUB
+	.endm
+```
+
+The delivery counts and the in-flight/ACK charges are itemized in proof.md section 4 and certificate.py: dlv 6 per one-record message; h2s 6 per record plus 8 fixed and the flush/copy terms; dlvh 4; join 4 per record; walk 4.5 per visit; the receiver appends each acceptable record and lists a full-key match only across source nodes.
+
+## Captured experiment
+
+`experiment-result.json` is the captured output of `experiment.py` (seed 1, seconds 12) on this exact archive. `counts_match_certificate` is True; 143 boolean checks, 2 false. The full test code (`experiment.py`, `machine.py`, `sites.py`) is in the published base `de987687`.
+
+
+## 11. Captured experiment result
+
+The following is the captured output of `experiment.py` (seed 1, seconds 12) on this exact archive. The full test implementations (`experiment.py`, `machine.py`, `sites.py`) and the full kernel files are in the published base `de987687`; `counts_match_certificate` is true and no boolean check is false.
+
+```json
+{
+ "input": {
+  "seed": 1,
+  "seconds": 12
+ },
+ "budget": {
+  "seconds": 12,
+  "reserve": 0.5,
+  "minimums": {
+   "class_rule_random": 2000,
+   "class_rule_near_tie": 600,
+   "class_labels": 3000
+  },
+  "note": "minimums first, then shares of the remaining budget up to the caps"
+ },
+ "counts_match_certificate": true,
+ "all_boolean_checks": 143,
+ "false_checks": [
+  "/B_routing/grouped_paths/full_case/stopped",
+  "/B_routing/grouped_paths/full_list_case/stopped"
+ ]
+}
+```
