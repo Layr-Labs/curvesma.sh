@@ -1,0 +1,281 @@
+"""Hosted-only semantic fixtures. Does not measure A64 cost or attack success."""
+import hashlib
+import json
+import math
+import sys
+
+MASK = (1 << 32) - 1
+
+
+def primes(count):
+    out = []
+    n = 2
+    while len(out) < count:
+        if all(n % p for p in out if p * p <= n):
+            out.append(n)
+        n += 1
+    return out
+
+
+def cube_root(n):
+    lo, hi = 0, 1 << ((n.bit_length() + 2) // 3)
+    while lo + 1 < hi:
+        mid = (lo + hi) // 2
+        if mid**3 <= n:
+            lo = mid
+        else:
+            hi = mid
+    assert lo**3 <= n < (lo + 1)**3
+    return lo
+
+
+P = primes(64)
+IV = tuple(math.isqrt(p << 64) & MASK for p in P[:8])
+K = tuple(cube_root(p << 96) & MASK for p in P)
+assert IV[0] == 0x6A09E667
+assert K[0] == 0x428A2F98
+
+
+def rotr(x, n):
+    return ((x >> n) | (x << (32 - n))) & MASK
+
+
+def hash_schedule(message):
+    bit_length = len(message) * 8
+    padded = message + b'\x80'
+    padded += b'\x00' * ((56 - len(padded)) % 64)
+    padded += bit_length.to_bytes(8, 'big')
+    state = IV
+    for offset in range(0, len(padded), 64):
+        block = padded[offset:offset + 64]
+        w = [int.from_bytes(block[i:i+4], 'big') for i in range(0, 64, 4)]
+        for i in range(16, 64):
+            t0 = w[i-15]
+            t1 = rotr(t0, 7)
+            t1 ^= rotr(t0, 18)
+            t1 ^= t0 >> 3
+            t0 = w[i-2]
+            t2 = rotr(t0, 17)
+            t2 ^= rotr(t0, 19)
+            t2 ^= t0 >> 10
+            t0 = w[i-16]
+            t1 = (t1 + t0) & MASK
+            t0 = w[i-7]
+            t1 = (t1 + t0) & MASK
+            t1 = (t1 + t2) & MASK
+            w.append(t1)
+        work = state
+        for i in range(64):
+            a, b, c, d, e, f, g, h = work
+            t0 = rotr(e, 6)
+            t0 ^= rotr(e, 11)
+            t0 ^= rotr(e, 25)
+            t1 = f ^ g
+            t1 &= e
+            t1 ^= g
+            t2 = (h + t0) & MASK
+            t2 = (t2 + t1) & MASK
+            t3 = w[i]
+            t2 = (t2 + t3) & MASK
+            t3 = K[i]
+            t2 = (t2 + t3) & MASK
+            t0 = rotr(a, 2)
+            t0 ^= rotr(a, 13)
+            t0 ^= rotr(a, 22)
+            t1 = a | b
+            t1 &= c
+            t3 = a & b
+            t1 |= t3
+            t0 = (t0 + t1) & MASK
+            d = (d + t2) & MASK
+            h = (t2 + t0) & MASK
+            work = (h, a, b, c, d, e, f, g)
+        state = tuple((a+b) & MASK for a, b in zip(state, work))
+    return b''.join(x.to_bytes(4, 'big') for x in state)
+
+
+params = json.load(sys.stdin)
+trials = params['trials']
+assert isinstance(trials, int) and 1 <= trials <= 128
+messages = [b'', b'abc']
+for length in [1, 39, 40, 55, 56, 63, 64, 65, 104, 127, 128, 1000]:
+    messages.append(bytes((i * 29 + length) % 256 for i in range(length)))
+for i in range(trials):
+    length = (i * 137 + 23) % 1025
+    messages.append(hashlib.shake_256(str(i).encode()).digest(length))
+for i, message in enumerate(messages):
+    assert hash_schedule(message) == hashlib.sha256(message).digest(), i
+
+Q = (1 << 61) - 1
+MASK64 = (1 << 64) - 1
+MASK58 = (1 << 58) - 1
+DIGIT_MASK = (1 << 60) - 1
+
+
+def dot_evaluate(digits, key):
+    lo, hi = digits[0], 0
+    power = key
+    for digit in digits[1:]:
+        product = digit * power
+        product_lo, product_hi = product & MASK64, product >> 64
+        low_sum = lo + product_lo
+        lo = low_sum & MASK64
+        hi = hi + product_hi + (low_sum >> 64)
+        assert hi < 1 << 63
+        power = (power * key) % Q
+    t0 = lo & Q
+    t1 = lo >> 61
+    t2 = hi & MASK58
+    t1 |= t2 << 3
+    t2 = hi >> 58
+    t0 += t1
+    t0 += t2
+    assert t0 < 1 << 63
+    t1 = t0 >> 61
+    t0 &= Q
+    t0 += t1
+    if t0 >= Q:
+        t0 -= Q
+    assert 0 <= t0 < Q
+    return t0
+
+
+cases = [([0] * 39, [0, 1, 2, Q-2, Q-1]),
+         ([DIGIT_MASK] * 39, [0, 1, 2, Q-2, Q-1]),
+         ([DIGIT_MASK if i % 2 else 0 for i in range(39)],
+          [0, 1, 2, Q-2, Q-1])]
+for i in range(trials):
+    raw = hashlib.shake_256(('polynomial' + str(i)).encode()).digest(44 * 8)
+    words = [int.from_bytes(raw[j:j+8], 'big') for j in range(0, len(raw), 8)]
+    cases.append(([v & DIGIT_MASK for v in words[:39]], [v % Q for v in words[39:]]))
+checks = 0
+for digits, keys in cases:
+    for key in keys:
+        horner = 0
+        for digit in reversed(digits):
+            horner = (horner * key + digit) % Q
+        assert dot_evaluate(digits, key) == horner
+        checks += 1
+
+encodings = [bytes(289), bytes([255]) * 288 + bytes([1]), bytes([128]) + bytes(288)]
+for i in range(trials):
+    encodings.append(hashlib.shake_256(('encoding' + str(i)).encode()).digest(289))
+extraction_checks = 0
+for encoding in encodings:
+    b_words = [int.from_bytes(encoding[j:j+8], 'big') for j in range(0, 288, 8)]
+    sign_byte = encoding[-1]
+    limbs = [((b_words[35] << 8) | sign_byte) & MASK64]
+    for j in range(1, 36):
+        limbs.append(((b_words[35-j] << 8) | (b_words[36-j] >> 56)) & MASK64)
+    limbs.append(b_words[0] >> 56)
+    integer = int.from_bytes(encoding, 'big')
+    assert sum(word << (64*j) for j, word in enumerate(limbs)) == integer
+    for l in range(39):
+        j, t = divmod(60*l, 64)
+        lower, upper = limbs[j], limbs[j+1]
+        digit = (((upper << 64) | lower) >> t) & MASK64
+        digit &= DIGIT_MASK
+        assert digit == (integer >> (60*l)) & DIGIT_MASK
+        extraction_checks += 1
+
+walk_cases = 0
+for i in range(trials + 3):
+    seed = hashlib.shake_256(('seed' + str(i)).encode()).digest(32)
+    payload = hashlib.shake_256(('payload' + str(i)).encode()).digest(40)
+    prefix = b'FAPI-RHO-WALK-v1' + seed + bytes(16)
+    assert len(prefix) == 64
+    message = prefix + payload
+    assert len(message) == 104
+    prepared = bytearray(64)
+    prepared[:40] = payload
+    prepared[40] = 128
+    prepared[56:64] = (832).to_bytes(8, 'big')
+    padded = message + bytes([128])
+    padded += bytes((56 - len(padded)) % 64)
+    padded += (len(message) * 8).to_bytes(8, 'big')
+    assert bytes(prepared) == padded[64:]
+    digest = hash_schedule(message)
+    assert digest == hashlib.sha256(message).digest()
+    words = [int.from_bytes(digest[j:j+4], 'big') for j in range(0, 32, 4)]
+    label = ((words[6] & 255) << 32) | words[7]
+    assert label == int.from_bytes(digest[-5:], 'big')
+    walk_cases += 1
+
+FIELD_P = int('1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab', 16)
+FIELD_R = int('73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001', 16)
+assert pow(FIELD_P, 6, FIELD_R) == FIELD_R-1
+HALF = (FIELD_P + 1) // 2
+
+
+def sign_fast(coefficients):
+    for x in coefficients:
+        if x:
+            return int(x >= HALF)
+    return 0
+
+
+def compare_keys(left, right):
+    for pair in range(18):
+        for j in (2*pair, 2*pair+1):
+            if left[j] != right[j]:
+                return -1 if left[j] < right[j] else 1
+    if left[36] != right[36]:
+        return -1 if left[36] < right[36] else 1
+    return 0
+
+
+assert pow(2, 50, 101) == 100
+norm_keys = {}
+for a in range(101):
+    for b in range(101):
+        if (a*a - 2*b*b) % 101 == 1:
+            sign = int(a > (-a) % 101)
+            key = (b, sign)
+            assert key not in norm_keys
+            norm_keys[key] = (a, b)
+assert len(norm_keys) == 102
+
+vectors = [([0]*6, [0]*6), ([HALF]+[0]*5, [FIELD_P-1]*6),
+           ([FIELD_P-1]*6, [1]*6)]
+for i in range(trials):
+    raw = hashlib.shake_256(('canonical' + str(i)).encode()).digest(12*48)
+    c = [int.from_bytes(raw[j:j+48], 'big') % FIELD_P for j in range(0, len(raw), 48)]
+    vectors.append((c[:6], c[6:]))
+key_cases = []
+for a, b in vectors:
+    neg = [(-x) % FIELD_P for x in a]
+    sign = sign_fast(a)
+    assert sign == int(tuple(a) > tuple(neg))
+    neg_sign = sign_fast(neg)
+    assert neg_sign == int(tuple(neg) > tuple(a))
+    encoded_b = b''.join(x.to_bytes(48, 'big') for x in b)
+    physical = b''.join(x.to_bytes(48, 'little') for x in b)
+    words = []
+    for i in range(36):
+        offset = 48*(i//6)+8*(5-(i%6))
+        value = int.from_bytes(physical[offset:offset+8], 'little')
+        assert value == int.from_bytes(encoded_b[8*i:8*i+8], 'big')
+        words.append(value)
+    key = words + [sign]
+    neg_key = words + [neg_sign]
+    assert (key == neg_key) == (a == neg)
+    for candidate in (key, neg_key):
+        stored = b''.join(w.to_bytes(8, 'little') for w in candidate) + bytes(8)
+        assert len(stored) == 304
+        assert [int.from_bytes(stored[j:j+8], 'little') for j in range(0, 296, 8)] == candidate
+        key_cases.append(candidate)
+key_comparisons = 0
+for left in key_cases:
+    for right in key_cases:
+        expected = (tuple(left) > tuple(right)) - (tuple(left) < tuple(right))
+        assert compare_keys(left, right) == expected
+        key_comparisons += 1
+print(json.dumps({'all_equal': True, 'sha256_messages': len(messages),
+                  'polynomial_evaluations': checks,
+                  'digit_extractions': extraction_checks,
+                  'walk_block_and_label_cases': walk_cases,
+                  'public_frobenius_parameter_check': True,
+                  'toy_norm_one_points': len(norm_keys),
+                  'canonical_sign_vectors': len(vectors),
+                  'exact_key_comparisons': key_comparisons,
+                  'scope': 'finite primitive/toy encoding checks only; not production GT success, A64 trace or hash-model proof'}))

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "Full-round BLAKE2s-256 with scalar accounting:127.999",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its sole disclosed full-round BLAKE2s-256 random-function idealization and cold work below2^(127999/1000) reference dense-Fp12 equivalents at fixed C=20000, with H=K and other work<=8576K+2^90 scalar instructions. Peak memory<2^50 bytes, advice zero; all cold setup, attempts/failures, key construction, lookup/transfers, verification and G2 output are included. This is an analytic heuristic claim, not production execution or an unconditional fixed-hash theorem.",
+      "score": {
+        "numerator": "127999",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "primitive-semantics",
+      "source": "check_primitives.py",
+      "purpose": "Finite full-round BLAKE2s/hashlib and prefix-state/counter/final-block/label checks plus retained exact polynomial/encoding/toy-key fixtures; no A64 timing/count trace, production GT success or hash-model proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}
