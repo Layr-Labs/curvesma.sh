@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Deterministic exact fixed-G1 inversion: conservative cold BSGS bound",
+  "claims": [
+    {
+      "statement": "For every valid full-production BLS12-381 supplied nonidentity P in G1 and z in GT, the deterministic algorithm in proof.md returns canonical Q in G2 satisfying the exact pinned e(P,Q)=z with success probability 1. Total cold classical work including all preprocessing, full-key sorting/lookup, multiword addressing, arithmetic, verification and output is at most 2^146 dense-Fp12 reference units at C=20000. Peak memory is at most 2^142 bytes, preprocessing at most 2^146 units included in the total, and searched nonuniform advice is zero bytes. The analytic load/store memory-access interpretation, immense hypothetical storage and absence of production execution are explicitly disclosed in proof.md. No heuristic distribution or smoothness premise is used.",
+      "score": {
+        "numerator": "146",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
