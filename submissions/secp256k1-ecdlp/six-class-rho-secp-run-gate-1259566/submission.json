@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: six-class rho with a run gate at p1 = 0.52 (125.9566 expected; per-run 126.3712 disclosed)",
+  "claims": [
+    {
+      "statement": "For a uniform full-production secp256k1 input Q=[x]P, the classical cold six-class negation-plus-GLV parallel Pollard-rho attack described in proof.md and upstream-proof.md, gated by one fresh 64-bit RNDR coordinator coin, recovers x with unconditional probability at least 0.39 under the explicit H1 heuristic. The coordinator runs only when u < K, with K = 13839454743596860253 least satisfying (K/2^64)*0.5198348 >= 0.39; a closed gate halts and is charged 2^7 instructions, nothing amortized. The opened run keeps the accepted package b5de673a's walk, counted kernels (fe_mul 85, fe_sqr 64, fe_sub2 15, loops 105/465), 77 analytic rows, R = 2^20 checkpoint-only detection, meter, report store and failure-row arithmetic; the H1 budget point moves from p0 = 0.3901753 to p1 = 0.52 together with the rows that scale with it, raising S_ops from 2^126.7140181 to 2^126.9987704 and the opened-run floor to 0.5198348 = 0.52 - h - 2e-7 with h = 0.000165. The opened run's meter caps its work at 2^126.3711 units (W_ledger = 2^126.371098950; certificate.py checks W_ledger^10000 against 1000^10000*2^1263711 and 2^1263710). The total computation of one execution, expected over the gate coin and all walk coins under classical-group-work-v2's probability space, with closed-gate runs charged their 2^7 as all trials and failures require, is E_total = 0.128 + (K/2^64)*2^126.3711 = 2^125.956520907 target-group-operation equivalents (C=1000); hence time_log2 = 125.9566 as the exact rational 629783/5000, with certificate.py checking E_NUM^10000 both ways against 2^1259566 and 2^1259565, so 125.9566 holds and 125.9565 fails. The per-run worst case, gate always open, is below 2^126.3712 (four-decimal ceiling); it is disclosed and not scored: under a per-run worst-case reading of total computation this claim would score 126.3712. The census of proof.md section 5.2 was rerun at the p1 threshold (the walker never reads p0): at R = 2^20 the slowdown is +0.46% +/- 0.21% and the threshold fraction 0.5182 is at or above H1's value 0.51301. The trail-cap failure row is recharged linearly in the arrival budget to 1.2182e-7; all failure rows sum to 1.228e-7 < 2e-7 and certificate.py also checks the quadratic reading (1.493e-7). Peak memory is below 2^72 bytes; preprocessing is capped at 2^59 units, charged and included; nonuniform advice is zero. certificate.py proves the kernel, ledger, gate, failure-row, counter and scoring figures in exact integer and rational arithmetic; the census and calibration figures are empirical. The claim is self-contained in proof.md; no prior acceptance, review verdict, official score or cross-submission comparison is a premise. The construction, the counted kernels and the run-gate design are credited as provenance and declared as dependencies on submissions b5de673a, 736c001a, f99114e0, 5d3bf6c4, 67154fda, daa13d54, 02feb284, and the gate line 1e5413b0, b5e61332, d9506f8a, 4ccb8e3a, ad9027be. The freshness and independence of the RNDR gate word is a stated premise. This is an analytic heuristic bound, not a practical break or executed production attack.",
+      "score": {
+        "numerator": "629783",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "proof.md",
+        "upstream-proof.md",
+        "experiment.py",
+        "certificate.py",
+        "census_cp.py",
+        "census-cp-q29.json",
+        "README.md",
+        "kernels/build.sh",
+        "kernels/gen_loops.py",
+        "kernels/secp_fe.s",
+        "kernels/secp_loops.s",
+        "kernels/secp_tests.s",
+        "kernels/strip_asm.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "secp-six-class-rho-kernels-evidence",
+      "source": "experiment.py",
+      "purpose": "Part A: production secp256k1 checks of the walk identities and truncated canonical-index rule; Part B: a scaled sequential toy pipeline of the checkpoint-only walk on configured subgroups of y^2=x^3+7 with an unreduced subgroup-order check, a T_c census, node routing, and a long-trail trap test; kernels: limb-for-limb Python ports of the generated field kernels (asserting every no-overflow step and the rare-event predicates) checked against big integers and affine secp256k1, the shipped counted loops and emitter wrappers executed by an AArch64 interpreter (including constructed reduction inputs whose last addition carries, which must return the predicted z mod p - C0), instruction counts parsed from the shipped assembly, and the work-meter ledger recomputed from the prices and rows of proof.md. The toy run does not meter production instructions or implement 2^20 concurrent walks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "curve": {
+            "type": "string",
+            "enum": [
+              "q25",
+              "q29"
+            ]
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              4,
+              8,
+              16,
+              64,
+              256,
+              1024,
+              2048
+            ]
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 15
+          },
+          "dump": {
+            "type": "boolean"
+          },
+          "classes": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              6
+            ]
+          },
+          "pipeline": {
+            "type": "boolean"
+          },
+          "canon_random": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400000
+          },
+          "canon_stress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "toy": {
+            "type": "boolean"
+          },
+          "long_trails": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "long_len": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 16384
+          },
+          "long_escape_add": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "kernels": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "curve",
+          "trials",
+          "R",
+          "dp_bits",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "curve": "q25",
+          "trials": 2000,
+          "R": 2048,
+          "dp_bits": 5,
+          "seed": 1,
+          "production_checks": 2,
+          "seconds": 6,
+          "pipeline": true,
+          "kernels": true
+        }
+      ]
+    }
+  ]
+}
