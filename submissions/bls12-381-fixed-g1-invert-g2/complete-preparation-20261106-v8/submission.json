@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "Complete1024-instruction preparation audit:128.068",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its sole disclosed SHA-256 random-function idealization and cold work below2^(32017/250) reference dense-Fp12 equivalents at fixed C=20000, with H=K and other work<=9728K+2^90 scalar instructions. Peak memory<2^50 bytes and advice zero; all preprocessing, trials, failures, lookup, transfers, verification and G2 output are included. This is an analytic heuristic claim, not production execution or an unconditional fixed-hash theorem.",
+      "score": {
+        "numerator": "32017",
+        "denominator": "250"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "primitive-semantics",
+      "source": "check_primitives.py",
+      "purpose": "Finite SHA-256/hashlib, exact polynomial dot-product, aligned-buffer/EXTR and standard104-byte walk final-block/low40-bit label fixtures; not A64 counts or cryptanalytic success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}
