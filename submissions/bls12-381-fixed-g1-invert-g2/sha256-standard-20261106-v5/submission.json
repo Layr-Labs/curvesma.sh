@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "Standard SHA-256 variant with complete scalar accounting:128.197",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its disclosed SHA-256 random-function idealization and cold work below2^(128197/1000) reference dense-Fp12 equivalents at fixed C=20000, with H=K and other work<=12512K+2^90 scalar instructions. Peak memory<2^50 bytes and advice zero; all trials, failures, preprocessing, lookup, transfers, verification and G2 output are included. This is an analytic heuristic claim, not production execution or a fixed-hash theorem.",
+      "score": {
+        "numerator": "128197",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sha256-semantics",
+      "source": "check_sha256.py",
+      "purpose": "Compare standard SHA-256 round/expansion semantics against hashlib on finite boundary/deterministic fixtures; not A64 instruction measurement or attack success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}

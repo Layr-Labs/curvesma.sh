@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "title": "Explicit64-instruction reference interface and compact evidence:128.222",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its sole disclosed SHA-512 idealization, total cold work below2^(64111/500) dense-Fp12 reference equivalents with H=K and other scalar work<=13088K+2^90 at fixed C=20000, peak storage below2^50 bytes and zero advice. All cold setup, trials, failures, lookup, transfers, verification and G2 output are included. This is an analytic heuristic bound, not production execution.",
+      "score": {
+        "numerator": "64111",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sha512-semantics",
+      "source": "check_sha512.py",
+      "purpose": "Compare the charged SHA-512 round and expansion semantics against hashlib on padding-boundary and deterministic fixtures. Does not measure A64 instructions or cryptanalytic success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}

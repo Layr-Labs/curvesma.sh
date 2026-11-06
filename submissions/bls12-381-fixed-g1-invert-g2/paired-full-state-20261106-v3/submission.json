@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "title": "Paired scalar full-state checkpoint comparator: 128.236",
+  "claims": [
+    {
+      "statement": "The analytic supplied-P pairing inversion algorithm in proof.md has success at least 0.39 under its sole disclosed SHA-512 idealization. Total cold work H+R/20000 is below 2^(32059/250) reference dense Fp12 equivalents, with H=K reference multiplications and R<=13408*K+2^90 other scalar instructions. Peak memory is below 2^50 bytes, advice zero. All preprocessing, trials, lookup, transfers, verification and G2 output are charged. This is an analytic heuristic bound, not a production execution.",
+      "score": {
+        "numerator": "32059",
+        "denominator": "250"
+      },
+      "evidence": [
+        "collision-proof.md",
+        "compression-proof.md",
+        "compressor-audit.md",
+        "prefix-audit.md",
+        "proof.md",
+        "universal-proof.md",
+        "checkpoint-proof.md",
+        "horizon-audit.md",
+        "round-schedule.md",
+        "expansion-schedule.md",
+        "paired-comparator.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sha512-semantics",
+      "source": "check_sha512.py",
+      "purpose": "Compare the charged SHA-512 round and expansion semantics against hashlib on padding-boundary and deterministic fixtures. Does not measure A64 instructions or cryptanalytic success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 32
+        }
+      ]
+    }
+  ]
+}
