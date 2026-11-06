@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Exact finite compression loss and shorter cold rho horizon",
+  "claims": [
+    {
+      "statement": "The analytic supplied-P pairing inversion algorithm in proof.md has success at least 0.39 under its sole disclosed SHA-512 idealization. Total cold work H+R/20000 is below 2^(128291/1000) reference dense Fp12 equivalents, with H=K reference multiplications and R<=14720*K+2^90 other scalar instructions. Peak memory is below 2^50 bytes, advice zero. All preprocessing, trials, lookup, transfers, verification and G2 output are charged. This is an analytic heuristic bound, not a production execution.",
+      "score": {
+        "numerator": "128291",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "collision-proof.md",
+        "compression-proof.md",
+        "compressor-audit.md",
+        "prefix-audit.md",
+        "proof.md",
+        "universal-proof.md",
+        "checkpoint-proof.md",
+        "horizon-audit.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
