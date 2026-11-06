@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "title": "LCP-assisted checkpoint search with complete finite pairing-inversion bound",
+  "claims": [
+    {
+      "statement": "The analytic supplied-P pairing inversion algorithm in proof.md has success at least 0.39 under its sole disclosed SHA-512 idealization. Total cold work H+R/20000 is below 2^(1282483/10000) reference dense Fp12 equivalents, with H=K reference multiplications and R<=13696*K+2^90 other scalar instructions. Peak memory is below 2^50 bytes, advice zero. All preprocessing, trials, lookup, transfers, verification and G2 output are charged. This is an analytic heuristic bound, not a production execution.",
+      "score": {
+        "numerator": "1282483",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "collision-proof.md",
+        "compression-proof.md",
+        "compressor-audit.md",
+        "prefix-audit.md",
+        "proof.md",
+        "universal-proof.md",
+        "checkpoint-proof.md",
+        "horizon-audit.md",
+        "lcp-proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

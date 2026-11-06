@@ -1,0 +1,23 @@
+# LCP checkpoint search and complete finite cost
+
+The predecessor uses q=62 checkpoint intervals, at most 63 saved full GT keys (72 words each). The original sorted binary search does at most six full-key comparisons, each charged 384, total2304. Other outer work3072, outer5376. This exact deterministic LCP data structure lowers full search charge to1280 and outer to4352, saving1024 per walk step without a new success heuristic.
+
+Allocate a 64x64 byte matrix of longest common prefix lengths in words between immutable saved keys, maximum72. For each new saved record compute its LCP with all existing saved records; store both directions, diagonal72. At most63 insertions and63 comparisons each, even72 words each, cost below2^30 over the whole attack, already paid by huge2^90 fixed budget. Sorted entries should hold both stable slot ID and pointer (16 bytes per entry), so matrix indexing never requires division of a pointer difference by640. Additional memory less8KiB, ample within2^50 bound. Records are only saved when not equal to existing ones, so distinct keys have LCP<72.
+
+Binary search maintains two bounding sorted positions lo,hi, with lower key<current<upper key, or conceptual low/high sentinel. Store exact current-to-boundary LCPs, initially0 for sentinels. Start with an ordinary first comparison; thereafter choose a REAL boundary B with maximal known prefix length l; prefer real on ties. Midpoint M is strictly between the boundary positions. Query k=LCP(B,M) from the matrix.
+
+- k<l: current agrees with B at first difference k, so its order relative to M is exactly B's order relative to M. Update the opposite boundary; B and its maximal prefix l remain.
+- k>l: M agrees with B at current's first difference from B, so current's order versus M equals its known order versus B. Update B with M; the new prefix stays l.
+- k=l: inspect current and M beginning at word l, never rereading the shared prefix. Obtain exact new prefix and order/equality. Whichever boundary changes, the maximum known prefix never decreases.
+
+Thus at most72 matched word comparisons occur across an entire search, plus at most6 mismatching words (one per iteration). Four instructions per word (two LDR,CMP,B.ne) give312. Maximal prefix grows monotonically. Equality can only occur in the k=l case, and is detected. Every shortcut is based on key words/order, not scalar coefficient history, so the existing uniform useful-denominator proof and deterministic checkpoint-detection lemma are unchanged.
+
+A dynamic entry into an unrolled word comparator can use ADR of cmp_word0, ADD index l shifted by4 (each word's4 instructions occupy16 bytes), then BR. Fixed immediate word offsets remain below576. Mismatch-specific labels return the known prefix index and unsigned order; all-equal returns equality. No word loop or data-dependent long prefix rereading.
+
+Charge128 non-word instructions per binary-search iteration, including LCP lookup, real-boundary choice, midpoint, sorted pointer/slot tuple read, branch cases, comparator entry/return, boundary updates, loop control, entry/exit and spills. A direct schedule is well below64 for the control plus64 for spills/caller margins: termination2, midpoint2, tuple address/LDP2, boundary choice<=12, matrix address/LDRB<=3, k comparison/branches3, shortcut/scan dispatch<=7, comparator non-word return<=5, endpoint updates<=9, loop branch1, fixed-frame loads/stores<=20. This is at most86 including generous spill allowance, below128. At most6*128=768. Full search <=312+768=1080; charge1280, leaving200 slack. Memory words and all table accesses counted.
+
+Retain remaining3072 outer work: scalar updates512, table addressing256, counters512, save copy512, equality/dispatch256, other spills/control1024. New outer=4352. Extra LCP construction charged in2^90. New peak matrix/sorted tuples fit unchanged2^50 memory.
+
+The current candidate uses the SHA-512-only predecessor: R_step=14720-1024=13696 and W<=(33696*K+2^90)/20000. For the protected order, (33696*K+2^90)^10000 < 20000^10000*2^1282483. Score1282483/10000=128.2483. SHA-512, universal compressor, 2^40-entry table, rho=1/32768, L=ceil(1031ceil(sqrt(r))/1000), q=62 and conditional success0.39 are unchanged.
+
+This is the established LCP-assisted binary-search technique of Manber and Myers, Suffix arrays: a new method for on-line string searches, DOI10.1137/0222058. The necessary finite argument for fixed72-word checkpoint keys is reproduced above; no retrieval or unfamiliar external theorem is needed. No novelty of LCP acceleration is claimed. All experiments are empty; this is an analytic instruction bound, not a measured production runtime.
