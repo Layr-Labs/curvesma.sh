@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Deterministic fixed-P BSGS with conservative bit arithmetic",
+  "claims": [
+    {
+      "statement": "For every valid full-production BLS12-381 fixed-G1 pairing inversion input (P,z), the deterministic cold BSGS algorithm in proof.md returns the actual Q in G2 with e(P,Q)=z, with success probability 1, total classical computation at most 2^154 dense-Fp12 reference equivalents at C=20000, including all preprocessing, lookup, transfers, verification and output. Peak memory is at most 2^143 bytes; preprocessing is at most 2^154 equivalents and included in total; nonuniform advice is at most 1 byte and included in peak storage. This analytic bound uses no heuristic, powers input, target amortization or quantum computation and does not claim practical execution.",
+      "score": {
+        "numerator": "154",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
