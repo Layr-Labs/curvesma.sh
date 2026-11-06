@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: interleaved-chain BSGS with a deterministic lookup bound",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. The construction in proof.md uses m=2^128 baby indices and h=2^128-1 giant indices, advanced as W=2^16 independent affine chains in lockstep so that one Montgomery batch inversion per round serves all 65536 denominators of that round. The batch cost is charged in full at 3(W-1)+512 multiplications per round, i.e. 197117/65536 = 3.007767... multiplications per step, and is added to the 3M incomplete-affine formula rather than replacing it. Lookup uses a B-tree over the 2^128 keys with node fanout 64 and height 22, so the per-step lookup is a worst-case 676 instructions rather than an expected probe count: 22 levels times 22 instructions for the descent, plus a 192-instruction worst-case scan of the single leaf that can share the queried 128-bit prefix. Each step is metered at 1771.40 AArch64 instruction equivalents and charged rounded up at 1772 (537 formula, 538.40 batch inversion, 676 tree lookup, 20 control and chain-state branch), so the total is at most (2^129-1)*1772 < 2^139.79135 instructions and the score is at most 129.82557 target-group-operation equivalents at C=1000, declared rounded up as 129.83. Preprocessing is the 2^128 baby steps at 128.82557 units, declared 128.83, and is included in the total; nonuniform advice is 0 bytes. Peak memory is 2^129 records at 48 bytes, rounded up to 2^134.59 bytes. Success probability is 1 for every valid Q: the search is exhaustive over the m baby and h giant indices with no randomness, restart schedule, birthday premise or collision-dependency assumption. The point at infinity, doubling and inverse-point chain-advance cases are handled explicitly and charged, including chain c=0 which begins at [0]P=O; the b=0 giant-chain infinity case and Q=infinity are handled and re-verified. This is a deterministic generic search costed under classical-group-work-v2, not a new cryptanalytic technique, not a best-known-attack estimate, and not a full-size execution. The declared bound is deliberately weaker than an earlier revision of this candidate because that revision undercharged the batch inversion and relied on an expected probe count that is not a per-step upper bound.",
+      "score": {
+        "numerator": "12983",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-interleaved-bsgs-v3",
+      "source": "experiment.py",
+      "purpose": "Check at toy scale that the interleaved-chain schedule and the one-batch-inversion-per-round construction recover the scalar on every instance of y^2=x^3+7 over a small prime field, that the four chain-advance cases (infinity start, doubling, inverse point, out-of-range skip) are handled, including chain c=0 which begins at [0]G=O, that the b=0 giant-chain point-at-infinity case is handled, and that the round's batched inversion matches independent per-element inversion. This does not establish production cost, memory, timing or behaviour at 2^128 steps.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 100003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "prime",
+          "trials",
+          "width"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 10007,
+          "trials": 16,
+          "width": 16
+        }
+      ]
+    }
+  ]
+}

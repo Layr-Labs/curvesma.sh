@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: interleaved-chain BSGS with a fully itemised multiword ledger",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. proof.md uses m=2^128 baby indices and h=2^128-1 giant indices advanced as W=2^16 independent affine chains in lockstep, so one Montgomery batch inversion per round serves all 65536 denominators. The batch cost is charged in full at (3*(W-1)+512)/W = 197117/65536 = 3.007767... multiplications per step, times 179 instructions = 538.39024353, charged 538.40, and added to the 3M incomplete-affine formula rather than replacing it. Records (32-byte x, 16-byte index) are collected into a flat array and sorted by LSD radix sort on the full 256-bit x-coordinate, 16 passes of 16 bits, double-buffered, with 113-bit bucket counters because 2^128 records over 2^16 buckets force some bucket to hold at least 2^112 records. Lookup is a multiword binary search over the sorted array: exactly ceil(log2(2^128))=128 iterations, each itemised at 30 instructions (4 to load the 128-bit lo and hi, 4 for the two-word midpoint add and shift, 6 for the two-word base+mid*48 address, 4 to load the record's four-word x, 8 for a worst-case four-word comparison, 2 to store the updated bound, 2 for loop control) and charged at 40 with a one-third margin, so 5120 per giant step. No average-case premise is used: the four-word comparison is charged at its worst case on every iteration even though it usually resolves on the leading word. The ledger is: baby step 1091.40 (537 formula, 538.40 batch, 8 record append, 8 control); giant step 6203.40 (537, 538.40, 5120 search, 8 control); radix sort 592 per record (16 passes times 17 histogram plus 20 distribute). Total is 2^128*7886.80 = 2^129*3943.40 instructions, log2 = 140.94551, so the score is at most 130.97973 target-group-operation equivalents at C=1000, declared rounded up as 130.98 = 6549/50. Preprocessing is the baby phase plus the sort at 128.75139 units, declared 128.76, and is included in the total; every record insertion, record move, 113-bit counter increment and destination-offset update is charged. Peak memory is the double-buffered record array at 2^135.5850 bytes, declared 2^135.59, plus 2^20 bytes of counters; nonuniform advice is 0. Success probability is 1: exhaustive search with no randomness, restart schedule, birthday premise or collision-dependency assumption. Chain advancement handles the point at infinity, doubling and inverse points in four explicit charged states, including chain c=0 which begins at [0]P=O, and the experiment also forces the inverse-point state rather than only leaving the branch present; the b=0 giant-chain infinity case and Q=infinity are handled and re-verified. This is a deterministic generic search costed under classical-group-work-v2, not a new cryptanalytic technique, not a best-known-attack estimate, and not a full-size execution. The declared bound is weaker than the three earlier revisions of this candidate (129.22, 129.83, 129.92) and weaker than the organizer control's 129.000802, because each earlier revision was rejected on a ledger row that did not survive decomposition: a rounded-down inversion, then an expected probe count, then an unjustified tree bound, then uncharged multiword comparison and addressing plus 64-bit bucket overflow. None of those numbers is recovered here by shaving the margin.",
+      "score": {
+        "numerator": "6549",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-interleaved-bsgs-v5",
+      "source": "experiment.py",
+      "purpose": "Check at toy scale that the interleaved-chain schedule and the one-batch-inversion-per-round construction recover the scalar on every instance of y^2=x^3+7 over a small prime field; that the four chain-advance cases (infinity start, doubling, inverse point, out-of-range skip) are handled, including chain c=0 which begins at [0]G=O, and that the inverse-point state is forced to occur rather than only present in code; that the b=0 giant-chain point-at-infinity case is handled; that the round's batched inversion matches independent per-element inversion; and that the priced structures are the ones implemented, namely an LSD radix sort with 16-bit digits and 113-bit-safe counters plus a multiword binary search over full coordinates, reporting the actual maximum number of full comparisons performed so the ledger's worst-case figure can be compared with a real count. This does not establish production cost, memory, timing or behaviour at 2^128 steps.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 100003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "prime",
+          "trials",
+          "width"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 10007,
+          "trials": 16,
+          "width": 16
+        }
+      ]
+    }
+  ]
+}
