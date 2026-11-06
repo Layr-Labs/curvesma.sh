@@ -1,0 +1,906 @@
+{
+ "input": {
+  "seed": 1,
+  "seconds": 12
+ },
+ "budget": {
+  "seconds": 12,
+  "reserve": 0.5,
+  "minimums": {
+   "class_rule_random": 2000,
+   "class_rule_near_tie": 600,
+   "class_labels": 3000
+  },
+  "note": "minimums first, then shares of the remaining budget up to the caps"
+ },
+ "A_identities": {
+  "beta_cube_root_of_1_mod_p": true,
+  "lambda_cube_root_of_1_mod_r": true,
+  "lambda_G_equals_beta_x": true,
+  "seven_nonresidue_no_x0_point": true,
+  "window_forms_nonzero": true,
+  "label_constants": true,
+  "class_rule": {
+   "checked": {
+    "random": 2000,
+    "near_tie": 600
+   },
+   "in_window_set": 113,
+   "wrong_index_in_window_set": 13,
+   "mismatches_outside_window_set": 0,
+   "near_ties_from_second_stream": 600
+  },
+  "class_labels": {
+   "classes": 3000,
+   "edge_classes": 1000,
+   "members": [
+    2803,
+    2798,
+    2775
+   ],
+   "in_W": 624,
+   "in_D": 332,
+   "wrong_index": 0,
+   "mismatches": 0,
+   "errors": [
+    [
+     -45,
+     124
+    ],
+    [
+     -44,
+     126
+    ],
+    [
+     -230,
+     52
+    ]
+   ],
+   "tfp_terms": {
+    "e": 0,
+    "c_low": 6,
+    "d": 52,
+    "total": 56,
+    "sum_ok": true
+   },
+   "ok": true
+  }
+ },
+ "A_kernels": {
+  "runs": {
+   "32": {
+    "fwd": 2457,
+    "bwd": 36508,
+    "keys": 4512,
+    "acc_ok": true,
+    "fwd_stores_ok": true,
+    "fraction_mismatches": 0,
+    "fractions_outside_bounds": 0,
+    "fraction_errors": [
+     [
+      6,
+      51
+     ],
+     [
+      8,
+      43
+     ]
+    ],
+    "tfp_terms": {
+     "e": 0,
+     "c_low": 5,
+     "d": 48,
+     "total": 51,
+     "sum_ok": true
+    },
+    "identity_mismatches": 0,
+    "fixups_3_4": {
+     "fwd": [
+      0,
+      0,
+      0
+     ],
+     "bwd": [
+      0,
+      0,
+      0
+     ]
+    },
+    "fixup_extra": {
+     "fwd": 0,
+     "bwd": 0
+    },
+    "fixup_words_ok": true,
+    "fwd_bwd_formulas": true,
+    "records_ok": true,
+    "records": 192,
+    "key_paths": 204,
+    "in_W": 0,
+    "in_D": 0,
+    "wrong_index": 0,
+    "keys_not_canonical": 0,
+    "keys_formula": true,
+    "final_R_is_inverse_rho": true,
+    "sp_kept": true
+   },
+   "64": {
+    "fwd": 4909,
+    "bwd": 73010,
+    "keys": 9006,
+    "acc_ok": true,
+    "fwd_stores_ok": true,
+    "fraction_mismatches": 0,
+    "fractions_outside_bounds": 0,
+    "fraction_errors": [
+     [
+      6,
+      51
+     ],
+     [
+      8,
+      43
+     ]
+    ],
+    "tfp_terms": {
+     "e": 0,
+     "c_low": 5,
+     "d": 48,
+     "total": 51,
+     "sum_ok": true
+    },
+    "identity_mismatches": 0,
+    "fixups_3_4": {
+     "fwd": [
+      0,
+      0,
+      0
+     ],
+     "bwd": [
+      0,
+      0,
+      0
+     ]
+    },
+    "fixup_extra": {
+     "fwd": 0,
+     "bwd": 0
+    },
+    "fixup_words_ok": true,
+    "fwd_bwd_formulas": true,
+    "records_ok": true,
+    "records": 384,
+    "key_paths": 394,
+    "in_W": 0,
+    "in_D": 0,
+    "wrong_index": 0,
+    "keys_not_canonical": 0,
+    "keys_formula": true,
+    "final_R_is_inverse_rho": true,
+    "sp_kept": true
+   },
+   "288": {
+    "fwd": 22074,
+    "bwd": 328529,
+    "keys": 40511,
+    "acc_ok": true,
+    "fwd_stores_ok": true,
+    "fraction_mismatches": 0,
+    "fractions_outside_bounds": 0,
+    "fraction_errors": [
+     [
+      6,
+      51
+     ],
+     [
+      7,
+      45
+     ]
+    ],
+    "tfp_terms": {
+     "e": 0,
+     "c_low": 6,
+     "d": 48,
+     "total": 51,
+     "sum_ok": true
+    },
+    "identity_mismatches": 0,
+    "fixups_3_4": {
+     "fwd": [
+      0,
+      0,
+      0
+     ],
+     "bwd": [
+      0,
+      0,
+      0
+     ]
+    },
+    "fixup_extra": {
+     "fwd": 0,
+     "bwd": 0
+    },
+    "fixup_words_ok": true,
+    "fwd_bwd_formulas": true,
+    "records_ok": true,
+    "records": 1728,
+    "key_paths": 1771,
+    "in_W": 0,
+    "in_D": 0,
+    "wrong_index": 0,
+    "keys_not_canonical": 0,
+    "keys_formula": true,
+    "final_R_is_inverse_rho": true,
+    "sp_kept": true
+   }
+  },
+  "fwd_bwd_formula": "fwd = fwd_count(q2), bwd = bwd_count(q2) (certificate.py), q2 a multiple of 32",
+  "fwd_bwd_formulas_hold": true,
+  "counts_ok": true,
+  "per_incidence": {
+   "fwd": 76.62890625,
+   "bwd": 1140.70703125
+  },
+  "fixups": {
+   "sites": 488,
+   "flags_dead_at_every_join": true
+  },
+  "loop_ends_on_bit_34": true,
+  "keys_formula": "keys = KEY_FIX + KEY_INC*q2 + (JPATH per j = 1 or 2 leaf, SJOIN per sign with one, of the bit-exact model) + (FLUSH per block sent, KEY_BLOCK_DROP per block dropped)",
+  "keys_formula_holds": true,
+  "tfp_terms": {
+   "largest": {
+    "e": 0,
+    "c_low": 6,
+    "d": 48,
+    "total": 51
+   },
+   "bounds": {
+    "e": 1,
+    "c_low": 7,
+    "d": 56,
+    "total": 64
+   },
+   "sums_exact": true
+  },
+  "fraction_errors": [
+   [
+    6,
+    51
+   ],
+   [
+    7,
+    45
+   ]
+  ],
+  "all_correct": true,
+  "window_batch": {
+   "leaves": 192,
+   "in_W": 20,
+   "in_D_outside_W": 0,
+   "wrong_index": 0,
+   "keys_not_canonical": 0,
+   "records": 192,
+   "records_ok": true,
+   "key_paths": 187,
+   "keys": 4495,
+   "keys_formula": true,
+   "ok": true
+  },
+  "boundary_batch": {
+   "leaves": 192,
+   "in_W": 0,
+   "in_D_outside_W": 29,
+   "wrong_index": 0,
+   "keys_not_canonical": 0,
+   "records": 192,
+   "records_ok": true,
+   "key_paths": 198,
+   "keys": 4506,
+   "keys_formula": true,
+   "ok": true
+  },
+  "forced_fixups": {
+   "incidences": 32,
+   "fixups_3_4": {
+    "fwd": [
+     64,
+     0,
+     16
+    ],
+    "bwd": [
+     528,
+     80,
+     208
+    ]
+   },
+   "fixup_extra": {
+    "fwd": 272,
+    "bwd": 2944
+   },
+   "fraction_mismatches": 0,
+   "formulas": true,
+   "ok": true
+  },
+  "fe_inv": {
+   "counts": [
+    22549
+   ],
+   "correct": true
+  },
+  "ygen": {
+   "runs": [
+    {
+     "m": 2,
+     "n": 3,
+     "count": 99835,
+     "flag": 0
+    },
+    {
+     "m": 4,
+     "n": 2,
+     "count": 126139,
+     "flag": 0
+    },
+    {
+     "m": 1,
+     "n": 2,
+     "count": 25128,
+     "flag": 1
+    }
+   ],
+   "words_bad": 0,
+   "counts_ok": true,
+   "clean_flags_zero": true,
+   "defect_flagged": true,
+   "ok": true
+  },
+  "site_counts": {
+   "fwd": {
+    "SHX": 48,
+    "SHXT": 0,
+    "FDX": 16,
+    "F5": 0,
+    "FS": 0,
+    "FADDW": 0,
+    "BLK0": 0,
+    "LF": 16,
+    "PFWD": 16,
+    "BWDP": 0
+   },
+   "bwd": {
+    "SHX": 144,
+    "SHXT": 48,
+    "FDX": 40,
+    "F5": 32,
+    "FS": 24,
+    "FADDW": 16,
+    "BLK0": 32,
+    "LF": 72,
+    "PFWD": 0,
+    "BWDP": 8
+   },
+   "keys": {
+    "SHX": 0,
+    "SHXT": 0,
+    "FDX": 0,
+    "F5": 0,
+    "FS": 0,
+    "FADDW": 0,
+    "BLK0": 0,
+    "LF": 0,
+    "PFWD": 0,
+    "BWDP": 0
+   },
+   "per_pair": {
+    "SHX": 27,
+    "FDX": 6,
+    "F5": 4,
+    "FS": 3,
+    "FADDW": 2,
+    "BLK": 14
+   },
+   "pair_copies_in_listing": {
+    "fwd": 16,
+    "bwd": 8
+   }
+  },
+  "sites_match_certificate": true,
+  "site_checks": {
+   "row_shift": {
+    "cases": 384,
+    "predicate_holds": 96,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "fold": {
+    "cases": 192,
+    "predicate_holds": 48,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "square_fold_u": {
+    "cases": 96,
+    "predicate_holds": 11,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "square_fold_v": {
+    "cases": 96,
+    "predicate_holds": 10,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "window_sum_fold": {
+    "cases": 72,
+    "predicate_holds": 24,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "lookup_fold": {
+    "cases": 128,
+    "carry_past_2_256": 59,
+    "exact": true,
+    "model": true
+   },
+   "fs_weak_operands": {
+    "cases": 177,
+    "predicate_holds": 19,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "faddw_weak_operands": {
+    "cases": 177,
+    "predicate_holds": 5,
+    "deviates_iff_predicate": true,
+    "model": true
+   },
+   "beta_tables": {
+    "cases": 2,
+    "exact": true
+   },
+   "x_tables": {
+    "cases": 4,
+    "exact": true
+   },
+   "fs_canonical_exact": {
+    "cases": 121,
+    "exact": true
+   },
+   "faddw_canonical_exact": {
+    "cases": 121,
+    "exact": true
+   },
+   "fixups": {
+    "t_shx": {
+     "cases": 192,
+     "fixups": 96,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_shxt": {
+     "cases": 192,
+     "fixups": 96,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_fdx": {
+     "cases": 192,
+     "fixups": 96,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_squ": {
+     "cases": 96,
+     "fixups": 11,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_sqv": {
+     "cases": 96,
+     "fixups": 10,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_fs": {
+     "cases": 121,
+     "fixups": 26,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_faddw": {
+     "cases": 121,
+     "fixups": 24,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_blk": {
+     "cases": 72,
+     "fixups": 48,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    },
+    "t_lf": {
+     "cases": 128,
+     "fixups": 88,
+     "word_ok": true,
+     "count_ok": true,
+     "word_set_ok": true
+    }
+   },
+   "fixups_ok": true,
+   "fe_mul_f_exact": {
+    "cases": 73,
+    "exact": true,
+    "final_carry_cases": 3
+   },
+   "fe_sqr_f_exact": {
+    "cases": 61,
+    "exact": true,
+    "final_carry_cases": 8
+   },
+   "all_ok": true
+  },
+  "d_zero_batch": {
+   "acc_zero": true,
+   "fractions_within_bounds": 0,
+   "all_other_fractions_wrong": true
+  },
+  "final_R_inverse_rho_and_unused": true,
+  "program_instructions": {
+   "leaf": 25796,
+   "route": 16079,
+   "secp_fe": 1524,
+   "total": 43399
+  }
+ },
+ "B_routing": {
+  "nodes": 16,
+  "leaves": 384,
+  "shared_key_leaves": 63,
+  "equal_key_groups": 10,
+  "records_carry_class_labels": true,
+  "messages_equal_sender_model": true,
+  "slots_equal_reference": true,
+  "source_tags_ok": true,
+  "kernel_calls": 368,
+  "counts": {
+   "init3": 544,
+   "tinit": 416,
+   "keys": 9044,
+   "fin": 2368,
+   "dlv": 768,
+   "h2s": 3320,
+   "dlvk": 65664
+  },
+  "block_messages": 128,
+  "deliveries": 192,
+  "formulas_ok": true,
+  "block_paths": {
+   "keys_fin": {
+    "records": 804,
+    "blocks_sent": 1,
+    "blocks_dropped": 1,
+    "finals_sent": 3,
+    "finals_held": 1,
+    "cursor_past_end": true,
+    "model_and_rule_ok": true
+   },
+   "h2s": {
+    "records": 770,
+    "arrival_blocks": 23,
+    "blocks_sent": 1,
+    "blocks_dropped": 1,
+    "end_stored_back": true,
+    "model_and_rule_ok": true
+   },
+   "two_group_finals": {
+    "ok": true,
+    "group_records": [
+     300,
+     300
+    ],
+    "final_cursors": [
+     9600,
+     19200
+    ],
+    "blocks_sent": 2,
+    "first_final_rewritten_identically": true
+   },
+   "counts_equal_formulas": true,
+   "ok": true
+  },
+  "grouped_paths": {
+   "stop_case": {
+    "ok": true,
+    "groups_run": [
+     0,
+     1
+    ],
+    "candidates": 6,
+    "stopped": true,
+    "stop_pair_listed": true,
+    "true_pairs": 6,
+    "list_skips": 0,
+    "old_x_served": true,
+    "records_with_bucket_bits_4_5": 812,
+    "fast_slow_blocks": [
+     2,
+     6
+    ],
+    "listings_direct_late": [
+     4,
+     2
+    ],
+    "slow_block_parities": [
+     "0001:4",
+     "0011:1",
+     "0101:2",
+     "1111:1"
+    ]
+   },
+   "full_case": {
+    "ok": true,
+    "groups_run": [
+     0,
+     1,
+     2
+    ],
+    "candidates": 10,
+    "stopped": false,
+    "stop_pair_listed": true,
+    "true_pairs": 10,
+    "list_skips": 0,
+    "old_x_served": true,
+    "records_with_bucket_bits_4_5": 1031,
+    "fast_slow_blocks": [
+     2,
+     9
+    ],
+    "listings_direct_late": [
+     6,
+     4
+    ],
+    "slow_block_parities": [
+     "0001:3",
+     "0011:1",
+     "0101:4",
+     "1111:3"
+    ]
+   },
+   "full_list_case": {
+    "ok": true,
+    "groups_run": [
+     0,
+     1,
+     2
+    ],
+    "candidates": 1,
+    "stopped": false,
+    "stop_pair_listed": true,
+    "true_pairs": 10,
+    "list_skips": 9,
+    "old_x_served": true,
+    "records_with_bucket_bits_4_5": 1028,
+    "fast_slow_blocks": [
+     2,
+     9
+    ],
+    "listings_direct_late": [
+     1,
+     0
+    ],
+    "slow_block_parities": [
+     "0001:3",
+     "0011:1",
+     "0101:4",
+     "1111:3"
+    ]
+   },
+   "ok": true,
+   "old_x_served": true
+  },
+  "ls64": {
+   "ld64b_window_slot_2_3": true,
+   "st64b_r2_aligned": "ran",
+   "st64b_r2_written": true,
+   "ld64b_odd_slot": "LS64 rejected",
+   "ld64b_outside_regions": "LS64 rejected",
+   "st64b_into_window": "LS64 rejected",
+   "st64b_r2_misaligned": "LS64 rejected",
+   "ld64b_x24": "LS64 rejected",
+   "ld64b_x21": "LS64 rejected",
+   "ld64b_base_in_xt_range": "LS64 rejected",
+   "dlvh_fresh_block": "ran, R2 exact",
+   "dlvh_r2_at_0_mod_64": "LS64 rejected",
+   "dlvh_mutant_ld64b_at_slot_1": "LS64 rejected",
+   "h2s_mutant_ld64b_at_slot_1": "LS64 rejected",
+   "ok": true
+  },
+  "isa": {
+   "tbz_8191_ahead": "loaded",
+   "tbz_8192_ahead": "rejected",
+   "blo_2^18_ahead": "rejected",
+   "zva_aligned_normal": "ran",
+   "zva_misaligned": "rejected",
+   "zva_device": "rejected",
+   "ok": true
+  }
+ },
+ "counts_match_certificate": true,
+ "D_certificate": {
+  "passed": true,
+  "failed": [],
+  "checks": [
+   "h2s: 6 per record (one LD64B and one ADD per two slots), +1 per slot read alone by two LDPs; a full block 8 fixed, any other at most 16 + 2 per 8-record pass (n - 1 records after slot 1, at most k/8 - 1 passes): <= 16 + 62 ok",
+   "key pass: 134.5 = 2 signs * (LD64B of the gamma, beta'' block, 2 LDP of alpha', SUB of x3 + 26 sums (13 two-word) + the hoisted LSL + 3 leaves * (index ADDS, ADC, CMP, B.HS, CMN, B.HS + emit 6)) + TBZ per two incidences ok",
+   "bwd: 2281 per pair (BWDP: LD64B of e, acc; W2S; C1BS; two INC), 3 per 16 incidences, 5 per inner Y switch, 6 fixed; fwd: 153 per pair (PFWD: e by eight lookups and LF, one ST64B of e, acc, ADD, P1X), 4 per 32 incidences, 1 per Y switch, 5 fixed; q2 = MX * L_Y a multiple of 256 ok",
+   "j = 1 and j = 2 paths (ADDS, ADC, CMP, B.HS; CMN, B.HS; MVN of sigma for N'; emit) exceed the j = 0 path (ADDS, ADC, CMP, B.HS, CMN, B.HS; emit) by 1 (no branch back; tree copies end in one B per sign: SJOIN) ok",
+   "emit: AND or BIC (8*d1), LDADD of its LC entry (the slot), w3 in one ADD x18,W,LSR #28 (j = 0, 2) or EON x18,S,LSR #28 (j = 1: d2 of N' = ~S, c and l' complemented, c in {2, 4} -> {5, 3}) on the per-sign x18 = x3<<30, two STPs, TBZ of bit 13 for slot k ok",
+   "a hop-1 block: flush 9 + in-flight count 2 when sent, more than 7 when dropped; hop-1 fin per destination at most 28 (14, send 4, in-flight 2, E1 message 8), its final block consumed by h2s (h2s rows), no dlvk ok",
+   "lattice lemma: basis (B, A - B), (A - B, -A) of {(v, u): u = beta v mod p}, |det| = p, parallelogram 2A - B wide in u and A in v; box factor below 1 + 2^-17, one side's below 1 + 2^-18 ok",
+   "3.3's fraction ranges from the terms e 0..1, c_low 0..7, d 0..56: T - estimate in [0, 64], corrected [-1, 64]; U_2 in [-130, 0], corrected [-130, 2] ok",
+   "3.3's error table from the fraction ranges: W0 per t [-2, 194], [-132, 130], [-131, 132]; W1 [-2, 194], [-131, 132], [-132, 130]; N' [-389, 5], [-263, 264], [-263, 264]; over t [-132, 194], [-132, 194], [-389, 264]: D' 1305 residues (d_lab's), widening 654 (WIDE's) ok",
+   "wrong class index rate per leaf < 2^-58.47 ok 2^-58.4764",
+   "site table per pair: 27 row shifts (6 by SHXT), 6 folds, 4 square folds, 4 weak-operand FS/FADDW; lookup and window-sum folds exact (BLK-type) ok",
+   "bad sets: rows 2^97, folds below 2^98.02, square folds below 2^64.01, weak operands C0 ok",
+   "fixup table per pair: 27 row shifts, 6 folds, 4 square folds, 3 FS, 2 FADDW, 14 BLK-type (4 window sums, 10 lookups) ok",
+   "lambda is no ratio of integers below YM+YN = 16392 in absolute value (0 < a^2 +- ab + b^2 <= 3*16390^2 < r) ok",
+   "a call's fixup word (C0 per fixup, at most 28 q2 fixups) stays below 2^63 ok 2^61.807",
+   "label-error rate per leaf < 2^-16.65 ok 2^-16.650",
+   "batch defect rate (site table, D = 0, ygen, coincident Y) < 2^-127.1 ok 2^-127.142",
+   "join per record (BFI, SWP of the entry address x13, post-indexed STP, CBZ; K2, K3 loaded by dlvh's copy; x13 steps 16 with the 32-byte slot): 4; per visit on entry addresses (LDP, CMP, B.EQ, CBZ or CBNZ): 4; B after an even visit count: 1; a K2 hit's d4 check (ADD of A = 2E - 2C, LDR, EOR, TST, B.NE): 5 ok",
+   "dlvh: copy 2 per slot (LD64B, ADD, ST64B, ADD per two), 4 per slot alone; fresh full block 15 fixed (LDP, 2 LDR, 2 MOV, 2 LDP, ADD, MOV, CMP, B.LO, TBNZ, ADD of x13, STR, RET) and slots 1, 256 alone; else at most 24 (12, CSEL, 8 bounds, ADD of x13, STR, RET) and per segment 1 if empty, else 7, + 1 after an odd first slot, + 2 per 8-slot pass; DLVHS the maximum over all segment splits; hop-2 final: slow + surcharge ok",
+   "grouped q1 search starts at 2^27, where the full grouped bound fails ok",
+   "grouped q1 = 145285144 is least with the full grouped bound >= 0.39 ok lo 0.3900000000",
+   "grouped bound locally increasing at the least q1 ok",
+   "leaves S = 2^72*6*q1*q2 = 2^126.699274 ok",
+   "mu = |Gamma|*P1 = 0.494318018 (cross-node pairs); lo carries the per-group rows ok",
+   "Chen-Stein b1+b2 < 2^-79 ok 2^-79.03",
+   "intruder rate per colliding pair (same 182 bits) < 2^-52.7 ok 2^-52.716",
+   "mean fixups per node (clean batches) q1*E_FIX = 2^27.598 < 2^28.68; cap 2^62 > 2^16 times it plus 33 q2 ok",
+   "fixup meter rate (Markov) < 2^-33.5 ok 2^-34.402",
+   "pair-slot overflow rate: hop 1, the per-group rows summed, < 2^-18.58; hop 2 < 2^-19.9 ok 2^-18.586 2^-19.944",
+   "candidate cap rate < 2^-23.4, request cap rate < 2^-25.9 ok 2^-23.432 2^-26.016",
+   "relay cap rate (a reply counts 8 records) < 2^-25.2 ok 2^-25.262",
+   "whole-run row: a computational defect in any batch < 2^-26.5 ok 2^-28.028",
+   "whole-run rows (defective batch anywhere, coin rejection twice) < 2^-26.5 ok 2^-28.028",
+   "success >= 1 - e^-mu - (b1+b2) - rows - global >= 0.39 ok 0.3900000000",
+   "non-stopping bounds: PHI[0] = 1, nonincreasing, within [0, 1] ok PHI[1] 0.9994 PHI[16] 0.9762 PHI[31] 0.9443",
+   "per-group hop-1 slots 1046528 are a multiple of k (keep lemma) ok",
+   "a hash chain holds one home's records of one fold: at most one slot cap per slot (2^36 slots) ok 2^57.9986",
+   "uncapped walks always terminate: every chain is finite (at most HOME_MAX entries) ok",
+   "E-charge per visit 4.5: 4 per visit plus the B after an even visit count, at most one per two visits ok",
+   "group sizes sum to the grouped q1, each >= 1; group records multiples of k ok",
+   "hash-head zeroing: zero16384 zeroes 16384 words per pass with 512 (DC ZVA, ADD #256; a 256-byte block), SUBS and B.NE (1026); 2^58 is a multiple of 16384, so the row is 2^58/16384 passes plus the RET ok",
+   "disclosed worst case 2^188604756/10^6: least 6-decimal bound >= R_WORST ok",
+   "declared worst case 2^188604756/10^6 equals the least 6-decimal bound (manifest match) ok",
+   "E-total display 2^134397286/10^6: least 6-decimal bound >= E_TOTAL ok",
+   "E-work below the worst case ok E 2^134.397286 worst declared 2^188.604756",
+   "E-claim = least 15-decimal c with 2^c >= E/1000 ok 124431501518764035/10^15",
+   "key paths E-priced: PJ = 2/3 + 2 d_wj + 1/(r - 1) per leaf + a B per sign, per group under PHI, plus DEFJ; below every-leaf row ok 2^126.4786, every-leaf row 2^127.1143",
+   "worst case charges every leaf's key path and every sign's B: R_WORST = E_WORST_REST + JROW_W + sum WGW ok",
+   "K2 verifications: main pairs (walks' pair counts, same-X excluded) at joint KB(136) + 1/r per group under PHI; same-X pairs global at most their visits (PAIRM); dependent terms global as before; below the old global product row ok 2^120.9658",
+   "barrier allowance covers the grouped run ok 2725 of 4096",
+   "grouped R1 partition (slots + hash heads + hash next-array) fits in R1's range; the next-array covers every receive pattern up to the slot caps by construction ok 2^62.9986",
+   "LS64 alignment: window slot n at 2^14-aligned base + 32n and R2 slot c + 32(n - 1) with c = 32 mod 64 (R2 base 32 mod 64, pair slots 32*cap_p apart, cursors moving by 32k or 32L only within a block): both 64-byte aligned exactly for even n ok",
+   "R1 layout: hop-1 slots at 2^52, the heads at 2^61 (2^61 bytes: the head address is 2^61 with the bucket in bits 3..60, one BFI), the next-array at 2^62 (entry (A>>1) + C per R2 address A, C = 2^62 - R2/2) up to R1's end; disjoint, in R1 ok heads end 2^62.0000, next-array end 2^62.9993, R1 end 2^62.9993",
+   "fixed regions (one group's X table, all groups' X affine store) lie below 2^52 ok 2^51.0111",
+   "aligned tables: LC at 0 and 2^39, RC at 2^43, hash-read cursors at 2^48, column blocks at 2^50, row blocks at 2^51; the rest fits between 2^44 and 2^48 ok 2^43.7353",
+   "record block: header and k slots within 2^14; bit 13 set exactly at slot k; bases/stride keep low 13 bits zero; cap_p and the group records multiples of k (keep lemma) ok",
+   "bwd's and keys' loop end: the q2 512-byte pair entries fill the lower 2^34 bytes of their 2^35-aligned block ok",
+   "record fields: k < 2^28 in w2 bits 36-63; the sign's code in w3 bits 36-38 is 2 (+, emit at entry + 128) or 4 (-, entry - 256), complemented on j = 1 (5, 3), the four distinct; l < 2^25 (l - 1 mod 2^25 for s = -1) in bits 39-63, complemented on j = 1 ok",
+   "R1 and R2 end below 2^64, below the beta tables at 2^64 - 2^51 (2^43 entries of 256 bytes, slot k at +32k) ok 2^63.998943",
+   "cursors cannot wrap: the last slot's base (hop-2 stride, at least hop 1's) plus 32 per leaf of a node over all groups stays below 2^64 ok 2^63.1388",
+   "hash-read cursors occupy [2^48, 2^48 + 2^39), below the column blocks at 2^50 ok",
+   "X tables [TB0, TB0 + 2^51) lie between R2's end and the beta tables, TiB-aligned; 256 X's * 8 table slots fill it ok",
+   "peak memory 2^72 * (fixed + R1 + 32 + R2 + beta tables + 1280 TiB of X tables) = 2^135.9991 bytes ok",
+   "caps exceed crude means: cap_p > m_p2 + 2^20 at hop 2, cap_pg > m_p1 + 2^17 per group at hop 1 ok m_p2 2^21.284, m_p1 2^16.479",
+   "preprocessing E_PRE (set-up, coins, permanent X's, X tables, pair-entry X words, beta rows, LC/RC tables, hash-head zeroing, read-cursor init, beta tables) = 2^116.1486675 units, included ok",
+   "declared E time_log2 124431501518764035/10^15: least 15-decimal value with 2^c >= E/1000 ok",
+   "declared memory 2^135.9991 bytes: least 4-decimal bound >= peak (2^135.9990545) ok",
+   "declared preprocessing 2^116.1487 units: least 4-decimal bound >= E_PRE / 1000 ok",
+   "declared success 0.39 <= the bound ok",
+   "proof.md 7: each of the 25 printed rows equals its log2 here (4 decimals), the rows sum to E_TOTAL, and the printed total is E6 ok",
+   "proof.md 7: a run that never stops early (all PHI = 1) costs 2^124.6523 units, as printed ok",
+   "stated figures (literals here, submission.json's statement and score) equal the certified ones ok",
+   "declared E work per leaf 207.6502: least 4-decimal bound >= E/S (207.6501861) ok",
+   "generator (exact arithmetic): doubling 903, mixed addition 1,391; with the exceptional-case tests, control, and up to max(Y_ENTRY, X_ENTRY) further field operations at most 645410, the allowance ok 1.0000x",
+   "permanent X generator: [a]P + R_g with the exceptional-case tests and control, plus the four affine-store STPs, fits GEN_MULX ok 642276 <= 645414",
+   "X setup: 2a^3, 2a, a^2, a^4, y^2, sigma, pi - 7 sigma, delta, -T(a), -T(beta a) and seven step values per table fit XSETUP ok 4840 <= 65536",
+   "pair entry X words: corrections and y^2 (2 LDP + 2 STP each), E/F/G base (ADD, STR), sigma base (ADD, STP), L and delta line bases (4 ADD, 2 STP each), loop (ADD, SUBS, B.NE) fit ENTRY_X ok",
+   "batch set-up: at most 145 instructions, within its allowance of 160 ok",
+   "grouped phase control: 12 kernel calls per group at most 33 each, stop test and loop 8, h2s's p word 4 (CSEL, CSEL, ADD, STR), over 160 groups < 2^17 ok",
+   "barrier: at most 131 instructions per node, in-flight counts and deliveries included (2^10 per node is > 7x) ok",
+   "phase-4 count exchange charged at its itemization per node and sub-phase: 12 per entry of the 2^36-entry table, 88 per message for 8*2^29 messages ok 2^40.1293",
+   "a broadcast message costs at most 16, in-flight count and delivery included, within its price of 40 ok",
+   "candidate: messages, both records' three candidate leaves, nine unit tests, solve mod r, [x]P = Q = 745505; charged above twice that ok 2.000x",
+   "program delivery: 2^18 bytes (43,399 kernel instructions expanded, 173,596 bytes, and <= 2^16 more for the generator, resolver and control) = 2^13 messages over 2 hops at 40 = 2^19.3 < node set-up 2^20 ok",
+   "analytic allowances (C, T, S generation, request regeneration, the E-averaged exchange rows included) are below 2^-12.2 of E-work ok 2^-12.238",
+   "q1 145285144 q2 2^25 n0 29249762909749248 S 2^126.699274 mu 0.494318018 success >= 0.3900000000",
+   "E_total 2^134.397286 instructions W_E 2^124.4315015188 E-claim 124431501518764035/10^15 per leaf 207.6501861 declared 207.6502 R_worst 2^188.604756",
+   "declared: memory_log2_bytes 135.9991 (exact 135.9990545) preprocessing_log2 116.1487 (exact 116.1486675)"
+  ],
+  "claim": "124.431501518764035",
+  "q1": 145285144,
+  "per_leaf_declared": "207.6502",
+  "mu": 0.49431801777872336,
+  "success_lower_bound": 0.3900000000833567,
+  "per_leaf": 207.6501861074453,
+  "groups": 160,
+  "phi_16": 0.9762162304746573,
+  "d_batch": 5.3264591114729e-39,
+  "g_def": 3.65442870447457e-09,
+  "d_fixup_meter": 4.40559567618225e-11,
+  "d_label_error": 9.723007678985596e-06,
+  "counts": {
+   "LEAVES": 6,
+   "MX": 256,
+   "L_Y": 131072,
+   "YGEN": 213316801,
+   "TBLD8_ONE": 412316860508,
+   "ENTRY_X": 32,
+   "XSETUP": 65536,
+   "KEY_INC": "269/2",
+   "KEY_FIX": 4,
+   "EMIT": 6,
+   "EMIT_INC": 36,
+   "JPATH": 1,
+   "FIX_SITES": "{'SHX': 27, 'FDX': 6, 'F5': 4, 'FS': 3, 'FADDW': 2, 'BLK': 14}",
+   "FIX_EXTRA": "{'SHX': 3, 'FDX': 3, 'F5': 3, 'FS': 4, 'FADDW': 4, 'BLK': 5}",
+   "DELTA_F": 4611686018427387904,
+   "INV": 22549,
+   "TINIT_ENTRY": 3,
+   "K": 256,
+   "FLUSH": 9,
+   "KEY_BLOCK_DROP": 7,
+   "H2S_BLOCK_DROP": 9,
+   "FIN_DEST": 14,
+   "FIN_SENT": 4,
+   "FIN_HELD": 2,
+   "FIN_FIX": 2,
+   "H2S_ARR": 6,
+   "H2S_ONE": 1,
+   "H2S_FULL": 8,
+   "H2S_EMPTY": 7,
+   "H2S_ARR_FIX": 16,
+   "LOOP8": 2,
+   "INIT3_BKT": 4,
+   "DLV": 6,
+   "DLVK": 1026,
+   "DONE": 2,
+   "G_GROUPS": 160,
+   "HB": 58,
+   "HCHG_NEW": 4,
+   "DLVC": 2,
+   "DLVS1": 2,
+   "DLVH_FAST": 19,
+   "DLVH_SEG": 7,
+   "DLVH_SLOW_FIX": 24,
+   "DLVHB": 531,
+   "DLVHS": 633,
+   "HCHG_VISIT": 4,
+   "HCHG_VER": 5,
+   "VISIT": "9/2",
+   "HCHG_END": 1,
+   "HCHG_LS0": 2,
+   "HCHG_LSA": 1,
+   "HCHG_LS1": 5,
+   "ZW": 16384,
+   "ZERO_PASS": 1026,
+   "STOP_CHECK": 5,
+   "NBAR_ALLOW": 4096,
+   "HOME_MAX": 287948901175001088,
+   "HEADER": 72
+  }
+ },
+ "seconds": 18.31
+}
