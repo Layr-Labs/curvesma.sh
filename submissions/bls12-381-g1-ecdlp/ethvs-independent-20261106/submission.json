@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Complete independent Shanks construction: bls12-381-g1-ecdlp",
+  "claims": [
+    {
+      "statement": "For the exact bls12-381-g1-ecdlp full-production challenge and encodings fixed by the protected profile reproduced in proof.md, the complete classical Shanks construction in proof.md and arithmetic.md returns the required output with success probability 1 over all valid challenge inputs. Its full cold total scalar AArch64 instruction-equivalent work divided by the fixed normalization C has log2 at most 162 at n=2^20, with R(n)<2^170+(n+1)*2^52 for all supplied n. Peak total memory is bounded by 2^151 bytes under the explicitly declared finite local-link machine model; all initialization, arithmetic, transfer, sorting/lookup, input/output and verification work is charged. No practical attack, novelty, improvement, reward or previous acceptance is claimed.",
+      "score": {
+        "numerator": "162",
+        "denominator": "1"
+      },
+      "evidence": [
+        "arithmetic.md",
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [],
+  "checks": []
+}
