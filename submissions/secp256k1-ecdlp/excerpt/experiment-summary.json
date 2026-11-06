@@ -1,0 +1,22 @@
+{
+ "input": {
+  "seed": 1,
+  "seconds": 12
+ },
+ "budget": {
+  "seconds": 12,
+  "reserve": 0.5,
+  "minimums": {
+   "class_rule_random": 2000,
+   "class_rule_near_tie": 600,
+   "class_labels": 3000
+  },
+  "note": "minimums first, then shares of the remaining budget up to the caps"
+ },
+ "counts_match_certificate": true,
+ "all_boolean_checks": 143,
+ "false_checks": [
+  "/B_routing/grouped_paths/full_case/stopped",
+  "/B_routing/grouped_paths/full_list_case/stopped"
+ ]
+}
