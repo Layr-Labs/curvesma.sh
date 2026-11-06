@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Compact finite pairing inversion with SHA-256 walk labels",
+  "claims": [
+    {
+      "statement": "The fully specified analytic classical algorithm in proof.md inverts the pairing for the exact supplied P with success at least 0.39 conditional on its sole joint SHA-512/SHA-256 random-function idealization. Complete cold work is below 2^(320583/2500) dense Fp12 reference equivalents at fixed C=20000: H<=K and R<=13344*K+2^90. Peak storage is below 2^50 bytes, advice zero, all preprocessing and failures charged. This is an exploratory heuristic bound, not a production execution.",
+      "score": {
+        "numerator": "320583",
+        "denominator": "2500"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
