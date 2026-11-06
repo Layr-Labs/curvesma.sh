@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: interleaved-chain BSGS, an analytic upper bound at time_log2 138",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. This is a conservative analytic upper bound on one cold classical attack, in the style of the organizer control; it does not claim to be the best attack, the tightest ledger, a new discrete-log method, a practical break, or a lower bound on security, and a cheaper attack may exist without contradicting it. The claimed bound is time_log2 = log2(W/1000) < 138, i.e. total classical work below 2^147.96578 instructions at the protected C=1000 scalar AArch64 instructions per target-group-operation equivalent. The construction uses m=2^128 baby indices and h=2^128-1 giant indices advanced as W=2^16 independent affine chains in lockstep, so one Montgomery batch inversion per round serves all 65536 denominators; the batch cost is charged in full at (3*(W-1)+512)/W = 197117/65536 = 3.007767... multiplications per step, times 179 = 538.39024353, added to the 3M incomplete-affine formula rather than replacing it. Records are collected in a flat array and LSD radix sorted on the full 256-bit x-coordinate, 16 passes of 16 bits, double buffered; the table holds 2^128 - 1 finite records, not 2^128, because baby index j=0 is [0]P=O and has no affine x-coordinate, so it is not inserted. The histogram counters and the cumulative destination offsets are SEPARATE arrays, each 2^16 entries of 129 bits (three 64-bit words), one word wider than the 128 bits the maximum bucket and maximum offset of 2^128-1 actually need, so the width is conservative rather than derived from a lower bound on a bucket; the counters are never reused as offsets. Lookup is a multiword binary search over the sorted array with lo=0 and hi=2^128-1, which fits in 128 bits; the worst case over N=2^128-1 half-open records is ceil(log2(N))=128 comparisons, so the row is 128 iterations of 40 charged instructions covering multiword lo/hi, the two-word midpoint with carry, multiword base+mid*48 addressing for a 2^133.58496-byte array (2^128 records of 48 bytes), a four-word record load, a worst-case four-word comparison, a two-word bound store and control, and experiment.py reports table_records so the specification and the ledger agree. Every allowance is the exact ceiling of eight times its count, verified in integer arithmetic: baby 1091.40 counted, ceil(8731.2)=8732 allowed; giant 6203.40 counted, ceil(49627.2)=49628 allowed; radix sort 736 counted, 5888 allowed. Note that 8731 and 49627, used in the preceding revision, were each strictly below eight times their counts; that contradiction is removed. The sum of allowances is 64248 per 2^128 records, so W <= 2^128*64248 = 2^129*32124 < 2^129*2^15 = 2^144. Since log2(32124)=14.97136, log2(W) <= 129 + 14.97136 = 143.97136, and the priced construction satisfies time_log2 <= 143.97136 - 9.96578 = 134.00558; the round figure 144 - 9.96578 = 134.03422 is weaker but also below 138, and the two identities are stated separately rather than interchanged. The declared 138 exceeds that by 3.99442, a factor of 2^3.99442 = 15.9 of slack. Preprocessing is the baby phase plus the sort at 131.86987 units, declared 132, and is included in the total rather than deducted. Peak memory is the double-buffered record array at 2^134.58496 bytes, declared 2^136, plus the two counter arrays; nonuniform advice is 0. Success probability is 1, exceeding the required 0.39: the search is exhaustive over the m baby and h giant indices, with no randomness, restart schedule, birthday premise or collision-dependency assumption. Chain advancement has four explicit charged states - FROM_INF, DOUBLING, TO_INF, SKIP - and chain c=0 starts at [0]P=O, so the infinity state is actually taken; the b=0 giant-chain infinity case and Q=infinity are handled and re-verified. The experiment drives each of the four states through the real advance routine and checks the resulting point, masks every counter and offset to 129 bits and reports overflow, and re-checks the eight-times assertion in integer arithmetic. The ledger deliberately avoids every pattern the Astra reviewer has rejected on this track: rounded-down scores, numeric assertions that do not hold, expected probe counts presented as upper bounds, tree height inferred from maximum branching, 256-bit comparisons charged as two scalar instructions, uncharged multiword bounds and addressing, counters sized from a lower bound on a bucket, counters reused as cumulative offsets, fixed-width claims validated only with unbounded integers, omitted batch inversion, chain advancement that leaves a point at infinity unchanged, exceptional-case tests that never execute the branch, and claim/proof figures that disagree. No production-size execution is performed or claimed, the 2^128-record array is not instantiated, and exploratory acceptance is not proof.",
+      "score": {
+        "numerator": "138",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-interleaved-bsgs-v7",
+      "source": "experiment.py",
+      "purpose": "Check at toy scale that the interleaved-chain schedule and the one-batch-inversion-per-round construction recover the scalar on every instance of y^2=x^3+7 over a small prime field; that each of the four chain-advance states is executed through the real advance routine and the resulting point checked; that the b=0 giant-chain point-at-infinity case is handled; that the batched inversion matches independent per-element inversion; that the priced structures are the ones implemented, namely an LSD radix sort with 16-bit digits whose histogram counters and cumulative offsets are separate arrays held in 129-bit fixed-width fields with overflow reporting, plus a multiword binary search over full coordinates; that every allowance equals the exact ceiling of eight times its count, checked in integer arithmetic; and that the claimed bound follows from the ledger in exact integer arithmetic with the reported slack. This does not establish production cost, memory, timing or behaviour at 2^128 steps, and no part of the claimed 138 derives from it.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 100003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "prime",
+          "trials",
+          "width"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 10007,
+          "trials": 16,
+          "width": 16
+        }
+      ]
+    }
+  ]
+}
