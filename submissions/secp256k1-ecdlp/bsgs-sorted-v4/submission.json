@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: interleaved-chain BSGS on a sorted array",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, recover x. The construction in proof.md uses m=2^128 baby indices and h=2^128-1 giant indices, advanced as W=2^16 independent affine chains in lockstep so that one Montgomery batch inversion per round serves all 65536 denominators of that round. The batch cost is charged in full at 3(W-1)+512 multiplications per round, i.e. 197117/65536 = 3.007767... multiplications per step, added to the 3M incomplete-affine formula rather than replacing it. Records (full 32-byte x, 16-byte index) are collected into a flat array and radix-sorted on the full 256-bit coordinate in 16 passes of 16 bits, double-buffered. Lookup is a binary search over the sorted array of full x-coordinates, exactly ceil(log2(2^128))=128 iterations at 10 instructions each, comparing complete 256-bit values: there is no hash, no tree occupancy assumption, no prefix grouping and no expected probe count. The ledger is: baby step 1090.40 instructions (537 formula, 538.40 batch inversion, 7 record append, 8 control); giant step 2363.40 (537, 538.40, 1280 binary search, 8 control); sort 320 instructions per record (16 passes times 20). Total is 2^128*3773.80 = 2^129*1886.90 instructions, log2 = 139.88195, so the score is at most 129.91617 target-group-operation equivalents at C=1000, declared rounded up as 129.92. Preprocessing is the baby phase plus the sort at 128.49509 units, declared 128.50, and is included in the total; every record insertion, record move and bucket increment is charged. Peak memory is the doubled record array at 2^135.5850 bytes, declared 2^135.59; nonuniform advice is 0 bytes. Success probability is 1: the search is exhaustive with no randomness, restart schedule, birthday premise or collision-dependency assumption. Chain advancement handles the point at infinity, doubling and inverse points in four explicit charged states, including chain c=0 which begins at [0]P=O; the b=0 giant-chain infinity case and Q=infinity are handled and re-verified. This is a deterministic generic search costed under classical-group-work-v2, not a new cryptanalytic technique, not a best-known-attack estimate, and not a full-size execution. The declared bound is deliberately weaker than earlier revisions of this candidate because those revisions undercharged the batch inversion, relied on an expected probe count, and then on an unjustified tree-bound; none of those numbers is recovered here by weakening the ledger.",
+      "score": {
+        "numerator": "3248",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-interleaved-bsgs-v4",
+      "source": "experiment.py",
+      "purpose": "Check at toy scale that the interleaved-chain schedule and the one-batch-inversion-per-round construction recover the scalar on every instance of y^2=x^3+7 over a small prime field; that the four chain-advance cases (infinity start, doubling, inverse point, out-of-range skip) are handled, including chain c=0 which begins at [0]G=O; that the b=0 giant-chain point-at-infinity case is handled; that the round's batched inversion matches independent per-element inversion; and that the lookup is a binary search over a sorted array of full x-coordinates, the same structure the ledger prices rather than a hash table. This does not establish production cost, memory, timing or behaviour at 2^128 steps.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prime": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 100003
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "prime",
+          "trials",
+          "width"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "prime": 10007,
+          "trials": 16,
+          "width": 16
+        }
+      ]
+    }
+  ]
+}
