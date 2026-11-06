@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "Tighter complete field-sum call accounting for sorted-checkpoint rho",
+  "claims": [
+    {
+      "statement": "The analytic algorithm in proof.md solves the full supplied-P pairing inversion problem with success at least 0.39 under its sole disclosed SHA-512 idealization and total cold work below 2^(25883/200) dense Fp12 equivalents at fixed C=20000. All failures, setup, sorted insertion, lookup, arithmetic, verification and G2 output are charged. Peak storage is below 2^35 bytes, advice zero. This is a heuristic analytic bound, not a production execution.",
+      "score": {
+        "numerator": "25883",
+        "denominator": "200"
+      },
+      "evidence": [
+        "blst-LICENSE.txt",
+        "collision-proof.md",
+        "compression-proof.md",
+        "compressor-audit.md",
+        "kernel-audit.md",
+        "kernel-excerpts.txt",
+        "prefix-audit.md",
+        "proof.md",
+        "universal-proof.md",
+        "checkpoint-proof.md",
+        "horizon-audit.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
