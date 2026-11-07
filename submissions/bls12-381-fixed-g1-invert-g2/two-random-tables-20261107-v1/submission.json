@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "title": "Two random tables with support-rank collision and weighted repeated-key proof:126.3634",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity P and full protected BLS12-381 sizes,proof.md gives pairing inversion into G2 with success>0.39 under disclosed full-standard-BLAKE3 H and finite banked-storage admissibility,with complete work<2^(631817/5000) protected dense-Fp12 equivalents,C20000. Two paid W=2^92 random-scalar tables generate X=h*z^(vj+wk) in one dense product;fresh PAIR hashes select independent indices. State independence conditional on tables is NOT assumed:success.md derives exact first/second moments by linear-row support alias bounds. Repeated equal-beta raw points are ignored cheaply;storage.md derives weighted bucket variance with a Markov multiplicity correction. Every nontrivial twist gives a deterministically nonzero extraction denominator. L=ceil2153R/2000 and all sampler/NH/identity/multiplicity/dictionary losses yield success>0.39008543834971. Native multiplication2034 retained2048,full seven-round hash928 retained1024,NH460 retained512,complete ordinary scalar<=10752L;full per-target cold<=540*2^119. Complete(30752L+540*2^119)/20000 has an exact5000th-power certificate. Peak capacity<2^136,advice0,no supplied auxiliary powers/amortization. Conditional analytic evidence,not official score,qualification,promotion or production execution.",
+      "score": {
+        "numerator": "631817",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "coarse-montgomery.S",
+        "cold-construction.md",
+        "generic-hash.S",
+        "hash.md",
+        "native-work.md",
+        "nh-fingerprint.S",
+        "proof.md",
+        "storage.md",
+        "success.md",
+        "trace.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
