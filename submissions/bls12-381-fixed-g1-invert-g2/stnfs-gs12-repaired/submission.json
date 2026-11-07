@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: repaired STNFS (exact norms, converged rho, measured alpha and kernels, re-parameterised)",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT, this package computes g = e(P, Q0) in GT and returns Q = [a]Q0 with e(P, Q) = z, where g^a = z is obtained by a Special Tower Number Field Sieve on the tower h(Y) = Y^6 - Y^2 + 1 = g3(Y^2), f_y(X) = X^12 - 2yX^10 + 2y^3X^6 + y^5X^2 + (y^2-1), g_y(X) = X^2 - u y, at sieve box A = 650 and smoothness bound B = 2^66. Relation collection sieves the exact fundamental domain of the order-4 automorphism group (the box is Cartesian and exactly invariant; both norms depend only on even powers of b so the automorphism yields a second relation from the same norm at no extra norm or cofactorisation cost, charged). Algebraic norms are computed exactly as integer resultants and independently cross-checked against all six conjugate embeddings in 55-digit arithmetic. Smoothness uses Murphy/Dickman second order with alpha measured from exact valuations. Under the disclosed heuristics the attack succeeds with probability at least 0.39 (claimed 0.97) and its complete classical work is at most 2^116.337899 dense-Fp12-multiplication equivalents, normalized by C = 20000 scalar AArch64 instructions per reference multiplication. Peak memory is below 2^68.5 bytes; preprocessing is charged in full with no amortization; nonuniform advice is 0 bytes.",
+      "score": {
+        "numerator": "116337899",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md",
+        "experiment.py",
+        "kern.c"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-exact-norms-yield-filtering-descent-ledger",
+      "source": "experiment.py",
+      "purpose": "Verify the BLS12-381 target identities and the tower, compute both algebraic norms exactly as integer resultants and cross-check them against the product over all six conjugate embeddings, validate the converged Dickman rho against its table, measure Murphy alpha by exact prime valuations of the norms, run the observed-smoothness calibration, run the production-parameter Monte-Carlo yield with a block confidence interval and Poisson survival, run the filtering/rank simulation, run the descent model with its Markov bound, and recompute the full instruction ledger and the score.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "A": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 3000
+          },
+          "B_log2_milli": {
+            "type": "integer",
+            "minimum": 50000,
+            "maximum": 78000
+          },
+          "mc_samples": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 60000
+          },
+          "alpha_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "cal_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "cross_samples": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 2000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000000
+          }
+        },
+        "required": [
+          "A",
+          "B_log2_milli",
+          "mc_samples",
+          "alpha_samples",
+          "cal_samples",
+          "cross_samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "A": 650,
+          "B_log2_milli": 66000,
+          "mc_samples": 12000,
+          "alpha_samples": 1500,
+          "cal_samples": 2000,
+          "cross_samples": 60,
+          "seed": 20261108
+        }
+      ]
+    }
+  ]
+}
