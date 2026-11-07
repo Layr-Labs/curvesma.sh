@@ -1,0 +1,135 @@
+// Native canonical six-limb Fp addition/subtraction. x0=a,x1=b,x2=output.
+// Explicit scalar leaf source evidence,never host-executed.
+.text
+.p2align 2
+.global fapi_fp_add
+.type fapi_fp_add,%function
+fapi_fp_add:
+    mov x13,x0
+    mov x14,x1
+    mov x15,x2
+    adrp x16,fapi_mod_p
+    add x16,x16,:lo12:fapi_mod_p
+    ldp x0,x1,[x13,#0]
+    ldp x2,x3,[x13,#16]
+    ldp x4,x5,[x13,#32]
+    ldp x6,x7,[x14,#0]
+    ldp x8,x9,[x14,#16]
+    ldp x10,x11,[x14,#32]
+    adds x0,x0,x6
+    adcs x1,x1,x7
+    adcs x2,x2,x8
+    adcs x3,x3,x9
+    adcs x4,x4,x10
+    adc x5,x5,x11
+    ldp x6,x7,[x16,#0]
+    ldp x8,x9,[x16,#16]
+    ldp x10,x11,[x16,#32]
+    subs x6,x0,x6
+    sbcs x7,x1,x7
+    sbcs x8,x2,x8
+    sbcs x9,x3,x9
+    sbcs x10,x4,x10
+    sbcs x11,x5,x11
+    csel x0,x6,x0,hs
+    csel x1,x7,x1,hs
+    csel x2,x8,x2,hs
+    csel x3,x9,x3,hs
+    csel x4,x10,x4,hs
+    csel x5,x11,x5,hs
+    stp x0,x1,[x15,#0]
+    stp x2,x3,[x15,#16]
+    stp x4,x5,[x15,#32]
+    ret
+.size fapi_fp_add,.-fapi_fp_add
+.p2align 2
+.global fapi_fp_sub
+.type fapi_fp_sub,%function
+fapi_fp_sub:
+    mov x13,x0
+    mov x14,x1
+    mov x15,x2
+    adrp x16,fapi_mod_p
+    add x16,x16,:lo12:fapi_mod_p
+    ldp x0,x1,[x13,#0]
+    ldp x2,x3,[x13,#16]
+    ldp x4,x5,[x13,#32]
+    ldp x6,x7,[x14,#0]
+    ldp x8,x9,[x14,#16]
+    ldp x10,x11,[x14,#32]
+    subs x0,x0,x6
+    sbcs x1,x1,x7
+    sbcs x2,x2,x8
+    sbcs x3,x3,x9
+    sbcs x4,x4,x10
+    sbcs x5,x5,x11
+    csetm x12,lo
+    ldp x6,x7,[x16,#0]
+    ldp x8,x9,[x16,#16]
+    ldp x10,x11,[x16,#32]
+    and x6,x6,x12
+    and x7,x7,x12
+    and x8,x8,x12
+    and x9,x9,x12
+    and x10,x10,x12
+    and x11,x11,x12
+    adds x0,x0,x6
+    adcs x1,x1,x7
+    adcs x2,x2,x8
+    adcs x3,x3,x9
+    adcs x4,x4,x10
+    adc x5,x5,x11
+    stp x0,x1,[x15,#0]
+    stp x2,x3,[x15,#16]
+    stp x4,x5,[x15,#32]
+    ret
+.size fapi_fp_sub,.-fapi_fp_sub
+.p2align 2
+// Static analytic evidence only; never host-executed.
+// x0 points to canonical Montgomery a in [0,p); x1 points to disjoint output48.
+// Returns canonical -a mod p. Caller scratch only; x18 and callee state untouched.
+.text
+.p2align 2
+.global fapi_fp_neg
+.type fapi_fp_neg,%function
+fapi_fp_neg:
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x0,#16]
+    ldp x6,x7,[x0,#32]
+    orr x14,x2,x3
+    orr x14,x14,x4
+    orr x14,x14,x5
+    orr x14,x14,x6
+    orr x14,x14,x7
+    cbz x14,.Lfp_neg_zero
+    adrp x14,fapi_mod_p
+    add x14,x14,:lo12:fapi_mod_p
+    ldp x8,x9,[x14,#0]
+    ldp x10,x11,[x14,#16]
+    ldp x12,x13,[x14,#32]
+    subs x8,x8,x2
+    sbcs x9,x9,x3
+    sbcs x10,x10,x4
+    sbcs x11,x11,x5
+    sbcs x12,x12,x6
+    sbc x13,x13,x7
+    stp x8,x9,[x1,#0]
+    stp x10,x11,[x1,#16]
+    stp x12,x13,[x1,#32]
+    ret
+.Lfp_neg_zero:
+    stp xzr,xzr,[x1,#0]
+    stp xzr,xzr,[x1,#16]
+    stp xzr,xzr,[x1,#32]
+    ret
+.size fapi_fp_neg,.-fapi_fp_neg
+
+.section .rodata
+.p2align 3
+fapi_mod_p:
+    .quad 0xb9feffffffffaaab
+    .quad 0x1eabfffeb153ffff
+    .quad 0x6730d2a0f6b0f624
+    .quad 0x64774b84f38512bf
+    .quad 0x4b1ba7b6434bacd7
+    .quad 0x1a0111ea397fe69a
