@@ -1,0 +1,161 @@
+// Static evidence only;neverhost-executed.
+// x0rawA96,x1negAimag48,x2Bvariants4*96,x3outTrace192,x4koutput8.
+// Bvariants=(B,K(B),-B,-K(B));B!=0,k0..3. Destinationsdisjoint.
+.text
+.p2align 2
+.global fapi_trace_min
+.type fapi_trace_min,%function
+.macro COMPARE_B k
+    add x1,x8,#(96*\k)
+    mov x7,#\k
+    ldp x2,x3,[x0,#48]
+    ldp x4,x5,[x1,#48]
+    subs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#64]
+    ldp x4,x5,[x1,#64]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#80]
+    ldp x4,x5,[x1,#80]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x1,#0]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#16]
+    ldp x4,x5,[x1,#16]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#32]
+    ldp x4,x5,[x1,#32]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    csel x0,x1,x0,hs
+    csel x6,x7,x6,hs
+.endm
+fapi_trace_min:
+    mov x11,x0
+    mov x12,x1
+    mov x8,x2
+    mov x9,x3
+    mov x10,x4
+    mov x6,xzr
+// TestAimagzero. x6kremains0.
+    ldp x2,x3,[x11,#48]
+    orr x7,x2,x3
+    ldp x2,x3,[x11,#64]
+    orr x7,x7,x2
+    orr x7,x7,x3
+    ldp x2,x3,[x11,#80]
+    orr x7,x7,x2
+    orr x7,x7,x3
+    cbnz x7,.Ltrace_nonzero_aimag
+// Count the rare longer zero-imaginary path; caller checks negative status.
+    adrp x15,fapi_trace_zero_control
+    add x15,x15,:lo12:fapi_trace_zero_control
+    ldp x0,x1,[x15,#0]
+    adds x0,x0,#1
+    adc x1,x1,xzr
+    stp x0,x1,[x15,#0]
+    ldp x2,x3,[x15,#16]
+    subs xzr,x0,x2
+    sbcs xzr,x1,x3
+    b.hi .Ltrace_min_costfail
+    mov x0,x8
+    COMPARE_B 1
+    COMPARE_B 2
+    COMPARE_B 3
+    b .Ltrace_output
+.Ltrace_nonzero_aimag:
+// ChooseparitybyAimagversusitscanonicalnegative.
+    ldp x2,x3,[x11,#48]
+    ldp x4,x5,[x12,#0]
+    subs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x11,#64]
+    ldp x4,x5,[x12,#16]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x11,#80]
+    ldp x4,x5,[x12,#32]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    cset x6,hs
+    add x0,x6,x6,lsl #1
+    add x0,x8,x0,lsl #5
+// Same-parityothercandidateisk+2.
+    add x1,x0,#192
+    add x7,x6,#2
+    ldp x2,x3,[x0,#48]
+    ldp x4,x5,[x1,#48]
+    subs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#64]
+    ldp x4,x5,[x1,#64]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#80]
+    ldp x4,x5,[x1,#80]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x1,#0]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#16]
+    ldp x4,x5,[x1,#16]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    ldp x2,x3,[x0,#32]
+    ldp x4,x5,[x1,#32]
+    sbcs xzr,x2,x4
+    sbcs xzr,x3,x5
+    csel x0,x1,x0,hs
+    csel x6,x7,x6,hs
+.Ltrace_output:
+    tst x6,#1
+    add x13,x11,#48
+    csel x14,x12,x13,ne
+// Areal48,Aimag48,B96;alloutputfieldsareinitialized.
+    ldp x2,x3,[x11,#0]
+    stp x2,x3,[x9,#0]
+    ldp x2,x3,[x11,#16]
+    stp x2,x3,[x9,#16]
+    ldp x2,x3,[x11,#32]
+    stp x2,x3,[x9,#32]
+    ldp x2,x3,[x14,#0]
+    stp x2,x3,[x9,#48]
+    ldp x2,x3,[x14,#16]
+    stp x2,x3,[x9,#64]
+    ldp x2,x3,[x14,#32]
+    stp x2,x3,[x9,#80]
+    ldp x2,x3,[x0,#0]
+    stp x2,x3,[x9,#96]
+    ldp x2,x3,[x0,#16]
+    stp x2,x3,[x9,#112]
+    ldp x2,x3,[x0,#32]
+    stp x2,x3,[x9,#128]
+    ldp x2,x3,[x0,#48]
+    stp x2,x3,[x9,#144]
+    ldp x2,x3,[x0,#64]
+    stp x2,x3,[x9,#160]
+    ldp x2,x3,[x0,#80]
+    stp x2,x3,[x9,#176]
+    str x6,[x10]
+    mov x0,x6
+    ret
+// Failure leaves output/key untouched; parent tests x0 bit63 before STATUS1.
+.Ltrace_min_costfail:
+    mov x0,#-1
+    ret
+.size fapi_trace_min,.-fapi_trace_min
+
+.section .data
+.p2align 4
+.global fapi_trace_zero_control
+fapi_trace_zero_control:
+// Cold initializes count0 and capG=floor(K/2^16)+1 in two128-bit fields.
+// Reset count after the cold initial canonical call,before ordinary main.
+    .zero 32

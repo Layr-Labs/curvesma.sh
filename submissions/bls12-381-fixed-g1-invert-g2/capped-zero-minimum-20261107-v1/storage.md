@@ -1,0 +1,19 @@
+# Explicit finite banked storage for the chained dictionary
+
+This is a material finite machine-model assumption,not an installed VM configuration or practical hardware claim. It supplies storage only:no hash,group,search or arithmetic oracle. All CPU index work,selector writes,barriers andtransfers arepaid. If inadmissible under protected rules,the scientific claim must be rejected. The VM intakes static evidence;analytic bounds arepermitted.
+
+Reserve2^126 payloads*512=2^135 bytes,2^128 bucket heads*16=2^132 bytes,and2^64 jump banks*2^40=2^104 bytes. Sharedtables,code,currentstates,frames,scratch andcountersfit<2^45. Peak2^135+2^132+2^104+2^45<2^136 includesallcapacity andpadding,withzeroadvice. Payloadindex0isnil,indices1..K+1<2^126 areallocatedmonotonically.
+
+The noncacheable2^40-bytewindowbeginsat2^45;allshareddataisbelow2^45 andallnativeaddressesbelow2^46,withinordinary48-bitvirtualaddressing. Payloadindexp:local31bits,offsetlocal<<9,bankp>>31 (<2^95). Headindexi128bits:local36bits,offsetlocal<<4,bank2^95+(i>>36) (<2^96). Jumpindexj94bits:local30bits,offsetjlow*640,bank2^96+(j>>30) (<2^97). Thethreebankrangesaredisjoint,withpayloads andheads fullycontainedinonewindow. Alllogicalindicesfit128bits,actualpointers64bits.
+
+A97-bitselectorhaslow64/high33ordinarywordlatches. DSB completespreviousaccesses;STRlow,STRhigh fillpendinglatches;STRcommitselectsbank;DSBorderssubsequentaccesses. Noatomic128-bitstoreisassumed. Noncacheablemappingpreventsstalealiases. EXTR/LSRimplement128-bitshifts;regionbases sethighwordbits31/32,clearofthebankindex. Allselectors,includingindexloads,shifts,masks,regionbits,windowoffset,pointer,latches,commit,barriers andcontext,cost<=32instructions. Thisispaidinthefixed dictionary,per-visit andjumpbudgets. Onecontrollerexists;decoderonlyroutesaddressbits,withoutstoredper-bankdescriptororcomputationaloracle.
+
+EVERY buckethead iszeroedcold:2^128ordinarypairedstores,withcompletefixed-blockhelpers/control/bankworkcoveredby(540*2^119). This excludesuninitializedadvice. Eachallocatedpayload isfullyzeroedandwrittenbeforepublicationbythe160fixed dictionary allowance;unallocatedpayloadsareneverread. Everyrawjump/bankispopulatedbychargedtarget-specificconstruction. The fully initialized NH seed record uses1040 shared bytes. Allotherfixedimage,stateandbuffersfittheshared2^45allowance. No DMA,network,processor migration,page-faultalgorithm orfreeglobalinitializationisused.
+
+Rootdraftsremainadd-only. Candidateevidenceisnevercompiledorexecutedonthehostorwithcredentials. Scientificexecution/review/scoringbelonginsharedllm-verifier. Physicalcapacity isanalyticallystated,notallocatedbytheverificationVM,anddoesnotdemonstratepracticalhardwareavailability.
+
+Canonical outputS192 and the576-byte workspace fit within the same shared2^45 image. Workspace:Bvariants384,ANEG48,SUM48,DIFF48,native s48;no zero operand buffer. Raw A is read in place. All fields are cold initialized;all transient B/ANEG/SUM/DIFF values are overwritten before use. Payload/raw/head/jump capacities remain unchanged,including2^64 jump banks. canonical-parent.md specifies every byte and lifetime.
+
+The lazy parent adds32 explicitly initialized shared bytes for count128/cap128. It fits the same shared2^45 image;all workspace/control/code/native-s initialization and the post-initial-call count reset are charged cold. No bank-selection contract changes.
+
+The minimum adds32 initialized shared bytes for zero-count128/G128;total new cap controls are64 bytes. Both counters reset after the cold initial canonical call,before ordinary main. All code/data/bindings/reset work is cold paid.
