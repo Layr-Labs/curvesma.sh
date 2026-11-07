@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "Simple b-half key and complete scalar leaves for the plain adding walk:127.650",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size plain GT adding walk inproof.md has success>=0.39 under disclosed standard BLAKE3 H andcomplete cold work<2^(2553/20) protected dense-Fp12 equivalents atC=20000. It uses one reference multiplication pertransition andotherwork<=2432K+2^90 scalarinstructions,peakmemory<2^50bytes,zero advice,includingalltableconstruction,rejections,lookup,transfers,verification andcanonicalG2output. Thisisanalyticconditional evidence,notproductionexecution orqualification.",
+      "score": {
+        "numerator": "2553",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md",
+        "lookup.S",
+        "hot-loop.S",
+        "tabulate.S",
+        "blake3-final.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
