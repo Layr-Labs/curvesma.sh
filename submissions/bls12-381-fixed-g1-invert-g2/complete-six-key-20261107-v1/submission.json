@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Complete150-instruction six-fiber projection with index sorting:126.698",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 and exact supplied nonidentity P,proof.md gives pairing inversion into verified canonical G2 with success>0.39024473 under explicitly disclosed actual full standard keyed/unkeyed BLAKE3 H and finite banked-storage admissibility. Canonicalize only the sign of raw b1 in the192-byte Fp4 trace key;exact fibers are six even-Frobenius points on FULL order-r GT. Two full-Fr paid target-specific tables produce h*z^(v+w),one dense reference/sample. Finite first/second useful-collision support-rank moments use five nonidentity phases and L=ceil1031*ceil(sqrt(r/5))/1000. Two80-bit stable radix passes move64-byte fingerprint/ordinal records;immutable payloads are fully compared under a paid work cap. Generation5184+sort544+scan128+cap32=5888 retained6112 native/sample,cold<=2^120. Static standard seven-round compression leaf928 through RET,retained1024;static conjugate sign helper97 through RET,complete key wrapper overcount150 including all calls,key retained192. All five scalar candidates are verified,cold paid. Exact500th-power bound(26112L+2^120)/20000<2^(63349/500). Peak<2^137,advice0,no supplied auxiliary powers/amortization. Conditional analytic evidence,not an official score,qualification,promotion or practical production attack.",
+      "score": {
+        "numerator": "63349",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
