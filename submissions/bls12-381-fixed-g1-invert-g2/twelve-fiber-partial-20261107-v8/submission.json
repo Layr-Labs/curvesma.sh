@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "Exact partial GT product for trace key:125.831",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion under explicit cold SCAL/KEYF BLAKE3 H and finite banked-storage admissibility succeeds with probability greater than0.39024473 via deterministic grid,finite projective-row proof and full192-bit universal polynomial fingerprint. Compute exact Fp2 coefficients A=a0c0+xi(a1c2+a2c1+b0d2+b1d1+b2d0),B=a0d1+a1d0+b0c1+b1c0+xi(a2d2+b2c2) of each mathematical GT product,only those consumed by the full twelve-orbit key. No full hot GT product is materialized or priced as a free oracle. Complete projection body201 plus transitive native calls totals14372,retained15360 via12 full Fp2 products,10 Fp2 adds,4 Fp operations and all zero/interface costs. Unchanged other sample work5408 yields20768 scalar instructions/sample,no hot dense reference. Complete bound(20768L+2^120)/20000<2^(125831/1000),proposed125.831,includes cold tables,all failures,transfers,rejections and verified canonical G2 output for actual P. Peak<2^137,zero advice,no supplied powers or amortization. Full conditional algorithm/proof/accounting are in evidence;not practical execution or qualification.",
+      "score": {
+        "numerator": "125831",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
