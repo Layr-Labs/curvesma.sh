@@ -1,0 +1,7 @@
+# Direct exact-key fingerprint contract
+
+Canonical S is192 initialized native bytes, four canonical Fp coefficients Areal,Aimag,Breal,Bimag, each six little-endian64-bit Montgomery limbs. trace-min.S writes all of it directly in shared context64..255. The NH fingerprint leaf tabulate.S reads exactly its24 words as twelve adjacent pairs; no digits beyond192 bytes, constant-position table, or serialization copy is used. Its1040-byte seed record is initialized cold and its U40 output is big-endian. nh-fingerprint.md proves all arithmetic, independence, compression/coupling and complete460-instruction claims.
+
+fp4-trace.md proves key equality iff raw points are in the same full Frobenius12 orbit. No trace-distribution assumption is used. Under the same full standard BLAKE3 bridge H, NH key derivation is explicitly computed/paid and fixed-pair fingerprint collision is<2^-312. Ideal-path coupling loss is<2^-61, retained2^-55. The Markov/mixing/moment proof is unchanged after this coupling. Actual fingerprints/trajectories differ from the tabulation predecessor.
+
+Payload stores192 key bytes0..191, zero padding192..303, historyA304/B336/k368/U384/next432. Every512-byte payload is initialized before publication. Current raw GT always remains a full576-byte value in960-byte state records. Terminal canonical-key comparison checks all24 words; cold reconstruction and three-twist search recover the unique group relation, followed by h^a=z and exact pairing/output verification. No key-only group operation or free decompression oracle is assumed.

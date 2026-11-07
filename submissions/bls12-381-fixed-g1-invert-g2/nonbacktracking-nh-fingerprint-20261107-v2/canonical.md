@@ -1,0 +1,13 @@
+# Exact trace canonicalization in the pinned full field
+
+Useprotectedfullp,r,Q0,validatednonidentitysuppliedP,canonicalGTz,andpinnedpairingh=e(P,Q0). Nondegeneracy/primeordermakehagen for everyallowedP. Solve z=h^aandreturncanonicalQ=[a]Q0afterh^a=zandpairing(Q,P)=zchecks. IdentityzreturnsG2infinity. Noauxiliarypowers,replacementP,hiddenscalarinputoruncheckedanswerisused.
+
+ThepinnedtowerisFp2[u]/(u²+1),Fp6=Fp2[v]/(v³-1-u),Fp12=Fp6[w]/(w²-v). NativeGTrecordscontainfullrawX576bytes,FrhistoryA/B576..639,k944,otherpaddingunused. Exactcubictracefiber,theprojectionS=a0+b1w³,andfree4-imagecanonicalizationareprovedinfp4-trace.md. AllrawgroupoperationsremainfullprotectedFp12referenceoperations. No192-bytekeyisusedasafreegroupoperation.
+
+Coldconstructs=(1+u)^((p-1)/2)'sequalFpcoefficientsinC=(s,s). Publicprofilepmod24=19and2s²=-1areexactlycheckable. StoreitnativeMontgomery,withzeroFpfornegationandallordinarycode/descriptors/addressesfullyinitialized. ExtractrawA=a0at0..95,B=b1at384..479intoTRAW192. TestB!=0;onGT,B0iffidentity,whosevisitlossispaid. DirectlycopyrawB96tocandidateB0,paidinside176minimum/copy.
+
+Onefixedfieldprogramhasninecalls,withactualhelperABIsencoded:(1)negrawAimagtoANEG48,(2)addBre+BimtoSUM48,(3)subBre-BimtoDIFF48,(4)nativeMULSUM*stoBcandidate1real,(5)nativeMULDIFF*stoBcandidate1imag,(6/7)negBre/Bimtocandidate2,(8/9)negcandidate1real/imagtocandidate3. Alloutputsaredisjointfromtheirsourcesorotherwiseexplicitlysafe. AllfourBvariantsandANEG48areinitializedbeforetrace-min.S. Thereisnonewlocalrandomness,costcounter,deferredimaginaryfieldorvariableprogramselection.
+
+trace-min.S inputs(rawA96,negAimag48,Bvariants384,outS192,kout8),returnsminimumk0..3andwritesall192keybytes/k. Itsparentfapi_trace_canonicalstoreskatcurrentrecord944andreturnsSTATUS1,notk,toitscaller;B0identityreturnsSTATUS0. CanonicalkeylayoutisAreal48,Aimag48,Breal48,Bimag48,nativecanonicalMontgomerylimbs. Itidentifiesfulltwelve-elementGTorbits,notonlytraceorbits;threepossiblerawtwistsareresolvedcoldbyreconstructingXsfrompaidFrhistory. Fullreduction/termination/verificationareinproof.md.
+
+Nativefieldbodyprices384/42arecertifiedinnative-field-audit.mdwithprimaryexcerpts/adapter/license. Ninefieldcalls,oneinterpreterentry/arguments<=58,parent/top<=32,total90<96wrappers. Rawprojection27,Bzerotest18,fixedbuffer/programsetup10,parentcontext16,finaldispatch12,total83<96control. Minimum131max+interface16+Bcopy18=165<176. Canonical1440isdeterministicperstep,noM/classcap. Actualcontext/pointers/phase/ABIandloopareexplicitintrace-controller.md/trace-hot-loop.S. Rootdraftsareadd-only;allevidenceisstatic,neverhostexecuted.
