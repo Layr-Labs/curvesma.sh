@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "Scalar pointer minimum and tight hard canonical budget for the joint-label walk:126.253",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size joint-label nonbacktracking algorithm in proof.md has success>=0.39 underdisclosed standard BLAKE3-256 H andexplicitfinitebankedstorage,withcompletecoldwork<2^(126253/1000) protecteddense-Fp12equivalents atC20000:onereferencepertransition,otherwork<=9728K+540*2^119 scalarinstructions,peakmemory<2^136bytes,zeroadvice. The explicit327-instructionpointer-minimumleaf andtightenedweightedcap boundcanonicalwork<=6762K withcapfailure<2^-100. Jointphasecouplingandconditionaldictionarylossesareincluded;everyheadisinitialized. Thisisanalyticconditionalevidence,notproductionexecution orqualification.",
+      "score": {
+        "numerator": "126253",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "canonical-budget.md",
+        "copy-negate.S",
+        "dictionary.md",
+        "canonical-min.S",
+        "canonical-min.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
