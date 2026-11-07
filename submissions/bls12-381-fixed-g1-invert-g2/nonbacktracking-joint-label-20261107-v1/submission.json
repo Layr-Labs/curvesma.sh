@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "title": "One joint standard hash for nonbacktracking labels and capped dictionary:126.278",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size algorithm in proof.md has success>=0.39 under disclosed standard BLAKE3-256 H andexplicit finitebankedstorage,withcompletecoldwork<2^(63139/500) protecteddense-Fp12equivalentsatC20000:onereferencepertransition,otherwork<=10240K+2^130 scalarinstructions,peakmemory<2^136bytes,zeroadvice. Oneordinaryfullhashsupplies76-bitindex,180-bitphasevariate andcorrelated128-bitbucket. Thephasecouplingloss<2^-50 andconditionaldictionary-capfailure<2^-100 areexplicitlysubtracted. Everyheadisinitialized. Thisisanalyticconditionalevidence,notproductionexecution orqualification.",
+      "score": {
+        "numerator": "63139",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "canonical-budget.md",
+        "copy-negate.S",
+        "dictionary.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
