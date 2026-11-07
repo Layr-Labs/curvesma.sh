@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "Two wide-component Frobenius12 walk with explicit banked memory:127.062",
+  "claims": [
+    {
+      "statement": "For the exact supplied P, the full-size algorithm in proof.md has success>=0.39 under disclosed standard BLAKE3 H and the explicit finite banked-RAM realization in storage.md. Complete cold computation<2^(63531/500) reference dense-Fp12 equivalents at C=20000,with two reference multiplications per transition andother work<=12032K+2^120 scalar instructions. Peak memory<2^87 bytes,zero advice;all table construction,attempts,failures,selection,transfers,verification andG2 output are included. This is an analytic conditional proposal,not production execution,qualification orpractical availability.",
+      "score": {
+        "numerator": "63531",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md",
+        "storage.md",
+        "baseline/README.md",
+        "baseline/hot-loop.S",
+        "baseline/prefix-lookup.S",
+        "baseline/blake3-final.S",
+        "baseline/sign.S",
+        "baseline/tabulate.S",
+        "field-ops.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
