@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "title": "Integrated full-size Montgomery products for twelve-orbit index search:126.28",
+  "claims": [
+    {
+      "statement": "Full protected fixed-G1 BLS12-381 pairing inversion for the actual supplied P,success>0.39024473 under explicit actual full standard keyed/unkeyed BLAKE3 H and finite banked-storage admissibility. Start from exact six-fiber trace/sign key,compute one odd Frobenius candidate using actual C=(s,s),two full Fp native Montgomery products,and select the full192-byte minimum. Exact fibers are FULL twelve-element Frobenius orbits on FULL order-r GT. Two paid full-Fr target-specific tables,one dense reference/sample. Finite support-rank useful-collision moments use eleven nonidentity phases,L=ceil1031*ceil(sqrt(r/11))/1000. Immutable payloads and64-byte fingerprint/index records are processed with two80-bit stable radix passes and capped full confirmations. Key<=3072 includes explicit780-through-RET CIOS Montgomery products retained832 each,with seven-word headroom proved using actual p<Rmont/2;standard BLAKE3 leaf928 retained1024. Generation8064+sort544+scan128+cap32=8768 retained8992 native/sample,cold<=2^120 includes all eleven verified terminal candidates. Exact25th-power complete bound(28992L+2^120)/20000<2^(3157/25),proposed126.28. Peak<2^137,advice0,no supplied auxiliary powers/amortization. Conditional analytic evidence,not an official score,qualification,promotion or practical break.",
+      "score": {
+        "numerator": "3157",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "cios-montgomery.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
