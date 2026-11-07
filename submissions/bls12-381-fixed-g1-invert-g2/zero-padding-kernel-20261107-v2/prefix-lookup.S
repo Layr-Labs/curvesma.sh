@@ -1,0 +1,169 @@
+// Analytic leaf, not host-executed. x0 sorted record pointer array,x1 n<=1023,
+// x2 current full record,x3 pointer to128-bit remaining equality budget.
+// Return x0 insertion/match index,x1 flag0 miss,1 exact match,2 budget exhaustion.
+.text
+.p2align 2
+.global fapi_prefix_lookup
+.type fapi_prefix_lookup,%function
+fapi_prefix_lookup:
+    mov x13,x3
+    ldr x12,[x2,#936]
+    mov x3,xzr
+    mov x4,x1
+.Ltop:
+    cmp x3,x4
+    b.hs .Lscan
+    sub x5,x4,x3
+    lsr x5,x5,#1
+    add x5,x5,x3
+    ldr x6,[x0,x5,lsl #3]
+    ldr x7,[x6,#936]
+    cmp x7,x12
+    b.lo .Lless
+    mov x4,x5
+    b .Ltop
+.Lless:
+    add x3,x5,#1
+    b .Ltop
+.Lscan:
+    cmp x3,x1
+    b.hs .Lmiss
+    ldr x6,[x0,x3,lsl #3]
+    ldr x7,[x6,#936]
+    cmp x7,x12
+    b.ne .Lmiss
+    ldp x14,x15,[x13]
+    orr x16,x14,x15
+    cbz x16,.Lbudget
+    subs x14,x14,#1
+    sbc x15,x15,xzr
+    stp x14,x15,[x13]
+    add x6,x6,#640
+    add x7,x2,#640
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldp x8,x9,[x6],#16
+    ldp x10,x11,[x7],#16
+    cmp x8,x10
+    b.ne .Ladvance
+    cmp x9,x11
+    b.ne .Ladvance
+    ldr x8,[x6]
+    ldr x10,[x7]
+    cmp x8,x10
+    b.ne .Ladvance
+    mov x0,x3
+    mov x1,#1
+    ret
+.Ladvance:
+    add x3,x3,#1
+    b .Lscan
+.Lmiss:
+    mov x0,x3
+    mov x1,xzr
+    ret
+.Lbudget:
+    mov x0,x3
+    mov x1,#2
+    ret
+.size fapi_prefix_lookup,.-fapi_prefix_lookup
