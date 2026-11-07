@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "title": "Explicit dictionary instructions and exact history from allocation index:125.827",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size h*z^v_j walk with A_t=t+1 in proof.md has success>=0.39 under disclosed standard BLAKE3-256 H and explicit finite banked storage,with complete work<2^(125827/1000) protected dense-Fp12 equivalents at C20000:one reference per transition,otherwork<=2944K+540*2^119 scalar instructions,peak memory<2^136,zero advice. K=ceil1243R/1250 is justified by finite weighted-Fourier factorial moments. Explicit dictionary-index.S certifies fixed147+43 per old-node visit,retained160/48;logical payload p=s+1 recovers exact As with no stored A. Full B update26,all initialization,ABI,transfers,cold raw-twist reconstruction and verified G2 output are paid. Exact BLS parameter interval arithmetic bounds singular matches<2^-180. Conditional analytic evidence,not qualification or production execution.",
+      "score": {
+        "numerator": "125827",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "copy-negate.S",
+        "dictionary.md",
+        "field-program.S",
+        "native-field-adapter.S",
+        "pinned-montgomery.S",
+        "pinned-source-license.txt",
+        "fp4-trace.md",
+        "trace-min.S",
+        "trace-hot-loop.S",
+        "trace-controller.md",
+        "success.md",
+        "prepared-hash.md",
+        "nh-fingerprint.md",
+        "dictionary-index.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
