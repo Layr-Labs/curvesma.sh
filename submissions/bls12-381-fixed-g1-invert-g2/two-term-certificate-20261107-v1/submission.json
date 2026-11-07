@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "title": "Finite two-term collision certificate with full native implementation:125.8614",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity P and full protected BLS12-381 sizes,the raw W94 jump walk in proof.md has success>=0.39 under disclosed full standard BLAKE3 H and explicit finite banked storage,with complete work<2^(629307/5000) protected dense-Fp12 equivalents,C20000. K=ceil5153R/5000 is justified solely by the finite first/second collision moments in success.md;all higher factorial moments are omitted. Other scalar work<=2680K+540*2^119,including every target-specific construction/initialization/transfer/hash/field/ABI/dictionary/failed path and verified G2 finish. Exact full BLS interval arithmetic bounds singular matches<2^-180 at this longer cap. Dictionary mean<0.105K and margin>0.020K preserve its stated visit cap/loss. Peak capacity<2^136,zero advice,no auxiliary powers. A weaker proposed bound than the unqualified six-term proposal deliberately simplifies scientific review;no official score or qualification is claimed.",
+      "score": {
+        "numerator": "629307",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "dictionary.md",
+        "native-field-adapter.S",
+        "pinned-montgomery.S",
+        "pinned-source-license.txt",
+        "fp4-trace.md",
+        "trace-min.S",
+        "trace-hot-loop.S",
+        "trace-controller.md",
+        "success.md",
+        "prepared-hash.md",
+        "nh-fingerprint.md",
+        "dictionary-index.S",
+        "canonical-parent.S",
+        "canonical-parent.md",
+        "cold-construction.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
