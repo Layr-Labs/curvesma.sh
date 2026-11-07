@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Two80-bit radix passes for standard keyed trace inversion:127.468",
+  "claims": [
+    {
+      "statement": "Full protected fixed-G1 pairing inversion with supplied P,success>0.39024473 under explicit actual full standard unkeyed/keyed BLAKE3 H and finite banked-storage admissibility. proof.md supplies a complete two-random-table raw three-fiber trace algorithm,exact useful-collision moments,confirmed160-bit fingerprints,two deterministic80-bit radix passes and work cap. Ordinary native<=8192L,cold<=2^120,one reference per sample. Exact250th-power bound gives proposed time_log2=31867/250. Peak<2^137 bytes,advice0,all tables paid per target,no auxiliary inputs. Analytic conditional evidence;no official score,qualification,promotion or execution claimed.",
+      "score": {
+        "numerator": "31867",
+        "denominator": "250"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
