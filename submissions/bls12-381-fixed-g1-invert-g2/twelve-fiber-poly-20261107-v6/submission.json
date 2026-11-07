@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Universal polynomial fingerprint on deterministic grid:126.165",
+  "claims": [
+    {
+      "statement": "For full protected supplied-P fixed-G1 pairing inversion,deterministic unique index enumeration and exact twelve-orbit key succeed with probability greater than0.39024473 under cold actual standard unkeyed BLAKE3 SCAL/KEYF uniformity premise H and finite banked-storage admissibility. Use two full-Fr W=2^64 cold tables,L=ceil1031R/1000 with21R^2>=2r,finite projective-row-class success proof,and three independent Fq polynomial keys,q=2^64-59. Injective25-coefficient63-bit encoding has degree24;unequal fingerprints collide with probability at most(24/q)^3. Actual full192-bit fingerprints use scalar implementation1656 instructions retained2048,no hot hash oracle or massive-query ideal fingerprint premise. Two stable96-bit radix passes,all count arrays/initialization and capped full confirmations are paid. Complete key2304,generation5248+sort544+scan128+cap32=5952 retained6176 scalar/sample plus one dense reference. All cold work below2^120 includes tables,randomness,failures,transfers and terminal verified canonical G2 output for actual P. Complete bound(26176L+2^120)/20000<2^(25233/200),proposed126.165. Peak<2^137 bytes,zero advice,no supplied powers or amortization. Explicit conditional analytic evidence,not practical execution or qualification.",
+      "score": {
+        "numerator": "25233",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md",
+        "poly192.S",
+        "poly-prime-certificate.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
