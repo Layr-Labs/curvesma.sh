@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "Exact partial trace with bounded delayed reduction:125.600",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion under explicit cold SCAL/KEYF BLAKE3 H and finite banked-storage admissibility succeeds with probability greater than0.39024473 using deterministic grid,finite projective-row proof,full192-bit universal polynomial fingerprint and exact partial A/B projection. Compute36 full raw products and24 full modular sums,accumulating67 signed updates into four positive-offset12-limb integers bounded by18p^2<R^2 at every prefix. Four full Montgomery reductions satisfy unreduced U<3p<R and include two additional complete conditional subtractions each. No overflow,negative borrow,free reduction or approximate coefficient occurs. Complete transitive path11248 retained12288;unchanged other sample work5408 gives17696 scalar/sample,no hot dense reference. Bound(17696L+2^120)/20000<2^(628/5),proposed125.600,includes all cold tables,randomness,failures,transfers,rejections and full verified canonical G2 output for supplied P. Peak<2^137 bytes,zero advice,no supplied powers/amortization. Complete concrete code,probability,cost and conditional limitations are in proof.md;not practical execution or qualification.",
+      "score": {
+        "numerator": "628",
+        "denominator": "5"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
