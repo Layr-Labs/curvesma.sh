@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "title": "Offline raw trace-fiber search with deterministic radix work:127.468",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity P and full protected BLS12-381 sizes,proof.md gives pairing inversion into G2 with success>0.39 under disclosed full-standard-BLAKE3 H and finite banked-storage admissibility,with complete work<2^(31867/250) protected dense-Fp12 equivalents,C20000. Two paid W=2^92 random-scalar tables give one-reference samples h*z^(v+w). The raw native projection S=TrFp12/Fp4(X)/3 copies192 bytes and has exact three-element Frobenius fibers on the full order-r group;no ordinary field multiplication or orientation minimum is used. Full-size useful-collision first/second moments use linear support-rank alias bounds,not state independence. NH160 collisions are exactly confirmed after ten deterministic16-bit radix passes,with an explicitL/16 pair cap and Markov failure<2^-24. L=ceil1031*ceil(sqrt(r/2))/1000 gives success>0.39024467 including all scalar/identity/cap losses. Every true nontrivial twist has a nonzero denominator;try both fixed phases and verify canonical G2 output. Native ordinary work<=8192L,cold<=2^120 includes all tables/rejections/initialization/sort setup/failures and finish. Complete(28192L+2^120)/20000 has an exact250th-power certificate. Peak<2^137,advice0,no supplied auxiliary powers/amortization. Conditional analytic evidence,not official scoring,qualification,promotion or production execution.",
+      "score": {
+        "numerator": "31867",
+        "denominator": "250"
+      },
+      "evidence": [
+        "cold.md",
+        "hash.md",
+        "proof.md",
+        "sort.md",
+        "trace.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

@@ -1,0 +1,15 @@
+# Complete cold work and ordinary native bounds
+
+Each of2W=2^93 table records samples a full Fr scalar with at most1024 actual standard SCAL attempts. Price each attempt8192 scalar instructions,including all full rounds,128-bit counter/BE encoding,255-bit extraction,r comparison and control/interfaces. Accepted scalar-cap failure<2^-970 follows from rejection<1/8. For T0=h*z^v or T1=z^w,full255-bit binary exponentiation plus h where needed costs<=512 dense references,squarings priced as full products. A separate65536 instructions covers all record640 initialization/copy,scalar encoding,index/bank/loop/control and reference arguments. Therefore per entry
+512*20000+1024*8192+65536<2^25.
+All table work is<2^93*2^25=2^118.
+
+Fixed work<=2^60 instructions pays parsing/canonical conversion/subgroup/identity checks,h pairing,public xi^4/xi^8 computation,39 NH seed hashes/624-byte record,all code/constants/arrays/buffers/controller bindings,all radix count zeros and prefix sums,every fixed remainder/last cap check,and both terminal scalar candidate attempts/G2 verification. Conventional binary field/tower/curve routines suffice:scalar/subgroup loops<=256 bits,Miller64 bits,final exponent<4608 bits. Even2^24 fixed high-level steps each charged2^24 instructions fit<2^48;2^60 leaves ample room for complete code/data initialization and every interface. Radix count/prefix work is<2^30. No fixed routine hides a table-size loop or unbounded search. Thus complete preprocessing/finish in instruction-equivalents C*H_cold+R_cold<2^118+2^60<2^120. No advice,free zeros,DMA or cross-target amortization is used.
+
+Ordinary generation per sample:
+- Trace key128:12 LDP/12 STP for192 bytes,all B-zero tests,pointers/status/interface/RET. No field arithmetic.
+- NH1602048:36 lane products each<=16 scalar instructions plus256 for seed/input/state/output/compression/frame;full64/128-bit work implemented by MUL/UMULH/ADDS/ADC/MADD,not wide unit-cost arithmetic.
+- Full standard PAIR2048:all56 G at16 instructions plus512 complete initialization/frames/feed-forward/output;no reduced rounds.
+- Fr beta addition256:full four-limb loads/carry,r loads/trial subtraction/select/output/addresses/RET;r<2^255 makes v+w<2^256 and one correction sufficient.
+- Main/record640:128-bit sample counter/PAIR input encoding,index extraction,two selectors<=64,rawT0 copy36LDP/36STP=72,scalar/caller arguments,buffer handling,full record writes and padding,output selector/copy,loop/control/preservation. Every bank pointer is consumed before switching.
+Generation subtotal5120L. Sort.md prices all ten counting/scatter passes2240L,group scan128L,confirmations<=512*floor(L/16)<=32L plus one fixed last check. Total ordinary scalar<=7520L+fixed,retained8192L with672 spare. One dense reference per generated sample is counted separately and never double-counted with its internal instructions. All generation,rejections,sort/scans,ignored pairs/failures,verification/output and all processors' work are charged. This is analytical instruction-equivalent evidence,explicitly permitted by COST_MODEL.md,not measured execution or qualification.
