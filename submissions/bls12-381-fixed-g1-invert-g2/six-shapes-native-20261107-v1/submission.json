@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "title": "Six chronological collision shapes and explicit unrolled native multiplication:126.3707",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity P and full protected BLS12-381 parameters,proof.md gives pairing inversion into G2 with success>=0.39 under disclosed full-standard-BLAKE3 H and finite banked-storage admissibility,with complete computation<2^(1263707/10000) protected dense-Fp12 equivalents,C20000. K=ceil2061R/2000 follows from direct conditioning on the six chronological shapes of two orbit-collision edges in success.md;only first/second moments and pointwise long/short kernel bounds are used. coarse-montgomery.S has2034 scalar instructions after fixed macro expansion,retained2048 with all pointers/scratch/carry/normalization/RET. Complete deterministic ordinary scalar work<=12288K,all per-target cold work<=540*2^119. Complete(32288K+540*2^119)/20000 has an exact10000th-power certificate. All hash/table/sampler/identity/dictionary/singular losses are paid;no lazy/average-cost cap or production execution is assumed. Peak capacity<2^136,advice0,no auxiliary powers. Conditional analytic evidence,not qualification or official scoring.",
+      "score": {
+        "numerator": "1263707",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "coarse-montgomery.S",
+        "cold-construction.md",
+        "hash.md",
+        "native-work.md",
+        "probability.md",
+        "proof.md",
+        "storage.md",
+        "success.md",
+        "trace.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
