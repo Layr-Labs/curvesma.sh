@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Borrow-chain checkpoint ordering:127.994",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its sole disclosed full-round BLAKE2s-256 random-function idealization and cold work below2^(127994/1000) reference dense-Fp12 equivalents at fixed C=20000, with H=K and other work<=8448K+2^90 scalar instructions. Peak memory<2^50 bytes, advice zero; all cold setup, attempts/failures, key construction, lookup/transfers, verification and G2 output are included. This is an analytic heuristic claim, not production execution or an unconditional fixed-hash theorem.",
+      "score": {
+        "numerator": "127994",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
