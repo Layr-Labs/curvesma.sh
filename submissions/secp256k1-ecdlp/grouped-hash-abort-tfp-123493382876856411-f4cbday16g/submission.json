@@ -1,0 +1,62 @@
+{
+ "version": 1,
+ "title": "52-bit-VA gated Phase-0 birthday X-quad Y-cluster search on secp256k1 at 123.493382876856411 (MX=16, 44-TiB convex windows)",
+ "claims": [
+  {
+   "statement": "For uniform production secp256k1 Q=[x]P, the classical cold gated grouped stored-leaf birthday search of proof.md on a pairwise-disjoint 52-bit-VA generator/relay/home machine recovers x with unconditional single-run probability at least 0.3901 over the challenge and fresh algorithm coins: before any node work, one coordinator draws a fresh 128-bit RNDR coin u and tests u < K_GATE = 133015161165470784583994612803444211703 (p_gate = K_GATE/2^128 = 0.390896426, kernels/route.s gate, GATE = 256 instructions charged unconditionally on every run), halting immediately with no output if u >= K_GATE and otherwise running Phase-0 transversal birthday X-pair mining across N_POOLS = 2^15 pools (K_GEN = 2^53 generators/pool, M_POOL = 2^100 points in 32,768-point chains via kernels/xmine.s, p_fail < 2^-47.21 by Cauchy-Schwarz and pigeonhole) to equip each generator with MX = 16 permanent X points (8 pairs with 0 < A_(2q+1) - A_(2q) = delta_A < 2^63, hence a_(2q+1)^3 - a_(2q)^3 = delta_A), followed by a q1 = 8,700,000,000-batch search (G = 1536 power-law groups m_g = floor(q1*(g/1536)^(28/32)), certified opened-run success lo_run >= 0.997962564363 via Chen-Stein on cross-pool and cross-cluster leaf pairs across 2^58 clusters of M_G = 1024 generators, giving p_gate * lo_run >= 0.3901). Its unconditional expected total work E_total = 256 + p_gate * E_run is at most 2^123.493382876856411 target-group-operation equivalents (1000 scalar AArch64 instructions per unit; opened run E_run <= 2^124.848525 units, at most 74.0795 instructions per leaf of S = 2^128.603307; opened-run preprocessing <= 2^117.2303 units; peak memory <= 2^136.9996 bytes), and the worst case on every run, 2^179.732087 instructions, is disclosed.",
+   "score": {
+    "numerator": "123493382876856411",
+    "denominator": "1000000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "success.md",
+    "certificate.py",
+    "experiment.py",
+    "machine.py",
+    "sites.py",
+    "kernels/a64.py",
+    "encoding_fuzz.py",
+    "kernels/leaf.s",
+    "kernels/route.s",
+    "kernels/secp_fe.s",
+    "kernels/xmine.s"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "secp-stored-leaf-kernels",
+   "source": "experiment.py",
+   "purpose": "Verifies xmine.s Phase-0 +/- affine X-pair mining, secp_fe.s yround (37,37,37,37,36,36,36) 44-TiB Y-chain generation, MX=16 C1BSPLIT_BDAY + EQUAD_ONE + split 32+12-TiB P1_7WIN leaf kernels, plain-dict tbld 44-TiB table consumption and mutant rejections, pairwise-disjoint 52-bit-VA machine + 128-bit gate_checks, and all counts against certificate.py.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000000
+     },
+     "seconds": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 15
+     },
+     "kernels": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 1,
+     "seconds": 12
+    }
+   ]
+  }
+ ]
+}
