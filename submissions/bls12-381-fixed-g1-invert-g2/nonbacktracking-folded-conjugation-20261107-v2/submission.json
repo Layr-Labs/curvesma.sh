@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "title": "Folded structured conjugation in the joint-label nonbacktracking orbit walk:126.232",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-sizejointlabelnonbacktrackingalgorithm inproof.md has success>=0.39 underdisclosedstandardBLAKE3-256 H andexplicitfinitebankedstorage,withcompletecoldwork<2^(15779/125) protecteddense-Fp12equivalents atC20000:onereferencepertransition,otherwork<=9296K+540*2^119 scalarinstructions,peakmemory<2^136bytes,zeroadvice. Explicitsignedconstantformulasabsorbconjugation:16rotation/sixstructuredfieldoperations and327-instructionminimumleaf givehardcanonical6330K. Allsuccesslosses,headinitialization,transfersandfinishingareincluded. Thisisanalyticconditionalevidence,notproductionexecution orqualification.",
+      "score": {
+        "numerator": "15779",
+        "denominator": "125"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "canonical-budget.md",
+        "copy-negate.S",
+        "dictionary.md",
+        "canonical-min.S",
+        "canonical-min.md",
+        "field-schedule.md",
+        "folded-conjugation.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
