@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "Conservative Fp4 projection and finite second moments:125.304",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion succeeds with probability greater than0.39024473 under explicit finite first/second-moment actual-hash transfer H with epsilon2^-40 and finite bank-window storage admissibility. Deterministic C4-free incidence indices make all11 phase rows per time pair nonproportional. ForN=11binom(L,2),L=ceil1031R/1000,11R^2>=r,the exact two-moment boundT1-T2 minus all aborts and3epsilon exceeds0.39 without higher moments,collision independence or Poisson assumptions. Retain simpler nine-Fp2/27-raw-product pretransformed Fp4 projection,complete native path8970 retained9216,other5536,total14752 native/sample. Bound(14752L+2^120)/20000<2^(15663/125),proposed125.304,includes both full cold tables,987-instruction transform per2048-byte record,all1296-byte transfers,failures,rejections,sorting and verified canonical G2 output for supplied P. Peak<2^137 bytes,zero advice,no supplied powers/amortization. Conservative higher-work branch with fewer transferred moments;not a lower-score claim against unreviewed faster proposals. Conditional analytic evidence,not qualification or practical execution.",
+      "score": {
+        "numerator": "15663",
+        "denominator": "125"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json",
+        "pretransform.S"
+      ]
+    }
+  ],
+  "experiments": []
+}

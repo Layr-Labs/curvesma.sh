@@ -1,0 +1,365 @@
+// Static untrusted analytic evidence. Never host-compile/execute or use credentials.
+// x0=left transformed prefix1296,x1=right prefix1296,x2=disjoint output576.
+// Each of9 Fp2 forms stores canonical real48,imag48,(real+imag)48.
+// Compute exact a0,b1 using three Fp4 trace products,nine Fp2 Karatsuba products.
+// Output only exact A/B projection;other bytes zero. Output IS NOT a GT element.
+.text
+.p2align 2
+.macro RAW_MUL o,a,b
+    add x0,sp,#\o
+    add x1,x19,#\a
+    add x2,x20,#\b
+    bl mul_384
+.endm
+.macro RAW_ACC op,o,a
+    add x0,sp,#\o
+    add x1,sp,#\a
+    bl \op
+.endm
+.global fapi_partial_trace_product
+.type fapi_partial_trace_product,%function
+fapi_partial_trace_product:
+    sub sp,sp,#768
+    stp x19,x20,[sp,#0]
+    stp x21,x22,[sp,#16]
+    stp x23,x24,[sp,#32]
+    stp x25,x26,[sp,#48]
+    stp x27,x28,[sp,#64]
+    stp x29,x30,[sp,#80]
+    mov x19,x0
+    mov x20,x1
+    mov x21,x2
+    adrp x22,.Lraw_p
+    add x22,x22,:lo12:.Lraw_p
+    adrp x23,.Lraw_n0
+    ldr x23,[x23,:lo12:.Lraw_n0]
+    mov x24,x21
+.rept 36
+    stp xzr,xzr,[x24],#16
+.endr
+    adrp x24,.Lraw_offsets
+    add x24,x24,:lo12:.Lraw_offsets
+    ldp x4,x5,[x24,#0]
+    stp x4,x5,[sp,#96]
+    ldp x4,x5,[x24,#16]
+    stp x4,x5,[sp,#112]
+    ldp x4,x5,[x24,#32]
+    stp x4,x5,[sp,#128]
+    ldp x4,x5,[x24,#48]
+    stp x4,x5,[sp,#144]
+    ldp x4,x5,[x24,#64]
+    stp x4,x5,[sp,#160]
+    ldp x4,x5,[x24,#80]
+    stp x4,x5,[sp,#176]
+    ldp x4,x5,[x24,#0]
+    stp x4,x5,[sp,#192]
+    ldp x4,x5,[x24,#16]
+    stp x4,x5,[sp,#208]
+    ldp x4,x5,[x24,#32]
+    stp x4,x5,[sp,#224]
+    ldp x4,x5,[x24,#48]
+    stp x4,x5,[sp,#240]
+    ldp x4,x5,[x24,#64]
+    stp x4,x5,[sp,#256]
+    ldp x4,x5,[x24,#80]
+    stp x4,x5,[sp,#272]
+    ldp x4,x5,[x24,#96]
+    stp x4,x5,[sp,#288]
+    ldp x4,x5,[x24,#112]
+    stp x4,x5,[sp,#304]
+    ldp x4,x5,[x24,#128]
+    stp x4,x5,[sp,#320]
+    ldp x4,x5,[x24,#144]
+    stp x4,x5,[sp,#336]
+    ldp x4,x5,[x24,#160]
+    stp x4,x5,[sp,#352]
+    ldp x4,x5,[x24,#176]
+    stp x4,x5,[sp,#368]
+    ldp x4,x5,[x24,#0]
+    stp x4,x5,[sp,#384]
+    ldp x4,x5,[x24,#16]
+    stp x4,x5,[sp,#400]
+    ldp x4,x5,[x24,#32]
+    stp x4,x5,[sp,#416]
+    ldp x4,x5,[x24,#48]
+    stp x4,x5,[sp,#432]
+    ldp x4,x5,[x24,#64]
+    stp x4,x5,[sp,#448]
+    ldp x4,x5,[x24,#80]
+    stp x4,x5,[sp,#464]
+    // Pretransformed Fp2 product left0,right0;A coefficient1,B coefficient-1.
+    RAW_MUL 480,0,0
+    RAW_MUL 576,48,48
+    RAW_MUL 672,96,96
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_sub,96,576
+    RAW_ACC .Lraw_add,192,672
+    RAW_ACC .Lraw_sub,192,480
+    RAW_ACC .Lraw_sub,192,576
+    RAW_ACC .Lraw_sub,288,480
+    RAW_ACC .Lraw_add,288,576
+    RAW_ACC .Lraw_sub,384,672
+    RAW_ACC .Lraw_add,384,480
+    RAW_ACC .Lraw_add,384,576
+    // Pretransformed Fp2 product left1,right1;A coefficient2,B coefficient-1.
+    RAW_MUL 480,144,144
+    RAW_MUL 576,192,192
+    RAW_MUL 672,240,240
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_sub,96,672
+    RAW_ACC .Lraw_add,192,672
+    RAW_ACC .Lraw_sub,192,576
+    RAW_ACC .Lraw_sub,192,576
+    RAW_ACC .Lraw_sub,288,480
+    RAW_ACC .Lraw_add,288,576
+    RAW_ACC .Lraw_sub,384,672
+    RAW_ACC .Lraw_add,384,480
+    RAW_ACC .Lraw_add,384,576
+    // Pretransformed Fp2 product left2,right2;A coefficient0,B coefficient1.
+    RAW_MUL 480,288,288
+    RAW_MUL 576,336,336
+    RAW_MUL 672,384,384
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_sub,288,576
+    RAW_ACC .Lraw_add,384,672
+    RAW_ACC .Lraw_sub,384,480
+    RAW_ACC .Lraw_sub,384,576
+    // Pretransformed Fp2 product left3,right6;A coefficient-2,B coefficient1.
+    RAW_MUL 480,432,864
+    RAW_MUL 576,480,912
+    RAW_MUL 672,528,960
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_add,96,672
+    RAW_ACC .Lraw_sub,192,672
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_sub,288,576
+    RAW_ACC .Lraw_add,384,672
+    RAW_ACC .Lraw_sub,384,480
+    RAW_ACC .Lraw_sub,384,576
+    // Pretransformed Fp2 product left4,right7;A coefficient-2,B coefficient2.
+    RAW_MUL 480,576,1008
+    RAW_MUL 576,624,1056
+    RAW_MUL 672,672,1104
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_add,96,672
+    RAW_ACC .Lraw_sub,192,672
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_sub,288,672
+    RAW_ACC .Lraw_add,384,672
+    RAW_ACC .Lraw_sub,384,576
+    RAW_ACC .Lraw_sub,384,576
+    // Pretransformed Fp2 product left5,right8;A coefficient2,B coefficient0.
+    RAW_MUL 480,720,1152
+    RAW_MUL 576,768,1200
+    RAW_MUL 672,816,1248
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_sub,96,672
+    RAW_ACC .Lraw_add,192,672
+    RAW_ACC .Lraw_sub,192,576
+    RAW_ACC .Lraw_sub,192,576
+    // Pretransformed Fp2 product left6,right3;A coefficient-2,B coefficient1.
+    RAW_MUL 480,864,432
+    RAW_MUL 576,912,480
+    RAW_MUL 672,960,528
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_add,96,672
+    RAW_ACC .Lraw_sub,192,672
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_sub,288,576
+    RAW_ACC .Lraw_add,384,672
+    RAW_ACC .Lraw_sub,384,480
+    RAW_ACC .Lraw_sub,384,576
+    // Pretransformed Fp2 product left7,right4;A coefficient-2,B coefficient2.
+    RAW_MUL 480,1008,576
+    RAW_MUL 576,1056,624
+    RAW_MUL 672,1104,672
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_sub,96,480
+    RAW_ACC .Lraw_add,96,672
+    RAW_ACC .Lraw_sub,192,672
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,192,576
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_add,288,480
+    RAW_ACC .Lraw_sub,288,672
+    RAW_ACC .Lraw_add,384,672
+    RAW_ACC .Lraw_sub,384,576
+    RAW_ACC .Lraw_sub,384,576
+    // Pretransformed Fp2 product left8,right5;A coefficient2,B coefficient0.
+    RAW_MUL 480,1152,720
+    RAW_MUL 576,1200,768
+    RAW_MUL 672,1248,816
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_add,96,480
+    RAW_ACC .Lraw_sub,96,672
+    RAW_ACC .Lraw_add,192,672
+    RAW_ACC .Lraw_sub,192,576
+    RAW_ACC .Lraw_sub,192,576
+    add x0,x21,#0
+    add x1,sp,#96
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,x21,#0
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#0
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#48
+    add x1,sp,#192
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,x21,#48
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#48
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#384
+    add x1,sp,#288
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,x21,#384
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#384
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#432
+    add x1,sp,#384
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,x21,#432
+    mov x1,x22
+    bl .Lraw_correct
+    add x0,x21,#432
+    mov x1,x22
+    bl .Lraw_correct
+    ldp x29,x30,[sp,#80]
+    ldp x27,x28,[sp,#64]
+    ldp x25,x26,[sp,#48]
+    ldp x23,x24,[sp,#32]
+    ldp x21,x22,[sp,#16]
+    ldp x19,x20,[sp,#0]
+    add sp,sp,#768
+    ret
+.size fapi_partial_trace_product,.-fapi_partial_trace_product
+.type .Lraw_add,%function
+.Lraw_add:
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x1,#0]
+    adds x2,x2,x4
+    adcs x3,x3,x5
+    stp x2,x3,[x0,#0]
+    ldp x2,x3,[x0,#16]
+    ldp x4,x5,[x1,#16]
+    adcs x2,x2,x4
+    adcs x3,x3,x5
+    stp x2,x3,[x0,#16]
+    ldp x2,x3,[x0,#32]
+    ldp x4,x5,[x1,#32]
+    adcs x2,x2,x4
+    adcs x3,x3,x5
+    stp x2,x3,[x0,#32]
+    ldp x2,x3,[x0,#48]
+    ldp x4,x5,[x1,#48]
+    adcs x2,x2,x4
+    adcs x3,x3,x5
+    stp x2,x3,[x0,#48]
+    ldp x2,x3,[x0,#64]
+    ldp x4,x5,[x1,#64]
+    adcs x2,x2,x4
+    adcs x3,x3,x5
+    stp x2,x3,[x0,#64]
+    ldp x2,x3,[x0,#80]
+    ldp x4,x5,[x1,#80]
+    adcs x2,x2,x4
+    adcs x3,x3,x5
+    stp x2,x3,[x0,#80]
+    ret
+.size .Lraw_add,.-.Lraw_add
+.type .Lraw_sub,%function
+.Lraw_sub:
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x1,#0]
+    subs x2,x2,x4
+    sbcs x3,x3,x5
+    stp x2,x3,[x0,#0]
+    ldp x2,x3,[x0,#16]
+    ldp x4,x5,[x1,#16]
+    sbcs x2,x2,x4
+    sbcs x3,x3,x5
+    stp x2,x3,[x0,#16]
+    ldp x2,x3,[x0,#32]
+    ldp x4,x5,[x1,#32]
+    sbcs x2,x2,x4
+    sbcs x3,x3,x5
+    stp x2,x3,[x0,#32]
+    ldp x2,x3,[x0,#48]
+    ldp x4,x5,[x1,#48]
+    sbcs x2,x2,x4
+    sbcs x3,x3,x5
+    stp x2,x3,[x0,#48]
+    ldp x2,x3,[x0,#64]
+    ldp x4,x5,[x1,#64]
+    sbcs x2,x2,x4
+    sbcs x3,x3,x5
+    stp x2,x3,[x0,#64]
+    ldp x2,x3,[x0,#80]
+    ldp x4,x5,[x1,#80]
+    sbcs x2,x2,x4
+    sbcs x3,x3,x5
+    stp x2,x3,[x0,#80]
+    ret
+.size .Lraw_sub,.-.Lraw_sub
+.type .Lraw_correct,%function
+.Lraw_correct:
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x0,#16]
+    ldp x6,x7,[x0,#32]
+    ldp x8,x9,[x1,#0]
+    ldp x10,x11,[x1,#16]
+    ldp x12,x13,[x1,#32]
+    subs x8,x2,x8
+    sbcs x9,x3,x9
+    sbcs x10,x4,x10
+    sbcs x11,x5,x11
+    sbcs x12,x6,x12
+    sbcs x13,x7,x13
+    csel x2,x8,x2,hs
+    csel x3,x9,x3,hs
+    csel x4,x10,x4,hs
+    csel x5,x11,x5,hs
+    csel x6,x12,x6,hs
+    csel x7,x13,x7,hs
+    stp x2,x3,[x0,#0]
+    stp x4,x5,[x0,#16]
+    stp x6,x7,[x0,#32]
+    ret
+.size .Lraw_correct,.-.Lraw_correct
+.section .rodata
+.p2align 3
+.Lraw_p:
+    .quad 0xb9feffffffffaaab,0x1eabfffeb153ffff,0x6730d2a0f6b0f624
+    .quad 0x64774b84f38512bf,0x4b1ba7b6434bacd7,0x1a0111ea397fe69a
+.Lraw_n0:
+    .quad 0x89f3fffcfffcfffd
+.Lraw_offsets:
+    .quad 0xcff800015552aaac,0xdb2105618aa23005,0xa126a2898cedbe1,0xd0fad71eed549725,0xee2e43e546d38370,0x60e49356492455c5,0x7e4f6e6471ab340d,0xc7ca1bdd12657d33,0xd2c36b6e776e8dc3,0xa256cabcad435074,0x8dddaaff9a35c6f6,0x1fb29bb8a9287d57
+    .quad 0xea60000c71ae38f,0x6a7dedce3b8946ae,0x9b356897ae78aaee,0xcf3cfd7cb51c02d5,0x2045a79b13fb6201,0xcddaab47aaaa875e,0xb4590065424e8907,0x348b3aeba0108908,0xd04754007055d2b2,0x3407f6436511eeee,0x12c14e6a6f4a0965,0x127d85810d579e73

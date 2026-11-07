@@ -1,0 +1,148 @@
+// Static untrusted evidence;never host-execute or use credentials.
+// Cold transform x0=original native GT576,x1=scalarBE32,x2=disjoint record2048.
+// Nine Fp2 forms at144-byte strides:(a0,b1,a0+b1,b0,a2,b0+a2,a1,b2,a1+b2).
+// Each form stores canonical real48,imag48,(real+imag)48. Scalar at1536.
+.text
+.p2align 2
+.macro PRE_ADD o,a,b
+    add x0,x21,#\o
+    add x1,x21,#\a
+    add x2,x21,#\b
+    mov x3,x22
+    bl add_mod_384
+.endm
+.global fapi_trace_pretransform
+.type fapi_trace_pretransform,%function
+fapi_trace_pretransform:
+    stp x19,x20,[sp,#-96]!
+    stp x21,x22,[sp,#16]
+    stp x23,x24,[sp,#32]
+    stp x25,x26,[sp,#48]
+    stp x27,x28,[sp,#64]
+    stp x29,x30,[sp,#80]
+    mov x19,x0
+    mov x20,x1
+    mov x21,x2
+    adrp x22,.Lpre_p
+    add x22,x22,:lo12:.Lpre_p
+    mov x24,x21
+.rept 128
+    stp xzr,xzr,[x24],#16
+.endr
+    add x24,x21,#0
+    add x25,x19,#0
+    ldp x4,x5,[x25,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x25,#16]
+    stp x4,x5,[x24,#16]
+    ldp x4,x5,[x25,#32]
+    stp x4,x5,[x24,#32]
+    ldp x4,x5,[x25,#48]
+    stp x4,x5,[x24,#48]
+    ldp x4,x5,[x25,#64]
+    stp x4,x5,[x24,#64]
+    ldp x4,x5,[x25,#80]
+    stp x4,x5,[x24,#80]
+    add x24,x21,#144
+    add x25,x19,#384
+    ldp x4,x5,[x25,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x25,#16]
+    stp x4,x5,[x24,#16]
+    ldp x4,x5,[x25,#32]
+    stp x4,x5,[x24,#32]
+    ldp x4,x5,[x25,#48]
+    stp x4,x5,[x24,#48]
+    ldp x4,x5,[x25,#64]
+    stp x4,x5,[x24,#64]
+    ldp x4,x5,[x25,#80]
+    stp x4,x5,[x24,#80]
+    add x24,x21,#432
+    add x25,x19,#288
+    ldp x4,x5,[x25,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x25,#16]
+    stp x4,x5,[x24,#16]
+    ldp x4,x5,[x25,#32]
+    stp x4,x5,[x24,#32]
+    ldp x4,x5,[x25,#48]
+    stp x4,x5,[x24,#48]
+    ldp x4,x5,[x25,#64]
+    stp x4,x5,[x24,#64]
+    ldp x4,x5,[x25,#80]
+    stp x4,x5,[x24,#80]
+    add x24,x21,#576
+    add x25,x19,#192
+    ldp x4,x5,[x25,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x25,#16]
+    stp x4,x5,[x24,#16]
+    ldp x4,x5,[x25,#32]
+    stp x4,x5,[x24,#32]
+    ldp x4,x5,[x25,#48]
+    stp x4,x5,[x24,#48]
+    ldp x4,x5,[x25,#64]
+    stp x4,x5,[x24,#64]
+    ldp x4,x5,[x25,#80]
+    stp x4,x5,[x24,#80]
+    add x24,x21,#864
+    add x25,x19,#96
+    ldp x4,x5,[x25,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x25,#16]
+    stp x4,x5,[x24,#16]
+    ldp x4,x5,[x25,#32]
+    stp x4,x5,[x24,#32]
+    ldp x4,x5,[x25,#48]
+    stp x4,x5,[x24,#48]
+    ldp x4,x5,[x25,#64]
+    stp x4,x5,[x24,#64]
+    ldp x4,x5,[x25,#80]
+    stp x4,x5,[x24,#80]
+    add x24,x21,#1008
+    add x25,x19,#480
+    ldp x4,x5,[x25,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x25,#16]
+    stp x4,x5,[x24,#16]
+    ldp x4,x5,[x25,#32]
+    stp x4,x5,[x24,#32]
+    ldp x4,x5,[x25,#48]
+    stp x4,x5,[x24,#48]
+    ldp x4,x5,[x25,#64]
+    stp x4,x5,[x24,#64]
+    ldp x4,x5,[x25,#80]
+    stp x4,x5,[x24,#80]
+    PRE_ADD 288,0,144
+    PRE_ADD 336,48,192
+    PRE_ADD 720,432,576
+    PRE_ADD 768,480,624
+    PRE_ADD 1152,864,1008
+    PRE_ADD 1200,912,1056
+    PRE_ADD 96,0,48
+    PRE_ADD 240,144,192
+    PRE_ADD 384,288,336
+    PRE_ADD 528,432,480
+    PRE_ADD 672,576,624
+    PRE_ADD 816,720,768
+    PRE_ADD 960,864,912
+    PRE_ADD 1104,1008,1056
+    PRE_ADD 1248,1152,1200
+    add x24,x21,#1536
+    ldp x4,x5,[x20,#0]
+    stp x4,x5,[x24,#0]
+    ldp x4,x5,[x20,#16]
+    stp x4,x5,[x24,#16]
+    ldp x29,x30,[sp,#80]
+    ldp x27,x28,[sp,#64]
+    ldp x25,x26,[sp,#48]
+    ldp x23,x24,[sp,#32]
+    ldp x21,x22,[sp,#16]
+    ldp x19,x20,[sp],#96
+    ret
+.size fapi_trace_pretransform,.-fapi_trace_pretransform
+.section .rodata
+.p2align 3
+.Lpre_p:
+    .quad 0xb9feffffffffaaab,0x1eabfffeb153ffff,0x6730d2a0f6b0f624
+    .quad 0x64774b84f38512bf,0x4b1ba7b6434bacd7,0x1a0111ea397fe69a
