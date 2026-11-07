@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "Unrotated random-table walk with integer-count extraction and full12-orbit detection:125.844",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size unrotated random-table walk in proof.md has success>=0.39 under disclosed standard BLAKE3-256 H and explicit finite banked storage,with complete work<2^(31461/250) protected dense-Fp12 equivalents at C20000:one reference per transition,otherwork<=3224K+540*2^119 scalar instructions,peak memory<2^136,zero advice. K=ceil1243R/1250 follows from finite weighted-Fourier factorial moments,not birthday independence. Integer count coefficients and norm<2^212<r prove a uniform terminal denominator without phase selection,inverse retries or fruitless-return hypotheses. All initialization,ABI,transfers,cold raw-twist reconstruction and verified G2 output are included. Conditional analytic evidence,not qualification or production execution.",
+      "score": {
+        "numerator": "31461",
+        "denominator": "250"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "copy-negate.S",
+        "dictionary.md",
+        "field-program.S",
+        "native-field-adapter.S",
+        "pinned-montgomery.S",
+        "pinned-source-license.txt",
+        "fp4-trace.md",
+        "trace-min.S",
+        "trace-hot-loop.S",
+        "trace-controller.md",
+        "success.md",
+        "prepared-hash.md",
+        "nh-fingerprint.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
