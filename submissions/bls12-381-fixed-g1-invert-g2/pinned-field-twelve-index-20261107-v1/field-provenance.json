@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/supranational/blst",
+  "commit": "f7a88067ed98385ebc6cf41ccecf21ead706a5b7",
+  "sourcePath": "build/elf/mul_mont_384-armv8.S",
+  "sourceSha256": "a8234680738f79d8f438c6b27832b209d14fe610cc83bfbd37bef9f74213a2b7",
+  "sourceStartLine": 414,
+  "sourceEndLine": 825,
+  "verbatimBodySha256": "cde6bd6461ffbd961093de71f1572472a3a05c3afbf888597f0b15db2ccc49e5",
+  "counts": {
+    "mul_mont_384": 29,
+    "__mul_mont_384": 341
+  },
+  "ownWrapper": 12,
+  "externalCall": 1,
+  "total": 383,
+  "retained": 416
+}
