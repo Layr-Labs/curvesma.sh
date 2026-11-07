@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "Complete exact-trace canonical parent with actual ABI and worst-path count:125.821",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size h*z^v_j walk with A_t=t+1 in proof.md has success>=0.39 under disclosed standard BLAKE3-256 H and explicit finite banked storage,with complete work<2^(125821/1000) protected dense-Fp12 equivalents at C20000:one reference per transition,otherwork<=2848K+540*2^119 scalar instructions,peak memory<2^136,zero advice. K=ceil1243R/1250 follows from finite weighted-Fourier factorial moments. canonical-parent.S explicitly certifies82parent+52dispatch+1033field+131minimum<=1298,retained1312,with all workspace/ABI/copies/status work. dictionary-index.S certifies fixed147/visit43,retained160/48;logical p recovers exact saved A. All full B updates,initialization,transfers,cold raw-twist reconstruction and verified G2 output are paid. Exact BLS parameter interval arithmetic bounds singular matches<2^-180. Conditional analytic evidence,not qualification or production execution.",
+      "score": {
+        "numerator": "125821",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "copy-negate.S",
+        "dictionary.md",
+        "field-program.S",
+        "native-field-adapter.S",
+        "pinned-montgomery.S",
+        "pinned-source-license.txt",
+        "fp4-trace.md",
+        "trace-min.S",
+        "trace-hot-loop.S",
+        "trace-controller.md",
+        "success.md",
+        "prepared-hash.md",
+        "nh-fingerprint.md",
+        "dictionary-index.S",
+        "canonical-parent.S",
+        "canonical-parent.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
