@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "Explicit full BLAKE3 leaf with two80-bit radix passes:127.36",
+  "claims": [
+    {
+      "statement": "Full protected fixed-G1 pairing inversion with supplied P,success>0.39024473 under explicit actual full standard unkeyed/keyed BLAKE3 H and finite banked-storage admissibility. proof.md supplies a complete two-random-table raw three-fiber trace algorithm,exact useful-collision moments,confirmed160-bit fingerprints,two deterministic80-bit radix passes and work cap. Ordinary native<=6144L,cold<=2^120,one reference per sample. Exact25th-power bound gives proposed time_log2=3184/25. Peak<2^137 bytes,advice0,all tables paid per target,no auxiliary inputs. Analytic conditional evidence;no official score,qualification,promotion or execution claimed. Static compression.S has928 instructions through return,retained1024 per full seven-round compression;never host-executed.",
+      "score": {
+        "numerator": "3184",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
