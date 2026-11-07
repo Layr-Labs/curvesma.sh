@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Single-proof full-BLAKE3 offline trace inversion:127.6174",
+  "claims": [
+    {
+      "statement": "Full protected fixed-G1 pairing inversion with supplied P,success>0.39024473 under explicit actual standard BLAKE3 H and finite banked-storage admissibility. proof.md supplies a complete two-random-table raw three-fiber trace algorithm,exact useful-collision moments,confirmed160-bit fingerprints,ten deterministic radix passes and work cap. Ordinary native<=11264L,cold<=2^120,one reference per sample. Exact5000th-power bound gives proposed time_log2=638087/5000. Peak<2^137 bytes,advice0,all tables paid per target,no auxiliary inputs. Analytic conditional evidence;no official score,qualification,promotion or execution claimed.",
+      "score": {
+        "numerator": "638087",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
