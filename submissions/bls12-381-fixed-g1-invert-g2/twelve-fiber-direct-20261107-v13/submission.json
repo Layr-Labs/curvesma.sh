@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "Integrated raw-leaf calls with full ABI preservation:125.132",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion succeeds with probability greater than0.39020809 under the explicit tolerated aggregate hash transfer H and finite bank-window storage model. Retain the incidence/four-moment,scaled240 quartic interpolation and21 raw products. Direct hidden-alias calls use the exact162-instruction raw leaf;the integrated caller snapshots every live parameter,fully reloads pointers and restores the externally required callee-save ABI. Actual projection body340+21*162+19*35+4*561+4*102+4*204+1=7876 retained8064. No wrapper preservation work is silently omitted. Other full sample work5504 gives13568 native instructions/sample. Bound(13568L+2^120)/20000<2^(31283/250),proposed125.132,includes full cold GT powers/transforms,all failures,rejections,sorting,transfers and verified canonical G2 output for supplied P. Peak<2^137 bytes,zero advice,no supplied powers or amortization. Complete concrete source,finite probability,overflow/normalization bounds and actual-hash limitations are in evidence. Conditional analytic claim,not practical execution or qualification.",
+      "score": {
+        "numerator": "31283",
+        "denominator": "250"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json",
+        "pretransform.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
