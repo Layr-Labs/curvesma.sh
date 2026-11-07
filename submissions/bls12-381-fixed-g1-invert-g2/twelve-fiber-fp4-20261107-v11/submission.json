@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "title": "Pretransformed Fp4 trace factorization:125.253",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion under explicit cold-standard-hash aggregate transfer heuristic H and finite banked-storage admissibility succeeds with probability greater than0.39020809 using C4-free incidence scheduling and finite four-moment bounds. Exact trace projection D=F0G0+t(F1G2+F2G1) needs nine pretransformed Fp2 products,27 raw Fp products,84 full signed12-limb updates and4 full Montgomery reductions with complete corrections. Every accumulator prefix is nonnegative and below24p^2<R^2;quotient U<4p<R. Complete hot path8970 retained9216. Both2g^2 target-specific tables include a paid987-instruction full cold transform into initialized2048-byte records;the full1296-byte prefix transfer is charged in main768. Other sample work5536 yields14752 native scalar instructions/sample,no hot dense reference. Complete bound(14752L+2^120)/20000<2^(125253/1000),proposed125.253,includes full cold GT powers,all transformed records,randomness,failures,transfers,rejections and verified canonical G2 output for actual P. Peak<2^137 bytes,zero advice,no supplied auxiliary powers or amortization. H is not a literal finite-seed independence theorem;the full ideal-model/actual-hash limitation is explicit. Conditional analytic evidence,not qualification or practical execution.",
+      "score": {
+        "numerator": "125253",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json",
+        "pretransform.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
