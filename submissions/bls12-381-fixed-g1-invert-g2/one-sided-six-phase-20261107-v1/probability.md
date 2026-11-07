@@ -1,0 +1,37 @@
+# Complete coupling, denominator and failure bounds
+
+All statements are conditional on the disclosed standard full BLAKE3 random-function bridge H, with actual hashes computed and paid. Protected p/r and full-sized group inputs are unchanged. Let W=2^76,D=6W,q=12,N=r/q,R=min{R:12R^2>=r},K=L=ceil(1243R/1250),T=128,eta=2^-128. Thus K=.9944R rounded upward. mixing.md proves stationary independent-increment Fourier bounds for the six one-sided phases; success.md supplies the finite repeat bound, without a raw-endpoint independence assumption.
+
+## Hash labels and dictionary coupling
+
+For each fresh exact192-byte full-orbit key, nh-fingerprint.md computes U40 with fixed-pair collision<2^-312 using65 independently domain-separated, paid standard BLAKE3 seed calls. Couple to an independent ideal group walk through its first orbit repeat. Before that event its canonical keys are distinct. K+1<2^126 gives fingerprint collision probability<2^251*2^-312=2^-61; retain2^-55. This is a fixed-key-pair union on an ideal path independent of fingerprint keys, not an adaptive-universality assertion.
+
+JUMP is the full BLAKE3-256 message JUMPtag16||seed32||zero16||U40. Prefix64 is compressed and prepared cold; final40 uses counter0,len40,flags10 and all seven rounds. Its256-bit digest Y is little-endian. j=Y mod2^76, V=floor(Y/2^76), e=floor(6V/2^180), bucket=V mod2^128. j is uniform independent of V. Phase bins differ by at most1, so coupling their phase to uniform on0..5 costs <=6(K+1)/2^180<2^-50, retaining within-phase uniform V. Given a bin, its length>=2^177, so each128-bit bucket probability differs from1/2^128 by relative at most2^-49; retain the older conservative epsilon2^-47 in dictionary.md. Phase and bucket are correlated, explicitly handled there. There is no phase-minus-k correction, fictitious previous edge, inverse guard, retry domain or retry cap.
+
+Through the first repeated orbit on this coupling, increments are independent uniform among the6W generators. Hash values are only queried on distinct fingerprint messages before that event. dictionary.md bounds the fully initialized capped chained dictionary's extra cap-failure probability<2^-100, including the final repeated query; all transfers and complete head zeroing are paid. Early aborts only reduce work. Uniform x0 and stationarity give identity-visit loss <=(K+1)/r<2^-100.
+
+## Scalar sampler
+
+SCAL uses the original global unsigned128-bit counter encoded16-byte big-endian and the full standard64-byte BLAKE3 message/tag. Accept low255 bits interpreted big-endian iff<r; cap1024 tries per scalar. There are at most2W+1<2^78 accepted scalars, and r>7*2^252 makes rejection<1/8. Scalar-cap failure<2^78*(1/8)^1024<2^-970; all attempted hashes/counters and target-specific group construction are paid cold. There is no per-step rejection sampler.
+
+## One-sided formal coefficients rule out fruitless formal returns
+
+Let zeta=exp(pi*i/6), a fixed complex primitive twelfth root, and R0=Z[zeta], Phi12(X)=X^4-X^2+1. Reduction sends zeta to the protected xi modulo r. For each j and prefix t define S_j(t)=sum_(steps with index j through t)zeta^e, e0..5. In basis(1,zeta,zeta^2,zeta^3), each zeta^e for e0..5 has coefficients in{-1,0,1}; explicitly zeta^4=zeta^2-1 and zeta^5=zeta^3-zeta. Every coefficient is bounded in magnitude by the number N_j(t) of uses of j.
+
+The ideal indices are iid uniform on W. N_j(K) is binomial with mean K/W<2^50. Set Hc=2^52. Chernoff gives Pr[N_j(K)>=Hc]<=(e*(K/W)/Hc)^Hc<(3/4)^Hc. Since (3/4)^4<1/2, union over W indices is <2^76*2^(-2^50)<2^-200. Counts are monotone, so outside this single event every prefix and interval satisfies the same count bound. This is public finite combinatorics, not a trajectory-distribution heuristic or an algorithmic count test.
+
+For a nonempty interval, its total formal sum is never zero: all zeta^e,e0..5, have nonnegative imaginary parts; phases1..5 have positive imaginary parts and phase0 is positive real. Thus at least one j has a nonzero interval coefficient. Its basis coordinates are <=Hc, so every complex embedding has magnitude<=4Hc and its algebraic norm is <=(4Hc)^4=2^216<r. A nonzero algebraic integer has nonzero integer norm. Evaluation at xi equal to0 modulo r would force r to divide that norm, impossible. Hence at least one interval coefficient remains nonzero in Fr. This eliminates the formal same-phase return mechanism without a short-return or long-return assumption.
+
+For a rotated match x_t=xi^ell*x_s, define C_j=S_j(t)-zeta^ell*S_j(s). Multiplication by any zeta^ell has a basis matrix whose entries have magnitude<=1, by direct reduction modulo Phi12; thus each coordinate of C_j has magnitude<=5Hc<2^55. For any nonzero C_j, norm<=(4*2^55)^4=2^228<r, so its evaluation cannot vanish modulo r. If ell=0, the preceding positive-half-plane argument proves some C_j nonzero for every s<t. If ell!=0 and all C_j are formally zero, the raw invariant implies (1-xi^ell)*alpha0=0, so alpha0=0 because0<ell<12 and xi has order12. That is the initial identity event already charged. Therefore for every terminal nonidentity orbit match outside the count event, the coefficient vector evaluated modulo r is not zero.
+
+This argument depends only on index/phase counts, the full-order xi and exact norms; it does not identify finite-field values with complex numbers. Complex embeddings are used only to bound the integer norm and show a formal coefficient is nonzero. The explicit finite inequalities2^216<r and2^228<r are checked at the full protected order.
+
+## Uniform terminal denominator and verified output
+
+Fix h,z and every group jump M_j=h^u_j*z^v_j, alpha0 and ideal label randomness through first orbit match. Since h generates GT, the map from(u_j,v_j) to(M_j,v_j) is bijective on Fr^2, so v_j remain independent uniform conditional on M_j. The group path, canonical keys, NH values and unique true orbit twist depend on group values and independent hash keys/labels, not on this remaining scalar freedom. Counts and the good-table event also have this property. Saved raw reconstruction from histories returns exactly its group invariant and hence does not select a scalar-dependent alternative twist.
+
+The extraction denominator is D=B_t-xi^ell*B_s=sum_j C_j(xi)*v_j. The nonzero coefficient vector just proved makes D uniform Fr, conditional on that whole group path. Singular D has probability1/r for the first detected match, not an unsupported independent-trial claim. If D!=0, a=(xi^ell*A_s-A_t)/D satisfies h^a=z; compute and check it, form canonical Q=[a]Q0, check subgroup/curve and exact pairing(Q,P)=z. All reconstruction, three-twist search, inversion, scalar multiplication and verification are fixed cold paid. Scalar-only or unchecked output is never accepted.
+
+## Complete finite success
+
+success.md proves repeat probability>0.3900538335845625 with full protected integers. Subtract fingerprint2^-55, bad generator table2^-98, scalar cap2^-970, ordinary phase2^-50, identity2^-100, count/norm exception2^-200, dictionary cap2^-100 and singular denominator1/r. Their union gives success>0.39005383358456>0.39. No independence of losses is needed. No immediate-inverse, small-return, lattice martingale, long-return, previous-edge mixing, retry or post-repeat assumption remains. Actual standard BLAKE3 H and finite banked-memory admissibility remain material; this is conditional analytic evidence, not qualification, an official score, fixed-hash theorem or production execution.
