@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Paired scalar leaves for unchanged plain walk:127.656",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its disclosed extended-domain full-round BLAKE3 random-function idealization and cold work below2^(15957/125) reference dense-Fp12 equivalents at fixed C=20000, with H=K and other work<=2520K+2^90 scalar instructions. Peak memory<2^50 bytes, advice zero; all cold setup, attempts/failures, key construction, lookup/transfers, verification and G2 output are included. This is an analytic heuristic claim, not production execution or an unconditional fixed-hash theorem.",
+      "score": {
+        "numerator": "15957",
+        "denominator": "125"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md",
+        "lookup.S",
+        "hot-loop.S",
+        "sign.S",
+        "tabulate.S",
+        "blake3-final.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
