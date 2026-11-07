@@ -1,0 +1,19 @@
+# Complete scalar instruction certificate
+
+OneacceptedtransitionusesoneprotectedpinneddenseFp12referenceatC20000,chargedonce. AllotherworkisscalarAArch64instructions,includingdata,addressing,ABI,dispatch,controlandbarriers. Nofreeoracle,wideunitprimitive,SIMD,parallelwalltimediscountorchangedreferencepriceisused. Allcandidateevidenceisstatic,neverhostexecuted.
+
+NativeFpMontgomery29wrapper+341core+5modulusadapter=375,retain384;providedadd/sub/copy/neg36/37/7/42,retain42. native-field-audit.md providesexactprimaryexcerpts,SHA256/licenseandhistograms. Fieldprogramdescriptorloads/BLR/controlareseparatelypaid.
+
+Currentcanonicalstagingiscompleteinlazy-imaginary.md/canonical-audit.md. ThreefixedrealproductsperhelperplusremainingB=floor321K/64boundproductwork384(3K+B)<=3078K. Bhas129bits,storedinTHREE64-bitlimbs192bits. product-budget.S success10/failure8,interfaces<=16;twochecksarepaidincontroller865. Exactg1/g2orbitmean<=5+2/r,variance3185K+49*2^-127K²andChebyshevboundexhaustion<2^-100,REPLACINGtheoldcanonicalclasscaploss. Partialfailedhelpersarepaidcold.
+
+Nonproductcanonical1508K=18*42fieldoperations+304twostageminimum/copy+192key/control+256wrappers. First12callsbuildallrealfields;imaginaryprogram<=7callsinitializesexactlyneededfields;otherpairprogram<=8calls. Dispatch27calls/3entries/interfaces165,parent/top32,total197<256. Stagedminimum188+60normal,zerocases<=26+109,plus32interfaces+14initialcopy=294<304. Remainingcontrol157<192includingimaginaryprogramselection/WMETAcontext. No uninitializedimaginaryfieldisread. CANONBnativedigitsstilldirectlyfeedtabulation;thereisnokeyserialization.
+
+Canonical4586K. Tabulation807 includesall72digitentryreads,constantT72[0],addresses,XORs,40-bytebigendianUserializationandRET. Onefullstandardseven-roundBLAKE3-256jointlabelcost797includesfulloutput/frame/preservation/RET. Itsj76,V180,phasefloor12V/2^180,bucketVmod2^128andconditionalbucketproofareindictionary.md. Scalarupdate46usesthecorrectrebasedpairedimmediates0..48andbothcanonicalfour-limbFrresidues.
+
+Controller865retainsallloop128-bitbounds/increments,pointer/bufferswap,prefixCVcopy,hasharguments,indexdecode/phasearithmetic,orientation/previousgeneratorchecks/stores,inverseguard,jumpbankselect<=32,reference/scalar/canonical/tabulationinterfaces,identity/failuredispatch,sharedcontext,preservationandTWOproductcapchecks32. Itreplaces849'soneold16-instructioncheck;otherordinarycontrollerworkunchanged. Extra generic48-byte retryattemptsremaincappedfloorK/2^32at<2^20each,extra<K,retain1perstep.
+
+Dictionaryhead192,payload224,cappedchain32K+fixed256arecompleteindictionary.md. Fullbconfirmationisatmostonceterminalcold. Everyheadiszeroedandpayloadinitialized. Allselectors,loads/stores,comparison,counters,links,contextandinterfacesarepaid;noexpectedlookup,freeallocation/sort/memcpyorpre-zeroedRAM.
+
+Ordinary4586+807+797+46+865+192+224+32+1=7550K,retain7568K,18slack. ColdD=540*2^119 boundsC*H_cold+R_coldonce:headzero537*2^119,selectors<=32*2^92,index/setup<2^100,allpriorcompletegenerator/scalar/variant/tableconstruction,rejections,writes,parsing/subgroupchecks,pairings,code/constants/descriptors,initialkey/hash/edge/payload,failedfinishes,inversion,G2outputandexactverification<2^120;sum<D. Newprograms,WIN/WMETAandcounterarewithinthatfixedterm. Initialkeyiscold,beforeBforKtransitionsisinitialized. Peakmemory<2^136,zeroadvice.
+
+W<=(27568K+540*2^119)/20000. Exactcertificate(27568K+540*2^119)^125<20000^125*2^15768 establishesproposed126.144,abovediagnostic126.14337795082898. H andexplicitfinitebankedRAMadmissibilityremainmaterial. Noofficialscore,qualification,productionexecutionorhardwareavailabilityisclaimed.

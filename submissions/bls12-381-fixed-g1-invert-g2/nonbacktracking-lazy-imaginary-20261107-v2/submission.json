@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "Deferred imaginary coordinates with finite product-cap proof:126.144",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-sizejointlabelnonbacktrackingalgorithm inproof.md has success>=0.39 underdisclosedstandardBLAKE3-256 H andexplicitfinitebankedstorage,withcompletecoldwork<2^(15768/125) protecteddense-Fp12equivalentsatC20000:onereferencepertransition,otherwork<=7568K+540*2^119 scalarinstructions,peakmemory<2^136bytes,zeroadvice. Deferredimaginaryprogramsandtwoexactminimumstageswith192-bitnative-productcountergivehardcanonical4586K,capfailure<2^-100fromprovedorbitmeans/mixing. Allinitialization,transfers,ABI,successlossesandfinishingareincluded. Thisisanalyticconditionalevidence,notproductionexecution orqualification.",
+      "score": {
+        "numerator": "15768",
+        "denominator": "125"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "copy-negate.S",
+        "dictionary.md",
+        "canonical-min.S",
+        "field-program.S",
+        "native-field-adapter.S",
+        "native-field-audit.md",
+        "pinned-montgomery.S",
+        "pinned-source-license.txt",
+        "canonical-audit.md",
+        "direct-key.md",
+        "lazy-imaginary.md",
+        "product-budget.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
