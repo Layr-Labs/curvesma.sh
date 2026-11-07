@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Compact conservative native bounds with a finite two-term proof:126.68",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity G1 point P and full protected BLS12-381 parameters,proof.md gives pairing inversion into G2 with success>=0.39 under explicitly disclosed full-standard-BLAKE3 H and finite banked-storage admissibility,with complete computation<2^(3167/25) protected dense-Fp12 equivalents,C20000. K=ceil5153R/5000 follows from the finite first/second factorial certificate;all generator/NH/sampler/identity/dictionary/singular losses are included. Native-work.md derives a conventional six-limb Montgomery product<=4096 and complete deterministic ordinary scalar work<=20000K;all target-specific construction/initialization/failed paths and verified G2 finish are in D540*2^119. Complete work(40000K+540*2^119)/20000 has an exact25th-power certificate. No assembly/execution or lazy/average-cost cap is required. Peak capacity<2^136,advice0,no auxiliary powers. Conditional analytic evidence,not official scoring,qualification,promotion or practical attack installation.",
+      "score": {
+        "numerator": "3167",
+        "denominator": "25"
+      },
+      "evidence": [
+        "cold-construction.md",
+        "hash.md",
+        "native-work.md",
+        "probability.md",
+        "proof.md",
+        "storage.md",
+        "success.md",
+        "trace.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
