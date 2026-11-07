@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "title": "Complete native scalar/field paths with polynomial grid:126.122",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion under explicit cold SCAL/KEYF BLAKE3 H and finite banked-storage admissibility succeeds with probability greater than0.39024473,using deterministic distinct grid indices,finite projective-row proof,and full192-bit three-coordinate polynomial fingerprint. The full59-instruction BE/native Fr addition path is retained64,pinned Fp add/sub are retained96 each,complete384-instruction Fp products retained400,and complete1656-instruction polynomial path retained1792. Key1976 retained1984;generation4480+sort544+scan128+cap32=5184 retained5408 scalar/sample plus one dense reference. Every failure,transfer,rejection,all cold tables/radix initialization and verified canonical G2 output for the actual P are included in(25408L+2^120)/20000<2^(63061/500),proposed126.122. Peak<2^137 bytes,zero advice,no auxiliary supplied powers or amortization. Prime q and polynomial collision bound,complete algorithm,cost and uncertainty are in proof.md. Conditional analytic evidence,not qualification or practical execution.",
+      "score": {
+        "numerator": "63061",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
