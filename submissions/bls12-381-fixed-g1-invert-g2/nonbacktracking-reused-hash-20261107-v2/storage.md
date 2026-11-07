@@ -1,0 +1,13 @@
+# Explicit finite banked storage for the chained dictionary
+
+This is a material finite machine-model assumption,not an installed VM configuration or practical hardware claim. It supplies storage only:no hash,group,search or arithmetic oracle. All CPU index work,selector writes,barriers andtransfers arepaid. If inadmissible under protected rules,the scientific claim must be rejected. The VM intakes static evidence;analytic bounds arepermitted.
+
+Reserve2^126 payloads*512=2^135 bytes,2^128 bucket heads*16=2^132 bytes,and2^49 jump banks*2^40=2^89 bytes. Sharedtables,code,currentstates,frames,scratch andcountersfit<2^45. Peak2^135+2^132+2^89+2^45<2^136 includesallcapacity andpadding,withzeroadvice. Payloadindex0isnil,indices1..K+1<2^126 areallocatedmonotonically.
+
+The noncacheable2^40-bytewindowbeginsat2^45;allshareddataisbelow2^45 andallnativeaddressesbelow2^46,withinordinary48-bitvirtualaddressing. Payloadindexp:local31bits,offsetlocal<<9,bankp>>31 (<2^95). Headindexi128bits:local36bits,offsetlocal<<4,bank2^95+(i>>36) (<2^96). Jumpindexj76bits:local27bits,offset(12*jlow+e)*640,bank2^96+(j>>27) (<2^97). Thethreebankrangesaredisjoint,withpayloads andheads fullycontainedinonewindow. Alllogicalindicesfit128bits,actualpointers64bits.
+
+A97-bitselectorhaslow64/high33ordinarywordlatches. DSB completespreviousaccesses;STRlow,STRhigh fillpendinglatches;STRcommitselectsbank;DSBorderssubsequentaccesses. Noatomic128-bitstoreisassumed. Noncacheablemappingpreventsstalealiases. EXTR/LSRimplement128-bitshifts;regionbases sethighwordbits31/32,clearofthebankindex. Allselectors,includingindexloads,shifts,masks,regionbits,windowoffset,pointer,latches,commit,barriers andcontext,cost<=32instructions. Thisispaidinthehead,payload,chain andjumpbudgets. Onecontrollerexists;decoderonlyroutesaddressbits,withoutstoredper-bankdescriptororcomputationaloracle.
+
+EVERY buckethead iszeroedcold:2^128ordinarypairedstores,withcompletefixed-blockhelpers/control/bankworkcoveredby2^130. This excludesuninitializedadvice. Eachallocatedpayload isfullyzeroedandwrittenbeforepublicationbythe224hotbudget;unallocatedpayloadsareneverread. Everyjumpvariant/bankispopulatedbychargedtarget-specificconstruction. Sharedtabulationuses(72*2^32+2)*40<2^44 bytes. Allotherfixedimage,stateandbuffersfittheshared2^45allowance. No DMA,network,processor migration,page-faultalgorithm orfreeglobalinitializationisused.
+
+Rootdraftsremainadd-only. Candidateevidenceisnevercompiledorexecutedonthehostorwithcredentials. Scientificexecution/review/scoringbelonginsharedllm-verifier. Physicalcapacity isanalyticallystated,notallocatedbytheverificationVM,anddoesnotdemonstratepracticalhardwareavailability.

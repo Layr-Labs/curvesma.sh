@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "title": "Nonbacktracking capped dictionary using disjoint JUMP output bits:126.314",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size orbit algorithm in proof.md has success>=0.39 under disclosed standard BLAKE3 H and explicit finite banked storage,with complete cold work<2^(126314/1000) protected dense-Fp12 equivalents at C=20000:one reference pertransition,otherwork<=11008K+2^130 scalarinstructions,peakmemory<2^136 bytes,zero advice. Everybuckethead isinitialized andallchainvisitsarehardcappedwithprovedfailure<2^-100. This isanalyticconditional evidence,notproductionexecution orqualification. Dictionary buckets reuse JUMP digest D2,D3,disjoint from generator-index bits;noextra hash iscalled.",
+      "score": {
+        "numerator": "63157",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "canonical-budget.md",
+        "copy-negate.S",
+        "dictionary.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
