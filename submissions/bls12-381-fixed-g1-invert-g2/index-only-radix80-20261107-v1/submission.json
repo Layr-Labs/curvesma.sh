@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "Sort fingerprint/index metadata with immutable trace payloads:127.354",
+  "claims": [
+    {
+      "statement": "Full protected fixed-G1 pairing inversion with supplied P,success>0.39024473 under explicit actual full standard unkeyed/keyed BLAKE3 H and finite banked-storage admissibility. proof.md supplies a complete two-random-table raw three-fiber trace algorithm,exact useful-collision moments,confirmed160-bit fingerprints,two deterministic80-bit radix passes and work cap. Ordinary native<=6048L,cold<=2^120,one reference per sample. Exact500th-power bound gives proposed time_log2=63677/500. Peak<2^137 bytes,advice0,all tables paid per target,no auxiliary inputs. Analytic conditional evidence;no official score,qualification,promotion or execution claimed. Static compression.S has928 instructions through return,retained1024 per full seven-round compression;never host-executed. Two radix passes move64-byte metadata;all full key/scalar payloads are immutably stored and retrieved for every capped comparison.",
+      "score": {
+        "numerator": "63677",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
