@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "Frobenius12 with explicit native field kernels:127.537",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity P anduniform GT target z,the algorithm in proof.md succeeds with probability>=0.39 under its disclosed standard BLAKE3 idealization H andhas cold classical work below2^(127537/1000) protected dense-Fp12 reference equivalents at C=20000. It uses at most3K reference multiplications and12288K+2^120 other scalar instructions,with all preprocessing,failures,banked storage addressing,lookup,verification andcanonical G2 output included. Peak storage<2^63 bytes,zero advice. The concrete banked-memory realization is explicit in storage.md andis a material accounting condition,not an installed/practical hardware claim. This is exploratory analytic evidence,not an unconditional fixed-hash theorem orproduction execution.",
+      "score": {
+        "numerator": "127537",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md",
+        "storage.md",
+        "baseline/README.md",
+        "baseline/hot-loop.S",
+        "baseline/prefix-lookup.S",
+        "baseline/blake3-final.S",
+        "baseline/sign.S",
+        "baseline/tabulate.S",
+        "field-ops.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
