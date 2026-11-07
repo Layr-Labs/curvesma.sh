@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Independent GT samples with paid three-table fixed-base construction:127.2957",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity G1 point P and full protected BLS12-381 sizes,proof.md gives pairing inversion into G2 with success>0.39 under disclosed full standard BLAKE3 H and finite banked-storage admissibility,with complete work<2^(1272957/10000) protected dense-Fp12 equivalents,C20000. Three target-specific2^85-entry tables generate independent full-order X=h*z^beta in two reference products each;every table/base/scalar/hash/rejection/initialization/transfer is paid. L=ceil1053R/1000 has an exact independent orbit birthday-product bound and exact11/12 useful-first-twist factor. Every nontrivial raw twist gives a deterministically nonzero extraction denominator;no mixing or interval lemma is needed. Complete work(60000L+540*2^119)/20000 has an exact10000th-power certificate,with scalar work<=20000L including all2L allowed sampler attempts and verified G2 finish cold. Source native product2034 retained2048 includes every carry/pointer/scratch/canonicalization/RET. Peak capacity<2^136,advice0,no supplied auxiliary powers or amortization. Conditional analytic evidence,not qualification,official scoring,promotion or production execution.",
+      "score": {
+        "numerator": "1272957",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "coarse-montgomery.S",
+        "cold-construction.md",
+        "hash.md",
+        "native-work.md",
+        "proof.md",
+        "storage.md",
+        "success.md",
+        "trace.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
