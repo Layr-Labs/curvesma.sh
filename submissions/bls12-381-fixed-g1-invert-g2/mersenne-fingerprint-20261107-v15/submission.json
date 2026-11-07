@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "Two-limb Mersenne fingerprint with rigorous truncation:125.077",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion succeeds with probability greater than0.39020809 under explicit finite aggregate hash transfer H with epsilon2^-40 and finite bank-window storage admissibility. Retain C4-free incidence/four moments and exact integrated21-product scaled-quartic projection7876 retained8064. New ancillary fingerprint field q=2^127-1 uses13 injective126-bit coefficients,degree12,and two full two-limb Horner residues;store full first127 bits and low64 of second. For unequal keys,a constant difference never collides in the first field;otherwise root counting bounds total fingerprint collision by144*(2^64-1)/q^2. Complete scalar fingerprint1232 retained1280 includes every128-bit carry and all full residues before final truncation. Other sample work4992 gives13056 native/sample. Bound(13056L+2^120)/20000<2^(125077/1000),proposed125.077,includes full cold GT powers/transform,all failures,rejections,sorting,transfers and verified canonical G2 output for actual P. Peak<2^137 bytes,zero advice,no supplied powers or amortization. Protected production p,r are unchanged;only an internal checksum field changes. Conditional analytic evidence,not qualification or practical execution.",
+      "score": {
+        "numerator": "125077",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json",
+        "pretransform.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
