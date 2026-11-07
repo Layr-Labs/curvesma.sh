@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "title": "Nonbacktracking orbit walk with initialized capped chained dictionary:126.373",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size orbit algorithm in proof.md has success>=0.39 under disclosed standard BLAKE3 H and explicit finite banked storage,with complete cold work<2^(126373/1000) protected dense-Fp12 equivalents at C=20000:one reference pertransition,otherwork<=12288K+2^130 scalarinstructions,peakmemory<2^136 bytes,zero advice. Everybuckethead isinitialized andallchainvisitsarehardcappedwithprovedfailure<2^-100. This isanalyticconditional evidence,notproductionexecution orqualification.",
+      "score": {
+        "numerator": "126373",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "canonical-budget.md",
+        "copy-negate.S",
+        "dictionary.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
