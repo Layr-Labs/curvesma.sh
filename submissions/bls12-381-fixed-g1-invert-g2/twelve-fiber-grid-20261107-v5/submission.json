@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "Deterministic table grid and projective-row collision proof:126.221,consistent protocol",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P fixed-G1 pairing inversion under explicit standard SCAL/KEYS BLAKE3 premise H and finite banked-storage admissibility succeeds with probability greater than0.39024473. Deterministically enumerate L distinct table-index pairs from two paid W=2^64 full-Fr target-specific tables. A projective-row proof supplies at least21/2 times binom(L,2) distinct useful constraint classes with pairwise-independent row equations;the phase -1 has at most two rectangle aliases,and other ten phases have none. Use R=min integer with21R^2>=2r,L=ceil1031R/1000. No PAIR hash is evaluated. Unchanged exact twelve-orbit key uses two full pinned blst products retained512 each,complete key2304. Generation6272+sort544+scan128+cap32=6976 retained7200 scalar instructions/sample plus one dense reference. Complete cold envelope2^120 includes all tables/rejections,transfers,failures and verified G2/pairing finish. Bound(27200L+2^120)/20000<2^(126221/1000),proposed126.221. Peak<2^137 bytes,zero advice,no supplied auxiliary powers or amortization. Conditional analytic claim,not practical execution or qualification.",
+      "score": {
+        "numerator": "126221",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
