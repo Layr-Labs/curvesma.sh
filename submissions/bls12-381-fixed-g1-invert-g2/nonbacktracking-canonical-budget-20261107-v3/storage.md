@@ -1,0 +1,15 @@
+# Explicit97-bit bank ids with ordinary48-bit virtual addressing
+
+This finite banked-RAM realization is a material machine-model assumption,not an installed VM configuration orpractical availability claim. It supplies storage only,no hash,group operation,search,randomness orarithmetic oracle. CPU index work,selector writes,barriers anddata transfers are all charged. If outside the permitted model,the claim must be rejected. The VM onlyintakes static evidence;analytic bounds are allowed.
+
+Reserve2^126 payload slots*512=2^135 bytes,2^122 tree slots*8192=2^135,and2^49 jump banks*2^40=2^89. Shared tables/code/current states/frames/scratch use<2^45. Total allocated peak2^135+2^135+2^89+2^45<2^137,including everycapacity andpadding. No advice orfuture-target amortization isexcluded.
+
+A2^40-byte noncacheable window begins at2^45. Shared data remains below2^45,so every native virtual address is below2^46 andfits anordinary48-bit mode. No large-VA extension isrequired. Payload indexp useslocal31bits,offsetlocal<<9,bankp>>31. Nodeindexn useslocal27bits,offsetlocal<<13,bank2^95+(n>>27). Jumpindexj useslocal27bits,offset(12*jlow+e)*640,bank2^96+(j>>27). These rangesaredisjoint andallbankids<2^97. Payload/node/jump complete512/8192/640-byteoperandsfitonebank. Alllogicalindicesfit128bits;actualwindowaddressesfit64bits.
+
+The97-bit selector uses low64/high33 bits in twoordinarywords. DSBcompletespreviousaccesses;STRlow andSTRhigh fillpendinglatches;STRcommitselectsthebank;DSBorderssubsequentwindowaccesses. No atomic128-bitstore isassumed. Noncacheablemappingavoidsstalealiases. One sequential controllerexists. Decoder routesbankbits only,analogoustoRAMaddressing;it doesnot executean unpricedalgorithm. Threevalidbankrangeshavefixedlayouts,withnostoredper-bankdescriptororacle.
+
+Rightshift ofa128-bitindexusesEXTR/LSRontwolimbs. Regionbase2^95/2^96 setsbit31/32ofthehighselectorword,clearofthelocalbankindex. Localmasks/shiftsuseone64-bitlowword. Atmost32instructions/selectincludeindexloads,twolimbshift,regionbits,windowoffset,selectorpointer,twolatchstores,commit,twoDSBandcontext. This ischargedintreevisits/splits,payloadwrites andcontroller. References/scalarhelpersfinishreadingjumpdata beforetreebankswitch;liveGT/hash/coefficientsalwaysremainshared. No freepagefaultalgorithm,DMAsearch,networkorprocessor migration.
+
+Globaltree/payloadarenasarenotinitializedenmasse. Indicesstartat1;root/initialpayloadareinitializedcold;allocatednodesandrecordsarefullyinitializedbychargedhotwork. Unallocatedslotsareneverreadandcannotprovideadvice. Capacitypaddingisincluded. Jumpbanksarefullyconstructed,theirwrites/optionalzeroingpaidcold2^120. Sharedtabulation(72*2^32+2)*40<2^44;allothercode,constants,two960-bytecurrentrecords,26-levelpathscratch,hashblocks,countersandframesfit<2^45. Theweightedcanonicalbudgetaddsone128-bitcounterand12classbytes.
+
+Thisismaterialfinitehardwareorganization,notclaimsofcommodityRAMavailabilityorproductionexecution. Instruction-equivalentworkcountsallCPUtransfers,notelapsedtime. Candidatefilesneverexecuteonthehostorwithcredentials. Sharedllm-verifierowns scientificexecution/review/scoring.
