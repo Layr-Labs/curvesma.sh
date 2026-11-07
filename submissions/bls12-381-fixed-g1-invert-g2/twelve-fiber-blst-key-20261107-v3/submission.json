@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "Pinned native blst multiplication for twelve-orbit key:126.240",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 BLS12-381 pairing inversion with success greater than 0.39024473 under explicit full-standard-BLAKE3 premise H and finite banked-storage admissibility, as fully described in proof.md. Twelve-element exact Frobenius orbit key uses two pinned upstream blst full six-limb Montgomery products, each with complete entry/helper/wrapper/external-call static count 384 retained at 512. Complete key sum 2264 retained 2304; generation 7296, radix 544, scan 128, capped confirmations 32 give 8000 retained 8224 scalar instructions/sample, plus one dense reference. All cold work remains below 2^120 scalar instruction equivalents. Complete bound (28224 L+2^120)/20000 < 2^(3156/25), proposed 126.240, including cold tables, all failures, transfers, rejections and terminal G2/pairing verification. Peak memory below 2^137 bytes, zero advice, no auxiliary input powers or amortization. Conditional analytical claim, not practical execution or promotion. Full algorithm materially reused from e750ade2-0c61-4061-87a7-9f66de49eaae.",
+      "score": {
+        "numerator": "3156",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
