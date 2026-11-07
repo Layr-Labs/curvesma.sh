@@ -1,0 +1,714 @@
+// Static untrusted analytic evidence;never host-execute or use credentials.
+// x0=left21-evaluation prefix1008,x1=right prefix1008,x2=disjoint output576.
+// Exact scaled projection240*(A,B),not a GT element;only orbit-key input.
+.text
+.p2align 2
+.macro TOOM_MUL_CORE
+	ldp	x11,x12,[x1]
+	ldr	x17,        [x2]
+	ldp	x13,x14,[x1,#16]
+	ldp	x15,x16,[x1,#32]
+
+	mul	x19,x11,x17
+	mul	x20,x12,x17
+	mul	x21,x13,x17
+	mul	x22,x14,x17
+	mul	x23,x15,x17
+	mul	x24,x16,x17
+
+	umulh	x5,x11,x17
+	umulh	x6,x12,x17
+	umulh	x7,x13,x17
+	umulh	x8,x14,x17
+	umulh	x9,x15,x17
+	umulh	x10,x16,x17
+	ldr	x17,[x2,8*1]
+
+	str	x19,[x0]
+	adds	x19,x20,x5
+	mul	x5,x11,x17
+	adcs	x20,x21,x6
+	mul	x6,x12,x17
+	adcs	x21,x22,x7
+	mul	x7,x13,x17
+	adcs	x22,x23,x8
+	mul	x8,x14,x17
+	adcs	x23,x24,x9
+	mul	x9,x15,x17
+	adc	x24,xzr,    x10
+	mul	x10,x16,x17
+	adds	x19,x19,x5
+	umulh	x5,x11,x17
+	adcs	x20,x20,x6
+	umulh	x6,x12,x17
+	adcs	x21,x21,x7
+	umulh	x7,x13,x17
+	adcs	x22,x22,x8
+	umulh	x8,x14,x17
+	adcs	x23,x23,x9
+	umulh	x9,x15,x17
+	adcs	x24,x24,x10
+	umulh	x10,x16,x17
+	ldr	x17,[x2,#8*(1+1)]
+	adc	x25,xzr,xzr
+
+	str	x19,[x0,8*1]
+	adds	x19,x20,x5
+	mul	x5,x11,x17
+	adcs	x20,x21,x6
+	mul	x6,x12,x17
+	adcs	x21,x22,x7
+	mul	x7,x13,x17
+	adcs	x22,x23,x8
+	mul	x8,x14,x17
+	adcs	x23,x24,x9
+	mul	x9,x15,x17
+	adc	x24,x25,x10
+	mul	x10,x16,x17
+	adds	x19,x19,x5
+	umulh	x5,x11,x17
+	adcs	x20,x20,x6
+	umulh	x6,x12,x17
+	adcs	x21,x21,x7
+	umulh	x7,x13,x17
+	adcs	x22,x22,x8
+	umulh	x8,x14,x17
+	adcs	x23,x23,x9
+	umulh	x9,x15,x17
+	adcs	x24,x24,x10
+	umulh	x10,x16,x17
+	ldr	x17,[x2,#8*(2+1)]
+	adc	x25,xzr,xzr
+
+	str	x19,[x0,8*2]
+	adds	x19,x20,x5
+	mul	x5,x11,x17
+	adcs	x20,x21,x6
+	mul	x6,x12,x17
+	adcs	x21,x22,x7
+	mul	x7,x13,x17
+	adcs	x22,x23,x8
+	mul	x8,x14,x17
+	adcs	x23,x24,x9
+	mul	x9,x15,x17
+	adc	x24,x25,x10
+	mul	x10,x16,x17
+	adds	x19,x19,x5
+	umulh	x5,x11,x17
+	adcs	x20,x20,x6
+	umulh	x6,x12,x17
+	adcs	x21,x21,x7
+	umulh	x7,x13,x17
+	adcs	x22,x22,x8
+	umulh	x8,x14,x17
+	adcs	x23,x23,x9
+	umulh	x9,x15,x17
+	adcs	x24,x24,x10
+	umulh	x10,x16,x17
+	ldr	x17,[x2,#8*(3+1)]
+	adc	x25,xzr,xzr
+
+	str	x19,[x0,8*3]
+	adds	x19,x20,x5
+	mul	x5,x11,x17
+	adcs	x20,x21,x6
+	mul	x6,x12,x17
+	adcs	x21,x22,x7
+	mul	x7,x13,x17
+	adcs	x22,x23,x8
+	mul	x8,x14,x17
+	adcs	x23,x24,x9
+	mul	x9,x15,x17
+	adc	x24,x25,x10
+	mul	x10,x16,x17
+	adds	x19,x19,x5
+	umulh	x5,x11,x17
+	adcs	x20,x20,x6
+	umulh	x6,x12,x17
+	adcs	x21,x21,x7
+	umulh	x7,x13,x17
+	adcs	x22,x22,x8
+	umulh	x8,x14,x17
+	adcs	x23,x23,x9
+	umulh	x9,x15,x17
+	adcs	x24,x24,x10
+	umulh	x10,x16,x17
+	ldr	x17,[x2,#8*(4+1)]
+	adc	x25,xzr,xzr
+
+	str	x19,[x0,8*4]
+	adds	x19,x20,x5
+	mul	x5,x11,x17
+	adcs	x20,x21,x6
+	mul	x6,x12,x17
+	adcs	x21,x22,x7
+	mul	x7,x13,x17
+	adcs	x22,x23,x8
+	mul	x8,x14,x17
+	adcs	x23,x24,x9
+	mul	x9,x15,x17
+	adc	x24,x25,x10
+	mul	x10,x16,x17
+	adds	x19,x19,x5
+	umulh	x5,x11,x17
+	adcs	x20,x20,x6
+	umulh	x6,x12,x17
+	adcs	x21,x21,x7
+	umulh	x7,x13,x17
+	adcs	x22,x22,x8
+	umulh	x8,x14,x17
+	adcs	x23,x23,x9
+	umulh	x9,x15,x17
+	adcs	x24,x24,x10
+	umulh	x10,x16,x17
+	adc	x25,xzr,xzr
+
+	str	x19,[x0,8*5]
+	adds	x19,x20,x5
+	adcs	x20,x21,x6
+	adcs	x21,x22,x7
+	adcs	x22,x23,x8
+	adcs	x23,x24,x9
+	adc	x24,x25,x10
+
+	stp	x19,x20,[x0,#48]
+	stp	x21,x22,[x0,#64]
+	stp	x23,x24,[x0,#80]
+
+.endm
+.macro TOOM_ADD_CORE
+    ldp x3,x4,[x1,#0]
+    ldp x5,x6,[x2,#0]
+    adds x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#0]
+    ldp x3,x4,[x1,#16]
+    ldp x5,x6,[x2,#16]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#16]
+    ldp x3,x4,[x1,#32]
+    ldp x5,x6,[x2,#32]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#32]
+    ldp x3,x4,[x1,#48]
+    ldp x5,x6,[x2,#48]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#48]
+    ldp x3,x4,[x1,#64]
+    ldp x5,x6,[x2,#64]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#64]
+    ldp x3,x4,[x1,#80]
+    ldp x5,x6,[x2,#80]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#80]
+    ldr x3,[x1,#96]
+    ldr x5,[x2,#96]
+    adcs x3,x3,x5
+    str x3,[x0,#96]
+.endm
+.macro TOOM_RAW out,lo,ro
+    add x0,sp,#\out
+    add x1,x29,#\lo
+    add x2,x30,#\ro
+    TOOM_MUL_CORE
+    str xzr,[sp,#(\out+96)]
+.endm
+.macro TOOM_VEC op,out,a,b
+    add x0,sp,#\out
+    add x1,sp,#\a
+    add x2,sp,#\b
+    bl \op
+.endm
+.global fapi_partial_trace_product
+.type fapi_partial_trace_product,%function
+fapi_partial_trace_product:
+    sub sp,sp,#3712
+    stp x19,x20,[sp,#0]
+    stp x21,x22,[sp,#16]
+    stp x23,x24,[sp,#32]
+    stp x25,x26,[sp,#48]
+    stp x27,x28,[sp,#64]
+    stp x29,x30,[sp,#80]
+    mov x19,x0
+    mov x20,x1
+    mov x21,x2
+    adrp x22,.Ltoom_p
+    add x22,x22,:lo12:.Ltoom_p
+    adrp x23,.Ltoom_n0
+    ldr x23,[x23,:lo12:.Ltoom_n0]
+    adrp x24,.Ltoom_denom
+    ldr x24,[x24,:lo12:.Ltoom_denom]
+    mov x25,x21
+.rept 36
+    stp xzr,xzr,[x25],#16
+.endr
+    // The inlined raw/merge phase makes no calls and preserves x29,x30.
+    mov x29,x19
+    mov x30,x20
+    stp x21,x22,[sp,#112]
+    stp x23,x24,[sp,#240]
+    TOOM_RAW 128,0,0
+    TOOM_RAW 1920,336,672
+    TOOM_RAW 2048,672,336
+    add x0,sp,#1024
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_RAW 256,48,48
+    TOOM_RAW 1920,384,720
+    TOOM_RAW 2048,720,384
+    add x0,sp,#1152
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_RAW 384,96,96
+    TOOM_RAW 1920,432,768
+    TOOM_RAW 2048,768,432
+    add x0,sp,#1280
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_RAW 512,144,144
+    TOOM_RAW 1920,480,816
+    TOOM_RAW 2048,816,480
+    add x0,sp,#1408
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_RAW 640,192,192
+    TOOM_RAW 1920,528,864
+    TOOM_RAW 2048,864,528
+    add x0,sp,#1536
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_RAW 768,240,240
+    TOOM_RAW 1920,576,912
+    TOOM_RAW 2048,912,576
+    add x0,sp,#1664
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_RAW 896,288,288
+    TOOM_RAW 1920,624,960
+    TOOM_RAW 2048,960,624
+    add x0,sp,#1792
+    add x1,sp,#1920
+    add x2,sp,#2048
+    TOOM_ADD_CORE
+    TOOM_VEC .Ltoom_add13,2176,256,384
+    TOOM_VEC .Ltoom_sub13,2304,256,384
+    TOOM_VEC .Ltoom_add13,2432,512,640
+    TOOM_VEC .Ltoom_sub13,2560,512,640
+    TOOM_VEC .Ltoom_add13,2688,768,896
+    TOOM_VEC .Ltoom_sub13,2816,768,896
+    TOOM_VEC .Ltoom_add13,2944,1152,1280
+    TOOM_VEC .Ltoom_sub13,3072,1152,1280
+    TOOM_VEC .Ltoom_add13,3200,1408,1536
+    TOOM_VEC .Ltoom_sub13,3328,1408,1536
+    TOOM_VEC .Ltoom_add13,3456,1664,1792
+    TOOM_VEC .Ltoom_sub13,3584,1664,1792
+    // Raw reads are complete;restore live output/modulus/reduction parameters.
+    ldp x21,x22,[sp,#112]
+    ldp x23,x24,[sp,#240]
+    add x0,sp,#256
+    add x1,sp,#384
+    add x2,sp,#128
+    add x3,sp,#2176
+    add x4,sp,#2432
+    add x5,sp,#2688
+    add x6,sp,#3072
+    add x7,sp,#3328
+    add x8,sp,#3584
+    bl .Ltoom_jointA
+    add x0,sp,#256
+    mov x1,x22
+    mov x2,x24
+    bl .Ltoom_barrett
+    add x0,x21,#0
+    add x1,sp,#256
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,sp,#384
+    mov x1,x22
+    mov x2,x24
+    bl .Ltoom_barrett
+    add x0,x21,#48
+    add x1,sp,#384
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,sp,#512
+    add x1,sp,#640
+    add x2,sp,#1024
+    add x3,sp,#2944
+    add x4,sp,#3200
+    add x5,sp,#3456
+    add x6,sp,#2304
+    add x7,sp,#2560
+    add x8,sp,#2816
+    bl .Ltoom_jointB
+    add x0,sp,#512
+    mov x1,x22
+    mov x2,x24
+    bl .Ltoom_barrett
+    add x0,x21,#384
+    add x1,sp,#512
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    add x0,sp,#640
+    mov x1,x22
+    mov x2,x24
+    bl .Ltoom_barrett
+    add x0,x21,#432
+    add x1,sp,#640
+    mov x2,x22
+    mov x3,x23
+    bl redc_mont_384
+    ldp x29,x30,[sp,#80]
+    ldp x27,x28,[sp,#64]
+    ldp x25,x26,[sp,#48]
+    ldp x23,x24,[sp,#32]
+    ldp x21,x22,[sp,#16]
+    ldp x19,x20,[sp,#0]
+    add sp,sp,#3712
+    ret
+.size fapi_partial_trace_product,.-fapi_partial_trace_product
+.type .Ltoom_add13,%function
+.Ltoom_add13:
+    ldp x3,x4,[x1,#0]
+    ldp x5,x6,[x2,#0]
+    adds x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#0]
+    ldp x3,x4,[x1,#16]
+    ldp x5,x6,[x2,#16]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#16]
+    ldp x3,x4,[x1,#32]
+    ldp x5,x6,[x2,#32]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#32]
+    ldp x3,x4,[x1,#48]
+    ldp x5,x6,[x2,#48]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#48]
+    ldp x3,x4,[x1,#64]
+    ldp x5,x6,[x2,#64]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#64]
+    ldp x3,x4,[x1,#80]
+    ldp x5,x6,[x2,#80]
+    adcs x3,x3,x5
+    adcs x4,x4,x6
+    stp x3,x4,[x0,#80]
+    ldr x3,[x1,#96]
+    ldr x5,[x2,#96]
+    adcs x3,x3,x5
+    str x3,[x0,#96]
+    ret
+.size .Ltoom_add13,.-.Ltoom_add13
+.type .Ltoom_sub13,%function
+.Ltoom_sub13:
+    ldp x3,x4,[x1,#0]
+    ldp x5,x6,[x2,#0]
+    subs x3,x3,x5
+    sbcs x4,x4,x6
+    stp x3,x4,[x0,#0]
+    ldp x3,x4,[x1,#16]
+    ldp x5,x6,[x2,#16]
+    sbcs x3,x3,x5
+    sbcs x4,x4,x6
+    stp x3,x4,[x0,#16]
+    ldp x3,x4,[x1,#32]
+    ldp x5,x6,[x2,#32]
+    sbcs x3,x3,x5
+    sbcs x4,x4,x6
+    stp x3,x4,[x0,#32]
+    ldp x3,x4,[x1,#48]
+    ldp x5,x6,[x2,#48]
+    sbcs x3,x3,x5
+    sbcs x4,x4,x6
+    stp x3,x4,[x0,#48]
+    ldp x3,x4,[x1,#64]
+    ldp x5,x6,[x2,#64]
+    sbcs x3,x3,x5
+    sbcs x4,x4,x6
+    stp x3,x4,[x0,#64]
+    ldp x3,x4,[x1,#80]
+    ldp x5,x6,[x2,#80]
+    sbcs x3,x3,x5
+    sbcs x4,x4,x6
+    stp x3,x4,[x0,#80]
+    ldr x3,[x1,#96]
+    ldr x5,[x2,#96]
+    sbcs x3,x3,x5
+    str x3,[x0,#96]
+    ret
+.size .Ltoom_sub13,.-.Ltoom_sub13
+// Two output13-limb signed dots sharing every input word and bias load.
+// Internal convention:x0/x1 outputs,x2..x8 seven input vectors.
+.macro TOOM_JPAIR ptr,c0,shift0,sgn0,c1,shift1,sgn1,i
+    ldr x26,[\ptr,#(8*\i)]
+.if \shift0 == -1
+    mul x27,x26,\c0
+    umulh x28,x26,\c0
+.elseif \shift0 == 0
+    mov x27,x26
+    mov x28,xzr
+.else
+    lsl x27,x26,#\shift0
+    lsr x28,x26,#(64-\shift0)
+.endif
+.if \sgn0 == 1
+    adds x20,x20,x27
+    adc x21,x21,x28
+.else
+    subs x20,x20,x27
+    sbc x21,x21,x28
+.endif
+.if \shift1 == -1
+    mul x27,x26,\c1
+    umulh x28,x26,\c1
+.elseif \shift1 == 0
+    mov x27,x26
+    mov x28,xzr
+.else
+    lsl x27,x26,#\shift1
+    lsr x28,x26,#(64-\shift1)
+.endif
+.if \sgn1 == 1
+    adds x22,x22,x27
+    adc x23,x23,x28
+.else
+    subs x22,x22,x27
+    sbc x23,x23,x28
+.endif
+.endm
+.type .Ltoom_jointA,%function
+.Ltoom_jointA:
+    stp x19,x20,[sp,#-96]!
+    stp x21,x22,[sp,#16]
+    stp x23,x24,[sp,#32]
+    stp x25,x26,[sp,#48]
+    stp x27,x28,[sp,#64]
+    stp x29,x30,[sp,#80]
+    mov x9,#2640
+    mov x10,#5520
+    mov x11,#115
+    mov x12,#55
+    mov x13,#3
+    mov x14,#9
+    mov x15,#170
+    mov x16,#60
+    mov x17,#28
+    mov x19,#36
+    adrp x29,.Ltoom_bias
+    add x29,x29,:lo12:.Ltoom_bias
+    mov x24,xzr
+    mov x25,xzr
+.irp i,0,1,2,3,4,5,6,7,8,9,10,11,12
+    mov x20,x24
+    asr x21,x24,#63
+    mov x22,x25
+    asr x23,x25,#63
+    ldr x26,[x29,#(8*\i)]
+    adds x20,x20,x26
+    adc x21,x21,xzr
+    adds x22,x22,x26
+    adc x23,x23,xzr
+    TOOM_JPAIR x2,x9,-1,1,x10,-1,1,\i
+    TOOM_JPAIR x3,x11,-1,1,x12,-1,-1,\i
+    TOOM_JPAIR x4,xzr,3,1,xzr,6,1,\i
+    TOOM_JPAIR x5,x13,-1,-1,x14,-1,-1,\i
+    TOOM_JPAIR x6,x15,-1,1,x16,-1,1,\i
+    TOOM_JPAIR x7,x17,-1,-1,x19,-1,1,\i
+    TOOM_JPAIR x8,xzr,1,1,xzr,2,-1,\i
+    str x20,[x0,#(8*\i)]
+    mov x24,x21
+    str x22,[x1,#(8*\i)]
+    mov x25,x23
+.endr
+    ldp x29,x30,[sp,#80]
+    ldp x27,x28,[sp,#64]
+    ldp x25,x26,[sp,#48]
+    ldp x23,x24,[sp,#32]
+    ldp x21,x22,[sp,#16]
+    ldp x19,x20,[sp],#96
+    ret
+.size .Ltoom_jointA,.-.Ltoom_jointA
+.type .Ltoom_jointB,%function
+.Ltoom_jointB:
+    stp x19,x20,[sp,#-96]!
+    stp x21,x22,[sp,#16]
+    stp x23,x24,[sp,#32]
+    stp x25,x26,[sp,#48]
+    stp x27,x28,[sp,#64]
+    stp x29,x30,[sp,#80]
+    mov x9,#2640
+    mov x10,#5520
+    mov x11,#115
+    mov x12,#55
+    mov x13,#3
+    mov x14,#9
+    adrp x29,.Ltoom_bias
+    add x29,x29,:lo12:.Ltoom_bias
+    mov x24,xzr
+    mov x25,xzr
+.irp i,0,1,2,3,4,5,6,7,8,9,10,11,12
+    mov x20,x24
+    asr x21,x24,#63
+    mov x22,x25
+    asr x23,x25,#63
+    ldr x26,[x29,#(8*\i)]
+    adds x20,x20,x26
+    adc x21,x21,xzr
+    adds x22,x22,x26
+    adc x23,x23,xzr
+    TOOM_JPAIR x2,x9,-1,1,x10,-1,1,\i
+    TOOM_JPAIR x3,x11,-1,1,x12,-1,-1,\i
+    TOOM_JPAIR x4,xzr,3,1,xzr,6,1,\i
+    TOOM_JPAIR x5,x13,-1,-1,x14,-1,-1,\i
+    TOOM_JPAIR x6,x11,-1,1,x12,-1,-1,\i
+    TOOM_JPAIR x7,xzr,2,1,xzr,5,1,\i
+    TOOM_JPAIR x8,xzr,0,-1,x13,-1,-1,\i
+    str x20,[x0,#(8*\i)]
+    mov x24,x21
+    str x22,[x1,#(8*\i)]
+    mov x25,x23
+.endr
+    ldp x29,x30,[sp,#80]
+    ldp x27,x28,[sp,#64]
+    ldp x25,x26,[sp,#48]
+    ldp x23,x24,[sp,#32]
+    ldp x21,x22,[sp,#16]
+    ldp x19,x20,[sp],#96
+    ret
+.size .Ltoom_jointB,.-.Ltoom_jointB
+.type .Ltoom_barrett,%function
+.Ltoom_barrett:
+    sub sp,sp,#64
+    ldr x4,[x0,#96]
+    ldr x3,[x0,#88]
+    lsr x3,x3,#9
+    orr x3,x3,x4,lsl #55
+    udiv x4,x3,x2
+    mov x9,xzr
+    ldr x10,[x1,#0]
+    mul x7,x10,x4
+    umulh x8,x10,x4
+    adds x7,x7,x9
+    adc x8,x8,xzr
+    str x7,[sp,#0]
+    mov x9,x8
+    ldr x10,[x1,#8]
+    mul x7,x10,x4
+    umulh x8,x10,x4
+    adds x7,x7,x9
+    adc x8,x8,xzr
+    str x7,[sp,#8]
+    mov x9,x8
+    ldr x10,[x1,#16]
+    mul x7,x10,x4
+    umulh x8,x10,x4
+    adds x7,x7,x9
+    adc x8,x8,xzr
+    str x7,[sp,#16]
+    mov x9,x8
+    ldr x10,[x1,#24]
+    mul x7,x10,x4
+    umulh x8,x10,x4
+    adds x7,x7,x9
+    adc x8,x8,xzr
+    str x7,[sp,#24]
+    mov x9,x8
+    ldr x10,[x1,#32]
+    mul x7,x10,x4
+    umulh x8,x10,x4
+    adds x7,x7,x9
+    adc x8,x8,xzr
+    str x7,[sp,#32]
+    mov x9,x8
+    ldr x10,[x1,#40]
+    mul x7,x10,x4
+    umulh x8,x10,x4
+    adds x7,x7,x9
+    adc x8,x8,xzr
+    str x7,[sp,#40]
+    mov x9,x8
+    str x9,[sp,#48]
+    ldr x5,[x0,#48]
+    ldr x6,[sp,#0]
+    subs x5,x5,x6
+    str x5,[x0,#48]
+    ldr x5,[x0,#56]
+    ldr x6,[sp,#8]
+    sbcs x5,x5,x6
+    str x5,[x0,#56]
+    ldr x5,[x0,#64]
+    ldr x6,[sp,#16]
+    sbcs x5,x5,x6
+    str x5,[x0,#64]
+    ldr x5,[x0,#72]
+    ldr x6,[sp,#24]
+    sbcs x5,x5,x6
+    str x5,[x0,#72]
+    ldr x5,[x0,#80]
+    ldr x6,[sp,#32]
+    sbcs x5,x5,x6
+    str x5,[x0,#80]
+    ldr x5,[x0,#88]
+    ldr x6,[sp,#40]
+    sbcs x5,x5,x6
+    str x5,[x0,#88]
+    ldr x5,[x0,#96]
+    ldr x6,[sp,#48]
+    sbcs x5,x5,x6
+    str x5,[x0,#96]
+    ldp x3,x4,[x0,#48]
+    ldp x5,x6,[x0,#64]
+    ldp x7,x8,[x0,#80]
+    ldp x9,x10,[x1,#0]
+    ldp x11,x12,[x1,#16]
+    ldp x13,x14,[x1,#32]
+    subs x9,x3,x9
+    sbcs x10,x4,x10
+    sbcs x11,x5,x11
+    sbcs x12,x6,x12
+    sbcs x13,x7,x13
+    sbcs x14,x8,x14
+    csel x3,x9,x3,hs
+    csel x4,x10,x4,hs
+    csel x5,x11,x5,hs
+    csel x6,x12,x6,hs
+    csel x7,x13,x7,hs
+    csel x8,x14,x8,hs
+    stp x3,x4,[x0,#48]
+    stp x5,x6,[x0,#64]
+    stp x7,x8,[x0,#80]
+    str xzr,[x0,#96]
+    add sp,sp,#64
+    ret
+.size .Ltoom_barrett,.-.Ltoom_barrett
+.section .rodata
+.p2align 3
+.Ltoom_p:
+    .quad 0xb9feffffffffaaab,0x1eabfffeb153ffff,0x6730d2a0f6b0f624,0x64774b84f38512bf,0x4b1ba7b6434bacd7,0x1a0111ea397fe69a
+.Ltoom_n0:
+    .quad 0x89f3fffcfffcfffd
+.Ltoom_denom:
+    .quad 0xd0088f51cbff4
+.Ltoom_bias:
+    .quad 0x8000071c638e4000,0x5ac75d8e0baac9aa,0xce0d8844f3f5f3b,0xe47b4f9c6dd0c58b,0xa16a1c24681259af,0x18672186171eca4b,0x524cc25e3bc0475a,0x8b3f45b7729bbd4c,0x67924d27a2f41429,0x2439439c11ad19b9,0x9e3aa88bc97a78b7,0xde92e30d7f1d2f4,0xa9

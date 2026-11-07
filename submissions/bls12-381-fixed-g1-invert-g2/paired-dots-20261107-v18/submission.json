@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "title": "Paired interpolation dots with shared loads:125.030",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion succeeds above0.39020809 conditional on explicit charged entropy-channel condition R_coin and bank-window storage admissibility. Sixteen uniform full Fr coefficients define degree15 polynomial f;table exponents f(j),f(W+k) are exactly16-wise independent at distinct arguments. Every four-collision moment term uses at most16 vertices,so finite Bonferroni probability bounds transfer exactly;no actual-BLAKE3 hash-transfer H remains. R_coin is material:at most4438016 ideal independent bits with total generation/transfer cost<=2^100 and source abort probability<=2^-100;no claim is made that hashes,RNDR or this VM implement it. Full cold polynomial scalar arithmetic is bit-serial and charged. Inlined scaled-quartic projection7566 retained7680,EXTR-based complete fingerprint1210 retained1248,other work4960,total12640 native/sample. Bound(12640L+2^120)/20000<2^(12503/100),proposed125.030. Every rejection,failure,cold GT point,sort,transfer and canonical verified output for actual P is paid. Full protected p,r,C20000,threshold unchanged;peak<2^137 bytes,zero advice,no auxiliary powers or future-target amortization. Conditional analytic evidence,not qualification or practical execution. Paired signed13-limb dots share each input/bias load while preserving both independent full128-bit word accumulators/carries. Complete joint functions1015+1011 replace4*561,plus16 saved parent arguments/calls,234 actual instructions saved.",
+      "score": {
+        "numerator": "12503",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json",
+        "pretransform.S",
+        "finite-coins.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
