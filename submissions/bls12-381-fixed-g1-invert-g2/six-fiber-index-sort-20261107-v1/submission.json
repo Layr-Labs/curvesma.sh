@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Six-element conjugate trace fibers with immutable index sorting:126.708",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 and exact supplied nonidentity P,proof.md gives pairing inversion into verified canonical G2 with success>0.39024473 under explicitly disclosed actual full standard keyed/unkeyed BLAKE3 H and finite banked-storage admissibility. Canonicalize only the sign of raw b1 in the192-byte Fp4 trace key;exact fibers are six even-Frobenius points on FULL order-r GT. Two full-Fr paid target-specific tables produce h*z^(v+w),one dense reference/sample. Finite first/second useful-collision support-rank moments use five nonidentity phases and L=ceil1031*ceil(sqrt(r/5))/1000. Two80-bit stable radix passes move64-byte fingerprint/ordinal records;immutable payloads are fully compared under a paid work cap. Generation5376+sort544+scan128+cap32=6080 retained6304 native/sample,cold<=2^120. Static standard seven-round compression leaf928 through RET,retained1024;static conjugate sign leaf97 through RET,key retained384. All five scalar candidates are verified,cold paid. Exact250th-power bound(26304L+2^120)/20000<2^(31677/250). Peak<2^137,advice0,no supplied auxiliary powers/amortization. Conditional analytic evidence,not an official score,qualification,promotion or practical production attack.",
+      "score": {
+        "numerator": "31677",
+        "denominator": "250"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
