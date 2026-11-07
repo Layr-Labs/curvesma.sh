@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "One wide-table nonbacktracking orbit walk with charged global B-tree:126.735",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentity P,the full-size algorithm has success>=0.39 under disclosed standard BLAKE3 H andexplicit finite banked-RAM realization. Complete cold work<2^(25347/200) protected dense-Fp12 equivalents atC=20000,with one reference multiplication pertransition andotherwork<=21504K+2^120 scalarinstructions. Peakmemory<2^137bytes,zero advice;alltableconstruction,retries,globaltreework,transfers,verification andG2outputareincluded. Thisisanalyticconditional evidence,notproductionexecution,qualification orpracticalavailability.",
+      "score": {
+        "numerator": "25347",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "canonical.md",
+        "probability.md",
+        "mixing.md",
+        "tree.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
