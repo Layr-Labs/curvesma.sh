@@ -1,0 +1,1 @@
+Resubmission of cc11ed5d-a62a-4af6-9f57-980801e93d76 (run 42386909899, provider_timeout) and eb1e4412-bfcc-4d78-b65c-9dbfad201cf1 (run 42389443862, provider_timeout): shortened proof.md and success.md (< 10,000 B combined); all code, kernels, submission.json, and the claimed score stay byte-identical.

@@ -1,0 +1,15 @@
+# Success and Work Bound (section 6 of proof.md)
+
+### 6.1 Phase-0 Vandermonde mining and scalar hiding
+
+All coins (`u,b_g,c_(g,b),s_(g,b),c_(c,k),s_(c,k),rho`) and `Q=[x]P` (`|G|=r` prime) are independent and uniform. With `g=1024c+m` (`0<=m<1024`), `u_c=c&31`, `v_c=(c>>5)&0x3ff` in `GF(1024)=GF(2)[z]/(z^10+z^3+1)`, `pool(g)=32m+h(c,m)` (`h(c,m)=(u_c^gf1024_mul(v_c,m))&31`) gives `K_GEN=2^53`/pool, `1024` distinct pools/cluster, and rank-`5` surjectivity of `dv -> gf1024_mul(dv,m_1^m_2)&31` for `0<=m_1<m_2<1024` (`_vand_gf1024_ok`), so `(N_CLUST^2/1024-N_CLUST)/2` pairs `c_1<c_2` share both pools.
+
+In `P_p` (`M_POOL=2^100` in `2^85` chains of `32,768` hashed by `A>>63`, `P_BUCKET_MAX=6*2^63/(r-1)`), uniform `c_(g,b)` gives hit rate `>= 1/2^193-6/(r-1)` (`mu_pool>63.99`), pairwise chain uniformity bounds co-occurrence by `P_BUCKET_MAX^2` (`P_FAIL_ALL_POOLS < 2^-47`), and cross-chain same-`A` hits satisfy `P_SAME_A_ALL < 2^-39.4` (`glob`). Outside `P_FAIL_ALL_POOLS U SAME_A_ALL`, `0` triples and `0` same-`A` hits occur, so the first `8` (`<=64` capped) reports give `8` disjoint pairs (`0 < A_(p,2q+1)-A_(p,2q) < 2^63`, distinct `A`). For any `z in G \ {O}`, `Q -> x(z-Q)^3-x(Q)^3` (deg `12`, fiber `<=12` per `d!=0`, single-pair `24 * 2^63 / (r(r - 1))`) bounds `1..4`-slot cross-pool `Z[lambda]`-relations by `P_BAD_X < 2^-72.99` (`glob`). Given all pts and step scalars (`x!=0`; `x=0` in `1/r` of `rows_`), `c_(g,b) = dlog_P(P_(g,b,0))-b_g x mod r` is a bijection keeping `(b_g)` i.i.d. uniform.
+
+### 6.2–6.4 Swap-free conditional-`X` Chen–Stein and caps
+
+`Gamma(q1p)` (`n0p=6 q1p Q2`, `Sp=2^68 n0p`) holds leaf pairs `alpha={L_1,L_2}` with `c_1<c_2`, `pool(g_1)!=pool(g_2)`, and `m_1<m_2` if `c_1,c_2` share both pools (`|Gamma|=GOOD_NODE_PAIRS*n0p^2`). Given `X` outside `P_FAIL_ALL_POOLS U B_X`: uniform `c_(c_1,k_1),c_(c_2,k_2)` make `(L_1,L_2)` uniform on `G x G` so `E[J_alpha|X] = P1_GOOD = (6(r-1)/r^2)(1-D_WJ-D_LAB_SYM)`; `|B_alpha| <= 2 CLUST_BATCH Sp`; for `beta!=alpha` in `B_alpha`, unshared or `(u_3,u_4)!=(u_1,u_2)` batches give `<= 36/(r(r - 1))`, and `(u_3,u_4)=(u_1,u_2)` has `<=1` sol on `30` non-zero-det `(zeta,zeta')` pairs and `0` on `6` zero-det pairs (`(1,3)+(2,4)`->`beta=alpha`; `(1,2)+(3,4)`->`p_1=p_2`; `(1,4)+(2,3)` cut by `m_1<m_2`; 1-pool by distinct `A`; multi-pool by `B_X^c`), giving `<= 30/r^2 < 36/(r(r - 1))` and `cs < 2^-82.43` (AGG Thm 1). Distinct pools give `P(nu'==u nu|pts)=1/r`; `0<=Z_(c,k,u)<=98,304` gives `Var(Z)<=98,304 E[Z]` in `d_p2`, `SAMEX_FAC<1.001`, and `lo(q1p) = 1-exp(-mu)-cs-rows-glob`.
+
+### 6.5–6.7 Early-abort work and 128-bit gate
+
+With `P_open(T_stop>g) <= 1-lo(MQ1[g]) <= PHI[g]`, `E_open[R] <= E_RUN <= 2^134.814654` insns (`<=74.0972`/leaf). At `q1=8,700,000,000`, exact `lo_run >= 0.998670985595` and `K_GATE = 132920808407662439192763145161662651734` (`p_gate = K_GATE/2^128 = 0.390619148...`) give `p_gate*lo_run >= 0.39010001 > 0.39` and `E_total = 256 + p_gate*E_RUN <= 2^133.458488` insns (`time_log2 = 123.492703530915914`; `R_worst <= 2^179.732829`).
