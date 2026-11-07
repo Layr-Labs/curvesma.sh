@@ -1,0 +1,42 @@
+{
+ "version": 1,
+ "title": "recover-Q: bounded shared record band from 2^52, 117.525153583201",
+ "claims": [
+  {
+   "statement": "For the plain bls12-381-g1-ecdlp-plain target, uniform T=[x]P0 including identity, proof.md's algorithm returns canonical x with success at least 0.39 over uniform challenges and fresh coins under the disclosed heuristics H1-H5, H-EA, H-X and H-FFT. For nonidentity T use z=e(T,Q0), h=e(P0,Q0), independent uniform b in [1,r), g=h^b; the cold STNFS core computes a=log_g(z) from two logarithms, and x=ba mod r is checked in G1. The complete core is the accepted recover-Q package stnfs-rec7-band52q (117.525153584), transferred unchanged: bounded shared record-walk extension over [2^52,2^56), f-only sieve with the exact FFT batch g test, f-only scan2 and the f-only norm-bound kernel, six owners, descent plan and meter 2^120.847081678041. Core ledger <= 2^117.5730562390 dense-Fp12 units (C=20,000 instructions): collection <= 2^116.865873450, linear algebra <= 2^115.814110851, both logarithms metered at 2^113.29; wrapper <= 2^80 instructions, a 2^66 row. The plain bound is core + log2(10) = 2^120.847081678041 G1 units (C=2,000), the factor 10 being the C=20,000 to C=2,000 conversion. Core success >= 0.44748, >= 0.39 at +10% expected descent work. All cold construction, processors, failures, transfers and verification are included without amortization; no auxiliary powers, advice or amortisation. An analytic exploratory claim, not a practical break.",
+   "score": {
+    "numerator": "120847081678041",
+    "denominator": "1000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md",
+    "KERNELS.md",
+    "STORAGE.md",
+    "field-map.md",
+    "refinement.json",
+    "pool_d.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "refinement_audit",
+   "source": "audit_refinement.py",
+   "purpose": "Hosted audit: code identity, parameters, certificate, probes, SRT replay, band split, ledger, success, claim (80-digit decimals); {\"descent\": true} reruns the descent. evidence16.py (local) reruns every check.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "descent": {
+      "type": "boolean"
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
