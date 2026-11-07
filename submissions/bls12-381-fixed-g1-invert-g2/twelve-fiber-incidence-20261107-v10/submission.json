@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "C4-free incidence schedule and finite fourth moments:125.518",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion under explicit cold SCAL/KEYF BLAKE3 H and finite banked-storage admissibility succeeds with probability greater than0.39020809. Use two paid W=g^2 full-Fr tables,g=2^42-11 prime,and deterministic point-line incidence indices y=mx+b,j=xg+y,k=mg+b. Complete40-instruction helper plus caller43 retained64. Incidence C4-freeness gives11 distinct phase constraints per time pair;finite forest/rank/cycle counts through fourth Bonferroni moments justify L=ceil995R/1000,11R^2>=r,without collision independence or Poisson assumptions. Retain exact bounded delayed partial projection12288 and other native sample work5440,total17728. Complete cold envelope2^120 includes both full2g^2 tables,all rejections,larger count arrays,transfers,failures and terminal verified canonical G2 output for actual P. Bound(17728L+2^120)/20000<2^(62759/500),proposed125.518. Peak<2^137 bytes,zero advice,no supplied auxiliary powers or amortization. Complete concrete algorithm,source,finite probability,cost and conditional limitations are in evidence;not qualification or practical execution.",
+      "score": {
+        "numerator": "62759",
+        "denominator": "500"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "inherited-origins.md",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json"
+      ]
+    }
+  ],
+  "experiments": []
+}
