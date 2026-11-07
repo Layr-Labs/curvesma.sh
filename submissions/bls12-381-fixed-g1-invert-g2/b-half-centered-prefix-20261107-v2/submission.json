@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "title": "Odd-order b-half key with centered finite moment:127.551",
+  "claims": [
+    {
+      "statement": "The supplied-P algorithm in proof.md has success at least0.39 under its disclosed extended-domain full-round BLAKE3 random-function idealization and cold work below2^(127551/1000) reference dense-Fp12 equivalents at fixed C=20000, with H=K and other work<=1856K+2^90 scalar instructions. Peak memory<2^50 bytes, advice zero; all cold setup, attempts/failures, key construction, lookup/transfers, verification and G2 output are included. This is an analytic heuristic claim, not production execution or an unconditional fixed-hash theorem.",
+      "score": {
+        "numerator": "127551",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "scalar-audit.md",
+        "prefix-lookup.S",
+        "hot-loop.S",
+        "blake3-final.S",
+        "tabulate.S",
+        "templates.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
