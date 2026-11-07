@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "title": "Direct raw-A projection and fused B initialization:125.8152",
+  "claims": [
+    {
+      "statement": "For the exact supplied P,the full-size h*z^v_j walk with W=2^94,A_t=t+1 in proof.md has success>=0.39 under disclosed standard BLAKE3-256 H and explicit finite banked storage,with complete work<2^(157269/1250) protected dense-Fp12 equivalents at C20000:one reference per transition,otherwork<=2768K+540*2^119 scalar instructions,peak memory<2^136,zero advice. K=ceil9943R/10000 follows from stronger finite weighted-Fourier factorial bounds at delta2^-42,with table failure2^-66 paid. cold-construction.md bounds every target-specific record<2^25 and all non-head cold work<2^120;all94-bit addressing,full B updates,workspace/ABI/transfers,raw-twist reconstruction and verified G2 output are paid. Exact BLS interval arithmetic bounds singular matches<2^-180. Conditional analytic evidence,not qualification or production execution. canonical-parent.S reads raw A directly and fuses the B identity reduction with its candidate-zero copy,85 parent+1008 fields+131 minimum=1224 retained1232;all raw/workspace/output lifetimes and interfaces are included.",
+      "score": {
+        "numerator": "157269",
+        "denominator": "1250"
+      },
+      "evidence": [
+        "proof.md",
+        "probability.md",
+        "mixing.md",
+        "storage.md",
+        "scalar-audit.md",
+        "scalar-and-copy.S",
+        "tabulate.S",
+        "blake3-final.S",
+        "field-ops.S",
+        "block-copy.S",
+        "dictionary.md",
+        "native-field-adapter.S",
+        "pinned-montgomery.S",
+        "pinned-source-license.txt",
+        "fp4-trace.md",
+        "trace-min.S",
+        "trace-hot-loop.S",
+        "trace-controller.md",
+        "success.md",
+        "prepared-hash.md",
+        "nh-fingerprint.md",
+        "dictionary-index.S",
+        "canonical-parent.S",
+        "canonical-parent.md",
+        "cold-construction.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
