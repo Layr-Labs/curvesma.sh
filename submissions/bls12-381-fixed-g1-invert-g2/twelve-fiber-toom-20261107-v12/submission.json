@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "title": "Scaled quartic interpolation with complete native normalization:125.173",
+  "claims": [
+    {
+      "statement": "Full-production supplied-P fixed-G1 pairing inversion has success greater than0.39020809 under explicit finite actual-hash aggregate transfer H with epsilon2^-40 and finite bank-window storage admissibility. C4-free incidence sampling and finite four moments are retained. Seven-evaluation quartic interpolation computes240 times the exact a0,b1 trace projection with21 raw Fp products;nonzero uniform scale240 preserves all twelve Frobenius orbit fibers and output recovery. Four fused signed13-limb dot kernels have proved positive result T<32768p^2;explicit102-instruction high-half Barrett normalization makes T<pR before full Montgomery reduction. Complete hot projection8228 retained8448,other full sample work5504,total13952 native instructions/sample,no hot dense reference. Every2g^2 target-specific record includes paid69-operation cold21-evaluation transform,full2048-byte zeroing,all powers and scalar;all1008-byte transfers are charged. Complete bound(13952L+2^120)/20000<2^(125173/1000),proposed125.173,includes all failures,rejections,sorting,transfers,cold data and verified canonical G2 output for actual P. Peak<2^137 bytes,zero advice,no supplied powers or amortization. H is a finite tolerated aggregate transfer heuristic,not literal finite-seed independence. Conditional analytic evidence,not practical execution or qualification.",
+      "score": {
+        "numerator": "125173",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "blst-mul-mont-384-armv8.S",
+        "native-wrapper.S",
+        "poly192.S",
+        "poly-prime-certificate.json",
+        "fr-add.S",
+        "blst-add-mod-384-armv8.S",
+        "partial-trace-product.S",
+        "incidence.S",
+        "incidence-prime-certificate.json",
+        "pretransform.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
