@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Finite-memory deterministic BSGS accounting control",
+  "claims": [
+    {
+      "statement": "For uniform full-production supplied nonidentity P and independently uniform z, the deterministic fixed-G1 inversion in proof.md returns a canonically encoded G2 Q with e(P,Q)=z with probability at least 39/100, using fewer than 2^231 total target-group-operation equivalents at the protected C=20000. This is a worst-case cold bound including every failure, preprocessing, sorting, lookup, transfers, output and verification. Preprocessing is below 2^68 target equivalents, included in total work; peak memory is at most 640*2^25+2^20 bytes, below 2^35, with no nonuniform advice. No hash or random-walk heuristic is assumed. This is an analytic accounting control, not a practical break or a best-known-computation claim.",
+      "score": {
+        "numerator": "231",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
