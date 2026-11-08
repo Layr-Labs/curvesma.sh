@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "title": "Routed exact-key BSGS for fixed-G1 pairing inversion",
+  "claims": [
+    {
+      "statement": "For every nonidentity P in G1 and every z in GT, D=e(P,Q0) generates GT and z=D^a. Baby-step/giant-step with m=h=2^128, exact 72-limb keys, 256-bit indexes and a routed binary memory tree recovers a and returns Q=[a]Q0, with infinity when z=1. There are no heuristics. Success probability is 1. Total classical work is at most 2^145 dense-Fp12 units at C=20000, including tree installation, both lists, merge-sort, binary search, failed giant steps, the pairing, the G2 scalar and verification. Peak memory is below 2^150 bytes. Advice is 0 bytes.",
+      "score": {
+        "numerator": "145",
+        "denominator": "1"
+      },
+      "evidence": ["proof.md"]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "routed-bsgs-checks",
+      "source": "experiment.py",
+      "purpose": "Recover every exponent in a 100-element toy group by exact-key BSGS, and check the production instruction inequalities.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": ["all", "ledger", "group"]
+          }
+        },
+        "required": ["mode"]
+      },
+      "initial_inputs": [{"mode": "all"}]
+    }
+  ]
+}
