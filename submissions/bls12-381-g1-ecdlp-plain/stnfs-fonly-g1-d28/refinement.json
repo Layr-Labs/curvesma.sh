@@ -1,0 +1,103 @@
+{
+ "source_commit": "852f57de5e67dd4a066e37e3f3d926c1e4bec592",
+ "source_submission": "3a2e69ca-18c2-4f1d-b3dc-5f54c81eece0",
+ "mesh": 384,
+ "rho_denominator": 1024,
+ "two_log_measured": 112.42595756130736,
+ "two_log_upper": 112.426,
+ "descent_cap": 113.279,
+ "node_log2_measured": 15.681293609891336,
+ "boot_phi_measured": 1.3065603822233858e-05,
+ "boot_phi_upper": 1.307e-05,
+ "counter_abort_log2_upper": -11.61,
+ "repeat_log2_upper": -10.7,
+ "log2_rels_input": 63.575,
+ "ledger_upper_rows": [
+  "117.857377650",
+  116.1739,
+  107.1626,
+  "113.279",
+  91,
+  88,
+  80,
+  73,
+  70.6,
+  73.5,
+  50,
+  11,
+  74,
+  95,
+  101.63
+ ],
+ "ledger_upper_claim": "118.29441",
+ "success_lower_claim": 0.44542,
+ "lazy_probes": [
+  [
+   394.8,
+   1.0,
+   0.391
+  ],
+  [
+   593.4,
+   1.0,
+   0.39
+  ],
+  [
+   160.9,
+   1.0,
+   0.247
+  ]
+ ],
+ "probe_checks": [
+  {
+   "name": "kA0",
+   "rho_den": 1024,
+   "limited": 2.805489547110276e-09,
+   "upper_limited": 2.815072446467079e-09
+  },
+  {
+   "name": "kA1",
+   "rho_den": 1024,
+   "limited": 9.902753534643453e-09,
+   "upper_limited": 9.97851915882687e-09
+  },
+  {
+   "name": "kA4",
+   "rho_den": 1024,
+   "limited": 3.2505664635290736e-06,
+   "upper_limited": 3.5441380259369754e-06
+  },
+  {
+   "name": "kA15",
+   "rho_den": 1024,
+   "limited": 1.5143471845542834e-05,
+   "upper_limited": 2.3268520296823795e-05
+  }
+ ],
+ "full_run": {
+  "command": "evidence16.py {\"seed\":1}",
+  "checks_ok": true,
+  "checks": 32,
+  "ledger_log2": 118.225909477273,
+  "success": 0.4454367966590886
+ },
+ "code_sha256": {
+  "descent16.py": "21101906e4e08580139220811dfbdcbab1320fffed6f43ef33b0be302aa7e07e",
+  "model16.py": "69ffd4e7dac8e97daf00b238b64dd8f537698dd5a6d609ee296757674e126857",
+  "retain16.py": "803757109d4b0c5e53065905525eb25ac3d0da658736d9dcb544a939f49dc1d9",
+  "counts16.py": "ad2a4cbb243c4590ddacf29368449460629255d70f02ded06ba088ea7396df75",
+  "embedding_bounds.py": "78129663866e7911880b91b357fbfcdd25cca0d35967a8cc752a98f89ee67914",
+  "filt16.b85": "1fd8b0eb5ba884170a185d7265e5e73810991385899d949ca480255375e1df5e",
+  "kernels_asm.b85": "59ab2c2dfae04d560da2c9aa33c660e4b680845bfc239b073a16f3e678d98dc5",
+  "proj_ud.c": "4c8e341dcea7fd1de2aee20815efaf93b3ef73504f07c9e9cef8ef356ab7daf7"
+ },
+ "ledger_rows_sum_upper": 118.2944,
+ "log2_rels_2se": 63.6747,
+ "claim": "118.29441",
+ "wrapper_log2": 66,
+ "cap_abort": 1e-09,
+ "split_inputs": [
+  63.731155,
+  0.0234
+ ]
+}
