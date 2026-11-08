@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: Pollard's rho with bounded distinguished points (rho-v2)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on secp256k1, the Pollard's rho algorithm with distinguished-point density 2^{-32}, at most 2^{16} concurrent walks, a hard cap of 2^{129.2} reference operations per trial, and an eviction/restart policy recovers x with success probability at least 0.39. Total charged work is at most 2^{129.2} target-group-operation equivalents (C=1000). Peak memory is at most 2^{30} bytes. Preprocessing is at most 2^{16}. No negation map is used. Heuristics are disclosed in proof.md. This is a classical cold attack with no uncharged advice.",
+      "score": {
+        "numerator": "646",
+        "denominator": "5"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho-v2",
+      "source": "experiment.py",
+      "purpose": "Simulate Pollard's rho collision finding and discrete-log recovery on a small cyclic group. Confirms control flow and birthday scaling only; does not establish production costs or field-arithmetic bounds.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 257
+        }
+      ]
+    }
+  ]
+}

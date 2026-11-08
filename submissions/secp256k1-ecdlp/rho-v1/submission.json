@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: Pollard's rho with distinguished points",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on secp256k1, the Pollard's rho algorithm with distinguished points and negation map recovers x with success probability at least 0.39 using at most 2^128.5 total target-group-operation equivalents (C=1000 reference), including all preprocessing, randomness, walks, distinguished point storage/lookup, verification and amplification. Peak memory is at most 2^40 bytes. This is a classical cold attack. Heuristic: random-like walk behavior under the partition function; supported by standard analyses and small experiments. No uncharged advice.",
+      "score": {
+        "numerator": "257",
+        "denominator": "2"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho",
+      "source": "experiment.py",
+      "purpose": "Check Pollard's rho collision finding on a small cyclic group. Does not establish production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
