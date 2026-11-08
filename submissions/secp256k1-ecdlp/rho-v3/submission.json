@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: Pollard's rho with Floyd cycle detection (rho-v3)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on secp256k1, Pollard's rho using Floyd cycle detection (tortoise and hare) recovers x with success probability at least 0.39. Two independent trials are run, each with a hard cap of 2^{130.5} reference operations; the total charged work of both trials is at most 2^{130.5}. Peak memory is O(1) (≤ 2^{16} bytes). No distinguished-point table and no negation map are used. Heuristics are disclosed in proof.md. This is a classical cold attack with no uncharged advice.",
+      "score": {
+        "numerator": "261",
+        "denominator": "2"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-floyd",
+      "source": "experiment.py",
+      "purpose": "Demonstrate Floyd cycle detection and discrete-log recovery on a small cyclic additive group. Confirms control flow only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 257
+        }
+      ]
+    }
+  ]
+}
