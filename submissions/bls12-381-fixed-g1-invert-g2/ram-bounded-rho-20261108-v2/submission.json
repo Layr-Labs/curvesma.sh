@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "title": "20 GiB rho with one-fold polynomial compression",
+  "claims": [
+    {
+      "statement": "Under the single explicitly disclosed fixed-SHA-512 random-function heuristic H in proof.md, the cold classical attack solves full-production supplied-P fixed-G1 pairing inversion into G2 with probability at least 0.39, using total work below 2^(16021/125) target-group-operation equivalents at fixed C=20000. All initialization, bounded rejections and failures, actual hashing, table construction, sorting/checkpoint lookup, transfers, verification and output are charged. Preprocessing below 2^76 target equivalents is included. Peak storage is at most 640*2^25+2^20=21475885056 bytes, below 2^35; advice is zero. The computation bound is deterministic even if H fails, but the success claim requires H. No ideal adding-walk collision law, entropy service or bank-window model is assumed. This is an exploratory analytic heuristic attack, not a practical completed inversion or unconditional fixed-hash theorem.",
+      "score": {
+        "numerator": "16021",
+        "denominator": "125"
+      },
+      "evidence": [
+        "proof.md",
+        "collision-proof.md",
+        "universal-proof.md",
+        "compression-proof.md",
+        "preparation-audit.md",
+        "compressor-audit.md",
+        "round-schedule.md",
+        "expansion-schedule.md",
+        "checkpoint-proof.md",
+        "paired-comparator.md",
+        "horizon-audit.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
