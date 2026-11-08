@@ -1,0 +1,81 @@
+{
+ "version": 1,
+ "title": "Plain G1: the accepted f-only STNFS core with dense X and a retuned split under our accepted G1 wrapper: 121.628928094887363",
+ "claims": [
+  {
+   "statement": "proof.md's algorithm returns x for uniform T=[x]P0 with success >= 0.39 under heuristics H1-H5, H-EA and H-FFT: z=e(T,Q0) against a randomized base g=e(P0,Q0)^b, the charged field map, a=log_g(z) by the GT STNFS core, ba mod r checked by [ba]P0=T. Core: the accepted recover-Q package e12e517f's f-only sieve with the exact FFT batch g test (collection <= 2^117.857377650), six owners, N <= 2^58.5430, dense X (26, 5) linear algebra <= 2^116.2265, generator <= 2^106.9190, descent meter 2^113.279; ledger rows sum to at most 2^118.30700 dense-Fp12 units (C=20,000). All classical work is at most 10 x 2^118.30700 + 2^80/2000 < 2^121.628928094887363 G1 units (C=2,000). H-X is not used: X is dense and the section 5 lemma gives failure <= 2N/2^128 < 2^-67 (Kaltofen-Villard block-Wiedemann analysis, Schwartz-Zippel over the independent uniform entries). Storage below 2^106 bytes; no advice or amortization. Analytic exploratory claim.",
+   "score": {
+    "numerator": "121628928094887363",
+    "denominator": "1000000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md",
+    "KERNELS.md",
+    "STORAGE.md",
+    "field-map.md",
+    "refinement.json",
+    "pool_d.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "refinement_audit",
+   "source": "audit_refinement.py",
+   "purpose": "Hosted audit. {}: code identity, parameters, recorded full-run certificate, integration probes, lazy bound vs a simulation, core ledger and success, unit-X linear algebra, G1 conversion at 20,000/2,000 with 80-digit decimals, base-randomisation bijection; {\"descent\": true} also re-evaluates the descent. evidence16.py (local, ~2.5 minutes) reruns every check.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "descent": {
+      "type": "boolean"
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  },
+  {
+   "id": "unit_entry_fraction",
+   "source": "unit_entries.py",
+   "purpose": "filtsim.py (purge 0.0001, excess 1.05 or 'excess') at the shipped means to weight 100/200/300 (default): +-1 share of row weight (charged 0.86) and U/N, at its scale only (H4u, H3).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "weight": {
+      "type": "integer",
+      "enum": [
+       100,
+       200,
+       300
+      ]
+     },
+     "excess": {
+      "type": "number",
+      "minimum": 1.0,
+      "maximum": 1.3
+     }
+    },
+    "required": [
+     "log2U",
+     "seed"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
