@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/grouped-hash-abort-tfp-123524197061184465-ycluster12g5
