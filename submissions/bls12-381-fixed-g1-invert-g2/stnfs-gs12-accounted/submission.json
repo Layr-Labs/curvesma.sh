@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: accounted STNFS, no filter credit, duplicate phases for the two logs",
+  "claims": [
+    {
+      "statement": "For uniform nonidentity P in G1 and uniform z in GT, compute g=e(P,Q0) and return Q=[a]Q0 with e(P,Q)=z. The discrete log is an STNFS on h(Y)=Y^6-Y^2+1, at A=650 and B=2^66. The sieved set is the exact integer domain with positive leading coefficient of a and b_5 in 1..A. Norms are integer resultants, cross-checked on six embeddings. Smoothness is Dickman-Murphy with the second-order term and with alpha charged at the measured mean plus 1.5 standard errors. Primitive density multiplies by 1/zeta=0.903208. The linear system is square on li(B) orbits and takes no filtering reduction. Each of the two target logarithms is charged one extra collection and one extra linear algebra of that same shape. Under heuristics H1-H3 and H5 the success probability is at least 0.97, hence at least 0.39. Complete classical work is at most 2^122.745034 dense-Fp12 units at C=20000. Peak memory is below 2^71 bytes. Preprocessing is inside that total. Advice is 0 bytes. This is higher than the withdrawn 116.337899 total from 9cb00ec2.",
+      "score": {
+        "numerator": "122745034",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md",
+        "experiment.py",
+        "kern.c"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stnfs-exact-norms-yield-filtering-descent-ledger",
+      "source": "experiment.py",
+      "purpose": "Check field identities, the mean number of roots of h below 3000, exact norms against six embeddings, Dickman rho, alpha with a +1.5 SE charge, smoothness calibration, the production yield, a corrected elimination that is not used to shrink the matrix, and the instruction ledger including two extra phases.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "A": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 3000
+          },
+          "B_log2_milli": {
+            "type": "integer",
+            "minimum": 50000,
+            "maximum": 78000
+          },
+          "mc_samples": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 60000
+          },
+          "alpha_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "cal_samples": {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          "cross_samples": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 2000
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000000
+          }
+        },
+        "required": [
+          "A",
+          "B_log2_milli",
+          "mc_samples",
+          "alpha_samples",
+          "cal_samples",
+          "cross_samples",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "A": 650,
+          "B_log2_milli": 66000,
+          "mc_samples": 12000,
+          "alpha_samples": 1500,
+          "cal_samples": 2000,
+          "cross_samples": 60,
+          "seed": 20261108
+        }
+      ]
+    }
+  ]
+}
