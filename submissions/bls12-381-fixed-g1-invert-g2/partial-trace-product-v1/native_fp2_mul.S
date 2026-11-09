@@ -1,0 +1,66 @@
+// Inert scalar evidence only; no host execution. x0=out96,x1=A96,x2=B96,x3=p48,x4=n0.
+// mul_mont_384 is the exact pinned blst public implementation cited in proof.
+.text
+.p2align 2
+.global native_fp2_mul
+.type native_fp2_mul,%function
+native_fp2_mul:
+    stp x29,x30,[sp,#-320]!
+    stp x19,x20,[sp,#16]
+    stp x21,x22,[sp,#32]
+    stp x23,x24,[sp,#48]
+    mov x19,x0
+    mov x20,x1
+    mov x21,x2
+    mov x22,x3
+    mov x23,x4
+    add x24,sp,#64
+    add x0,x24,#0
+    add x1,x20,#0
+    add x2,x20,#48
+    mov x3,x22
+    bl fp381_add
+    add x0,x24,#48
+    add x1,x21,#0
+    add x2,x21,#48
+    mov x3,x22
+    bl fp381_add
+    add x0,x24,#96
+    add x1,x20,#0
+    add x2,x21,#0
+    mov x3,x22
+    mov x4,x23
+    bl mul_mont_384
+    add x0,x24,#144
+    add x1,x20,#48
+    add x2,x21,#48
+    mov x3,x22
+    mov x4,x23
+    bl mul_mont_384
+    add x0,x24,#192
+    add x1,x24,#0
+    add x2,x24,#48
+    mov x3,x22
+    mov x4,x23
+    bl mul_mont_384
+    add x0,x19,#0
+    add x1,x24,#96
+    add x2,x24,#144
+    mov x3,x22
+    bl fp381_sub
+    add x0,x24,#192
+    add x1,x24,#192
+    add x2,x24,#96
+    mov x3,x22
+    bl fp381_sub
+    add x0,x19,#48
+    add x1,x24,#192
+    add x2,x24,#144
+    mov x3,x22
+    bl fp381_sub
+    ldp x19,x20,[sp,#16]
+    ldp x21,x22,[sp,#32]
+    ldp x23,x24,[sp,#48]
+    ldp x29,x30,[sp],#320
+    ret
+.size native_fp2_mul,.-native_fp2_mul

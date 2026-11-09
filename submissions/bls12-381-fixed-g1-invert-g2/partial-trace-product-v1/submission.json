@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "title": "Direct trace-product inversion with full-phase determinant filtering",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.390003, conditional on the explicit bounded fair-coin interface and finite storage-controller admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(3149/25) reference equivalents with unchanged C=20000. Peak memory <2^137 bytes, cold preprocessing <2^120 scalar instructions included in total, advice0 bytes. The explicit finite first/second moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "3149",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S",
+        "aux127_mul.S",
+        "aux127_add.S",
+        "audit.py",
+        "fr256_mul.S",
+        "fp381_add.S",
+        "fp381_sub.S",
+        "native_fp2_mul.S",
+        "project_product.S"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "full-audit",
+      "source": "audit.py",
+      "purpose": "Credential-free shared Docker only: interpret exact field add/sub and projection/Fp2 wrapper code using a scoped pinned scalar-multiply oracle,compare arbitrary full-width coefficient products with independent dense Fp2 convolution,check native Fr/fingerprint/q127,finite support patterns and exact production-parameter certificates. Not a production inversion,entropy/storage test or native blst benchmark.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 32,
+          "seed": 381012
+        }
+      ]
+    }
+  ]
+}
