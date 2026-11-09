@@ -1,0 +1,90 @@
+// Inert analytic source; NEVER host-execute or use credentials.
+// x0=out96,x1=A96,x2=B96,x3=sumA48,x4=sumB48,x5=p48,x6=n0.
+// Core341 is unchanged pinned blst; this wrapper amortizes all callee saves.
+.text
+.p2align 2
+.global native_fp2_fused
+.type native_fp2_fused,%function
+native_fp2_fused:
+    stp x29,x30,[sp,#-336]!
+    mov x29,sp
+    stp x19,x20,[x29,#16]
+    stp x21,x22,[x29,#32]
+    stp x23,x24,[x29,#48]
+    stp x25,x26,[x29,#64]
+    stp x27,x28,[x29,#80]
+    stp x0,x1,[x29,#128]
+    stp x2,x3,[x29,#144]
+    stp x4,x5,[x29,#160]
+    stp x6,xzr,[x29,#176]
+    ldp x1,x2,[x29,#136]
+    ldp x3,x4,[x29,#168]
+    add x0,x29,#192
+    stp x4,x0,[x29,#96]
+    ldp x11,x12,[x1]
+    ldr x17,[x2]
+    ldp x13,x14,[x1,#16]
+    ldp x15,x16,[x1,#32]
+    ldp x5,x6,[x3]
+    ldp x7,x8,[x3,#16]
+    ldp x9,x10,[x3,#32]
+    bl __mul_mont_384
+    stp x11,x12,[x2]
+    stp x13,x14,[x2,#16]
+    stp x15,x16,[x2,#32]
+    ldp x1,x2,[x29,#136]
+    ldp x3,x4,[x29,#168]
+    add x1,x1,#48
+    add x2,x2,#48
+    add x0,x29,#240
+    stp x4,x0,[x29,#96]
+    ldp x11,x12,[x1]
+    ldr x17,[x2]
+    ldp x13,x14,[x1,#16]
+    ldp x15,x16,[x1,#32]
+    ldp x5,x6,[x3]
+    ldp x7,x8,[x3,#16]
+    ldp x9,x10,[x3,#32]
+    bl __mul_mont_384
+    stp x11,x12,[x2]
+    stp x13,x14,[x2,#16]
+    stp x15,x16,[x2,#32]
+    ldp x1,x2,[x29,#152]
+    ldp x3,x4,[x29,#168]
+    add x0,x29,#288
+    stp x4,x0,[x29,#96]
+    ldp x11,x12,[x1]
+    ldr x17,[x2]
+    ldp x13,x14,[x1,#16]
+    ldp x15,x16,[x1,#32]
+    ldp x5,x6,[x3]
+    ldp x7,x8,[x3,#16]
+    ldp x9,x10,[x3,#32]
+    bl __mul_mont_384
+    stp x11,x12,[x2]
+    stp x13,x14,[x2,#16]
+    stp x15,x16,[x2,#32]
+    ldr x0,[x29,#128]
+    add x1,x29,#192
+    add x2,x29,#240
+    ldr x3,[x29,#168]
+    bl fp381_sub
+    add x0,x29,#288
+    add x1,x29,#288
+    add x2,x29,#192
+    ldr x3,[x29,#168]
+    bl fp381_sub
+    ldr x0,[x29,#128]
+    add x0,x0,#48
+    add x1,x29,#288
+    add x2,x29,#240
+    ldr x3,[x29,#168]
+    bl fp381_sub
+    ldp x19,x20,[x29,#16]
+    ldp x21,x22,[x29,#32]
+    ldp x23,x24,[x29,#48]
+    ldp x25,x26,[x29,#64]
+    ldp x27,x28,[x29,#80]
+    ldp x29,x30,[sp],#336
+    ret
+.size native_fp2_fused,.-native_fp2_fused
