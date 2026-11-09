@@ -129,14 +129,14 @@ class BLSChallenges(unittest.TestCase):
                 self.assertEqual(config['manifest_preprocessor'], 'curvesmash-v1')
                 self.assertEqual(provider['response_format'], 'json_object')
                 self.assertEqual(provider['max_attempts'], 3)
-                self.assertEqual(provider['timeout_seconds'], 300)
+                self.assertEqual(provider['timeout_seconds'], 1200)
                 self.assertEqual(provider['max_completion_tokens'], 32768)
                 self.assertEqual(limits['max_followups'], 1)
                 self.assertEqual(limits['max_initial_runs'], 1)
                 self.assertEqual(limits['total_provider_requests'], 2 * provider['max_attempts'])
-                self.assertEqual(limits['total_review_seconds'], 2000)
-                self.assertGreater(limits['total_review_seconds'],
-                                   limits['total_provider_requests'] * provider['timeout_seconds'])
+                self.assertEqual(limits['total_review_seconds'], 2400)
+                self.assertEqual(limits['total_review_seconds'],
+                                 2 * provider['timeout_seconds'])
 
     def test_yukon_tracks_keep_the_existing_interface(self):
         manifest = json.loads((ROOT / 'benchmark.json').read_text())

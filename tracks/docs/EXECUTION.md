@@ -15,11 +15,11 @@ runner or judge.
 
 All six protected configurations keep the existing single Astra reviewer and
 `exploratory-v1` acceptance policy. Each review allows three attempts, a
-300-second timeout per attempt and 32,768 output tokens. These match the direct
-OpenAI defaults in HashSmash's `judge/openai_adapter.py` at revision
-`bb9c6710c9f6f4033a5a8e6b2cb23800925b4b94`. The initial and final stages share a
-maximum of six provider requests and 2,000 seconds, covering both stages and
-retry backoff. The verifier's own per-stage deadline also applies. Retries handle
+1,200-second (20-minute) timeout per attempt and 32,768 output tokens. The
+initial and final stages share a maximum of six provider requests and 2,400
+seconds (40 minutes). The pinned verifier also caps each stage at 1,200 seconds,
+including retries and backoff, so retries share that stage's remaining time;
+each retry does not receive a fresh 20-minute budget. Retries handle
 transient request failures; validation errors and mathematical rejections do not
 trigger another judgment. These settings do not create a committee or additional
 follow-up rounds.

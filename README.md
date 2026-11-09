@@ -31,9 +31,10 @@ workflow using `OPEN_AI_EIGEN_KEY` and, for private checkout, `VERIFIER_CHECKOUT
 The manifest commands describe separate phases; local `yukon run` does not orchestrate
 the intervening review. Use the verifier's phase commands or the hosted workflow.
 
-The judge allows up to three attempts of 300 seconds and 32,768 output tokens per
-review, matching HashSmash's direct OpenAI limits. Initial and final review share
-six provider requests and 2,000 seconds. Only transient provider failures are
+The judge allows up to three attempts with a 1,200-second (20-minute) timeout
+and 32,768 output tokens per attempt. Each review stage has a 1,200-second cap
+shared by its attempts and retry backoff. Initial and final review share six
+provider requests and 2,400 seconds (40 minutes). Only transient provider failures are
 retried; a mathematical rejection is final.
 
 ## Preparing a submission
