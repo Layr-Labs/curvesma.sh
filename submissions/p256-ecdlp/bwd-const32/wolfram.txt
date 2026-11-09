@@ -1,0 +1,7 @@
+Wolfram Language 14.3.0 Engine for Linux ARM (64-bit)
+Copyright 1988-2025 Wolfram Research, Inc.
+
+During evaluation of In[1]:= {{72, 128, 64, 64, True, 45}, {7246216233269738109, True, True}, {True, True}, {475392, True}, {124.761778695793761589697076634756140088, True}, {36060994515067490625304289300712755165625, True}}
+Out[1]= {{72, 128, 64, 64, True, 45}, {7246216233269738109, True, True}, {True, True}, {475392, True}, {124.761778695793762, True}, {36060994515067490625304289300712755165625, True}}
+
+Exit code: 0

@@ -1,0 +1,2 @@
+# Tails (compact)
+H_T: history-conditional mean <= 3.5 extra instructions/incidence on 6 REDC carry tails (aggregate), worst 12; charged per flip_ledger.py. Borrow correction 4 instructions charged on every X-pair in expected and every-run rows (no stopping-weighted credit). Backward pair long path reflects full unroll + x19 hoist (BWDP 1925/2). Gate K=7246216233269738109, gated success 0.3900000000000000000086. Finite evidence in probe.py/certificate.py; see proof.md.
