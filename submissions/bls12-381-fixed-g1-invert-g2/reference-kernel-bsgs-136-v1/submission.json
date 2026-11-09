@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Pinned reference-kernel GT BSGS with exact inverse-class keys",
+  "claims": [
+    {
+      "statement": "For uniform protected full-production fixed-G1 pairing-inversion challenges and independent fresh random hash bits, proof.md gives an explicit classical signed partial-range algorithm returning Q in G2 with e(P,Q)=z for the exact supplied P with success probability at least 0.4. Total computation on every challenge and coin outcome, including all failures and budget aborts, is at most 2^136 dense-Fp12 equivalents at C=20,000. Peak memory is at most 2^139 bytes; preprocessing at most 2^136 equivalents is included; no nonuniform advice is used. Exact six-even-coefficient inverse-class keys, the actual protected pinned dense reference kernel with explicit charged tower conversion and normalization, exact signed coverage and a proven universal binary hash family with a charged work cap provide the success bound without heuristics. This analytic accounting control requires exponential resources and makes no practical execution or novelty claim.",
+      "score": {
+        "numerator": "136",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

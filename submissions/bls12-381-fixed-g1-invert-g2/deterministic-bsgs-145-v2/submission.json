@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Deterministic full-range GT BSGS accounting control",
+  "claims": [
+    {
+      "statement": "For the protected full-production fixed-G1 pairing-inversion problem, the deterministic algorithm in proof.md returns Q in G2 satisfying e(P,Q)=z for the exact supplied nonidentity P with success probability 1, total work at most 2^145 dense-Fp12 equivalents at C=20,000, peak memory at most 2^141 bytes, preprocessing at most 2^144 equivalents included in total work, and no nonuniform advice. This analytic classical accounting control requires exponential memory and makes no practical execution or novelty claim.",
+      "score": {
+        "numerator": "145",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
