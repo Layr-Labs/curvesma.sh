@@ -1,6 +1,6 @@
 # Organizer execution
 
-The six workflows named in `benchmark.json` call
+The seven workflows named in `benchmark.json` call
 `Layr-Labs/llm-verifier/.github/workflows/verify.yml` at the same immutable revision
 as their `verifier_revision` input. Keep both pins aligned when upgrading.
 
@@ -13,7 +13,7 @@ runner or judge.
 
 ## Review settings
 
-All six protected configurations keep the existing single Astra reviewer and
+All seven protected configurations keep the existing single Astra reviewer and
 `exploratory-v1` acceptance policy. Each review allows three attempts, a
 1,200-second (20-minute) timeout per attempt and 32,768 output tokens. The
 initial and final stages share a maximum of six provider requests and 2,400
@@ -99,3 +99,12 @@ The manifest also includes `bls12-381-g1-ecdlp-plain`,
 `bls12-381-fixed-g2-invert-g1`, and `p256-ecdlp`. These have no auxiliary powers
 or n parameter and select unscored templates. Each needs a separate fresh
 registration and qualification before opening; existing results do not transfer.
+
+## BN254 registration
+
+bn254-gt-dlp is one new registration with its own editable paths, selector and
+dispatch workflow. Import it initially closed in dev at an immutable challenge
+commit. Run preflight and hosted smoke checks before opening it. Its incomplete
+unscored template is not a qualified baseline; an invalid template judgment is
+expected. Do not reuse BLS scores or equate workflow success with mathematical
+qualification. The existing six tracks retain their target parameters and prices.

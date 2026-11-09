@@ -1,7 +1,7 @@
 # Curvesma.sh
 
 Exploratory cryptanalysis of full-production secp256k1 and P-256 discrete logarithms,
-BLS12-381 G1 discrete logarithms and both orientations of fixed-argument pairing inversion. Each track contains protected `rules.md`
+BN254 GT discrete logarithms, BLS12-381 G1 discrete logarithms and both orientations of fixed-argument pairing inversion. Each track contains protected `rules.md`
 and `verifier.json`, with target and cost definitions in JSON files.
 Original baseline candidates are kept separately in the add-only `submissions/`.
 The sole metric is log2(total computation in target-group-operation equivalents),
@@ -9,7 +9,7 @@ lower is better; success must be at least 39%. Memory is reported separately.
 
 The auxiliary-powers G1 track (`bls12-381-g1-ecdlp`) provides public powers
 A_i=[s^i]P0, i=1..n, and asks for their secret s. Attacks state their cost W(n);
-Yukon compares log2(W(n)) at n=2^20. The other five tracks have no powers input.
+Yukon compares log2(W(n)) at n=2^20. The other six tracks have no powers input.
 
 Install `tests/requirements.txt` in a Python environment, then run the scientific checks:
 
@@ -85,9 +85,10 @@ verifier's isolated container, using Python's standard library.
 | `bls12-381-g1-ecdlp` | T=[s]P0 and powers A_i=[s^i]P0, i=1..n | Scalar s |
 | `bls12-381-fixed-g1-invert-g2` | Nonidentity P in G1 and z in GT | Q in G2 with e(P,Q)=z |
 | `bls12-381-fixed-g2-invert-g1` | Nonidentity Q in G2 and z in GT | P in G1 with e(P,Q)=z |
+| `bn254-gt-dlp` | z=g^x in BN254 GT, fixed public g=e(P0,Q0) | Scalar x |
 
 Only the powers-assisted G1 track supplies auxiliary powers and evaluates
-work at n=2^20. The other five tracks have no auxiliary powers or n parameter.
+work at n=2^20. The other six tracks have no auxiliary powers or n parameter.
 
 Both pairing tracks use BLS12-381. The supplied point is sampled uniformly
 from the nonidentity points of its group for each instance; z is independently
@@ -120,3 +121,17 @@ Eigen Labs hosts the Yukon challenge under the Terms of Service and Privacy
 Policy published on its challenge page; this repository adds no separate
 participation terms. See [terms](tracks/docs/legal/TERMS_OF_SERVICE.md) and
 [privacy](tracks/docs/legal/PRIVACY_POLICY.md).
+
+## BN254 target-group discrete logarithm
+
+The single BN254 track uses Ethereum alt_bn128 and the pinned py_ecc reduced
+pairing to define g=e(P0,Q0). Given z=g^x for uniform x in 0..r-1, recover x.
+The input is a GT element only, with no source-group preimage or auxiliary powers.
+The profile pins the Fp12 basis and encodes each coefficient as 64 lowercase hex
+characters. The identity target is included and requires x=0.
+
+All work is charged in scalar instruction equivalents divided by the borrowed
+C=20,000 BLS Fp12 normalization unit; this is not a measured BN254 kernel price.
+GT DLP enables reductions from source-group DLP and pairing inversion, but no
+optimality or exact cost equivalence is asserted. All justified classical
+methods are eligible. The selected submission is an unscored template.
