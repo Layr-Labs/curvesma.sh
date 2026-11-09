@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Signed partial-range BSGS with exact GT inverse canonicalization",
+  "claims": [
+    {
+      "statement": "For uniform protected full-production fixed-G1 pairing-inversion challenges, the deterministic signed partial-range algorithm in proof.md returns Q in G2 satisfying e(P,Q)=z for the exact supplied P with success probability at least 1/2; exact success is (2^254-2^127)/r. Total work including unsuccessful challenges is at most 2^143 dense-Fp12 equivalents at C=20,000; peak memory is at most 2^139 bytes; preprocessing at most 2^142 equivalents is included; no nonuniform advice is used. Canonicalization by the exact p^6 Frobenius pairs each baby power with its inverse. This analytic classical accounting control requires exponential memory and makes no practical execution or novelty claim.",
+      "score": {
+        "numerator": "143",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
