@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/stored-leaf-728-groups-123551539246602267
