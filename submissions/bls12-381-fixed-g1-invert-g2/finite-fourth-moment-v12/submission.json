@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "Eight-wise grid tables and four-moment finite success",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.39004, conditional on the explicit bounded fresh-fair-coin delivery R and fixed-word message-storage admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(25219/200) reference equivalents with unchanged C=20000. Peak memory <2^138 bytes, cold preprocessing <2^124 scalar instructions included in total, advice0 bytes. The explicit finite unique-row and deficient-rank four-moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "25219",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S",
+        "fp381_add.S",
+        "fp381_sub.S",
+        "native_fp2_pre.S",
+        "project_quartic.S",
+        "fr256_mul.S",
+        "audit.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "grid-projection",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker only:small-grid projective constraint uniqueness over production Fr,nine-product projection vs independent dense convolution over production Fp,and exact integer/rational certificates. No native execution,production inversion,R or storage certification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 128,
+          "seed": 381004
+        }
+      ]
+    }
+  ]
+}
