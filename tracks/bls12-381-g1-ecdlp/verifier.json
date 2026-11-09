@@ -51,14 +51,14 @@
     "reasoning_effort": "high",
     "max_attempts": 3,
     "max_completion_tokens": 32768,
-    "timeout_seconds": 300,
+    "timeout_seconds": 1200,
     "response_format": "json_object"
   },
   "limits": {
     "max_followups": 1,
     "max_initial_runs": 1,
     "total_provider_requests": 6,
-    "total_review_seconds": 2000
+    "total_review_seconds": 2400
   },
   "rules_files": [
     "tracks/bls12-381-g1-ecdlp/target-profile.json",
