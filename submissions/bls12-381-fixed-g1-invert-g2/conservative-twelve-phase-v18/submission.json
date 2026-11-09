@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "title": "All twelve phases with unchanged dense/keyed primitives",
+  "claims": [
+    {
+      "statement": "Full protected fixed-G1 BLS12-381 pairing inversion for the actual supplied P,success>0.39024 conditional on explicit actual full-standard BLAKE3 finite-event H and source finite bank-window B. Four full-Fr tables of coefficients generate two paid GT tables;full dense multiplication per sample and original6144-instruction trace key/keyed3072 fingerprint are retained. A nonzero full scalar determinant makes all twelve phases informative. Finite support-rank moments include phase1empty supports;all cap/identity/rejection failures and complete cold/hot work are charged. N=32384L+2^120 with L=68152580234859358892647710588466745853 gives score<=12638/100,peak<2^137 bytes,cold<2^120 included,advice0,C20000 unchanged. No inherited qualification or production execution.",
+      "score": {
+        "numerator": "6319",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "compression.S",
+        "conjugate.S",
+        "coarse-montgomery.S",
+        "fr256_mul.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
