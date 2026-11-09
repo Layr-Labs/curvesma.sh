@@ -1,0 +1,33 @@
+# In-place record read: the owner's 16-byte page copy is dropped.
+# Apple clang 21, arm64, -O3 -fno-vectorize -fno-unroll-loops
+# -mgeneral-regs-only. Records {u64 cell, u64 ideal}; owner adds +1 per
+# record into 2^30 sums. copy: copy page to private, apply from private.
+# inplace: apply straight from the handed-off page (emission order kept).
+BEGIN COPYLOOP
+ldp x10, x11, [x0], #16
+stp x10, x11, [x8], #16
+subs x9, x9, #1
+b.ne LBB0_2
+END COPYLOOP
+BEGIN APPLYCOPY
+ldr x8, [x1], #16
+and x8, x8, #0x3fffffff
+ldr w9, [x2, x8, lsl #2]
+add w9, w9, #1
+str w9, [x2, x8, lsl #2]
+subs x3, x3, #1
+b.ne LBB0_3
+END APPLYCOPY
+BEGIN APPLYINPLACE
+ldr x8, [x0], #16
+and x8, x8, #0x3fffffff
+ldr w9, [x1, x8, lsl #2]
+add w9, w9, #1
+str w9, [x1, x8, lsl #2]
+subs x2, x2, #1
+b.ne LBB0_1
+END APPLYINPLACE
+COPYLOOP_IR 4
+APPLYCOPY_IR 7
+APPLYINPLACE_IR 7
+SAVING_CHARGED 3.0
