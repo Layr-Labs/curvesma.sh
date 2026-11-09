@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "Shared-load deferred Mersenne fingerprint with finite moments",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.39024, conditional on the precisely disclosed actual-hash event bridge H_M and finite storage-controller admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(12611/100) reference equivalents with unchanged C=20000. Peak memory <2^137 bytes, cold preprocessing <2^120 scalar instructions included in total, advice0 bytes. The explicit finite first/second moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "12611",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
