@@ -1,0 +1,95 @@
+// Static mathematical evidence only; never execute on host or with credentials.
+// a=x0..x3 canonical mod 2^255-19; x4,x5 arbitrary 128-bit b. Output x0..x3. Clobbers x4..x17, preserves x18..x30. No calls.
+.text
+.p2align 2
+.global aux255_mul128
+.type aux255_mul128,%function
+aux255_mul128:
+    mov x6,xzr
+    mov x7,xzr
+    mov x8,xzr
+    mov x9,xzr
+    mov x10,xzr
+    mov x11,xzr
+    mul x12,x0,x4
+    umulh x13,x0,x4
+    adds x6,x6,x12
+    adcs x7,x7,x13
+    adcs x8,x8,xzr
+    adcs x9,x9,xzr
+    adcs x10,x10,xzr
+    adc x11,x11,xzr
+    mul x12,x0,x5
+    umulh x13,x0,x5
+    adds x7,x7,x12
+    adcs x8,x8,x13
+    adcs x9,x9,xzr
+    adcs x10,x10,xzr
+    adc x11,x11,xzr
+    mul x12,x1,x4
+    umulh x13,x1,x4
+    adds x7,x7,x12
+    adcs x8,x8,x13
+    adcs x9,x9,xzr
+    adcs x10,x10,xzr
+    adc x11,x11,xzr
+    mul x12,x1,x5
+    umulh x13,x1,x5
+    adds x8,x8,x12
+    adcs x9,x9,x13
+    adcs x10,x10,xzr
+    adc x11,x11,xzr
+    mul x12,x2,x4
+    umulh x13,x2,x4
+    adds x8,x8,x12
+    adcs x9,x9,x13
+    adcs x10,x10,xzr
+    adc x11,x11,xzr
+    mul x12,x2,x5
+    umulh x13,x2,x5
+    adds x9,x9,x12
+    adcs x10,x10,x13
+    adc x11,x11,xzr
+    mul x12,x3,x4
+    umulh x13,x3,x4
+    adds x9,x9,x12
+    adcs x10,x10,x13
+    adc x11,x11,xzr
+    mul x12,x3,x5
+    umulh x13,x3,x5
+    adds x10,x10,x12
+    adc x11,x11,x13
+    extr x12,x10,x9,#63
+    extr x13,x11,x10,#63
+    and x9,x9,#0x7fffffffffffffff
+    mov x0,#19
+    mul x14,x12,x0
+    umulh x15,x12,x0
+    mul x16,x13,x0
+    umulh x17,x13,x0
+    adds x15,x15,x16
+    adc x17,x17,xzr
+    adds x6,x6,x14
+    adcs x7,x7,x15
+    adcs x8,x8,x17
+    adc x9,x9,xzr
+    lsr x12,x9,#63
+    and x9,x9,#0x7fffffffffffffff
+    mul x12,x12,x0
+    adds x6,x6,x12
+    adcs x7,x7,xzr
+    adcs x8,x8,xzr
+    adc x9,x9,xzr
+    movn x10,#18
+    movn x11,#0
+    orr x12,xzr,#0x7fffffffffffffff
+    subs x0,x6,x10
+    sbcs x1,x7,x11
+    sbcs x2,x8,x11
+    sbcs x3,x9,x12
+    csel x0,x0,x6,hs
+    csel x1,x1,x7,hs
+    csel x2,x2,x8,hs
+    csel x3,x3,x9,hs
+    ret
+.size aux255_mul128,.-aux255_mul128

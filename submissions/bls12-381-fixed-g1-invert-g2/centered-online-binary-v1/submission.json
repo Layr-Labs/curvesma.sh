@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Certified partial online B-tree with every message on a charged binary fabric",
+  "claims": [
+    {
+      "statement": "For uniform full-production fixed-G1 challenges, the online B-tree algorithm in proof.md returns a verified Q in G2 satisfying pairing(Q,P)=z for the exact supplied nonidentity P with probability at least 391/1000. Its total cold classical work, including every unsuccessful query, all insertions and splits, all routing and graph construction, arithmetic, output and verification, is <=2^(135) reference equivalents under C=20000. Peak memory <=2^145 bytes; preprocessing <=2^(135) equivalents included in total; nonuniform advice zero bytes. The finite binary-fabric word/message storage model is a material assumption. No production execution or physical provisioning is claimed.",
+      "score": {
+        "numerator": "135",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

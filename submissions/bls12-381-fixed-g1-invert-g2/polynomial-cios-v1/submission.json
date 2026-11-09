@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "Four-wise full-orbit inversion with an explicit 551-instruction CIOS field kernel",
+  "claims": [
+    {
+      "statement": "For full-production fixed-G1 pairing inversion, the algorithm in proof.md returns a verified Q with pairing(Q,P)=z for the exact supplied nonidentity P, with success probability >0.39024 over fresh algorithm coins under the disclosed bounded fair-coin and finite bank-window interfaces. The identity target is handled directly. Complete cold work, including every failure, seed/table construction, sampling, full native arithmetic, sorting/transfers, output and verification, is <=2^(5051/40) target-group-operation equivalents under unchanged C=20000. Peak memory <=2^137 bytes; preprocessing <=2^120 equivalents included in total; advice zero bytes. No production-scale BLAKE3-output bridge is used. Physical entropy/storage certification, source qualification, production execution and promotion are not claimed.",
+      "score": {
+        "numerator": "5051",
+        "denominator": "40"
+      },
+      "evidence": [
+        "proof.md",
+        "cios381_mul.S",
+        "aux127_mul.S",
+        "aux127_add.S",
+        "aux255_mul128.S",
+        "aux255_add.S",
+        "project_six381.S",
+        "native_audit.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-audit",
+      "source": "native_audit.py",
+      "purpose": "In shared isolated Docker only, expand and interpret actual CIOS assembly with full 64-bit carries, memory and frame semantics; compare bounded full-width BLS381 Montgomery cases against exact modular arithmetic, check ABI and exact public-parameter success/cost certificates. No production inversion, entropy certification or physical bank test.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 32,
+          "seed": 381127
+        }
+      ]
+    }
+  ]
+}
