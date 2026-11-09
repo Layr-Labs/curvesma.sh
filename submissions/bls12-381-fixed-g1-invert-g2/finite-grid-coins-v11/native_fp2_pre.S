@@ -1,0 +1,61 @@
+// Inert analytic evidence only; never execute on host or with credentials.
+// x0=out96,x1=A96,x2=B96,x3=(Ar+Ai)48,x4=(Br+Bi)48,x5=p48,x6=n0.
+// Cached sums MUST be canonical native sums of the given full-width inputs.
+.text
+.p2align 2
+.global native_fp2_pre
+.type native_fp2_pre,%function
+native_fp2_pre:
+    stp x29,x30,[sp,#-224]!
+    stp x19,x20,[sp,#16]
+    stp x21,x22,[sp,#32]
+    stp x23,x24,[sp,#48]
+    stp x25,x26,[sp,#64]
+    mov x19,x0
+    mov x20,x1
+    mov x21,x2
+    mov x22,x3
+    mov x23,x4
+    mov x24,x5
+    mov x25,x6
+    add x26,sp,#80
+    add x0,x26,#0
+    add x1,x20,#0
+    add x2,x21,#0
+    mov x3,x24
+    mov x4,x25
+    bl mul_mont_384
+    add x0,x26,#48
+    add x1,x20,#48
+    add x2,x21,#48
+    mov x3,x24
+    mov x4,x25
+    bl mul_mont_384
+    add x0,x26,#96
+    add x1,x22,#0
+    add x2,x23,#0
+    mov x3,x24
+    mov x4,x25
+    bl mul_mont_384
+    add x0,x19,#0
+    add x1,x26,#0
+    add x2,x26,#48
+    mov x3,x24
+    bl fp381_sub
+    add x0,x26,#96
+    add x1,x26,#96
+    add x2,x26,#0
+    mov x3,x24
+    bl fp381_sub
+    add x0,x19,#48
+    add x1,x26,#96
+    add x2,x26,#48
+    mov x3,x24
+    bl fp381_sub
+    ldp x19,x20,[sp,#16]
+    ldp x21,x22,[sp,#32]
+    ldp x23,x24,[sp,#48]
+    ldp x25,x26,[sp,#64]
+    ldp x29,x30,[sp],#224
+    ret
+.size native_fp2_pre,.-native_fp2_pre
