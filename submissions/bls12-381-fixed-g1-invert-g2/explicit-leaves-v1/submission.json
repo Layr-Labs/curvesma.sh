@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "title": "Explicit native arithmetic and full hash leaves for analytic inversion",
+  "claims": [
+    {
+      "statement": "For uniform full-production fixed-G1 challenges, the complete attack in proof.md returns a verified G2 point Q with pairing(Q,P)=z for the exact supplied nonidentity P with probability >0.39024, conditional on the explicitly retained full-standard BLAKE3 bridge H and finite bank-window admissibility. Identity z is handled directly. Complete cold classical work including every rejection, failure, target-dependent table, full native arithmetic, hash, radix transfer/lookup, reconstruction and verification is <=2^(505/4) target-group-operation equivalents under unchanged C=20000. Peak memory <=2^137 bytes, preprocessing <=2^120 equivalents included in total, advice zero bytes. No production execution, physical storage certification, inherited qualification or promotion is claimed.",
+      "score": {
+        "numerator": "505",
+        "denominator": "4"
+      },
+      "evidence": [
+        "proof.md",
+        "cios381_mul.S",
+        "compression.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
