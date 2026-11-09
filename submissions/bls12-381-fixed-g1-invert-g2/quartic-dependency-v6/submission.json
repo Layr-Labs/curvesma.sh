@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "title": "Finite dependency bound for nine-product trace inversion",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.39001, conditional on the explicit actual-standard-hash event bridge H_CS and fixed-word message-storage admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(25221/200) reference equivalents with unchanged C=20000. Peak memory <2^138 bytes, cold preprocessing <2^124 scalar instructions included in total, advice0 bytes. The explicit finite conditional dependency-graph argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "25221",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S",
+        "fp381_add.S",
+        "fp381_sub.S",
+        "native_fp2_pre.S",
+        "project_quartic.S",
+        "compression.S",
+        "fr256_mul.S",
+        "audit.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "quartic-projection",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker only:compare nine-product quartic trace formula to independent dense convolution for arbitrary full-production-p coefficients,and exact success/work inequalities. No native assembly execution,production inversion,hash/storage test or complexity inference from finite samples.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 128,
+          "seed": 381004
+        }
+      ]
+    }
+  ]
+}
