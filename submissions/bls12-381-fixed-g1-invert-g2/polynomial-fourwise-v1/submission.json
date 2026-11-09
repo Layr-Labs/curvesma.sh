@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "Four-wise polynomial sampling and universal fingerprints for twelve-orbit inversion",
+  "claims": [
+    {
+      "statement": "For every allowed supplied nonidentity P and nonidentity z, the full-production algorithm in proof.md returns a verified Q in G2 with pairing(Q,P)=z with success probability >0.39024 over fresh algorithm coins, under the explicitly disclosed bounded fair-coin and finite bank-window interfaces. The identity target is handled directly. Complete cold classical work including every failure, polynomial/table/seed construction, fingerprinting, sorting/lookup/transfers, arithmetic, output and verification is <=2^(632/5) target-group-operation equivalents under unchanged C=20000. Peak memory <=2^137 bytes, preprocessing <=2^120 equivalents included in total, nonuniform advice zero bytes. Four-wise and pairwise finite families replace the source's production-scale BLAKE3-output heuristic; no production execution, physical entropy certification, installed bank hardware, source qualification or promotion is claimed.",
+      "score": {
+        "numerator": "632",
+        "denominator": "5"
+      },
+      "evidence": [
+        "proof.md",
+        "aux127_mul.S",
+        "aux127_add.S",
+        "aux255_mul128.S",
+        "aux255_add.S",
+        "fullcarry381_mul.S",
+        "project_six381.S",
+        "kernel_audit.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "kernel-audit",
+      "source": "kernel_audit.py",
+      "purpose": "Interpret actual straight-line auxiliary assembly with 64-bit carry semantics on full-width edge and bounded reproducible vectors; compare exact modular results and preserved registers; check exact public-parameter success/cost certificates and tiny-field independence. Does not execute a production inversion or certify entropy/storage hardware.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 128,
+          "seed": 381127
+        }
+      ]
+    }
+  ]
+}

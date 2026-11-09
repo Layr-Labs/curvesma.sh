@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Deterministic supplied-P BSGS with charged routing and dense-reference arithmetic",
+  "claims": [
+    {
+      "statement": "For every valid full-production fixed-G1 inversion instance, the deterministic algorithm in proof.md returns Q in G2 with pairing(Q,P)=z for the exact supplied P. Success probability is 1. Total classical work is at most 2^141 target-group-operation equivalents under C=20000, including all per-target preprocessing, large-storage routing, sorting, lookup, arithmetic, setup and verification. Peak storage is at most 2^145 bytes, preprocessing at most 2^141 equivalents included in total, nonuniform advice zero bytes. This is an analytic banked-storage computation, not a practical attack on this VM; its explicit finite communication model is a material assumption described in proof.md.",
+      "score": {
+        "numerator": "141",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

@@ -1,0 +1,165 @@
+// Inert static evidence. Six-fiber construction from e750ade2; no host execution.
+.text
+.p2align 2
+.global sign_pair381
+.type sign_pair381,%function
+sign_pair381:
+    mov x17,x0
+    ldp x2,x3,[x0]
+    ldp x4,x5,[x0,#16]
+    ldp x6,x7,[x0,#32]
+    orr x16,x2,x3
+    orr x16,x16,x4
+    orr x16,x16,x5
+    orr x16,x16,x6
+    orr x16,x16,x7
+    cbnz x16,.Lchosen
+    add x17,x0,#48
+.Lchosen:
+    ldp x2,x3,[x17]
+    ldp x4,x5,[x17,#16]
+    ldp x6,x7,[x17,#32]
+    adrp x14,.Lhalf381
+    add x14,x14,:lo12:.Lhalf381
+    ldp x8,x9,[x14]
+    ldp x10,x11,[x14,#16]
+    ldp x12,x13,[x14,#32]
+    subs x14,x2,x8
+    sbcs x14,x3,x9
+    sbcs x14,x4,x10
+    sbcs x14,x5,x11
+    sbcs x14,x6,x12
+    sbcs x14,x7,x13
+    cset x15,hs
+    adrp x17,.Lp381
+    add x17,x17,:lo12:.Lp381
+    ldp x2,x3,[x0,#0]
+    ldp x4,x5,[x0,#16]
+    ldp x6,x7,[x0,#32]
+    orr x16,x2,x3
+    orr x16,x16,x4
+    orr x16,x16,x5
+    orr x16,x16,x6
+    orr x16,x16,x7
+    ldp x8,x9,[x17,#0]
+    ldp x10,x11,[x17,#16]
+    ldp x12,x13,[x17,#32]
+    subs x8,x8,x2
+    sbcs x9,x9,x3
+    sbcs x10,x10,x4
+    sbcs x11,x11,x5
+    sbcs x12,x12,x6
+    sbcs x13,x13,x7
+    cmp x16,#0
+    csel x8,xzr,x8,eq
+    csel x9,xzr,x9,eq
+    csel x10,xzr,x10,eq
+    csel x11,xzr,x11,eq
+    csel x12,xzr,x12,eq
+    csel x13,xzr,x13,eq
+    cmp x15,#0
+    csel x2,x8,x2,ne
+    csel x3,x9,x3,ne
+    csel x4,x10,x4,ne
+    csel x5,x11,x5,ne
+    csel x6,x12,x6,ne
+    csel x7,x13,x7,ne
+    stp x2,x3,[x1,#0]
+    stp x4,x5,[x1,#16]
+    stp x6,x7,[x1,#32]
+    ldp x2,x3,[x0,#48]
+    ldp x4,x5,[x0,#64]
+    ldp x6,x7,[x0,#80]
+    orr x16,x2,x3
+    orr x16,x16,x4
+    orr x16,x16,x5
+    orr x16,x16,x6
+    orr x16,x16,x7
+    ldp x8,x9,[x17,#0]
+    ldp x10,x11,[x17,#16]
+    ldp x12,x13,[x17,#32]
+    subs x8,x8,x2
+    sbcs x9,x9,x3
+    sbcs x10,x10,x4
+    sbcs x11,x11,x5
+    sbcs x12,x12,x6
+    sbcs x13,x13,x7
+    cmp x16,#0
+    csel x8,xzr,x8,eq
+    csel x9,xzr,x9,eq
+    csel x10,xzr,x10,eq
+    csel x11,xzr,x11,eq
+    csel x12,xzr,x12,eq
+    csel x13,xzr,x13,eq
+    cmp x15,#0
+    csel x2,x8,x2,ne
+    csel x3,x9,x3,ne
+    csel x4,x10,x4,ne
+    csel x5,x11,x5,ne
+    csel x6,x12,x6,ne
+    csel x7,x13,x7,ne
+    stp x2,x3,[x1,#48]
+    stp x4,x5,[x1,#64]
+    stp x6,x7,[x1,#80]
+    ret
+.size sign_pair381,.-sign_pair381
+.global project_six381
+.type project_six381,%function
+project_six381:
+    stp x19,x30,[sp,#-16]!
+    mov x19,x1
+    ldp x2,x3,[x0,#0]
+    stp x2,x3,[x19,#0]
+    ldp x2,x3,[x0,#16]
+    stp x2,x3,[x19,#16]
+    ldp x2,x3,[x0,#32]
+    stp x2,x3,[x19,#32]
+    ldp x2,x3,[x0,#48]
+    stp x2,x3,[x19,#48]
+    ldp x2,x3,[x0,#64]
+    stp x2,x3,[x19,#64]
+    ldp x2,x3,[x0,#80]
+    stp x2,x3,[x19,#80]
+    mov x4,xzr
+    ldp x2,x3,[x0,#384]
+    stp x2,x3,[x19,#96]
+    orr x4,x4,x2
+    orr x4,x4,x3
+    ldp x2,x3,[x0,#400]
+    stp x2,x3,[x19,#112]
+    orr x4,x4,x2
+    orr x4,x4,x3
+    ldp x2,x3,[x0,#416]
+    stp x2,x3,[x19,#128]
+    orr x4,x4,x2
+    orr x4,x4,x3
+    ldp x2,x3,[x0,#432]
+    stp x2,x3,[x19,#144]
+    orr x4,x4,x2
+    orr x4,x4,x3
+    ldp x2,x3,[x0,#448]
+    stp x2,x3,[x19,#160]
+    orr x4,x4,x2
+    orr x4,x4,x3
+    ldp x2,x3,[x0,#464]
+    stp x2,x3,[x19,#176]
+    orr x4,x4,x2
+    orr x4,x4,x3
+    cbz x4,.Lidentity
+    add x0,x19,#96
+    mov x1,x0
+    bl sign_pair381
+    mov w0,#0
+    b .Lproject_done
+.Lidentity:
+    mov w0,#1
+.Lproject_done:
+    ldp x19,x30,[sp],#16
+    ret
+.size project_six381,.-project_six381
+.section .rodata
+.p2align 3
+.Lp381:
+    .quad 0xb9feffffffffaaab,0x1eabfffeb153ffff,0x6730d2a0f6b0f624,0x64774b84f38512bf,0x4b1ba7b6434bacd7,0x1a0111ea397fe69a
+.Lhalf381:
+    .quad 0xdcff7fffffffd556,0xf55ffff58a9ffff,0xb39869507b587b12,0xb23ba5c279c2895f,0x258dd3db21a5d66b,0xd0088f51cbff34d
