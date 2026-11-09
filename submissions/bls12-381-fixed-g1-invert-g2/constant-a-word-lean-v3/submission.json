@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "title": "Constant-A trace inversion with explicit native and word-message bounds",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.390003, conditional on the explicit actual-standard-hash event bridge H_const and fixed-word message-storage admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(6321/50) reference equivalents with unchanged C=20000. Peak memory <2^138 bytes, cold preprocessing <2^124 scalar instructions included in total, advice0 bytes. The explicit finite first/second moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "6321",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S",
+        "fp381_add.S",
+        "fp381_sub.S",
+        "native_fp2_mul.S",
+        "project_product.S",
+        "compression.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
