@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "Auditable full-phase determinant inversion",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.39024, conditional on the explicit bounded fair-coin interface and finite storage-controller admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(2521/20) reference equivalents with unchanged C=20000. Peak memory <2^137 bytes, cold preprocessing <2^120 scalar instructions included in total, advice0 bytes. The explicit finite first/second moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "2521",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S",
+        "aux127_mul.S",
+        "aux127_add.S",
+        "audit.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "full-audit",
+      "source": "audit.py",
+      "purpose": "Credential-free shared Docker only: interpret actual scalar native files on bounded full-width cases; enumerate all finite phase-support equality patterns; check planted scalar-recovery relations and exact full-production rational success/work certificates. Does not run production inversion or certify fair coins/storage.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 32,
+          "seed": 381012
+        }
+      ]
+    }
+  ]
+}
