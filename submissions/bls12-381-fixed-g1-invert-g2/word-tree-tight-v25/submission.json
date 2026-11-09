@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "title": "Exact trace interpolation with native scalar addition and tight complete ledgers",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P fixed-G1 inversion outputs verified G2 Q with pairing(Q,P)=z with success>0.390003 under disclosed full-standard-hash finite-event heuristic H. Complete scalar instruction work,including finite ordinary-word tree routing/all processors/construction,cold tables,arithmetic,hashing,sorting,losing paths and all11 terminal attempts,is<=20000*2^(3159/25). Peak memory<2^138 bytes,cold<2^124 instructions included,advice0. No extended-address bank primitive or production execution/qualification is claimed.",
+      "score": {
+        "numerator": "3159",
+        "denominator": "25"
+      },
+      "evidence": [
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "audit.py",
+        "project_toom.S",
+        "proof.md",
+        "fp381_sub.S",
+        "compression.S",
+        "pinned_mont_wrapper.S",
+        "storage.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-interpolation-projection",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker only:interpret exact pinned native Toom projection with complete assembler offset grammar;independent full-p dense comparison,ABI/read/write/count checks;new full-r21-instruction scalar addition across boundary/random inputs and output aliases. No production inversion or H/storage certification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381025
+        }
+      ]
+    }
+  ]
+}
