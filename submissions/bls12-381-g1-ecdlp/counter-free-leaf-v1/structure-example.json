@@ -1,0 +1,65 @@
+{
+  "census": {
+    "K": "0.495118",
+    "k": 12,
+    "m_bits": 24,
+    "multiplicity": true,
+    "q": "29/25",
+    "seed": 1
+  },
+  "ec": {
+    "K": "0.495118",
+    "bits": 23,
+    "cand_cap": 4096,
+    "head_cap": 64,
+    "headbits": 6,
+    "keybits": 18,
+    "logG": 12,
+    "logX2": 13,
+    "logd": 5,
+    "nodebits": 5,
+    "q": "29/25",
+    "seed": 7,
+    "spotchecks": 6,
+    "trials": 30
+  },
+  "planner": {
+    "specs": [
+      {
+        "classes": 2,
+        "d": 4,
+        "kappa": 8,
+        "logX2": 14,
+        "seed": 0
+      },
+      {
+        "classes": 2,
+        "d": 8,
+        "kappa": 8,
+        "logX2": 16,
+        "seed": 1
+      },
+      {
+        "classes": 1,
+        "d": 4,
+        "kappa": 8,
+        "logX2": 14,
+        "max_tree": 64,
+        "seed": 0
+      }
+    ]
+  },
+  "proto": {
+    "cap1": 96,
+    "cap2": 96,
+    "fanin": 4,
+    "gen_bits": 3,
+    "lanes": 4,
+    "s_bits": 1,
+    "seed": 2026,
+    "steps": 6,
+    "t_bits": 2,
+    "u_bits": 2,
+    "waves": 3
+  }
+}
