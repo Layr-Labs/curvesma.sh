@@ -1,0 +1,362 @@
+""
+import os,sys,json,math,cmath,time,random
+from math import ceil,gcd,log2,prod,sqrt
+from fractions import Fraction as F
+from decimal import Decimal as D,localcontext
+HERE=os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0,os.path.join(HERE,'files')if os.path.isdir(os.path.join(HERE,'files'))else HERE)
+import common12 as C
+P=4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559787
+R=0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001
+U=C.U
+LOG2U6=6*log2(U)
+Z=[0]*6;ONE=([1]+[0]*5,Z[:])
+def add(a,b):return[(x+y)%P for x,y in zip(a,b)]
+def neg(a):return[(-x)%P for x in a]
+def mul(a,b):return[x%P for x in C.mul(a,b)]
+def pow6(a,n):
+	v=ONE[0]
+	while n:
+		if n&1:v=mul(v,a)
+		a=mul(a,a);n>>=1
+	return v
+def mul12(a,b):
+	ac=mul(a[0],b[0]);bd=mul(a[1],b[1]);cross=mul(add(a[0],a[1]),add(b[0],b[1]))
+	return add(ac,neg(mul(C.UW,bd))),add(cross,neg(add(ac,bd)))
+def pow12(a,n):
+	v=ONE
+	while n:
+		if n&1:v=mul12(v,a)
+		a=mul12(a,a);n>>=1
+	return v
+def boot_basis(z):
+	if not any(z[1]):raise ValueError('subfield/identity: solve separately')
+	ratio=mul(neg(z[0]),pow6(z[1],P**6-2))
+	return[[P if i==j else 0 for j in range(12)]for i in range(6)]+[mul(ratio,[0]*j+[1])+[int(i==j)for i in range(6)]for j in range(6)]
+def gs_exact(B):
+	stars=[];mu=[];norm=[]
+	for v in B:
+		row=[];s=list(map(F,v))
+		for j,b in enumerate(stars):
+			m=sum(x*y for x,y in zip(v,b))/norm[j];row.append(m)
+			s=[x-m*y for x,y in zip(s,b)]
+		stars.append(s);mu.append(row);norm.append(sum(x*x for x in s))
+	return mu,norm
+def _emb():
+	""
+	rts=_croots(C.H)
+	return[[sum(c*e**i for i,c in enumerate(b))/2 for b in C.BAS2]for e in rts],[abs(e+1)for e in rts]
+def metric(lam,eb,scale=2**24):
+	""
+	ev,aw=_emb()
+	g=lambda wt,ex:[[round(scale*wt*sum(x**ex*(e[i]*e[j].conjugate()).real for e,x in zip(ev,aw)))for j in range(6)]for i in range(6)]
+	return g(1,0),g(lam,eb)
+def qv(Q,v):
+	""
+	return[sum(Q[0][i][j]*v[j]for j in range(6))for i in range(6)]+[sum(Q[1][i][j]*v[6+j]for j in range(6))for i in range(6)]
+def lll(B,Q=None):
+	""
+	B=[v[:]for v in B];n=len(B);swaps=0
+	with localcontext()as ctx:
+		ctx.prec=300
+		dot=(lambda v,b:sum(D(a)*c for a,c in zip(v,b)))if Q is None else(lambda v,b:sum(D(a)*c for a,c in zip(qv(Q,v),b)))
+		mu=[];norm=[];star=[]
+		for v in B:
+			s=list(map(D,v));row=[]
+			for j,b in enumerate(star):
+				x=dot(v,b)/norm[j];row.append(x)
+				s=[a-x*c for a,c in zip(s,b)]
+			star.append(s);mu.append(row);norm.append(sum(x*x for x in s)if Q is None else sum(a*c for a,c in zip(s,_qd(Q,s))))
+		k=1
+		while k<n:
+			for j in range(k-1,-1,-1):
+				q=int(mu[k][j].to_integral_value(rounding='ROUND_HALF_EVEN'))
+				if q:
+					B[k]=[x-q*y for x,y in zip(B[k],B[j])]
+					for i in range(j):mu[k][i]-=q*mu[j][i]
+					mu[k][j]-=q
+			m=mu[k][k-1]
+			if norm[k]>=(D('0.99')-m*m)*norm[k-1]:k+=1;continue
+			A=norm[k]+m*m*norm[k-1];newm=m*norm[k-1]/A
+			norm[k]=norm[k]*norm[k-1]/A;norm[k-1]=A;mu[k][k-1]=newm
+			B[k],B[k-1]=B[k-1],B[k]
+			for j in range(k-1):mu[k][j],mu[k-1][j]=mu[k-1][j],mu[k][j]
+			for i in range(k+1,n):
+				t=mu[i][k];mu[i][k]=mu[i][k-1]-m*t;mu[i][k-1]=t+newm*mu[i][k]
+			k=max(1,k-1);swaps+=1
+	return B,swaps
+def _qd(Q,s):
+	return[sum(Q[0][i][j]*s[j]for j in range(6))for i in range(6)]+[sum(Q[1][i][j]*s[6+j]for j in range(6))for i in range(6)]
+def _chol(M):
+	n=len(M);L=[[0.0]*n for _ in range(n)]
+	for i in range(n):
+		for j in range(i+1):
+			t=M[i][j]-sum(L[i][k]*L[j][k]for k in range(j))
+			L[i][j]=sqrt(t)if i==j else t/L[j][j]
+	return L
+def reduce(B,Q):
+	""
+	B,s0=lll(B)
+	La,Lb=_chol(Q[0]),_chol(Q[1])
+	f=lambda L,x:[round(2.0**28*sum(L[i][j]*x[i]for i in range(j,6))/2.0**12)for j in range(6)]
+	E,s1=lll([f(La,v[:6])+f(Lb,v[6:])+v for v in B])
+	B,s2=lll([r[12:]for r in E],Q)
+	return B,s0+s1+s2
+def lovasz(B,Q,delta=F(98,100)):
+	""
+	star=[];norm=[]
+	for i,v in enumerate(B):
+		s=list(map(F,v))
+		for j,b in enumerate(star):
+			m=F(sum(x*y for x,y in zip(qv(Q,v),b)))/norm[j]
+			if i>0 and abs(m)>F(1,2):return False
+			if j==i-1 and i:mu_last=m
+			s=[x-m*y for x,y in zip(s,b)]
+		nr=sum(x*y for x,y in zip(s,_qd(Q,s)))
+		if i and nr<(delta-mu_last**2)*norm[-1]:return False
+		star.append(s);norm.append(nr)
+	return True
+def certify_boot(z,B):
+	""
+	for v in B:
+		assert mul(v[:6],z[1])==neg(mul(v[6:],z[0]))
+	mu,norm=gs_exact(B)
+	det2=prod(norm);assert det2==P**12
+	assert lovasz(B,QB)
+	return float(sum(norm)),mu,norm
+def int_ball_point(rng,Rr,dim=12):
+	R2=Rr*Rr
+	while True:
+		c=[rng.randrange(-Rr,Rr+1)for _ in range(dim)]
+		if any(c)and sum(x*x for x in c)<=R2:
+			for x in reversed(c):
+				if x:
+					if x<0:c=[-y for y in c]
+					break
+			return c
+ball_point=int_ball_point
+def boot_ball_stats(z,B,seed,points=16,radii=(14,96)):
+	import descent16 as DS
+	cert,mu,norm=certify_boot(z,B);rng=random.Random(seed)
+	out=[]
+	for Rr in radii:
+		S=log2(DS.CELLS[Rr]);c=(6*log2(P)+S)/12
+		cg=[]
+		for _ in range(points):
+			k=ball_point(rng,Rr)
+			v=[sum(k[i]*B[i][j]for i in range(12))for j in range(12)]
+			assert mul(v[:6],z[1])==neg(mul(v[6:],z[0]))
+			ng=gnorm(v)
+			assert ng>0
+			cg.append(log2(ng)-12*c-LOG2U6)
+		out.append(dict(R=Rr,S=S,points=points,cg_mean=sum(cg)/points,cg_max=max(cg),cg_min=min(cg)))
+	return out
+def trim(a):
+	while a and a[-1]==0:a.pop()
+	return a
+def psub(a,b,q):return trim([((a[i]if i<len(a)else 0)-(b[i]if i<len(b)else 0))%q for i in range(max(len(a),len(b)))])
+def pmod(a,b,q):
+	a=trim([x%q for x in a]);iv=pow(b[-1],-1,q)
+	while len(a)>=len(b):
+		v=a[-1]*iv%q;k=len(a)-len(b)
+		for i,x in enumerate(b):a[k+i]=(a[k+i]-v*x)%q
+		trim(a)
+	return a
+def pmul(a,b,f,q):
+	v=[0]*(len(a)+len(b)-1)
+	for i,x in enumerate(a):
+		for j,y in enumerate(b):v[i+j]=(v[i+j]+x*y)%q
+	return pmod(v,f,q)
+def ppow(a,n,f,q):
+	v=[1]
+	while n:
+		if n&1:v=pmul(v,a,f,q)
+		a=pmul(a,a,f,q);n>>=1
+	return v
+def pgcd(a,b,q):
+	while b:a,b=b,pmod(a,b,q)
+	if not a:return[]
+	iv=pow(a[-1],-1,q);return[x*iv%q for x in a]
+def roots(f,q,rng):
+	f=trim([x%q for x in f]);f=pgcd(f,psub(ppow([0,1],q,f,q),[0,1],q),q)
+	def split(g):
+		if len(g)<=1:return[]
+		if len(g)==2:return[-g[0]*pow(g[1],-1,q)%q]
+		while True:
+			a=[rng.randrange(q)for _ in range(len(g)-1)]
+			h=pgcd(g,psub(ppow(a,(q-1)//2,g,q),[1],q),q)
+			if 1<len(h)<len(g):
+				a=g[:];v=[0]*(len(g)-len(h)+1)
+				for k in range(len(v)-1,-1,-1):
+					v[k]=a[k+len(h)-1]
+					for j,x in enumerate(h):a[k+j]=(a[k+j]-v[k]*x)%q
+				assert not any(a)
+				return split(h)+split(trim(v))
+	return sorted(split(f))
+def probable_prime(n):
+	if n%2==0:return False
+	d=n-1;s=0
+	while d%2==0:d//=2;s+=1
+	for a in(2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53):
+		if n==a:return True
+		x=pow(a,d,n)
+		if x in(1,n-1):continue
+		for _ in range(s-1):
+			x=x*x%n
+			if x==n-1:break
+		else:return False
+	return True
+def peval(c,z,q):return sum(x*pow(z,j,q)for j,x in enumerate(c))%q
+def basis_at(s,q):
+	""
+	i2=pow(2,-1,q);return[peval(b,s,q)*i2%q for b in C.BAS2]
+def side_poly(s,q,side):
+	""
+	if side=='g':return[U*(s+1)%q,0,1]
+	ff=[0]*13
+	for d,c in C.PTERMS:ff[d]=peval(c,s,q)
+	return ff
+def specialq_lattice(bits,side,rng):
+	while True:
+		q=rng.getrandbits(bits)|(1<<(bits-1))|1
+		if not probable_prime(q):continue
+		ss=roots(C.H,q,rng)
+		opts=[]
+		for s in ss:
+			opts.extend((s,t)for t in roots(side_poly(s,q,side),q,rng))
+		if opts:break
+	s,t=rng.choice(opts)
+	return(q,s,t)+qlattice(q,s,t)
+def qlattice(q,s,t):
+	E=basis_at(s,q);assert E[0]==1
+	w=E+[(-t*x)%q for x in E]
+	B=[[q]+[0]*11]+[[(-w[j])%q]+[int(k==j)for k in range(1,12)]for j in range(1,12)]
+	B,swaps=reduce(B,QN)
+	assert all(sum(a*b for a,b in zip(v,w))%q==0 for v in B)
+	mu,nn=gs_exact(B);assert prod(nn)==q*q
+	return w,B,swaps
+def offsets(q,side,B,rng,Rr,points):
+	import descent16 as DS
+	S=log2(DS.CELLS[Rr]);c=(log2(q)+S)/12;cf=[];cg=[]
+	for _ in range(points):
+		k=ball_point(rng,Rr)
+		v=[sum(k[i]*B[i][j]for i in range(12))for j in range(12)]
+		a,b=C.norms(v[:6],v[6:]);assert(a if side=='f' else b)%q==0
+		cf.append(log2(a)-72*c);cg.append(log2(b)-12*c-LOG2U6)
+	return S,c,cf,cg
+def specialq_ball_stats(bits,side,seed,points=16,radii=(16,96)):
+	rng=random.Random(seed)
+	q,s,t,w,B,swaps=specialq_lattice(bits,side,rng)
+	rows=[]
+	for Rr in radii:
+		S,c,cf,cg=offsets(q,side,B,rng,Rr,points)
+		rows.append(dict(R=Rr,S=S,c=c,points=points,cf_mean=sum(cf)/points,cf_max=max(cf),cg_mean=sum(cg)/points,cg_max=max(cg)))
+	return dict(bits=bits,side=side,seed=seed,q=q,s=s,t=t,swaps=swaps,stats=rows,basis=B)
+def encountered(bits,side,seed):
+	rng=random.Random(seed);B=specialq_lattice(bits,side,rng)[4];enc=[];ctl=[]
+	while len(enc)<4:
+		k=ball_point(rng,128);v=[sum(k[i]*B[i][j]for i in range(12))for j in range(12)]
+		for N,sd in zip(C.norms(v[:6],v[6:]),'fg'):
+			for p in range(1<<16,1<<17):
+				if N%p or not probable_prime(p):continue
+				r=[(s,t)for s in roots(C.H,p,rng)for t in roots(side_poly(s,p,sd),p,rng)if not sum((v[j]-t*v[6+j])*e for j,e in enumerate(basis_at(s,p)))%p]
+				if len(r)==1 and len(enc)<4:
+					Q=specialq_lattice(17,sd,rng)
+					enc.append(offsets(p,sd,qlattice(p,*r[0])[1],rng,16,16)[2:]);ctl.append(offsets(Q[0],sd,Q[4],rng,16,16)[2:])
+	return enc,ctl
+def encountered_check(seed):
+	en=[encountered(90,s_,seed+i)for i,s_ in enumerate('fg')];mm=[[sum(sum(x[j])/16 for e in en for x in e[k])/8 for k in(0,1)]+[max(max(x[j])for e in en for x in e[0])]for j in(0,1)]
+	return mm,mm[0][0]<=mm[0][1]+10 and mm[1][0]<=mm[1][1]+4 and mm[0][2]<=97 and mm[1][2]<=14.5
+def _croots(c):
+	n=len(c)-1;c=[complex(x)/c[-1]for x in c]
+	ev=lambda z:sum(c[i]*z**i for i in range(n+1))
+	rad=1+max(abs(x)for x in c[:-1]);z=[rad*cmath.exp(2j*math.pi*(k+.25)/n)for k in range(n)]
+	for _ in range(3000):
+		nz=[z[i]-ev(z[i])/prod(z[i]-z[j]for j in range(n)if j!=i)for i in range(n)]
+		done=max(abs(a-b)for a,b in zip(z,nz))<1e-15*rad;z=nz
+		if done:break
+	return z
+def forms():
+	""
+	F_,G_=[],[]
+	for e in _croots(C.H):
+		p=[sum(c*e**i for i,c in enumerate(b))/2 for b in C.BAS2]
+		ff=[0]*13
+		for d,c in C.PTERMS:ff[d]=sum(x*e**i for i,x in enumerate(c))
+		F_+=[(p,x)for x in _croots(ff)]
+		x=cmath.sqrt(-U*(e+1));G_+=[(p,x),(p,-x)]
+	return F_,G_
+def cell_bound(v,fs):
+	t=0.0
+	for p,x in fs:
+		L=abs(sum(v[j]*p[j]for j in range(6))-x*sum(v[6+j]*p[j]for j in range(6)))
+		t+=log2(L+2.0**-46*(sum(abs(v[j])*abs(p[j])for j in range(6))+abs(x)*sum(abs(v[6+j])*abs(p[j])for j in range(6))))
+	return t
+def retention(bits,side,R,seed,points,slack=96.0):
+	rng=random.Random(seed);q,s,t,w,B,swaps=specialq_lattice(bits,side,rng)
+	FF,GG=forms();ok=True;gmax=0.0
+	for _ in range(points):
+		k=ball_point(rng,R)
+		while gcd(*k)>1:k=ball_point(rng,R)
+		v=[sum(k[i]*B[i][j]for i in range(12))for j in range(12)]
+		for N,fs in zip(map(abs,C.norms(v[:6],v[6:])),(FF,GG)):
+			g=cell_bound(v,fs)-log2(N);ok&=g>=-1e-9;gmax=max(gmax,g)
+	return ok,gmax,points
+def gnorm(v):
+	return C.norm([x+y for x,y in zip(C.mul(v[:6],v[:6]),C.mul(C.UW,C.mul(v[6:],v[6:])))])
+def prime_tests(p):
+	""
+	if p==2:
+		import runs16 as L2
+		return[lambda a:L2.div(a,C.W)is not None,lambda a:L2.div(a,L2.PI4)is not None]
+	import retain16 as RT
+	Hp=[x%p for x in C.H];g=RT.pgcd(Hp,RT.pderiv(Hp,p),p)
+	sqf=RT.pdiv(Hp,g,p)[0]if len(g)>1 else Hp;i2=pow(2,-1,p)
+	return[(lambda h:lambda a:not RT.pmod([x*i2 for x in C.power2(a)],h,p))(h)for h in RT.factor_Fp(sqf,p)]
+def residue_valuations(p,n,seed,K=None):
+	K=K or ceil(104/log2(p));M=p**K
+	tests=prime_tests(p);rng=random.Random(seed)
+	hf,hg,rejected={},{},0
+	while sum(hf.values())<n:
+		a=[rng.randrange(M)for _ in range(6)];b=[rng.randrange(M)for _ in range(6)]
+		if any(t(a)and t(b)for t in tests):
+			rejected+=1;continue
+		for N,h in zip(C.norms(a,b),(hf,hg)):
+			v=0
+			if N==0:v=K
+			else:
+				while v<K and N%p==0:N//=p;v+=1
+			h[v]=h.get(v,0)+1
+	return dict(p=p,K=K,n=n,seed=seed,rejected=rejected,factors=len(tests),f=hf,g=hg)
+QN=metric(1.5,0.5)
+QB=metric(2.0**64,1)
+def ball_fast(rng,Rr,dim=12):
+	Rp=Rr+sqrt(dim)/2
+	while True:
+		g=[rng.gauss(0,1)for _ in range(dim)];n=sqrt(sum(x*x for x in g));t=Rp*rng.random()**(1/dim)
+		c=[round(x/n*t)for x in g]
+		if 0<sum(x*x for x in c)<=Rr*Rr:
+			for x in reversed(c):
+				if x:return c if x>0 else[-y for y in c]
+def camp_ideal(i,j):
+	"PREREG-D ideal j of type i (DESCENT.md)"
+	import descent16 as DS,unit_orbit as UO,retain16 as RT
+	RT.STRUCT_TABLE or RT.load_table(C.stats());Pm=DS.P();t=(['boot']+sorted(DS.PLAN16))[i];rng=random.Random(20000+1000*i+j);K=512 if j<(256 if t!='boot'and t[0]<=90 else 64)else 256
+	if t=='boot':
+		while True:
+			x=([rng.randrange(P)for _ in range(6)],[rng.randrange(P)for _ in range(6)])
+			if any(x[0]+x[1]):break
+		B,_=reduce(boot_basis(pow12(pow12(x,(P**12-1)//R),rng.randrange(1,R))),QB);n1,iA,kA,Rr=DS.BOOT16;pr=2**log2(DS.boot_pr(Pm,DS.BOOT16)[5])
+		f=lambda v:DS.ss_lower2(log2(gnorm(v)),Pm.LX,float(n1),iA,kA,1,Pm.MESH,Pm.ALPHA_G,Pm.TRUNC)
+	else:
+		b=next(x for x in DS.bins_of(Pm)if x[0]==t[0]);n,iA,kA,kB,Rr,th=DS.PLAN16[t];sd=t[1]
+		d=DS.node_cost(Pm,b[0],b[1],sd,float(n),iA,kA,kB,Rr,bool(th));pr=2**d['pr_log2']
+		q,_,_,_,B,_=specialq_lattice(b[1],sd,rng);lq=log2(q);FF,GG=forms()
+		def f(v):
+			mf=cell_bound(v,FF)-(lq if sd=='f'else 0.0);mg=cell_bound(v,GG)-(lq if sd=='g'else 0.0)
+			if mf>d['nf']or mg>d['ng']:return 0.0
+			return DS.ss_lower2(mf,Pm.LX,float(n),iA,kA,kB,Pm.MESH,Pm.ALPHA_F,Pm.TRUNC)*DS.ss_lower2(mg,Pm.LX,float(n),iA,kA,kB,Pm.MESH,Pm.ALPHA_G,Pm.TRUNC)
+	adj,den=UO.lattice_adj(B);xs=[];ys=[]
+	for _ in range(K):
+		c=ball_fast(rng,Rr);v=[sum(c[a]*B[a][e]for a in range(12))for e in range(12)];y=f(v);xs+=[y/pr];ys+=[y/UO.m_true(UO.orbit(v,adj,den,Rr)[0])/pr]
+	return dict(t=t,j=j,raw=sum(xs)/K,yr=sum(ys)/K,raw_lo=(sum(xs)-max(xs))/K,yr_lo=(sum(ys)-max(ys))/K)
