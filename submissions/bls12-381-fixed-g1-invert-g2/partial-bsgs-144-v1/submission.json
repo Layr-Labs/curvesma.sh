@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Partial-range GT BSGS with uniform-challenge success above one half",
+  "claims": [
+    {
+      "statement": "For the protected full-production fixed-G1 pairing-inversion problem with uniform challenges, the deterministic partial-range algorithm in proof.md returns Q in G2 satisfying e(P,Q)=z for the exact supplied nonidentity P with success probability at least 1/2, total work including failed challenges at most 2^144 dense-Fp12 equivalents at C=20,000, peak memory at most 2^140 bytes, preprocessing at most 2^143 equivalents included in total work, and no nonuniform advice. It searches precisely the first 2^254 exponents; the exact success is 2^254/r. This analytic classical accounting control requires exponential memory and makes no practical execution or novelty claim.",
+      "score": {
+        "numerator": "144",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
