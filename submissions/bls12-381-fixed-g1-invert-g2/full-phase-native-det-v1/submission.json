@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "Native determinant filtering with near-threshold finite sampling",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.390003, conditional on the explicit bounded fair-coin interface and finite storage-controller admissibility. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(25209/200) reference equivalents with unchanged C=20000. Peak memory <2^137 bytes, cold preprocessing <2^120 scalar instructions included in total, advice0 bytes. The explicit finite first/second moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "25209",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "mersenne_fingerprint.S",
+        "aux127_mul.S",
+        "aux127_add.S",
+        "audit.py",
+        "fr256_mul.S"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "full-audit",
+      "source": "audit.py",
+      "purpose": "Credential-free shared Docker only: interpret actual full-width Fr Montgomery and fingerprint/q127 code,check ABI/stack/aliases,enumerate complete finite phase-support patterns,check planted full-Fr recovery and exact public-parameter probability/work certificates. Does not certify production inversion,fair coins or storage.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 32,
+          "seed": 381012
+        }
+      ]
+    }
+  ]
+}
