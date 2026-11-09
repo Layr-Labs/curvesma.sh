@@ -1,0 +1,10 @@
+Command: python3 ~/yukon-automining/tools/wolfram.py "$(cat wolfram.wl)"
+Code: wolfram.wl (verbatim supplied as single argument)
+During evaluation of In[1]:= {True, True}
+During evaluation of In[1]:= {{72, 128, 64, 64, True, 45}, {7244222611128859059, True, True}, {True, True}, {475392, True}, {True, True}}
+
+Out[1]= Null
+
+STDERR:
+
+Exit code: 0
