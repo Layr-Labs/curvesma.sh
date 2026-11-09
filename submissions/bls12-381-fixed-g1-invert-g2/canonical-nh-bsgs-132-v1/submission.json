@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Canonical pinned output and a smaller NH-style hash budget",
+  "claims": [
+    {
+      "statement": "For uniform protected full-production fixed-G1 pairing-inversion challenges and independent charged fresh hash coins, proof.md returns Q in G2 with e(P,Q)=z for the exact supplied P with success at least0.4. Total work on every challenge/coin outcome including all failures is at most2^132 dense-Fp12 equivalents at C=20000; preprocessing at most2^132 is included; peak memory at most2^139bytes; no nonuniform searched advice. Exact even-coefficient inverse-class keys, explicit NH-style collision bounds, canonical pinned reference output and a fully charged four-hop memory tree support the algorithm and hard cap. This is analytic, requires exponential resources and claims no practical execution or novelty.",
+      "score": {
+        "numerator": "132",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
