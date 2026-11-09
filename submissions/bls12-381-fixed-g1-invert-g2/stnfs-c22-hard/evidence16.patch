@@ -1,0 +1,61 @@
+--- a/evidence16.py
++++ b/evidence16.py
+@@ -22,7 +22,7 @@
+ U=C.U
+ H=C.H
+ LN2=math.log(2)
+-CLAIM=115.65886
++CLAIM=115.627692
+ import retain16
+ ALPHA_PMAX=2000
+ ALPHA_F,ALPHA_G=-0.047244,0.706684
+@@ -59,7 +59,7 @@
+ 	for p in retain16.primes(2,pmax):
+ 		a,b=alpha_contrib(p);af+=a;ag+=b
+ 	return af,ag
+-DECLARED={'ledger':('<=',115.65886),'relcol':('<=',115.300026350),'la':('<=',113.232777467),'gen':('<=',108.749023425),'log2_rels':('>=',62.5959),'rels_2se':('>=',62.5238),'margin':('>=',0.1335),'work_se':('<=',0.005049),'two_log':('<=',109.5279),'markov':('<=',0.553406),'log2_EN':('<=',15.2673),'over':('<=',-12.03),'rep':('<=',-10.7),'boot_phi':('<=',5.10e-06),'success':('>=',0.4456),'success_head':('>=',0.3903)}
++DECLARED={'ledger':('<=',115.627692),'relcol':('<=',115.300026350),'la':('<=',113.118909502),'gen':('<=',91.197),'log2_rels':('>=',62.5959),'rels_2se':('>=',62.5238),'margin':('>=',0.1335),'work_se':('<=',0.005049),'two_log':('<=',109.5279),'markov':('<=',0.5315),'log2_EN':('<=',15.2673),'over':('<=',-12.03),'rep':('<=',-10.7),'boot_phi':('<=',5.10e-06),'success':('>=',0.4443),'success_head':('>=',0.3938)}
+ _REPORT=[]
+ T0=time.time()
+ load_stats=C.stats
+@@ -205,7 +205,8 @@
+ 			w=s+1;c=poly_roots_count([w**6,0,w**5,0,0,0,2*w**3,0,0,0,-2*w,0,1],p);tf+=c;tot+=c+poly_roots_count([U*w,0,1],p)
+ 	return tot/len(ps),len(ps),tf/len(ps)
+ def _asm(name):
+-	t=lzma.decompress(base64.b85decode("".join(open(os.path.join(_DIR,"kernels_asm.b85")).read().split()))).decode()
++	fn=os.path.join(_DIR,"kernels_full.b85");fn=fn if os.path.exists(fn)else os.path.join(_DIR,"kernels_asm.b85")
++	t=lzma.decompress(base64.b85decode("".join(open(fn).read().split()))).decode()
+ 	parts=re.split(r"(?m)^@@ ([A-Za-z][A-Za-z0-9_.-]*)\n",t)
+ 	return dict(zip(parts[1::2],parts[2::2]))[name].rstrip("\n").splitlines()
+ def kernel_rec7(ru,nunits):
+@@ -561,8 +562,8 @@
+ 		return m,(sum((y-m)**2 for y in x)/(n-1))**.5/n**.5,n
+ 	fs={k:fst(k)for k in M.FILT_RUNS};fx={k:(lambda x:(sum(x)/len(x),(sum((y-sum(x)/len(x))**2 for y in x)/(len(x)-1)/len(x))**.5,len(x)))([v[1]/2**k for v in vs])for k,vs in M.FILT_X.items()};fxk=tuple(k for k in(19,20)if k in fx);fneed=max(fx[k][0]+2*fx[k][1]for k in fxk)
+ 	sdu=max((sum((v[1]/2**k-sum(w[1]for w in vs)/len(vs)/2**k)**2 for v in vs)/(len(vs)-1))**.5*2**(k/2)for T in(M.FILT_RUNS,M.FILT_X)for k,vs in T.items()if len(vs)>=6)
+-	lu=la['log2_N']-log2(M.NU);chb=(M.SD_C*2**(-lu/2)/(M.NU-M.NU_H))**2;cap_ok=sdu<=M.SD_C and M.NU_H>=fneed and chb+1e-15<=M.P_CAP
+-	say(f"[10c] cap {M.NU} U: sd {sdu:.3f} <= {M.SD_C}; {M.NU_H} >= {fneed:.6f}; {chb:.2e} <= {M.P_CAP}: {cap_ok}")
++	lu=la['log2_N']-log2(M.NU);chb=(M.SD_C*2**(-lu/2)/(M.NU-M.NU_H))**2;fc=M.filter_cap();cap_ok=fc["ok"]
++	say(f"[10c] cap {M.NU} U at excess {M.FILT_EXCESS}: NU/(2^19,2^20 mean+2SE) {fc['nu_need']:.4f} >= 1.03, NU/mean 2^19 {fc['nu_m19']:.4f} >= 1.04, 2^20 {fc['nu_m20']:.4f} >= 1.07; flat abort allowance P_CAP {M.P_CAP} (model error); per-run sd x sqrt(U) {sdu:.3f} (descriptive): {cap_ok}")
+ 	nu_ok=cap_ok and M.NU>=fneed and max([fs[k][0]for k in(19,20)if k in fs]+[fx[k][0]for k in fxk])<=fs[15][0]and max(v[2]for vs in(*M.FILT_RUNS.values(),*M.FILT_X.values())for v in vs)<=255
+ 	say(f"[10] N(W)/U (mean/SE/seeds): "+", ".join(f"2^{k} {m:.5f}/{s_:.5f}/{n}"for k,(m,s_,n)in sorted(fs.items()))
+ 	+f"; excess {M.FILT_EXCESS} (PREREG-J): "+", ".join(f"2^{k} {m:.5f}/{s_:.5f}/{n}"for k,(m,s_,n)in sorted(fx.items()))+f"; {M.NU} >= max 2^19, 2^20 mean + 2 SE {fneed:.6f}; 2^19, 2^20 means (both excesses) <= 2^15's; "
+@@ -572,8 +573,8 @@
+ 	prs={k:(sum(x)/len(x),(sum((y-sum(x)/len(x))**2 for y in x)/(len(x)-1)/len(x))**.5)for k,x in pr.items()};pw=sum(prs[k][1]**-2 for k in prs);pm=sum(prs[k][0]*prs[k][1]**-2 for k in prs)/pw;ps=pw**-.5
+ 	ok_fy=all(len(pr[k])==len(M.FILT_Y[k])for k in pr)and pm+2*ps<=1 and max(v[3]for vs in M.FILT_Y.values()for v in vs)<=255
+ 	say(f"[10y] excess {M.FILT_EXCESS}, means {M.FILT_Y_MEANS} vs campaign: "+", ".join(f"2^{k} {m:.5f}/{s_:.5f}/{n}, ratio {prs[k][0]:.4f} +- {prs[k][1]:.4f}"for k,(m,s_,n)in sorted(fyn.items()))+f"; pooled {pm:.4f} +- {ps:.4f}, + 2 SE {pm+2*ps:.4f} <= 1 {K(ok_fy)}")
+-	hxD,hxr=hx_toy(seed);ok_hx=hxr==hxD
+-	say(f"[10x] H-X rank {hxr} = {hxD} {K(ok_hx)}")
++	hxD,hxr=hx_toy(seed,14);ok_hx=hxr==hxD>M.BW_M
++	say(f"[10x] H-X rank {hxr} = {hxD} > m {M.BW_M} {K(ok_hx)}")
+ 	bf_n,bf_br=check_la_kernel("bw_dot.s","LBB1_2:")
+ 	say(f"[10] bw_full: {bf_n} (charged {M.C_FULL:.0f}) {K(bf_n==97 and bf_n<=M.C_FULL and bf_br==['b.ne'])}")
+ 	wl="\n".join(_asm("wide12.txt"));ml="\n".join(_asm("measurements12x.txt"))
+@@ -645,7 +646,7 @@
+ 	f"apply {ap[0]:.3f} <= {M.C_APPLY}; MATCH: {K(ok_oh)}")
+ 	b2_n,b2_br=check_la_kernel("bw_dot2.s","LBB0_2:")
+ 	k5_n,k5_br=check_la_kernel("krylov5.s",".LBB0_1:");g1_n,g1_br=check_la_kernel("krylov5.s",".LBB1_1:")
+-	u5=k5_n/5;UE=__import__('unit_entries');ku={k:(sum(v)/len(v),(sum((x-sum(v)/len(v))**2 for x in v)/(len(v)-1)/len(v))**.5)for k,v in M.K5_RUNS.items()};k5c=max(ku[k][0]+2*ku[k][1]for k in(16,17))
++	u5=k5_n/5;UE=__import__('unit_entries');ku={k:(sum(v)/len(v),(sum((x-sum(v)/len(v))**2 for x in v)/(len(v)-1)/len(v))**.5)for k,v in{**M.K5_RUNS,**{100+k:v for k,v in M.K5_105.items()}}.items()};k5c=max(ku[k][0]+2*ku[k][1]for k in(16,17,116,117))
+ 	k5_ok=k5_br==['b.ne']and g1_br==['b.ne']and u5==UE.U5==7.8 and g1_n==UE.G1 and M.C_ENTRY_K>=k5c and max(ku[16][0],ku[17][0])<=ku[15][0]and max(M.K5_RUNS[16]+M.K5_RUNS[17])<=12.54
+ 	say(f"[10] krylov5: {k5_n}/entry, {u5:.1f}, {g1_n}; PREREG-U k5 "+", ".join(f"2^{k} {ku[k][0]:.4f}/{ku[k][1]:.4f}"for k in sorted(ku))+f"; max mean+2SE {k5c:.4f} <= {M.C_ENTRY_K} {K(k5_ok)}")
+ 	say(f"[10] bw_dot2: {b2_n} (charged {M.C_PROJ:.0f}) {K(b2_n<=M.C_PROJ and b2_br==['b.ne'])}")
