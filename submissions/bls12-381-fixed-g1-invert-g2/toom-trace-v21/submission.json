@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "Twenty-one scalar products through cold evaluation and exact interpolation",
+  "claims": [
+    {
+      "statement": "For the full protected fixed-G1 inversion instance, the complete algorithm returns an encoded G2 point Q with pairing(Q,P)=z for the supplied nonidentity P with probability >0.390003, conditional on the explicit actual-standard-hash event bridge H and explicit finite bank-window admissibility B. Complete cold classical work including table construction, all failures, hashes, native arithmetic, transfers, sorting, reconstruction and verification is <=2^(3139/25) reference equivalents with unchanged C=20000. Peak memory <2^137 bytes, cold preprocessing <2^120 scalar instructions included in total, advice0 bytes. The explicit finite first/second moment argument does not presume independent collisions or a Poisson law. No production execution or qualification is asserted.",
+      "score": {
+        "numerator": "3139",
+        "denominator": "25"
+      },
+      "evidence": [
+        "proof.md",
+        "project_toom.S",
+        "pinned_mont_core.S",
+        "pinned_mont_wrapper.S",
+        "fp381_add.S",
+        "fp381_sub.S",
+        "compression.S",
+        "mersenne_fingerprint.S",
+        "conjugate.S",
+        "audit.py",
+        "blst-LICENSE.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-interpolation-projection",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker only:interpret actual21 scalar cores and full interpolation projection;compare full-production-p outputs to independent dense convolution and check ABI,stack,aliases,initialization and exact counts. No native hardware,production inversion,H/B certification or production complexity inference from samples.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 8,
+          "seed": 381021
+        }
+      ]
+    }
+  ]
+}
