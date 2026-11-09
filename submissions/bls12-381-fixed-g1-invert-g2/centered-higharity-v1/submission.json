@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Partial exact-half-trace BSGS with explicitly paid five-level routing",
+  "claims": [
+    {
+      "statement": "For uniform full-production challenges with the exact supplied nonidentity P and independently uniform z in GT, the partial centered algorithm in proof.md returns a verified Q in G2 with pairing(Q,P)=z with probability at least 391/1000. Its worst-case total cold classical work is at most 2^(1077/8) target-group-operation equivalents under C=20000, including every failure, table construction, routing, sorting/lookup, arithmetic, setup and verification. Peak memory <=2^145 bytes, preprocessing <=2^(1077/8) equivalents included in total, nonuniform advice zero bytes. The finite distributed word/message storage model is an explicit material assumption. No practical production attack is claimed.",
+      "score": {
+        "numerator": "1077",
+        "denominator": "8"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}

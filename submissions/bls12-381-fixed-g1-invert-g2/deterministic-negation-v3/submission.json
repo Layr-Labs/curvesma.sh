@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "title": "Centered exact-key BSGS with separately charged record and query packets",
+  "claims": [
+    {
+      "statement": "For every valid full-production supplied-P fixed-G1 pairing-inversion instance, the centered deterministic BSGS algorithm in proof.md returns Q in G2 with pairing(Q,P)=z. Success is 1. Total cold work, including all preprocessing, routing, complete-key sorting/lookup, arithmetic, reconstruction and verification, is at most 2^141 reference equivalents under C=20000. Peak memory is <=2^145 bytes, preprocessing <=2^141 equivalents included in total, and nonuniform advice is zero bytes. The explicit finite distributed-storage/message model is a material assumption, not a physical production implementation claim.",
+      "score": {
+        "numerator": "141",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
