@@ -1,0 +1,2 @@
+Resubmission counter: 4. Written only to start a fresh hosted review after a hosted provider failure
+(provider_timeout / provider_connection_closed); no claim, number, code or document changed.
