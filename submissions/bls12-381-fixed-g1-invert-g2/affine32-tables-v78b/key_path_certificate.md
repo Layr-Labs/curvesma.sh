@@ -1,0 +1,33 @@
+# Current complete native key/hash and paired-field source path
+
+Canonical field/Frobenius fibers are proved in key_contract.md;NH/affine in nh_certificate.md. Actual combinedleaf hasNOoutputmemoryaccess. Inputs:compatibility0unused/rawPhi192at1/sLUT2/p483/products4/keys696at5. Nonidentity returnsALL183bits word0=x1/word1=x0/word2=x5low55;statusx7nonnullselectedBpointer. Identityx7zero invalidatesresults. Source MUST useFULL64CBZx7 andnever dereference the expiredframepointer.
+
+## Complete field normalization/hash dataflow
+
+Bothlow-limbsignblocksareactualnativecanonicalp48subtractions/zerooutlines. OddconjugationdoesnotchangerealA,so its copy is dead;canonicalrealAalwaysrawPhi. Compare signedBtwelveLE64words,then choosecorrespondingimagA. ReadALL192conceptualbytes in orderrawAreal48/selectedAimag48/signedB96. No independent field bit is dropped.
+
+NH row1 accumulators0/1keepselectedpointers6/7live duringALLinputreads. Compressaffinerow1BEFORErow0,holdingresult0while4/5row0accumsurvive;row0result1,row2result5. EachrowhasfreshADDSchain/independentcoefficients,so no carry crossesrows. FinalBFI/LSRreturnswordsx1/x0/x5withoutoutputstores. The full128-bitwrappingNH/M61family isunchanged.
+
+Entryp48pointer3stayslive throughfirstsign/oddnegationandthepairedblockLASTpLDP. THEN SBCSoverwrites3withborrowmask,asbelow. NegationpLDPsread3directly,noearlymodulusMOVs. ExistingfixedLDP2,3atSP152loadsproductsbase;bothfixedMOV21,3remain. No freeconstantdelivery.
+
+## Paired canonical sum/difference
+
+ReadrawBreal4..9 andBimag10..15ONCEbySIXLDPdirectraw20offset96..176. ONE STP25/26atSP0preservescallercallees. SixADDS/ADCScomputesum21..26;canonicalinputs<p<2^381make sum<2p<2^382,no384overflow. SixSUBS/SBCScomputediff4..9. THREEactualpLDPsload10..15withoutchangingdiffborrow. AFTERthelastmodulusread,pointer3isdeaduntiltheexistingfixedargumentreload. SBCS3,xzr,xzrproducesmask0ifdifferencehadnoborrow,orallonesifborrow. Use0/1/2/16/17/19astrialsumtemporarysixlimbs,keepingactualp10..15untouched. SixSUBS/SBCStrialsum-pandsixCSELcanonicalizesum21..26;threeSTPstoreSP192/208/224.
+
+SixANDsapplythesavedmask3totheoriginalp10..15,thenfreshADDS/ADCSsixlimbsgivecanonicaldiff4..9;threeSTPstoreSP240/256/272. ThisdoesNOTreuseexpiredflags:maskwasmaterializedBEFOREsumtrial,andADDSstartsafreshcarrychain. Recomputeoddout19=SP384byONEactualADDafterusing19astrialsumhighlimb. Originalcaller19remainsinouterbackup288andisrestorednormally. ONE LDP25/26restoresnewcallees. ExistingfirstfixedLDP2,3reloadsproductsbase,bothfixedMOV21,3remain. No lateruseexpectsmodulus3untiltheexplicitsecond-signheaderreload.
+
+Allsum/diff48bytesandfullfieldcanonicalboundsremain. Oldpaired56includedpRELOAD3. Newbody55removesthreeactualLDPbutaddsborrow-maskSBCS1andoddpointerADD1,netONEsavedevenincluding25/26preservation. SixANDreplaceprevioussixCSELatthesamecost. DirectSPoffsetsandtemporary/registerlifetimesareordinarynative64-bit,encodable,andfullycharged.
+
+## One complete frame,all ABI and count
+
+ONE576frame:innerbackup21/22at32,23/24at48,args152/160,scratch192/240;new25/26backup0..15. Header288..335holdsoriginal19/20at288,table/products304/312,p48at320,keys328. EvenB336..431,OddAimag432..479,OddB480..575. OddnominalrealA384..431isNEVERaccessedandmayoverlapEvenBimag;canonicalrealAisrawPhi. Inneroddout19=SP384. Allactualaccessesareinitialized/disjoint/encodable. Frames/pointers16/8alignedasrequired.
+
+Allocate576once,restoreonceatONLYRET. NO BL/nox29/x30writes;entryLRstayslive. Callees19..26areexplicitlypreserved,27..30untouched,18neverused. Successpointerx7=SP336or480=entrySP-240or-96. Avalid576downwardframeforcesnonnull. NHonlyREADS7afterselection,epilogueleaves7unchanged. Identitysets7zero. No expiredframe dereferenceoccurs.
+
+Current hotraw923includesallcodeandthepaidtop8affine replacement. RawDAGcountsALLsyntacticbranches/RET,rejectscycles. Retain944=923+1margin+12caller+8spare. Field2506+key944+Main720=4170;local720+scan128+confirmation1+inner256+network886+outer80givesN6241L+12m+28n+cold2^124. Allfullparameters/probability/coins/cap/prices remain.
+
+Worker19out/20color/21-22fullordinalareABI-preserved. ActualsourceCBZx7skipsidentity;successSTPlo128,ORRcolor55,STRhi16,STPordinal24completesALL40bytes. Fourdatainstructions,ordinalSTPalreadyinmain712;newsource3. Branchalreadyincaller12. NativehelperincludesfixtureRETonly;noextraMOV/BL/argloadpricedaway.
+
+IntegratedisolatedoracleusesZEROleafoutputwritebudget,fullindependentcanonicalFp+full128NH/M61registerhash,andactualcallee/SP/rawPhi/initializedreadchecksincluding25/26. EVERYnative successcasechoosesvalidbelow47-bitstackgivingstatusEXACT2^32(low32zero),thenexecutesACTUAL64bitCBZ/sourcefourdatawithSAMEreturned/preservedregisters,checkingall40bytes/hash183/color/pending0/ordinal128. IdentityCBZ+RETstoresnothing. Referencefield/copy/byte/scalar/controlandexactfullsizeledgerremain. Thesearescopedfixtures,notproductionGT/probabilitytheorem/controllerhardwarequalification;sharedreviewisrequired.
+
+Currentfour32-chunkaffinefamilyandFULL12tablesperworkeryield19instructionsperrow,insteadofold24. All128NHbits/full183residuesremain,15coefficientsarefresh/independent,collisionboundunchangednotbyteidentity. Cold2^48/384GiBperworker/696byteinput/worker-private[1,1.375)TiB/address/proofandhonestprefix/virtualfixturelimitsareinnh_certificate.md. Raw923ret944,N6241. Nootherfield/frame/status/source/mask/group/probabilitycontractchanges.
