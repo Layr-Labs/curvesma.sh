@@ -1,0 +1,97 @@
+# Random-stride baby/giant inversion with exact trace recurrence
+
+Proposed time_log2=124527/1000=124.527. This is an analytic claim, not an observed score, runtime pass, qualification or promotion. It uses the full protected p381/r255, actual nonidentity supplied P, uniform full GT target z including identity, threshold0.39 and fixed reference C20000. There are still six production tracks and one computation metric. Complete cold work is below2^124, peak storage below2^138 bytes, advice0. All tables and powers are constructed for this attack. No auxiliary powers are given and no work is amortized over future targets. Explicit finite randomness premise R is disclosed in randomness.md.
+
+Validate canonical inputs, curves and subgroups. Set h=e(P,Q0) for the public G2 generator Q0. It generates GT for every valid nonidentity P. If z=1, return and verify G2 identity. Otherwise the target has unique z=h^a; a is uniform Fr when z is uniform GT. The probability proof below is over uniform a and fresh independent algorithm coins, as required, rather than a worst-case-target assertion.
+
+Sample one uniform b in Fr and twelve independent Fm61 affine coefficients and seventy-two independent raw64-bit NH keys by the capped finite sampler. Compute d=h^(-b) with actual GT exponentiation. Let
+m=44951011978550636487095639346140676096, L=2m=89902023957101272974191278692281352192.
+m is a multiple of3*2^110, hence2048 and512. Baby records correspond to h^j for j=1,...,m; giant records to z*d^i=z*h^(-bi) for i=0,...,m-1. Stored scalar is j for a baby, bi modulo r for a giant. Both workers use the SAME independently sampled fingerprint coefficients.
+
+## Exact recurrence and emitted records
+
+Let Phi(X)=a0+b1*t=trace_(Fp12/Fp4)(X)/3, t=w^3,t^2=1+u,u^2=-1. This is four native canonical Fp coordinates. For any GT increment g, its three p^4-conjugates satisfy
+Y^3-cY^2+c^(p^2)Y-1, c=3Phi(g).
+Consequently v_n=Phi(Z*g^n) satisfies
+v_n=c*v_(n-1)-c^(p^2)*v_(n-2)+v_(n-3).
+The recurrence follows separately for each conjugate root and therefore also for their Z-weighted sum. It remains valid for g=1 with repeated roots.
+
+Baby increment is h, with cold initial Phi(1),Phi(h),Phi(h^2). Giant increment is d, with cold initial Phi(z),Phi(zd),Phi(zd^2). These are actual computed GT values. Write c=A+B*t, previous values X=a+b*t and Y=d0+e*t, with all letters except t in Fp2. The first two recurrence terms factor EXACTLY as
+cX-c^(p^2)Y = A(a-d0)+B*xi*(b+e) + t*(A(b-e)+B(a+d0)).
+Eight canonical Fp add/sub operations form four Fp2 inputs. A two-block vector lookup then computes the two output Fp2 components. The integer accumulators are seeded with the appropriate third-predecessor coordinates, so the final canonical output directly REPLACES that third raw history value. No later copy or key canonicalization writes into the raw history.
+
+recurrence_fp2_step.S is2711 throughRET:250 fused-wrapper own instructions plus the new2461-instruction map. The new map reads fully constructed ordinary q*p products for q0..49 instead of multiplying them, with the exact31-instruction correction in quotient_certificate.md. Caller16 plus four pointer rotations give2731 retained2752. All full-field recurrence, actual characteristic c=3Phi(increment), temporary layout, raw-history and key-separation proofs remain unchanged.
+
+Use the exact12-Frobenius-fiber key S192 from key_contract.md and the actual canonical_twelve_bfirst.S. All emitted conceptual elements are actual GT by the recurrence proof. Abort if a giant identity is encountered; baby identities cannot occur since1<=j<=m<r. The constant number of cold initial records is charged, and also conservatively assigned the normal hot allowance. Identity targets are solved directly.
+
+Compute the full canonical S192 into a private192-byte scratch area disjoint from raw history and payload. The revised actual nh_fingerprint.S receives x3=CtagOut48 and emits its three FULL128-bit NH accumulators before affine compression. Its U32 is unchanged. Payload is now112 bytes:Ctag48 at0,full canonical Fr32 at48,U32 at80 (color100). Metadata40 stays U24 plus ALL128 ordinal bits at24. The generated exact S192 is discarded only AFTER hashing;no field input or twelve-orbit information is truncated during key construction. Ctag is NOT an exact orbit key.
+
+Generate all L records and stably sort metadata in the same two80-bit passes. Enumerate every unordered equal-U pair,aborting BEFORE more than Kc=floor(L/8192) cheap confirmations. Fetch two metadata40 and two payload112 rows;compare full Ctag48 and ignore baby/baby or equal-scalar giant/giant pairs. Mixed pairs remain informative even when scalars equal. Before each informative Ctag-equal pair,abort if the new expensive counter is already Kt=floor(L/2^40);otherwise increment it and try the12 mixed phases a=bi+lambda*j or11 nonidentity giant phases a=(b_t-lambda*b_s)/(1-lambda),lambda=p^ell. Each candidate is checked by ACTUAL dense full-field GT exponentiation h^a==z. If every phase fails,CONTINUE enumeration. A tag collision must NEVER cause immediate failure or unverified output. On GT equality,construct[a]Q0 and verify canonical subgroup/full supplied-P pairing before returning. Since h generates GT,a successful verification is sound even for a false tag collision. A genuine informative exact-S pair always yields equal Ctag and U and has a correct tested phase. Terminal G2 construction/final pairing occur once;the potentially many losing GT powers are hot-capped,not cold-only.
+
+nh_certificate.md proves the extra tag-pair failure bound and2^40 per-pair constructive verification schedule. metadata40_certificate.md supplies the new14-payload/five-metadata complete frame assembly and exact112-byte bank strides. No full-S fetch or equality is performed at confirmation.
+
+## Exact useful-collision probability
+
+Write u0=0xd201000000010000 and lambda0=u0^2. The full protected parameters satisfy r=u0^4-u0^2+1, p=-u0 modr. At the displayed m,
+m<u0^2-1, 2m^2<r, 3m<lambda0, 4m(lambda0+1)<r.
+These are exact integer inequalities, not toy parameters.
+
+The union of baby Frobenius exponents
+Sexp={p^ell*j modr:0<=ell<12,1<=j<=m}
+has size s=12*(m-floor(m/u0)). Here is a complete short-interval proof. The twelve roots are ±1,±u0,±u0^2,±u0^3,±(u0^2-1),±(u0^3-u0). The ±u0^2 and ±(u0^2-1) products lie outside[1,m] without modular wrap because m<u0^2-1 and m*u0^2<r-m. Of ±u0 only +u0 produces pairs j'=u0*j, exactly floor(m/u0). The inverse phases ±(u0^3-u0)=∓u0^(-1) give only the same reverse pairs: multiply by u0 and use u0*m+m<r. Neither -1 nor -u0 produces another small positive value.
+
+For ±u0^3 put x=-u0. The congruence j'=x^3*j modr has integer lattice basis (x,x^2-1),(x^2-1,-x), determinant-r. Both basis vectors have squared norm r and are orthogonal, so every nonzero lattice vector has norm at least sqrt(r). The basis spans the full congruence lattice because its determinant is its index r. A pair with |j|,|j'|<=m has squared norm<=2m^2<r, impossible. Negating j' covers the other sign. Finally u0^2>m prevents any three-point +u0 chain. Thus each duplicate baby orbit contains exactly two baby exponents and there are precisely floor(m/u0) such pairs. All nonidentity orbits have size12, proving s.
+
+For every i=0,...,m-1 and c in Sexp, select a mixed event a=i*b+c. There are M=m*s distinct events. Each has probability1/r over uniform independent a,b. Two different slopes i give a full-rank2x2 system and probability1/r^2; same slope with different nonzero c is disjoint. Each event gives an actual useful mixed collision.
+
+Select FOUR giant/giant phase families. Put lambda=lambda0, so lambda^2-lambda+1=0 modulo r. For each0<=i<k<m use both sigma=lambda and lambda^(-1)=1-lambda. Also use sigma=-lambda and -lambda^(-1)=lambda-1 ONLY when i and k have different residues modulo3. In all cases define
+c_sigma(i,k)=(i-sigma*k)/(1-sigma),
+and the guarded event b!=0, a=b*c_sigma(i,k).
+
+Here is a complete injectivity/disjointness certificate in ordinary integer coordinates:
+sigma=lambda: c=k+lambda*(i-k);
+sigma=lambda^(-1): c=i+lambda*(k-i);
+sigma=-lambda: 3c=(2i+k)+lambda*(k-i);
+sigma=-lambda^(-1): 3c=(i+2k)+lambda*(i-k).
+These identities follow by lambda^2=lambda-1 and are equations in Fr. Their coefficient pairs are NOT treated as arbitrary-width machine words; they are only the finite success proof.
+
+For the first two families, the lambda coefficient has opposite nonzero signs; constants lie in[0,m). Two such representations can be equal modulo r only when their integer coefficients agree: |Delta_constant|<m<lambda and the whole integer difference has absolute value<2m(lambda+1)<r. Thus each is injective and they are disjoint. For either last family, the scaled constant lies in[0,3m), the lambda coefficient has magnitude<m, and the pair determines i,k uniquely (the integer linear transform has determinant±3). Equality within or across the last families similarly forces equality of their integer coordinates, using3m<lambda and4m(lambda+1)<r. Their lambda signs are opposite, so the last families are disjoint.
+
+To compare a last-family slope with a first-family slope, multiply the latter by3. Constant-coordinate differences are less than3m; lambda-coordinate differences less than4m. The whole integer difference has absolute value<4m(lambda+1)<r, and3m<lambda again forces both coordinates to agree. But that would make the last family's lambda coefficient divisible by3, contrary to the selection i!=k mod3. Hence these families are disjoint from the first two. Each slope is nonzero: its lambda coefficient is nonzero, dominates the bounded constant if it has opposite sign, and the full absolute value is below r.
+
+Since m is divisible by3, the number of pairs i<k in different residue classes is exactly m^2/3. Therefore the number of DISTINCT nonzero selected giant slopes is
+G=2choose(m,2)+2*m^2/3=5*m^2/3-m.
+The four phases are p^2,p^10,p^8,p^4; all are tested by the algorithm, with inverse orientation if needed. The actual algorithm still tries all useful phases, so omitting duplicate slopes only affects this lower-bound proof.
+
+Each giant event has probability(r-1)/r^2 because b!=0. Different giant slopes are disjoint under that guard. Their points are nonidentity, since c_sigma-i=sigma*(i-k)/(1-sigma)!=0. Scalars bi,bk are distinct. A mixed/giant event pair is either an independent linear system with probability at most1/r^2 or parallel and disjoint, because the mixed intercept c is nonzero. These are exact two-variable finite-field facts, not collision independence or a hash heuristic.
+
+Let
+mu=M/r+G*(r-1)/r^2,
+U2=(choose(M,2)+M*G)/r^2.
+The omitted giant/giant intersections are exactly zero. The second Bonferroni inequality gives useful-event probability at least mu-U2. Here
+s=539412143742607637809501443445415278032,
+M=24247121734749633684056342593153827383372251374231666912243654457484296323072,
+G=3367655796493004678563705089834660441163038088766687439445668254313835659264.
+All selected events correspond to actual records; inverse phase orientation is harmless because the algorithm tests every required Frobenius phase.
+
+For confirmations, distinct giant exponent pairs are uniform Fr^2 as functions of uniform a,b; a mixed giant exponent is uniform Fr. Their expected orbit matches are bounded by12/r per pair. The deterministic baby duplicates contribute exactly floor(m/u0). With independent fingerprint collision bound delta=(2^-63+128/q)^2*(2^-63+512/q),q=2^61-1 (proved in nh_certificate.md),
+caploss=(choose(L,2)*(12/r+delta)+floor(m/u0))/(floor(L/8192)+1).
+Any giant identity contributes at most m/r by a union bound. Capped sampling/extraction contributes less than2^-970. Identity targets return successfully; their unused coins can be extended hypothetically for this unconditional probability proof.
+
+The SAME NH keys supply Ctag,so its equality is NOT independent of U equality. Use epsilon=2^-189 from three independent NH rows,not2^-384 and not epsilon*delta. For ALL record pairs,expected tag matches T<=choose(L,2)*(12/r+epsilon)+floor(m/u0). This overcounts ignored baby pairs safely. Markov gives extra loss tagloss=T/(floor(L/2^40)+1). Raw keys are independent of the complete GT sequences;record-pair events need not be independent. The caploss above is still the cheap-U cap loss. Union bound both cap failures,identity and paid-coin failures WITHOUT multiplying them.
+
+EXACT finite rational evaluation gives
+mu-U2-caploss-tagloss-m/r-2^-970 >3900031/10000000>0.39.
+Diagnostics:mu=0.5266390126800469,U2=0.13661194642012903,caploss=2.5306782098113685e-7,tagloss=9.931955842714579e-8,final=0.39002671387253846. Formulas,not rounded decimals,are the certificate. Identity targets return successfully;unused keys/streams can be sampled hypothetically in this unconditional proof.
+
+## Complete work and storage
+
+Recurrence2711/key813 retain2752/824. Revised NH378+caller5=383 retains384. Baby7+caller3<=12 and giant full-r21+caller5<=28 give aggregate20L because each count<=m. Generation4684 plus two local passes720,scan128,cheap confirmations1L,NEW expensive confirmations1L and spare256 gives base5790. Network is generation608+two count23/scatter128 passes302+scan36=946. Hot6736 retains6816,leaving80 spare. Every failure prefix is included.
+
+Cheap confirmation stays<=8192 including four RPCs,Root formations,full48-byte compare and all losing branches;READ5/READ14 transport3288<=retained3408. Expensive verification costs<=2^40 per informative tag pair including ALL12 phase attempts,so Kt permits<=L extra work. Native scalar arithmetic/control/GT decoding has no oracle access;nh_certificate.md provides a constructive dense GT arithmetic bound. The once-only output G2 construction and full pairing remain in cold2^92. Repeated false-tag phase attempts are NEVER assigned there.
+
+All ordinary processor/code/page/bootstrap work<2^121;edge/flag/controller setup<2^118;ALL2^80 sort construction/prefix/finish/cache exceptions<2^104. Actual fields/tables/RNG/powers/constants and once-only validation/output keep fixed bounds,sum cold<2^124. Smaller payload plus extra192 scratch retains peak<2^138/advice0. Every native pointer fits47bits;96-bit identifiers/128-bit counters are ordinary words. N=6816L+2^124 satisfies EXACT N^1000<20000^1000*2^124527,proposed124527/1000=124.527 under unchangedC20000. No physical production execution or promotion is claimed.
+
+The key uses a specified fixed total order: first compare the twelve little-endian64-bit words of signed b1 in increasing word index, then a0 as a secondary coordinate. On nonidentity GT, the T²=-1 lemma in key_contract.md proves the two candidate b1 values are distinct, so the secondary comparison is never needed. The temporary S192 still includes full a0 followed by full b1. Any fixed total order of the two even-coset keys preserves exact twelve-orbit fibers; both workers use this identical order. Output is disjoint from raw history. Universal hashing applies to arbitrary distinct192-byte strings, so the complete two-cap success proof applies to this representation.
+
+The exact new fingerprint construction, collision composition, full378-instruction bound and updated coin declaration are in nh_certificate.md/randomness.md. It replaces the prior direct26-chunk affine family completely; no old81-coefficient claim is used.
