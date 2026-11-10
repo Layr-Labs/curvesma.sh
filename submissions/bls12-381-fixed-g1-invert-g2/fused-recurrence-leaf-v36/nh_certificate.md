@@ -1,0 +1,41 @@
+# Full183-bit NH/affine fingerprint and charged confirmation
+
+The current algorithm keeps ALL three canonical61-bit affine residues. No54/54/52 truncation is used. Store their injective183-bit concatenation in24 bytes with9 high zero bits. These padding bits are never counted as entropy. Same72 uniform64-bit NH keys and12 independent uniformFq coefficients,q=2^61-1,as declared in randomness.md. Every key/table/coin is constructed and paid;R is the explicit finite randomness premise,not a CSPRNG-IID assertion.
+
+## Self-contained wrapping-NH bound (a conservative2^-63)
+
+The NH construction is credited to Black, Halevi, Krawczyk, Krovetz and Rogaway, UMAC (1999), https://www.cs.ucdavis.edu/~rogaway/papers/umac-full.pdf . The bound USED HERE is proved below without relying on the paper's sharper theorem.
+
+Put N=2^64. For unequal W,W', select a differing pair and exchange its two positions if needed so the second words differ. Fix every key except its first k. Then c=(W_second+K_second) modN and c'=(W'_second+K_second) modN are distinct. Let x=(W_first+k) modN,d=(W'_first-W_first) modN; x is uniform and x'=(x+d) modN. All other pairs contribute a fixed difference y moduloN². A collision forces
+(c-c')x = y+c'd-Nc't moduloN²,
+where t=0 if x<N-d, otherwise1. Within either region, two solutions would give nonzero (c-c')(x1-x2) divisible byN², impossible since its absolute value is belowN². Thus at most two of N keys collide. Averaging the fixed keys proves2/N=2^-63, including d=0. This uses unsigned wrapping additions and the full128-bit accumulated output.
+
+This supplies every NH premise used by the following affine composition. The two-region bound is intentionally looser than the paper's theorem, avoiding any need for an unproved cross-region exclusion. It is a rigorous finite bound for all distinct full192-byte strings, independent of empirical checks.
+
+## Exact full-residue composition
+
+Interpret S192 as24 unsigned little-endian64-bit words. Each independent row computes the full128-bit wrapping NH sum from12 pairs,without truncating it. Encode NH injectively as60/60/8-bit chunks;all chunks are belowq,so differing128-bit NH values give distinct vectors inFq^3. With independent uniform b,a0,a1,a2,let Y=b+a0*C0+a1*C1+a2*C2 modq. For unequal chunk vectors,the coefficient-to-(Y,Y') map has rank2,so P[Y=Y']=1/q. When NH values agree,match probability is1;the NH-key event has probability<=2^-63. Thus each row matches with probability<=2^-63+1/q. All three key sets are independent,so for ANY distinct S,S',delta=(2^-63+1/q)^3. This is conditional on complete point streams and does not assume independence between different record pairs. Equal exact keys always hash equally. Full-key comparison is NOT assumed at confirmation;every candidate exponent is verified in actualGT instead.
+
+The fixed q is the Mersenne prime2^61-1. A finite Lucas-Lehmer certificate is v0=4,v_(i+1)=v_i²-2 modq,v59=0 with prime exponent61. Accepted coefficients are canonical residues and exactly uniform under the capped finite sampler. No searched answers are embedded.
+
+## Native implementation and all-input arithmetic
+
+nh_fingerprint.S reads all192 input bytes before its output stores and supports exact output/input alias or disjoint buffers. Keys are disjoint. It uses only x0..17/flags,noSP/x18/callees/LR changes,no calls. First NH product of each row writes MUL/UMULH directly into its low/high accumulator;later ADDS/ADC implement full128-bit wrapping. The three affine first products use paired(b,a0) loads and direct high-limb initialization. All remaining product/carry operations and input/key offsets preserve the declared family.
+
+The affine sum N is below3*q*2^60+q<2^123. AND low,q plus EXTR(high,low,61) extracts the full quotient,which fits62 bits. Their sum is below2^63,so no64-bit carry is lost. Fold once more:t=(s AND q)+(s>>61)<=q+2<2q. One conditional subtraction gives the canonical residue. This is all-input arithmetic,not an empirical distribution claim.
+
+Pack Y0,Y1,Y2 exactly with BFI(x1,x4,61,3),LSR x4,3,BFI(x4,x5,58,6),LSR x5,6. These are encodable scalar64-bit instructions,with lsb+width64. The four stored words are the low64 bits of Y0|(Y1<<61),the next64 bits,the final55 bits,and zero. The first24 bytes contain183 bits plus9 zero padding;the final8 bytes initially zero become color24/pending25/padding26..31 in metadata. The hash routine itself returns all32 bytes with73 high zero bits. No hash-byte equality with the predecessor160-bit encoding is claimed.
+
+Exact source count remains341 throughRET;four caller instructions345,retained350. Current independent integer oracle compares the ENTIRE183-bit result,including high zeros,at exact alias/disjoint addresses and maximal affine coefficients. It checks initialized reads and ABI. Finite cases do not prove the universal theorem or production success;the proofs above do.
+
+## Tighter cap and complete verification work
+
+cap=floor(L/2^29) counts ALL unordered equal-fingerprint pairs,including skipped BB/equal-scalarGG. For each informative pair try up to12 phases,compute actual h^candidate inGT,and CONTINUE after all failed phases. Return only after h^candidate=z and final verifiedG2 construction. No full S is stored or used as an oracle. A genuine useful orbit pair always passes one phase,so false fingerprints hurt only through the charged cap.
+
+Expected total matching pairs is at most choose(L,2)*(12/r+delta)+floor(m/u0). Markov cap loss divides this bycap+1. With the unchanged exact mu/U2 and all identity/sampling losses,the lower bound is0.39000510783950465 diagnostically and EXACTLY>0.3900031>0.39. No Poisson,random-walk or pairwise-event-independence law is used.
+
+A255-bit binary power uses<=512 dense referenceFp12 multiplications;12 phases give H<=6144. Cold public phase inverses are charged. Per-phase Fr work is below2^20 using at most three256-step/five-limb bit-serial products,each step<=128 scalar instructions,plus adds. Calls,loop/buffer/control work<=256 instructions per dense operation,metadata/payload transport and remaining bookkeeping fit R<=2^25. C*H+R<=20000*6144+2^25=156434432<2^28<2^29. Thus cap confirmations cost<=L in the same normalized numerator;all failures are included. Scalar work R and reference operations H are counted exactly once under the protected normalization. FinalG2 construction/pairing at most once stays cold. This is an analytical ledger,not an executed production attack.
+
+Current postindexed source layout:the36 NH key pairs are already contiguous16-byte entries in exact row0,row1,row2 order for each of12 S pairs. Use ordinary scalar LDP x12,x13,[x2],#16 for each. Encodable signed pair postindex16 advances the caller pointer by576 total;affine rows begin there. Eliminate second-bank ADD x16,x2,#288 and final ADD x2,x2,#576. The full key bytes,uniform64 distribution,128-bit NH wrap,affine coefficients and every residue remain identical. Native341 throughRET,caller4=345,retained350 with5 spare. Postindex is one real scalar paired load,not vector or a unit-cost bulk copy. Exact alias reads all S before any output store. Scope/ABI/no-x18/SP/callee contracts unchanged.
+
+Current affine coefficient loads:after extracting a row's entire128-bit NH accumulator into x10/x11/x12,the old accumulator registers are dead. Row0 a1/a2 pair-load into x15/x4;row1 into x15/x6;row2 into x15/x8. Use saved a2 register for last full product. x4 is overwritten only before row1's output is formed;row2 uses x8 and preserves earlier outputs x1/x4. No liveness overlap,extra memory,distribution or arithmetic change occurs. Three LDP replace six LDR,all ordinary scalar pair loads. Native341,caller4=345,retained350 with5 spare. Shared oracle compares full183-bit result,alias/initialized reads/ABI,not only low bits.
