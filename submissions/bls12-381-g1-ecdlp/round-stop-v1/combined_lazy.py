@@ -1,0 +1,39 @@
+import contextlib,io,json,runpy,sys
+sys.set_int_max_str_digits(0)
+from pathlib import Path
+root=Path(__file__).resolve().parent
+if (root/'files').is_dir():root=root/'files'
+sys.path.insert(0,str(root))
+import kernel_check, nocarry_witness, batch_audit
+buf=io.StringIO()
+with contextlib.redirect_stdout(buf):runpy.run_path(str(root/'evidence.py'),run_name='__main__')
+out=json.loads(buf.getvalue())
+from evidence import R_PRODUCTION as r, D_PRODUCTION as d
+from math import gcd
+m=(r-1)//d; omega=pow(7,m,r); k=256
+assert gcd(m,d)==4096 and pow(omega,d//2,r)==r-1
+assert pow(omega,d,r)==1 and (m*k)%d==0
+assert pow(pow(7,k,r),m,r)==pow(omega,k,r)!=1
+out['character_base']='passed: log base omega, not the full-field generator'
+out['kernel_check']=kernel_check.run({'seed':113,'samples':200})
+out['kernel_check_plus']=kernel_check.run({'seed':113,'samples':200,'plus':True})
+out['leaf_kernel']=kernel_check.run_leaf({'seed':113,'samples':200})
+out['leaf_kernel_plus']=kernel_check.run_leaf({'seed':113,'samples':200,'plus':True})
+out['beta_keys']=batch_audit.beta_run({'seed':11})
+out['h7_lanes']=batch_audit.xge_run({})
+out['table_level']=batch_audit.run({'table':True,'seed':7})
+out['nocarry_witness']=nocarry_witness.run({'seed':5,'samples':2000})
+if 'ledger' in out:
+ from fractions import Fraction
+ import log_bound
+ L=out['ledger'];S=L['score_numerator'];E=L['expected_numerator_x2pow64'];R=L['run_instructions']
+ assert E==64*2**64+L['gate_K']*L['expected_run_instructions'] and R==L['run_total_instructions']+64
+ out['exact_log_bound']=log_bound.certify(E,2000*2**64,Fraction(S,10**15))
+ out['opened_run_log_bound']=log_bound.certify(R,2000,Fraction(L['run_score_numerator'],10**15))
+ for shift in (-1,1):
+  try: log_bound.certify(E,2000*2**64,Fraction(S+shift,10**15))
+  except AssertionError: pass
+  else: raise AssertionError('wrong log grid accepted')
+ out['log_grid_negative_controls']=2
+out['scope_new']='Run gate; both log grids; finite checks.'
+print(json.dumps(out))
