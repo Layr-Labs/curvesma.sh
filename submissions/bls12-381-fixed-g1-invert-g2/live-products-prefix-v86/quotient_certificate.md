@@ -1,0 +1,33 @@
+# Exact small-quotient reduction of both full-width accumulator types
+
+Write B=2^325,D=floor(p/B)=58556206801485620=0xd0088f51cbff34>256, p=DB+e with0<=e<B. For every0<=Y<256p let Y=qp+t with0<=t<p,q<=255. Then U=floor(Y/B)=qD+floor((qe+t)/B). The extra is nonnegative and below D+256<2D, so qhat=floor(U/D) is q or q+1. Since256p<2^389, U fits64 bits and the high-limb EXTR#5 computes it exactly. UDIV is one ordinary64-bit scalar instruction priced1 by the protected metric; this is not a CPU-cycle or arbitrary-precision-division assertion.
+
+For the actual recurrence map, each output is the sum of46 canonical digit-table terms and one canonical third-history seed. Thus0<=Y<49p, q<=48 and qhat<=49. For the fixed-s lookup there are twelve canonical terms,givingY<12p andqhat<=12. These are deterministic bounds for every possible input, not sampled constraints.
+
+## Fully constructed3728-byte constants
+
+Retain the prior520-byte header, including ordinary p at448 and D at512. Initialize padding520..527 to zero. Construct FIFTY64-byte slots at528+64j,0<=j<=49. Slot j contains seven ordinary64-bit limbs of j*p plus an initialized zero eighth word. Build slot0 as all zero; each subsequent slot is the exact seven-limb integer sum of the preceding slot and p, with no modular reduction. Because49p<2^448, no significant carry is lost. All fifty slots, header and padding are actually filled and delivered to both workers in this attack; their scalar addition/store/transport cost is included cold. No searched advice, given powers or field-multiplication oracle is supplied.
+
+The same3728-byte block is passed through the existing arguments to the map and key/fixed-s helper. The recurrence reads0..49; fixed-s reads only0..12. All reads are in range and ordinary j*p is not mistaken for a canonical Montgomery field value. Increasing the block from1296 to3728 changes no hot argument count, pointer width, record size or storage protocol.
+
+## Actual product-base reducers: fused27 andfixed28
+
+Coldconstructsall3728bytes exactlyasabove,includingordinaryp/header,D@512,zeropad520..527,andALL50ordinaryq*p slots528..3727. Coldcomputesproductsbase=blockbase+528 onceperworker andpassesitinexistingconstargument. Parent/oddpassitunchanged;separatep48argumentstillservesFpadd/sub/negation. ThisonecoldADDperworker ispaidintheunchangedcoldallowance. Standalonemap31remainsuncalledreferencewithitsolderblockbasecontract.
+
+TheactualfusedROWPAIR loadsDusinganencodableLDPx2,xzr,[productsbase,#-16]. ThisreadsD@512andinitializedpad@520;bothactualreadsareinrangeandpaid. ItsQREDUCE27 usesEXTR/UDIV tocomputeqhat=qorq+1,ONEADDx26,productsbase,qhatLSL6,andthreeLDP/oneLDRtogetsevenordinaryproductlimbs. TrialSUBS/SBCS intoproductregsx11..17 preserveORIGINAL Y inx4..10. Thefinal448-bitborrowistrueexactlyifqhat=q+1. NonflagSUBx19,x26,64 andCSELx26,x19,x26,LO selecttheprecedingslotONLYonthatborrow. Thereforeselectedaddressisproductsbase+64q,whereq=floor(Y/p),0<=q<=48. Reloadcorrectordinaryq*p andfinalSUBS/SBCS intopreservedY yieldscanonicalremainder,zeroseventhlimb. x19wasdead/usedcalleealready;noextraspill/register/argument ishidden.
+
+Ifqhat0,theunusedtemporaryaddressisblock464,insidetheconstructedheader,butNEVERdereferenced. Actualselectedaddressalwayspointsvalidqslot. Thisisordinarytwo-instructionaddressarithmetic/selection,notfreeindexing,conditionalmemoryoracle oromittedread. Alltruevaluesarefarbelow2^448andfirsttrialborrowexactlytestsY<qhat*p.
+
+Fusedexactcount:EXTR/UDIV2,address1,load4,trialsubtract7,nonflagaddressSUB/CSEL2,reload4,finalsubtract7,total27. Dload1 isalreadyinROWPAIR'sunchangedsetupallowanceandnowreadsproductsbase-16. ThiseliminatesoneADDfromthe28-instructionproduct-slotreducer,fourinstructionsperleaf. Four31-instructionaddbackreducerswouldcost16more. Completeleaf2465/retained2506 isexplicitlycountedelsewhere.
+
+Fixed-susesEXACTLYthesameargumentcontract/algorithmwithoneDloadinsideitsfunction,soitsreducer28. OriginalY isx5..11,product/trialresultx12..17/x26,addressx2,productsbasex25,temporarycandidatex1. Selectedslotq0..11 followsY<12p,qhat<=12. LDPx2,xzr,[x25,#-16]readsDandzeropad;thenONEADDformsaddress,trialborrowselectsx2-64,andreload/finalsubtractiscanonical. Thehelperuses192instructions,including148lookupcore+44prefix/reducer/suffix. Allcallee/alias/initializedreads/frame32 andtablegeometryremainunchanged. Twoactualfixedcalls giveodd504=58+2*31+2*192,key655=89+88+504,eightcallerwork689,retained666.
+
+Everyconstant/table/page/header/pad/slotisactuallyconstructed/delivered. Nativefull-pindependentfield/key/fixedfixturescheckABI,alias,initializedreads,actualencodableimmediates,borrowcorrectionandcount. Finitefixturesarenotwholeattackorphysicalhardwarecertification;thefullone-highquotientproofaboveandglobalcold/hotledgersprovidetheanalyticalclaims. Main720,protectedC20000/threshold0.39/fullfields/sixtracks/solemetricremainunchanged.
+
+
+CURRENT streamed-inputfixedhelper192:keepx1astheactualinputpointerthroughALLtwelve lookups. UBFXextractsdigitintox2,andMADDx2,x2,x28,x26 computesitsentryaddressbeforeload,sox1 isnotclobberedbydigits. Loadtwoinputlimbsintox3/x4 atoffset0,consumeallfourdigits,thenloadnextpairat16,thenlastpairat32. ThethreeactualLDP countisunchanged. AllsixfullinputlimbsarestillreadBEFOREanyoutputstore,soexactinput/outputalias remainsvalid. No retainedinputlimb isoverwrittenbeforeitslastuse;topdigitretains29bitsandall381fieldbits.
+
+Calleex21..24areneverreadorwritten;onlyx25..28 areused. Frame32 saves/restoresthemwithtwoSTP/twoLDP instead ofeightcallees/fourpairs. No newpointerMOVisneededbecausex1 stayslive. Fouractualinstructionsdisappear;allproduct-base/reducer28/table/field/ABIsemanticsremainunchanged. Completefixed192=148lookupcore+44remaininginstructions,odd504=58+62+384,key655=89+88+504,eightcallerwork689,retained666. Nativefusedleaf2465/retained2506 staysunchanged. Non-scalar4137generation/6208total plus12m+28n+cold2^124. No currentcounter,transportorMain720 allowanceischanged.
+
+
+CURRENT interleavedfieldloads:eachactualLDPx3/x21isfollowedbyitsADDS/ADCSbeforethenextLDP. Loadsarenonflag,so448-bitcarrychains/tablevaluesareunchanged. Callees22..25stayuntouched,only19/21/26..29aresaved/restored. Frame528:callee0..47,out48/table56/const64,workspace80..135,temp144..527. AbsoluteoriginalSP-384temporarybaseisunchanged. Fiveinitialstores/threefinalLDPsave4instructions;nativeleaf2465+caller20=2485,retained2506. Fieldbody2350,fixed192reference/combinedkeyhash890andallprotectedparameters/probability/geometryareunchanged. Main720/transport2504/3080/5584remain. Non-scalar4137generation/6208total plus12m+28n+cold2^124.
