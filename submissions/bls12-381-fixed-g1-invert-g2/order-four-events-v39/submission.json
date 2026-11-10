@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Additional disjoint order-four events reduce full-order streams",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 supplied nonidentityP and uniformGT target,findQ with e(P,Q)=z,no auxiliary powers. Preserve full381/255-bit fields/order,C20000,success0.39,six tracks and sole computation metric. Generate actualfull-r streams withm=35817703650916589218486702641782980608 babies andn=52294728911609895979986709731763814400 giants,L=m+n. Bothcounts are3*2^96 multiples,notcryptographicparameters. Compute exact twelve-orbit S192 transiently,hash tothree full61-bit affine residues in24-byte183-bit encoding with9 highzero bits. DistinctS hash collision<=(2^-63+1/q)^3. Payload stores ONLY canonical32-byteFr scalar;metadata48 retains fingerprint24,color24,pending25,zeros26..31,ALL128ordinal32..47. Sort byTWO stable96-bit two-edge passes,construct/pay BOTH full2^96 bucket sets. Cap ALL matching pairs including skips atfloor(L/2^29);try<=12 actualGT exponent checks per pair,continue afterfalse hashes,return onlyverified a/Q. Pair C*H+R<2^29 withH<=6144,R<=2^25,all checks<=L numerator. TerminalG2/fullpairing atmostoncecold. Exact event/hash/Markov/sampler bound>0.3900031>0.39. Current differences are full384-bit two's-complement subtraction;proven|diff|<p<2^381 makeslow382 aunique signedcode andtop2 bits redundant signextension. A top35-bit digitd atstart347 usescanonical(d ifd<2^34 elsed-2^35)*C*2^347/Rm. Fill BOTH full2^34 halves viazero/paidnegativeoffset loops;no hotbias/correction,GToracle orindependentbitloss. B/Bxi sums retainALL382 bits. Two A28.5TiB/fourB4.21875TiB givevector[4.03125,77.90625),fixed[77.90625,79.9921875),parent4,children80..128 disjoint/47-bit. Everytable/seed/offset/page constructed/paid. Completefusedleaf2486 retains2527,key710/NH341 retain721/350. Non-scalar generation4310L plusactual scalar12m+28n;local720L/scan128L/confirm1L/spare256L,network920L/outerspare80L yield N=6415L+12m+28n+2^124. ExactN^10000<20000^10000*2^1244151 supports124.4151. Babyorbit s=12(m-floor(m/u)),mixedM=n*s,giantslopesG=G0+E withG0=5n\u00b2/3-n andE exactselectedorder-fourcount;proof usesbabyshortintervalm andgiantintervaln separately. ExactBonferroni/hash/Markov/identitylossn/r/samplingloss supports>0.3900031>0.39. Weightedscalarcost isNOTbalanced20L. Bothfull2^96 bucketsets/tablearrays/allcoins/failures remaincharged. Fullcold<2^124,algorithmdata<2^110,peak<2^138,advice0. Allcoin/failure/transfer/sort/verification/output charged. Frame560 callee/args112/workspace56/temp384 keepsoriginalSP-384 temporarybase. Full16 nativefull-p cases explicitlyverifyrawsubtraction/signextension/bothsignedhalves/sum2p-2,ABI/alias/readchecks;32 nativezero/offsetfill executions and80copyfixtures,all-path/exactledger checks remain. Virtualcells/sparsearrays/TESTexponentoracle are scoped,notproductionfreeinput. Exploratoryanalyticalclaim only,no productionrun,physicalqualification,completedscore,promotion orinheritedacceptance. Unequal publicsourcecountsterminate thetwo workersindependently;giantordinal startsatm. Bothfull128-bit counters,full32-byteFr payloads,full183-bit metadatahash and48-byte rows stayunchanged. Larger giantcount doesnotcondition targets orshrinkp/r. Shared exactchecker reconstructsbothcounts,eventconstants,weightedN andallcurrentledgerfractions. Full16 nativecases/32fillcases/80copies remain;bounded4096-rowprotocol fixture nowhas1536baby/2560giantrecords acrosssource/bulk boundaries. Printedtransportcost2504/3656/6160 isrestoredandcheckedagainstitsformula. No qualification orscore isassertedbefore genuine review. Secondwidecolumn leavesnormalbase directlyinx26;firstnormalcolumnneedsnoMOV andnextnormalbase usesexactfinaltableallocationstride. Row1 needsnocolumnblockconstant;compile-timeci1 omitsit,ci5 keepsitforphysicalcol2. Noexplicitx30 writeorBL remains;LRuntouched. Saveelevenusedcallees plusout/table/const in7STP,frame560 temp176 preservesoriginalSP-384 base. Fused2486,retained2527,saving3 actualinstructions frompriorfusedleaf. Arithmetic/field/threshold/probability/prices/alltables unchanged. Additional already-tested p^3/p^9 giantphases yieldc=t+/-u^3*j for selectedresiduegaps. Orthogonal full-r lattice provesnewslopesdistinct; residuewindow distancesforj/3j prove disjointnessfromallfour oldfamilies. ExactarithmeticseriesgivesE;sharedledger verifiesallfullsizecount/separationconditions. No extraphase orhotwork isadded. Publicstreamlimits aresearchedonfinitegrid,notgloballyoptimalclaim.",
+      "score": {
+        "numerator": "1244151",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free DockerONLY. Fullunchanged2486-instruction fusedleaf,full-p rawsigned/subtraction/sum oracles,all16 key/hash/fixed/scalar/control and32 nativefill/80copycases. Protocolfixture usesunequal1536baby/2560giantrows,full128 ordinals/183hashbits/32payload/48metadata,allframes/boundaries/stability preserved. Exactchecker independentlyreconstructs m/n,L,eventcounts,baby/giantinterval inequalities,Bonferroni/hash/cap/giantidentity/sampling losses,weighted12m+28n,Ninteger andmatchingcurrentdocscore. Transport2504/3656/6160 formula checked. Virtualcells/sparsearrays/TESTexponentoracle remain scoped,notproductionfreeinput,GTaccess,physicalhardware orqualification evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
