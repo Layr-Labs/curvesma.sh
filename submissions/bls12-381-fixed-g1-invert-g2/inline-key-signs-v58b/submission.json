@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Split zero-real sign paths and inline both canonical blocks",
+  "claims": [
+    {
+      "statement": "For the exact suppliednonidentityP anduniformfullGT targetz,findQ withe(P,Q)=z usingh=e(P,Q0),noauxiliarypowers. Preservefullp381/r255,success0.39,C20000,sixproductiontracks/solecomputationmetric. Full-r randomstridebaby/giantstreamsm/nandtheirprintedexactcountsareinproof.md. Actualtrace recurrence/fullsigned382-bit lookupreconstruction andexacttwelve-Frobenius keytheoremremain. HashfullS192withthreefull61-bit independentaffine/NH rows,all183bitsretained;scalarpayload32/metadata48hasall128ordinalbits. Bothstable96-bitpassesandBOTHcomplete2^96bucketsetsareconstructed/paid. ALLfingerprintpairsincludingskipsconsumecapfloor(L/2^29);actualGTpowersverifyallinformativephasecandidates,continueafterfalsematches,returnonlyverifiedG2/fullpairing. PerpairC*H+R<2^29,H<=6144,R<=2^25;allconfirmations<=L numerator,terminalverificationoncecold.\n\nFull-r lattice/residue/mod3/oddquotientparity/directed64-strataandsignedendpointgroupsproveallselectedgiantslopesdistinctandmixedintersectionsbounded.Bonferroni/full-residuehash/Markov/identity/samplinglosssupportexactsuccess>0.3900031>0.39,withoutPoisson/recordindependence/randomoracle/CSPRNG-IID assumptions. Allcoinextraction/delivery/failureworkispaid;attacklengthsarepublicworkchoices,notreducedparametersorglobaloptimality.\n\nActualfusedfield2465retain2506,frame528,fullsignedA28.5TiB/B4.21875TiB/completehalf-fillgeometrybelow2^47unchanged.Productbase=constructedblock+528ispassedthroughexistingarg,coldADDpaid;D/padLDP@-16andQ27selectedordinaryproductslot preserveeveryfieldvalue.Fourcallee fixed192 usesstreamedfull381-bitinputpairs/frame32,preservesexactalias;all50ordinaryq*p slots/headerareconstructedpaid.\n\nTheactualcanonicalparentnowcontainsTWOinlinesignblockswithuniqueordinarybranchlabels.Thecommonworstpathfallsintotheparentcontinuation;copy/zeroexceptionsuseexplicitout-of-lineBjoins. All-pathacyclicCFGown170(retain171)includesbothsigns;thereisNOcanonical_b1hotBLoradditionalsignprice. Theuncalledreferenceleafremainsinpackage.Nativekey<=171+odd504=675,retained686includingcallers/spare. Odd504=58own+2*31Fphelpers+2*192fixedlookups.Frame384/header/EvenB96/OddPhi192/rawPhiimmutability/identity/all192outputbytesareunchanged.p48x3isreadonlythroughinlinefirstsign,secondp reloadisexplicit;table/productsbaseargs32/40,p48at48areinitializedanddisjoint.HelperABI/carry/zero/outputlogicfullFpunchanged,allactualp/tablewordreadsretained.Nativehash341retained350andMain712unchanged.\n\nNon-scalargeneration4254L,completeN=6359L+12m+28n+2^124 onEVERYpath,includingunequalweightedscalar/localsorts/transfers/coordination/failures/cappedGTchecks/output.Fullcold<2^124,peak<2^138,advice0.Noamortization/freeauxiliaryresources. Exactpowerinequalityanddeclaredscoreareinproof.md. Thisisexploratoryanalyticalsupport,notcompletedproductioninversion,physicalVMcapacity,formalcertification,completedscoreorpromotion. OfficialsharedDockeronlyexecutescandidatefixtures;16full-pnative/key/hash/scalar/controlcases,32fill/80copies,ABI/alias/initializedreads/rawsigned/sumboundaries/exactfull-sizeledgerarescopedevidence. Virtualtables/sparsearrays/TESTexponentoraclearenotproductionresources.Sharedllm-verifieraloneexecutes,reviewsandfinalizes. ExplicitrealzeroCBZleadstoaseparateoutlinewithitsownp loads/compare;noinfeasiblebranchcombinationreachesrealnegation.Themainworstsignpath42andallcopy/zerooutlines<=37arecountedbyunchangedrawacyclicCFG,fullown170retain171+odd504=675,retained686. Initialmergedinlineintakefailedbound178vs172andwasnotexecutedpastassertorsubmitted;thisnewsourcefixescontrolflowwithoutchanginglimits.",
+      "score": {
+        "numerator": "310913",
+        "denominator": "2500"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free DockerONLY. Fullunchanged2465-instruction fusedleaf,full-p rawsigned/subtraction/sum oracles,all16 key/hash/fixed/scalar/control and32 nativefill/80copycases. Protocolfixture usesunequal1536baby/2560giantrows,full128 ordinals/183hashbits/32payload/48metadata,allframes/boundaries/stability preserved. Exactchecker independentlyreconstructs m/n,L,eventcounts,baby/giantinterval inequalities,Bonferroni/hash/cap/giantidentity/sampling losses,weighted12m+28n,Ninteger andmatchingcurrentdocscore. Transport2504/3656/6160 formula checked. Virtualcells/sparsearrays/TESTexponentoracle remain scoped,notproductionfreeinput,GTaccess,physicalhardware orqualification evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
