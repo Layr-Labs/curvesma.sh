@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Two shared11-digit A columns with a smaller full381-bit fixed table",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 supplied nonidentity P in G1 and independent uniform z in GT,return Q in G2 with e(P,Q)=z,no auxiliary powers. Preserve full fields/r255,six tracks,one computation metric,C20000 and0.39 success. Generate the actual random-stride trace streams and exact twelve-orbit S192 transiently. Fingerprint S using three independent full61-bit affine residues,183 bits encoded in24 bytes with9 high zero padding bits. Pair collision bound for distinctS is(2^-63+1/q)^3. Store ONLY full canonical32-byte Fr scalar payloads;metadata48 retains fingerprint24,color24,pending25,padding26..31,ALL128 ordinal bits32..47. Sort by two stable96-bit passes over the192-bit encoding,construct BOTH full2^96 bucket sets. Process at most floor(L/2^29) equal-fingerprint pairs,including skipped pairs. Try at most12 exponents per pair,verify each by actual h^a=z,and CONTINUE after false fingerprints. Each complete pair has C*H+R<2^29 with H<=6144 dense reference multiplications,R<=2^25;all confirmations together cost<=L in the normalized numerator. TerminalG2 construction/full pairing verification at most once. Exact group-event/Markov/sampling calculation supports success>0.3900031. Native recurrence2626/key740/NH346 retain2667/751/355,scalar20/main712 givegeneration4505;local sorting720,scan128,confirmation1,spare256 givebase5610;network920 giveshot6530,retained6610. N=6610L+2^124 is below20000*2^(124483/1000). Both full2^96 constructions are paid,sortcold<2^121,totalcold<2^124,algorithmdata<2^110,totalpeak<2^138 bytes,advice0. All preprocessing,coins,failures,transfers,sorting,verification and output charged. Analytical exploratory claim only,no production run,qualification,promotion or inherited acceptance. BOTH identical A0/A4 and A1/A5 pairs share widened tables,each seven35/four34-bit digits covering ALL381 bits. Four B columns retain32/29 digits. Fixed-s uses eleven32/final29-bit digits,also ALL381 bits. Construct vector[5,75.6875)TiB,fixed[76,78.0859375),parent4,children80..128 disjoint below47 bits. Native map2390/wrapper236 gives2626;fixed207/odd537/key740. All table/seed/page construction charged. All16 cases execute before representative/maxima reporting. Assembler.rept compresses I/O SOURCE only;the shared interpreter expands/counts EVERY load/store,unchanged copy costs.",
+      "score": {
+        "numerator": "124483",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker ONLY. Check actual full-p recurrence with BOTH shared11-digit A columns at vectorbase5TiB,four normal B columns,and12-digit32/29 fixed-s table at76TiB against independent full-p algebra. Expected map2390/step2626,fixed207/odd537/key<=740. Full183-bit native hash,scalar/meta/ABI/read checks remain. Static assembler.rept expansion counts EVERY actual copy4/6/384/386/512 instruction. All16 cases execute before representative/maxima summaries. Bounded48-byte metadata/32-byte scalar-payload,two96-bit stable radix and TEST-ONLY exponent-oracle fixtures retain full fields/ordinals. Virtual tables/sparse arrays/test oracle are scoped fixtures,not free production data,GT oracle,cost/success/hardware or qualification evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
