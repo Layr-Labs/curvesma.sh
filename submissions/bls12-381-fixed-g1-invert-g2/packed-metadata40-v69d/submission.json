@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Pack all fingerprint, color, occupancy and ordinal bits into 40-byte rows",
+  "claims": [
+    {
+      "statement": "Preserve exact suppliednonidentityP,fulluniformGTz includingidentity,fullp381/r255,noauxiliarypowers,success0.39,C20000,sixproductiontracks/solecomputationmetric. Native actualGT trace recurrence/signedlookups/canonical12fiberkey/full128NH/threefull61bitresidues and full-r probability proof are unchanged from current explicit proof.md. The current public m/n/event integers and exactBonferroni/Markov/identity/samplingloss support success>0.3900031 without recordindependence/Poisson/randomoracle/CSPRNG-IID assumptions. All matchingpairs includingBB/equalGGskip counttowardcapfloor(L/2^29),actualGTpow verifiesallphasecandidates andfalsematchescontinue;terminalG2/fullpairingoncecold.\n\nNEW metadata40 retains183hashbits0..182,colorbit183(byte22bit7),pending0..63byte23low6,full128ordinal24..39;tworeservedbitszero. Payloadremainsfullcanonical32byteFrscalar. Everyupper96digit/equality MUST maskword2low55bits,excludingcolor/occupancy;thelogical192bitfingerprintstillhas9zeropaddingbitsandbothcomplete2^96bucketsetsareconstructed. Workercolorpack3 usesfreshNHpadding,LDRB/ORRshift7/STRB. OrdinalSTP24 retainsbothlimbs. Pending23restored0beforeemission. Nativecolorget2/maskhigh2/byte1/ordinal1datahelpersandcopy4/5/320/322/512haveactualencodableinstructionsandscopedABI/alias/initializedread/fullbyteoracles. Copy5takes6data+RET;evenNtakeN+RET.\n\nSource512metadata20480bytesusesFIVE4096frames;Rootconcatenatesallbeforeparsing40byterows. Allpayload4/metafive/ACKsprecederegeneration. Fourbatches2048rows=81920bytes=TWENTYbulkframes. Metabank2^34rows uses40*low34 (640GiBwithin1TiB),scalarbankunchanged. Full64block320words,reply322,header2608<6144;singleton7wordswithoddpaddingcharged. Existing3024byteslotstride/zeroing retained,2520used;alloldarrayaddresses/caches/queues/coldboundsremainconservative. Color/pendingneveraffectsort/equality/entropy.\n\nExplicit oldmain712+EIGHTsupplementaryaggregateinstructions:colorpack3,upperpassCOUNT/SCATTERmasks2,scanoperandmasks2,spare1. Thisis summed acrossactualprocessors,notfreeRootwork. LocalCOUNT120/SCATTER240/scan128/pending32remain;newoperationsalsofitretainedlocalspare,butpriceisnotremoved. Sourceedgepayload2504/meta3080,total5584/512;metadata20bulk35160/2048. Source/output563,COUNT24/SCATTER118perpass,scan39 yieldnetwork886. Field2465retains2506,combinedkeyhash963retains984(noextrahash350),aggregate4210=2506+984+720. FullN=6281L+12m+28n+2^124 onEVERYpath. Exactintegerpriceinequality inproof.md. Allcoins/tables/halves/offsets/products/headers/padding/processors/edges/notifications/copies/fullprefixes/tails/failures/verification/outputarepaid. PerpairC*6144+RwithR<=2^25<2^29,totalconfirmations<=L numerator. Cold<2^124,algorithmdata<2^110,peak<2^138,advice0,noamortization.\n\nWhole isolatedsharedDockerfixturetestsall183hashbits,pack/mask/pending/color/full128ordinal,allframebytes,stabletwo96bitpasses,bank/counterboundaries,actualnativecopy/ABI/alias/initializedreads,fullpfield/key/hash/scalar/fill/controlandexactfullsizeledger. Sparsevirtualtables/TESTexponentoraclearescopedfixtures,notproductionresources/success/hardware/probabilitycertification. All256distancepartitions/signedfactor/endpointrangesandgroup-eventtheoremsremainexplicit. No productionattack/physicalqualification/inheritedacceptance/score/promotionclaimedbeforeactualreview. Sharedllm-verifieraloneexecutes/reviews/finalizes;candidate NEVER hostcompiled/executed orrunwithcredentials.",
+      "score": {
+        "numerator": "621621",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Officialcredential-freeDockerONLY:actualmetadata40pack/mask/pending/color/full128ordinal/nativecopies4/5/320/322/512plusstabletwo96bitmasked183bitsort/fiveframeandtwentyframeallbytes;nativefullpfield/key/hash/scalar/fill/control/ABI/initializedreadsandexactfullsizeledger.Scopedfixtures,notproductionGTsuccess/controllerhardwarequalification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
