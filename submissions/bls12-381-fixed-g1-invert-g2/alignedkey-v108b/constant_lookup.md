@@ -1,0 +1,7 @@
+# Full381-bit fixed-s lookup with an aligned first word
+
+Currentwidths[32,32]+[35]*7+[36]*2/starts0,32,64,99,134,169,204,239,274,309,345 coverALL381bits. Everyentry d*s_native*2^start/Rm canonicalfull48bytes,actuals fromxi^((p-1)/2),allordinaryMontgomeryseed/power/fill_lutaddloops/pagespaidcold2^92. Fullfixed16.875TiB at[77.90625,94.78125);vector73.875unchanged;workerchildren[95,128)/8.25KiBports/full2^32count/full4096frames/controlwords4160/4168/47bitboundproof inproof.md/handoff.md. Othernodes12KiB.
+
+ActualTHREELDPinputs3/4offset0,3/19offset16,3/4offset32. Firstword2UBFX32,nextwordUBFX35,middleEXTR35/UBFX6/EXTR41/UBFX12,lastpairEXTR47/UBFX18/EXTR53masked36/UBFX25width36. Fourcross-wordEXTR+ANDvsfivebefore;full11terms/all381bits,nottruncation. Iterator22usesactualperdigitwidth32/35/36;MADD48/index36fitsbelow47. Firstninecanonicalterms9p<2^384,term10ADC11fromXZR,term11ADC11from11;Y<11p/7limbtrial15normal/rare18/shared128cap/calleeproofunchanged. Already-saveddead19register/outer288restoreallpaths. New134prefixopsvs135,save2/key;normal804/MAX840/ret825. Existingcaller12/spare9unchanged.
+
+Standalonefixed_s_lookup.S remainsUNCALLEDold12digit192-opreferencewithSEPARATEdefaultvirtual[32]*11+[29]fixture;productionrun_keyusesCURRENT[32,32]+[35]*7+[36]*2/full16.875TiBoracle. Allindependentfullp/key/hash183/status/source/ABI/forcedrare/capchecksretain. No productionconstructionprovidedbyvirtualfixture. Exactcurrentcomputation/success/cold/peak/adviceboundsproof.md.
