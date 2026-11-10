@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "Balanced inversion with a complete exact quotient certificate",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion success>0.390003 underfinitecoinR/exacteight-wise fourth-Bonferroni rank/capbounds. ALL21products bypaidordinarylocaltables;3051instructionseven-limbintegerinterpolationwithordinary64-bitUDIVquotientandprovedone-stepcanonicalcorrection. Completework<=20000*2^(12549/100),cold124,peak138,advice0. No productionparameter/threshold/C changes orobservedruntimequalification/pass/score.",
+      "score": {
+        "numerator": "12549",
+        "denominator": "100"
+      },
+      "evidence": [
+        "handoff.md",
+        "projective_rows.md",
+        "odd_trace.S",
+        "fixed_s_lookup.S",
+        "lookup_ten32.S",
+        "leaf_lookup.md",
+        "interpolation_certificate.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "coins.md",
+        "quotient_certificate.md",
+        "lazy_interpolate.S",
+        "proof.md",
+        "lazy_interpolation.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "fourth_moment_certificate.md",
+        "constant_lookup.md",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}

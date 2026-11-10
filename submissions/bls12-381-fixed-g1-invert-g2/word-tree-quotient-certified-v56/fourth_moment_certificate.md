@@ -1,0 +1,11 @@
+# Exact balanced-grid fourth-moment certificate
+
+Fullprotected r=0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001;W=2^63;K=7620875000000000000;L=70290165371365639585792000000000000000;M=25938713576653128833402736143147065724260480647202871107911680000000000000000;D=28415637834639788322359612360469459410878464000000000000000. Allcandidatepolynomialindices<r. p0=(r-1)/r²,mu=M*p0,A2=choose(M,2)/r²,A3=(choose(M,3)-M²D)*p0³,A4=choose(M,4)/r4+3M²D7560/r³+MD1440²/r². caploss=choose(L,2)*(12/r+2^23/(2^61-1)^3)/(floor(L/128)+1). EXACT mu-A2+A3-A4-caploss-L/r-2^-970>390003/1000000. choose(M,3)-M²D>0. The proof's support-count/Vandermonde arguments apply to these actualdimensions,not only the earlier grid.
+
+Diagnosticmu,A2,A3,A4,rank2,rank3,cap=0.4946749432525459,0.12235164974095475,0.020174765130820723,0.002494987699614424,5.558707023803194e-13,3.007542432953377e-15,3.0780468997510033e-09. Diagnosticsuccesslowerbound=0.39000306786475053. The exact rational inequality defines the certificate,not decimalrounding. No Poisson/hash/eventindependence assumption. FixedcoininterfaceR/cappedextraction remains material andcharged.
+
+Nativekey1536,projection8192,fingerprint496,Fr32,main704=>generation10960. Five272passes,scan128,confirmation64,spare256=>base12768. Network3963 includesALLRPC/endpoints;hot16731retain16896. Completecold124 includesALL21lookupfills109/bootstrap121/edges118/fixed92. N=16896L+2^124;EXACT N^100<20000^100*2^12549,proposed12549/100=125.49. ProbabilitycertificateUNCHANGED;quotient_certificate.md proves the new3051instructionintegerkernel. No candidateexecution/qualification.
+
+Balanced dimensions are possible because the finitepolynomial proof has no hash W^-2 term. ItsD=24L(W+K) is smaller than the previousunbalanced case. Reducingalgorithmictables changes neither productionparameters nor the success threshold. StandardVandermonde/Bonferronitechniques credited;ownunpublishedv12 suppliesrankdeficient-eventaccounting. Noqualificationinherited.
+
+CURRENT INTEGER INTERPOLATION: AdditionalA20slot88..92TiB,ALL21productsbyfullypaidtables;lazy_interpolate3051instructions replaceshotfieldreductions with boundedsevenlimbintegers/fourfinalcanonicalreductions. See lazy_interpolation.md. Nooldreferencecombine_products/project_toom is called.
