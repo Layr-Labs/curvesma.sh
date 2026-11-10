@@ -1,0 +1,875 @@
+"""Only shared llm-verifier credential-free Docker may execute this candidate.
+Scoped scalar-instruction interpretation; virtual table values are a test oracle,
+not a claim that production tables can be replaced by arithmetic for free.
+"""
+import ast,json,random,re,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parent/'files'
+P=int('1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab',16)
+MASK=2**64-1
+R=pow(2,384,P);RI=pow(R,-1,P)
+
+def integer(s):
+    node=ast.parse(s.strip().removeprefix('#'),mode='eval').body
+    def go(n):
+        if isinstance(n,ast.Constant) and type(n.value) is int:return n.value
+        if isinstance(n,ast.UnaryOp) and isinstance(n.op,ast.USub):return -go(n.operand)
+        if isinstance(n,ast.BinOp) and isinstance(n.op,(ast.Add,ast.Sub,ast.Mult)):
+            a,b=go(n.left),go(n.right)
+            return a+b if isinstance(n.op,ast.Add) else a-b if isinstance(n.op,ast.Sub) else a*b
+        raise AssertionError('noninteger immediate')
+    return go(node)
+
+def parse(name):
+    source=(ROOT/name).read_text()
+    if name=='recurrence_fp2_step.S':
+        assert [row.strip() for row in source.splitlines() if row.strip().startswith('.include ')]==['.include "recurrence_fp2_map.S"']
+        source=(ROOT/'recurrence_fp2_map.S').read_text()+'\n'+source
+    rows=[s.split('//')[0].strip() for s in source.splitlines()]
+    macros={};ordinary=[];i=0
+    while i<len(rows):
+        s=rows[i];i+=1
+        if s.startswith('.macro '):
+            head=s.split(None,2);formals=[] if len(head)==2 else head[2].split(',');body=[]
+            while rows[i]!='.endm':body.append(rows[i]);i+=1
+            i+=1;macros[head[1]]=([x.strip() for x in formals],body)
+        else:ordinary.append(s)
+    out=[]
+    def expand(rows,depth=0):
+        assert depth<=4
+        active=[]
+        for s in rows:
+            if s.startswith('.if '):active.append(bool(integer(s[4:])));continue
+            if s=='.endif':assert active;active.pop();continue
+            if not all(active) or not s:continue
+            if s.endswith(':'):out.append(('@label',[s[:-1]]));continue
+            if s.startswith('.'):continue
+            op,*tail=s.split(None,1)
+            if op in macros:
+                names,body=macros[op];vals=[] if not tail else [v.strip() for v in tail[0].split(',')];assert len(names)==len(vals)
+                mapped=[]
+                for line in body:
+                    for k,v in sorted(zip(names,vals),key=lambda t:-len(t[0])):line=line.replace('\\'+k,v)
+                    mapped.append(line)
+                expand(mapped,depth+1)
+            else:out.append((op,[] if not tail else [v.strip() for v in tail[0].split(',')]))
+        assert not active
+    expand(ordinary);return out
+
+
+RODATA={};RODATA_VALUES={}
+ro_at=0x260000
+ro_text=(ROOT/'canonical_b1.S').read_text().split('.section .rodata',1)[1]
+for ro_line in ro_text.splitlines():
+    ro_line=ro_line.split('//')[0].strip()
+    if ro_line.endswith(':'):RODATA[ro_line[:-1]]=ro_at
+    elif ro_line.startswith('.quad '):
+        for literal in ro_line[6:].split(','):
+            value=integer(literal);assert 0<=value<=MASK
+            RODATA_VALUES[ro_at]=value;ro_at+=8
+assert sum(RODATA_VALUES[RODATA['conjugate_p']+8*i]<<(64*i) for i in range(6))==P
+assert sum(RODATA_VALUES[RODATA['conjugate_halfceil']+8*i]<<(64*i) for i in range(6))==(P+1)//2
+
+class Machine:
+    def __init__(self,coeffs):
+        self.reg=[0]*32;self.mem=dict(RODATA_VALUES);self.coeffs=coeffs;self.count=0;self.calls={};self.sp=0x100000
+        self.out=0x200000;self.prev1=0x210000;self.prev2=0x220000;self.const=0x230000;self.mod=0x240000
+        self.table=2**43;self.block=96*(7*2**35+4*2**34)
+        self.reg[31]=self.sp
+        self.reg[18]=0xfeedfacedeadbeef
+        for i in range(19,31):self.reg[i]=0xabc000+i
+        self.saved=self.reg[18:]
+    def readmem(self,at):
+        assert at%8==0
+        if hasattr(self,'fixed_s') and 64*2**40<=at<77.5*2**40:
+            off=at-64*2**40;start=0
+            for width in [35]*7+[34]*4:
+                size=48*(1<<width)
+                if off<size:
+                    digit,part=divmod(off,48);value=self.fixed_s*RI*pow(2,start,P)*digit%P
+                    return (value>>(8*part))&MASK
+                off-=size;start+=width
+            raise AssertionError('fixed lookup range')
+        if self.table<=at<self.table+2*self.block:
+            col,off=divmod(at-self.table,self.block);start=0
+            for width in [35]*7+[34]*4:
+                size=96*(1<<width)
+                if off<size:
+                    index,part=divmod(off,96);row,limb=divmod(part,48)
+                    value=self.coeffs[col][row]*RI*pow(2,start,P)*index%P
+                    return (value>>(8*limb))&MASK
+                off-=size;start+=width
+            raise AssertionError('vector lookup range')
+        assert at in self.mem,('uninitialized',hex(at))
+        return self.mem[at]
+    def writemem(self,at,value):
+        assert at%8==0 and ((self.sp-816<=at<self.sp) or (self.out<=at<self.out+getattr(self,'out_bytes',192)) or any(lo<=at<hi for lo,hi in getattr(self,'extra_write_ranges',[]))),('write',hex(at))
+        self.mem[at]=value&MASK
+    def field(self,at,value):
+        for i in range(6):self.mem[at+8*i]=(value>>(64*i))&MASK
+    def loadfield(self,at):return sum(self.readmem(at+8*i)<<(64*i) for i in range(6))
+    def execute(self,name):
+        ops=OPS[name];carry=0;zero=0;before=self.count
+        if name=='nh_fingerprint':self.nh_words_read=[]
+        def ix(s):return 31 if s=='sp' else int(s[1:])
+        def rd(s):
+            if s.startswith(':lo12:'):return RODATA[s.removeprefix(':lo12:')]&4095
+            value=0 if s in ('xzr','wzr') else integer(s) if s.startswith('#') else self.reg[ix(s)]
+            return value&0xffffffff if s.startswith('w') else value
+        def wr(s,v):
+            if s not in ('xzr','wzr'):self.reg[ix(s)]=v&MASK
+        def shifted(a):
+            value=rd(a[2])
+            if len(a)==4:
+                kind,n=a[3].split();n=integer(n);assert kind in ('lsl','lsr') and 0<=n<64
+                value=(value<<n)&MASK if kind=='lsl' else value>>n
+            return value
+        labels={a[0]:i for i,(op,a) in enumerate(ops) if op=='@label'}
+        pc=labels.get(name,0)
+        while pc<len(ops):
+            op,a=ops[pc];pc+=1
+            if op=='@label':continue
+            self.count+=1;assert self.count<10000
+            assert not any(re.search(r'\b[wx]18\b',v) for v in a)
+            if op=='ret':self.calls.setdefault(name,[]).append(self.count-before);return
+            if op=='bl':self.reg[30]=pc*4;self.execute(a[0]);carry=0;zero=0;continue
+            if op=='b':pc=labels[a[0]];continue
+            if op in ('cbz','cbnz'):
+                take=(rd(a[0])==0)
+                if op=='cbnz':take=not take
+                if take:pc=labels[a[1]]
+                continue
+            if op.startswith('b.'):
+                cond=op[2:];assert cond in ('lo','hi','eq','ne','hs')
+                take={'lo':not carry,'hi':carry and not zero,'eq':bool(zero),'ne':not zero,'hs':bool(carry)}[cond]
+                if take:pc=labels[a[0]]
+                continue
+            if op=='cmp':
+                delta=rd(a[0])-rd(a[1]);carry=int(delta>=0);zero=int((delta&MASK)==0);continue
+            if op in ('ldr','ldp','str','stp','ldrb','strb'):
+                n=2 if op in ('ldp','stp') else 1
+                addr=','.join(a[n:]).replace(' ','');m=re.fullmatch(r'\[(x\d+|sp)(?:,#(.+?))?\](!)?(?:,#(.+))?',addr);assert m,addr
+                base,off,pre,post=m.groups();assert not(pre and post)
+                displacement=integer(post if post else off if off else '0')
+                if op in ('ldp','stp'):
+                    assert displacement%8==0 and -512<=displacement<=504,('pair immediate',op,displacement)
+                elif pre or post:
+                    assert -256<=displacement<=255,('unscaled immediate',op,displacement)
+                else:
+                    if op in ('ldrb','strb'):assert 0<=displacement<=4095,('byte immediate',op,displacement)
+                    else:assert displacement%8==0 and 0<=displacement<=32760,('scaled immediate',op,displacement)
+                old=rd(base);at=old+(integer(off) if off else 0)
+                if pre:wr(base,at)
+                if op in ('ldrb','strb'):
+                    word_at=at&~7;shift=(at&7)*8;word=self.readmem(word_at)
+                    if op=='ldrb':wr(a[0],(word>>shift)&255)
+                    else:self.writemem(word_at,(word&~(255<<shift))|((rd(a[0])&255)<<shift))
+                    if post:wr(base,old+integer(post))
+                    continue
+                if op in ('ldr','ldp'):
+                    vals=[self.readmem(at+8*j) for j in range(n)]
+                    if name=='nh_fingerprint' and op=='ldp' and a[:2]==['x10','x11']:self.nh_words_read.extend(vals)
+                    for j,v in enumerate(vals):wr(a[j],v)
+                else:
+                    vals=[rd(a[j]) for j in range(n)]
+                    for j,v in enumerate(vals):self.writemem(at+8*j,v)
+                if post:wr(base,old+integer(post))
+                continue
+            if op=='adrp':value=RODATA[a[1]]&~4095
+            elif op=='mov':value=rd(a[1])
+            elif op=='movz':
+                value=rd(a[1]);assert len(a) in (2,3)
+                if len(a)==3:
+                    kind,n=a[2].split();assert kind=='lsl';value<<=integer(n)
+            elif op=='ubfx':value=(rd(a[1])>>rd(a[2]))&((1<<rd(a[3]))-1)
+            elif op=='and':value=rd(a[1])&shifted(a)
+            elif op=='orr':value=rd(a[1])|shifted(a)
+            elif op=='lsr':value=rd(a[1])>>rd(a[2])
+            elif op=='madd':value=rd(a[1])*rd(a[2])+rd(a[3])
+            elif op in ('mul','umulh'):
+                value=rd(a[1])*rd(a[2]);value=value>>64 if op=='umulh' else value
+            elif op=='extr':value=((rd(a[1])<<64)|rd(a[2]))>>rd(a[3])
+            elif op=='udiv':assert rd(a[2]);value=rd(a[1])//rd(a[2])
+            elif op in ('add','adds','adc','adcs'):
+                value=rd(a[1])+shifted(a)+(carry if op in ('adc','adcs') else 0)
+                if op in ('adds','adcs'):carry=int(value>MASK);zero=int((value&MASK)==0)
+            elif op in ('sub','subs','sbc','sbcs'):
+                value=rd(a[1])-shifted(a)-(1-carry if op in ('sbc','sbcs') else 0)
+                if op in ('subs','sbcs'):carry=int(value>=0);zero=int((value&MASK)==0)
+            elif op=='csel':
+                assert a[3] in ('lo','hs');yes=bool(carry) if a[3]=='hs' else not carry;value=rd(a[1] if yes else a[2])
+            else:raise AssertionError(('opcode',op))
+            wr(a[0],value)
+        raise AssertionError('missing ret')
+
+OPS={n:parse(n+'.S') for n in ['recurrence_fp2_step','fp381_add','fp381_sub','nh_fingerprint','fixed_s_lookup','canonical_twelve_bfirst','odd_trace_compact','fr255_add']}
+OPS['canonical_conjugate_b1']=parse('canonical_b1.S')
+
+for io_name in ['prefix_copy5', 'prefix_copy320', 'prefix_copy322', 'prefix_copy512', 'metadata_pending_get', 'metadata_pending_set', 'metadata_pending_clear', 'metadata_ordinal', 'metadata_color', 'baby_scalar_fill', 'prefix_copy11', 'payload_scalar', 'payload_color', 'payload_tag_equal', 'notify_wait_flag', 'notify_publish', 'notify_clear']:OPS[io_name]=parse('metadata_io.S')
+
+def cadd(a,b):return tuple((x+y)%P for x,y in zip(a,b))
+def cneg(a):return tuple(-x%P for x in a)
+def cmul(a,b):return ((a[0]*b[0]-a[1]*b[1])%P,(a[0]*b[1]+a[1]*b[0])%P)
+def oracle(c,x,y,z):
+    A,B=c[:2],c[2:];a,b=x[:2],x[2:];d,e=y[:2],y[2:]
+    # Independent dense Fp4 products, not the factored native transform.
+    def mul(v,w):
+        aa,bb=v[:2],v[2:];cc,dd=w[:2],w[2:]
+        return cadd(cmul(aa,cc),cmul((1,1),cmul(bb,dd)))+cadd(cmul(aa,dd),cmul(bb,cc))
+    left=mul(c,x);right=mul(A+cneg(B),y)
+    return tuple((left[i]-right[i]+z[i])%P for i in range(4))
+
+def run(inputs):
+    count=inputs['count'];assert 1<=count<=16;rng=random.Random(inputs['seed']);results=[]
+    for case in range(count):
+        # Fixed full-p boundaries plus full-p random cases; no reduced field.
+        vals=[rng.randrange(P) for _ in range(16)]
+        if case==0:vals=[0,P-1,1,(P-1)//2]*4
+        if case==1:vals=[P-1]*16
+        if case==2:vals=[0]*16
+        c,x,y,z=[tuple(vals[i:i+4]) for i in range(0,16,4)]
+        A,B=c[:2],c[2:];Bxi=cmul(B,(1,1));coeffs=[]
+        for C in (A,B):coeffs.append((C[0]*R%P,C[1]*R%P))
+        machine=Machine(coeffs)
+        for base,vec in [(machine.out,z),(machine.prev1,x),(machine.prev2,y)]:
+            for j,v in enumerate(vec):machine.field(base+48*j,v*R%P)
+        for at in range(machine.const,machine.const+3728,8):machine.mem[at]=0
+        machine.field(machine.const+448,P);machine.mem[machine.const+512]=(P+2**325-1)//2**325;machine.field(machine.mod,P)
+        for quotient in range(50):
+            for limb in range(7):machine.mem[machine.const+528+64*quotient+8*limb]=(quotient*P>>(64*limb))&MASK
+        machine.reg[:6]=[machine.out,machine.prev1,machine.prev2,machine.table,machine.const,machine.mod]
+        machine.execute('recurrence_fp2_step')
+        got=tuple(machine.loadfield(machine.out+48*j)*RI%P for j in range(4));assert got==oracle(c,x,y,z),(case,got)
+        assert all(machine.loadfield(machine.out+48*j)<P for j in range(4))
+        assert machine.reg[18:]==machine.saved
+        assert machine.count<=2590 and 'recurrence_fp2_map' not in machine.calls
+        assert all(v<=26 for n in ('fp381_add','fp381_sub') for v in machine.calls.get(n,[]))
+        results.append({'case':case,'step_instructions':machine.count,'leaf_without_nested_map_call':True,'exact_third_alias':True,'abi_and_initialized_reads':True})
+    return {'scope':'full-p native fused recurrence map/step instruction interpretation against independent dense Fp4 oracle; virtual read-only table test fixture only; no production fill, GT coverage, hardware or score qualification','cases':results}
+
+
+def run_nh(inputs):
+    rng=random.Random(inputs['seed']+72);q=2**61-1;cases=[]
+    for case in range(inputs['count']):
+        words=[rng.getrandbits(64) for _ in range(24)]
+        if case==0:words=[0]*24
+        if case==1:words=[MASK]*24
+        keys=[[rng.getrandbits(64) for _ in range(24)] for _ in range(3)]
+        affine=[[rng.randrange(q) for _ in range(4)] for _ in range(3)]
+        if case%4==2:
+            # NH=2^128-1 by (N-1)^2+2(N-1),full affine maximum coefficients.
+            keys=[]
+            for row in range(3):
+                added=[MASK,MASK,2,MASK]+[0]*20
+                keys.append([(added[j]-words[j])&MASK for j in range(24)])
+            affine=[[q-1]*4 for row in range(3)]
+        if case%4==3:
+            # NH=1; b=q-1,a0=1 produces exact accumulatorq requiring correction.
+            keys=[]
+            for row in range(3):
+                added=[1,1]+[0]*22
+                keys.append([(added[j]-words[j])&MASK for j in range(24)])
+            affine=[[q-1,1,q-1,q-1] for row in range(3)]
+        machine=Machine([]);base=machine.out if case%2 else machine.prev1
+        for j,v in enumerate(words[:12]):machine.mem[base+8*j]=v
+        second=machine.prev2
+        for j,v in enumerate(words[12:]):machine.mem[second+8*j]=v
+        for pair in range(12):
+            for row in range(3):
+                for j in range(2):machine.mem[machine.const+48*pair+16*row+8*j]=keys[row][2*pair+j]
+        for row in range(3):
+            for j,v in enumerate(affine[row]):machine.mem[machine.const+576+32*row+8*j]=v
+        tag=machine.out+64;machine.out_bytes=32;machine.extra_write_ranges=[(tag,tag+24)]
+        machine.reg[:4]=[machine.out,base,machine.const,second];before=dict(machine.mem)
+        machine.execute('nh_fingerprint')
+        ys=[];field_rows=[]
+        for row in range(3):
+            nh=sum(((words[2*i]+keys[row][2*i])&MASK)*((words[2*i+1]+keys[row][2*i+1])&MASK) for i in range(12))%(1<<128)
+            chunks=[nh&((1<<60)-1),(nh>>60)&((1<<60)-1),nh>>120]
+            y=(affine[row][0]+sum(affine[row][j+1]*chunks[j] for j in range(3)))%q
+            field_rows.append(y)
+            ys.append(y&((1<<(52 if row==2 else 54))-1))
+        want=ys[0]|(ys[1]<<54)|(ys[2]<<108)
+        got=sum(machine.readmem(machine.out+8*j)<<(64*j) for j in range(4));assert got==want
+        assert machine.count==369 and machine.reg[18:]==machine.saved and machine.nh_words_read==words
+        assert [machine.readmem(tag+8*j) for j in range(3)]==field_rows
+        assert all(machine.out<=at<machine.out+32 or tag<=at<tag+24 or before.get(at)==v for at,v in machine.mem.items())
+        cases.append({'case':case,'instructions':369,'full_three_Fm61_outputs':True,'affine_corner':('maximum_NH_and_coefficients' if case%4==2 else 'exact_q_corrects_to_zero' if case%4==3 else 'seeded_full_width'),'exact_input_alias':base==machine.out,'abi_and_initialized_reads':True})
+    return {'scope':'actual encodable scalar NH plus affine-compression instructions against independent integer oracle; no empirical universal-hash probability or hardware/score qualification','cases':cases}
+
+
+def run_fixed(inputs):
+    rng=random.Random(inputs['seed']+77);power=(1,1);e=(P-1)//2;C=(1,0)
+    while e:
+        if e&1:C=cmul(C,power)
+        power=cmul(power,power);e>>=1
+    assert C[0]==C[1] and 2*C[0]*C[0]%P==P-1
+    scalar=C[0]*R%P;cases=[]
+    for case in range(inputs['count']):
+        x=[0,P-1,(P+1)//2][case] if case<3 else rng.randrange(P)
+        machine=Machine([]);machine.fixed_s=scalar;base=machine.out if case%2 else machine.prev1
+        machine.field(base,x)
+        for at in range(machine.const,machine.const+3728,8):machine.mem[at]=0
+        machine.field(machine.const+448,P);machine.mem[machine.const+512]=(P+2**325-1)//2**325
+        for q in range(50):
+            for i in range(7):machine.mem[machine.const+528+64*q+8*i]=(q*P>>(64*i))&MASK
+        machine.reg[:4]=[machine.out,base,64*2**40,machine.const];before=dict(machine.mem)
+        machine.execute('fixed_s_lookup');got=machine.loadfield(machine.out)
+        assert got==x*scalar*RI%P and got<P
+        assert machine.count==211 and machine.reg[18:]==machine.saved
+        assert all(machine.out<=at<machine.out+48 or machine.sp-96<=at<machine.sp or before.get(at)==v for at,v in machine.mem.items())
+        cases.append({'case':case,'instructions':211,'exact_input_alias':base==machine.out,'abi_and_initialized_reads':True})
+    return {'scope':'actual wider-digit constant lookup plus small-quotient native correction vs independent full-p product for actual fixed s; virtual initialized table fixture only, not production fill or GT/key probability qualification','cases':cases}
+
+
+def run_key(inputs):
+    rng=random.Random(inputs['seed']+83);power=(1,1);e=(P-1)//2;C=(1,0);prime61=2**61-1
+    while e:
+        if e&1:C=cmul(C,power)
+        power=cmul(power,power);e>>=1
+    assert C[0]==C[1] and 2*C[0]*C[0]%P==P-1
+    scalar=C[0]*R%P;cases=[]
+    def sign(B):
+        first=B[0] if B[0] else B[1]
+        return tuple(-x%P for x in B) if first>=(P+1)//2 else B
+    def words(B):return tuple((v>>(64*j))&MASK for v in B for j in range(6))
+    for case in range(inputs['count']):
+        phi=[rng.randrange(P) for _ in range(4)]
+        if case==0:phi=[R,0,0,0]
+        if case==1:phi=[0,P-1,0,P-1]
+        if case==2:phi=[P-1,(P+1)//2,(P+1)//2,0]
+        if case and phi[2:]==[0,0]:phi[2]=1
+        machine=Machine([]);machine.fixed_s=scalar;machine.out_bytes=32
+        machine.extra_write_ranges=[(machine.out+64,machine.out+88)]
+        for j,v in enumerate(phi):machine.field(machine.prev1+48*j,v)
+        for at in range(machine.const,machine.const+3728,8):machine.mem[at]=0
+        machine.field(machine.const+448,P);machine.mem[machine.const+512]=(P+2**325-1)//2**325;machine.field(machine.mod,P)
+        for quotient in range(50):
+            for j in range(7):machine.mem[machine.const+528+64*quotient+8*j]=(quotient*P>>(64*j))&MASK
+        hashbase=machine.const+4096
+        keys=[[rng.getrandbits(64) for _ in range(24)] for _ in range(3)]
+        affine=[[rng.randrange(prime61) for _ in range(4)] for _ in range(3)]
+        for pair in range(12):
+            for row in range(3):
+                for j in range(2):machine.mem[hashbase+48*pair+16*row+8*j]=keys[row][2*pair+j]
+        for row in range(3):
+            for j,v in enumerate(affine[row]):machine.mem[hashbase+576+32*row+8*j]=v
+        untouched_scalar=[rng.getrandbits(64) for _ in range(4)]
+        for j,v in enumerate(untouched_scalar):machine.mem[machine.out+32+8*j]=v
+        machine.reg[:6]=[machine.out,machine.prev1,64*2**40,machine.mod,machine.const,hashbase]
+        machine.execute('canonical_twelve_bfirst')
+        assert machine.reg[18:]==machine.saved and machine.count<=1147
+        assert [machine.loadfield(machine.prev1+48*j) for j in range(4)]==phi
+        assert [machine.readmem(machine.out+32+8*j) for j in range(4)]==untouched_scalar
+        assert all(v<=65 for v in machine.calls['canonical_conjugate_b1'])
+        assert all(v<=555 for v in machine.calls['odd_trace_compact'])
+        assert machine.calls['fixed_s_lookup']==[211,211]
+        if case==0:
+            assert machine.reg[0]==1 and not getattr(machine,'nh_words_read',[])
+            assert not any(machine.out<=at<machine.out+32 or machine.out+64<=at<machine.out+88 for at in machine.mem)
+        else:
+            even=sign(tuple(phi[2:]));Br,Bi=phi[2:];odd=sign((C[0]*(Br+Bi)%P,C[0]*(Br-Bi)%P))
+            assert even!=odd
+            expected=(tuple(phi[:2])+even) if words(even)<words(odd) else ((phi[0],-phi[1]%P)+odd)
+            exact_words=words(expected)
+            assert tuple(machine.nh_words_read)==exact_words and len(exact_words)==24
+            ys=[]
+            for row in range(3):
+                nh=sum(((exact_words[2*j]+keys[row][2*j])&MASK)*((exact_words[2*j+1]+keys[row][2*j+1])&MASK) for j in range(12))%(1<<128)
+                chunks=[nh&((1<<60)-1),(nh>>60)&((1<<60)-1),nh>>120]
+                ys.append((affine[row][0]+sum(affine[row][j+1]*chunks[j] for j in range(3)))%prime61)
+            want=(ys[0]&((1<<54)-1))|((ys[1]&((1<<54)-1))<<54)|((ys[2]&((1<<52)-1))<<108)
+            got=sum(machine.readmem(machine.out+8*j)<<(64*j) for j in range(4))
+            assert machine.reg[0]==0 and got==want
+            assert [machine.readmem(machine.out+64+8*j) for j in range(3)]==ys
+            assert machine.calls['nh_fingerprint']==[369]
+        cases.append({'case':case,'instructions':machine.count,'fused_key_hash_bound':1147,'ALL192_actual_hash_input_bytes_match_independent_key':case!=0,'scalar32_untouched':True,'immutable_raw_phi':True,'abi_and_initialized_reads':True,'identity_case':case==0})
+    return {'scope':'actualfusedkey/hashunderfullp381withALL24nativeNHinputwordstracedfromactualLDPsagainstindependentexactcanonicalkeyoracle,thenfullY/Uoracle;identityhasNOhash;nonzeroBfieldcasesnotempiricalGTfibertheorem/productioninversion/probability/hardwarequalification','cases':cases}
+
+# CANDIDATE TEST TEXT: only the credential-free shared verifier may execute.
+# Sparse dictionaries are bounded initialized-zero test fixtures, not production
+# replacements for the explicitly constructed/scanned 2^64+2^96 bucket arrays.
+
+def add128(a,b):
+    assert 0<=a<1<<128 and 0<=b<1<<128
+    lo=(a&MASK)+(b&MASK);hi=(a>>64)+(b>>64)+(lo>>64)
+    assert hi<1<<64
+    return (hi<<64)|(lo&MASK)
+
+def digit6496(raw,stage):
+    w0,w1,w2=[int.from_bytes(raw[8*j:8*j+8],'little') for j in range(3)]
+    if stage==0:
+        high,middle,low,word=w0>>32,0,w0&0xffffffff,w0&0xffffffff
+        assert (high<<32)|low==int.from_bytes(raw[:8],'little')
+    else:
+        assert stage==1
+        high,middle,low,word=w2&0xffffffff,w1>>32,w1&0xffffffff,w1
+        assert (high<<64)|(middle<<32)|low==int.from_bytes(raw[8:20],'little')
+    return high,middle,low,word
+
+def meta_fixture(U,ordinal,color):
+    assert 0<=U<1<<160 and 0<=ordinal<1<<128 and color in (0,1)
+    return U.to_bytes(20,'little')+bytes([color])+bytes(3)+ordinal.to_bytes(16,'little')
+
+def packet_fixture(at,data):
+    assert len(data) in (40,2560)
+    result=at.to_bytes(16,'little')+data
+    assert len(result)+32<=6144
+    if len(data)==2560:
+        assert at%64==0 and at//(1<<34)==(at+63)//(1<<34)
+    return result
+
+class Leaf6496:
+    def __init__(self,stage,high,middle):
+        self.stage=stage;self.high=high;self.middle=middle
+        self.counts={};self.next={};self.pending={}
+    def count(self,words):
+        assert 0<len(words)<=512
+        for low in words:
+            assert 0<=low<1<<32
+            self.counts[low]=add128(self.counts.get(low,0),1)
+    def prefix(self,start):
+        for low in sorted(self.counts):
+            self.next[low]=start;start=add128(start,self.counts[low])
+        return start
+    def receive(self,records):
+        assert 0<len(records)<=64
+        queue=[]
+        for raw in records:
+            high,middle,low,_=digit6496(raw,self.stage)
+            assert (high,middle)==(self.high,self.middle) and raw[21:24]==bytes(3)
+            at=self.next[low];self.next[low]=add128(at,1)
+            pending=self.pending.get(low,[])
+            if pending:assert pending[0][21]==len(pending)
+            if not pending and at%64:
+                queue.append(packet_fixture(at,raw));continue
+            pending.append(bytearray(raw))
+            if len(pending)<64:
+                pending[0][21:22]=len(pending).to_bytes(1,'little')
+                self.pending[low]=pending
+            else:
+                assert len(pending)==64
+                pending[0][21:22]=bytes(1)
+                queue.append(packet_fixture(at-63,b''.join(pending)))
+                self.pending.pop(low,None)
+        assert len(queue)<=len(records)<=64
+        return queue
+    def finish(self):
+        for low in sorted(self.pending):
+            records=self.pending[low];count=len(records)
+            assert 1<=count<=63 and records[0][21]==count
+            records[0][21:22]=bytes(1)
+            start=self.next[low]-count
+            for j,raw in enumerate(records):yield packet_fixture(add128(start,j),bytes(raw))
+        self.pending.clear()
+
+class Relay96:
+    def __init__(self,stage,high):
+        self.stage=stage;self.high=high
+        self.leaves={};self.totals={};self.count_cache={};self.scatter_cache={};self.queue=[];self.maximum=0
+    def leaf(self,middle):
+        if middle not in self.leaves:self.leaves[middle]=Leaf6496(self.stage,self.high,middle)
+        return self.leaves[middle]
+    def count(self,words):
+        assert 0<len(words)<=512
+        for word in words:
+            middle,low=word>>32,word&0xffffffff
+            self.totals[middle]=add128(self.totals.get(middle,0),1)
+            cache=self.count_cache.setdefault(middle,[]);cache.append(low)
+            if len(cache)==512:self.leaf(middle).count(cache);cache.clear()
+    def count_finish(self):
+        for middle,cache in self.count_cache.items():
+            if cache:self.leaf(middle).count(cache);cache.clear()
+    def prefix(self,start):
+        for middle in sorted(self.totals):
+            end=self.leaf(middle).prefix(start)
+            assert end==add128(start,self.totals[middle]);start=end
+        return start
+    def receive(self,records):
+        assert 0<len(records)<=64 and not self.queue
+        for raw in records:
+            high,middle,_,_=digit6496(raw,self.stage);assert high==self.high
+            cache=self.scatter_cache.setdefault(middle,[]);cache.append(raw)
+            if len(cache)==64:self.queue.extend(self.leaf(middle).receive(cache));cache.clear()
+        self.maximum=max(self.maximum,len(self.queue));assert len(self.queue)<=4096
+
+def sort96_fixture(records,stage):
+    assert stage==1
+    relays={};totals={};count_cache={};scatter_cache={};out={};full_count_frames=0
+    def relay(high):
+        if high not in relays:relays[high]=Relay96(stage,high)
+        return relays[high]
+    def consume_queue(r):
+        for packet in r.queue:
+            at=int.from_bytes(packet[:16],'little');data=packet[16:]
+            assert len(data) in (40,2560)
+            for j in range(len(data)//40):
+                dest=add128(at,j);raw=data[40*j:40*j+40]
+                assert 0<=dest<len(records) and dest not in out and raw[21:24]==bytes(3)
+                out[dest]=raw
+        r.queue.clear()
+    for raw in records:
+        high,_,_,word=digit6496(raw,stage);totals[high]=add128(totals.get(high,0),1)
+        cache=count_cache.setdefault(high,[]);cache.append(word)
+        if len(cache)==512:
+            frame=b''.join(x.to_bytes(8,'little') for x in cache);assert len(frame)==4096
+            relay(high).count([int.from_bytes(frame[8*j:8*j+8],'little') for j in range(512)])
+            full_count_frames+=1;cache.clear()
+    for high,cache in count_cache.items():
+        if cache:relay(high).count(cache);cache.clear()
+    for r in relays.values():r.count_finish()
+    start=0
+    for high in sorted(totals):
+        end=relay(high).prefix(start);assert end==add128(start,totals[high]);start=end
+    assert start==len(records)
+    for raw in records:
+        high,_,_,_=digit6496(raw,stage);cache=scatter_cache.setdefault(high,[]);cache.append(raw)
+        if len(cache)==64:relay(high).receive(cache);consume_queue(relay(high));cache.clear()
+    for high,cache in scatter_cache.items():
+        if cache:relay(high).receive(cache);consume_queue(relay(high));cache.clear()
+    for r in relays.values():
+        for middle,cache in r.scatter_cache.items():
+            if cache:
+                r.queue.extend(r.leaf(middle).receive(cache));r.maximum=max(r.maximum,len(r.queue))
+                assert len(r.queue)<=4096;consume_queue(r);cache.clear()
+        for leaf in r.leaves.values():
+            for packet in leaf.finish():
+                r.queue.append(packet)
+                if len(r.queue)==64:consume_queue(r)
+            consume_queue(r)
+    assert len(out)==len(records)
+    return [out[i] for i in range(len(records))],max(r.maximum for r in relays.values()),full_count_frames
+
+def sort64_fixture(records):
+    shards={};totals={};count_cache={};scatter_cache={};out={};full_count_frames=0;maximum=0
+    def shard(high):
+        if high not in shards:shards[high]=Leaf6496(0,high,0)
+        return shards[high]
+    def consume(queue):
+        nonlocal maximum
+        maximum=max(maximum,len(queue));assert len(queue)<=64
+        for packet in queue:
+            at=int.from_bytes(packet[:16],'little');data=packet[16:];assert len(data) in (40,2560)
+            for j in range(len(data)//40):
+                dest=add128(at,j);raw=data[40*j:40*j+40]
+                assert 0<=dest<len(records) and dest not in out and raw[21:24]==bytes(3)
+                out[dest]=raw
+    for raw in records:
+        high,_,low,_=digit6496(raw,0);totals[high]=add128(totals.get(high,0),1)
+        cache=count_cache.setdefault(high,[]);cache.append(low)
+        if len(cache)==512:
+            frame=b''.join(v.to_bytes(8,'little') for v in cache);assert len(frame)==4096
+            shard(high).count([int.from_bytes(frame[8*j:8*j+8],'little') for j in range(512)])
+            full_count_frames+=1;cache.clear()
+    for high,cache in count_cache.items():
+        if cache:shard(high).count(cache);cache.clear()
+    start=0
+    for high in sorted(totals):
+        end=shard(high).prefix(start);assert end==add128(start,totals[high]);start=end
+    assert start==len(records)
+    for raw in records:
+        high,_,_,_=digit6496(raw,0);cache=scatter_cache.setdefault(high,[]);cache.append(raw)
+        if len(cache)==64:consume(shard(high).receive(cache));cache.clear()
+    for high,cache in scatter_cache.items():
+        if cache:consume(shard(high).receive(cache));cache.clear()
+    for leaf in shards.values():
+        for packet in leaf.finish():consume([packet])
+    assert len(out)==len(records)
+    return [out[i] for i in range(len(records))],maximum,full_count_frames
+
+def run_protocol(inputs):
+    rng=random.Random(inputs['seed']+85);results=[]
+    for case in range(inputs['count']):
+        records=[];current=0
+        for i in range(4096):
+            if case%4==0:U=0
+            elif case%4==1:
+                if i%4==0:current=rng.getrandbits(160)
+                U=current
+            elif case%4==2:U=((i%2)<<159)|((i%16)<<128)|((i%7)<<96)|((i%2)<<64)|((i%16)<<32)|(i%7)
+            else:U=((i%3)<<158)|((i%64)<<96)|((i//64%7)<<64)|((i%2)<<64)|((i%64)<<32)|(i//64%7)
+            records.append(meta_fixture(U,(1<<100)+i,i&1))
+        reconstructed=[];batches=0
+        for start in range(0,len(records),512):
+            batch=records[start:start+512];assert len(batch)==512
+            payload=b''.join((raw[24:40]*6)[:88] for raw in batch);metadata=b''.join(batch);pending=True
+            assert len(payload)==45056 and len(metadata)==20480
+            payload_frames=[payload[j:j+4096] for j in range(0,len(payload),4096)]
+            metadata_frames=[metadata[j:j+4096] for j in range(0,len(metadata),4096)]
+            assert len(payload_frames)==11 and len(metadata_frames)==5
+            assert b''.join(payload_frames)==payload and pending
+            reply=b''.join(metadata_frames);pending=False
+            assert reply==metadata and not pending
+            reconstructed.extend(reply[j:j+40] for j in range(0,len(reply),40));batches+=1
+        assert reconstructed==records and batches==8
+        for group in range(0,len(records),2048):
+            bulk=b''.join(reconstructed[group:group+2048])
+            frames=[bulk[j:j+4096] for j in range(0,len(bulk),4096)]
+            assert len(bulk)==81920 and len(frames)==20 and b''.join(frames)==bulk
+        stage0,q0,f0=sort64_fixture(reconstructed)
+        stage1,q1,f1=sort96_fixture(stage0,1)
+        expected=sorted(records,key=lambda raw:int.from_bytes(raw[:20],'little'))
+        assert stage1==expected
+        # Standalone full-width destination carry and bank-boundary case.
+        boundary=Leaf6496(0,0,0);boundary.count([0]*200)
+        base=(1<<100)+(1<<34)-17;assert boundary.prefix(base)==add128(base,200)
+        test=[meta_fixture(0,(1<<110)+i,i&1) for i in range(200)];packets=[]
+        for i in range(0,200,64):packets.extend(boundary.receive(test[i:i+64]))
+        packets.extend(boundary.finish());written={}
+        for packet in packets:
+            at=int.from_bytes(packet[:16],'little');data=packet[16:]
+            for j in range(len(data)//40):written[add128(at,j)]=data[40*j:40*j+40]
+        assert [written[add128(base,j)] for j in range(200)]==test
+        assert add128((1<<64)-1,1)==1<<64
+        results.append({'case':case,'records':4096,'worker_batches':8,'metadata_frames_per_batch':5,'stable_full160_sort':True,'full128_ordinals_preserved':True,'padding_restored':True,'maximum_direct_queue':q0,'maximum_relay_queue':q1,'pass_bits':[64,96],'full_count_frames':f0+f1,'bank_and_counter_boundary':True})
+    return {'scope':'bounded sparse initialized-zero packet/state-model fixture at full160-bit fingerprints/128-bit ordinals and real40/88-byte records; actual direct64 then relayed96-bit stable passes and5 metadata frames; not production bucket initialization, native dispatch timing, GT success, probability or qualification','cases':results}
+
+def run_prefix_copy(inputs):
+    rng=random.Random(inputs['seed']+86);cases=[]
+    for case in range(inputs['count']):
+        for size in (5,11,320,322,512):
+            machine=Machine([]);machine.out_bytes=size*8
+            base=machine.out if case%2 else machine.prev1;words=[rng.getrandbits(64) for _ in range(size)]
+            for j,v in enumerate(words):machine.mem[base+8*j]=v
+            machine.reg[:2]=[machine.out,base];before=dict(machine.mem)
+            machine.execute('prefix_copy'+str(size))
+            assert [machine.readmem(machine.out+8*j) for j in range(size)]==words
+            assert [machine.readmem(base+8*j) for j in range(size)]==words
+            assert machine.count==size+(size%2)+1 and machine.reg[18:]==machine.saved
+            assert machine.reg[0]==machine.out+size*8 and machine.reg[1]==base+size*8
+            assert all(machine.out<=at<machine.out+size*8 or before.get(at)==v for at,v in machine.mem.items())
+            cases.append({'case':case,'words':size,'instructions_including_ret':size+(size%2)+1,'exact_alias':base==machine.out,'abi_and_initialized_reads':True})
+    return {'scope':'actual post-indexed scalar5/11/320/322/512-word frame-copy source, including encodable immediates, full bytes, alias/ABI/read/write/count constraints; not a production routing/controller timing certificate','cases':cases}
+
+
+def run_pending_byte(inputs):
+    rng=random.Random(inputs['seed']+87);cases=[]
+    for case in range(inputs['count']):
+        machine=Machine([]);machine.out_bytes=40
+        raw=bytearray(rng.getrandbits(8) for _ in range(40));raw[20]=case&1;raw[21:24]=bytes(3)
+        for j in range(5):machine.mem[machine.out+8*j]=int.from_bytes(raw[8*j:8*j+8],'little')
+        q=[1,63,32,0][case%4];machine.reg[:2]=[machine.out,q]
+        machine.execute('metadata_pending_set');assert machine.count==2 and machine.reg[18:]==machine.saved
+        actual=b''.join(machine.readmem(machine.out+8*j).to_bytes(8,'little') for j in range(5));expected=bytearray(raw);expected[21]=q
+        assert actual==expected and actual[20]==raw[20] and actual[24:40]==raw[24:40]
+        machine.reg[0]=machine.out;machine.execute('metadata_color');assert machine.reg[0]==raw[20]
+        machine.reg[0]=machine.out;machine.execute('metadata_ordinal')
+        assert machine.reg[0]|(machine.reg[1]<<64)==int.from_bytes(raw[24:40],'little')
+        machine.reg[0]=machine.out;machine.execute('metadata_pending_get');assert machine.reg[0]==q
+        machine.reg[0]=machine.out;machine.execute('metadata_pending_clear')
+        cleared=b''.join(machine.readmem(machine.out+8*j).to_bytes(8,'little') for j in range(5));assert cleared==raw
+        assert machine.count==10 and machine.reg[18:]==machine.saved
+        cases.append({'case':case,'occupancy':q,'only_byte21_changes':True,'color_and_full128_ordinal_preserved':True,'byte_and_ordinal_wrappers_instructions':2})
+    return {'scope':'actual unsigned-offset LDRB/STRB occupancy primitives against complete40-byte row oracle; production inlines one byte instruction,wrapper RET is separately control; not a production controller timing or probability certificate','cases':cases}
+
+
+def run_scalar_streams(inputs):
+    order=int('73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001',16)
+    baby_count=35597089187900144514297950209050673152
+    assert baby_count<1<<126 and baby_count<order and 2*order<1<<256
+    rng=random.Random(inputs['seed']+91);cases=[]
+    for case in range(inputs['count']):
+        j=[1,baby_count,(1<<64)-1,1<<64][case%4]
+        machine=Machine([]);machine.out_bytes=32;machine.extra_write_ranges=[(machine.prev1,machine.prev1+16)]
+        machine.mem[machine.prev1]=j&MASK;machine.mem[machine.prev1+8]=j>>64
+        machine.reg[:2]=[machine.out,machine.prev1];before=dict(machine.mem)
+        machine.execute('baby_scalar_fill')
+        got=sum(machine.readmem(machine.out+8*k)<<(64*k) for k in range(4))
+        state=machine.readmem(machine.prev1)|(machine.readmem(machine.prev1+8)<<64)
+        assert got==j and got<order and state==j+1 and machine.count==7 and machine.reg[18:]==machine.saved
+        assert all(machine.out<=at<machine.out+32 or machine.prev1<=at<machine.prev1+16 or before.get(at)==v for at,v in machine.mem.items())
+        a,b=[(0,0),(order-1,1),(order-1,order-1),(rng.randrange(order),rng.randrange(order))][case%4]
+        giant=Machine([]);giant.out_bytes=32;ap=giant.out if case%2 else giant.prev1
+        for base,value in [(ap,a),(giant.prev2,b),(giant.mod,order)]:
+            for k in range(4):giant.mem[base+8*k]=(value>>(64*k))&MASK
+        giant.reg[:4]=[giant.out,ap,giant.prev2,giant.mod]
+        giant.execute('fr255_add')
+        got=sum(giant.readmem(giant.out+8*k)<<(64*k) for k in range(4))
+        assert got==(a+b)%order and got<order and giant.count<=18 and giant.reg[18:]==giant.saved
+        cases.append({'case':case,'baby_j':str(j),'baby_instructions':7,'full32_encoding_and_exact128_next':True,'giant_instructions':giant.count,'giant_full_r_oracle':True,'giant_exact_alias':ap==giant.out})
+    return {'scope':'actual small public baby counter/full32 Fr encoding and full-r giant modular-add instructions with boundaries,carry,alias,read/write/ABI/count checks;no reduced production order,GT success,probability or qualification assertion','cases':cases}
+
+
+def run_payload88(inputs):
+    rng=random.Random(inputs['seed']+95);cases=[]
+    for case in range(inputs['count']):
+        raw=bytearray(rng.getrandbits(8) for _ in range(88));raw[20]=case&1
+        machine=Machine([]);machine.out_bytes=0
+        for j in range(11):machine.mem[machine.prev1+8*j]=int.from_bytes(raw[8*j:8*j+8],'little')
+        before=dict(machine.mem);machine.reg[0]=machine.prev1;machine.execute('payload_scalar')
+        assert sum(machine.reg[j]<<(64*j) for j in range(4))==int.from_bytes(raw[32:64],'little')
+        machine.reg[0]=machine.prev1;machine.execute('payload_color');assert machine.reg[0]==raw[20]
+        assert machine.count==6 and machine.reg[18:]==machine.saved and machine.mem==before
+        for different_word in [-1,0,1,2]:
+            x=Machine([]);x.out_bytes=0
+            for j in range(3):
+                value=int.from_bytes(raw[64+8*j:72+8*j],'little');x.mem[x.prev1+64+8*j]=value
+                x.mem[x.prev2+64+8*j]=value^(1 if j==different_word else 0)
+            before=dict(x.mem);x.reg[:2]=[x.prev1,x.prev2];x.execute('payload_tag_equal')
+            assert x.reg[0]==int(different_word==-1) and x.count<=14 and x.reg[18:]==x.saved and x.mem==before
+        cases.append({'case':case,'payload_bytes':88,'full32_scalar_offset32':True,'color_offset20':True,'all24_tag_bytes_at64_compared':True,'read_write_abi':True})
+    return {'scope':'actual88-byte payload full-scalar/color/complete24-byte tag getters;no empirical hash probability,GT execution or production controller timing assertion','cases':cases}
+
+
+def run_notification(inputs):
+    # Explicit monitor/event semantics fixture ONLY,not a hardware execution proof.
+    ops=OPS['notify_wait_flag'];labels={args[0]:i for i,(op,args) in enumerate(ops) if op=='@label'}
+    def body(name):
+        pos=labels[name]+1;rows=[]
+        while pos<len(ops):
+            op,args=ops[pos];pos+=1
+            if op=='@label':continue
+            rows.append((op,args))
+            if op=='ret':return rows
+        raise AssertionError('missing notification RET')
+    assert body('notify_publish')==[('dmb',['ish']),('stlr',['x1','[x0]']),('ret',[])]
+    assert body('notify_clear')==[('stlr',['xzr','[x0]']),('ret',[])]
+    def one(arrivals,stale):
+        # Producer writes HEADER twice then publishesflag1;all are in the watchedgranule.
+        # Other idle PEs hold DISTINCT2048B granules and must not execute any step.
+        flag=0;event=bool(stale);monitor=False;reg1=0;pc=labels['notify_wait_flag'];count=0;tick=0;pending=list(arrivals);delivered=0
+        others=[{'monitor':2048*(j+10),'event':False,'instructions':0} for j in range(7)]
+        def write():
+            nonlocal flag,event,monitor,delivered
+            delivered+=1
+            if delivered==len(arrivals):flag=1
+            if monitor:event=True;monitor=False
+            # Allproducerstoresaregranule0;otherPEgranulesareunmatched.
+            for other in others:
+                if other['monitor']==0:other['monitor']=None;other['event']=True
+        while True:
+            while pending and pending[0]<=tick:pending.pop(0);write()
+            op,args=ops[pc];pc+=1
+            if op=='@label':continue
+            count+=1;assert count<=20
+            if op=='ldaxr':assert args==['x1','[x0]'];reg1=flag;monitor=True
+            elif op=='cbnz':assert args==['x1','notify_wait_ready'];pc=labels[args[1]] if reg1 else pc
+            elif op=='wfe':
+                while not event:
+                    assert pending,('lost wake',flag,monitor,arrivals,stale)
+                    tick=max(tick,pending.pop(0));write()
+                event=False
+            elif op=='b':assert args==['notify_wait_loop'];pc=labels[args[0]]
+            elif op=='clrex':monitor=False;event=True
+            elif op=='ret':
+                assert flag==reg1==1 and delivered==len(arrivals)
+                assert all(other['instructions']==0 and not other['event'] and other['monitor'] is not None for other in others)
+                return count
+            else:raise AssertionError(('unexpected notifier opcode',op))
+            tick+=1
+    # Finite boundary enumeration supports lost-wake logic;arbitrary timing bound is analytic.
+    worst=0;scenarios=0
+    for stale in (0,1):
+        for x in range(9):
+            for y in range(x,9):
+                for z in range(y,9):
+                    worst=max(worst,one([x,y,z],stale));scenarios+=1
+        worst=max(worst,one([100,200,300],stale));scenarios+=1
+    assert worst==20
+    continuation_worst=0;continuation_cases=0
+    for stale in (0,1):
+        for publication in list(range(13))+[100]:
+            continuation_worst=max(continuation_worst,one([publication],stale));continuation_cases+=1
+    assert continuation_worst==12
+    layouts=[]
+    for case in range(inputs['count']):
+        size=[0,320,322,512][case%4];memory=bytearray([0xa7]*12288)
+        for half in (0,6144):
+            memory[half:half+8]=bytes(8);memory[half+8:half+16]=bytes(8)
+            header=bytes((j+case)&255 for j in range(32));data=bytes((j*7+case)&255 for j in range(size*8))
+            oldflag=memory[half:half+8]
+            memory[half+16:half+48]=header;memory[half+2048:half+2048+len(data)]=data
+            assert memory[half:half+8]==oldflag and half%2048==0 and len(data)<=4096
+            assert memory[half+48:half+2048]==bytes([0xa7])*2000
+            memory[half:half+8]=(1).to_bytes(8,'little')
+            assert int.from_bytes(memory[half:half+8],'little')==1
+            assert memory[half+16:half+48]==header and memory[half+2048:half+2048+size*8]==data
+            memory[half:half+8]=bytes(8)
+        layouts.append({'case':case,'data_words':size,'edge_bytes':12288,'header_offset':16,'payload_offset':2048,'flag_header_granule_isolated_from_data':True,'padding_unread_and_unchanged':True})
+    stable_streams=[]
+    for frames in (1,5,11,20):
+        edge=bytearray(12288)
+        for half in (0,6144):
+            bank=(1<<94)+frames;offset=(1<<40)-frames*4096;descriptor=1|(frames<<8)|(512<<24)
+            header=(bank&((1<<64)-1)).to_bytes(8,'little')+(bank>>64).to_bytes(8,'little')+offset.to_bytes(8,'little')+descriptor.to_bytes(8,'little')
+            assert int.from_bytes(header[:8],'little')|(int.from_bytes(header[8:16],'little')<<64)==bank
+            assert int.from_bytes(header[8:16],'little')<1<<32 and offset+frames*4096==1<<40
+            assert descriptor>>34==0 and (descriptor>>8)&65535==frames and (descriptor>>24)&1023==512
+            edge[half+16:half+48]=header;header_stores=2
+            for frame in range(frames):
+                assert int.from_bytes(edge[half:half+8],'little')==0
+                data=bytes((j+frame*17)&255 for j in range(4096))
+                before_header=bytes(edge[half+16:half+48]);edge[half+2048:half+6144]=data
+                edge[half:half+8]=(1).to_bytes(8,'little')
+                assert bytes(edge[half+16:half+48])==before_header==header
+                assert bytes(edge[half+2048:half+6144])==data
+                edge[half:half+8]=bytes(8)
+            assert header_stores==2
+        stable_streams.append({'frames':frames,'header_stores_per_half_entire_stream':2,'all4096_data_bytes_each_frame':True,'continuation_header_stores':0,'flags_cleared_before_reuse':True})
+    return {'scope':'actualwaiter/controlopcodesunderexplicitper-PEexclusive-monitor/latchedeventsemantics;finiteproducer-race/stale/header-wake/selectivity/12KiB-layoutfixtureONLY,notrealhardwareWFEorproduction2^96PEexecution/GTprobability/qualification','race_scenarios':scenarios,'max_waiter_instructions_including_ret':worst,'other_idle_PEs_hot_instructions':0,'notification_caller_budget':32,'ordinary_controller_bound':120,'ordinary_allowance':128,'prefix_controller_bound':136,'prefix_allowance':160,'layouts':layouts,'continuation_race_cases':continuation_cases,'continuation_max_waiter_including_ret':continuation_worst,'continuation_endpoint_notify':24,'continuation_endpoint_control':8,'continuation_edge_total':64,'stable_header_streams':stable_streams}
+
+
+def run_quotient_boundaries(inputs):
+    # Actual first expanded QREDUCE30 body; appendedRET only supplies fixture return.
+    ops=OPS['recurrence_fp2_step'];starts=[i for i,(op,a) in enumerate(ops) if op=='extr' and a==['x1','x10','x9','#5']]
+    assert starts
+    body=ops[starts[0]:starts[0]+30]
+    assert body[-1]==('csel',['x9','x24','x9','hs'])
+    OPS['quotient_boundary_fixture']=body+[('ret',[])]
+    cases=0
+    for q in range(45):
+        for t in (0,1,P//2,P-1):
+            m=Machine([]);Y=q*P+t;m.reg[28]=m.const;m.reg[2]=(P+2**325-1)//2**325
+            m.field(m.const+448,P)
+            for j in range(50):
+                for k in range(7):m.mem[m.const+528+64*j+8*k]=(j*P>>(64*k))&MASK
+            for k in range(7):m.reg[4+k]=(Y>>(64*k))&MASK
+            keep=m.reg[11:18];m.execute('quotient_boundary_fixture')
+            assert sum(m.reg[4+k]<<(64*k) for k in range(7))==t and m.reg[10]==0
+            assert m.reg[11:18]==keep and m.reg[18]==m.saved[0] and m.count==31
+            cases+=1
+    return {'cases':cases,'actual_QREDUCE30_plus_fixture_RET':31,'scope':'full-p q0..44/remainder0,1,half,p-1 boundaries; exact residue/live-other-accumulator; not universal proof or hardware qualification'}
+
+
+def run_sort_roles(inputs):
+    T=1<<40;code=(0,4<<20)
+    def disjoint(ranges):
+        values=sorted([code]+ranges)
+        assert all(a[1]<=b[0] for a,b in zip(values,values[1:]))
+        assert all(0<=a<b<=1<<47 for a,b in values)
+    for worker in (False,True):
+        parent=(4 if worker else 32)*T;ports=(80 if worker else 64)*T
+        # Each edge port uses12KiB,all2^32childportsconsume48TiB.
+        common=[(parent,parent+12288),(ports,ports+(48*T))]
+        disjoint(common+[(T,T+(64<<30)),((8 if worker else 2)*T,(8 if worker else 2)*T+2520*(1<<32))])
+        disjoint(common+[(T,T+(64<<30)),(2*T,2*T+(32<<30)),(8*T,24*T),(24*T,24*T+(32<<20))])
+    disjoint([(32*T,32*T+12288),(64*T,112*T),(T,T+(64<<30)),(2*T,2*T+2520*(1<<32))])
+    disjoint([(64*T,112*T),(T,T+(64<<30)),(2*T,2*T+(32<<30)),(8*T,24*T)])
+    return {'scope':'exact47-bit role-specific localintervals for Root/directworker/nonworker/relay/depth2shards; phases reuse arrays ONLYafterallACKs; not a runtime scheduler or productionallocationcertificate','worker_pending_overwrites_dead_LUT_only':True,'port_remap_required':False,'full_bucket_bits':[64,96]}
+
+
+def run_field_branch_boundaries(inputs):
+    cases=[];values=[0,1,P-1,P//2,(P+1)//2]
+    for name in ('fp381_add','fp381_sub'):
+        seen=set()
+        for a in values:
+            for b in values:
+                for alias in (0,1,2):
+                    m=Machine([]);m.out_bytes=48
+                    ap=m.out if alias==1 else m.prev1;bp=m.out if alias==2 else m.prev2
+                    m.field(ap,a);m.field(bp,b);m.field(m.mod,P)
+                    m.reg[:4]=[m.out,ap,bp,m.mod];before=dict(m.mem);m.execute(name)
+                    want=(a+b if name=='fp381_add' else a-b)%P
+                    assert m.loadfield(m.out)==want and m.loadfield(m.out)<P
+                    assert m.reg[18:]==m.saved and m.count<=26
+                    assert all(m.out<=at<m.out+48 or before.get(at)==v for at,v in m.mem.items())
+                    seen.add(m.count)
+        cases.append({'function':name,'native_full_p_cases':75,'all_aliases':True,'public_ABI':True,'actual_counts':sorted(seen),'maximum_bound':26})
+    return {'scope':'actual conditional native field source vs independent fullp integer oracle,zero/p-1/sump/borrow/equality/exactout-a/out-baliases; not timing/probability/production qualification','cases':cases}
+
+for line in sys.stdin:
+    if line.strip():
+        try:
+            inputs=json.loads(line)
+            print(json.dumps({'field_branch_boundaries':run_field_branch_boundaries(inputs),'sort_role_layouts':run_sort_roles(inputs),'quotient_boundaries':run_quotient_boundaries(inputs),'recurrence':run(inputs),'fingerprint':run_nh(inputs),'constant_lookup':run_fixed(inputs),'orbit_key':run_key(inputs),'prefix_copy':run_prefix_copy(inputs),'radix80_protocol':run_protocol(inputs),'metadata_pending_byte':run_pending_byte(inputs),'scalar_streams':run_scalar_streams(inputs),'payload88':run_payload88(inputs),'selective_notification':run_notification(inputs)}),flush=True)
+        except Exception as exc:print(json.dumps({'audit_error':type(exc).__name__,'message':str(exc)}),flush=True);raise
