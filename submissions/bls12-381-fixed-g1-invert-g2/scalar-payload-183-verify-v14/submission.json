@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "183-bit full-residue fingerprint and scalar-only payload with charged GT verification",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 supplied nonidentity P in G1 and independent uniform z in GT,return Q in G2 with e(P,Q)=z,no auxiliary powers. Preserve full fields/r255,six tracks,one computation metric,C20000 and0.39 success. Generate the actual random-stride trace streams and exact twelve-orbit S192 transiently. Fingerprint S using three independent full61-bit affine residues,183 bits encoded in24 bytes with9 high zero padding bits. Pair collision bound for distinctS is(2^-63+1/q)^3. Store ONLY full canonical32-byte Fr scalar payloads;metadata48 retains fingerprint24,color24,pending25,padding26..31,ALL128 ordinal bits32..47. Sort by two stable96-bit passes over the192-bit encoding,construct BOTH full2^96 bucket sets. Process at most floor(L/2^29) equal-fingerprint pairs,including skipped pairs. Try at most12 exponents per pair,verify each by actual h^a=z,and CONTINUE after false fingerprints. Each complete pair has C*H+R<2^29 with H<=6144 dense reference multiplications,R<=2^25;all confirmations together cost<=L in the normalized numerator. TerminalG2 construction/full pairing verification at most once. Exact group-event/Markov/sampling calculation supports success>0.3900031. Native recurrence2697/key724/NH346 retain2738/735/355,scalar20/main712 givegeneration4560;local sorting720,scan128,confirmation1,spare256 givebase5665;network920 giveshot6585,retained6665. N=6665L+2^124 is below20000*2^(24899/200). Both full2^96 constructions are paid,sortcold<2^121,totalcold<2^124,algorithmdata<2^110,totalpeak<2^138 bytes,advice0. All preprocessing,coins,failures,transfers,sorting,verification and output charged. Analytical exploratory claim only,no production run,qualification,promotion or inherited acceptance.",
+      "score": {
+        "numerator": "24899",
+        "denominator": "200"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker ONLY. Interpret actual full183-bit NH packing,recurrence/key/fixed/scalar,I/O4/6/384/386/512 and byte25/color24/ordinal32 instructions. Bounded4096-row48-byte metadata model checks two96-bit passes,full183-bit fingerprints/192-bit zero padding,full128 ordinals,four scalar payload/six metadata source frames,24-frame bulk,queues,banks and padding. Full-r exponent-control fixtures use an explicitly TEST-ONLY hidden-exponent oracle to check continuing after false fingerprints,mixed/GG formulas,skips and capped counts;they are not a production GT oracle or cost/success certification. All production array/controller/reference-work bounds are analytical.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
