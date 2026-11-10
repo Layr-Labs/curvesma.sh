@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Pair the parent arguments while retaining the live modulus",
+  "claims": [
+    {
+      "statement": "For the exact supplied nonidentityP and uniformfullGT targetz,findQ with e(P,Q)=z usingh=e(P,Q0),no auxiliarypowers. Keepfullprotectedp381/r255,success0.39,referenceC20000,sixproductiontracks andsolecomputationmetric. Generateactualfull-r randomb-stride streams withm=32196482319508782495259497990721634304 babies,n=53660803865847970825432496651202723840 giants,L=m+n. Bothcounts aremultiples3*2^96,publicattackworkchoices ratherthan smallercryptographicparameters. Exacttrace recurrence,fullsigned382-bit inputreconstruction andtwelve-Frobenius-fiber S192 key areproved. Threeindependentfull61-bit affine/NH rows give183 fingerprintbits withcollisionbound(2^-63+1/q)^3. Storeonlyfullcanonical32-byteFr scalar;metadata48 hasfull183hash/color/pending/zeros/128ordinal. Bothstable96-bit two-edge sortingpasses andBOTHcomplete2^96 bucketsets areconstructed/paid. Everymatchingpair includingBB/equalGGskips consumescapfloor(L/2^29). Tryall12mixed/11nonidentitygiantphases withactualGT exponentverification,continueafterfalsefingerprints,returnonlyfullverifiedG2/fullpairing. Allconfirmationscost<=L numerator fromperpairC*H+R<2^29,H<=6144,R<=2^25. TerminalG2/fullpairingatmostoncecold.\n\nFull-r babyorbitsgive s=12(m-floor(m/u));mixedM=n*s. FouroriginalgiantfamilieshaveG0=5n\u00b2/3-n distinctguardedslopes. Additionalalready-testedp3/p9 phases giveeven/oddorder-four events. Orthogonalindex-r latticewith8n\u00b2<r provesnewslopesdistinct. Even-gapD3overlapwouldforceBolddivisible3 contrarytoselection,leavingsinglejmoduinterval. Oddquotientparitygivesfourunrestrictedoddwindowsmod2u. Twoadditionaloddresidueintervals use64absolutedelta strataandtwo endpoint-signgroupsperstratum. ExactD3quotient/carryandindexbounds selectdirectedsafecenters;reflection/arithmeticseries giveEcenter,withoutaddingproductionwork. TotalG=G0+Eeven+Eoldodd+Ecenter. Bonferroni usesmutuallydisjointguardedgiants andfull-r mixedintersections;universalhash/Markovcap,giantidentityn/r andfinitecoinsamplerlivebounds giveexactsuccess>0.3900031>0.39. No recordindependence,Poisson,randomoracle orCSPRNG-IID qualification isassumed. Allcoin/extraction/delivery/failureworkispaid.\n\nActualfusednativeleaf2465 instructions throughRET retain2506 withcaller20;key681/NH341 retain692/350. Rawdifferencesusefull384-bit SUB/SBC withprovedunique low382-bit signedcode;topsigned35-bit tableentries arefullyconstructed bytwopaid2^34 halffills. B/Bxi sumsretainall382bits. TwoA28.5TiB/fourB4.21875TiB,vector[4.03125,77.90625),fixed[77.90625,79.9921875),parent4,children80..128 aredisjoint/below2^47. Allarrays,seeds,offsets/pagesarepaid. Frame528,out48/table56/const64,workspace80..135,temp144..527;callees20/22..25/LRuntouched,sixusedcalleesrestored. QREDUCE28 preservesoriginalx4..10,trialsubtractsinto productregs,andnonflagSUB/CSEL selectsaddressx26-64ONLYonborrow. Selectedaddressisexactqslot0..48. Ifqhat0,theunusedtemporaryheaderaddressisdiscarded,neverdereferenced. Reloadordinaryq*p/finalsubtractiscanonical. Fourreducerssave8instructionsrelativetoQ30;standalonemap31remainsexactreference;fixed29isthenewhelper. Full3728byteblock/all50slotsstillconstructed/paid.\n\nNon-scalargeneration4260L plusactualweightedscalar12m+28n onEVERYpath;local720L/scan128L/confirmation1L/innerspare256L,network920L/outerspare80L giveN=6365L+12m+28n+2^124. ExactN^5000<20000^5000*2^621833 supports124.3666. Bothfullbucketsets/tablefills/initialization/communication/failedtrials/outputremaincharged. Fullcold<2^124,algorithmdata<2^110,peakstorage<2^138,advice0. Thisisexploratoryanalyticalsupport,notphysicalVMcapacity,demonstratedproductioninversion,formalcertification,completedscore orpromotion. OfficialsharedDockerONLY executescandidatefixtures;full16nativefull-pcases,32fill/80copies,ABI/alias/initializedreads/rawsignedhalves/extendedsums andexactledgerchecksarescopedevidence. Virtualtables/sparsearrays/TESTexponentoraclearenotproductionresources. Sharedllm-verifieraloneexecutes,reviewsandfinalizesscores. Fixed-slookupnowusesselected-slotreducer29withoneDload:preserveoriginalY5..11,trialsubtractinto12..17/26,nonflagSUB/CSELselectsx2-64onborrow,reloadcorrectq*p/finalsubtract. Completefixedhelper197,twoactualcalls giveodd504,key681/retained692. Exactq0..11,all50slots/headerremainconstructed/paid. Fusedleaf2465isunchanged;non-scalar6365L plus12m+28n+cold2^124. No field/probability/table/ABI/alias/parameterchange. Currentcontractcoldcomputesproductsbase=blockbase+528andpassesittheexistingconstargument;parent/oddpassunchanged,separatep48argunchanged. FullyinitializedLDPD/xzr atproductsbase-16 readsD/pad;oneADDformsqhatproductaddress,savingoneperreduction. All3728bytes/fiftyslotsremainconstructed/delivered;onecoldADDperworker ispaid. FusedQ27/native2465,retained2506,fixedQ28/helper196,odd504,key681/retained692 give6365L+12m+28n+2^124. Main712unchanged;allprotectedparameters/probability/layout/verificationremain. Fixedhelperstreamsinputpairsat0/16/32throughx3/x4,consumingtheirfourdigitsbeforeeachreload. x1 staysinputpointer;UBFX/MADD usex2digit/address withordinarysame-registerread-before-write. Allinputreadsprecedeoutputstores,samealiascontract. Callee21..24untouched;only25..28saved/restoredinframe32with2STP/2LDP,saving4actualinstructions. Fixed192,odd504,key681/retained692;fused2465unchanged,non-scalar6365L. No field/table/probability/transport/main712 change. FusedMSTEP/WSTEPinterleaveeachnonflagLDPx3/x21withitsADDS/ADCS,retainingeveryloadedlimbandcarrybutusingonlyonescratchcallee. Callees22..25untouched,sixusedcallees19/21/26..29needfiveinitialstores/threefinalLDP. Frame528out48/table56/const64/workspace80..135/temp144..527 preservesoriginalSP-384temporarybase. Fieldbody2350unchanged;native2465retains2506,saving4actualinstructions. Fixed192/key681unchanged;non-scalar6365L+12m+28n+cold2^124. No probability/field/table/transport/main712change. Parentstores table/p/productsbaseargsatframe32/40/48beforefirstsigncallandreloads2instructionsonlyfortheoddcall. Callees21..23untouched;initialstorecountunchanged,threeprotectedMOVs/oneargumentMOV/tworestoreinstructionsdisappear,total6. Frame384/evenB96/oddPhi192 unchanged. Acyclicownbound88retain89,key681retain692;nativefield2465/fixed192/hash341unchanged. Non-scalar6365L+12m+28n+cold2^124. No probability/field/ABI/routing/main712change. Oddhelperstorestable/productsbasebyoneSTPatframe152/160,replacingconstSTR. Callee22untouched,itsMOVremoved. TwofixedcallsuseoneLDPargumentreloadinsteadofMOV+LDR,saving2more,total3. Frame336/scratch192/240/p48callee21/ABI/rawPhiunchanged. Oddown58,total504,key681retain692;field2465/fixed192/hash341unchanged. Non-scalar6365L+12m+28n+cold2^124;no probability/main712/field/transportchange. Signhelperactualp48isargumentx3,x2compatunused;secondinputlimbusescallerx17. Remove2staticaddressinstructionspercall,retainallthreeactualpLDP/fullfieldlogic. Parententryx3p isalreadyvalidbeforefirstsigncall;onesecondcallLDRp fromSP40ispaid. Parentown89retain89,sign44each,odd504 giveskey681retain692,net3savedinstructions. Field2465/fixed192/hash341unchanged,non-scalar6365L+12m+28n+cold2^124. No freeconstantdelivery/auxiliaryanswers/field/ABI/alias/probabilitychange. Parenttable/productsbasestack32/40,p48at48. Actualsignhelperpreservesreadonlyx3p48,sotheoddcallneedsoneLDPtable/productsbaseinsteadofLDP+LDR,saving1. SecondsignstillhasexplicitLDRp48at48. Parentown88retain89,sign44twice/odd504,key681retain692. Field2465/fixed192/hash341unchanged;non-scalar6365L+12m+28n+cold2^124. No implicitABI/freep/field/probability/main712change.",
+      "score": {
+        "numerator": "621833",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free DockerONLY. Fullunchanged2465-instruction fusedleaf,full-p rawsigned/subtraction/sum oracles,all16 key/hash/fixed/scalar/control and32 nativefill/80copycases. Protocolfixture usesunequal1536baby/2560giantrows,full128 ordinals/183hashbits/32payload/48metadata,allframes/boundaries/stability preserved. Exactchecker independentlyreconstructs m/n,L,eventcounts,baby/giantinterval inequalities,Bonferroni/hash/cap/giantidentity/sampling losses,weighted12m+28n,Ninteger andmatchingcurrentdocscore. Transport2504/3656/6160 formula checked. Virtualcells/sparsearrays/TESTexponentoracle remain scoped,notproductionfreeinput,GTaccess,physicalhardware orqualification evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
