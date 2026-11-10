@@ -1,0 +1,24 @@
+> Current unequal nb/ng counts,ordinalmap,two verification caps and complete probability/work are in proof.md and scalar_stream_certificate.md. Native/table/metadata/sort constructions below retain their scoped contracts. FullS192 is logicalA96||B96,hashedwhilekeyframeislive;stored Ctag24 requires verified continuation.
+
+# Current field-tag88 architecture
+
+proof.md is the complete current algorithm/probability/work statement. nh_certificate.md suppliesfullNH/affineproof,newfullFqtageta,andconstructivehotGTverification. metadata40_certificate.md definesexactbytes/banks/11+fiveframeassembly/transfers;radix80_certificate.md suppliesunchangedfulltwo80stablemetadataarray/routing/prefix/queue/finishconstruction. Otherscopedcertificatesretainactualfield/table/key/scalarproofs. Fullp381/r255,suppliedP,uniformGT,success0.39,C20000,sixtracks/onecomputationmetric preserved. Noauxpowers/freeadvice/hardwarequalification.
+
+The complete logicalS192=A96||B96 is consumed while the keyframe remains live, separate from readonly raw histories and payload. NativeNH369 has four arguments:x0payload,x1A96,x2keys672,x3B96; its caller is included in fused1176. OutputU32at0..31,fullFrscalar32at32..63,Ctag24at64..87. ItstoresFULLcanonicalY0/Y1/Y2beforelow54/54/52maskingtoU. Scalar32isunmodifiedbyhash. Colorbyte20;metadata40=U24/ordinal16retainsALL128ordinalbits24..39/temporarybyte21. Babyhelperoutputpointsatpayload32,giantfull-rscalarcopiesat32. CtagisprobabilisticandsharesALLkeyswithU;neverassumeindependenceor2^-192hashing.
+
+512payload88rows45056bytes=11complete4096frames;512metadata40rows20480bytes=5frames. RootconcatenatesALL11/fivebeforeparsing,neverdropfragments. Pendingflagclearsafterbothreplies/allACKs,neverdoublegeneration. PayloadID2^94+(i>>33),local88*low33uses704GiBof1TiB;unused320GiBneverread. MetadataIDbuffer*2^93+(i>>34),local40*low34uses640GiB. Full128counters/ordinarymultiwordIDsretain47bitnativepointers. Existingphysicalport/tablemapsandALL2^80constructioninradixcertificateareunchanged. Extra192scratch/codefitscharged4MiBcontrollerreserve.
+
+Finalmetadatabuffer0after0->1->0. EnumerateallequalUunorderedpairsunderKc=floor(L/8192). Fetch2READ5and2READ11=2*810+2*828=3276transport<=retained3408;cheap8192includesallcontrol/copies/tagcomparisons. Full24tagat64checked,baby/babyskip,GGsameScalarsskip,mixedequalScalarsinformative. InformativeCeqbeforeactualGTverificationchecks/incrementsKt=floor(L/2^36). Tryall12mixed/11GGphasesbyACTUALh^candidate==z. ALLphasesfail=>CONTINUEenumeration. OnlyverifiedcorrectcandidatesconstructG2/finalfullpairingonce. RepeatedGTpowershot2^36perpair=><=L,nevercold-onlyorfreeoracle. eta=(2^-63+1/q)^3;unionboundcheap/tagcapsandoriginalfailuresgivesexactsuccess>0.3900031.
+
+Native2664recurrence+1176keyhash+22aggregatescalar+704main=4566. Localsort720+scan128+cheap1+expensive1+spare256=>base5672. Generationnet595+sort302+scan36=933;hot6605retains6680,75spare. N=6680L+2^124 satisfiesN^1000<20000^1000*2^124479,proposed124479/1000=124.479,cold124/peak138/advice0. Noobservedscore/pass/acceptance/promotionclaimbeforeactualreview. Sharedcredentialfreellm-verifieraloneexecutescandidatecode;hostonlyconstructs/parsesitsbytes.
+The shared2table/11digit/fifthBOTH/signed22paccumulator contract is fully specified in fp2_certificate.md. Fixed-s table64..77.5TiB,vector8..62,parent4/children80..128 are disjoint. No genericDATA identifier or routing protocol changes.
+
+
+
+The formerlyunspecifiednotificationpremiseisREPLACEDbythecompleteper-PELDAXR/WFE/STLRmonitorconstructioninradix80_certificate.md. Each12KiBedgehastwo6144halves:flag0,header16,data2048. Up to2earlyheaderstores+publication+staleeventgive<=20waiterinstructions;fullcallerflagbudget32,ordinary120<=128/prefix136<=160. NoPEscanschildflagsandunrequestedPEsexecutezerohotpolls. RootserializedstackandqueueACKdisciplineensureoneexpectedflagperPE. Allcoldconfiguration/parking/pages/optionalSTOPcharged.
+
+FullbulkstreamheadersarecopiedONCEandremainunchangedforallFframes. Continuationsmodifyonlydata/flags:wait<=12,notify24+cursor/copycall8=32endpoint/64edge. CurrentF11payload/F5source-meta/F20generic-meta arebank-contained. Initialheader/route/validation/contextpaidfirst128/160controller. Exactproofandfixtureinradix80_certificate.md.
+
+Currentrecurrenceisone2639-instructionpublicLEAFwithmacro-onlyinclude,noBL/privatemapframe. Itsoriginal528frameargsoutSP96/headerSP128providecorecontext. FullpublicABI,liveaccumulatorsandallcanonicaloutputsareunchanged;caller20<=2664. Source/include/countproofisinfp2_certificate.md.
+
+Currentproductionkey+hashisONEretained1176call,not824+376. FullS192islogicalA96||B96readentirelywhilekey384frameislive,no192-bytecopy/materializedscratch. Publicsixargsincludehashkeys;identityreturnsbeforeNH;payloadscalar32andrawhistoriesareuntouched. Exactfunction/byteorder/lifetime/allpath/ALL24actualreadwordproofsareinkey_path_certificate.md. Generation2664+1176+22+704=4566.
