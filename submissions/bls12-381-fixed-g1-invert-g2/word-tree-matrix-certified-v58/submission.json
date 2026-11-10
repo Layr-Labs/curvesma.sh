@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "Balanced inversion with complete paid coupled-output matrix projection",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion success>0.390003 under explicitfinitecoinR/exacteight-wise fourth-Bonferroni rank/capbounds. Fullyconstructed4x12linearprojectiontables,7067instructioncoupled-outputscalarAArch64kernel,exact64bitquotientcorrection. Completegeneration/routing/copy/sort/setup/losingcasework<=20000*2^(3134/25),cold<2^124scalarinstructions,peak<2^138bytes,advice0. Fullproductionparameters/threshold/C unchanged. Noobservedruntimequalification/pass/scoreclaimed.",
+      "score": {
+        "numerator": "3134",
+        "denominator": "25"
+      },
+      "evidence": [
+        "handoff.md",
+        "projective_rows.md",
+        "matrix_project.S",
+        "fill_vector.S",
+        "odd_trace.S",
+        "fixed_s_lookup.S",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "matrix_projection.md",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "coins.md",
+        "quotient_certificate.md",
+        "proof.md",
+        "fp381_sub.S",
+        "probability.md",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "fourth_moment_certificate.md",
+        "constant_lookup.md",
+        "key_contract.md",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
