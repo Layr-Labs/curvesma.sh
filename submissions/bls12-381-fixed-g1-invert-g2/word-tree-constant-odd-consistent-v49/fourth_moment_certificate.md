@@ -1,0 +1,11 @@
+# Exact fourth-moment grid certificate
+
+All parameters remain full production sizes. W=2^92;K=14198870000;L=70309398742432029695427711881707520000;M=25952910645579127883607541678030266656726284256886104258345293932910346240000;D=8355726704768426264322512116230125817831729051902538944694190080000.
+
+Using the exact rational formulas in proof.md gives diagnostics:
+mu,A2,A3,A4,rank-two contribution,rank-three contribution,caploss = 0.4949456943152217, 0.12248562016058842, 0.02020791006563449, 0.002664885237127315, 0.00016354536508594636, 8.853476873773452e-07, 3.078889140167851e-09.
+Final success lower bound 0.39000309590425125 > .390003. Decimal values are diagnostic only. The exact inequality is mu-A2+A3-A4-caploss-L/r-2^-970 >390003/1000000 with r the complete protected subgroup order. choose(M,3)-M²D is positive. All ranks are over Fr, with degree-seven evaluation marginals proved by Vandermonde surjectivity.
+
+N=19648*L+2^124; EXACT N^10<20000^10*2^1257. Hence proposed time_log2=125.70. The probability certificate uses the same eight-wise grid as the predecessor; native fixed-s lookup and its fully charged tables improve the cost as specified in constant_lookup.md. All word-transfer counts remain unchanged. Horner7*32768+7*32 plus initialization/index work is less than2^18 per table entry; together with512*20000 dense references,2^18 Fp preparation and2^16 record/transport, still below2^25. W+K<2^93, preserving complete cold<2^124. Fair tape9237504bits<2^24 and<2MiB; tape plus MMU<.6MiB,code<64KiB,I/O<512KiB,frames fits4MiB.
+
+This certificate is agent-owned mathematical design arithmetic. It is not candidate execution, an observed verifier pass or an official score. R remains an explicit admissibility/cost premise. Standard limited-independence and finite Bonferroni techniques are not claimed invented. Session finite-fourth-moment-v12 supplied the support/rank deficient-event accounting method; that earlier submission remains unqualified and has no published commit, so formal dependency is deferred until eligible. The current method uses TWO degree-seven polynomials and constant A=1, whereas v12 used FOUR polynomials and determinant checks. It retains the current nonidentity-phase selected event set M=11B2-T.

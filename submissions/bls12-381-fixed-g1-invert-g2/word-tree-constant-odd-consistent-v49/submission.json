@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "title": "Eight-wise inversion with paid constant-field lookup products",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion, success>0.390003 conditional on finite coin-interface R. Two degree-seven Fr polynomials give exact eight-wise marginals; finite fourth-order Bonferroni with explicit rank-two/three event counts, no standard-hash bridge. Native arithmetic, ordinary word I/O, cold setup and all losing paths <=20000*2^(3143/25); peak<2^138 bytes, advice0. No observed qualification or runtime pass claimed. Fixed-s field tables are fully constructed,charged and accessed by ordinary local scalar instructions.",
+      "score": {
+        "numerator": "1257",
+        "denominator": "10"
+      },
+      "evidence": [
+        "handoff.md",
+        "projective_rows.md",
+        "odd_trace.S",
+        "fixed_s_lookup.S",
+        "interpolation_certificate.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "coins.md",
+        "project_toom.S",
+        "proof.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "fourth_moment_certificate.md",
+        "constant_lookup.md",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
