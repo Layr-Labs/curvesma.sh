@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Keep one actual modulus load across the paired field reductions",
+  "claims": [
+    {
+      "statement": "Preserve exact suppliednonidentityP/fulluniformGTz includingidentity,fullp381/r255,noauxiliarypowers,success0.39,C20000,sixproductiontracks/solecomputationmetric. Current full-sized m/n and every exact group/hash/cap/coin/success/price integer are inproof.md. The actual trace recurrence/coldconstructed signed tables/canonical12-Frobenius key/full128NH+threefull61bitresidues remain. Full-r orthogonallattice/residue/mod3/oddquotient/directionalendpoints and three256distance partitions count distinct guarded line events already tested by the algorithm. ExactBonferroni/Markov/identity/cappedsamplerloss support success>0.3900031 without birthday/Poisson/recordindependence/randomoracle/CSPRNG-IID assumptions.\n\nMetadata40 preserves all183hashbits0..182,color183,pendingbyte23low6,full128ordinal24..39,tworeservedzeros. ALWAYS maskword2low55 beforeupper96digit/equality,excludingeveryflag;bothcomplete2^96bucketsetsareconstructed/prefixed. Payload remainsfullcanonical32byteFrscalar. Source512recordsusespayload4/metafive4096frames,allconcatenated/ACKedbeforeadvance;2048metadatauses20bulkframes. Actualbank40*low34 fits640GiBwithin1TiB,IDs96/pointersbelow47/ordinals128 unchanged. Full64block320words/reply322/header2608<6144;singletonoddpadding/copiescharged. Old3024pendingstride/zeroingretained,2520used. Allsourcebulk/resident/control/notification/ACK/tail/failedcandidatecostsareexplicit.\n\nCompletecombinedkeyleafhasNOoutputmemoryaccess:compatibilityarg0unused/rawPhi1/sLUT2/p483/products4/keys5. Successreturnsfull183words0=x1/1=x0/2=x5low55,andx7nonnullselectedBpointer;identityx7zero/resultsinvalid. Source MUST useFULL64CBZx7,never dereferenceexpiredframepointer. ABIworker19out/20color/21-22ordinalarepreserved. ActualsourceCBZthensuccessSTPlo128/ORRcolor55/STRhi16/STPordinal24completesALL40bytes;branchalreadypaidincaller12,ordinalSTPalreadymain712,NEWsource3. No extraMOV/BL/load/freeABIoperator. Nativefixtureidentitystoresnothing;everysuccessstackchosenbelow47bitssothestatusisEXACT2^32(low32zero),testingactual64bitbranch.\n\nONE576frame hasinnerargs/scratch0..287/header288..335/EvenB336..431/OddAimag432..479/OddB480..575. DeadoddrealA384..431isNEVERaccessed;canonicalrealAalwaysrawPhi. ActualselectedpointerentrySP-240or-96isnonnull. NoBL/nox29/x30writes;all19..24/SP/LR/rawPhi/initializedreads/encodingspreserved.\n\nNEWsinglemoduluspairedreduction:readtwo6limbinputsONCE,sumin21..26/rawdiff4..9,actualpTHREELDPin10..15. AFTERthelastmodulusreadx3pointerisdeaduntilfixedargsreload;SBCS3,xzr,xzrmaterializesdiffborrowmask0/allones. Trialsum-pintocaller0/1/2/16/17andtemporarilydeadoddpointer19,sixCSELcanonicalsum,threeSTPsumSP192. Keeporiginalp10..15;SIXANDwithmask3replacessixCSELconditionalp,thenfreshADDS/ADCScanonicaldiff/threeSTPSP240. Recomputeoddpointer19=SP384byONEADD;actualcallee25/26STP/LDPstillpaid. ExistingfixedLDP2,3laterreloadsproductsbase,bothfixedMOV21,3remain. New55bodyvs56removespRELOAD3butaddsmask1/pointerADD1,ONEactualsavedeverypath. No staleflag/freeconstant/ABI assumption. Fullpcanonicalbounds/all48bytes/scratch/zero/carrysemanticsunchanged. Actualraw941retain962with1margin/12caller/8spare. Nativefield2465retains2506;Main720=712+source3+upperdigitmasks2+scanequalitymasks2+spare1. Generation4188=2506+962+720. Local720/scan128/confirmation1/inner256/network886/outer80giveN6259L+12m+28n+2^124 onEVERYsuccess/failurepath. Source/output563+2*(COUNT24+SCATTER118)+scan39=network886,withallrationalframe/copypricesreconstructed. Exactintegerpriceinequalityinproof.md.\n\nAllmatchingpairsincludingBB/equalGGskipcounttowardcapfloor(L/2^29). ActualGTpowchecksallrequiredphasecandidatesandcontinuesfalsefingerprints;terminalG2/fullpairingoncecold. PerprocessedpairH<=6144referenceFp12multiplications,R<=2^25scalarinstructionsgiveC*H+R<2^29,soallconfirmations<=Lnumerator. Alltables/halves/offsets/products/headers/padding/pages/processors/edges/queues/coins/delivery/fullprefixes/failures/outputarepaid;cold<2^124,algorithmdata<2^110,peak<2^138,advice0,noamortization.\n\nSharedcredential-freeDockerONLYexecutes/reviews/finalizes. Actualnative941key/zerooutput/fullregisterhash/status2^32/ABI/source40bytesandfullp/fill/copy/scalar/maskedradix/exactfullsizeledgerarescopedfixtures. Virtualtables/sparsearrays/TESTexponentoracleareNOTproductionresources/success/theorem/controllerhardwarecertification. No inheritedacceptance/hostedscore/promotionisclaimedbeforeactualreview. CandidateNEVERhostexecutedorrunwithcredentials.",
+      "score": {
+        "numerator": "155399",
+        "denominator": "1250"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "IsolatedsharedDockerONLY:actual941key/pairedfullpsum-diff/25-26ABI/rawimmutability/zerooutput/registerhash/status2^32/nativebranch/full40bytes/hash183/ordinal128;frames/masked96+96sort/copies/fill/scalar/control/exactfullsizeledger.Scopedfixtures,notproductionGT/hardware/probabilityqualification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
