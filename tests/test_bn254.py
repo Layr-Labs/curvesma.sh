@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 import py_ecc
-from py_ecc.optimized_bn128 import FQ12, G1, G2, curve_order, field_modulus, multiply, pairing
+from py_ecc.optimized_bn128 import FQ12, G1, G2, Z1, Z2, curve_order, field_modulus, multiply, pairing
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = 'bn254-gt-dlp'
@@ -76,9 +76,39 @@ class BN254TargetGroup(unittest.TestCase):
         self.assertEqual(pairing(multiply(G2, scalar), multiply(G1, b)), self.g ** a)
         self.assertEqual(pairing(multiply(G2, b), multiply(G1, scalar)), self.g ** a)
 
-    def test_single_track_and_borrowed_normalization(self):
+    def test_tracks_and_borrowed_normalization(self):
         manifest = json.loads((ROOT / 'benchmark.json').read_text())
-        self.assertEqual([t['name'] for t in manifest['tracks'] if t['name'].startswith('bn254-')], [NAME])
+        self.assertEqual([t['name'] for t in manifest['tracks'] if t['name'].startswith('bn254-')], [NAME, 'bn254-pairing-inversion'])
         costs = json.loads((ROOT / 'tracks/classical-group-work-v2.json').read_text())
         self.assertEqual(costs['reference_operation_costs'][NAME], 20000)
         self.assertIn('Borrowed', costs['reference_operations'][NAME])
+
+
+class BN254PairingInversion(unittest.TestCase):
+    def test_shared_parameters_and_distinct_contract(self):
+        name = 'bn254-pairing-inversion'
+        profile = json.loads((ROOT / 'tracks' / name / 'target-profile.json').read_text())
+        for key in ('field_modulus', 'subgroup_order', 'parameter_x', 'generator_P0',
+                    'generator_Q0', 'generator_g', 'field_Fp2', 'field_Fp12'):
+            self.assertEqual(profile[key], PROFILE[key])
+        self.assertEqual(profile['pairing']['reference'], PROFILE['pairing']['reference'])
+        self.assertEqual(set(profile['input']), {'z'})
+        self.assertEqual(set(profile['output']), {'P', 'Q'})
+        costs = json.loads((ROOT / 'tracks/classical-group-work-v2.json').read_text())
+        self.assertEqual(costs['reference_operation_costs'][name], 20000)
+
+    def test_multiple_pairs_and_dlp_reduction(self):
+        g = pairing(G2, G1)
+        # Each factorization gives a different valid pair for the same target.
+        x = 77
+        z = g ** x
+        for a in (1, 7, 11, curve_order - 1):
+            b = x * pow(a, -1, curve_order) % curve_order
+            P, Q = multiply(G1, a), multiply(G2, b)
+            self.assertEqual(pairing(Q, P), z)
+            self.assertNotEqual(pairing(multiply(G2, (b + 1) % curve_order), P), z)
+
+    def test_identity_outputs(self):
+        for P, Q in ((Z1, G2), (G1, Z2), (Z1, Z2)):
+            self.assertEqual(pairing(Q, P), FQ12.one())
+        self.assertNotEqual(pairing(G2, G1), FQ12.one())

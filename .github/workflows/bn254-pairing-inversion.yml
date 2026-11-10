@@ -1,0 +1,25 @@
+name: bn254-pairing-inversion
+on:
+  workflow_dispatch:
+    inputs:
+      yukon_evaluation:
+        type: string
+        required: false
+        default: ''
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  verify:
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@8c1f098875fae0750c29ecfd641f7c9fc53a0f41
+    with:
+      verifier_repository: Layr-Labs/llm-verifier
+      verifier_revision: 8c1f098875fae0750c29ecfd641f7c9fc53a0f41
+      root_dir: '.'
+      config_path: tracks/bn254-pairing-inversion/verifier.json
+      submission_path: submission
+      score_path: .yukon/bn254-pairing-inversion/score.json
+      yukon_evaluation: ${{ inputs.yukon_evaluation }}
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}
+      VERIFIER_CHECKOUT_TOKEN: ${{ secrets.VERIFIER_CHECKOUT_TOKEN }}

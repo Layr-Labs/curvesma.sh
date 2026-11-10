@@ -1,6 +1,6 @@
 # Organizer execution
 
-The seven workflows named in `benchmark.json` call
+The eight workflows named in `benchmark.json` call
 `Layr-Labs/llm-verifier/.github/workflows/verify.yml` at the same immutable revision
 as their `verifier_revision` input. Keep both pins aligned when upgrading.
 
@@ -13,7 +13,7 @@ runner or judge.
 
 ## Review settings
 
-All seven protected configurations keep the existing single Astra reviewer and
+All eight protected configurations keep the existing single Astra reviewer and
 `exploratory-v1` acceptance policy. Each review allows three attempts, a
 1,200-second (20-minute) timeout per attempt and 32,768 output tokens. The
 initial and final stages share a maximum of six provider requests and 2,400
@@ -74,7 +74,7 @@ phase commands or the hosted workflow, as described in the root README.
 
 ## Import and launch checks
 
-Import all six tracks from the intended immutable source commit as fresh
+Import all eight tracks from the intended immutable source commit as fresh
 registrations, initially closed. These are Pareto evaluations with one objective,
 not the historical scalar registrations. The retired any-pair and fixed-Q0
 registrations must stay distinct from the new fixed-argument tracks.
@@ -108,3 +108,9 @@ commit. Run preflight and hosted smoke checks before opening it. Its incomplete
 unscored template is not a qualified baseline; an invalid template judgment is
 expected. Do not reuse BLS scores or equate workflow success with mathematical
 qualification. The existing six tracks retain their target parameters and prices.
+
+`bn254-pairing-inversion` requires a separate fresh registration and the same
+preflight and hosted smoke checks before opening. Its input is only z and its
+output is any valid pair (P,Q); neither argument is fixed. It shares BN254
+parameters and normalization, not GT-DLP scores or qualification. Its selected
+package is also an incomplete unscored template.

@@ -58,7 +58,7 @@ qualified attack scores are claimed. For these tracks the score is log2(W).
 
 ## BN254 GT discrete logarithm
 
-bn254-gt-dlp borrows C=20,000 from the BLS Fp12 normalization as a fixed unit,
+bn254-gt-dlp and bn254-pairing-inversion borrow C=20,000 from the BLS Fp12 normalization as a fixed unit,
 not a measurement of BN254 multiplication. Charge every operation through its
 justified scalar AArch64 instruction count R: W=R/C and score log2(W).
 No BN254 operation automatically costs one unit. The original measurements and

@@ -141,7 +141,7 @@ class BLSChallenges(unittest.TestCase):
     def test_yukon_tracks_keep_the_existing_interface(self):
         manifest = json.loads((ROOT / 'benchmark.json').read_text())
         self.assertEqual({t['name'] for t in manifest['tracks']},
-                         {'secp256k1-ecdlp', 'p256-ecdlp', DLOG, FIXED, REVERSE, PLAIN, 'bn254-gt-dlp'})
+                         {'secp256k1-ecdlp', 'p256-ecdlp', DLOG, FIXED, REVERSE, PLAIN, 'bn254-gt-dlp', 'bn254-pairing-inversion'})
         for retired in ('bls12-381-invert-g1', 'bls12-381-miller-inversion'):
             self.assertFalse((ROOT / 'tracks' / retired).exists())
             self.assertFalse((ROOT / '.github/workflows' / (retired + '.yml')).exists())

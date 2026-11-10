@@ -45,7 +45,8 @@
     "bls12-381-fixed-g2-invert-g1": 20000,
     "bls12-381-g1-ecdlp-plain": 2000,
     "p256-ecdlp": 1000,
-    "bn254-gt-dlp": 20000
+    "bn254-gt-dlp": 20000,
+    "bn254-pairing-inversion": 20000
   },
   "reference_operations": {
     "secp256k1-ecdlp": "batched incomplete affine secp256k1 addition, 6M with S=M and A=0",
@@ -55,7 +56,8 @@
     "bls12-381-fixed-g2-invert-g1": "dense Fp12 multiplication, calibrated with pinned blst",
     "bls12-381-g1-ecdlp-plain": "batched incomplete affine BLS12-381 G1 addition, 6M with S=M and A=0",
     "p256-ecdlp": "Borrowed secp256k1 reference unit (1,000 instructions); not a P-256 addition price; account actual P-256 work in instructions",
-    "bn254-gt-dlp": "Borrowed BLS Fp12 reference unit; not a BN254 operation price; account actual BN254 work in instructions"
+    "bn254-gt-dlp": "Borrowed BLS Fp12 reference unit; not a BN254 operation price; account actual BN254 work in instructions",
+    "bn254-pairing-inversion": "Borrowed BLS Fp12 reference unit; not a BN254 operation price; account actual BN254 work in instructions"
   },
   "reference_measurement": "scripts/reference_costs/measurement.json"
 }

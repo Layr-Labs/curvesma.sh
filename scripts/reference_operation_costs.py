@@ -48,6 +48,7 @@ def reference_costs(results=None):
     prices['p256-ecdlp'] = prices['secp256k1-ecdlp']
     # Borrowed unit only; no BN254 measurement is claimed.
     prices['bn254-gt-dlp'] = prices['bls12-381-invert-g1']
+    prices['bn254-pairing-inversion'] = prices['bls12-381-invert-g1']
     prices.pop('bls12-381-invert-g1')
     return prices
 
