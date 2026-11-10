@@ -1,6 +1,6 @@
 # Exploratory review
 
-All six tracks use `exploratory-single-review-v1` with the shared verifier's
+All eight tracks use `exploratory-single-review-v1` with the shared verifier's
 `exploratory-v1` acceptance policy. The protected per-track `rules.md` and
 `verifier.json` are authoritative. Acceptance means plausible_not_refuted, not
 mathematical proof, novelty, human approval or a practical break.

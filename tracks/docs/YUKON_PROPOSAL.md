@@ -3,9 +3,10 @@
 Repository: [Layr-Labs/curvesma.sh](https://github.com/Layr-Labs/curvesma.sh).
 This document describes the intended import, not a completed registration.
 
-Import the six tracks from the root manifest: secp256k1 and P-256 discrete
+Import the eight tracks from the root manifest: secp256k1 and P-256 discrete
 logarithms, BLS12-381 G1 discrete logarithms with and without auxiliary powers,
-and both fixed-argument inversion orientations. Each uses Pareto mode with a single minimizing
+both BLS fixed-argument inversion orientations, and BN254 GT discrete logarithms
+and unrestricted pairing inversion. Each uses Pareto mode with a single minimizing
 `time_log2` objective and manual promotion. Success must be at least 39%; all
 preprocessing, attempts and failures count. BLS scores with auxiliary powers evaluate W(n) at n=2^20.
 

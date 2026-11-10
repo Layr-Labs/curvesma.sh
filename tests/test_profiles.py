@@ -121,7 +121,7 @@ class ProfileArithmetic(unittest.TestCase):
                                     "bls12-381-fixed-g1-invert-g2": 20000,
                                     "bls12-381-fixed-g2-invert-g1": 20000,
                                     "bls12-381-g1-ecdlp-plain": 2000,
-                                    "p256-ecdlp": 1000})
+                                    "p256-ecdlp": 1000, "bn254-gt-dlp": 20000, "bn254-pairing-inversion": 20000})
         reference = PROFILES["targets"][1]["pairing"]["reference"]
         self.assertEqual(reference["commit"], "04151f01f59f902ab932a51e0ca0ebce3883fc51")
         self.assertEqual(len(reference["source_sha256"]), 4)

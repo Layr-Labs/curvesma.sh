@@ -55,3 +55,14 @@ not a measured P-256 kernel price. Its actual arithmetic, including point
 additions, must be charged through justified instruction counts divided by C.
 The measurement record remains unchanged; no new hardware measurements or
 qualified attack scores are claimed. For these tracks the score is log2(W).
+
+## BN254 GT discrete logarithm
+
+bn254-gt-dlp and bn254-pairing-inversion borrow C=20,000 from the BLS Fp12 normalization as a fixed unit,
+not a measurement of BN254 multiplication. Charge every operation through its
+justified scalar AArch64 instruction count R: W=R/C and score log2(W).
+No BN254 operation automatically costs one unit. The original measurements and
+existing track prices remain unchanged. There is no n parameter or auxiliary
+powers input. Include all preprocessing, relation collection, linear algebra,
+descent, output and verification work without amortization over future targets.
+No BN254 attack score or optimal algorithm is asserted.

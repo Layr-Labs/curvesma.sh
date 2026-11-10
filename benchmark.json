@@ -349,6 +349,122 @@
         "scoreArtifactName": "benchmark-score",
         "maxConcurrentWorkflows": 2
       }
+    },
+    {
+      "name": "bn254-gt-dlp",
+      "description": "Recover x from z=g^x in the prime-order BN254 target group GT.",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/bn254-gt-dlp",
+        "tracks/bn254-gt-dlp/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/bn254-gt-dlp/verifier.json",
+        "--out",
+        ".yukon/bn254-gt-dlp/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/bn254-gt-dlp/intake.json",
+        "--initial",
+        ".yukon/bn254-gt-dlp/initial.json",
+        "--initial-review",
+        ".yukon/bn254-gt-dlp/review.json",
+        "--score",
+        ".yukon/bn254-gt-dlp/score.json",
+        "--dossier",
+        ".yukon/bn254-gt-dlp/dossier.json"
+      ],
+      "scorePath": ".yukon/bn254-gt-dlp/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "bn254-gt-dlp.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
+    },
+    {
+      "name": "bn254-pairing-inversion",
+      "description": "Given only z in BN254 GT, find any P in G1 and Q in G2 with e(P,Q)=z.",
+      "category": "cryptanalysis",
+      "mode": "pareto",
+      "promotionMode": "manual",
+      "direction": "-",
+      "objectives": [
+        {
+          "name": "time_log2",
+          "direction": "-"
+        }
+      ],
+      "paretoPolicies": {
+        "scoring": {
+          "version": "classical-group-work-v2"
+        },
+        "validity": {
+          "version": "exploratory-single-review-v1"
+        }
+      },
+      "editablePaths": [
+        "submissions/bn254-pairing-inversion",
+        "tracks/bn254-pairing-inversion/selected-submission.txt"
+      ],
+      "setupCommand": [
+        "llm-verifier",
+        "intake",
+        "--root",
+        ".",
+        "--config",
+        "tracks/bn254-pairing-inversion/verifier.json",
+        "--out",
+        ".yukon/bn254-pairing-inversion/intake.json"
+      ],
+      "benchmarkCommand": [
+        "llm-verifier",
+        "finalize",
+        "--intake",
+        ".yukon/bn254-pairing-inversion/intake.json",
+        "--initial",
+        ".yukon/bn254-pairing-inversion/initial.json",
+        "--initial-review",
+        ".yukon/bn254-pairing-inversion/review.json",
+        "--score",
+        ".yukon/bn254-pairing-inversion/score.json",
+        "--dossier",
+        ".yukon/bn254-pairing-inversion/dossier.json"
+      ],
+      "scorePath": ".yukon/bn254-pairing-inversion/score.json",
+      "maxSubmissionBytes": 262144,
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "bn254-pairing-inversion.yml",
+        "scoreArtifactName": "benchmark-score",
+        "maxConcurrentWorkflows": 2
+      }
     }
   ]
 }
