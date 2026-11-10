@@ -1,0 +1,83 @@
+// Inert analytic evidence only. Shared verifier credential-free Docker ONLY.
+// x0 out576,x1 input576 (onlya0@0,b1@384 initialized),x2 s48,
+// x3 p48,x4 n0. All native Montgomery canonical Fp. out/input alias safe.
+// s,p disjoint output. Only a0@0,b1@384 output initialized. Frame336.
+.text
+.p2align 2
+.global odd_trace
+.type odd_trace,%function
+odd_trace:
+    sub sp,sp,#336
+    stp x29,x30,[sp]
+    mov x29,sp
+    stp x19,x20,[x29,#16]
+    stp x21,x22,[x29,#32]
+    stp x23,x24,[x29,#48]
+    stp x25,x26,[x29,#64]
+    stp x27,x28,[x29,#80]
+    stp x0,x1,[x29,#128]
+    stp x2,x3,[x29,#144]
+    stp x4,xzr,[x29,#160]
+    ldp x19,x20,[x29,#128]
+    ldr x21,[x29,#152]
+    ldr x22,[x29,#144]
+    ldp x0,x1,[x20]
+    stp x0,x1,[x19]
+    ldp x0,x1,[x20,#16]
+    stp x0,x1,[x19,#16]
+    ldp x0,x1,[x20,#32]
+    stp x0,x1,[x19,#32]
+    stp xzr,xzr,[x29,#288]
+    stp xzr,xzr,[x29,#304]
+    stp xzr,xzr,[x29,#320]
+    add x0,x19,#48
+    add x1,x29,#288
+    add x2,x20,#48
+    mov x3,x21
+    bl fp381_sub
+    add x0,x29,#192
+    add x1,x20,#384
+    add x2,x20,#432
+    mov x3,x21
+    bl fp381_add
+    add x0,x29,#240
+    add x1,x20,#384
+    add x2,x20,#432
+    mov x3,x21
+    bl fp381_sub
+    ldp x5,x6,[x21]
+    ldp x7,x8,[x21,#16]
+    ldp x9,x10,[x21,#32]
+    ldr x4,[x29,#160]
+    add x0,x19,#384
+    stp x4,x0,[x29,#96]
+    mov x2,x22
+    ldp x11,x12,[x29,#192]
+    ldp x13,x14,[x29,#208]
+    ldp x15,x16,[x29,#224]
+    ldr x17,[x2]
+    bl __mul_mont_384
+    stp x11,x12,[x2]
+    stp x13,x14,[x2,#16]
+    stp x15,x16,[x2,#32]
+    ldr x19,[x29,#128]
+    ldr x22,[x29,#144]
+    add x0,x19,#432
+    stp x4,x0,[x29,#96]
+    mov x2,x22
+    ldp x11,x12,[x29,#240]
+    ldp x13,x14,[x29,#256]
+    ldp x15,x16,[x29,#272]
+    ldr x17,[x2]
+    bl __mul_mont_384
+    stp x11,x12,[x2]
+    stp x13,x14,[x2,#16]
+    stp x15,x16,[x2,#32]
+    ldp x19,x20,[x29,#16]
+    ldp x21,x22,[x29,#32]
+    ldp x23,x24,[x29,#48]
+    ldp x25,x26,[x29,#64]
+    ldp x27,x28,[x29,#80]
+    ldp x29,x30,[sp],#336
+    ret
+.size odd_trace,.-odd_trace

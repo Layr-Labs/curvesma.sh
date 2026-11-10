@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "title": "Finite four-wise grid inversion with a complete static interpolation certificate",
+  "claims": [
+    {
+      "statement": "Fullprotected supplied-P fixed-G1 inversion returnsverifiedG2Qwithpairing(Q,P)=zwithsuccess>0.390003 under explicitfinitecoininterfaceR. Degree3full-Frpolynomialgrid andselectedprojectiverowsgiveexactfirst/secondmoments;NOstandardhashH,Poissonormixingheuristic. Allcoin/extraction/rejection/controllerconstruction,ordinarywordI/O,nativearithmetic,sorting,pendingexceptionsand11terminalattempts<=20000*2^(12577/100),cold<2^124included,peak<2^138bytes,advice0. Rfairness/deliveryadmissibilityexplicit;noactualVMRNGqualificationorproductionrunclaimed.",
+      "score": {
+        "numerator": "12577",
+        "denominator": "100"
+      },
+      "evidence": [
+        "projective_rows.md",
+        "odd_trace.S",
+        "interpolation_certificate.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "coins.md",
+        "project_toom.S",
+        "proof.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}

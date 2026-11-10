@@ -1,0 +1,13 @@
+# Selected event rows are pairwise independent
+
+Types are the COMPLETEgrid(j,k),j<W,k<K,sequence t=kW+j,soeachtypeappearsonce. Fixa!=0. C_j=1+a*f(j),E_k=a*g(k). A nonidentityphaseevent is x_t=lambda*x_s with x_s!=0,lambda=p^ellmodr,ell1..11. ItslinearrowinlabeledC/Evariables is e_t-lambda*e_s. Since1-lambda!=0,a familyhasoneNONZEROcoefficientwhenitslabelshared,ortwoNONZEROcoefficientswhenlabels differ. Noemptysupport/cancellationexception.
+
+To selecteventsforLOWERBOUNDONLY,retainALL11phaseevents EXCEPTlambda=-1 andbothlabels differ,wherekeepjustthealigneddiagonal j_s<j_t andk_s<k_t. ThereareT=choose(W,2)*choose(K,2)rectangles,exactlyoneexcluded-1diagonal each. TotalM=11choose(L,2)-T. Thealgorithmstilltriesall11phasesforFIRSTusefulpair;excludedcollisionshelpandneednotbediscarded.
+
+Supposetwoselectedrowsareproportional. Their Csupportsets andEsupportsets mustmatch,eachsize1or2. Bothfamilysizes1wouldmean identicaltypeendpoints,impossibleforanunordereddistincttypepair. IfCsize1,Esize2,theunorderedpairisuniquely(j,k0),(j,k1);fixedtimeorientationandcoefficient1intheEdistinctpartfixproportionalityscalar1,thensamephase. AnalogousifEsize1. Ifbothfamilysizes2,theyarethe2diagonalsoftheSAME2x2rectangle,orsameunorderedpair. Samepairagainforcesamephase. Differentdiagonals:comparefourcoefficients1,-lambda,1,-lambda withcrossedEpositions;proportionalityrequireslambda=mu=-1 (or1,excludedphase0). Onlyone-1diagonalkept. ThereforetwoDISTINCTselectedrowsneverproportional,rank2.
+
+Any twoevents involve<=4Cindices and<=4Eindices. Degree3VandermondesurjectionmakesTHESEvaluesuniformindependentwithin eachfamily,independentfamilies;nofulltableIID needed. Rank2equationsjointprobexactlyr^-2;nonzero predicatescanonlydecreaseit. Eachsingleevent hasindependentuniformx_s,x_t andprob(r-1)/r². HenceEcount=M(r-1)/r²,Echoosecount2<=chooseM2/r². Pointwise1[count>0]>=count-choosecount2givesthefiniteboundwithoutPoisson/mixing/independentcollisionevents.
+
+Actualfullproductionr/p arithmetic independentlycheckedallcanonicalrowson4x4representativetypes:1284=11choose(16,2)-choose(4,2)^2uniqueprojectiverows. Thissmallindexsetcoversalltwo-eventequality/orderpatternsbyorder-preservingrelabeling;thegeneralsupportproofaboveiswhatjustifiesALLW,K. Thiswasagent-owneddesignarithmetic,notcandidateexecution/productionexperiment,scoreorqualification.
+
+Fullnumbers:W2^92,K14706455257,L72822839194397069068137322354963382272,M27841621018838473616430706950720261525364380289840562268029566606319347040256. EXACTmu-choose(M,2)/r²-B2*(12/r+2^23/m61³)/(floorL128+1)-L/r-2^-970>.390003. EqualSall12orbitsandallfalsefingerprintpairs/capsarecharged,notjustselectedevents;everyactualusefulpair reconstructsandverifiesQ. Allproductionparametersunchanged.
