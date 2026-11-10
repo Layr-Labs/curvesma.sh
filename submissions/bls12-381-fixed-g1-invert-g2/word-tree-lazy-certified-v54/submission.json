@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "Balanced inversion with a complete bounded-integer interpolation certificate",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion success>0.390003 underfinitecoinR;exacteight-wise/fourth-Bonferroni rank/capbounds. ALL21fieldproducts by fullygeneratedordinarylocaltables;explicit3434instructionseven-limbintegerinterpolation withfourfinalcanonicalreductions. CompleteCPU/routing/copy/sort/alllosingcasework <=20000*2^(3138/25),cold<2^124,peak2^138bytes,advice0. Fullproductionparameters/threshold/C unchanged. Noobservedruntimequalification/pass/scoreclaimed.",
+      "score": {
+        "numerator": "3138",
+        "denominator": "25"
+      },
+      "evidence": [
+        "handoff.md",
+        "projective_rows.md",
+        "odd_trace.S",
+        "fixed_s_lookup.S",
+        "lookup_ten32.S",
+        "leaf_lookup.md",
+        "interpolation_certificate.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "combine_products.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "coins.md",
+        "project_toom.S",
+        "lazy_interpolate.S",
+        "proof.md",
+        "lazy_interpolation.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "fourth_moment_certificate.md",
+        "constant_lookup.md",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
