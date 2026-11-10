@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "224-byte full-key/full-scalar payloads without duplicated hash bytes",
+  "claims": [
+    {
+      "statement": "For the full protected supplied nonidentity P in BLS12-381 G1 and independent uniform z in GT,return Q in G2 with e(P,Q)=z,with no auxiliary powers. The exact trace recurrence, twelve-Frobenius key and finite random-stride collision proof support success greater than0.3900031,at the protected0.39 threshold and explicit finite-randomness premise. Payload is224 bytes(S192,canonical scalar32);metadata is40 bytes and preserves all160 fingerprint bits,color and all128 ordinal bits. Sorting is ONE stable96-bit pass with H31/M32/B33 and TWO-WORD first-edge COUNT entries,followed by ONE stable64-bit pass with direct H31/B33 shards. Construct ALL2^96 and ALL2^64 bucket arrays,prefixes,pending slots,queues and tails,including failures;there are NO80-bit passes in the current algorithm. The cold sort subset is below2^120 instructions,complete cold below2^124;algorithm-specific extra storage below2^110,total peak below2^138 bytes,advice0. Native recurrence2697/key724/NH346 retain2738/735/355. Complete32-byte baby7 and full-r giant21 helpers retain12/28 with callers,20L total. Generation4556,local sorting680,scan128,confirmation1,spare256 give base5621;all network982 gives hot6603,retained6683. N=6683L+2^124 scalar instructions is below20000*2^(124499/1000),at fixed C20000. Charge all preprocessing,finite coins,arithmetic,lookup/sorting,transfers,failures,confirmation,verification and actual G2 output without amortization or uncharged advice. Preserve full parameters,six production tracks and one computation metric. This is an analytical exploratory claim,not a production run,qualification,promotion or inherited acceptance. Source512-record batches use28 payload frames and five metadata frames. Color is retained/fetched from metadata,never an omitted payload field. Charge four additional scalar instructions per record for224-stride and scratch-address formation(main708). Copy28 uses29 instructions throughRET and complete confirmation remains capped/priced8192.",
+      "score": {
+        "numerator": "124499",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-radix96-64-and-payload224",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker ONLY. Retain all actual native recurrence/key/hash/fixed-lookup/scalar/meta/copy checks and bounded96/64 stable-sort packet fixture. Payloads now224 bytes(full S192/full scalar32),source28 payload frames plus five metadata frames;test actual copy28 including exact alias,complete byte assembly,full128 ordinal bank addressing,color frommetadata and record fragments. Sparse fixtures do not stand in for production2^96 initialization,dispatcher costs,GT probability,physical hardware or qualification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
