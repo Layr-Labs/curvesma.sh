@@ -1,0 +1,44 @@
+# Composed NH128 and affine fingerprint, full160-bit collision proof
+
+## Self-contained wrapping-NH bound (a conservative2^-63)
+
+The NH construction is credited to Black, Halevi, Krawczyk, Krovetz and Rogaway, UMAC (1999), https://www.cs.ucdavis.edu/~rogaway/papers/umac-full.pdf . The bound USED HERE is proved below without relying on the paper's sharper theorem.
+
+Put N=2^64. For unequal W,W', select a differing pair and exchange its two positions if needed so the second words differ. Fix every key except its first k. Then c=(W_second+K_second) modN and c'=(W'_second+K_second) modN are distinct. Let x=(W_first+k) modN,d=(W'_first-W_first) modN; x is uniform and x'=(x+d) modN. All other pairs contribute a fixed difference y moduloN². A collision forces
+(c-c')x = y+c'd-Nc't moduloN²,
+where t=0 if x<N-d, otherwise1. Within either region, two solutions would give nonzero (c-c')(x1-x2) divisible byN², impossible since its absolute value is belowN². Thus at most two of N keys collide. Averaging the fixed keys proves2/N=2^-63, including d=0. This uses unsigned wrapping additions and the full128-bit accumulated output.
+
+This supplies every NH premise used by the following affine composition. The two-region bound is intentionally looser than the paper's theorem, avoiding any need for an unproved cross-region exclusion. It is a rigorous finite bound for all distinct full192-byte strings, independent of empirical checks.
+
+Interpret full S192 as24 unsigned little-endian64-bit words W. For each of three INDEPENDENT rows sample24 independent uniform64-bit keys K. Compute H=sum over i0..11 of ((W2i+K2i) mod2^64)*((W2i+1+K2i+1) mod2^64), reduced modulo2^128. Do NOT truncate H. Encode H injectively as three chunks of60,60,8 bits. Each chunk is strictly less than q=2^61-1, so no different128-bit H values acquire equal chunk triples modulo q. Independently sample four uniform Fq values b,a0,a1,a2 for each row and compute Y=b+a0*C0+a1*C1+a2*C2 modulo q. For two unequal chunk triples, the affine map from its four coefficients to (Y,Y') has rank2, so the pair is exactly uniform Fq². Keep low54,54,52 bits of the three Y values.
+
+For b output bits, a residue class has at most ceil(q/2^b)=2^(61-b) field elements. Thus, CONDITIONAL on distinct NH results, the collision probability of low bits is at most2^(61-b)/q. Conditional on equal NH results it is1, whose NH-key probability is at most2^-63. A row's total match probability is at most2^-63+2^(61-b)/q. The three rows' entire key sets are mutually independent, even for the same fixed S,S', so their match events are independent. Therefore delta=(2^-63+128/q)^2*(2^-63+512/q). This bound applies to ANY distinct192-byte keys, conditional on the complete generated sequences; no independence between different pairs of records is assumed. Equal exact keys always get equal fingerprints. The three FULL Fq affine outputs now form Ctag24;confirmation is probabilistic until actual GT verification,as proved below.
+
+## Native scalar source and exact layout
+
+nh_fingerprint.S usesONLYx0..17/flags,noSP/x18/callee19..30/LRchange. Originalthreearguments:x0payload88base,x1S192,x2keys672. U32 at0..31,Ctag24 at64..87,scalar32 at32..63 untouched. Keyblock interleaves72full64-bitNHkeys in576bytes plusindependent4canonicalFqcoefficients perrowat576/608/640. All24Swords consumed BEFORE any outputstore. Payload/inputbasesmayexactlyaliasonlybecauseallinputreadsfinishfirst;normalproductionusesprivateS192scratchdisjointfrompayload. Keysdisjointentirepayload. No fourthargument/derivedsecret/oracle.
+
+The original375instructionbody isretained;aftereachcanonical affineCSEL and BEFORE lowbitAND,insert STR oftheFULL Yresult to[x0,#64/72/80]. Registersarex1,x4,x5respectively. These three unsigned64-bit storesareencodable. Result378throughRET;originalthreeargumentmoves+BL4 gives382<=retained384. The originalqregisterx3,keybaseADDx16,x2,#288,alllegalLDPoffsets,chunk/affine/Mersennearithmeticandlow54/54/52Uoutputareunchanged. All24tagbytes areinitialized withthreefull61-bitvaluesindependentlypaddedbyzero3highbits. The full32scalar intervalisnotreadorwrittenbyhash. Noextra pointer orhiddenargumentcost.
+
+## Full-affine24 tag,dependent fingerprints and continuation
+
+ForarbitrarydistinctS,S',oneNHrowcollideswithprobability<=2^-63. ConditionalondistinctNH,theindependentfour-coefficientaffinemapoverprimeqmapsinjective60/60/8chunks toanexactlyuniformpairFq²,sofullYcollisionprobabilityis1/q. Totalrowcollision<=2^-63+1/q. Independentwholekeysetsforthreerowsgive eta=(2^-63+1/q)^3. This isNOT2^-192,NOT2^-189,andNOTaheuristicentropyestimate. Ctag=(Y0,Y1,Y2),threecanonical64-bitwordsatpayload64. EqualS alwaysgetsameCtag. U islow54/54/52bits oftheseSAMEvalues,soCtagequalityIMPLIESUequality;never multiplyeta*deltaorassumeconditionalindependenceafterUsort.
+
+ForALLunorderedrecordpairs,T<=choose(L,2)*(12/r+eta)+floor(m/u0). ExactSorbitmatchesanddeterministicbabyduplicatesareoverpaid;falseS Ctagmatchesusetherigorouseta. AllkeysareindependentofcompleteGTsequences,andlinearityofexpectationneedsnopairindependence. EveryfalseCtagequalitymustCONTINUE afterallGTphasesfail. BeforeeachinformativeCeqpair,abortifcounteralreadyKt=floor(L/2^36);otherwiseincrementandverifyactualGTphases. Markovtagloss<=T/(Kt+1). CheapUconfirmationcapKc=floor(L/8192)retainsitsown deltaproof. Unionboundbothcaplosses,identitym/r,cappedcoins<2^-970withunchangedgroupBonferroni:exactsuccess0.39002631881379807>3900031/10000000>0.39. Formulaeratherthanroundeddiagnosticscertifytheclaim.
+
+## Constructive GT verification budget,never a free oracle
+
+An informative pair tries at most12 full Fr candidates. Precompute the12 public lambdas and11 nonzero inverses(1-lambda)^-1 by actual finite Fr arithmetic in cold setup;these are public constants,not auxiliary powers given by the challenge. For EACH candidate,compute h^a by ordinary left-to-right binary exponentiation from identity over all255 scalar bits:at most255 squares+255 multiplies,each a dense full Fp12 product. Comparison reads all twelve canonical Fp coordinates. The target's secret generation scalar is never read or supplied to this algorithm.
+
+Use Fp2[u]/(u²+1),Fp12=Fp2[w]/(w^6-(1+u)). Schoolbook6-by6 convolution has36 Fp2 products=144 Fp products. Each Fp2 product also uses two canonical Fp add/sub;all convolution accumulation/w^6 reductions add fewer than1024 Fp add/sub instructions blocks. Multiplication by1+u uses only two Fp add/sub. Pinned full381-bit Montgomery multiplication with caller fits400 scalar instructions;canonical add/sub with caller fit36. All loop,address,copy,index and complete twelve-coordinate comparison/control per dense product is conservatively allowed2^16 additional instructions. Therefore one dense product costs<256*400+1024*36+2^16=204800<2^20. This overpays all144 products and all actual additions;no optimized sparse GT arithmetic is assumed.
+
+At most12*512 dense products cost<2^33 instructions. Scalar candidate formation uses full255-bit Montgomery multiply/add and precomputed inverse per phase;an ordinary255-bit word arithmetic or bitwise full modular schedule plus all Root control/phase rejection/GT exponent bit extraction fits the extra2^30 instructions per pair. Conservative combined cost is<2^34<Ce=2^36 per informative pair. Thus Ce*floor(L/Ce)<=L. GT temporaries use bounded private memory;no network RPC per field operation. Once equality holds,only one G2 construction/full final pairing/output validation is executed in the separate existing cold2^92 allowance. Repeated GT trials are hot,never charged as only12 attempts in total. Any unused cold phase reserve is harmless overpayment.
+
+## Complete score and scoped evidence
+
+Generation=2752+824+384+20+704=4684. Two local sort pairs720+scan128+cheap confirmations1+expensive confirmations1+spare256 give5790. Network595+302+36=933. Hot6723 retains6800. N=6800L+2^124 satisfies EXACT N^250<20000^250*2^31131,proposed31131/250=124.524. Full fields/success threshold/C20000/six tracks/one computation metric,cold124/peak138/advice0 remain unchanged. No current score,qualification,promotion or physical production attack is invented.
+
+Shared-only auditcomparesactual378-instructionU32ANDthreeFULLFqCtagwords toindependentintegerNH/affineoracles,includingexactinputbasealias,initializedreads,permittedU/tagwritesandscalar32preservation. Noempiricalprobabilityclaim. Payload88gettersreadfullscalar32at32,color20,ALL24tagbytesat64;nativeoddREAD11copychecksno12thwordoverread. Whole11/fiveframeassemblyandfull160stablemetadatafixturesretained. ThesearenotproductionGTexecution,dispatchtiming,physicalhardware,probabilityorqualificationcertificates. GTverificationcostisanalyticconstructiveevidenceabove,neverafreeoracle.
+
+The modulus q is prime: the Lucas-Lehmer recurrence v0=4,v_(i+1)=v_i²-2 modulo(2^61-1) has v59=0. This is a finite prime certificate and is separate from any candidate execution claim.
+

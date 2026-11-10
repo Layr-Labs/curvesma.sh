@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Full-affine24 payload tags with verified continuation and two paid caps",
+  "claims": [
+    {
+      "statement": "Completefullp381/r255suppliedPfixedG1inversionintoG2,noauxpowers. FULLtemporaryS192,storedU32/fullFr32/threeFULLFqY24=payload88. Metadata40/full160bits/two80stablepasses/ALL128ordinalsretained. NativeNH378+caller4<=384;ALL11/fiveframeassembly/oddREAD11/bank704GiBinside1TiB. Strongtageta=(2^-63+1/q)^3 shareskeyswithU:doNOTmultiplyprobabilities. ContinueafterallfailedACTUALGTphasechecks;cheapcapfloorL8192/separateexpensivecapfloorL2^36,constructive2^36perpairhotpaid. Exactsuccess>0.3900031>0.39. CompleteN=6800L+2^124 satisfiesN^250<20000^250*2^31131,peak138/advice0,C20000/sixtracks/onecomputationmetricunchanged. Proposedanalytic31131/250=124.524,notobservedscore/acceptance/qualification/promotion/productionattack.",
+      "score": {
+        "numerator": "31131",
+        "denominator": "250"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:actualfull-p381recurrence/key/full-rscalar/nativeNH378withU32ANDthreeFULLFqYtagwordscomparedtoindependentintegeroracle,allread/write/ABI/encodability/scalarpreservation/exactinputaliaschecks. Actual88bytepayloadfullscalar/color/ALL24tagbytesgettersandodd11-wordcopy. Bounded4096record/full160fingerprint/full128ordinal/40bytemetadatafixturewithALL11/fiveframeassembly/stabletwo80sort/queues/bank/counter/paddingchecks. SparsemapsareSCOPEDfixtures,notproductionALL2^80construction,GToracle/inversion,probabilityempiricism,timing/hardware/qualification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}

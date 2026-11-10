@@ -1,0 +1,1339 @@
+// Inert combined native I/O evidence; only shared credential-free verifier executes.
+
+// Inert evidence; credential-free shared llm-verifier only.
+// x0 out,x1 input,5 words;exact alias/disjoint,no partial.
+// Data N+(Nmod2) instructions plusRET;odd final scalar word avoids any overread.
+.text
+.p2align 2
+.global prefix_copy5
+.type prefix_copy5,%function
+prefix_copy5:
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldr x2,[x1],#8
+    str x2,[x0],#8
+    ret
+.size prefix_copy5,.-prefix_copy5
+
+// Inert evidence; credential-free shared llm-verifier only.
+// x0 out,x1 input,320 words;exact alias/disjoint,no partial.
+// Data N+(Nmod2) instructions plusRET;odd final scalar word avoids any overread.
+.text
+.p2align 2
+.global prefix_copy320
+.type prefix_copy320,%function
+prefix_copy320:
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ret
+.size prefix_copy320,.-prefix_copy320
+
+// Inert evidence; credential-free shared llm-verifier only.
+// x0 out,x1 input,322 words;exact alias/disjoint,no partial.
+// Data N+(Nmod2) instructions plusRET;odd final scalar word avoids any overread.
+.text
+.p2align 2
+.global prefix_copy322
+.type prefix_copy322,%function
+prefix_copy322:
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ret
+.size prefix_copy322,.-prefix_copy322
+
+// Inert evidence; credential-free shared llm-verifier only.
+// x0 out,x1 input,512 words;exact alias/disjoint,no partial.
+// Data N+(Nmod2) instructions plusRET;odd final scalar word avoids any overread.
+.text
+.p2align 2
+.global prefix_copy512
+.type prefix_copy512,%function
+prefix_copy512:
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ret
+.size prefix_copy512,.-prefix_copy512
+
+// Inert evidence; only shared credential-free verifier executes.
+// x0 metadata40;only byte21 is read/written. Getter returnsw0,setterq=w1<=63.
+// No18/SP/callees/LR changes;production inlines the single byte opcode.
+.text
+.p2align 2
+.global metadata_pending_get
+.type metadata_pending_get,%function
+metadata_pending_get:
+    ldrb w0,[x0,#21]
+    ret
+.size metadata_pending_get,.-metadata_pending_get
+
+// Inert evidence; only shared credential-free verifier executes.
+// x0 metadata40;only byte21 is read/written. Getter returnsw0,setterq=w1<=63.
+// No18/SP/callees/LR changes;production inlines the single byte opcode.
+.text
+.p2align 2
+.global metadata_pending_set
+.type metadata_pending_set,%function
+metadata_pending_set:
+    strb w1,[x0,#21]
+    ret
+.size metadata_pending_set,.-metadata_pending_set
+
+// Inert evidence; only shared credential-free verifier executes.
+// x0 metadata40;only byte21 is read/written. Getter returnsw0,setterq=w1<=63.
+// No18/SP/callees/LR changes;production inlines the single byte opcode.
+.text
+.p2align 2
+.global metadata_pending_clear
+.type metadata_pending_clear,%function
+metadata_pending_clear:
+    strb wzr,[x0,#21]
+    ret
+.size metadata_pending_clear,.-metadata_pending_clear
+
+// Inert evidence; only shared credential-free verifier executes.
+// x0 metadata40;ordinal returns x0/x1 ALL128bits,colorreturnsw0. No writeback/overread.
+// Production inlines the single load;no18/SP/callees/LR changes.
+.text
+.p2align 2
+.global metadata_ordinal
+.type metadata_ordinal,%function
+metadata_ordinal:
+    ldp x0,x1,[x0,#24]
+    ret
+.size metadata_ordinal,.-metadata_ordinal
+
+// Inert evidence; only shared credential-free verifier executes.
+// x0 metadata40;ordinal returns x0/x1 ALL128bits,colorreturnsw0. No writeback/overread.
+// Production inlines the single load;no18/SP/callees/LR changes.
+.text
+.p2align 2
+.global metadata_color
+.type metadata_color,%function
+metadata_color:
+    ldrb w0,[x0,#20]
+    ret
+.size metadata_color,.-metadata_color
+
+// Inert evidence; shared credential-free verifier ONLY.
+// x0 full32-byte scalar output,x1 disjoint initialized128-bit public j state.
+// 1<=j<=m<2^126<r;emit fullFr encoding(j),incrementstatej+1,all32byteswritten.
+// Onlycaller-savedx2/x3/flagsclobber;noSP/18/callees/LR changes.
+.text
+.p2align 2
+.global baby_scalar_fill
+.type baby_scalar_fill,%function
+baby_scalar_fill:
+    ldp x2,x3,[x1]
+    stp x2,x3,[x0]
+    stp xzr,xzr,[x0,#16]
+    adds x2,x2,#1
+    adc x3,x3,xzr
+    stp x2,x3,[x1]
+    ret
+.size baby_scalar_fill,.-baby_scalar_fill
+
+// Shared-only field-tag payload88 evidence. U32@0,scalar32@32,Ctag24@64.
+.text
+.p2align 2
+.global prefix_copy11
+.type prefix_copy11,%function
+prefix_copy11:
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldp x2,x3,[x1],#16
+    stp x2,x3,[x0],#16
+    ldr x2,[x1],#8
+    str x2,[x0],#8
+    ret
+.size prefix_copy11,.-prefix_copy11
+.global payload_scalar
+.type payload_scalar,%function
+payload_scalar:
+    mov x4,x0
+    ldp x0,x1,[x4,#32]
+    ldp x2,x3,[x4,#48]
+    ret
+.size payload_scalar,.-payload_scalar
+.global payload_color
+.type payload_color,%function
+payload_color:
+    ldrb w0,[x0,#20]
+    ret
+.size payload_color,.-payload_color
+.global payload_tag_equal
+.type payload_tag_equal,%function
+payload_tag_equal:
+    ldr x2,[x0,#64]
+    ldr x3,[x1,#64]
+    cmp x2,x3
+    b.ne payload_tag_false
+    ldr x2,[x0,#72]
+    ldr x3,[x1,#72]
+    cmp x2,x3
+    b.ne payload_tag_false
+    ldr x2,[x0,#80]
+    ldr x3,[x1,#80]
+    cmp x2,x3
+    b.ne payload_tag_false
+    mov w0,#1
+    ret
+payload_tag_false:
+    mov w0,#0
+    ret
+.size payload_tag_equal,.-payload_tag_equal
