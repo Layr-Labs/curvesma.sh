@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Consistent96/64 radix declaration with direct second-pass shards",
+  "claims": [
+    {
+      "statement": "For the full protected supplied nonidentity P in BLS12-381 G1 and independent uniform z in GT,return Q in G2 with e(P,Q)=z,with no auxiliary powers. The exact trace recurrence, twelve-Frobenius key and finite random-stride collision proof support success greater than0.3900031,at the protected0.39 threshold and explicit finite-randomness premise. Metadata is40 bytes and preserves all160 fingerprint bits,color and all128 ordinal bits. Sorting is ONE stable96-bit pass with H31/M32/B33 and TWO-WORD first-edge COUNT entries,followed by ONE stable64-bit pass with direct H31/B33 shards. Construct ALL2^96 and ALL2^64 bucket arrays,prefixes,pending slots,queues and tails,including failures;there are NO80-bit passes in the current algorithm. The cold sort subset is below2^120 instructions,complete cold below2^124;algorithm-specific extra storage below2^110,total peak below2^138 bytes,advice0. Native recurrence2697/key724/NH346 retain2738/735/355. Complete32-byte baby7 and full-r giant21 helpers retain12/28 with callers,20L total. Generation4552,local sorting680,scan128,confirmation1,spare256 give base5617;all network1000 gives hot6617,retained6697. N=6697L+2^124 scalar instructions is below20000*2^(62251/500),at fixed C20000. Charge all preprocessing,finite coins,arithmetic,lookup/sorting,transfers,failures,confirmation,verification and actual G2 output without amortization or uncharged advice. Preserve full parameters,six production tracks and one computation metric. This is an analytical exploratory claim,not a production run,qualification,promotion or inherited acceptance.",
+      "score": {
+        "numerator": "62251",
+        "denominator": "500"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-and-radix96-64-full-word-packets",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker ONLY:retain full-p recurrence/key/NH/fixed-lookup instruction checks;interpret actual odd5/even320/322/512 copies and byte21 LDRB/STRB primitives;bounded4096-record full160-bit/full128-bit metadata40 state model verifies complete32/five-frame source assembly,20-frame bulk,stable96/64-bit sort,queues,padding and bank/counter boundaries. Sparse maps are initialized-zero scoped fixtures only,not production2^80 construction or controller/GT probability/hardware/qualification certification. Actual metadata color/complete128-bit ordinal getters are also interpreted while occupancy is nonzero;no bytes are truncated or read beyond40. Also actual baby7 and full-r giant21 scalar helpers,full32-byte encoding,128-bit carry,full protected r255 wrap/alias/read/write/ABI/count checks;no reduction of production scalar space. Current protocol uses first96 bits in H31/M32/B33,two-word COUNT entries and256-entry first-edge count frames;second64 bits use H31/B33 with direct Root shards and512-entry count frames. Sparse fixtures never stand in for production2^96 construction.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
