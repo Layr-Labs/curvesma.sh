@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Use a ceil-divisor underestimate and six-limb conditional correction",
+  "claims": [
+    {
+      "statement": "Completefullprotectedp381/r255 suppliedPfixedG1inversionintoG2/noauxpowers/uniformGT/freshpaidcoins/success>0.3900031>0.39. Full192-bytecanonicalkeyVALUEunchangedasA96||B96readWHILEframealive;actualfusedkey/hash<=1162+caller9ret1174replaces824+376. Savekeysinexistingcallee28,readall24wordsbeforestores,identityNOhash,scalar32/rawhistoriesuntouched. NH369usesfourarg/tworegions/qMOVdelayedafterALLinputreads,SAMEhashfunction/fullY/U. Onepublicleafrecurrence2635+caller20<=2660/fullABI;sharedA/B/signed22p/currenttablegeometrypreserved. Payload88/fullFqtag24/metadata40/ALL128ordinals/two80stablepasses/ALL2^80construction,unchangedexactfinitegroup/cap/identity/coinbound. Explicitselectivenotificationfirstwait20/notify32/controller120<=128,prefix136<=160,stableheadercontwait12/notify24+control8=32endpoint/64edge,realblockingbaremetalA64implementationlimitationsvisible. CompleteN=6674L+2^124forL88722074495999233395607723401466085376satisfiesEXACTN^500<20000^500*2^62239,proposed62239/500=124.478,peak138/advice0/C20000/sixtracks/onecomputationmetricunchanged. Noobservednewpass/score/acceptance/qualification/promotion/productionexecutionclaim. Header512Dceil,estimateq/q-1,nonnegativeV<2p,seventhlimbzero,SIXlimbtrialsubtract/SIXCSEL;QREDUCE30/fixed211/odd570. Universal proof in quotient_certificate.md;not a changedfield/profile.",
+      "score": {
+        "numerator": "62239",
+        "denominator": "500"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:actualfusedcanonicalkey/NHcaller<=1162,traceALL24actualLDPinputwordsagainstindependentEXACTfullp381canonicalkeyoracle,thenfullY/Uoracle,raw/scalarreadonly/publiccalleeLRSPx18/initializedframe/lifetime/identityNOhash/counts. Direct369NHfixturesusetwoNONCONTIGUOUS96byteregions/allowedAalias/corners,ALL192inputtrace. Retainactual2635leafrecurrence/fullp381oracle/knownmacroinclude/nativefield/keysign/odd570/fixed211/full-rscalar/copy/packet/full160sort/ALL128ordinal/11+fiveframe/queues/banks/explicitmonitor-eventfirstwait20/cont12/selectivity/stableF1/5/11/20/headerfieldsfixtures. ScopeNOTproductiontablefill/GTinversion/hardwareWFEavailability/probability/timingqualification. Neverhostexecutecandidatecode. ALLheaderconstructorsuseDceil. ActualfieldoraclescheckcanonicaloutputandfullpublicABIundernewunderestimatecorrection.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
