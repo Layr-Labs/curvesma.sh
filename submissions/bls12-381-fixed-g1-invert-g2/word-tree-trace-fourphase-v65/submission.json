@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "title": "Trace-recurrence inversion with four disjoint giant-slope families",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion underuniformGTtarget/freshfinitecoinsR,success>0.3900031 by exact BG/four-familyGG counting,integer-coordinate disjointness andsecondBonferroni. Actual4808instructiontrace map/5001instructionstep,sharedfingerprint/color-aware sort,finite source-workerstreams andall construction/failures included. CompleteN<=20000*2^(12523/100),cold<2^124scalarinstructions,peak<2^138bytes,advice0. No suppliedauxiliarypowers,amortization,observedqualification/pass/score.",
+      "score": {
+        "numerator": "12523",
+        "denominator": "100"
+      },
+      "evidence": [
+        "handoff.md",
+        "recurrence_step.S",
+        "fill_vector.S",
+        "odd_trace.S",
+        "recurrence_project.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "quotient_certificate.md",
+        "proof.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
