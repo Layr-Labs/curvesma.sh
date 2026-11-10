@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "title": "Exact trace-recurrence inversion with a complete mixed/giant coverage certificate",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion under uniformGTtarget/freshfinitecoinsR,success>0.3900031 by exacttwo-variable BG/GG event counting andsecondBonferroni. Actual characteristic trace recurrence,4808instructionlinear map/5001instructionstep,sharedfingerprint/color-aware exactsort,two ordinary source workers and all streaming/losingcase/setup work included. N<=20000*2^(12527/100),completecold<2^124scalarinstructions,peak<2^138bytes,advice0. No auxiliarypowers given,targetamortization,observedqualification/pass/score.",
+      "score": {
+        "numerator": "12527",
+        "denominator": "100"
+      },
+      "evidence": [
+        "handoff.md",
+        "recurrence_step.S",
+        "fill_vector.S",
+        "odd_trace.S",
+        "recurrence_project.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "quotient_certificate.md",
+        "proof.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}

@@ -1,0 +1,76 @@
+# Random-stride baby/giant inversion with exact trace recurrence
+
+Proposed time_log2=12527/100=125.27. This is an analytic claim, not an observed score, runtime pass, qualification or promotion. It uses the full protected p381/r255, actual nonidentity supplied P, uniform full GT target z including identity, threshold0.39 and fixed reference C20000. There are still six production tracks and one computation metric. Complete cold work is below2^124, peak storage below2^138 bytes, advice0. All tables and powers are constructed for this attack. No auxiliary powers are given and no work is amortized over future targets. Explicit finite randomness premise R is disclosed in randomness.md.
+
+Validate canonical inputs, curves and subgroups. Set h=e(P,Q0) for the public G2 generator Q0. It generates GT for every valid nonidentity P. If z=1, return and verify G2 identity. Otherwise the target has unique z=h^a; a is uniform Fr when z is uniform GT. The probability proof below is over uniform a and fresh independent algorithm coins, as required, rather than a worst-case-target assertion.
+
+Sample one uniform b in Fr and eighty-one independent Fm61 fingerprint coefficients by the capped finite sampler. Compute d=h^(-b) with actual GT exponentiation. Let
+m=46202355521457529945571488961482719232, L=2m=92404711042915059891142977922965438464.
+m is a multiple of2^110, hence2048 and512. Baby records correspond to h^j for j=1,...,m; giant records to z*d^i=z*h^(-bi) for i=0,...,m-1. Stored scalar is j for a baby, bi modulo r for a giant. Both workers use the SAME independently sampled fingerprint coefficients.
+
+## Exact recurrence and emitted records
+
+Let Phi(X)=a0+b1*t=trace_(Fp12/Fp4)(X)/3, t=w^3,t^2=1+u,u^2=-1. This is four native canonical Fp coordinates. For any GT increment g, its three p^4-conjugates satisfy
+Y^3-cY^2+c^(p^2)Y-1, c=3Phi(g).
+Consequently v_n=Phi(Z*g^n) satisfies
+v_n=c*v_(n-1)-c^(p^2)*v_(n-2)+v_(n-3).
+The recurrence follows separately for each conjugate root and therefore also for their Z-weighted sum. It remains valid for g=1 with repeated roots.
+
+Baby increment is h, with cold initial Phi(1),Phi(h),Phi(h^2). Giant increment is d, with cold initial Phi(z),Phi(zd),Phi(zd^2). These are actual computed GT values. Each sequence uses a constant4x8 Fp linear map for the first two terms: multiplication by c and by -c^(p^2), acting on two raw four-coordinate predecessors. Generate all vector lookup entries with actual full-field seeds and fill_vector.S. recurrence_project.S computes this map in4808 instructions. recurrence_step.S then performs the four canonical additions of the third predecessor and copies the RAW new Phi to that history slot BEFORE any key sign canonicalization. The caller rotates three history pointers with four MOVs. architecture.md proves all source/count/alias/initialization contracts. No full hot GT multiplication is required.
+
+Use the exact12-Frobenius-fiber key S192 from key_contract.md. All emitted conceptual elements are actual GT by the recurrence proof. Abort if a giant identity is encountered; baby identities cannot occur since1<=j<=m<r. The constant number of cold initial records is charged, and also conservatively assigned the normal hot allowance. Identity targets are solved directly.
+
+The universal hash from key_contract.md returns U160 in bytes0..19 of a32-byte buffer, initially with96zero bits. Set byte20 to the color (baby0/giant1). Store immutable payload(S192,scalar32,U32) and metadata(U32,ordinal128,zero16), still256/64 bytes. Baby ordinal is j-1 and giant ordinal is m+i. The complete128-bit ordinal is retained. The color is OUTSIDE the160 sorting bits. Group equality compares ONLY bytes0..19, not all32 bytes. The pending occupancy word at metadata byte48 remains known-zero padding, distinct from color and ordinal.
+
+Generate all L records using the finite worker streams in architecture.md. Sort metadata by the unchanged five stable32-bit passes. Enumerate all unordered equal-U pairs, aborting BEFORE more than floor(L/8192) confirmations. Fetch full S, scalar and color. Reject unequal S and baby/baby pairs. A mixed pair is always informative: try all12 phases lambda=p^ell,ell0..11, with a=bi+lambda*j. Do NOT reject a mixed pair merely because its two stored scalars happen to be equal. For two giants, reject equal scalars; otherwise try the11 nonidentity phases:
+a=(b_t-lambda*b_s)/(1-lambda),
+because a-b_t=lambda*(a-b_s). Phase1 cannot be the true phase for distinct scalars. For the FIRST informative exact-S pair, some phase is correct. Verify h^a=z, construct[a]Q0, and verify canonical G2/curve/subgroup/full e(P,Q)=z before return. At most12 terminal phase attempts occur in total, all cold-paid.
+
+## Exact useful-collision probability
+
+Write u0=0xd201000000010000 and lambda0=u0^2. The full protected parameters satisfy r=u0^4-u0^2+1, p=-u0 modr. At the displayed m,
+m<u0^2-1, 2m^2<r, 2m<lambda0, 2m(lambda0+1)<r.
+These are exact integer inequalities, not toy parameters.
+
+The union of baby Frobenius exponents
+Sexp={p^ell*j modr:0<=ell<12,1<=j<=m}
+has size s=12*(m-floor(m/u0)). Here is a complete short-interval proof. The twelve roots are ±1,±u0,±u0^2,±u0^3,±(u0^2-1),±(u0^3-u0). The ±u0^2 and ±(u0^2-1) products lie outside[1,m] without modular wrap because m<u0^2-1 and m*u0^2<r-m. Of ±u0 only +u0 produces pairs j'=u0*j, exactly floor(m/u0). The inverse phases ±(u0^3-u0)=∓u0^(-1) give only the same reverse pairs: multiply by u0 and use u0*m+m<r. Neither -1 nor -u0 produces another small positive value.
+
+For ±u0^3 put x=-u0. The congruence j'=x^3*j modr has integer lattice basis (x,x^2-1),(x^2-1,-x), determinant-r. Both basis vectors have squared norm r and are orthogonal, so every nonzero lattice vector has norm at least sqrt(r). The basis spans the full congruence lattice because its determinant is its index r. A pair with |j|,|j'|<=m has squared norm<=2m^2<r, impossible. Negating j' covers the other sign. Finally u0^2>m prevents any three-point +u0 chain. Thus each duplicate baby orbit contains exactly two baby exponents and there are precisely floor(m/u0) such pairs. All nonidentity orbits have size12, proving s.
+
+For every i=0,...,m-1 and c in Sexp, select a mixed event a=i*b+c. There are M=m*s distinct events. Each has probability1/r over uniform independent a,b. Two different slopes i give a full-rank2x2 system and probability1/r^2; same slope with different nonzero c is disjoint. Each event gives an actual useful mixed collision.
+
+Also select two families of giant/giant events for sigma=lambda0 and -lambda0, for0<=i<k<m:
+c_sigma(i,k)=(i-sigma*k)/(1-sigma), b!=0, a=b*c_sigma(i,k).
+Each slope c_sigma is nonzero. Within either family it is injective: any equality gives Delta_i-sigma*Delta_k=0 modr, whose absolute integer value is below r; since lambda0>m, it forces both differences zero. The families are disjoint. Indeed equality across them reduces using lambda0^2=lambda0-1 to
+(i-s-t+k)+lambda0*(i+s-2k)=0 modr.
+The absolute value is less than r, and the constant coefficient has absolute value<2m<lambda0. It follows that i+s=2k and i+k=s+t. But i<k implies s=2k-i>k and t=2i-k<i, contradicting s<t. Therefore G=2choose(m,2)=m(m-1) distinct nonzero slopes are selected.
+
+Each giant event has probability(r-1)/r^2 because b!=0. Different giant slopes are disjoint under that guard. Their points are nonidentity, since c_sigma-i=sigma*(i-k)/(1-sigma)!=0. Scalars bi,bk are distinct. A mixed/giant event pair is either an independent linear system with probability at most1/r^2 or parallel and disjoint, because the mixed intercept c is nonzero. These are exact two-variable finite-field facts, not collision independence or a hash heuristic.
+
+Let
+mu=M/r+G*(r-1)/r^2,
+U2=(choose(M,2)+M*G)/r^2.
+The omitted giant/giant intersections are exactly zero. The second Bonferroni inequality gives useful-event probability at least mu-U2. Here
+s=554428266257490359310219321278485257756,
+M=25615891868773885244564869964225288721999138537633613355547905293263298363392,
+G=2134657655731157103854804758690597988114730995152973871480362324799459950592.
+All selected events correspond to actual records; inverse phase orientation is harmless because the algorithm tests every required Frobenius phase.
+
+For confirmations, distinct giant exponent pairs are uniform Fr^2 as functions of uniform a,b; a mixed giant exponent is uniform Fr. Their expected orbit matches are bounded by12/r per pair. The deterministic baby duplicates contribute exactly floor(m/u0). With independent fingerprint collision bound delta=2^23/(2^61-1)^3,
+caploss=(choose(L,2)*(12/r+delta)+floor(m/u0))/(floor(L/8192)+1).
+Any giant identity contributes at most m/r by a union bound. Capped sampling/extraction contributes less than2^-970. Identity targets return successfully; their unused coins can be extended hypothetically for this unconditional probability proof.
+
+EXACT finite rational evaluation gives
+mu-U2-caploss-m/r-2^-970 >3900031/10000000>0.39.
+Diagnostics: mu=0.5292283085163222, U2=0.13921265451446146, caploss=2.589731596323086e-07, final=0.3900153950287011. Decimal rounding is not the certificate.
+
+## Complete work and storage
+
+The combined native recurrence_step includes its4808-instruction map, four31-instruction field calls and69 own instructions:5001 throughRET. Sixteen outer argument/call instructions and four history-pointer MOVs give5021; retain5088. Add key1536, fingerprint496, Fr32, main704: generation7856. architecture.md accounts separately for all packet/resident work. Five count/scatter passes1360, scan128, confirmations1L, retained spare256 give base9601. Worker source streams plus Root output streams and all endpoint reserves cost698/item; count/scatter630 and scan36 make network1364. Total hot10965; retain11072.
+
+Each confirmation is at most8192 instructions, including four RPCs, all four Root formations256, full comparisons and losing branches. The cap floor(L/8192) therefore costs at most L, already included. All12 terminal verification attempts are cold. The more aggressive cap is justified by the displayed complete failure probability; it does not change the0.39 success threshold.
+
+All ordinary processors/code/pages/state are initialized below2^121 summed, and all edge/flag/controller initialization below2^118. Both complete fixed recurrence vector tables and both fixed-s tables are actually generated below2^50; all powers, initial traces, field-map coefficients, code/dispatch/constants/phase attempts and other fixed work below2^92. Finite coin source/delivery2^80 is included there. Count resets, prefixes, pending initialization/exceptions and final padding are below2^60 and also included. Thus complete cold/finish<2^124. There are no astronomical j-indexed target tables or supplied powers.
+
+Generic leaf capacity is2^136 bytes, all private state/code<2^119, edge pages<2^111, Root<2^47, and the two workers' extra tables/state<2^48. Total<2^137; retain peak<2^138. All native pointers are below2^47;96-bit data identifiers are routed as ordinary words. Total N=11072L+2^124 satisfies EXACT N^100<20000^100*2^12527. The C20000 scalar-instruction normalization is unchanged. These are analytic source/count/mathematical proofs, not a native execution or physical hardware qualification.

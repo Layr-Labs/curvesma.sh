@@ -1,0 +1,79 @@
+// Inert analytic code; NEVER host-execute/compile or use credentials.
+// x0 out576 partial, x1 prev1_192,x2 prev2_192,x3 prev3_192,x4 matrixbase,x5 constants520,x6 p48.
+// All buffers/tables/constants/frame disjoint except exact additions to out. prev3 receives RAWnewPhi BEFORE keycanonicalization.
+// Frame80; all19..29/SP/LR preserved,no18. Caller rotates history pointers AFTER return (4MOV included budget).
+.text
+.p2align 2
+.global recurrence_step
+.type recurrence_step,%function
+recurrence_step:
+    stp x29,x30,[sp,#-80]!
+    stp x19,x20,[sp,#16]
+    stp x21,x22,[sp,#32]
+    stp x23,x24,[sp,#48]
+    stp x25,x26,[sp,#64]
+    mov x29,sp
+    mov x19,x0
+    mov x22,x1
+    mov x23,x2
+    mov x20,x3
+    mov x24,x4
+    mov x25,x5
+    mov x21,x6
+    mov x0,x19
+    mov x1,x22
+    mov x2,x24
+    mov x3,x25
+    mov x4,x23
+    bl recurrence_project
+    add x0,x19,#0
+    mov x1,x0
+    add x2,x20,#0
+    mov x3,x21
+    bl fp381_add
+    add x0,x19,#48
+    mov x1,x0
+    add x2,x20,#48
+    mov x3,x21
+    bl fp381_add
+    add x0,x19,#384
+    mov x1,x0
+    add x2,x20,#96
+    mov x3,x21
+    bl fp381_add
+    add x0,x19,#432
+    mov x1,x0
+    add x2,x20,#144
+    mov x3,x21
+    bl fp381_add
+    ldp x0,x1,[x19,#0]
+    stp x0,x1,[x20,#0]
+    ldp x0,x1,[x19,#16]
+    stp x0,x1,[x20,#16]
+    ldp x0,x1,[x19,#32]
+    stp x0,x1,[x20,#32]
+    ldp x0,x1,[x19,#48]
+    stp x0,x1,[x20,#48]
+    ldp x0,x1,[x19,#64]
+    stp x0,x1,[x20,#64]
+    ldp x0,x1,[x19,#80]
+    stp x0,x1,[x20,#80]
+    ldp x0,x1,[x19,#384]
+    stp x0,x1,[x20,#96]
+    ldp x0,x1,[x19,#400]
+    stp x0,x1,[x20,#112]
+    ldp x0,x1,[x19,#416]
+    stp x0,x1,[x20,#128]
+    ldp x0,x1,[x19,#432]
+    stp x0,x1,[x20,#144]
+    ldp x0,x1,[x19,#448]
+    stp x0,x1,[x20,#160]
+    ldp x0,x1,[x19,#464]
+    stp x0,x1,[x20,#176]
+    ldp x19,x20,[sp,#16]
+    ldp x21,x22,[sp,#32]
+    ldp x23,x24,[sp,#48]
+    ldp x25,x26,[sp,#64]
+    ldp x29,x30,[sp],#80
+    ret
+.size recurrence_step,.-recurrence_step
