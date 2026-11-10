@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Exact short Mersenne folds for full-affine tags and unequal streams",
+  "claims": [
+    {
+      "statement": "Completefullp381/r255suppliedPfixedG1inversionintoG2,noauxpowers. Attackcountsnb=35597089187900144514297950209050673152,ng=53124985308099088881309773192415412224,L=nb+ng=88722074495999233395607723401466085376;bothmultiple3*2^110. BabyorbitM=ng*12*(nb-floor(nb/u0)),GGG=5ng\u00b2/3-ng,exactBonferroniwithbothcaps/identityng/r/coinsgivessuccess>0.3900031>0.39. Scalaractual7/21+callersretain12/28=>12nb+28ng<=22Lincludingallfailureprefixes,neverbalanced20L. Native/table/key/U160/fullFqtag24/payload88/metadata40/ALL128ordinals/two80stablepasses/ALL11+fiveframesretained. ContinueafterfailedACTUALGTphases;cheap8192andexpensive2^36capsbothhotpaid. CompleteN=6792L+2^124 satisfiesN^1000<20000^1000*2^124503,peak138/advice0,C20000/sixtracks/onecomputationmetricunchanged. Proposedanalytic124503/1000=124.503,noproductionexecution/observedscore/qualification/promotionclaim. FullaffineA<2^123 permitsentireupperquotientEXTRwithouttruncation,firstfoldt<3q andsecondv<2q ensureexactcanonicalY. Saves9actualinstructions;nativeNH369+caller4<=376,bothfullYtag/Uidentical,sameprobability.",
+      "score": {
+        "numerator": "124503",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:actualfull-p381recurrence/key/full-rscalar/nativeNH369withU32ANDthreeFULLFqYtagwordscomparedtoindependentintegeroracle,allread/write/ABI/encodability/scalarpreservation/exactinputaliaschecks. Actual88bytepayloadfullscalar/color/ALL24tagbytesgettersandodd11-wordcopy. Bounded4096record/full160fingerprint/full128ordinal/40bytemetadatafixturewithALL11/fiveframeassembly/stabletwo80sort/queues/bank/counter/paddingchecks. SparsemapsareSCOPEDfixtures,notproductionALL2^80construction,GToracle/inversion,probabilityempiricism,timing/hardware/qualification. Baby full32-byte boundary helper tests exact NEW nb endpoint;full r255 and all native code unchanged. Unequal GT success proof is analytic finite rational,not an empirical toy search. Actual369fold withindependentintegeroracle plusmaximumNH/fullaffinecoefficients andexactA=q->0 correctionfixtures;noempiricalproductionprobabilityclaim.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
