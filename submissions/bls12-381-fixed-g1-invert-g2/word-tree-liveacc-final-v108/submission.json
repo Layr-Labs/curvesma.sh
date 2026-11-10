@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Two live accumulators with exact flag-preserving quotient correction",
+  "claims": [
+    {
+      "statement": "Complete supplied-P fixed-G1 inversion intoG2 over FULL protectedp381/r255,uniformGT,noauxiliarypowers,freshfinitepaidcoins. nb35597089187900144514297950209050673152/ng53124985308099088881309773192415412224,L88722074495999233395607723401466085376;exactfinitegroupBonferroni/bothcaps/identity/coinlosses give success>0.3900031>0.39. FulltemporaryS192,fullaffineCtag24/payload88,metadata40/ALL128ordinals/two80stablepasses/ALL2^80construction/ALL11+fiveframes retained. NewactualprivateMap2357/publicStep2647+caller20<=2672:QREDUCE31 usesqp19..25/delayedpLDP preservingborrow,and keepsboth4..10/11..17accumulatorslive;remove16spill/reloads,privateframe48/publicfullABIunchanged. SharedA/Btables/ALL381bits/signed22p/allprefix<45p/canonicaloutputs unchanged. CompleteN=6712L+2^124 satisfiesEXACTN^500<20000^500*2^62243,proposed62243/500=124.486,peak138/advice0,C20000/sixtracks/onecomputationmetric unchanged. No observed newscore/pass/acceptance/qualification/promotion or productionexecutionclaim.",
+      "score": {
+        "numerator": "62243",
+        "denominator": "500"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:actualpublic2647/private2357recurrence withbothliveaccumulators/delayedflagpreservingpLDP/31opqpcorrection againstindependentDENSEfullp381Fp4oracle. Two27TiB/11digitreadonlytablefixture/fixedsbase64/privateframe48/publicfullcallee/LR/SP/x18/readwrite/initializedcarryalias/immediatecounts. Retainnative369NH/fullY/Ucorners,full-rscalar7/21,canonicalkey/byte/copy/88bytepayload/40bytemetadata/4096recordfull160stabletwo80/full128ordinal/ALL11+fiveframe/queue/padding/bankcounterfixtures. SparsefixturesareSCOPEDonly,notproductiontablefill/GTinversion/probability/timing/hardwarequalification. No hostcandidateexecution.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
