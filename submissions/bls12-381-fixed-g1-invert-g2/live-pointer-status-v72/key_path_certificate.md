@@ -1,0 +1,23 @@
+# Current complete key/hash register-return and source path
+
+The canonical math/fiber proof and full current native/source contract are in key_contract.md. No output-memory key buffer is written by the combined leaf. RawPhi192/x1,sLUT/x2,p48/x3,productsbase/x4,keys672/x5 remain actual explicit arguments;compatibilityx0 is unused. Nonidentity returnsword0=x1,word1=x0,word2=x5low55,statusx7!=0. Identitystatusx7=0 invalidates results and skips source packing. No hashbit is dropped.
+
+## Exact full-field normalization and hashing
+
+Sign normalization uses actual canonical p48 inx3 and unsigned low-limb totalorder,with a realzero outline that excludes an infeasible long CFG path. Both complete sign blocks are inline and perform actual subtraction,zero canonicalization and stores. Odd conjugation leaves realA unchanged. Its realA copy is dead;every candidate uses raw realA48. Select the smaller twelve-word signedB representative,then corresponding imagA48. The full conceptual S192 order is rawAreal48,selectedAimag48,selectedB96. Exact GT/Frobenius fibers remain the math contract;arbitrary field fixtures do not certify fibers.
+
+All192 conceptual bytes are read by the fused NH code before any source-output write. During input reads,row1 accumulator uses0/1 so selectedA/B pointers6/7 remain live. Compress affine row1 BEFORErow0,keeping row1 result0 while row0 accum4/5 survives;row0result1,row2result5. Each row has its own ADDS chain/keys,so no carry state crosses rows. The complete wrapping128 NH and three full61-bit affine results are unchanged. Final BFIs/LSRs produceword0=x1,word1=x0,word2=x5;statusx7 (zero=identity,nonnull=success) preserves those. Fresh highword has55 data bits,so source ORR color at55 leaves pendingbyte23 zero.
+
+## Frames,all caller state and exact count
+
+Outer336 bytes:original19/20backup0,table/productsbase16/24,p48at32,hashkeys40,EvenB48..143,OddPhi144..335. Inner288 bytes:21/22backup32,23/24backup48,table/products152/160,scratch192/240. Its output19=innerSP432=outerSP144. Rawpointer20 is already correct and stays live. Inner19backup/restore is unnecessary because no outer code needs19 until the final outer restoration. The outer original19/20backup still restores the caller's actual output/color registers. Inner restores original21..24;25..30 are untouched. SP frames are16aligned,all accesses initialized/disjoint and all immediates encodable. There are NO BL and nox29/x30writes;the entry link remains live until the singleRET. No field/key helper is separately charged hot.
+
+Remove two hash-output STPs,entry outputpointerMOV,and inner19STR/LDR,then keep the already live selectedB pointerx7 instead of an explicit final zero-status MOV. Identitysetsx7zero. Source usesFULL64-bitCBZx7. Actualraw957,retained978=957+1margin+12caller+8spare. The status pointer is outerSP+48 or+240;allocated336frameimpliesnonnull. NH/epilogue never write7 afterselection;the caller NEVER dereferences it afterreturn. No extra branch/setup is hidden.
+
+Worker keeps out19,color20,ordinalLOW21/HIGH22,all preserved by the complete leaf. Afterchecking FULL64-bit x7 byCBZ,actual source executes STP(x1,x0,[19]),ORR(x5,color20,LSL55),STR(x5,[19,16]),STP(21,22,[19,24]). These FOUR data instructions initialize ALL40bytes. OrdinalSTP was already in oldmain712,so newly charged sourcework3. No extraMOV,BL,load or free returned pointer is assumed. The standalone metadata_register_pack RET is fixture overhead;production inlines the four instructions.
+
+Field2465retains2506,keyhash957retains978,aggregateMain720=old712+source3+upperdigitmasks2+scanequalitymasks2+spare1. Generation/supplementary4204. Local720+scan128+confirmation1+inner256+network886+outer80 givesN=6275L+12m+28n+2^124. Full metadata mask/frames/copy/network/routing/cold ledgers are in metadata40_certificate.md andradix80_certificate.md. All full group/probability/field/order/threshold/referenceprices remain.
+
+## Integrated scoped evidence
+
+The whole-key fixture preloads actual worker19..22,out/color/ordinal,records their exact entry state,and gives the leaf ZERO output-write budget. It checksnooutputmemorywordexists,full independent canonicalFp+NH/M61expectedregisterhash,status,ABI/SP/rawPhi/initializedreads,and raw957. For nonidentity it then executes actual native metadata_register_pack WITHOUT any argumentMOV,using the SAME returned registers/preservedworkerstate. Four data instructions plus fixtureRET complete every40bytes,with all183hashbits/color/pending0/full128ordinal independently checked. Identity never packs. Independent native mask/byte/ordinal/copy fixtures and full-size ledger remain. These do not certify physical productionarrays,GTsuccess,probabilitytheorems orcontroller timing;review remains separate.
