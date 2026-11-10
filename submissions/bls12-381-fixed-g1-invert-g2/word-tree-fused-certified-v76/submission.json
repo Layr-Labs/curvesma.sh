@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "Fused canonical full-field transforms with self-contained NH probability proof",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion underuniformGTtarget/freshfinitecoinsR,success>0.3900031 by exact BG/four-familyGG counting andsecondBonferroni. ExactFp2factorization,2529instructionin-place map/2779instructionstep and913instructioncompleteorbitkey;alllookupentries/streams/coldsetup/failures included. CompleteN<=20000*2^(12477/100),cold<2^124scalarinstructions,peak<2^138bytes,advice0. Fullproductionparameters/threshold/C unchanged. No observedqualification/pass/score. New composed NH128/affine fingerprint374 instructions with rigorous160-bit false-match bound; no native or audit pass claimed. Self-contained two-wrap-region NH bound2^-63, explicitly recomposed delta and unchanged full success threshold.",
+      "score": {
+        "numerator": "12477",
+        "denominator": "100"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "full-p-recurrence-and-nh-instructions",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker only: interpret ACTUAL fused full-p transform/wrapper/map against independent dense Fp4 algebra, strict initialized reads/writes, exact third alias, preserved ABI and2779/2529 counts. Also actual374-instruction NH/affine fingerprint vs independent full128-bit integer oracle, including exact input alias. Virtual lookup contents are scoped fixtures, never a production oracle. No probability, sign/key, production-fill, hardware, score or qualification certification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
