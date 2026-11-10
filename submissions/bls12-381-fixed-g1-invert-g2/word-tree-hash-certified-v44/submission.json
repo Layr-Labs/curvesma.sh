@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "Exact trace inversion with a complete archived interpolation coefficient certificate",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P fixed-G1 inversion outputs verified G2 Q with pairing(Q,P)=z with success>0.390003 under disclosed full-standard-hash finite-event heuristic H. Complete scalar instruction work,including finite ordinary-word tree routing/all processors/construction,cold tables,arithmetic,hashing,sorting,losing paths and all11 terminal attempts,is<=20000*2^(62897/500). Peak memory<2^138 bytes,cold<2^124 instructions included,advice0. No extended-address bank primitive or production execution/qualification is claimed.",
+      "score": {
+        "numerator": "62897",
+        "denominator": "500"
+      },
+      "evidence": [
+        "odd_trace.S",
+        "interpolation_certificate.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "project_toom.S",
+        "proof.md",
+        "fp381_sub.S",
+        "compression.S",
+        "pinned_mont_wrapper.S",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
