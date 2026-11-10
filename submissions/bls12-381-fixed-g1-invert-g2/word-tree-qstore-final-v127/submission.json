@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "title": "Select canonical quotient output stores without copying selected registers",
+  "claims": [
+    {
+      "statement": "Completefullprotectedp381/r255suppliedPfixedG1inversionintoG2/noauxpowers/uniformGT/freshpaidcoins/success>0.3900031>0.39. SAMEfull192logicalkey/160U/fullFr32/fullFqtag24/metadata40/ALL128ordinals. Stablelow64DIRECTthenhigh96RELAYEDpasses;RootchildrenHINCLUDING0/1onlyAFTERGENACKs,deadLUTRAMreuse/unchangedports/rolebarriers;ALL2^64+2^96bucketsconstructed/scanned. SORTCOLDincreased104to120,totalcold124/peak138/advice0unchanged. Explicitselectivemonitor-eventwait/dispatch/stableheaders/allnotificationscharged,nofreeWFE-asNOPscheduler. Actual2574recurrence/207fixed/547odd/fused1139callerret1151;gen4474/local648/base5508/network906/hot6414ret6492with78spare. CompleteN=6492L+2^124forL88722074495999233395607723401466085376satisfiesEXACTN^500<20000^500*2^62219,proposed62219/500=124.438. Sameexactfinitegroup/hash/cap/identity/coinbound0.3900120659047603;alltrials/failures/outputpaid. C20000/sixtracks/onemetricunchanged. Noobservednewpass/score/acceptance/qualification/promotion/productionexecutionclaim. PublicFpadd/subMAX26,BOTHMAX39versus48;allconditionalbranches/joinjumpscharged1,maxoverALLpaths,nofrequency/timingassumption. FiveBOTHsave45recurrence,threeoddhelperssave15. BoundsareMAXnotconstantinstructioncounts. Legacyhandoff/streamrepairproseomittedfromTHISfreshpackagebecausecurrentproof/metadata/radixcontractsfullyreplaceit;existingrootfilesuntouched. FULLFr255conditionaladdMAX18/caller5ret25;fullbaby7ret12;13ng<=8L=>scalaraggregate20L,notold22L. Allfourlimbs/fullr/full32outputunchanged. QSTOREMAX29INCLUDINGthreecanonicaloutputSTP/conditionalbranch/joinB,replaces30+3;allaccumulatorsneednotbecanonicalafterstoresandareNEVERreadagain. CurrentDceil/universalV<2p/range/fullfield/otheraccumulator/publicABIprovedinquotient_certificate.md.",
+      "score": {
+        "numerator": "62219",
+        "denominator": "500"
+      },
+      "evidence": [
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:currentdirect64shards/relayed96shards4096recordfull160stablepermutation/ALL128ordinals/40bytepadding/bank/counter/queue/tails/11+fiveframes/20bulkfixtures;notproductionarrayfill/controllertiming/physicalhardware/probabilityqualification. Retainactual2574fullp381recurrence/207fixed/547odd/fused1139withALL24actualNHinputwordtrace/369hash/fullY/U/full-rscalar/actualcopy/nativeABI/initializedread/write/immediates/180actualQSTOREstored-outputboundarycases/literalnotificationwait20/continuation12/stableF1/5/11/20fixtures. CandidatecodeNEVERhostexecuted/imported/compiled/emulated. Newconditionalfieldactualsourceboundary/alias/publicABI/canonicalityfixtures;recurrence/odd/keycountsareupperbounds,notfalseexactfixedcounts. SharedONLY. FrgiantactualnativebranchMAX18full-roracle/equality/2r-2/carry/alias/publicABI;notreducedorder. CompareactualSTORED48bytes/topzero/otheraccumulator/x18/count<=30includingfixtureRET;notfalsecanonicalregisterassertion.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
