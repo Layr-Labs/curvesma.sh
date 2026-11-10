@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "One public leaf recurrence with explicit selective notification and stable-header streams",
+  "claims": [
+    {
+      "statement": "Completefullprotectedp381/r255 suppliedPfixedG1inversionintoG2,noauxpowers,uniformGT/freshpaidcoins/success>0.3900031>0.39. Currentfullnb/ng/L88722074495999233395607723401466085376 andexactfinitegroupBonferroni/bothdependent-hashcaps/identity/coinlossesretained. FulltemporaryS192/affineCtag24/payload88/metadata40/ALL128ordinals/two80stablepasses/ALL2^80construction. NativepublicrecurrenceisONELEAF2639+caller20<=2664:macro-onlyinclude/noBL/privatemapframe,public528frame/full19..29LRSPx18ABI;sharedA/Btables/ALL381bits/signed22p/allprefix<45p/canonicaloutputs unchanged. ExplicitselectiveLDAXR/WFE/STLR/CLREX/DMBnotificationfirstwait20/notify32/ordinary120<=128/prefix136<=160;2earlyheaderwakescounted/oneexpectedflag/serializedstack/noidleHOTpolls. Stableheadercontinuationswait12/notify24+control8=32endpoint/64edge. Exact12KiBedgelayout/max2048granule/coldparkconfigSTOPpaid. Real-blockingbaremetalA64addressedmonitors/disabledextraneouseventsimplementationchoiceexplicit,notWFEasNOPportability. CompleteN=6704L+2^124 satisfiesEXACTN^250<20000^250*2^31121,proposed31121/250=124.484,peak138/advice0/C20000/sixtracks/onecomputationmetric unchanged. Noobservednewpass/score/acceptance/qualification/promotion/productionexecutionclaim.",
+      "score": {
+        "numerator": "31121",
+        "denominator": "250"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:actualoneLEAF2639publicrecurrencewithfixedliteralmacroinclude/noBL/nohelpercallagainstindependentDENSEfullp381Fp4oracle,allpubliccalleeLRSPx18/initializedreadwrite/carryalias/immediatecounts. Two27TiB/11digitreadonlytablefixture/fixeds64. Retainactual369NH/fullY/Ucorners/full-rscalar/key/byte/copy/88bytepayload/40bytemetadata/4096recordfull160stabletwo80/ALL128ordinals/ALL11+fiveframes/queuepaddingbankcounterfixtures. Actualnotifywait/pub/clearopcodesunderexplicitperPEmonitor/eventsemantics:firstframeheaderpublicationstaleracesmax20,continuationmax12/otheridlePEzeroHOTinstructions/12KiBlayout/stableF1/5/11/20headerONCE/full96ID/offsetdescriptor. ScopeNOTproductiontablefill/GTinversion/hardwareWFEavailability/probability/timingqualification. CandidatecodeNEVERhostexecuted.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
