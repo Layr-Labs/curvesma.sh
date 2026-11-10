@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Unreduced full-width sums in linear recurrence tables",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 supplied nonidentity P in G1 and independent uniform z in GT,return Q in G2 with e(P,Q)=z,no auxiliary powers. Preserve full fields/r255,six tracks,one computation metric,C20000 and0.39 success. Generate the actual random-stride trace streams and exact twelve-orbit S192 transiently. Fingerprint S using three independent full61-bit affine residues,183 bits encoded in24 bytes with9 high zero padding bits. Pair collision bound for distinctS is(2^-63+1/q)^3. Store ONLY full canonical32-byte Fr scalar payloads;metadata48 retains fingerprint24,color24,pending25,padding26..31,ALL128 ordinal bits32..47. Sort by two stable96-bit passes over the192-bit encoding,construct BOTH full2^96 bucket sets. Process at most floor(L/2^29) equal-fingerprint pairs,including skipped pairs. Try at most12 exponents per pair,verify each by actual h^a=z,and CONTINUE after false fingerprints. Each complete pair has C*H+R<2^29 with H<=6144 dense reference multiplications,R<=2^25;all confirmations together cost<=L in the normalized numerator. TerminalG2 construction/full pairing verification at most once. Exact group-event/Markov/sampling calculation supports success>0.3900031. Native recurrence2569/key710/NH341 retain2610/721/350,scalar20/main712 givegeneration4413;local sorting720,scan128,confirmation1,spare256 givebase5518;network920 giveshot6438,retained6518. N=6518L+2^124 is below20000*2^(622311/5000). Both full2^96 constructions are paid,sortcold<2^121,totalcold<2^124,algorithmdata<2^110,totalpeak<2^138 bytes,advice0. All preprocessing,coins,failures,transfers,sorting,verification and output charged. Analytical exploratory claim only,no production run,qualification,promotion or inherited acceptance. BOTH identical A0/A4 and A1/A5 pairs share widened tables,each seven35/four34-bit digits covering ALL381 bits. Four B columns use eleven32/final30-bit digits for382-bit unreduced sums. Fixed-s uses eleven32/final29-bit digits,also ALL381 bits. Construct vector[5,75.875)TiB,fixed[76,78.0859375),parent4,children80..128 disjoint below47 bits. Native map2386/wrapper231 gives2569;fixed200/odd523/key710. All table/seed/page construction charged. All16 cases execute before representative/maxima reporting. Assembler.rept compresses I/O SOURCE only;the shared interpreter expands/counts EVERY load/store,unchanged copy costs. Current parent uses CMP+B.NE per limb,then ADD+two CSEL.LO copy-pointer selections with preserved first-difference flags. Equal limbs continue;all equal exitsidentity. Caller x4..x7 assigned after final BL and SP-based frame384 preserve ABI. All-path acyclic own bound94 retained95,key710 retained721. N=6518L+2^124 obeys exact N^5000<20000^5000*2^622311,proposed124.4622. Correct G=5*m*m/3-m is restored exactly;earlier intermediate numeric-replacement typos are not inherited evidence. Fixed lookup now loads first input pair into free caller x3/x4 AFTER saving constant x3 into x25. Those caller registers later hold corresponding p limbs. No BL,all input reads before output stores. x19/x20 stay untouched;remove save/restore pair and reduce balanced frame80 to64,still preserving x21..x28,x29/LR. Fixed200,odd523,key710 retained721,net4 saved per record. All table geometry/probability formulas remain unchanged. Wrapper BOTH never changes x1/x2. Preserve original pointers through first transform,then advance48 after each transform,instead of reloading four times from saved arguments. Every source stays read-only and all output/temp/history layouts unchanged. Four scalar LDP removed,wrapper231/map2386 gives2569,retained2610;net4 saved per record. Physical normal column3 follows column2 whose last29-bit table base remains x26. Column size96*(11*2^32+2^29),so next base equals prior lastbase+96*2^29. Normal stride x27=96*2^32;ADD x26,x26,x27,LSR3 is exact,one instruction versus MOV+MADD. Only this known adjacent-column transition changes. Map2386/wrapper231 gives2569,retained2610,net1 saved per record. Replace36 key-pair LDPs with scalar postindexed LDP[x2],#16 in identical order. Exactly576 bytes advances x2 to affine rows,eliminating initial second-bank ADD and final affine-base ADD. Each LDP remainsone scalar paired load,not SIMD. All key/input bytes and arithmetic unchanged. NH341 retained350 saves2 per record. Once each128-bit NH row is split into60/60/8 chunks,its original accumulator is dead. Pair-load a1/a2 into x15 and dead x4(row0),x6(row1),x8(row2). Multiply last chunk by that saved a2. This replaces six scalar LDRs with three scalar LDPs,all same bytes/arithmetic. Earlier affine outputs x1/x4 remain live and untouched. NH341 retained350 saves3 per record. Before first BOTH the x5 modulus pointer argument is still live. Read its three full limb pairs directly through x5 before BOTH overwrites x5. Remove redundant stack reload into x16. No read/address/ABI/field contract change. Wrapper231/map2386 gives2569,retained2610,net1 saved per record. Tune only attack record count m to44949064867228685926734940410017218560,one3*2^109 step below prior grid point. This still emits two actual full-r streams with full381-bit fields,full2^96 bucket sets and all original input distributions. m remains divisibleby3,2048,512. Exact unchanged formulas yieldsuccess0.39000510783950465>0.3900031>0.39. Native costs unchanged;fewer records lower totalN. No challenge parameter or threshold shrinks. This revision keeps native algorithm/currentm unchanged and replaces superseded historical price narratives with current helper certificates and exact explicit map/wrapper counts. No test coverage,production parameter,threshold,reference price or budget is changed. Current BOTH keeps four integer sums below2p<2^382 without trial subtract/select. Four differences remain canonical381-bit residues. Only B/Bxi columns2/3/6/7 consume sums and extend final digit29 to30;shared A columns consume canonical differences and remain35/34. Four normal blocks4.21875TiB makevector[5,75.875),stilldisjointfixed[76,78.0859375),parent4,children80..128. Every added entry/page is constructed/charged. Remove12 instructions per BOTH,48 total:wrapper183/map2386 gives2569,retained2610. All16 oracle cases plus explicit native2p-2 sums exercise bit381;no production field/order shrinks.",
+      "score": {
+        "numerator": "622311",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker ONLY. Check actual full-p recurrence with BOTH shared11-digit A columns at vectorbase5TiB,four normal B columns,and12-digit32/29 fixed-s table at76TiB against independent full-p algebra. Expected map2386/step2569,fixed200/odd523/key<=710. Full183-bit native hash,scalar/meta/ABI/read checks remain. Static assembler.rept expansion counts EVERY actual copy4/6/384/386/512 instruction. All16 cases execute before representative/maxima summaries. Bounded48-byte metadata/32-byte scalar-payload,two96-bit stable radix and TEST-ONLY exponent-oracle fixtures retain full fields/ordinals. Virtual tables/sparse arrays/test oracle are scoped fixtures,not free production data,GT oracle,cost/success/hardware or qualification evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
