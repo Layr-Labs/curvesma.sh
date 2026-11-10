@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "title": "Ten full381-bit digits with explicit52-bit A64 local mappings",
+  "claims": [
+    {
+      "statement": "Completefullprotectedp381/r255suppliedPfixedG1inversionintoG2/noauxpowers/uniformGT/freshpaidcoins/exactsuccess0.3900120659047603>0.39. ALL381bitswidths39+38*9/two264TiBA/Bvectors128..656/fixed132TiB672..804fullyconstructed<2^53tablecold. ConcreteFEAT_LVA/LPA52-bitlocalVA/PA/64KiBgranule/4TiBblocks;ALLneighborchildports1024..1280TiB,stride64KiB,first12KiBactivehalvesunchanged,fullcoherentNormalShareableparentpagealiases/bootstrap/MMUcharged. NOTactualVMfeature/physicalattackqualification. Edgecoldincreased118to121/memory111to113,processor121/sort120/other92sum<123retcold124;peak138/advice0. MAXrec2392ret2417/fixed194/odd521/fused1113ret1125/Fr18ret25/scalaraggregate20;gen4266/local648/base5300/network906/hot6206ret6284spare78. Same192logicalkey/160U/24fullFqtag/Fr32/88payload/40metadata/ALL128ordinals/64-96stablepasses/ALL2^64+2^96buckets/explicitmonitorWFE/notification/stableheaders/trials/failures/outputcharges. CompleteN=6284L+2^124forL88722074495999233395607723401466085376satisfiesEXACTN^1000<20000^1000*2^124391,proposed124391/1000=124.391. C20000/sixtracks/onemetricunchanged;noobservednewpass/score/promotionclaim.",
+      "score": {
+        "numerator": "124391",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md",
+        "large_address_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-meta40-bytes-and-full-word-packets",
+      "source": "audit.py",
+      "purpose": "SharedcredentialfreeDockerONLY:actualTENfull39/38digitnativeleafMAX2392/fixed194/odd521/fused1113/MOVKcolumnconstant againstindependentfullp381denseFp4/field/EXACTall24NHinputwordkey/fullY/Uoracles;52-bitroleintervals/4TiBL1indexfixtures;64KiBbackingfirst12KiBactivehalves/notificationwait20/cont12/stableFstreams. RetainFr18/Fp26/boundary/alias/publicABI/initializedmemory/immediates/180actualQSTOREstored-output/6496stablefull160/ALL128ordinal/queues/banks/11+fiveframes/20bulkfixtures. ScopeNOTproductiontable/MMUsetup/GTinversion/hardwareavailability/probability/controllertimingqualification. CandidatecodeNEVERhostexecuted/imported/compiled/emulated.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}

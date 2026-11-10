@@ -1,0 +1,13 @@
+# Current full-production architecture
+
+ActualPnonidentity/h=e(P,Q0),fullp381/r255,uniformGT/noauxpowers,allfullFr32scalars and exactPhi recurrence retained. Fusedkey/hashconsumesALL24canonicalkeywordsfromliveA96/B96,identityreturnsbeforehash,scalar/rawhistoriesuntouched. Recurrence2392/caller20ret2417;fixed194/odd521/fused1113caller9ret1125;generation4266. Proof.md suppliescompletefinitegroup/hash/cap/identity/coin/verifiedcontinuationargumentandactual0.3900120659047603lowerbound.
+
+Payload88=U32/fullFr32/fullFqtag24;metadata40=U24/ALL128ordinal16,padding21temporaryoccupancyrestoredbeforeoutput. Source512rowsuse11payload/fivemetadataframes,Rootconcatenatesbeforeparsing;generic2048metadata20frames. PayloadbanksID2^94+(i>>33),88low33;metadatabanksbuffer2^93+(i>>34),40low34;unusedtailsNEVERread.
+
+CURRENTstablelow64directshard/high96relay-shardpassesretainALL160bits,colorignored. RootchildrenHdirect,includingworkers0/1afterGENACKs,separateworkerphaseRAMconstructedforalgorithmarrayswithportsunchanged. Depth2futurelow32shardparent32/children1024..1280mappedfromboot. All2^64+2^96counts/pendingconstructed/scanned;SORTCOLD2^120,totalcold124. Fulladdress/phase/queues/finish/controllerconstructioninradix80_certificate.md(historicalfilename). NoportableWFE-asNOPclaim;explicitchosenbaremetalmonitor/eventrealblockingsemantics,nounboundedpoll/freebroadcast/scheduler. Literalwaiter<=20/notification32,continuation<=12/notify24+control8=32endpoint/64edge,stableheaderFstreamsfullycharged.
+
+Localgeneration4266+sort648+scan128+cheap1+expensive1+spare256=5300;network595+275+36=906;hot6206ret6284with78spare. SAMEfullL88722074495999233395607723401466085376,N6284L+cold124exactN^1000<20000^1000*2^124391,proposed124391/1000=124.391. Genericdatacapacity2^136/private119/edge113/algorithmextra<109retainpeak138,advice0. Allpreprocessing/work/failures/verification/outputpaid,sixtracks/onecomputationmetric/C20000/success0.39unchanged. ScopedexperimentsexecuteONLYsharedcredentialfreellm-verifier;noobservednewscore/pass/promotion/physicalproductionclaim.
+
+
+
+CURRENTtenfull39/38digitsretainALL381bits;LUTvectors128..656TiB/fixed672..804,childports1024..1280,64KiBedgebackingwith12KiBactivehalves/NormalShareable/FEAT_LVA+LPA/64KiBgranule/52-bitlocalMMUfullyconstructedinlarge_address_certificate.md. Edgecold121(memory113)/processor121/sort120/other92sumcold124,peak138/advice0. Actualrec2392ret2417/fixed194/odd521/fused1113ret1125/gen4266/base5300/net906/hot6206ret6284spare78. NoVMhardware/productionqualificationclaimed.
