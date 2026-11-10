@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "title": "Two complete80-bit stable radix passes with fully charged two-level queues",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P fixed-G1 inversion into G2 with no auxiliary powers, uniform full GT target and fresh paid finite coins. Exact trace recurrence/native map2461,step2711,key813 and NH375; all full-p tables,quotient slots,controller/transfer/initialization/failure work included. Two complete stable80-bit radix passes construct and finish ALL2^80 bins, preserve every64-byte metadata record and full128-bit ordinal,ignore color outside160 bits,and charge all two-level queues/copies. Exact finite success lower bound>0.3900031 at original threshold0.39. Complete N<=20000*2^(62287/500),cold<2^124 instructions,peak<2^138 bytes,advice0. Six tracks,one computation metric,full p381/r255 and C20000 unchanged. Proposed bound only; no new score,acceptance,qualification,promotion or production-size execution claimed.",
+      "score": {
+        "numerator": "62287",
+        "denominator": "500"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "prefix_copy512.S",
+        "prefix_copy514.S"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-arithmetic-and-two-level-packet-fixtures",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker only: interpret ACTUAL fused full-p transform/wrapper/map against independent dense Fp4 algebra, strict initialized reads/writes, exact third alias, preserved ABI and2711/2461 counts. Also actual374-instruction NH/affine fingerprint vs independent full128-bit integer oracle, including exact input alias. Virtual lookup contents are scoped fixtures, never a production oracle. No probability, sign/key, production-fill, hardware, score or qualification certification. Also interpret actual212-instruction fixed-s lookup against independent full-p product for actual curve s, initialized-read/alias/ABI/count checks; no production fill or probability certification. Enforce actual pair/single memory-immediate encoding ranges and375 NH count; metadata transport is analytically proved in stream_repair.md, not empirically certified by the instruction test. Also actual complete key/sign/odd instructions with true branches and actual source constants, full-p canonical-order oracle, identity/component-zero cases, immutable raw Phi, ABI/read/write/stack/immediate constraints. These are arithmetic/map checks, not empirical GT twelve-fiber or probability qualification. Also actual513/515 encodable scalar frame-copy kernels and bounded4096-record full160/128-bit packet/state models for two80-bit stable passes,complete8-frame metadata,queues,padding,ordinals and bank/carry boundaries. Sparse test maps are initialized-zero fixtures only; production ALL2^80 arrays and controller work are analytically charged,not empirically certified.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 4,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}

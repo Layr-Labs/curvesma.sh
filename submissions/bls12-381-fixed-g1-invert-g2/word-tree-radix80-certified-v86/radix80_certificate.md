@@ -1,0 +1,71 @@
+# Two full80-bit stable radix passes with explicit two-level routing
+
+This changes only the metadata sort implementation. The supplied-P reduction, complete production m/L, actual trace recurrence, native813 key,375 fingerprint, full-key confirmation, finite coins, all group events and success lower bound remain unchanged. Every metadata byte is retained. Two LSD stable passes process fingerprint bits0..79 and80..159, never color byte20. This is a finite sum of ordinary64-bit scalar work, not an elapsed-time or parallel speed claim.
+
+## Existing tree, exact addresses and complete arrays
+
+Keep the existing depth3/fanout2^32 ordinary processor tree and all2^96 data leaves. Root children0/1 remain the baby/giant workers. Root children2+H,0<=H<2^16, serve as relays. Each relay's child M,0<=M<2^32, serves as a counter/pending shard. These are existing depth2 processors, not extra unpriced processors. They continue ordinary storage routing to their depth3 leaves. The remaining tree retains its existing routing roles.
+
+Root algorithm arrays are a256MiB cache (2^16*4096 bytes) at1TiB,1MiB of128-bit H totals at2TiB and512KiB of64-bit cursors immediately above those totals. The same cache is reused across count/scatter phases. Source/reply buffers and code/stack/dispatch are below1TiB; Root child ports remain[64,112)TiB. All ranges are disjoint.
+
+Each selected relay has16TiB of middle caches (2^32*4096) at[8,24)TiB,64GiB of128-bit middle totals at1TiB,32GiB of cursors at2TiB and a32MiB completed-message queue at24TiB. Its parent edge is at32TiB and child ports at[64,112)TiB. Code/stack/dispatch is below1TiB. Each selected depth2 shard has a64GiB count/next array (2^32*16) at1TiB and4032-byte pending slots for ALL2^32 low digits at[2,17.75)TiB; parent32TiB and child ports[64,112)TiB avoid every algorithm array. A parent at4TiB would overlap pending RAM and is explicitly NOT used for these nodes.
+
+Other internal nodes retain parent4TiB/children[8,56)TiB. Workers retain parent4TiB, vector tables[8,42), fixed-s tables[56,69.5) and child ports[80,128)TiB exclusive. Every native pointer is strictly below2^47. Changing a node's port-base context changes a constant value, not an arithmetic instruction width. Ordinary DATA dispatch remains the first opcode branch, so its existing hot routing price is unchanged; new prefix opcodes use the larger controller allowance below.
+
+Code, MMU descriptors, stack and dispatch state remain within the retained4MiB per-processor bootstrap budget. The LARGE ALGORITHM ARRAYS and queues listed above are separately constructed data, as were the original Root count/pending arrays; they are not falsely asserted to fit4MiB. Maps can use the same ordinary1GiB block scheme, with all descriptors, code and source/controller setup charged. No large address, DATA identifier or array element is a unit-cost arbitrary-width pointer.
+
+## Full-word digit extraction and128-bit prefixes
+
+Represent an80-bit digit as H16,M32,B32. If U words are w0,w1,w2, pass0 has low64=w0,H=w1&65535. Pass1 has low64=EXTR(w2,w1,16),H=UBFX(w2,16,16). In either pass M=high32(low64),B=low32(low64). Thus Root needs at most two extraction instructions, relay at most two and low shard at most one. Pass1 excludes word2 bit32, where color byte20 begins. No160-bit native arithmetic or color-dependent comparison is used.
+
+Root caches512 packed low64 words per H during COUNT. Each full4096-byte frame is sent to relay2+H. A relay increments its128-bit total[M], caches512 B words per M, then forwards a full4096-byte frame to shard M. Each shard increments count[B] as ordinary low/high64-bit words. Root likewise maintains128-bit total[H]. All counters are below L<2^127; ordinary ADD/ADC pairs and all memory accesses are priced.
+
+ALL2^80 bucket counters and pending slots are initialized. At prefix time Root scans all2^16 H totals in ascending order. Each relay scans ALL2^32 M totals in ascending order and supplies each shard its global128-bit starting prefix. Each shard scans ALL2^32 B counts, reads the old count, overwrites that same16-byte cell with next[B], then adds the old count to its running128-bit prefix. A single count/next array suffices. Empty buckets are not skipped in the production construction. The sparse maps used by the bounded test are only initialized-zero experiment fixtures, not the production algorithm.
+
+The resulting global intervals are ordered by H,M,B, exactly numeric80-bit digit order. Each interval length is its exact count, and their sum is L. All frame lengths, indexes, DATA masks and wide counters are ordinary64-bit or paired64-bit data. Metadata IDs remain buffer*2^93+(i>>34), local64*low34(i); payload IDs remain2^94+(i>>32), local256*low32(i). All IDs fit96 data bits and all actual pointers fit47 bits.
+
+## Stable scatter, full messages and bounded queues
+
+Root caches64 complete RAW64-byte metadata records per H in arrival order. A full512-word frame is sent to that relay. The relay caches64 records per M, preserving their order, and forwards a full512-word frame to the corresponding shard. Root and relay final cache tails are explicitly flushed; none are discarded. Input order within every full digit is therefore unchanged.
+
+Each shard uses the original63/64 pending algorithm with exact128-bit destinations. When pending is empty and next[B] is not64-record aligned, emit a singleton and advance next until aligned, at most63 such records. Thereafter store first63 records in the4032-byte slot; the first record's padding word at byte48 stores occupancy. On the64th arrival restore that word to zero, assemble exactly4096 metadata bytes, emit destination next-63 and advance next. Clear occupancy. All128 ordinal bits at32..47 and color byte20 are untouched. Final pending q<=63 records use next-q+i and restore padding before emission.
+
+Every full block starts at a multiple64, so cannot cross a2^34-record metadata bank because2^34 is divisible64. The final full sort is a stable permutation of every original RAW64-byte record. Two passes preserve increasing lower80 bits inside the final upper80-bit intervals, giving exact full160-bit sorting. Generation starts buffer0, pass0 writes1, pass1 writes0; the final group scan explicitly reads buffer0.
+
+A shard receives at most64 incoming records per batch, so emits at most64 completed messages. One relay Root batch can fill at most64 middle caches, each forwarding64 records. Therefore its maximum queue is4096 completed messages, each at most4112 bytes: under32MiB. Each shard queue is at most64*4112 bytes, below its private buffer reserve. A full reply is514 words:128-bit destination followed by4096 metadata bytes. Adding the32-byte header gives4144 bytes, below the existing6144-byte half-mailbox. No oversized implicit frame is used.
+
+Root drains a relay's queue before sending its next batch. A queued full block is copied to the relay's explicit queue; this additional copy is priced below. After each ACK both relay and shard resume ordinary DATA dispatch with their queue/cursor state saved. Root may perform generic destination writes through any routing node between queue reads, even when that node has saved algorithm data. No node waits for Root to drain its queue while holding an unfinished parent ACK, and no live arithmetic is arbitrarily interrupted.
+
+There is one active Root transaction, with sequential forwarded subrequests along its path as in the existing multi-edge RPC. Root does not start an unrelated RPC before that transaction returns. This is not simultaneous free coordination or a parallel scheduler. Every forward, return, flag, saved continuation and copied word is included. A batch can have a burst of completions, but the TOTAL number of full blocks is at most L/64; the traffic bound is global amortization, not a false per-batch constant-time bound.
+
+## Bounded finish and complete cold work
+
+Root flushes H caches, relays flush M caches, and shards flush pending records. Finish uses persistent cursors and bounded steps: a shard step scans at most256 empty buckets or emits at most64 tail records, and may pause within one bucket's q<=63 tail. Relays forward one bounded step and return a bounded queue; Root drains it before continuing. Thus finish does not materialize all2^32 tails into a supposedly tiny queue. Empty scans, callbacks, Root control and all initial/tail exceptions are charged.
+
+Across each pass, initial/tail exceptions are at most126*2^80 records. Two passes, even at4096 instructions per exceptional operation plus routing/finish overhead, remain below the retained2^104 cold subset. This also pays ALL count/pending zero construction, Root/relay cache tails, full prefixes over2^80 counters, queue resets, all page stores and bounded empty-finish calls. For scale, pending data is below2^92 bytes, prefix scans below a constant times2^80, and exceptional-record traffic below2^101 scalar instructions. The2^104 allowance is deliberately conservative and is included, not added outside the complete bound.
+
+Processor code/state/bootstrap remains below2^121 total; edge/flag/controller initialization below2^118; source R and all other fixed field/key/phase work below2^92 (with table fills within their earlier allowance). Adding the new2^104 subset still gives complete cold<2^124. No work is amortized over another target or supplied as advice.
+
+All selected shards' pending data totals<2^92 bytes, their counters2^84, relay caches2^60, relay queues2^41 and Root data<2^47. Complete algorithm-specific extra data is<2^93, negligible beside generic data-leaf capacity2^136, private code/state2^119 and edge pages2^111. Peak remains<2^138 bytes. These are analytical bounds, not an assertion that the review VM physically allocates these arrays.
+
+## Scalar copy and controller accounting
+
+New prefix control is allowed160 instructions at each endpoint, rather than the original128. A conservative fixed-body ledger includes save/restore16, header8, validation12, address/context12, flag/wake/barrier16, continuation16, bounded pointer advances16, counter/finish16 and return8:120<=160. The spare40 covers new opcode/queue selection and both caller/RET instructions of the copy kernels. These controls are separate from per-record processing. Existing ordinary DATA price and finite notification premise are retained; no uncharged busy-poll or external scheduling is introduced.
+
+One prefix edge therefore costs N+328 (two160 controls+eight header-copy instructions), and a two-edge traversal costs2N+656. Actual native prefix_copy512.S/prefix_copy514.S supply data copying with256/257 unrolled LDP/STP postincrement16 pairs, costing N+RET1 throughRET. Post16 is encodable; no LDP offset exceeds504. Caller/RET is already within the control allowance, not double counted. The routines alter only caller-saved x0..3, preserve SP/x18/callees/LR, and support disjoint or exact-alias buffers.
+
+COUNT full-frame traffic is(2*512+656)/512=3.28125 per record, below the retained extra5. With prior bulk metadata-read30 this is35 per count/item. SCATTER forward traffic is(2*512+656)/64=26.25 and full reply traffic(2*514+656)/64=26.3125, totaling52.5625 per record. With prior source read27.29296875, output36.375 and deliberately retained pending32, this is148.23046875<160. All destination/header words and relay hops are included. Cache and pending tails use the separate charged cold bound, not an omitted transfer.
+
+Count local120 includes Root formation64, Root digit/buffer/totals<=18, relay digit/buffer/totals<=18 and shard index/counter<=12:112<=120. Scatter local240 includes Root formation96, Root partition<=24, relay partition<=24, relay queue copy<=9 amortized, shard indexing/counter<=32 and pending append/full formation<=32 amortized:217<=240. The pending32 is also retained in the network allowance as conservative overpayment. Every intermediate resident copy is included; no free Root repack, relay queue or wide arithmetic is assumed.
+
+These are scalar instruction-equivalent upper bounds and sum all processors' work. They are not CPU cycle or wall-clock timings. The exact native copy counts and bounded packet-state checks do not replace this analytical controller/total-work argument.
+
+## Complete original claim and scoped evidence
+
+Generation4696 is unchanged. Two count/scatter passes cost2*(120+240)=720. With scan128,confirmation1 and spare256 this is base5801. Generation network703 plus2*(35+160)=390 and scan36 gives1129. Complete hot6930 is retained7040 (110 spare). For the SAME full production L:
+N=7040L+2^124 and EXACT N^500<20000^500*2^62287,
+giving proposed time_log2=62287/500=124.574 under fixed C20000. Full p/r, success0.39, six tracks and one metric are unchanged.
+
+The stable permutation preserves all exact keys, fingerprint groups and ordinals. The first informative collision, phase recovery, confirmation cap and all selected group events are unchanged. Hence the same exact rational success bound0.3900268131920969 applies; there is no new hash, Poisson, random-walk or record-independence premise.
+
+The shared-only audit retains all accepted-source arithmetic tests and adds actual513/515 copy interpretation plus a bounded4096-record packet/state model using full160-bit fingerprints,128-bit ordinals, actual64/256-byte records,32 payload/eight metadata frames per source batch, queue limits, stable sorting, padding restoration and counter/bank boundaries. The model's sparse initialized-zero dictionaries are explicit test fixtures; it does not execute production2^80 array construction or certify dispatcher timing, success probability, physical hardware or qualification. No new pass, score, acceptance or promotion is claimed before actual shared review. Candidate code was never host executed or compiled.
