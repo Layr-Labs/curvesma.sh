@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Centered top-digit tables remove difference correction chains",
+  "claims": [
+    {
+      "statement": "For full protected BLS12-381 supplied nonidentityP and uniformGT target,findQ with e(P,Q)=z,no auxiliary powers. Preserve full381/255-bit fields/order,C20000,success0.39,six tracks and sole computation metric. Generate actual full-r random-stride trace streams with m44949064867228685926734940410017218560. Compute exact twelve-orbit S192 transiently,hash tothree full61-bit affine residues in24-byte183-bit encoding with9 highzero bits. DistinctS hash collision<=(2^-63+1/q)^3. Payload stores ONLY canonical32-byteFr scalar;metadata48 retains fingerprint24,color24,pending25,zeros26..31,ALL128ordinal32..47. Sort byTWO stable96-bit two-edge passes,construct/pay BOTH full2^96 bucket sets. Cap ALL matching pairs including skips atfloor(L/2^29);try<=12 actualGT exponent checks per pair,continue afterfalse hashes,return onlyverified a/Q. Pair C*H+R<2^29 withH<=6144,R<=2^25,all checks<=L numerator. TerminalG2/fullpairing atmostoncecold. Exact event/hash/Markov/sampler bound>0.3900031>0.39. Current wrapper uses centered-code ordinary differences a-d+2^381 in(0,2^382) andsums<2p,ALL382-bit intermediatecodes;centered A top entries exactly cancel differencebias inFp. Shared A tables use seven35/three34/final35 digits,28.5TiB each;four B tables eleven32/final30 digits,4.21875TiB each. Everyentry is constructed/paid;A top table stores canonical(d-2^34)*C*2^347/Rm,all otherentries d*C*2^start/Rm. Vector[4.03125,77.90625),fixed[77.90625,79.9921875),parent4,children80..128 aredisjoint/47-bit. Wrapper129/map2386 givesstep2515,retained2556;key710/NH341 retain721/350,scalar20/main712 givegeneration4359;local720/scan128/confirm1/spare256 give5464;network920 giveshot6384,retained6464. N=6464L+2^124 obeys exactN^5000<20000^5000*2^622251,proposed124.4502. Fullcold<2^124,algorithmdata<2^110,peak<2^138,advice0. All preprocessing,coins,failure,transport,sort,verification/output charged. Shared count16 native full-p oracle checks include every actual transformed integer,ALL sum2p-2 anddifference2^381\u00b1(p-1) centered top halves,ABI/alias/read checks;80 copy fixtures plusall-path parent/exactledger checks remain. Virtual cells/sparse arrays/TEST-only exponent oracle are scoped aids,not free production data. Analytical exploratory claim only,no production run,physical qualification,completed score,promotion or inherited acceptance. Constant2^381 is added only to highest difference limb via stable x16;top A offsets cancel it exactly inFp. No hot p load/correction is needed. Unused x19..x24 remain untouched;balanced480-byte frame folds SP save/restore. Native offset-fill helper constructs ALL2^35 top entries from paid canonical initialoffset with full-p additions. Both centered halves/zero differences and full-p bounded offset-fill progression are independently checked.",
+      "score": {
+        "numerator": "622251",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Shared credential-free Docker ONLY. Actual full-p recurrence map2386/step2515 with382-bit centered differences rawx-rawy+2^381 andunreducedsums,independent denseFp4/exacttemporary integer oracle. Casesforce sum2p-2 anddifference2^381\u00b1(p-1),both halves ofcentered top A tables. Native offset-fill source checkedagainst independent full-p progression on2..5 entries,ABI/initializedreads;production2^35 fill remains analytical/paid. Physicalregions unchanged. Full183 NH341,key<=710,fixed200,all16 scalar/meta/radix/control and80copy fixtures remain. Exactsuccess/cost/current-doc andacyclic parent checks. Virtualcells/sparsearrays/TESTexponent oracle are NOT production freeinputs,GTaccess,hardware orqualification evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
