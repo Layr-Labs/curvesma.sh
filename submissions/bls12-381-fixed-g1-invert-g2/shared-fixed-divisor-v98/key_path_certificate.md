@@ -1,0 +1,48 @@
+# Current complete native key/hash and paired-field source path
+
+Canonical field/Frobenius fibers are proved in key_contract.md;NH/affine in nh_certificate.md. Actual combinedleaf hasNOoutputmemoryaccess. Inputs:compatibility0unused/rawPhi192at1/sLUT2/arg3unusedcompat/products4/keys672at5,PAIDcold29p48. Nonidentity returnsALL183bits word0=x1/word1=x0/word2=x5low55;statusx7nonnullselectedBpointer. Identityx7zero invalidatesresults. Source MUST useFULL64CBZx7 andnever dereference the expiredframepointer.
+
+## Complete field normalization/hash dataflow
+
+Bothlow-limbsignblocksareactualnativecanonicalp48subtractions/zerooutlines. OddconjugationdoesnotchangerealA,so its copy is dead;canonicalrealAalwaysrawPhi. Compare signedBtwelveLE64words,then choosecorrespondingimagA. ReadALL192conceptualbytes in orderrawAreal48/selectedAimag48/signedB96. No independent field bit is dropped.
+
+NH row1 accumulators0/1keepselectedpointers6/7live duringALLinputreads. Compressaffinerow1BEFORErow0,holdingresult0while4/5row0accumsurvive;row0result1,row2result5. EachrowhasfreshADDSchain/independentcoefficients,so no carry crossesrows. FinalBFI/LSR/UBFXreturnswordsx1/x0/x5withoutoutputstores. The full128-bitwrappingNH/M61family isunchanged.
+
+ACTUALcoldp48pointer29isREADONLYthroughoutkey;ALL18canonicalmodulusLDPsreadSAMEinitialized48bytesfrom29. Hotarg3isunusedcompatibility,header320nowDEAD;keys5spill328stillPAIDbySTR(oneinstructionreplacesoldSTP3,5). REMOVEonepostfixedLDR3,SP320. PairedSBCS3,xzr,xzrSTILLmaterializesdiffborrowfromCF,neverreadsold3;modulusLDP29isnonflag. Noearlierfieldnegation/borrow/carry/valuechanges. Fielduses29astempSPbutACTUALLYsaves/restorescoldp29,sointernalworkerinvariantpersists.
+
+## Paired canonical sum/difference
+
+ReadrawBreal4..9 andBimag10..15ONCEbySIXLDPdirectraw20offset96..176. ONE STP25/26atSP0preservescallercallees. SixADDS/ADCScomputesum21..26;canonicalinputs<p<2^381make sum<2p<2^382,no384overflow. SixSUBS/SBCScomputediff4..9. THREEactualpLDPsload10..15withoutchangingdiffborrow. AFTERthelastmodulusread,pointer3isdeaduntilfirstfixedinputLDP3,4. SBCS3,xzr,xzrproducesmask0ifdifferencehadnoborrow,orallonesifborrow. Use0/1/2/16/17/19astrialsumtemporarysixlimbs,keepingactualp10..15untouched. SixSUBS/SBCStrialsum-pandsixCSELcanonicalizesum21..26;threeSTPstoreSP192/208/224.
+
+SixANDsapplythesavedmask3totheoriginalp10..15,thenfreshADDS/ADCSsixlimbsgivecanonicaldiff4..9;threeSTPstoreSP240/256/272. ThisdoesNOTreuseexpiredflags:maskwasmaterializedBEFOREsumtrial,andADDSstartsafreshcarrychain. Oddoutpointer19isNOTrecomputed;fixedoutputbase0isSP480,secondstoresuseoffsets48/64/80. Originalcaller19remainsinouterbackup288andisrestorednormally. ONE LDP25/26restoresnewcallees. FirstLDP22,21loadsactualtable/productsdirectly,firstLDP22,21setsactualbases;secondbodyREUSESactualunchanged21/24. No lateruseexpectsmodulus3untiltheexplicitsecond-signheaderreload.
+
+Allsum/diff48bytesandfullfieldcanonicalboundsremain. Oldpaired56includedpRELOAD3. Currentbody54removesthreeactualLDPbutaddsborrow-maskSBCS1only,netTWOsavedevenincluding25/26preservation. SixANDreplaceprevioussixCSELatthesamecost. DirectSPoffsetsandtemporary/registerlifetimesareordinarynative64-bit,encodable,andfullycharged.
+
+## One complete frame,all ABI and count
+
+ONE576frame:innerbackup21/22at32,23/24at48,args152/160,scratch192/240;new25/26backup0..15. Header288..335holdsoriginal19/20at288,keys328;304..327dead. Table/productsareinner152/160. EvenB336..431,OddAimag432..479,OddB480..575. OddnominalrealA384..431isNEVERaccessedandmayoverlapEvenBimag;canonicalrealAisrawPhi. OddimagstoresuseSP432/448/464;fixedoutputbase0isSP480andsecondstoresuse48/64/80. Allactualaccessesareinitialized/disjoint/encodable. Frames/pointers16/8alignedasrequired.
+
+Allocate576once,restoreonceatONLYRET. NO BL/nox29/x30writes;entryLRstayslive. Callees19..26areexplicitlypreserved,27..30notwritten;27READScold48,18neverused. Successpointerx7=SP336or480=entrySP-240or-96. Avalid576downwardframeforcesnonnull. NHonlyREADS7afterselection,epilogueleaves7unchanged. Identitysets7zero. No expiredframe dereferenceoccurs.
+
+Current hotraw856includesallcodeandthepaidfull32-bitbiased-table affine evaluation. RawDAGcountsALLsyntacticbranches/RET,rejectscycles. Retain877=856+1margin+12caller+8spare. Field2444+key877+Main720=4041;local720+scan128+confirmation1+inner256+network886+outer80givesN6112L+12m+28n+cold2^124. Allfullparameters/probability/coins/cap/prices remain.
+
+Worker19out/20color/21-22fullordinalareABI-preserved. ActualsourceCBZx7skipsidentity;successSTPlo128,ORRcolor55,STRhi16,STPordinal24completesALL40bytes. Fourdatainstructions,ordinalSTPalreadyinmain712;newsource3. Branchalreadyincaller12. NativehelperincludesfixtureRETonly;noextraMOV/BL/argloadpricedaway.
+
+IntegratedisolatedoracleusesZEROleafoutputwritebudget,fullindependentcanonicalFp+full128NH/M61registerhash,andactualcallee/SP/rawPhi/initializedreadchecksincluding25/26. EVERYnative successcasechoosesvalidbelow47-bitstackgivingstatusEXACT2^32(low32zero),thenexecutesACTUAL64bitCBZ/sourcefourdatawithSAMEreturned/preservedregisters,checkingall40bytes/hash183/color/pending0/ordinal128. IdentityCBZ+RETstoresnothing. Referencefield/copy/byte/scalar/controlandexactfullsizeledgerremain. Thesearescopedfixtures,notproductionGT/probabilitytheorem/controllerhardwarequalification;sharedreviewisrequired.
+
+Currentfour32-chunkaffinefamilyandFULL12tablesperworkeryield11instructionsperrow,insteadofpreceding15. All128NHbits/full183OUTPUTbitsremain,15coefficientsfresh/independent;collisionboundNOW7/qperunequalNHrow,NOToldbyteidentity. Cold2^48/384GiBperworker/672byteinput/worker-private[1,1.375)TiB/address/proofandhonestprefix/virtualfixturelimitsareinnh_certificate.md. Raw856ret877,N6112. Field/frame/status/source/mask/grouptheoremunchanged;probabilityusesNEWdelta/caploss.
+
+Currentdirectoddslots:joinLDP2,4removedbecausebothvaluesoverwrittenbeforeuse. OddAimagstoresuseDIRECTSP432/448/464;fixedoutputsuseLIVEbase0SP480,secondSTP48/64/80. No19oddoutformation;19onlysaved/trialsumhigh/restored. Sameaddresses/frame576/pairedpborrowmask/25-26/ABI/status/source. STPoffsets<=504/ADD480<=4095encodable;allloadsinitialized.
+
+Currentlivefixedoutbase:actualADD0,SP480ONCE;neitherfixedbodywrites0. SecondSTP48/64/80writesSP528/544/560;existingMOV1,0passesEXACTinplacesecond-signinput. NoCALL/clobber/freeMOV. Allfield/hash/ABI/sourcevaluesunchanged.
+
+
+FirstLDP22,21fromSP48initializesactualsavedLUT/productsdirectly;secondLDP22,xzrresetsLUTandreadsinitializeddiscardedproductsword. Products21/entrysize24remainliveuntilactualABIrestoresAFTERbothfixedbodies. BothbodystridesNOWderivedfromentrysize24LSL32,no23strideconstant.
+
+TwoFIXEDbodieswerebyte-identicalexceptSTPout0/16/32vs48/64/80;newKEY_FIXED_SCALARoutoffASMMACROstores#(outoff+0/16/32),expandedat0and48. ThisisCOMPILE-TIMEtextfactorization,NOhotmacro-callopcode/price. ActualparserexpandsBOTHfullinstructionbodiesbeforeDAGcount/initializedreads/fulloracles;allactualops/addressesunchanged. 
+
+Current fixedscalar:9p<2^384 meansfirsttable+terms2..9 haszero carry;physical11DEAD untilterm10ADC11,xzr,xzr initializesfromcarry. Omit first8 highADCs andinitialMOV11 ineachbody;last2ADCsreadinitialized11. Alllowlimbs/digits/loads/ABI/outputsunchanged. Field counterpart/fullproof in fp2_certificate.md. Actualzero-carrylabelsassertflag0withoutrequiringdeadregister0. Key856ret877/field2403ret2444/gen4041/N6112,ALLmarginsunchanged.
+
+Current final-reduction high11/resultflags are dead;remove only second producthigh LDR22 and final SBcs11 per expanded fixedbody. Trialhigh/borrowselect retained. Actual six-limb stored canonical outputs/fieldkey/NH/source/status/ABI unchanged. Complete all-path register/flag proof in fp2_certificate.md. Key856ret877/field2403ret2444/generation4041/N6112,all margins unchanged.
+
+Current shared fixed divisor:actualpaidcoldD25=floor(p/2^325) survivespaired25/26restore BEFOREbothfixedbodies;neitherbodywrites25. Replacefixed UDIV1,1,2byUDIV1,1,25 andremoveLDp2,xzrproductsheaderinEACHexpandedbody. SAMEactualinitializedD/nativearithmetic/quotient/addresses/outputs/ABI;2REALhotoperationsremoved,noextraMOV/spill/address/caller/coldcost. NHpointerstillactualctx26+104. Field2403ret2444 unchanged;key856ret877/gen4041/N6112,allmargins/success/coins/prices/fullparamsunchanged. Nativeindependentfullpkey/NH128/hash183/status/source40/ABI/initializedreadoraclesretain. Freshscientificreviewrequired.
