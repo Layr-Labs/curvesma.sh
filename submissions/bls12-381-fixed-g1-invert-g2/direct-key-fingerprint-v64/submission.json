@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "title": "Hash the complete canonical key directly from live field regions",
+  "claims": [
+    {
+      "statement": "Preserveexact suppliednonidentityP/fulluniformGTz,fullp381/r255,noauxiliarypowers,success0.39,C20000,sixtracks/solecomputationmetric.Allcurrentm/n/eventintegersandfull-r proofareinproof.md.Actualtrace recurrenceandsignedlookup/fullGTorbitkeysremain.CanonicalS192isSTILLthefullordered192-bytevectorwith12Frobeniusfibers;thecombinednativeleafreadseveryworddirectlyfromrawAreal48/selectedAimag48/signedB96andhashesit,sophysicalS192copyisnotneeded.OddArealcopyisdeadbecauseconjugationneverchangesit.Noindependentfield/keybitislost. Threefull61-bitNH/affineresiduesretainall183hashbits,scalarpayload32/metadata48all128ordinalbitsunchanged.\n\nActualcombinedAPIout32/rawPhi192/sLUT/p48/productsbase/hashkeys672;identityreturns1/outinvalid,nonidentity0/fullU32. Frame336header40saveshashpointerbeforefieldcode,ONE LDRreloadsitafterselection. InputLDPsreadall192canonicalbytesinorderbeforestores.Row1accumulatorsuse0/1duringNHtokeepselectedpointers6/7live.Compressrow1beforerow0,holdingresult0while4/5row0areuntouched;row0result1,row2result5packidentically.NHwrap128/fullM61affinemapping/independentkeysfamilyunchanged.Outputstoresuse19,nocallee/extraMOVneeded.NOBL/nox29/x30writes,ABI/SP/rawPhi/partialalias/fullfieldcarrycontractsremain.\n\nRawown966=oldkey654+NH341-24S-copy-6realA-copy-RET1+hashpointerstore/load2.Retain987including1margin/12caller/8spare,versusold666+350=1016,saving29.NOextra350hashcharge.Field2465retains2506,Main712givesgeneration4205L,totalN=6310L+12m+28n+2^124onEVERYpath.Allsort/cold/transfers/coins/failures/cappedGTchecks/outputcharged.Exactpowerinequalityanddeclaredscoreareinproof.md.\n\nFull-r lattice/residue/mod3/oddquotient/directed64strataandsignedendpointgroupsgiveexactdistinctselectedevents;Bonferroni/hash/Markov/identity/samplinglosssupportsuccess>0.3900031>0.39withoutrecordindependence/Poisson/randomoracle/CSPRNG-IIDassumptions.ALLmatchingpairsincludingskipsconsumecapfloor(L/2^29),actualGTpowersverifyallphasecandidatesandcontinueafterfalsehashes;terminalG2/fullpairingoncecold.PerpairC*H+R<2^29withH<=6144/R<=2^25,allconfirmations<=L numerator.\n\nBOTHfull2^96bucketsets/alllookuphalves/seeds/offsets/products/header/pad/codepages/processors/edges/queues/coins/notifications/failuresareconstructed/paid.Cold<2^124,algorithmdata<2^110,peak<2^138,advice0,noamortization.Allfullfield/order/hash/scalar/ordinalbitsremain.Frame336/288andall48-byteframing/transport2504/3656/6160unchanged.ThelongerprivateauditusesiterativeRAWDAGlongestpath,rejectingcycles/countingallsymbolicbrancheswithoutchangingverifierlimits. OfficialsharedDockerwholeleafcaseoracles independentlycomputeFpkeyandfull128NH/M61hash,checkout32/ABI/SP/rawimmutability/initializedreads;16referencehash/fixed/field/controlcases,32fill/80copiesandexactfull-sizeledgerarescopedevidence.Virtualtables/sparsearrays/TESTexponentoraclearenotproductionresources.Exploratoryanalyticalclaimonly,noproductioninversion/hardwarequalification/inheritedacceptance/score/promotionbeforeactualreview.Sharedllm-verifieraloneexecutes,reviewsandfinalizes.",
+      "score": {
+        "numerator": "1243541",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "nh_fingerprint.S",
+        "audit.py",
+        "nh_certificate.md",
+        "stream_repair.md",
+        "key_path_certificate.md",
+        "radix80_certificate.md",
+        "metadata40_certificate.md",
+        "metadata_io.S",
+        "scalar_stream_certificate.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "native-full183-meta48-scalar32-and-verified-candidate-control",
+      "source": "audit.py",
+      "purpose": "Officialcredential-freeDockerONLY:actualcombinedleafall16full-pcanonical-keyplusfull128NH/M61integeroracles,out32/all183bits/rawPhi/ABI/SP/initializedreads/identity;iterativerawCFG966,fullfield2465/referenceNH341/fixed192/32fill/80copies/controlandexactfull-sizeledger.No productionGTsuccess/hardwarequalification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "count",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "count": 16,
+          "seed": 381070
+        }
+      ]
+    }
+  ]
+}
