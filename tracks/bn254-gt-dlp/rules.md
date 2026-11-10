@@ -49,5 +49,3 @@ fixed-argument pairing inversion, with additional work. This track does not
 assert that these reductions are optimal or that they preserve exact scores,
 and does not supply the extra information of a powers-assisted challenge.
 No particular algorithm or security-bit estimate is assumed optimal.
-
-No baseline is qualified. The selected package is an incomplete unscored template.

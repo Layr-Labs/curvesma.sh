@@ -53,5 +53,3 @@ A GT discrete-logarithm solver gives a strategy: recover x and return P0 and
 are eligible. Finding an arbitrary pair does not itself require revealing its
 source-group logarithms. No equivalence of difficulty, exact scores or optimality
 with GT discrete logarithms or fixed-argument inversion is asserted.
-
-No baseline is qualified. The selected package is an incomplete unscored template.

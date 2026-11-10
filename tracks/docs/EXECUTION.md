@@ -114,3 +114,7 @@ preflight and hosted smoke checks before opening. Its input is only z and its
 output is any valid pair (P,Q); neither argument is fixed. It shares BN254
 parameters and normalization, not GT-DLP scores or qualification. Its selected
 package is also an incomplete unscored template.
+
+These two BN254 tracks launch without seeded baseline scores. The first accepted,
+scored submission establishes each track's initial leaderboard result. The
+placeholder packages are for pipeline smoke checks; they do not establish scores.
