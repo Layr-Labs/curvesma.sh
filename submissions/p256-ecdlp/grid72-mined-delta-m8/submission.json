@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "title": "P256 72-bit grid: mined public X pairs with a one-word delta",
+  "claims": [
+    {
+      "statement": "For the protected full-production P256 target, uniform Q and fresh coins, recover x with success at least0.39 at expected total work at most34853079635106425712923240945367593634477 scalar instructions, below2^124.712625649795498 group units (C1000); every run below2^180.7709 units. N=2^72, MX=1024 permanent points, G=1600 groups of 1024 Y-chains, L=66800000. Phase 0 (charged, capped, abort without padding) mines2^14 public X pairs with0<x2-x1<2^64; Q is carried by the chains; the backward pass uses the one-word delta. Gate K=7197219092139003206 precedes worker startup; closed cost64. Single epoch;4000000 records/slot; CAP_H=ceil(m_h)+2^41; K2 mod2^58; label error within[-21,12]. Chen-Stein on good collisions of Gamma' (label-error classes excluded); second-moment candidate/request/relay rows with Lemma M's factors; CAND_CAP=2^27, REQ_CAP=2^34. Hot records omit sign and one X-index bit; source recovery enumerates four leaves and rejects ambiguity, with exact B45 success loss and2^22 extra instructions per served request; at most2*N*CAND_CAP requests are served over the run and all are charged. Algorithm and full accounting are proof.md and included appendices: disclosed history-conditional H_T (3.5 per incidence), Weil's bound in Lemma W, ideal coins, blocking ports, LSE, listed LS64 locations and256-byte DC ZVA. All processors, construction, failures, transfers and verification included without amortization; memory below2^138bytes, preprocessing below2^120units included, no advice or auxiliary input.",
+      "score": {
+        "numerator": "124712625649795498",
+        "denominator": "1000000000000000"
+      },
+      "evidence": [
+        "a64.py",
+        "block.s",
+        "cold_accounting_check.py",
+        "fixed_layout.py",
+        "flip_check.py",
+        "flip_ledger.py",
+        "flip_witness.py",
+        "phase0_check.py",
+        "p256_fields.s",
+        "p256_inv.s",
+        "phase4.s",
+        "probe.py",
+        "proof-appendices.md",
+        "proof-tails.md",
+        "proof.md",
+        "resolution_check.py",
+        "route.s",
+        "routing_check.py",
+        "scalar_check.py",
+        "source_recovery.py",
+        "certificate.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "flip-grid",
+      "source": "probe.py",
+      "purpose": "Check grid72 records, source sign/X-bit recovery, full finite kernels/protocols with the one-word delta step, Phase 0's dictionary, caps, collector and rule on real points, and the exact E-ledger.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261105
+        }
+      ]
+    }
+  ]
+}
