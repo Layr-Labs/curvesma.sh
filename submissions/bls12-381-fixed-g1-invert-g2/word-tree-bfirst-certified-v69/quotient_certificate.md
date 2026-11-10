@@ -1,0 +1,9 @@
+# Exact canonical reduction for the unsigned matrix accumulator
+
+For EVERY0<=Y<256p letB=2^325,D=floor(p/B)=58556206801485620=0xd0088f51cbff34>256. Since256p<2^389,U=floorY/B isuint64. EXTR highlimb6/limb5,#5 computesUexactly;UDIV64 computesqhat=floor(U/D). ThisisONEordinary64-bitdivisioninstruction priced1 byclassical-group-work-v2,NOT an arbitraryprecisiondivision or a CPUcycleassertion.
+
+Writep=D*B+e,0<=e<B,Y=q*p+t,0<=t<p,q<=255. ThenU=qD+floor((q*e+t)/B);extraisnonnegativeand<D+256<2D. Thereforeqhat=q orq+1,atmost256. Computeqhat*p EXACTsevenlimbs with6MUL/6UMULH,5ADDS/5ADCjoin andMOVtop=23. Carriedhighword<=256so joinscannot overflow64bits. Subtractsevenlimbs fromY. OriginalborrowLO iff overshoot;select ALLsixp limbs orzero with6CSEL under ORIGINALborrow,then sevencarryadds. IfZnegative(-p<Z<0),addingp yieldscanonicalt;otherwisenoaddition. Allsignedwrap is at448bits,withtruevaluesfarwithinrange;finaltopword0. No hiddensecondcorrection orloop.
+
+QREDUCE48=threeLDPp+EXTR/UDIV2+product23+sevenSUBS/SBCS+sixCSEL+sevenaddback. Acc4..10,p20..25,q1,D2,product11..17,carry26/high27,constptr28. Out0/input29/region30 remainlive. RowB11..17 is savedtoSP BEFORE producttemporaries overwriteit,thenrestoredinto4..10 afterrowA. EachcallreloadspbecauseCSELmayhavemaskedconstants. The separatelycharged520byteconstantblock retainseightordinaryp-power slots(onlyp@448neededhere),D@512;unusedconstantsmay beconstructedbutneversupplyadvice. No128paddisneededbecause matrixaccumulators arealready nonnegative.
+
+This proof uses thecompleteprotected381-bitp. Correctnessis for ALLYinrange,not sampledRSA/toyfieldtests. Agent-ownedintegerdesignboundarychecks are not nativeexecution/qualification. Nativecode is inert evidence untilsharedverifier. Total2529instructionprojection andallcold/transferwork are inproof.md/architecture.md;no observedpass/scoreclaimed.

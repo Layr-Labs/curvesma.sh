@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "Exact b1-first orbit key with factored native trace recurrence",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P inversion underuniformGTtarget/freshfinitecoinsR,success>0.3900031 by exact BG/four-familyGG counting andsecondBonferroni. ExactFp2factorization,2529instructionin-place map/2845instructionstep and971instructioncompleteorbitkey;alllookupentries/streams/coldsetup/failures included. CompleteN<=20000*2^(12483/100),cold<2^124scalarinstructions,peak<2^138bytes,advice0. Fullproductionparameters/threshold/C unchanged. No observedqualification/pass/score.",
+      "score": {
+        "numerator": "12483",
+        "denominator": "100"
+      },
+      "evidence": [
+        "handoff.md",
+        "canonical_twelve_bfirst.S",
+        "fixed_s_lookup.S",
+        "randomness.md",
+        "blst-LICENSE.txt",
+        "fp381_add.S",
+        "recurrence_fp2_map.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "fp2_certificate.md",
+        "quotient_certificate.md",
+        "recurrence_fp2_step.S",
+        "proof.md",
+        "fp381_sub.S",
+        "odd_trace_compact.S",
+        "fill_pair.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "canonical_b1.S",
+        "constant_lookup.md",
+        "key_contract.md",
+        "architecture.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
