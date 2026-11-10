@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "title": "Balanced finite-grid inversion with complete paid local lookup accounting",
+  "claims": [
+    {
+      "statement": "Full protected supplied-P fixed-G1 inversion,success>0.390003 under explicit finitecoin R;two degree-seven Fr polynomial families and exact finite fourth-Bonferroni rank bounds. Alltargetpowers/tablefills/native32/64bitwordinstructions/routing/copies/sorting/losingcases included:time<=20000*2^(12559/100),completecold<2^124,peak<2^138bytes,advice0. Uses ordinary47bitlocalpointers and96bitDATA route IDs;no banklatch or free product oracle. No observedqualification orruntimepassclaimed. BalancedalgorithmicW=2^63 leaves fullproductionparameters unchanged;allfiniteeventmoments reevaluated exactly.",
+      "score": {
+        "numerator": "12559",
+        "denominator": "100"
+      },
+      "evidence": [
+        "handoff.md",
+        "projective_rows.md",
+        "odd_trace.S",
+        "fixed_s_lookup.S",
+        "lookup_ten32.S",
+        "leaf_lookup.md",
+        "interpolation_certificate.md",
+        "blst-LICENSE.txt",
+        "conjugate.S",
+        "fp381_add.S",
+        "combine_products.S",
+        "pinned_mont_core.S",
+        "fr255_add.S",
+        "coins.md",
+        "project_toom.S",
+        "proof.md",
+        "fp381_sub.S",
+        "pinned_mont_wrapper.S",
+        "fill_lut.S",
+        "fourth_moment_certificate.md",
+        "constant_lookup.md",
+        "buffered_scatter.md",
+        "storage.md",
+        "streaming.md",
+        "mersenne_fingerprint.S"
+      ]
+    }
+  ],
+  "experiments": []
+}
