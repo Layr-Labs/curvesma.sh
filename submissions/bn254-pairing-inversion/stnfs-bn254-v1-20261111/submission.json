@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: GT-DLP reduction (SexTNFS), conservative ledger 2^111.705913",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 pairing-inversion target (given uniform z=g^a in GT, return P in G1 and Q in G2 with e(P,Q)=z; r and p 254-bit, x=0x44e992b44a6909f1), the attack of proof.md returns P=P0 and Q=[a]Q0 using total classical work at most 2^111.705913 reference units (20,000 scalar AArch64 instruction equivalents per unit, C=20,000), with exploratory success probability at least 0.39 over uniform production challenges and fresh coins, and peak storage at most 2^66 bytes. The rules explicitly permit this GT-DLP strategy. The dominant cost is a Special extended Tower Number Field Sieve discrete logarithm a=log_g z in F_{p^12} using a coprime (eta,kappa)=(4,3) tower (base field F_{p^4} via an irreducible degree-4 h, Joux-Pierrot special side f=P(X^kappa+S)), first-order complexity L_Q[1/3,(32/9)^{1/3}]=2^109.69. Concrete balanced-optimum chain: smoothness bound B=2^54.85, u=14.3, rho(u)=1.4e-18; relation collection 2^109.69; block-Wiedemann/Lanczos linear algebra over Z/r with matrix dimension D=2^49.6 costing 2^106.20 (sub-dominant); special-q descent of g and z 2^104; chain sum 2^109.84. Each NFS operation is charged conservatively as at most one dense-Fp12 reference unit. The pairing-specific work (one 254-bit G2 scalar multiplication [a]Q0 and canonical encoding plus subgroup checks) is at most ~2^16 reference units, negligible against the discrete-log term. A disclosed 1.87-bit aggregate margin covers filtering, Schirokauer maps, setup, the L-constant o(1), amplification and the pairing terms. By bilinearity e(P0,[a]Q0)=g^a=z and both points lie in the prescribed prime-order subgroups. Total work includes all preprocessing, relation collection, filtering, linear algebra, descent, scalar multiplication, verification and output, with no amortization and no free oracles or advice. Success >= 0.39 holds for any per-log descent-boot failure up to 0.30 (modelled 2e-3). The first-order constant relies on the disclosed NFS heuristics H1-H5 of proof.md; concrete published estimates for this field are near 2^100, ~11 bits below the claim, so the claim is a conservative over-estimate. No non-DLP inversion and no equivalence of difficulty with GT discrete logarithm are asserted. Analytic exploratory claim, not a production-scale execution.",
+      "score": {
+        "numerator": "111705913",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sextnfs-ledger-recompute",
+      "source": "experiment.py",
+      "purpose": "Deterministically recompute, from the public BN254 parameter x, the p/r/Q bit-sizes, the SexTNFS and generic-exTNFS first-order bit-costs, the smoothness bound B, parameter u, Dickman rho(u) and norm size, the matrix dimension D, the three ledger terms and their sum, the disclosed margin, the claimed rational and the memory bound; and construct a concrete degree-4 polynomial h and verify it is irreducible mod p. The pairing-specific terms are below 6-d.p. resolution and do not change the claim. It checks internal consistency only; it does not execute, simulate, or prove a production-scale number field sieve.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1,
+          "samples": 64
+        }
+      ]
+    }
+  ]
+}
