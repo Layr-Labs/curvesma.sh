@@ -1,0 +1,74 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: gated distinguished-point rho on Frobenius classes with a cyclotomic squaring branch, expected work, executed kernels",
+ "claims": [
+  {
+   "statement": "For uniform x in [0,r) and z=g^x in the protected BN254 target group GT, the algorithm in proof.md recovers x with success at least 0.39, as algorithmic probability over uniform challenges and fresh algorithm coins, under the disclosed heuristics H1 (an opened run that is never capped outputs x after at most 11/10 times sqrt(pi N'/2) walk slots in expectation, with N'=4RN/(3R-1), N=(r-1)/12, R=2^14), H2 (hash fields, branch bits and twist increments of distinct classes behave as independent uniform values) and H3 (tie rate), supported by algebra on the pinned constants and full-algorithm toy runs. Before any other work the algorithm reads one fresh 64-bit coin u and opens the run only when u < K, K = 7229537559736918267, the least integer for which the opened share of runs times the supported success of an opened run reaches 0.39; a closed run costs 64 instructions and is counted as a failure. An opened run is a sequential distinguished-point Pollard rho on the 12-element Frobenius classes of GT (2^14 twisted multipliers, a cyclotomic squaring step for the classes whose hash branch bit is 1, a 4-multiplication class selector, a 24-class look-back window with up to 8 probes, 87 distinguished bits, an ordered store of canonical exponents, and the check g^x=z before output) that continues until it outputs x or a counter reaches its cap. The score is an expectation: the expected total computation over the same uniform challenges and fresh coins is at most 2^123.459421 target-group-operation equivalents (scalar AArch64 instruction equivalents divided by C=20,000). It is not a bound on every run: on every run the total computation is at most 2^133.287917 equivalents, enforced by counters (a 3-word walk-slot counter compared with its cap in every slot, 2^50 trail starts, 2^50 reports, 16 recoveries). Prices are executed instruction counts of generated AArch64 programs: 6,671 per squaring slot (5,238 for the cyclotomic squaring, 1,067 for the class selector and 366 for the remaining per-slot work) and 15,276 per multiplying slot (13,843 for the Fp12 product instead of the squaring). Both totals include the gate, all input checks, constants, table construction, fresh coins (16 instructions per 64-bit word), trail starts, reports, store operations, recoveries, verification and output. Peak memory is at most 2^57.000001 bytes in one address space with 64-bit pointers; preprocessing is at most 2^23.478998 equivalents and is included; nonuniform advice is 0 bytes. The identity input z=1 returns x=0 in an opened run. Nothing is amortised over other targets, and no prior acceptance, submission or score is a premise. Analytic exploratory claim: no production-size run, not a finite-field sieve estimate.",
+   "score": {
+    "numerator": "123459421",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md",
+    "machine.md",
+    "experiment.py",
+    "toyrho.py",
+    "toy_offline.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "class-rho-checks",
+   "source": "experiment.py",
+   "purpose": "Generate and execute the priced AArch64 programs (Fp multiply/add/sub, Fp12 product, cyclotomic squaring, class selector, per-slot glue on both paths, across its counter carries and on both sides of both caps) against big-integer arithmetic and print executed counts; check the algebra on the pinned BN254 constants (class invariance of both steps, order of 2 mod r); recompute every ledger integer, the gate constant K (and that K - 1 fails), the expected and every-run totals and the score; run the complete algorithm of proof.md to its output in the BN-family toy field q=p(-15), r'=r(-15). Toy results are evidence at toy scale only.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "all",
+       "kernels",
+       "algebra",
+       "ledger",
+       "toy"
+      ],
+      "maxLength": 7
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "toy_instances": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 48
+     },
+     "toy_R": {
+      "type": "integer",
+      "enum": [
+       16,
+       64
+      ],
+      "minimum": 16,
+      "maximum": 64
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 1,
+     "toy_instances": 48,
+     "toy_R": 16
+    }
+   ]
+  }
+ ]
+}
