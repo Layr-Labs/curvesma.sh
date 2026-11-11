@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp tag-traced Frobenius-class rho: a 32-adding class walk evaluated by c_1-only tags and a multiset product table",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the parallel distinguished-point Pollard rho of proof.md on the 12-element Frobenius classes of GT returns x with g^x=z with probability at least 0.39 using at most 2^123.02 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). The walk is a plain 32-adding walk on classes with twisted table multipliers (the class map of the multiply step of accepted submissions 2ece9f04 and 7e58d165), reading its index, distinguished-point and fingerprint bits from the least stored Frobenius key K, a class invariant computed from the w^1 coefficient c_1 alone. It is evaluated by tag tracing (Cheon-Hong-Kim): a walk keeps a materialised chunk base x and the multiset S of table items chosen since; since GT is abelian the current element is x*P_S, with P_S taken from a precomputed table of all multisets of at most 7 of the 384 items (2^47.90 entries, 2^58.16 bytes, built for this target at 2^47.35 units, charged); each step computes only c_1(x*P_S) with the executed fused AArch64 listing c1dot (1,662 instructions: 18 unreduced 4x4-limb products, two Montgomery reductions; the exact operand sums it reads are written by the executed listing add4sums), and one dense Fp12 product (11,803 instructions, kernels of 7e58d165) materialises x*P_S every 7 steps. Every BN254 operation is charged through its implementation (machine.md): a chunk of 7 steps costs 31,566 instructions, 0.225471 unit per step. The total W = c*S*(1+eps) + c*E + 2^57 = 2^123.0036 includes setup, the table, 2^20 walk starts, distinguished-point handling, fruitless-cycle escapes priced by the exact useless-cycle law of part F (eps = 0.0276 charged against 0.0182 computed), restarts, the distinguished-point density 2^-70, the detection delay E=2^94.32 steps, false-fingerprint verification and output; a metered total-work abort at 2^123.02 makes the work bound hold on every run. Peak memory is below 2^63 bytes in one flat 64-bit address space shared by the walk processors, nonuniform advice 0 bytes. Success relies on the disclosed random-mapping heuristic for adding walks with the conservative effective class count N/(1-1/32) (model success 0.43 against the required 0.39), on pseudorandom walk bits (H2) and on the no-drift heuristic H1+ with a 0.01 budget, supported by toy-field runs of the complete algorithm (1,100 runs, all logs recovered) and by the production walk executed in the real BN254 GT in two implementations, tag-traced and direct, compared at every step; no production-size run is claimed.",
+      "score": {
+        "numerator": "6151",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "experiment.py",
+        "c1dot.listing.txt",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "tag-rho-checks",
+      "source": "experiment.py",
+      "purpose": "Execute the base-field, fused Fp2 and new add4sums and fused tag (c1dot) AArch64 listings on an instruction simulator against Python integers; check the BN254 tower, Frobenius, key, canonical-conjugate, least-key invariance, tag identity and Granger-Scott identities on the protected GT and count the priced routines; run the production walk in the real GT twice (tag-traced and direct) in lock step and compare every step, materialisation and escape; run the complete algorithm in toy fields of the same tower; compute the exact useless-cycle law and check the escape charge; recompute the ledger and score exactly. Toy runs are evidence at their own scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kernel_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "q": {
+            "type": "integer",
+            "enum": [
+              151,
+              163,
+              283
+            ],
+            "minimum": 151,
+            "maximum": 283
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              8,
+              16,
+              32,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 10
+          },
+          "listings": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261112
+        }
+      ]
+    }
+  ]
+}
