@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: gated Frobenius-class rho with generated lazy-reduction Fp12 kernels, expected work 2^122.85",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the gated parallel distinguished-point Pollard rho of proof.md on the 12-element Frobenius classes of GT returns x with g^x=z with probability at least 0.39 over uniform challenges and fresh coins, at EXPECTED total work at most 1 + (K/2^64)(c E[T_c](1+eps) + c_mul E + 2^66) < 2^122.85 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run. The attack first draws a fresh uniform 64-bit word v and stops as a failure unless v < K = 7416732153347139310, the least K with (K/2^64) x 0.97 >= 0.39; past the gate it runs to the first useful class collision and succeeds with probability at least 0.97, the only failures being the ordinary-step cap S_cap = 64 sqrt(N') (probability at most 0.020563 by Markov's inequality under H-mean), the all-step cap (probability below 2^-15), the report cap (at most 2^-8) and events of total probability below 0.001. Both step caps are 192-bit step counters (3-word add and compare, charged per step); every run therefore does at most 2^131.22 units of work. The walk, keys, table, Granger-Scott squaring branch with probability 1/2, cycle handling, gate and the expected-work argument are those of submissions 2ece9f04-8559-42ee-9f25-06bc993f1d89 and 8b901b3d-a617-4b1f-a442-ff370e6ec4f7. New here: every Fp12 operation is a generated straight-line scalar AArch64 program with lazy (single per output coefficient) Montgomery reduction, executed instruction by instruction and checked against big-integer arithmetic in lazy.py part L: dense Fp12 product with a precomputed table operand 8,785 instructions, cyclotomic squaring 4,323, the twelve Frobenius keys with their argmin 898. With 300 bookkeeping and the call sites, a multiply step costs 9,991 instructions (0.49955 unit) and a squaring step 4,627 (0.23135 unit), average c = 0.36545 unit. The expected work uses c per step by Wald's identity under the pseudorandom-bit heuristic H2 and the premise H-mean: the expected number of steps to the first useful collision is at most 1.05 sqrt(pi N'/2) = 2^125.6098, N' = N/(1 - s^2 - (1-s)^2/R) the effective class count of the random-mapping heuristic H1; this mean is supported by toy-field runs of the complete algorithm and extrapolated to production size. Setup, table construction (including the precomputed operand sums), walk starts, distinguished-point handling, cycle escapes, restarts, the detection delay E = 2^84.32 steps, false-candidate verification and output are included. Peak memory is below 2^81 bytes, preprocessing at most 2^31 units (included), nonuniform advice 0 bytes. No production-size run is claimed.",
+      "score": {
+        "numerator": "2457",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "lazy.py",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "lazy-kernels-and-ledger",
+      "source": "lazy.py",
+      "purpose": "Generate the lazy-reduction dense Fp12 product, cyclotomic squaring and twelve-key argmin as straight-line scalar AArch64 programs with asserted static bounds, execute them instruction by instruction on a simulator, compare every output with big-integer arithmetic on the protected BN254 GT (keys against the twelve explicitly computed conjugates) and report executed counts (part L); recompute the gate, caps, failure budget and expected-work ledger exactly from those counts (part G). Then execute the base package's unchanged experiment.py (submission 2ece9f04) in-process: BN254 tower, Frobenius, key, canonical-conjugate, trace-invariance and Granger-Scott identities on the protected GT, the production step rule in the real GT, and toy-field runs of the complete algorithm (evidence at their own scale only); its own 124.65 ledger is dropped from the output.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "lazy_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 150
+          },
+          "lazy_gt_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "mean_allowance_percent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "cap_multiple": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "listings": {
+            "type": "boolean"
+          },
+          "base_run": {
+            "type": "boolean"
+          },
+          "base_seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "base_seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 12
+          },
+          "base_production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261112
+        }
+      ]
+    }
+  ]
+}
