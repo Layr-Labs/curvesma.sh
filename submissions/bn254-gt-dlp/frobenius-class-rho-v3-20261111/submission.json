@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp Frobenius-class rho with stack cycle detection",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial Frobenius-class Pollard-rho algorithm in proof.md (1024-adding walk on classes of the order-12 Frobenius group acting on GT, Nivasch stack cycle detection, squaring escape from fruitless cycles) can return x with g^x=z with exploratory success probability at least 0.50 (predicted about 0.64), using at most 2^131.996245 reference units (20,000 scalar AArch64 instruction equivalents per unit) and at most 2^22 bytes of peak total storage. The success assessment relies on the disclosed random-mapping heuristics H1-H3 for the class walk, supported and limited as explained in proof.md; it is not an unconditional production success theorem. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, hashing, Frobenius canonicalisation, stack operations, arithmetic, memory access, recovery, verification and output. The uniform capped instruction bound is E*1392640+2^42 with E=isqrt(floor((9/5)^2*n*1024/1023))+1, n=(r-1)/12+1, so log2(W)<=131.976245; the claim adds a stated 0.02-bit margin. All costs are justified in machine.md, whose primitive bounds are restated from, and credited to, the organizer's reviewed baseline rho-baseline-v2-20261110. No prior acceptance, searched advice, amortization or production-scale attack execution is assumed.",
+      "score": {
+        "numerator": "131996245",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-class-rho-walks-and-cost",
+      "source": "experiment.py",
+      "purpose": "Check word-level Montgomery arithmetic, the BN254 Frobenius matrices, canonical-class invariance and a production-field class-walk invariant; run the actual class walk with stack detection and fruitless-cycle escape on small prime groups with an order-12 automorphism group (and without, for comparison), reporting all outcomes; recompute the complete capped cost and claimed score. These do not prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1024
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 512
+        }
+      ]
+    }
+  ]
+}
