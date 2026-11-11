@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: distinguished-point rho on Frobenius classes, no run gate, executed kernels",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and z=g^x in the protected BN254 target group GT, the algorithm in proof.md (sequential distinguished-point Pollard rho on the 12-element Frobenius classes of GT: 2^14 twisted multipliers, a 4-multiplication class selector, a 24-class look-back window with up to 8 probes, 87 distinguished bits, an ordered store of canonical exponents, and the check g^x=z before output) recovers x with success at least 0.39, as algorithmic probability over uniform challenges and fresh algorithm coins, under the disclosed heuristics H1 (the class walk behaves like a random mapping within factor mu=6/5), H2 (hash fields and twist increments of distinct classes behave as independent uniform values) and H3 (tie rate), supported by algebra on the pinned constants and full-algorithm toy runs. The step budget S_max is the least integer whose square is at least 2(6/5)N ln(5/3), N=(r-1)/12. Total computation is at most 2^124.763426 target-group-operation equivalents (scalar AArch64 instruction equivalents divided by C=20,000) on every run, with no run gate. This cap is enforced by meters: 15,267 executed instructions per slot (13,843 for the Fp12 product, 1,067 for the class selector and 357 for the remaining per-slot work, all generated AArch64 programs) times S_max+floor(S_max/2^13)+1+2^94 slots, plus all input checks, constants, table construction, fresh coins (16 instructions per 64-bit word), trail starts, reports, store operations, recoveries, verification and output. Peak memory is at most 2^47.000001 bytes in one address space below 2^48; preprocessing is at most 2^23.478998 equivalents and is included in the run total; nonuniform advice is 0 bytes. The identity input z=1 returns x=0. Nothing is amortised over other targets, and no prior acceptance, submission or score is a premise. Analytic exploratory claim: no production-size run, not a finite-field sieve estimate.",
+      "score": {
+        "numerator": "62381713",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "experiment.py",
+        "toy_offline.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "class-rho-checks",
+      "source": "experiment.py",
+      "purpose": "Generate and execute the priced AArch64 programs (Fp multiply/add/sub, Fp12 product, class selector) against big-integer arithmetic and print executed counts; check the algebra on the pinned BN254 constants; recompute every ledger integer, the score and the trap sums; run the complete algorithm of proof.md in the BN-family toy field q=p(-15), r'=r(-15). Toy results are evidence at toy scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all",
+              "kernels",
+              "algebra",
+              "ledger",
+              "toy"
+            ],
+            "maxLength": 7
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "toy_instances": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 48
+          },
+          "toy_R": {
+            "type": "integer",
+            "enum": [
+              16,
+              64
+            ],
+            "minimum": 16,
+            "maximum": 64
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 1,
+          "toy_instances": 48,
+          "toy_R": 16
+        }
+      ]
+    }
+  ]
+}
