@@ -1,0 +1,215 @@
+{
+ "purpose": "Provenance of the two listings and of the development runs. Development evidence only; the verifier container recounts the listings and reruns the experiment itself.",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.0.13.5), target arm64-apple-darwin24.6.0",
+ "compile_commands": [
+  "clang -O2 -fno-vectorize -fno-slp-vectorize ttstep.c main.c -o tt.bin",
+  "clang -O2 -fno-vectorize -fno-slp-vectorize tower.c main.c -o tower.bin",
+  "(main.c is 'int main(void){return 0;}')"
+ ],
+ "disassemble_commands": [
+  "objdump -d --no-show-raw-insn tt.bin > ttstep.disasm.txt",
+  "objdump -d --no-show-raw-insn tower.bin > tower.disasm.txt"
+ ],
+ "declared_experiment_output": {
+  "seed": 20261111,
+  "tower_vs_profile_basis_cases": 6,
+  "row_identity_cases": 40,
+  "tag_certificate_cases": 260,
+  "tag_certificate_worst_offset_of_96": 41,
+  "full_width_walk": {
+   "steps": 121,
+   "selectors": [
+    5,
+    3,
+    5,
+    7,
+    6,
+    3,
+    0,
+    1,
+    7,
+    5,
+    2,
+    6,
+    1,
+    1,
+    7,
+    1,
+    3,
+    2,
+    2,
+    2,
+    1,
+    5,
+    6,
+    3
+   ],
+   "label_checks": 4,
+   "window_rebases": 23,
+   "exact_paths_cbits3": 0,
+   "exact_paths_cbits54_same_walk": 14
+  },
+  "toy_runs": [
+   {
+    "group_order_bits": 16,
+    "field_bits": 61,
+    "distinguished_bits": 3,
+    "trials": 256,
+    "outcomes_at_cap": {
+     "success": 133,
+     "identity": 0,
+     "degenerate": 0,
+     "cap": 123,
+     "walk_cap": 0
+    },
+    "success_fraction_at_cap": 0.51953125
+   },
+   {
+    "group_order_bits": 20,
+    "field_bits": 61,
+    "distinguished_bits": 4,
+    "trials": 256,
+    "outcomes_at_cap": {
+     "success": 117,
+     "identity": 0,
+     "degenerate": 0,
+     "cap": 139,
+     "walk_cap": 0
+    },
+    "success_fraction_at_cap": 0.45703125
+   },
+   {
+    "group_order_bits": 24,
+    "field_bits": 61,
+    "distinguished_bits": 5,
+    "trials": 128,
+    "outcomes_at_cap": {
+     "success": 60,
+     "identity": 0,
+     "degenerate": 0,
+     "cap": 68,
+     "walk_cap": 0
+    },
+    "success_fraction_at_cap": 0.46875
+   }
+  ],
+  "model_success_at_cap": 0.46013571765339045,
+  "tower_instruction_counts": {
+   "fp_add": 35,
+   "fr_add": 34,
+   "fp_sub": 35,
+   "fp_mul": 218,
+   "fp2_mul": 873,
+   "fp2_add": 85,
+   "fp2_sub": 85,
+   "fp2_mul_xi": 399,
+   "fp6_mul": 7412,
+   "fp6_add": 274,
+   "fp6_sub": 274,
+   "fp12_mul": 24044,
+   "rebase": 24132
+  },
+  "tag_kernel": {
+   "loop_instructions": 273,
+   "call_overhead": 65,
+   "umulh": 48,
+   "madd_or_mul": 48,
+   "loads": 121,
+   "stores": 0
+  },
+  "step_cap_S": "175614732316003428141458596702221752171",
+  "windows": "685995048109388391177572643368053720",
+  "instructions_per_step": 273,
+  "instructions_per_window": 24576,
+  "fixed_instruction_allowance": "2^110",
+  "total_instruction_bound": "64801837522679479617905129315743908870427",
+  "score_rounded_up": "121.285447",
+  "table_entries": 525783425977953,
+  "table_bytes_log2": 59.223,
+  "peak_bytes_log2_bound": 59.939,
+  "scope": "Full-width BN254 checks of the tower formulas, the tag row identity, the tag certificate and a 120-step walk through the real solve loop; complete-algorithm runs on toy prime-field subgroups only; static instruction recount of the supplied listings. No production DLP, profiler measurement or acceptance is claimed."
+ },
+ "offline_toy_run": {
+  "command": "same reference.solve and step_cap, fresh group/target/coins per trial, random.Random(20261111), window 6",
+  "rows": [
+   {
+    "group_order_bits": 16,
+    "distinguished_bits": 3,
+    "trials": 4000,
+    "success_fraction_at_cap": 0.5105
+   },
+   {
+    "group_order_bits": 20,
+    "distinguished_bits": 4,
+    "trials": 3000,
+    "success_fraction_at_cap": 0.451667
+   },
+   {
+    "group_order_bits": 24,
+    "distinguished_bits": 5,
+    "trials": 2000,
+    "success_fraction_at_cap": 0.4565
+   },
+   {
+    "group_order_bits": 28,
+    "distinguished_bits": 6,
+    "trials": 400,
+    "success_fraction_at_cap": 0.4975
+   }
+  ]
+ },
+ "earlier_calibration_run_not_the_shipped_cap": {
+  "note": "cap at model success 0.44 instead of 0.46, random.Random(77)",
+  "rows": [
+   [
+    16,
+    3000,
+    0.4983
+   ],
+   [
+    20,
+    2000,
+    0.459
+   ],
+   [
+    24,
+    1500,
+    0.434
+   ],
+   [
+    28,
+    300,
+    0.45
+   ]
+  ]
+ },
+ "not_claimed": "No production-scale walk was run; no instruction count was measured by a profiler; counts are static counts of the supplied listings.",
+ "earlier_declared_layouts_same_seed": [
+  {
+   "trials_16_20_24": [
+    256,
+    256,
+    64
+   ],
+   "success": [
+    0.488,
+    0.441,
+    0.438
+   ],
+   "note": "first layout of the experiment"
+  },
+  {
+   "trials_16_20_24": [
+    256,
+    256,
+    64
+   ],
+   "success": [
+    0.52,
+    0.457,
+    0.391
+   ],
+   "note": "after reducing the number of full-width GT cases, which shifts the coin stream; the 64-trial row has standard error 0.06"
+  }
+ ]
+}
