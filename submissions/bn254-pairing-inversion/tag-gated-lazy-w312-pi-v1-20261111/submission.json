@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: gated tag-tracing 8-adding rho, consistent DP predicate, 312-step lazy window, expected work 2^119.94",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the gated tag-tracing 8-adding distinguished-point Pollard rho of proof.md finds x with g^x=z and returns P=P0 and Q=[x]Q0 with e(P,Q)=z (z=1 gives P0 and infinity; the G2 scalar multiplication, the check g^x=z and serialization are charged, below 2^30 instructions, inside the fixed 2^110-instruction allowance) with probability at least 0.39 over uniform challenges and fresh coins, at EXPECTED total work at most 1 + (K/2^64)(273 E[T] + 9216 (E[T]/312 + E[walks] + 1) + 2^110)/20000 < 2^119.94 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run; every run, including all failures, is capped at 2^126.96 units by a 2^133-step global three-word step counter, at most 2^52 walks of at most 2^90 steps, at most 2^90 exact evaluations, at most 2^70 store probes and at most 1,024 draws per random scalar. The attack first draws a fresh uniform 64-bit word v and stops as a failure unless v < K = 7416732153347139310, the least K with (K/2^64) x 0.97 >= 0.39; past the gate it runs to its first verified recovery and succeeds with probability at least 0.9760 (failure budget below 0.0240: step cap at most 0.019115 by Markov's inequality, walk cap at most 0.004779, all other caps and degenerate events below 2^-16). The walk Y -> Y*M_s with s = floor(8t/p) for the protected-basis constant coefficient t, the tag certificate (proved), the 2,496,767,727,736,920-entry table of all products of at most 312 multipliers, and the 273-instruction step loop (ttstep.disasm.txt) are those of submission 73463878-0c19-4309-a991-749ea525d51c, whose listings and development evidence are included unchanged and whose reference.py and experiment.py are included with the full-width distinguished-point bit count set to the production value 84; one predicate, Y distinguished iff t(Y)*2^84 < p, is used in the proof, the machine ledger, the failure budget and every experiment; the gate and run-to-collision expected-work accounting follow submission 8b901b3d-a617-4b1f-a442-ff370e6ec4f7. This is the pairing-inversion port of GT-DLP submission f990c954-d4d2-4864-b9b1-aca0f7dfef87 (same walk, kernels and ledger; output map as in 73463878). As in f990c954: the window re-base uses a generated straight-line lazy-reduction Fp12 product of 8,679 scalar AArch64 instructions, encoding-validated and executed instruction by instruction on a simulator against big-integer arithmetic (lazy.py part L), so a window end costs at most 9,216 instructions and a step 273 + 9216/312 = 3933/13 instructions; the tag certificate is re-checked in this layout on window bases produced by that routine (part T). The expected work uses E[T] <= 1.05 sqrt(pi kappa r/2) + 2^85 <= 2^127.2909 steps, kappa = 8/7 (premise H-mean on the mean collision time of the 8-adding walk, with H1 and H2 of the base package), supported by toy-scale runs of the complete walk (lazy.py part H and development-evidence-mean.json: per-setting means 0.93 to 1.00 of the model at 16 to 32 bits) and extrapolated to production size. Table construction (below 2^72 instructions) and all other work are included without amortization. Peak storage is below 2^63 bytes, nonuniform advice 0 bytes. No production-size run is claimed; this is a generic square-root attack, not a security estimate.",
+      "score": {
+        "numerator": "5997",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "lazy.py",
+        "development-evidence-mean.json",
+        "reference.py",
+        "experiment.py",
+        "ttstep.c",
+        "ttstep.disasm.txt",
+        "tower.c",
+        "tower.disasm.txt",
+        "development-evidence.json",
+        "development-evidence-window312.json",
+        "ATTRIBUTION.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "gated-tag-tracing-lazy-window",
+      "source": "lazy.py",
+      "purpose": "Part L: generate the lazy-reduction window-end Fp12 product as a straight-line scalar AArch64 program with asserted static bounds, validate the encoding of every instruction, execute it on an instruction simulator and compare with big-integer arithmetic. Part T: check the tag certificate in this layout on window bases produced by that routine. Part H: toy-scale runs of the complete 8-adding distinguished-point walk run to recovery, mean collision time against sqrt(pi kappa n/2). Part G: gate, caps, failure budget and expected-work ledger in exact decimal arithmetic. Then execute the base package's unchanged experiment.py (submission 73463878) in-process: tower and row checks, tag certificate on 260 cases, 120-step full-width walk, toy runs at the cap, listing recount. Toy runs are evidence at their own scale only. Part P re-runs the full-width reference walk with the production distinguished-point predicate t*2^84 < p; part C (consistency.py) asserts that the predicate, caps, counter widths, instruction counts, gate constant, claim and rounded failure/success/work figures agree across submission.json, proof.md, machine.md, the code and the ledger output. Defaults: lazy_cases 30, tag_cases 6, toy_seconds 0.5, base_trials 16, production_steps 16; the schema maximums keep every follow-up below the runner limit, and a 12 s guard skips any remaining optional part (reported in skipped_parts_by_time_guard). Sensitivity inputs (mean_allowance_percent, cap_bits) change partG_ledger only; the claim and part C are checked against the declared parameters, reported as partG_ledger_declared_parameters.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "lazy_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30
+          },
+          "tag_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "toy_runs": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 4000
+          },
+          "toy_seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 1
+          },
+          "mean_allowance_percent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "cap_bits": {
+            "type": "integer",
+            "minimum": 128,
+            "maximum": 180
+          },
+          "listings": {
+            "type": "boolean"
+          },
+          "base_run": {
+            "type": "boolean"
+          },
+          "base_seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "base_trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 64
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 120
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261112
+        }
+      ]
+    }
+  ]
+}

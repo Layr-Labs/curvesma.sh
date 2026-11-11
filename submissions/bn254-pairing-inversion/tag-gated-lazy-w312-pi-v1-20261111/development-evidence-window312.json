@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "source_commit": "85cede25b979b09e16adb8695922c175234c7320",
+  "direct_dependency": {
+    "submission_id": "0bb2e6af-6887-4632-90af-2c40123c7852",
+    "candidate_commit": "0ffeb3d41b7eefde4c801d20a248e8825368afe2",
+    "status_at_audit": "validating",
+    "note": "Used the corrected v1b source, not cancelled 0dcf9e31; the latter had inconsistent 80/84-bit distinguished predicates."
+  },
+  "delta": {
+    "window_steps_before": 256,
+    "window_steps_after": 312,
+    "table_entries": "2496767727736920",
+    "table_bytes": "6551518517581678080",
+    "store_bytes": "1729382256910270464",
+    "peak_bytes_bound": "8280900775565690368",
+    "peak_below_2_pow_63": true,
+    "per_step_instructions_exact": "3933/13",
+    "computed_log2_expected_total_units": "119.92955738876771112156054483219774959615270945655488",
+    "claimed_time_log2": "119.94",
+    "claim_margin_bits": "0.01044261123228887843945516780225040384729054344512",
+    "computed_log2_every_run_units": "126.95326237382083458794240539903878119362994800416"
+  },
+  "safe_intake": {
+    "candidate_files_executed_on_host": false,
+    "experiment_environment": "llm-verifier credential-free Docker sandbox",
+    "paid_api_used": false,
+    "external_publication_performed": false
+  },
+  "verification": {
+    "llm_verifier_revision": "8c1f098875fae0750c29ecfd641f7c9fc53a0f41",
+    "preflight": {
+      "valid": true,
+      "adapter_changes": [],
+      "submission_files_before_this_evidence_file": 16
+    },
+    "sandbox_experiment": {
+      "exit_code": 0,
+      "partC_consistency_all_ok": true,
+      "partC_failed": [],
+      "partG_budget_ok": true,
+      "partG_success_ok": true,
+      "partG_claim_ok": true,
+      "partG_K_is_least": true,
+      "partP_distinguished_bits": 84,
+      "partP_flag_checks": 17,
+      "partL_executed_instructions": 8679,
+      "partL_encoding_violations": 0,
+      "partL_failures": 0,
+      "partT_certificate_cases": 6,
+      "partT_certificate_failures": 0,
+      "skipped_parts": []
+    },
+    "repository_tests": {
+      "command": "python -m unittest discover -s tests -v (tests/requirements.txt installed in scratch venv)",
+      "passed": 24,
+      "failed": 0,
+      "errors": 0
+    }
+  }
+}

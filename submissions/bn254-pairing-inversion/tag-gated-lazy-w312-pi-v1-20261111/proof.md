@@ -1,0 +1,272 @@
+# BN254 pairing inversion: gated tag-tracing 8-adding rho in GT with a lazy-reduction window product, output (P0, [x]Q0)
+
+**Claim.** For uniform z = g^x in the protected BN254 GT, the algorithm below finds x with g^x = z and returns
+P = P0 and Q = [x]Q0 with e(P, Q) = z with probability at least 0.39 over uniform challenges and fresh coins, at **expected** total work
+
+    E[W] <= 1 + (K/2^64) (273 E[T] + 9,216 (E[T]/312 + E[walks] + 1) + 2^110) / 20,000 < 2^119.94
+
+reference units (W = R/20,000, R the total scalar AArch64 instruction-equivalent work), where T is the number
+of walk steps of a run past the gate. This is an expectation over the challenge and the coins of the one
+attack on the one target, **not a bound on every run**; every run is capped at 2^126.96 units (section 5).
+Peak storage is below 2^63 bytes; preprocessing (the table, included) below 2^72 instructions; no advice.
+This is a generic square-root attack, not index calculus or NFS, not a practical break and not a security
+estimate. The success and expected-work bounds use disclosed heuristics (H1, H2, H-mean); the tag
+certificate and the 1/r degeneracy are proved.
+
+**Lineage and what is new.** This package directly derives from public submission
+0bb2e6af-6887-4632-90af-2c40123c7852 (kshitij-hash), candidate commit
+0ffeb3d41b7eefde4c801d20a248e8825368afe2. That source corrects the inconsistent 80/84-bit
+distinguished predicate in its cancelled predecessor 0dcf9e31 and retains the inherited lazy product,
+gate, walk, evidence and pairing-output port. The walk and tag structure come from accepted submission
+73463878-0c19-4309-a991-749ea525d51c (e-man07); run-gate accounting comes through 8b901b3d and
+accepted pairing twin e2dfd4cf-27ca-4a30-b2bd-ab28edbfd8b2 (terrapinelf).
+
+The **only new algorithmic delta** is a conservative increase of the direct source's maximum table
+multiset/window length from 256 to 312. The inherited window re-base uses a generated lazy-reduction Fp12
+product of 8,679 executed instructions. A complete window end costs at most 9,216 instead of 24,576
+instructions. Extending the table to C(320,8) entries keeps combined table/store storage at
+8,280,900,775,565,690,368 bytes, below 2^63,
+and table construction below 2^72 instructions (inside the fixed 2^110 allowance). The amortized step
+price is therefore 273 + 9,216/312 = **3933/13** = 302.538461... instructions instead of 309 in the
+direct source or 369 in the accepted base. All inherited claims and provenance are in `ATTRIBUTION.md`.
+**Predicate consistency (correction).** The GT package f990c954 was rejected because its section 1 defined
+distinguished points with an 80-bit threshold while its parameters and ledger used density 2^-84. Here one predicate is
+used everywhere: **Y is distinguished iff t(Y)*2^84 < p** (section 1, step 3c, the store, `machine.md`'s test
+t < ceil(p/2^84), and the ledger's E[walks] <= 2 E[T]/2^84 + 1). The base `experiment.py` of 73463878 used the bit count 80
+in its full-width reference run; here that constant is set to 84 (`DP_BITS = 84`; the reference `solve` takes the
+bit count as an argument), so the reference run checks every step's flag against t*2^84 < p. `lazy.py` part P
+repeats that full-width walk with a different seed, and part C (`consistency.py`) extracts the predicate, caps,
+counter widths, failure terms, step costs and the claim from `submission.json`, `proof.md`, `machine.md`, the
+code and the ledger output, and asserts that they agree.
+`lazy.py` part G recomputes every figure below.
+
+Notation: p, r, g are the protected modulus, group order and generator;
+z=g^x is the input. An element Y of Fp12 has twelve Fp coordinates
+y_0..y_11 in a fixed basis (the tower order of `tower.c`); t(Y) in [0,p)
+denotes its coefficient of w^0 in the protected basis, a fixed Fp-linear
+functional of the coordinates.
+
+## 1. The walk as a function of the group element
+
+Fix eight multipliers M_s=g^(c_s)*z^(d_s), s=0..7. Define
+
+    s(Y) = floor(8*t(Y)/p) in {0..7},      f(Y) = Y*M_{s(Y)},
+    Y is distinguished  iff  t(Y)*2^84 < p.
+
+f, s and the distinguished predicate depend on the group element only. The
+algorithm below evaluates exactly these functions; the table machinery is
+only a way to evaluate s(Y) cheaply. Hence the walk is a standard 8-adding
+walk with a deterministic iteration function, and two trails that reach
+the same element coincide from there on.
+
+## 2. Tag certificate (exact statement, proved)
+
+Row. For a fixed T in Fp12, Y -> t(Y*T) is Fp-linear, so there is a row
+v(T) in Fp^12 with t(Y*T) = sum_k y_k*v_k mod p (explicit formula in
+`reference.py`, `BN254GT.row`; checked on 40 random pairs).
+
+Stored data. Coordinates are kept as 4-limb Montgomery residues
+Y~_k = y_k*2^256 mod p with limbs Y~_{k,i}, i=0..3. For T put
+u_{k,i} = v_k(T)*2^(64i-256) mod p and store the 128-bit integers
+F_{k,i} = floor(2^128*u_{k,i}/p) = Fhi*2^64+Flo.
+
+Tag. A = sum over the 48 pairs (k,i) of
+( UMULH(Y~_{k,i},Flo_{k,i}) + Y~_{k,i}*Fhi_{k,i} ) mod 2^64.
+
+**Lemma.** With t=t(Y*T), the real number tau = 2^64*t/p satisfies
+(tau - A) mod 2^64 in [0,96).
+
+Proof. sum_i Y~_{k,i}*u_{k,i} = Y~_k*v_k*2^-256 = y_k*v_k (mod p), so
+t/p = sum_{k,i} Y~_{k,i}*u_{k,i}/p (mod 1). For one pair write y=Y~_{k,i}
+<2^64 and u/p = F/2^128+eps, 0<=eps<2^-128. Then
+y*u/p = y*Fhi/2^64 + y*Flo/2^128 + y*eps. Modulo 1 the first term equals
+(y*Fhi mod 2^64)/2^64 exactly; the second equals UMULH(y,Flo)/2^64 plus a
+remainder in [0,2^-64); the third lies in [0,2^-64). So each pair
+contributes its two computed words plus an error in [0,2*2^-64), and the
+48 errors add up to less than 96*2^-64. Multiply by 2^64. QED
+(`experiment.py` checks the lemma on 260 full-width cases including edge
+values; largest observed offset 40.)
+
+**Corollary (certified step).** Call A *certified* if
+((A+96) mod 2^64) mod 2^61 > 96. Then the low 61 bits of A lie in
+[1, 2^61-97], so [A,A+96) contains no multiple of 2^61 and does not wrap:
+tau and A have the same top three bits, i.e. s(Y*T) = A>>61 exactly, and
+tau>=A>=1, i.e. t/p>=2^-64>2^-84: the element is not distinguished.
+
+## 3. Complete algorithm
+
+Parameters: R = 8 multipliers; window length 312; distinguished predicate t(Y)*2^84 < p (section 1), i.e. density
+ceil(p/2^84)/p <= 2^-84 + 1/p, below 2^-84 + 2^-253; step cap S_cap = 2^133
+steps in total; at most 2^52 walks, each at most 2^90 steps; at most 2^90 exact evaluations; at most
+2^70 store probes. Reaching any cap ends the run as a failure.
+
+0. **Gate.** Draw a fresh uniform 64-bit word v. Unless v < K = 7416732153347139310 (the least K with
+   (K/2^64) x 0.97 >= 0.39), stop and fail (below one unit of work).
+1. Decode z, check z != 0 and z^r = 1. If z = 1 output P0 and infinity (allowed exactly when z = 1).
+2. Draw c_s, d_s uniformly mod r (rejection sampling of 254-bit words with at most 1,024 draws per scalar;
+   exhausting them ends the run as a failure, probability below 2^-200 per scalar, charged in section 6)
+   and form M_s = g^(c_s) z^(d_s), s = 0..7. Build the table: one entry e for
+   every multiset of at most 312 multipliers (C(320,8) = 2,496,767,727,736,920 entries), holding the 96 words
+   F(T_e) of section 2, the eight child pointers, alpha_e = sum c_s and beta_e = sum d_s mod r, and T_e stored
+   as its 54 canonical Karatsuba operands (the 12 coordinates and their sums, `machine.md`), the form the
+   generated product reads.
+3. For each walk: draw a, b uniformly mod r (same bounded sampling), set Y0 = g^a z^b (skip if 1),
+   e = root. Repeat:
+   a. A = tag(Y0, e).
+   b. If A is certified: s = A >> 61. If e has a child for s, set e to it; otherwise (window end) re-base:
+      Y0 <- Y0 * T_e by the generated routine, (a, b) <- (a + alpha_e, b + beta_e), e <- the root's child
+      for s. This is one step Y <- Y * M_s.
+   c. If A is not certified: re-base to e = root, read t = t(Y0) exactly and evaluate s(Y) and the
+      distinguished predicate by their definitions; leave the loop at a distinguished point, otherwise
+      set e to the root's child for s (one step).
+4. At a distinguished point look t up in the store (2^54 slots, open addressing). If (t, a', b') exists,
+   put x = (a - a')/(b' - b) mod r (failure if b = b'); if g^x = z output P = P0 and Q = [x]Q0
+   (affine double-and-add over Fp2), otherwise treat it as a false match. Insert (t, a, b); start the next walk.
+
+There is no fixed step budget S: past the gate the run continues until it outputs x or a cap fires. The
+global step count is a three-word (192-bit) counter of the driver, the per-walk length a two-word counter
+(`machine.md`); 2^133 < 2^192, so neither wraps.
+
+## 4. Correctness
+
+By the corollary, step 3b applies exactly f of section 1 and never skips a
+distinguished point; step 3c uses the definitions directly. So every walk
+is a trail of f from its start, stopped at its first distinguished point,
+whatever representation (Y0,e) the element happens to have.
+`experiment.py` (base package; predicate bits set to 84) drives the real `solve` loop at full BN254 width for 120
+steps and checks at every step, against independently multiplied
+elements, that the selector equals floor(8t/p), that consecutive elements
+differ by exactly the selected multiplier, and (every 40 steps) that
+Y=g^a*z^b for the represented label; it repeats the same walk with a
+deliberately narrow certificate (54 protected bits, 14 exact evaluations)
+and obtains the identical element sequence.
+
+Labels: Y=g^a*z^b holds at each start and is preserved by multiplying with
+M_s and adding (c_s,d_s). Two distinguished points with equal t that are
+the same element give g^a z^b = g^a' z^b', so x=(a-a')/(b'-b) whenever
+b!=b' (r is prime). The check g^x=z makes a wrong output impossible; a
+false match (equal t, different elements) fails it and costs one
+exponentiation, metered in the fixed allowance. By bilinearity e(P0,[x]Q0) = e(P0,Q0)^x = g^x = z, and both
+points are in the prescribed order-r subgroups (P0 is the profile generator; Q is a multiple of Q0).
+
+Degeneracy is exactly 1/r, without heuristics. Fix x and condition on the
+logarithms m_s=c_s+x*d_s of the multipliers and s_i=a_i+x*b_i of all walk
+starts. Every group element, tag, exact evaluation, distinguished point
+and store hit is a function of these. Conditionally the b_i and d_s remain
+independent and uniform. For a hit between walk i and an earlier walk j,
+b-b' = b_i-b_j + (an integer combination of the d_s), which is uniform on
+Z/r because b_i is; it vanishes with probability exactly 1/r.
+
+## 5. Work
+
+Per-item prices (`machine.md`; the step loop is recounted from `ttstep.disasm.txt` by `experiment.py`,
+the window product is executed by `lazy.py`):
+
+| item | instructions |
+|---|---:|
+| one certified step (one trip of `tt_run`: 48 UMULH, 48 MADD, pointer, exits, counter) | 273 |
+| one window end: generated product 8,679 + two `fr_add` 68 + glue 20 (re-base 8,767), `tt_run` entry/exit 65, driver with the three-word counter <= 160 | 8,992 <= **9,216** |
+| everything else, by meters and caps: table build, <= 2^52 walk starts, <= 2^90 exact evaluations, store, recoveries | <= 2^110 |
+
+A window end occurs after 312 steps since the previous re-base, at a walk start, or within an exact
+evaluation (priced in that allowance), so the number of window ends is at most T/312 + walks + 1.
+
+**Every run** (independent of all heuristics): T <= 2^133 and walks <= 2^52, so
+R <= 273 x 2^133 + 9,216 (2^133/312 + 2^52 + 1) + 2^110 and W <= 2^126.96 units.
+
+**Expected work.** Let T_touch be the number of steps (all walks together) until some step reaches an
+element visited by an earlier trail. After it, the touching walk reaches its distinguished point within its
+remaining length: at most 2^90 steps, 2^84 in expectation under H2. Hence E[T] <= E[T_touch] + 2^85.
+The number of walks is at most one more than the number of distinguished points reached, which is T/2^84
+in expectation under H2 (charged twice: E[walks] <= 2 E[T]/2^84 + 1). The cost of every step is the fixed
+273 (the loop does not depend on the branch), so no Wald argument on step prices is needed:
+
+    E[R_run] <= 273 E[T] + 9,216 (E[T]/312 + E[walks] + 1) + 2^110.
+
+**H-mean.** E[T_touch] <= 1.05 sqrt(pi kappa r / 2), kappa = 8/7 (the 8-adding correction of H1). Then
+E[T] <= 2^127.2909, E[R_run]/20,000 <= 2^121.2441 units, and with the gate, W <= 1 + 1[v < K] W_run with v
+independent of the run, so
+
+    E[W] <= 1 + (K/2^64) x 2^121.2441 <= 2^119.9296.
+
+Submitted bound: **time_log2 = 119.94** (rational 5997/50); the computed value is 119.92955739..., so the
+claim is at least 0.0104 bits above it. For
+comparison, the base package's hard-capped run at S = sqrt(1.409 r) steps and 369 instructions per step is
+2^121.285447 on every run.
+
+## 6. Success probability: heuristics, support and limits
+
+Past the gate the run fails only if a cap fires or a recovery degenerates. Under H1, H2 and H-mean
+(`lazy.py` part G, `losses`):
+* the step cap: P(T > 2^133) <= E[T]/2^133 <= 0.019115 (Markov; exact ledger value 0.0191144...);
+* the walk cap: P(walks > 2^52) <= E[walks]/2^52 <= 0.004779 (Markov; exact ledger value 0.0047786...);
+* the exact-evaluation meter: a step is uncertified with probability 97/2^61 under H2, so the expected
+  number is E[T] x 97/2^61 below 2^72.9 and P(> 2^90) < 2^-17.1 (Markov);
+* the store-probe meter (2^54 slots, at most 2^52 keys, linear probing, O(1) expected probes): below 2^-20;
+* a walk not distinguishing within 2^90 = 64 x 2^84 steps (exp(-64) = 2^-92.3 per walk) or closing a cycle on
+  itself first (about E[len^2]/(2r) = 2^169/2^254.6 = 2^-85.6 per walk), union over at most 2^52 walks:
+  below 2^-33;
+* degeneracy b = b' (exactly 1/r per hit, section 4), scalar sampling failure, a start equal to 1: below
+  2^-200.
+The sum is below 0.0240 (ledger: 0.0239011...), so success past the gate is at least 0.9760; the claim uses
+0.97. With the
+gate, success is at least (K/2^64) x 0.97 >= 0.39 and K is the least such integer (part G: `success_ok`,
+`K_is_least`). Once a touch has happened no other event prevents success: the later trail follows the
+earlier one to its stored distinguished point.
+
+**H1** (collision law of the 8-adding walk with kappa = 8/7) and **H2** (uniform tag bits, and the leading
+bits of t/p at distinguished scale) are those of the base package, with its support: the selector is the
+classical leading-bits selector of finite-field rho and the walk is Teske's r-adding walk (Math. Comp. 70
+(2001)); the base experiment runs the complete algorithm on toy prime-field subgroups at the cap (success
+fractions around the model value 0.46).
+
+**H-mean** is new and is a statement about the mean only. Support, from the walk itself (`lazy.py` part H:
+fresh 61-bit prime field, prime n-bit subgroup, target and coins per run; 8-adding walk with selector
+floor(8t/q); distinguished points; sequential walks to their distinguished point; run to the first
+verified recovery; per-run ratios to sqrt(pi kappa n/2)). Offline (`development-evidence-mean.json`):
+
+| n bits | dp bits | runs | mean touch / model | s.e. | mean steps to recovery / model |
+|---:|---:|---:|---:|---:|---:|
+| 16 | 3 | 4,000 | 0.927 | 0.008 | 0.990 |
+| 20 | 4 | 3,000 | 0.948 | 0.009 | 0.971 |
+| 24 | 5 | 1,500 | 0.971 | 0.013 | 0.984 |
+| 28 | 6 | 400 | 0.996 | 0.026 | 0.999 |
+| 32 | 7 | 100 | 0.964 | 0.053 | 0.966 |
+
+Every row is at or below 1, and the allowance 1.05 is about two standard errors above the 28-bit row.
+**Limit, disclosed:** the touch ratio rises with n from 0.93 towards 1, as finite-size effects of the
+8-adding walk fade. The premise is that it stays below 1.05 at n = 2^254. The toy groups have one
+coordinate, so the selector reads the whole element there. In production it reads one of twelve
+coordinates of an element of a 3048-bit field, as in the base package. The declared run repeats smaller
+samples of the same settings (their scatter is larger).
+
+## 7. Experiments
+
+The declared experiment is `lazy.py` (standard library). Part L generates and executes the window
+product, validates the encoding of every instruction (0 violations) and executes it (30 cases: random,
+edge-valued and all-limbs-large inputs, 0 failures, canonical outputs, 8,679 instructions). Part T checks the tag certificate in this package's coordinate layout on window bases
+produced by that routine, with F words computed from the row of t(Y T). Part H is the toy mean (declared input: up to 600 / 300 / 75 runs at 16 / 20 / 24 bits within a 0.5 s
+budget, so only a small sample in the declared run; the offline table above is the evidence for H-mean; coin seed 20261113, a different stream from the offline seed 20261112; the output reports the
+runs completed; the two samples are separate runs, not pooled). Part G is
+the ledger. Then it executes the base package's `experiment.py` (only change: DP_BITS = 84) in-process with
+`{"seed": 20261111, "trials": 16}` (16 / 16 / 8 toy trials at the cap; up to 64 on request): tower checks, row identity, the certificate on 260 cases, the 120-step
+full-width walk through the real `solve` loop, toy runs at the cap, and the listing recount (273 per
+step). That experiment's printed score (121.285447) is the base package's hard-capped ledger, superseded
+here by part G.
+After the base experiment, part P runs the full-width reference solve loop once more with the production
+predicate (dbits = 84, a different seed; 16 steps by default, up to 120 on request) and checks every step's
+distinguished flag against t*2^84 < p, and
+part C (`consistency.py`) extracts the distinguished-point bit count, the caps (2^133 steps, 2^52 walks,
+2^90 steps per walk, 2^90 exact evaluations, 2^70 probes, 1,024 draws per scalar), the global counter width,
+the window product and per-step instruction counts, the gate constant K, the claim and every rounded failure,
+success and work figure from `submission.json`, `proof.md`, `machine.md`, the code and this run's ledger, and
+asserts that they agree (rounded figures in the safe direction), including the exact-meter, self-cycle and
+density-excess bounds of section 5. Declared run: all 28 checks pass. Runtime: the declared input takes about
+8 s and the largest inputs the schema allows about 9 s in the local runner image (20 s limit); a 12 s guard
+skips any remaining optional part (H, base, P) and lists it in `skipped_parts_by_time_guard`. Sensitivity
+inputs (`mean_allowance_percent`, `cap_bits`) change `partG_ledger` only; part C and the claim refer to the
+declared parameters (`partG_ledger_declared_parameters` when they differ).
+
+References: Pollard 1978; Teske, Math. Comp. 70 (2001); Cheon, Hong and Kim, J. Cryptology 25 (2012); van
+Oorschot and Wiener, J. Cryptology 12 (1999); Aranha, Karabina, Longa, Gebotys and Lopez, EUROCRYPT 2011
+(eprint 2010/526); submissions 73463878 (e-man07), 8b901b3d and e2dfd4cf (terrapinelf), 67df70ff.
