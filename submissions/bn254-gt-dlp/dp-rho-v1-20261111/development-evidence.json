@@ -1,0 +1,9 @@
+{
+  "purpose": "Provenance of arithmetic.disasm.txt and of the default experiment output. Development evidence only; the verifier container recounts the listing itself.",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.0.13.5), target arm64-apple-darwin24.6.0",
+  "compile_command": "clang -O2 -fno-vectorize -fno-slp-vectorize arithmetic.c main.c -o arith.bin   (main.c is 'int main(void){return 0;}')",
+  "disassemble_command": "objdump -d --no-show-raw-insn arith.bin > arithmetic.disasm.txt",
+  "executed_instruction_counts": {"fp_add": 35, "fr_add": 34, "fp_sub": 35, "fp_mul": 218, "fp2_mul": 873, "fp2_add": 85, "fp2_sub": 85, "fp2_mul_xi": 399, "fp6_mul": 7412, "fp6_add": 274, "fp6_sub": 274, "fp12_mul": 24044, "walk_step": 24156},
+  "default_experiment": {"seed": 20261111, "trials": 64, "toy_success_fractions": {"10007": 0.546875, "100003": 0.578125, "1000003": 0.5, "10000019": 0.703125, "100000007": 0.5625}, "score_rounded_up": "127.474108"},
+  "not_claimed": "No production-scale walk was run; no instruction count was measured by a profiler; counts are static counts of straight-line code."
+}

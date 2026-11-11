@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp Frobenius-class rho with a cyclotomic-squaring branch and fused lazy-reduction Fp2 kernels",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the parallel distinguished-point Pollard rho of proof.md on the 12-element Frobenius classes of GT returns x with g^x=z with probability at least 0.39 using at most 2^124.23 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). The walk uses R=1024 twisted table multipliers with a 4-Fp-multiplication canonical-conjugate key, and a Granger-Scott cyclotomic-squaring branch taken with probability 1/2; branch, multiplier, distinguished-point and fingerprint bits are read from the stored Montgomery limbs of the class invariant T=Re(c_0), so squaring steps compute no keys. The walk map is that of accepted submission 2ece9f04 (same classes, keys, table, branch rule, caps and success model); the arithmetic kernels and the ledger are new. Every BN254 operation is charged through its implementation (machine.md): executed four-limb AArch64 leaf listings (Montgomery multiplication 158 instructions, addition 22, subtraction 23) and three executed fused Fp2 listings with lazy reduction inside the listing (Fp2 product 443 instructions with 3 unreduced products and 2 Montgomery reductions, Fp2 squaring 336, multiplication by xi=9+u 151), plus 4 per call site and 32 per routine call; the 24 Karatsuba sums of the table operand are stored with the table; a counted Karatsuba Fp12 product of 11,803 instructions and a counted cyclotomic squaring of 5,386; a multiply step is charged 13,153 instructions (0.65765 unit) and a squaring step 5,686 (0.2843 unit), average 0.470975 unit per step. The total W = c*S*(1+eps) + c*E + 2^64.5 = 2^124.2127 includes setup, table construction, 2^20 walk starts, distinguished-point handling, deterministic fruitless-cycle escapes, restarts, the detection delay E=2^84.32 steps, false-fingerprint verification and output; a metered total-work abort at 2^124.23 makes the work bound hold on every run. Peak memory is below 2^73 bytes, preprocessing at most 2^31 units (included), nonuniform advice 0 bytes. Success relies on the disclosed random-mapping heuristic adjusted for the branch mix (effective class count N/(1-s^2-(1-s)^2/R), model success 0.43 against the required 0.39) and on the no-drift heuristic H1+ with a 0.01 budget, supported by toy-field runs of the complete algorithm and by the production step rule executed in the real BN254 GT; no production-size run is claimed.",
+      "score": {
+        "numerator": "12423",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-fused-kernels-checks",
+      "source": "experiment.py",
+      "purpose": "Execute the three base-field AArch64 leaf listings on an instruction simulator for p and r and the three fused Fp2 listings (lazy-reduction product, squaring, multiplication by xi) for p with separate and aliased outputs, checking restored stack pointer and callee-saved registers; check the BN254 tower, Frobenius, key, canonical-conjugate, trace-invariance and Granger-Scott identities on the protected GT and count the priced routines; run the production step rule in the real GT; run the complete algorithm in toy fields of the same tower; recompute the ledger and score exactly. Toy runs are evidence at their own scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kernel_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "q": {
+            "type": "integer",
+            "enum": [
+              151,
+              163,
+              283
+            ],
+            "minimum": 151,
+            "maximum": 283
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              8,
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 10
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "listings": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111
+        }
+      ]
+    }
+  ]
+}
