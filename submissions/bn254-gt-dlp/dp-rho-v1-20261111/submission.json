@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: distinguished-point 1024-adding Pollard rho with straight-line tower arithmetic",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial algorithm in proof.md (a single 1024-adding Pollard-rho walk with a 64-bit salted word-mixing partition, distinguished points of density 2^-100 kept in an append-only table of at most 2^29 records, step cap N=ceil(13*ceil(sqrt(r))/10), scalar recovery and verification of g^x=z before output) returns x with exploratory success probability at least 0.45, using at most 2^127.474108 reference units (20,000 scalar AArch64 instruction equivalents per unit) and less than 2^38 bytes of peak total storage. The uniform capped instruction bound, valid for every outcome including failures, is N*24,576+2^70; the per-step figure is derived in machine.md from the supplied straight-line implementation arithmetic.c and its supplied disassembly (24,156 executed instructions per step, one Karatsuba-tower Fp12 multiplication costing 24,044). The success assessment relies on the disclosed s-adding collision-time heuristic H (predicting about 0.570 at this cap) and distinguished-bit uniformity heuristic D, supported and limited as explained in proof.md; label degeneracy has probability exactly 1/r without heuristics. It is not an unconditional production success theorem, a finite-field index-calculus attack or a security estimate. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, partitioning, arithmetic, memory access, table scans, recovery, verification and output. No prior acceptance, searched advice, amortization or production-scale execution is assumed.",
+      "score": {
+        "numerator": "127474108",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "arithmetic.disasm.txt",
+        "rho.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "dp-rho-arithmetic-walks-and-instruction-recount",
+      "source": "experiment.py",
+      "purpose": "Check the word-level Montgomery algorithm and the tower formulas against the protected basis at full width, check the BN254 generator order and walk invariant, report partition statistics on genuine GT elements, run the exact walk (same mixer, 1024 records, distinguished rule, cap, recovery, failures) on toy prime-order subgroups, recount executed instructions from the supplied disassembly, and recompute the capped cost. These do not prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 128
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 64
+        }
+      ]
+    }
+  ]
+}
