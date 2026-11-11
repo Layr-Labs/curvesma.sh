@@ -1,0 +1,34 @@
+{
+ "type": "original authored execution plus later static cost correction",
+ "recorded_run_head": "59c990db45744db3041d617461fd1e33c97c8772",
+ "recorded_run": {
+  "seed": 1,
+  "Q0_on_twist_order_r": true,
+  "cases": 32,
+  "failures": 0,
+  "per_doubling_instr": 4125,
+  "per_addition_instr": 6870,
+  "inversion_affine_instr": 60603,
+  "analytic_worst_instr": 2845386,
+  "on_curve_check_instr": 1182,
+  "serialisation_instr": 4026,
+  "sample_max_instr": 2835468,
+  "charged_instr": 4194304,
+  "charge_ok": true,
+  "identity_output": [
+   "P0",
+   null
+  ],
+  "all_ok": true
+ },
+ "static_correction": {
+  "candidate_executed_after_correction": false,
+  "on_curve_check_instr": 4096,
+  "primitive_bound_instr": 2332,
+  "basis": "3 schoolbook Fp2 products, 8 Fp additions/subtractions including the twist coefficient, 3 routine calls, 128 comparison/branch/outer-call instructions",
+  "corrected_total_output_upper_instr": 2853508,
+  "charged_instr": 4194304,
+  "charge_ok": true,
+  "scalar_algorithm_and_recorded_samples_unchanged": true
+ }
+}
