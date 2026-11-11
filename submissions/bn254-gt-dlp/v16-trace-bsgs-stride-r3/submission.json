@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: trace baby-step giant-step with a random stride on a node machine, executed transport",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r) and z=g^x in the protected BN254 target group GT, the algorithm in proof.md (baby-step giant-step on Frobenius traces with a random giant stride and a recheck against every Frobenius conjugate, run on the node machine of proof.md and machine.md) recovers x with success at least 0.39, as algorithmic probability over uniform challenges and the algorithm's ordinary fresh independent coins, under the disclosed heuristics H1 (trace coincidences between distinct Frobenius classes) and H2 (salted hash balance), with the coverage of the exponent window bounded exactly in proof.md. Total computation is at most 2^120.534383 target-group-operation equivalents (scalar AArch64 instruction equivalents divided by C=20,000) on every run, counting every record, message, handler, flush, sort, merge, recheck, report, wait, setup step and fresh coin, each capped. Peak memory is at most 2^132.871418 bytes, split over nodes that each hold below 2^63 bytes, with every transfer executed by the receiving node; preprocessing (setup and table building, repeated in every run) is at most 2^58.0349 equivalents and is included; nonuniform advice is 0 bytes. The identity input z=1 returns x=0. Nothing is amortised over other targets, and no prior acceptance, submission or score is a premise. Analytic exploratory claim: no production-size run, not a finite-field sieve estimate.",
+      "score": {
+        "numerator": "120534383",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "experiment.py",
+        "progs.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "trace-bsgs-stride-checks",
+      "source": "experiment.py",
+      "purpose": "Generate and execute every priced AArch64 program (field kernels, table step and table build, emit, walk loop, send, relay and home handlers with END paths, flushes, reports, waits, radix, zero, prefix, merge) against Python and big integers at production shapes; simulate 2 walkers, 4 relays and 16 homes running the same generated listings (8 records per block) on real BN254 traces under two schedules, with a planted target reported over the return route, compare every processor's executed total with the ledger's cost functions and record every store into each node's wake block; check the algebra on the shipped copy of the protected target profile and probe every instruction guard with out-of-range values; recompute the ledger and compare every stated figure (exit status 1 on any mismatch, with a mutation self-test); run the whole algorithm in a BN-family toy field (solved must equal exact ground truth without overflow; a small toy_cap plants an overflow) and estimate coverage from 100,000 (small) or 30,000 (large) fresh pairs, which must reach the toy's Bonferroni bound. Every mode runs every check except the toy; any failure exits with status 1. Toy and simulation results are evidence at small scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "all",
+              "kernels",
+              "transport",
+              "algebra",
+              "ledger",
+              "toy"
+            ],
+            "maxLength": 9
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "toy_targets": {
+            "type": "integer",
+            "enum": [
+              20,
+              40,
+              60
+            ],
+            "minimum": 20,
+            "maximum": 60
+          },
+          "toy_field": {
+            "type": "string",
+            "enum": [
+              "small",
+              "large"
+            ],
+            "maxLength": 5
+          },
+          "toy_cap": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "all",
+          "seed": 1,
+          "toy_targets": 40,
+          "toy_field": "small"
+        }
+      ]
+    }
+  ]
+}
