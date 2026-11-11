@@ -1,0 +1,40 @@
+{
+ "bw": [
+  1024,
+  40
+ ],
+ "cap": 96.7,
+ "claim": "96.739599689",
+ "exp_run": "96.739599688",
+ "filter_means": [
+  420.0,
+  473.0
+ ],
+ "log2_rels_input": 49.85,
+ "margin": "0.1709",
+ "nu": 0.03544,
+ "output_instr_log2": 27,
+ "rels_2se": "50.0169",
+ "rows": {
+  "bases": "60.725727",
+  "canon": "77.387123",
+  "cert": "50.000001",
+  "collection": "91.432192",
+  "fb": "60.161456",
+  "gen": "81.076063",
+  "gtree": "55.855257",
+  "la": "87.614018",
+  "misc": "66.305316",
+  "output": "11.761903",
+  "sm": "70.588631",
+  "split": "80.288392",
+  "two_logs": "95.805191",
+  "verify": "11.000001",
+  "wrapper": "53.712288"
+ },
+ "split_cap": 112,
+ "success": "0.458323",
+ "track": "bn254-pairing-inversion",
+ "two_logs_charged": "96.7",
+ "work_allowance": 1.02
+}
