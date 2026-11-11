@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: tower-arithmetic 1024-adding Pollard rho with partitioned Nivasch stacks, output (P0,[x]Q0)",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the one-trial algorithm in proof.md (1024-adding multiplicative walk in the Fp2/Fp6/Fp12 tower, salted multiplicative-hash index on one Montgomery word, Nivasch cycle detection partitioned into 256 stacks of at most 512 entries, hard cap T=ceil(1.15*sqrt(r*1024/1023)) steps, exact recovery and verification of x) returns P=P0 and Q=[x]Q0 with e(P,Q)=z with exploratory success probability at least 0.39 (model prediction 0.4825; 0.4224 if the effective walk size is 20% larger), using at most 2^128.297935 reference units (20,000 scalar AArch64 instruction equivalents per unit) in every run and at most 2^26 bytes of peak storage. The success assessment relies on the disclosed standard r-adding random-mapping heuristic, supported and limited as explained in proof.md; degeneracy is bounded exactly by 1/r. The uniform cap R_total = T*49152 + 2^40 instructions includes all one-target setup, fresh randomness, table construction, subgroup check, stack work, failures, recovery, verification and output, justified in machine.md. No prior acceptance, advice, amortization or production-scale execution is assumed.",
+      "score": {
+        "numerator": "128297935",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "rho_ref.py",
+        "experiment.py",
+        "target-profile.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "tower-cios-walk-checks",
+      "source": "experiment.py",
+      "purpose": "Check tower Fp12 products against the protected basis and count their Fp operations; run word-level CIOS with an instruction tally; check BN254 generator order, walk invariant and output point; run the exact walk/stack/cap control flow on small prime-order groups and report every outcome; evaluate the success model; recompute the score. Finite-scope evidence only, not a production success proof.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+          "toy_trials": {"type": "integer", "minimum": 16, "maximum": 320}
+        },
+        "required": ["seed", "toy_trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"seed": 20261111, "toy_trials": 256}
+      ]
+    }
+  ]
+}
