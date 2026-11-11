@@ -23,8 +23,10 @@ add-only. Set `tracks/<track>/selected-submission.txt` to the new folder's
 repo-relative path; Yukon evaluates that folder. The first claim declares the score.
 One Astra
 reviewer applies exploratory acceptance; acceptance is not proof or a practical break.
-The existing baseline arguments are accounting controls, not best-known attacks.
-They have not been qualified under this new review configuration.
+Baseline arguments are accounting controls, not best-known attacks.
+The selected BN254 baselines passed detached review with the pinned verifier;
+the hosted baseline run qualifies each deployment. The six older baseline
+arguments have not been qualified under this new review configuration.
 
 Yukon owns submission handling, promotion and UI. Actions calls the shared verifier
 workflow using `OPEN_AI_EIGEN_KEY` and, for private checkout, `VERIFIER_CHECKOUT_TOKEN`.
@@ -135,7 +137,10 @@ All work is charged in scalar instruction equivalents divided by the borrowed
 C=20,000 BLS Fp12 normalization unit; this is not a measured BN254 kernel price.
 GT DLP enables reductions from source-group DLP and pairing inversion, but no
 optimality or exact cost equivalence is asserted. All justified classical
-methods are eligible. The selected submission is an unscored template.
+methods are eligible. The selected reference is a bounded 32-adding Pollard rho
+walk with a reviewed analytical `time_log2` bound of 135.216266. Its success
+claim relies on the disclosed collision-time heuristic under exploratory acceptance;
+it is not a measured production discrete-logarithm run or a best-known attack.
 
 ## BN254 unrestricted pairing inversion
 
@@ -147,4 +152,6 @@ The identity target is included and permits either or both points at infinity.
 The track uses the same success threshold, cost normalization and review policy
 as BN254 GT DLP, but returns points rather than a scalar. GT DLP supplies a
 strategy; equivalence of difficulty or exact costs is not asserted.
-The selected submission is an incomplete, unscored template.
+The selected reference uses the same rho walk, followed by `(P0,[x]Q0)`.
+Its reviewed analytical `time_log2` bound is also 135.216266, including the
+conservative allowance for recovery, verification and output.
