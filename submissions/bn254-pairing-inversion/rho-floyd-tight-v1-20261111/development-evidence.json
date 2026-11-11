@@ -1,0 +1,74 @@
+{
+    "seed": 20261111,
+    "montgomery_cases_passed": 544,
+    "toy_walks": [
+        {
+            "prime_order": 1009,
+            "trials": 128,
+            "outcomes": {
+                "success": 121,
+                "identity": 0,
+                "degenerate": 1,
+                "cap": 6,
+                "verification_failed": 0
+            },
+            "success_fraction": 0.9453125,
+            "mean_floyd_iterations": 32.21875
+        },
+        {
+            "prime_order": 10007,
+            "trials": 128,
+            "outcomes": {
+                "success": 116,
+                "identity": 0,
+                "degenerate": 0,
+                "cap": 12,
+                "verification_failed": 0
+            },
+            "success_fraction": 0.90625,
+            "mean_floyd_iterations": 108.2421875
+        },
+        {
+            "prime_order": 100003,
+            "trials": 128,
+            "outcomes": {
+                "success": 119,
+                "identity": 0,
+                "degenerate": 0,
+                "cap": 9,
+                "verification_failed": 0
+            },
+            "success_fraction": 0.9296875,
+            "mean_floyd_iterations": 310.84375
+        },
+        {
+            "prime_order": 1000003,
+            "trials": 128,
+            "outcomes": {
+                "success": 116,
+                "identity": 0,
+                "degenerate": 0,
+                "cap": 12,
+                "verification_failed": 0
+            },
+            "success_fraction": 0.90625,
+            "mean_floyd_iterations": 1071.3515625
+        }
+    ],
+    "full_bn254_generator_order_check": true,
+    "full_bn254_walk_invariant_check": true,
+    "floyd_cap": "295893513763578638011461384341992519220",
+    "per_group_step_bound": 53248,
+    "instructions_per_floyd_iteration_bound": 167936,
+    "step_breakdown": {
+        "fp12_mul": 32768,
+        "sha256_select": 16384,
+        "exponent_update": 4096,
+        "iter_compare": 8192,
+        "setup_allowance": 1099511627776
+    },
+    "total_instruction_bound": "49691173127400342153092779040857955219357696",
+    "score_rounded_up": "130.868186",
+    "peak_bytes_bound": 1048576,
+    "scope": "Small cyclic-group walk experiments, full-width Montgomery arithmetic and BN254 invariant checks. No production DLP, success-frequency proof, instruction measurement, or verifier acceptance is claimed."
+}
