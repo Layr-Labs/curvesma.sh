@@ -1,0 +1,52 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: (6,2) STNFS on a twisted base field behind a run gate: expected work 2^92.798994784659",
+ "claims": [
+  {
+   "statement": "For the full production bn254-gt-dlp target, proof.md's algorithm (run gate, section 1, field-map.md, the STNFS core of proof.md, DESCENT.md, KERNELS.md, STORAGE.md) returns x with g^x = z with success at least 0.39 over uniform challenges and fresh coins under heuristics H1-H5, H-EA, H-X and H-FFT, at expected total classical work at most 1+(K/2^64) 2^93.9768586204 < 2^92.798994784659 units (C = 20,000 scalar AArch64 instructions): an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run. The attack first draws a 64-bit word v and stops as a failure (under one unit) unless v < K = 8153561984748232693, the least K with (K/2^64) x 0.882342 >= 0.39. Past the gate it succeeds with probability at least 0.882342, costs at most 2^106.0000636778 units (both logarithms metered at 2^106) and at most 2^93.9768586204 in expectation (the two logarithms at their expected work 2^93.684, H5; the other rows at bounds that hold in every run; collection and the matrix size at measured means + 2 SE, H3, H4). Nothing is amortized over other targets or runs. Analytic exploratory claim.",
+   "score": {
+    "numerator": "92798994784659",
+    "denominator": "1000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md",
+    "KERNELS.md",
+    "STORAGE.md",
+    "field-map.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "Recomputes every ledger row from the shipped statistics and checks each declared number. {} or {\"part\": \"ledger\"}: tower, counts, yield, work, filtering, linear algebra, descent plan, ledger, success, gate, claim; \"pool\", \"filter\", \"descent\", \"laws\" with \"seed\": replays (each under 20 s; \"all\" runs every part locally).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "ledger",
+       "pool",
+       "filter",
+       "descent",
+       "laws"
+      ]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}

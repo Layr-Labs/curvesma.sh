@@ -1,0 +1,79 @@
+"""bn1 evidence: recomputes the ledger of proof.md from the shipped statistics and checks every declared number.
+stdin: {} (part "ledger": tower, counts, yield, work, every row, success, gate, claim) or {"part": "pool" | "alpha" | "filter" | "descent" | "laws" | "all",
+"seed": n} (replays: pool draws, anchors and runs; the filtering simulator at 2^12; descent residue classes and fresh lattices; descent laws;
+n selects the replayed objects; every part also reruns counts, alpha, yield, work and kernel checks).  stdout: one JSON object.  stderr: check lines.  Every part runs within the hosted limit except "all"."""
+import hashlib, json, math, sys, time
+from fractions import Fraction as F
+from math import log2, sqrt, floor, ceil
+from pathlib import Path
+HERE = Path(__file__).resolve().parent; ROOT = HERE / "files" if (HERE / "files").is_dir() else HERE; sys.path.insert(0, str(ROOT))
+import common12 as C, model16 as M, alpha12 as A, runs16 as RU, ideal_canonical as IC, embedding_bounds as EB, countmc as CM, lattice_count_bounds as LC, ledger16 as L
+T0 = time.time(); LINES = []; CHECKS = {}
+def say(*a):
+    line = " ".join(str(x) for x in a); LINES.append(line); print(line, file=sys.stderr, flush=True)
+def ok(name, cond):
+    CHECKS[name] = bool(cond) and CHECKS.get(name, True); return "ok" if cond else "FAIL"
+def tower():
+    U = C.U; P, R = L.P, L.R
+    def pm(a, b):
+        c = [0] * 11
+        for i, x in enumerate(a):
+            if x:
+                for j, y in enumerate(b): c[i + j] += x * y
+        for i in range(10, 5, -1):
+            if c[i]:
+                for j in range(6): c[i - 6 + j] -= c[i] * C.H[j]
+        return [x % P for x in c[:6]]
+    def pw(a, e):
+        r = [1, 0, 0, 0, 0, 0]
+        while e:
+            if e & 1: r = pm(r, a)
+            a = pm(a, a); e >>= 1
+        return r
+    c0 = P == 36 * U ** 4 + 36 * U ** 3 + 24 * U ** 2 + 6 * U + 1 == int(L.PROFILE_P, 16) and R == 36 * U ** 4 + 36 * U ** 3 + 18 * U ** 2 + 6 * U + 1 == int(L.PROFILE_R, 16)
+    c1 = pow(P, 12, R) == 1 and all(pow(P, k, R) != 1 for k in (1, 2, 3, 4, 6)) and (P ** 4 - P ** 2 + 1) % R == 0
+    say(f"[0] p, r from u = {U} equal the protected profile; ord_r(p) = 12, r | Phi_12(p) {ok('params', c0 and c1)}")
+    y = [0, 1, 0, 0, 0, 0]; fr = [y]
+    for _ in range(6): fr.append(pw(fr[-1], P))
+    irr = fr[6] == y and all(fr[k] != y for k in (1, 2, 3)); uw = [(U * x) % P for x in C.W]; gi = pw(uw, (P ** 6 - 1) // 2) == [P - 1, 0, 0, 0, 0, 0]
+    acc = [0] * 6
+    for k, ck in enumerate(C.FC): acc = [(a + ck * b) % P for a, b in zip(acc, pm(pw([x % P for x in C.W], k), pw(uw, 4 - k)))]
+    say(f"[0a] h irreducible mod p (y^(p^6) = y, y^(p^k) != y for k = 1, 2, 3); (u w)^((p^6-1)/2) = -1 so g is irreducible over F_p6; f(x^2 -> u w) = w^4 F(u) = 0 mod p {ok('tower', irr and gi and acc == [0] * 6)}")
+    tot = [0] * 6; ac = C.ONE
+    for ck in C.H: tot = [t + ck * a for t, a in zip(tot, ac)]; ac = C.mul(ac, C.SIGP)
+    aut = tot == [0] * 6 and C.sigma(C.SIGP) == [0, 1, 0, 0, 0, 0]; cu = C.mul(C.CU, C.sigma(C.CU)) == [-1, 0, 0, 0, 0, 0] and C.sigma(C.W) == C.mul(C.mul(C.CU, C.CU), C.W)
+    fb = fr[3] == [x % P for x in C.SIGP] and pw(uw, (P ** 3 - 1) // 2) == [x % P for x in C.CU]; chi = pow(P, 3, R)
+    say(f"[0b] sigma is an automorphism of order 2, c sigma(c) = -1, sigma(w) = c^2 w (so tau maps f to c^8 f, g to c^2 g); sigma(y) = y^(p^3), (u w)^((p^3-1)/2) = c: tau = Frobenius^3; chi^2 = -1 mod r {ok('tau', aut and cu and fb and (chi * chi + 1) % R == 0)}")
+    d = L.disc_h(); ded = L.maximal_order()
+    say(f"[0c] disc h = {d} = 2^4 5^3 7^2; Dedekind at 2, 5, 7: Z[y] is the maximal order; N(w) = {C.norm(C.W)}; units of norm 1 {ok('order', d == 98000 and ded and C.norm(C.W) == 5 and all(C.norm(u) == 1 for u in C.UNITS))}")
+def pool(st, seed):
+    cfg, pd = st['config'], st['pool_d']; qa, da, _ = C.integer_metric(cfg['matrix_a']); QA = [[F(x) for x in r] for r in cfg['matrix_a']]; A2 = cfg['production_A_squared']; th = F(cfg['production_theta_region']); lim = int(th * A2 * da)
+    # [2] replay of the canonical flags of the first draws of one sizing and one judged seed (exact predicate), and of 16 draws chosen by the input seed
+    good = True; n = 0
+    for sd, (cnt, lst) in sorted(pd['replay'].items())[seed % 2::2]:
+        got = [i for i in range(cnt) if IC.canonical_a(C.draw_a(cfg, int(sd), i)[0], QA)[0]]; good &= got == lst; n += cnt
+    say(f"[2] canonical flags of the first {n} draws of seed {sorted(pd['replay'])[seed % 2]} equal the stored list {ok('pool', good)}")
+    ul = RU.unit_list(); geo = M.Geometry(cfg, F(cfg['production_theta'])); ret, cost = M.retentions(); D7 = M.contam_sup(geo); pa = M.NBAR / 2 * 2 ** M.log2_li(M.OP['lx2']); cc = M.chain(); res = []
+    pick = [pd['anchors'][seed % len(pd['anchors'])]]
+    for an in pick:
+        r = M.pool_row(cfg, an[0], an[1]); a, aq = C.draw_a(cfg, an[0], an[1]); lo, hi = RU.run(a, ul, qa, lim); r.update(T=hi - lo + 1, lrs=round(RU.lrs(a, lo, hi, qa, da, A2, F(cfg['production_region_lam']), 1), 6))
+        w = sum(M.row_cost(r, geo, M.OP, cost, D7, pa, cc).values())
+        got = [an[0], an[1], round(r['qa'] * 65536), round(r['nf'] * 16), round(r['ng'] * 16), r['v2f'], r['v2g'], int(r['primitive']), r['T'], lo, hi, r['lrs'], r['evals'], r['bcells'], r['leaves'], r['blen'], r['rlen']]
+        can = [x[5] >= 1 and C.quadratic(qa, x) <= lim and IC.canonical_a(x, QA)[0] for x in ([a[0] + t] + a[1:] for t in range(lo - 1, hi + 2))]
+        res.append((got == an[:17] and math.isclose(w, an[17], rel_tol=1e-6), all(can[1:-1]) and not can[0] and not can[-1], r['T']))
+        # exact f norm of the anchor cell inside its certified single-cell bound
+        est = EB.NormBounds(a, M._ctx(cfg)['disks']); b, _ = C.draw_b(cfg, an[0], an[1], aq); c = C.sieve_coords(b); bd = est.block(est.row(c[1:]), c[0], c[0]); nf, ng = C.norms(a, b)
+        res[-1] += (bd[0] is not None and bd[0][0] <= C.scaled_log(nf) and C.scaled_log(nf, upper=True) <= bd[0][1] + 1,)
+    say(f"[2a] {len(pick)} anchor rows (norms, 2-parts, primitivity, run, threshold counts, per-cell work) recomputed {ok('pool', all(x[0] for x in res))}; [2r] their runs (T = {[x[2] for x in res]}): every a-value canonical, both neighbours outside {ok('runs', all(x[1] for x in res))}; [2b] exact N_f inside the cell bound {ok('bounds', all(x[3] for x in res))}")
+    return geo
+def main():
+    req = json.load(sys.stdin) if not sys.stdin.isatty() else {}
+    part = req.get("part", "ledger"); seed = req.get("seed", 1)
+    if set(req) - {"part", "seed"} or part not in ("ledger", "pool", "alpha", "filter", "descent", "laws", "all") or type(seed) is not int or not 0 <= seed <= 1000000: raise ValueError("input")
+    st = C.stats(); say(f"part={part} seed={seed}; unit {M.UNIT:.0f} instructions"); out = {}
+    if part in ("ledger", "all"): tower()
+    if part in ("pool", "all"): pool(st, seed)
+    out = L.check_all(st, part, seed, say, ok)
+    good = all(CHECKS.values()); say(f"checks {sum(CHECKS.values())}/{len(CHECKS)} {'ALL PASS' if good else 'FAILED: ' + ', '.join(k for k, v in CHECKS.items() if not v)}; {time.time() - T0:.1f} s")
+    print(json.dumps(dict(checks=CHECKS, all_pass=good, **out, output_sha256=hashlib.sha256("\n".join(LINES[:-1]).encode()).hexdigest())))
+if __name__ == "__main__": main()
