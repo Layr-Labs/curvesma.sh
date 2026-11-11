@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: tag-tracing 8-adding rho in GT behind a run gate, run to collision (expected-work claim), output (P0,[x]Q0)",
+  "claims": [
+    {
+      "statement": "CLAIM TYPE: EXPECTED WORK. For the full protected BN254 target and uniform z=g^x, the one-trial algorithm of proof.md returns P0 and [x]Q0 with e(P0,[x]Q0)=z with success probability at least 0.39 over the challenge and fresh coins. Its EXPECTED total work over the challenge and coins is at most 2^120.210312 reference units (20,000 scalar AArch64 instruction equivalents per unit). It is NOT an every-run bound: a single run that passes the gate is stopped by hard caps at 64 + 273*S_cap + 24576*(floor(S_cap/256)+1) + 2^110 instructions, below 2^127.199075 units, and a run that does not pass the gate costs under 1 unit. Step 0 is a run gate: one fresh 64-bit word v; continue only if v < K = 7416732153347139310, the least K with (K/2^64)*0.97 >= 0.39. Past the gate, an 8-adding Pollard-rho walk Y -> Y*M_s in GT with s=floor(8t/p) for the protected-basis constant coefficient t, evaluated by certified tag tracing over a table of all products of at most 256 multipliers (the walk, certificate, kernels, listings and prices of submission 73463878-0c19-4309-a991-749ea525d51c), runs to its first collision under hard caps. The caps are: step cap S_cap = ceil(64*sqrt(1.25 r)) (2^132.96, three-word global counter); 2^50 walks of at most 2^92 steps; 2^90 exact evaluations; 2^70 store probes. Distinguished density is 2^-86. Expected steps past the gate are bounded by M = sqrt(pi*1.25*r/2) + 1 + 2^86 + (2^223/r + 2^50*exp(-64))*S_cap. This includes a discrete-tail 1-step correction and charges every self-cycle/no-DP exception all S_cap steps. It relies on the disclosed H1 tail law and H2 tag heuristic. All Markov terms use M. Expected run work is below the upward-rounded 2^121.524823 units, and the unrounded formula with the gate bounds expected total by 2^120.210312. Success past the gate is at least 0.97801 (step cap by Markov on the mean 0.01958, walk cap by Markov 0.00238, others below 2^-15); 0.97 is claimed. The tag certificate and the degeneracy 1/r are proved. The success and mean rely on the disclosed heuristics H1 (with kappa 1.25 against the 8/7 model) and H2 (uniform tag bits). Support: the parent's toy runs and a new toy measurement of the mean total collision time of the serial 8-adding DP walk (gate_ledger.py part T: 1.225-1.332 sqrt(n) at 16-24 bits, against the charged 1.401). Peak storage is below 2^60 bytes with ordinary 64-bit addresses; the table construction (below 2^69 instructions) is inside each gated run. No advice, amortization, production-scale execution or prior acceptance is assumed. The protected rules do not settle expected-versus-worst-case scoring; this claim states its type and its every-run maximum explicitly.",
+      "score": {
+        "numerator": "120210312",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "gate_ledger.py",
+        "gate-ledger-evidence.json",
+        "reference.py",
+        "ttstep.c",
+        "ttstep.disasm.txt",
+        "tower.c",
+        "tower.disasm.txt",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "tag-tracing-certificate-walk-and-recount",
+      "source": "experiment.py",
+      "purpose": "Inherited from the parent (unchanged): at full BN254 width, tower and tag-row identities, the certificate interval, a 120-step real walk through solve (at the parent's density 2^-80), toy runs of the parent's capped algorithm, and the instruction recount. It does not run the gate or the run-to-collision control. Its printed capped cost is the parent's every-run figure, not this claim.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 256
+        }
+      ]
+    },
+    {
+      "id": "run-gate-ledger-and-toy-mean",
+      "source": "gate_ledger.py",
+      "purpose": "Follow-up callable. Part L: exact ledger of the gate constant K (least), step cap, losses past the gate, expected run and total work, every-run maximum, claim rounding. Part T: toy measurement of the mean total collision time of the serial 8-adding DP walk with selector floor(8y/q) in prime-order subgroups of toy prime fields. Exits 1 if a ledger check fails. Standard library only, under 2 s at the bounds.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 2000
+          },
+          "bits": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 24
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}

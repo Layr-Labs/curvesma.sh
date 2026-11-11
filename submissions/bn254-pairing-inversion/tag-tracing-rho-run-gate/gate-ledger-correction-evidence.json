@@ -1,0 +1,50 @@
+{
+  "scope": "authored corrected ledger and bounded 10-trial 12-bit smoke only; inherited packet not executed",
+  "output": {
+    "seed": 20261112,
+    "partL_gate_ledger": {
+      "kappa_charged": "1.25",
+      "log2_mean_Tc": 127.2850577896809,
+      "mean_Tc_over_sqrt_r": 1.4012478040994822,
+      "S_cap": "10586208174026103532672742055095885909668",
+      "log2_S_cap": 132.95930972494475,
+      "per_step_instructions": 369.0,
+      "log2_expected_run_units": 121.524822486057,
+      "log2_every_run_max_units": 127.19907435193511,
+      "losses": {
+        "step_cap_markov": 0.019583034011597094,
+        "walk_cap_markov": 0.0023798029463751517,
+        "exact_eval_meter_markov": 7.044704768958351e-06,
+        "store_probe_meter_markov_inherited": 1.52587890625e-05,
+        "walk_without_dp_within_2^92_H2": 1.8057305322618973e-13,
+        "self_cycle_before_dp": 6.158545211922072e-10,
+        "degeneracy_and_sampling": 6.223015277861142e-61
+      },
+      "success_past_gate_lb": 0.9780148589321612,
+      "sigma_claimed": "0.97",
+      "K": "7416732153347139310",
+      "gate_probability": 0.4020618556701031,
+      "success_lb": 0.39,
+      "log2_expected_total_units": 120.21031186273213,
+      "claim_time_log2": "120.210312",
+      "checks": {
+        "K_least": true,
+        "past_gate_ge_sigma": true,
+        "S_cap_bits_le_192": true,
+        "walk_cap_times_len_covers_S_cap": true,
+        "claim_ge_computed": true
+      }
+    },
+    "partT_toy_mean_collision": {
+      "bits": 12,
+      "trials": 10,
+      "dp_bits": 4,
+      "mean_Tc_over_sqrt_n": 1.2697486046374766,
+      "standard_error": 0.22601414678515067,
+      "model_kappa_8_7": 1.3398491713813576,
+      "charged_kappa_1_25": 1.4012478040994822,
+      "within_charged": true
+    },
+    "all_ok": true
+  }
+}
