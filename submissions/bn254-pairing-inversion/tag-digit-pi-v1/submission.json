@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: gated digit-tag 8-adding rho, 143 instructions per certified step, expected work 2^119.11, output (P0, [x]Q0)",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the gated digit-tag 8-adding distinguished-point Pollard rho of proof.md (a point Y is distinguished iff t(Y) 2^84 < p, the same 84-bit predicate in the algorithm, the caps and the ledger) finds x with g^x=z and returns P=P0 and Q=[x]Q0 with e(P,Q)=z (z=1 gives P0 and infinity; the G2 scalar multiplication, the check g^x=z and serialization are charged, below 2^30 instructions, inside the fixed 2^110-instruction allowance) with probability at least 0.39 over uniform challenges and fresh coins, at EXPECTED total work at most 1 + (K/2^64)(143 E[T] + 9216 (E[T]/312 + E[walks] + 1) + 10240 E[X] + 2^110)/20000 < 2^119.11 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work; T steps and X exact evaluations of a run past the gate). This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run; every run, including all failures, is capped at 2^133.16 units by a 2^140-step global three-word step counter, at most 2^52 walks of at most 2^90 steps, at most 2^127 exact evaluations, at most 2^70 store probes and at most 1,024 draws per random scalar. The attack first draws a fresh uniform 64-bit word v and stops as a failure unless v < K = 7237656125499723472, the least K with (K/2^64) x 0.994 >= 0.39; past the gate it runs to its first verified recovery and succeeds with probability at least 0.9947 (failure budget below 0.0053: step cap at most 0.000150 and walk cap at most 0.004779 by Markov's inequality, exact-evaluation meter at most 0.000336, all other caps and degenerate events below 2^-19). The walk Y -> Y*M_s with s = floor(8t/p) for the protected-basis constant coefficient t, the certified-tag method and the table of all products of at most ell multipliers are those of submission 73463878-0c19-4309-a991-749ea525d51c, whose reference.py, experiment.py, listings and development evidence are included byte for byte except DP_BITS = 84 in experiment.py and the dbits=84 docstring in reference.py. The digit tag (the window base as 72 digits of 43 bits, one 64-bit entry word per digit, tag error below 72 x 2^43) is that of submission 70974bf7-180b-47e1-a09b-c88363cfa805, adopted with credit; the gate and run-to-collision expected-work accounting follow 8b901b3d-a617-4b1f-a442-ff370e6ec4f7; the unrolled loop and 3-instruction certificate form follow f86cff50-80c5-43cf-a773-67417a7c29e4; window length ell = 312 (C(320,8) = 2,496,767,727,736,920 table entries) follows 2da98c02-9350-4cb1-83c1-b25d1a07a4b6. New here: a generated digit loop of 143 executed scalar AArch64 instructions per certified step (walks.py part S, 19 resident digits, encoding-validated and executed trip by trip against the definition with all exits exercised), a generated 171-instruction digit conversion, and this account's generated 8,679-instruction lazy-reduction window product, so a window end costs at most 9,216 instructions and an exact evaluation at most 10,240; with the uncertified rate (E+1)/2^61 = 2^-11.83 a step costs 143 + 9216/312 + 10240 (E+1)/2^61 <= 175.36 instructions in expectation. The digit tag lemma is checked on window bases produced by the generated programs (part T), and a 120-step full-width walk on real table entries runs through all three generated programs with 14 window ends and 0 mismatches (part I). The expected work uses E[T] <= 1.05 sqrt(pi kappa r/2) + 2^85 <= 2^127.2909 steps, kappa = 8/7 (premise H-mean on the mean collision time of the 8-adding walk, with H1 and the restricted equidistribution premise H2r of proof.md section 6, which also gives the revisitation-aware distinguished-point argument and treats t as constant on p^2-Frobenius orbits), supported by toy-scale runs of the complete walk (development-evidence-mean.json: offline per-setting means 0.927 to 0.996 of the model at 16 to 32 bits; development-evidence-mean2.json: a second offline run at 24 to 36 bits, Pooled at n >= 28 bits over both files: 3,000 runs, mean 1.0002, s.e. 0.0096; mean + 3 s.e. = 1.0291) and extrapolated to production size. Table construction (below 2^72 instructions) and all other work are included without amortization. Peak storage is below 2^63 bytes, nonuniform advice 0 bytes. No production-size run is claimed; this is a generic square-root attack, not a security estimate. This is the pairing-inversion port of GT-DLP submission 05b9ff85 (same walk, programs, ledger and checks; output map as in 73463878).",
+      "score": {
+        "numerator": "11911",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "lazy.py",
+        "walks.py",
+        "development-evidence-mean.json",
+        "reference.py",
+        "experiment.py",
+        "ttstep.c",
+        "ttstep.disasm.txt",
+        "tower.c",
+        "tower.disasm.txt",
+        "development-evidence.json",
+        "development-evidence-mean2.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "gated-tag-tracing-generated-loop",
+      "source": "lazy.py",
+      "purpose": "Part C: assert that submission.json, proof.md and machine.md state one 84-bit distinguished-point predicate, the same parameters as the code, and rounded bounds on the safe side of the ledger. Part S: generate the digit tag loop, validate the encoding of every instruction and execute it trip by trip on synthetic table entries against the definition (A, selector, child, exits). Part L: generate the lazy-reduction window-end Fp12 product and the digit conversion as a straight-line scalar AArch64 program with asserted static bounds, validate the encoding of every instruction, execute it on an instruction simulator and compare with big-integer arithmetic. Part T: check the tag certificate in this layout on window bases produced by that routine. Part H: toy-scale runs of the complete 8-adding distinguished-point walk run to recovery, mean collision time against sqrt(pi kappa n/2). Part I: a full-width walk on real table entries through both generated programs, checked step by step against the definition. Part X (declared input only): assert that every experimental figure stated in the manifest, proof.md and machine.md equals this run's measured value. Part G: gate, caps, failure budget and expected-work ledger in exact decimal arithmetic. Then execute the base package's experiment.py (submission 73463878; changed only to DP_BITS = 84) in-process: tower and row checks, tag certificate on 260 cases, 120-step full-width walk (steps_wanted = 120), toy runs at the cap, listing recount. Toy runs are evidence at their own scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "lazy_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30
+          },
+          "tag_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "toy_runs": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1000
+          },
+          "toy_seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 1.5
+          },
+          "mean_allowance_percent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "cap_bits": {
+            "type": "integer",
+            "minimum": 128,
+            "maximum": 180
+          },
+          "listings": {
+            "type": "boolean"
+          },
+          "base_run": {
+            "type": "boolean"
+          },
+          "base_seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "base_trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 24
+          },
+          "loop_entries": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "loop_budget": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "walk_steps": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 160
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261112
+        }
+      ]
+    }
+  ]
+}

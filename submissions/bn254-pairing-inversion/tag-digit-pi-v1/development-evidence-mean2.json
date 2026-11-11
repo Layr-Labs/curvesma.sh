@@ -1,0 +1,137 @@
+{
+ "description": "Second offline run of lazy.py part_H's toy_run (the same walk as development-evidence-mean.json: 8-adding, selector floor(8t/q), distinguished points, sequential walks, run to the first verified recovery; per-run ratios to sqrt(pi*(8/7)*n/2)). Ten independent processes with seeds 20261201..20261210 (disjoint from 20261112 of the first file and 20261113 of the declared run). Not pooled with the declared run.",
+ "per_seed": [
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "seed": 20261201,
+   "runs": 1000,
+   "mean_touch_over_model": 1.0007,
+   "se": 0.0164,
+   "mean_recovery_steps_over_model": 1.0099
+  },
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "seed": 20261202,
+   "runs": 1000,
+   "mean_touch_over_model": 0.9837,
+   "se": 0.0156,
+   "mean_recovery_steps_over_model": 0.994
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "seed": 20261203,
+   "runs": 600,
+   "mean_touch_over_model": 0.989,
+   "se": 0.0217,
+   "mean_recovery_steps_over_model": 0.9948
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "seed": 20261204,
+   "runs": 600,
+   "mean_touch_over_model": 1.0156,
+   "se": 0.0219,
+   "mean_recovery_steps_over_model": 1.0204
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "seed": 20261205,
+   "runs": 600,
+   "mean_touch_over_model": 1.0029,
+   "se": 0.0208,
+   "mean_recovery_steps_over_model": 1.0103
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261206,
+   "runs": 200,
+   "mean_touch_over_model": 0.9761,
+   "se": 0.0367,
+   "mean_recovery_steps_over_model": 0.9782
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261207,
+   "runs": 200,
+   "mean_touch_over_model": 1.0273,
+   "se": 0.036,
+   "mean_recovery_steps_over_model": 1.0309
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261208,
+   "runs": 200,
+   "mean_touch_over_model": 1.0118,
+   "se": 0.0401,
+   "mean_recovery_steps_over_model": 1.0135
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "seed": 20261209,
+   "runs": 50,
+   "mean_touch_over_model": 0.9431,
+   "se": 0.0794,
+   "mean_recovery_steps_over_model": 0.955
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "seed": 20261210,
+   "runs": 50,
+   "mean_touch_over_model": 1.0212,
+   "se": 0.0768,
+   "mean_recovery_steps_over_model": 1.0221
+  }
+ ],
+ "pooled_by_size": [
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "runs": 2000,
+   "mean_touch_over_model": 0.9922,
+   "se": 0.0113,
+   "mean_recovery_steps_over_model": 1.002
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "runs": 1800,
+   "mean_touch_over_model": 1.0025,
+   "se": 0.0124,
+   "mean_recovery_steps_over_model": 1.0085
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "runs": 600,
+   "mean_touch_over_model": 1.0051,
+   "se": 0.0217,
+   "mean_recovery_steps_over_model": 1.0075
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "runs": 100,
+   "mean_touch_over_model": 0.9822,
+   "se": 0.0551,
+   "mean_recovery_steps_over_model": 0.9885
+  }
+ ],
+ "pooled_n_bits_at_least_28": {
+  "sources": "this file's 28/32/36-bit runs and the 28/32-bit rows of development-evidence-mean.json",
+  "runs": 3000,
+  "mean_touch_over_model": 1.0002,
+  "se": 0.0096,
+  "mean_plus_2se": 1.0194,
+  "mean_plus_3se": 1.0291
+ }
+}
