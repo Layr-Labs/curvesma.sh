@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: gated Frobenius-class rho run to its collision with fused lazy-reduction kernels and a 256-bit meter, output (P0, [x]Q0)",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the gated parallel distinguished-point Pollard rho of proof.md on the 12-element Frobenius classes of GT returns P=P0 and Q=[x]Q0 with e(P,Q)=z (the reduction named in the track rules; z=1 gives (P0, infinity); the check g^x=z and the G2 scalar multiplication are charged) with probability at least 0.39 over uniform challenges and fresh coins, at EXPECTED total work at most 1 + (K/2^64)(c E[T_c](1+eps) + c_mul E + 2^66) < 2^123.17 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run. The attack first draws a fresh uniform 64-bit word v and stops as a failure (below one unit) unless v < K = 7208647483714153438, the least K with (K/2^64) x 0.998 >= 0.39; past the gate it runs to the first useful class collision and succeeds with probability at least 0.998, the only failures being the step cap S_cap = 4096 sqrt(N') (probability at most 0.000322 by Markov's inequality), the report cap of 2^12 times its mean (at most 2^-12) and events of total probability below 0.001, including a bounded rejection sampler for scalars mod r (at most 64 attempts, failure below 2^-76 per run). Reports are stored in a red-black tree with a worst-case cost of 6,434 instructions per report, inside the 10,000 charged. A work meter at 2^136.61 units (2^150.90 instructions, held in a 256-bit accumulator; the step cap uses a 192-bit counter; both charged per step) priced at the dearest step makes every run finite and adds no failure event. The walk map (classes, 4-multiplication canonical key, 1024 twisted multipliers, Granger-Scott squaring branch with probability 1/2, bits from the stored trace invariant, cycle handling) is that of submissions 2ece9f04/3325b532, with the gate design of e2dfd4cf-27ca-4a30-b2bd-ab28edbfd8b2 and the fused lazy-reduction Fp2 kernels and stored table sums of 7e58d165-ebf6-41aa-8003-2f0a42370b6a, whose experiment.py and machine.md (with sections 5a and 5b added) are included: multiply step 13,153 instructions = 0.65765 unit, squaring step 5,686 = 0.2843 unit, average c = 0.470975 unit. The expected work uses c per step by Wald's identity under the pseudorandom-bit heuristic H2 and the premise H-mean: the expected number of steps to the first useful collision is at most 1.05 sqrt(pi N'/2) = 2^125.6098, N' = N/(1 - s^2 - (1-s)^2/R) the effective class count of the random-mapping heuristic H1; toy-field runs of the complete algorithm give 0.994 of the model mean over the base pool of 1,100 runs; adding 400 new runs at a fourth setting (seed 77, ratio 1.037) gives 1.006 over 1,500 runs, 400 of them independent of the base pool. Setup, table construction, walk starts, distinguished-point handling, cycle escapes, restarts, the detection delay E = 2^84.33 steps, false-candidate verification and output are included. Expected run work past the gate 2^124.5245, expected total 2^123.1689. Peak memory is below 2^85 bytes, preprocessing at most 2^31 units (included), nonuniform advice 0 bytes. No production-size run is claimed.",
+      "score": {
+        "numerator": "12317",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "gate.py",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-fused-kernels-checks",
+      "source": "experiment.py",
+      "purpose": "Execute the three base-field AArch64 leaf listings on an instruction simulator for p and r and the three fused Fp2 listings (lazy-reduction product, squaring, multiplication by xi) for p with separate and aliased outputs, checking restored stack pointer and callee-saved registers; check the BN254 tower, Frobenius, key, canonical-conjugate, trace-invariance and Granger-Scott identities on the protected GT and count the priced routines; run the production step rule in the real GT; run the complete algorithm in toy fields of the same tower; recompute the ledger and score exactly. Toy runs are evidence at their own scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kernel_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "q": {
+            "type": "integer",
+            "enum": [
+              151,
+              163,
+              283
+            ],
+            "minimum": 151,
+            "maximum": 283
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              8,
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 10
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "listings": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111
+        }
+      ]
+    },
+    {
+      "id": "gate-ledger",
+      "source": "gate.py",
+      "purpose": "Recompute in exact decimal arithmetic the gate constant K and its minimality, the charged mean collision time, the step cap and its Markov bound, the failure budget, the expected run and total work with the fused step prices, the declared score, and that the meter cap fits the 256-bit accumulator and the step cap the 192-bit counter. Heuristics are inputs, not tested. Declared with no initial input because the track allows one initial run; available for the follow-up run. Its default output is reproduced in proof.md section 5.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mean_allowance_percent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "cap_multiple": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 4096
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
