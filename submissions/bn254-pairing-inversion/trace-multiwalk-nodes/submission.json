@@ -1,0 +1,85 @@
+{
+ "version": 1,
+ "title": "bn254-pairing-inversion: sixteen random-stride trace walks matched across all pairs, on a node machine with executed transport",
+ "claims": [
+  {
+   "statement": "For uniform x in [0,r) and z=g^x in the protected BN254 target group GT, with g=e(P0,Q0), the algorithm in proof.md (sixteen walks z^a g^b D^n on Frobenius traces, each with its own fresh random stride and offset, pairs of records with equal trace keys, from any two walks, rechecked against every Frobenius conjugate up to a per-home cap, run on the node machine of proof.md and machine.md, then output of P=[x]P0 in G1 and Q=Q0 in G2) returns points P and Q with e(P,Q)=z with success at least 0.39, as algorithmic probability over uniform challenges and the algorithm's ordinary fresh independent coins, under the disclosed heuristics H1 (trace coincidences between distinct Frobenius classes) and H2 (salted hash balance), with the coverage of the cross-walk collision events bounded exactly in proof.md. Total computation is at most 2^119.979552 target-group-operation equivalents (scalar AArch64 instruction equivalents divided by C=20,000) on every run, counting every record, message, handler, flush, sort, scan, recheck, report, wait, setup step, fresh coin, the scalar multiplication of the output and an attack-side pairing check, each capped. Peak memory is at most 2^132.418039 bytes, split over nodes that each hold below 2^63 bytes, with every transfer executed by the receiving node; preprocessing (setup and table building, repeated in every run) is at most 2^58.0393 equivalents and is included; nonuniform advice is 0 bytes. The identity input z=1 returns P=infinity (null) and Q=Q0, as the rules permit exactly for z=1. Nothing is amortised over other targets, and no prior acceptance, submission or score is a premise. Analytic exploratory claim: no production-size run, not a finite-field sieve estimate.",
+   "score": {
+    "numerator": "3749361",
+    "denominator": "31250"
+   },
+   "evidence": [
+    "proof.md",
+    "machine.md",
+    "experiment.py",
+    "progs.py",
+    "outstep.py",
+    "toy.py"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "trace-multiwalk-checks",
+   "source": "experiment.py",
+   "purpose": "Generate and execute every priced AArch64 program (field kernels mod p and mod r, table step and table build, emit, walk loop, send, setup messages, relay and home handlers with END paths, flushes, reports, waits, three radix passes, zero, prefix, scan) against Python and big integers at production shapes; simulate 16 walkers, 4 relays and 16 homes running the same generated listings (8 records per block) on real BN254 traces under two schedules, with a planted cross-walk target reported over the return route, compare every processor's executed total with the ledger's cost functions and record every store into each node's wake block; check the algebra on the shipped copy of the protected target profile (orders, trace, every walk-pair denominator nonzero, coin coefficients distinct, N least), execute the output step [x]P0 with counted field operations against an affine reference, and probe every instruction guard with out-of-range values; recompute the ledger and compare every build-filled figure line in every mode (exit status 1 on any mismatch, with a mutation self-test); run the whole 16-walk algorithm in a BN-family toy field (solved must equal exact ground truth without overflow; pairs inside one walk alone must solve exactly their own targets; a small toy_cap plants an overflow) and count the exact cross-walk coverage of the small toy field for 2 fresh coin draws, each of which must reach the toy's Bonferroni bound. Every mode runs every check except the toy; any failure exits with status 1. Toy and simulation results are evidence at small scale only.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "enum": [
+       "all",
+       "kernels",
+       "transport",
+       "algebra",
+       "ledger",
+       "toy"
+      ],
+      "maxLength": 9
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "toy_targets": {
+      "type": "integer",
+      "enum": [
+       20,
+       40,
+       60
+      ],
+      "minimum": 20,
+      "maximum": 60
+     },
+     "toy_field": {
+      "type": "string",
+      "enum": [
+       "small",
+       "large"
+      ],
+      "maxLength": 5
+     },
+     "toy_cap": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 100000
+     }
+    },
+    "required": [
+     "mode"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "mode": "all",
+     "seed": 1,
+     "toy_targets": 40,
+     "toy_field": "small"
+    }
+   ]
+  }
+ ]
+}
