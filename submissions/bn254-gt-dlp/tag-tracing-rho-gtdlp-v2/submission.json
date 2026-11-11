@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: tag-tracing 8-adding distinguished-point rho in GT, returning x (v2: window re-base from executed fused Fp2 kernels)",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial algorithm in proof.md (an 8-adding Pollard-rho walk Y -> Y*M_s in GT with s=floor(8t/p) for the protected-basis constant coefficient t of Y, evaluated by tag tracing: a certified 64-bit inner-product approximation of t against a precomputed table of all products of at most 256 multipliers, one Fp12 product per 256 steps, exact evaluation whenever the certificate fails; distinguished points of density 2^-80; at most S=floor(sqrt(1409*r/1000))+1 steps in total; scalar recovery and verification g^x=z; x=0 when z=1) returns x with 0<=x<r and g^x=z with exploratory success probability at least 0.39, using at most 2^121.077977 reference units (20,000 scalar AArch64 instruction equivalents per unit) and less than 2^60.4 bytes of peak total storage. The instruction bound, valid for every run including all failures, is 273*S + 11923*(floor(S/256)+1) + 2^110, derived in machine.md from the supplied clang listing ttstep.disasm.txt (273 executed instructions per certified step), the AArch64 listings of listings.txt (11,730 instructions per window re-base, executed instruction by instruction on a simulator in experiment.py, built from the fused Fp2 kernels of 7e58d165 with table-side Karatsuba sums stored in each entry) and from metered caps on all other work, including construction of the 525,783,425,977,953-entry table for this one target. The tag certificate (proof.md section 2) and the degeneracy probability 1/r are proved; the success assessment relies on the disclosed heuristics H1 (8-adding collision law with correction 8/7, model value 0.4601 at the cap) and H2 (uniformity of tag bits), supported and limited as explained in proof.md and by the toy-scale experiments; it is not an unconditional production success theorem, an index-calculus attack or a security estimate. No prior acceptance, searched advice, amortization or production-scale execution is assumed.",
+      "score": {
+        "numerator": "121077977",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "reference.py",
+        "kernels.py",
+        "listings.txt",
+        "ttstep.c",
+        "ttstep.disasm.txt",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "tag-tracing-certificate-walk-rebase-and-recount",
+      "source": "experiment.py",
+      "purpose": "At full BN254 width: check the tower formulas against the protected basis, the tag row identity, the tag certificate interval on random and edge cases, and a 120-step walk through the real solve loop (exact selector, one multiplier per step, label invariant, identical walk under forced exact evaluations). Run the complete algorithm with the production cap formula on toy prime-field subgroups, reporting all outcomes including failures. Regenerate the window re-base listings, check them against listings.txt and for A64 encodability, execute the leaves and the full re-base on a simulator of the AArch64 subset used on real GT elements, arbitrary Fp12 elements and edge values, compare with independently computed Montgomery limbs and count the executed instructions. Recount the step-loop listing and recompute the capped cost. Check the identity case (x=0) and the 64-hex scalar encoding. These do not prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 256
+        }
+      ]
+    }
+  ]
+}
