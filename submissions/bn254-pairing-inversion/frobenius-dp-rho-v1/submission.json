@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: Frobenius-class distinguished-point rho in GT, output (P0,[x]Q0)",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial algorithm in proof.md (distinguished-point collision search on the (r-1)/12 Frobenius classes of GT with the class-compatible step Y -> Y^2*phi^j(Y), j chosen among 11 Frobenius powers by a salted SHA-256 of the trace coefficient, at most S=floor(sqrt(3(r-1)/16))+1 steps in total, then scalar recovery and verification g^x=z) returns P0 and [x]Q0 with e(P0,[x]Q0)=z with exploratory success probability at least 0.50, using at most 2^126.853862 reference units (20,000 scalar AArch64 instruction equivalents per unit) and at most 2^30 bytes of peak total storage. The uniform capped instruction bound is S*48000+2^64, with every cost justified in machine.md; it holds regardless of any heuristic. The success assessment relies on the disclosed heuristic that the 11-multiplier class walk has corrected-random-map collision statistics (predicted about 0.63 after explicit losses), supported and limited as explained in proof.md and by the toy-scale experiments; it is not an unconditional production success theorem. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, hashing, arithmetic, table access, recovery, verification and output. No prior acceptance, searched advice, amortization or actual production-scale attack execution is assumed.",
+      "score": {
+        "numerator": "126853862",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "reference.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-class-walk-checks",
+      "source": "experiment.py",
+      "purpose": "Check at full BN254 width that Frobenius has order 12 on GT, acts as multiplication by p on logarithms, preserves the trace coefficient, that the actual walk is class-compatible and keeps its label invariant, and that the recovery formula returns the scalar on a planted conjugate pair; run the complete algorithm with its production cap formula on toy prime-order groups with an order-12 automorphism, reporting all outcomes including failures; reproduce the capped cost. These do not prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 256
+        }
+      ]
+    }
+  ]
+}
