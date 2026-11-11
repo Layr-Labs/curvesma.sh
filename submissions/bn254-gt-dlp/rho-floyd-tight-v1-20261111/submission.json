@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp tightened bounded Floyd Pollard-rho (130.868186)",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial 32-adding Floyd Pollard-rho algorithm in proof.md returns x with g^x=z at exploratory success probability at least 0.50, using at most 2^130.868186 reference units (20,000 scalar AArch64 instruction equivalents per unit) and at most 2^20 bytes of peak total storage. The success assessment relies on the disclosed standard r-adding collision-time heuristic, supported and limited in proof.md; it is not an unconditional production success theorem. The uniform capped instruction bound is 2*ceil(sqrt(r))*167936 + 2^40, holding on every run with no run gate or unbounded subroutine, with each per-iteration component justified conservatively in machine.md and anchored to the organizer's pinned blst Fp12 measurement. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, hashing, arithmetic, memory access, recovery, verification and output. This is the organizer's selected baseline algorithm with a tighter justified instruction charge; no prior acceptance, searched advice, amortization or production-scale attack execution is assumed.",
+      "score": {
+        "numerator": "130868186",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "rho.py",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "bounded-rho-walks-and-bn254-invariants",
+      "source": "experiment.py",
+      "purpose": "Check full-width four-word Montgomery arithmetic, run the actual 32-adding Floyd walk on four small cyclic groups including failures, verify the protected BN254 generator order and the exponent-label invariant on full-width Fp12 elements, and recompute the itemized cap and rounded-up score. These are finite walk-statistics and correctness evidence; they do not prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 128
+        }
+      ]
+    }
+  ]
+}
