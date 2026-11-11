@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: gated tag-tracing rho, 213-instruction step loop (SP-relative limbs, self-pointer leaves), expected-work claim",
+  "claims": [
+    {
+      "statement": "CLAIM TYPE: EXPECTED WORK. For uniform z=g^x in the protected BN254 GT, the gated tag-tracing 8-adding rho of proof.md returns x with g^x=z with probability at least 0.39 over the challenge and fresh coins, at EXPECTED total work E[W] <= 1 + (K/2^64)(213 E[T] + 9216 (E[T]/256 + E[walks] + 1) + 2^110)/20,000 <= 2^119.6486 < 2^119.65 reference units. It is not an every-run bound: every run is capped at 2^126.68 units. This package is the parent package e3771b98-7faa-4277-a559-c5feb10a85f4 (source b3aa659a), with the step-loop and store changes and mean correction specified below. Parent scripts retain identical syntax trees and comments with compact indentation; proof and manifest are updated. The parent's generated 217-instruction loop is replaced by a generated 213-instruction loop (ttloop2.py part S2). It computes the same tag A, certificate and selector on the same entry layout, with 22 resident limbs read SP-relative from the caller's frame (13 LDP reloads per trip instead of 14 LDP + 1 LDR), and loads the child directly into the entry register with no null test, because window leaves point to themselves and the driver budgets 257 - d0 trips per call. Window end: 8,966 instructions, charged 9,216 (generated lazy product 8,679, unchanged). Per step: 249 instead of 253. The distinguished-point store is a deterministic binary Patricia (crit-bit) trie keyed by the full canonical distinguished element (12 Montgomery coordinates, 3,072 bits). Key equality is element equality, so there are no false matches. A path has at most 3,072 internal nodes; N elements use N leaves (512 B) and N-1 internal nodes (32 B). An operation costs at most 98,872 instructions, charged 2^17, and there are at most 2^52 operations (2^69 instructions). The store occupies 2^61.0875 bytes. It replaces the parent's open-addressing table and its store-probe meter, so the store has no hashing assumption and no probe-failure term. The mean bound is corrected: E[T] <= 1.05 sqrt(pi kappa r/2) + 1 + 2^85 + (2^52*2^169/r + 2^52 e^-64)*2^133, with self-cycle and no-DP exceptions charged at the step cap. The other parameters and caps, the heuristics H1, H2 and H-mean (5% allowance, kappa 8/7), the gate K = 7416732153347139310 (success past the gate 0.97610, 0.97 claimed) and the rounding rule (all displayed upper bounds rounded up) are the parent's. The single declared run (ttloop2.py) does four things: executes the new loop trip by trip against the definition (6,672 trips, 0 mismatches, every certified trip 213 instructions); runs the full driver with self-pointer leaves and budget 257-d0 at window 4, matching the parent's step semantics over 6,000 steps (1,335 re-bases, 321 exact steps); runs the store on 980 operations (limb-boundary single-bit neighbours, nested prefixes, edges, exact duplicates) with 0 mismatches; and computes the ledger (119.64858459). The parent's lazy.py/walks.py are kept as attributed historical evidence with recorded outputs and are not declared experiments. Peak storage is below 2^61.7320 bytes; preprocessing (the table) is below 2^69 instructions; no advice. Generic square-root attack; not a practical break or a security estimate.",
+      "score": {
+        "numerator": "11965",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "ttloop2.py",
+        "ttloop2-evidence.json",
+        "lazy.py",
+        "walks.py",
+        "reference.py",
+        "experiment.py",
+        "development-evidence.json",
+        "development-evidence-mean.json",
+        "ttstep.c",
+        "ttstep.disasm.txt",
+        "tower.c",
+        "tower.disasm.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "step-loop-v2-and-ledger",
+      "source": "ttloop2.py",
+      "purpose": "Single initial run (current validation). Part S2: generate the 213-instruction step loop, validate encodings, execute it trip by trip against the tag definition. Part R: run the generated kernel under the full driver (budget min(steps left, W+1-d0), self-pointer leaves, leaf-trip re-base, EXACT path) on a complete multiset table of window W=4 and compare the step sequence with the parent's semantics (null leaves, REBASE exit) step by step. Part D: deterministic crit-bit (binary Patricia) distinguished-point store keyed by the full canonical 3,072-bit element, with limb-boundary single-bit neighbours, nested shared prefixes, edges and exact duplicates, against a dictionary reference; node counts, per-operation instruction bound and peak storage. Part G2: expected-work ledger with the corrected mean (discrete +1, self-cycle and no-DP exceptions charged at the step cap). Exits 1 on any failure. Standard library, about 1 s.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "entries": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          },
+          "starts": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 256
+          },
+          "driver_steps": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 20000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261112
+        }
+      ]
+    }
+  ]
+}

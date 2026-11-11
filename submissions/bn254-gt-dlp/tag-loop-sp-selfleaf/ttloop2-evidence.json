@@ -1,0 +1,111 @@
+{
+ "command": "echo '{\"seed\":20261112}' | python3 -I ttloop2.py",
+ "exit_status": 0,
+ "output": {
+  "seed": 20261112,
+  "partS2_step_loop_v2": {
+   "encoding_violations": 0,
+   "first_violations": [],
+   "prologue": 19,
+   "body_length": 213,
+   "exit_path": 12,
+   "trip_instructions_certified": [
+    213
+   ],
+   "resident_limbs": 22,
+   "reload_loads_per_trip": 13,
+   "entries": 64,
+   "calls": 64,
+   "trips_checked": 6672,
+   "exit_statuses": {
+    "EXACT": 19,
+    "BUDGET": 45
+   },
+   "calls_ending_on_a_leaf_self_pointer": 15,
+   "mismatches_with_definition": 0,
+   "body_opcodes": {
+    "add": 48,
+    "addi": 1,
+    "andi": 1,
+    "b.ls": 1,
+    "b.ne": 1,
+    "ldp": 61,
+    "ldrx": 1,
+    "lsr": 1,
+    "madd": 47,
+    "mul": 1,
+    "subs": 1,
+    "subsi": 1,
+    "umulh": 48
+   }
+  },
+  "partR_driver_equivalence": {
+   "window_test": 4,
+   "entries": 495,
+   "steps": 6000,
+   "reference_steps": 6000,
+   "driver_steps": 6000,
+   "identical_step_sequence": true,
+   "rebases": 1346,
+   "exact": 305
+  },
+  "partD_dp_store": {
+   "key_bits": 3072,
+   "operations": 980,
+   "distinct_keys": 778,
+   "mismatches": 0,
+   "adversarial_flip_keys": 139,
+   "nested_prefix_keys": 36,
+   "leaves": 778,
+   "internal_nodes": 777,
+   "nodes_ok": true,
+   "max_depth_seen": 175,
+   "max_instr_seen": 5880,
+   "depth_bound": 3072,
+   "analytic_worst_instr_per_op": 98872,
+   "charged_per_op": 131072,
+   "charge_ok": true,
+   "store_ops_cap_log2": 52,
+   "store_total_log2_instr": 69,
+   "store_bytes_log2": 61.08746284125034,
+   "table_bytes_log2": 60.25901399832104,
+   "peak_bytes_log2_rounded_up": 61.732,
+   "peak_below_2^63": true
+  },
+  "partG2_ledger": {
+   "window_end_instr": 8966,
+   "window_end_charged": 9216,
+   "window_ok": true,
+   "per_step_instr": "249",
+   "log2_charged_mean_steps": 127.29080562077529,
+   "losses": {
+    "step_cap_markov": 0.01911442511747842,
+    "walk_cap_2^52_markov": 0.004778606279369827,
+    "exact_meter_2^90_markov": 7.0728272872749594e-06,
+    "walk_length_cap_and_self_cycles": 1.5468592251095657e-10,
+    "degeneracy_and_sampling": 6.223015277861142e-61
+   },
+   "success_past_gate_lower": 0.9760998956211786,
+   "budget_ok": true,
+   "gate_K": "7416732153347139310",
+   "success_ok": true,
+   "K_is_least": true,
+   "log2_expected_run_units": 120.96309520942859,
+   "log2_expected_total_units": 119.64858458610371,
+   "parent_log2_expected_total_units_same_formula": 119.67157622815864,
+   "improvement_bits_same_formula": 0.02299164205493013,
+   "claim": "119.65",
+   "claim_ok": true,
+   "claim_minus_computed_bits": 0.0014154138962927498,
+   "log2_every_run_bound_units": 126.67228955320932,
+   "displayed_upper_bounds_rounded_up": {
+    "E_steps_log2": 127.2909,
+    "E_W_run_log2": 120.9631,
+    "E_W_log2": 119.6486,
+    "every_run_log2": 126.6723
+   }
+  },
+  "all_ok": true,
+  "scope": "The step loop is executed on a simulator of the scalar AArch64 subset it uses, against the tag definition; the window product, toy collision times and base checks are the parent's (lazy.py, development-evidence*.json). No production DLP is run."
+ }
+}
