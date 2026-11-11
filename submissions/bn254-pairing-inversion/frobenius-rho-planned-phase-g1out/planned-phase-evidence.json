@@ -1,0 +1,105 @@
+{
+ "command": "echo '{\"seed\":20261112,\"cases\":64}' | python3 -I planned_phase.py",
+ "exit_status": 0,
+ "output": {
+  "seed": 20261112,
+  "partP_planned_phase": {
+   "multiply_step_units": 0.90955,
+   "squaring_step_units": 0.34825,
+   "mean_step_units": 0.6289,
+   "log2_N_eff": 250.42723605730512,
+   "log2_S_useful_steps": 125.29809166607768,
+   "eps": 0.0006453196207682291,
+   "K_planned_steps_per_walk": "49907319649092925469941423940961",
+   "K_bits": 106,
+   "log2_S_plan": 125.29902236522743,
+   "tail_per_walk_bits": 75,
+   "log2_tail_E": 94.32192809488737,
+   "cap_instructions_floor": "667450334702089094098810736037947573300028",
+   "cap_bits": 139,
+   "log2_W_nominal_full_run": 124.62992490661135,
+   "claim_minus_nominal_bits": 0.020075093388653237,
+   "tolerated_multiply_fraction_excess_points": 1.5699820761149064,
+   "log2_largest_dependence_block_for_2^-20": 110.51964444144457,
+   "report_cap": 48759264760694832,
+   "log2_report_cap": 55.436525889970184,
+   "log2_expected_reports": 55.29902236590999,
+   "buckets_log2": 57,
+   "log2_store_bytes": 62.33914433609375,
+   "log2_expected_chain_visits": 52.87305177994036,
+   "nonwalk_rows_log2_units": {
+    "setup_table_and_starts": 28.660664477461278,
+    "bucket_head_zeroing": 42.29725012117171,
+    "reports": 54.436525889970184,
+    "chain_visits_cap": 60.71228762045055,
+    "restarts_cap": 56.64385618977472,
+    "false_candidates_cap": 25.22881869049588,
+    "phase_switch": 11.356143810225275,
+    "output": 6.658211482751795
+   },
+   "log2_nonwalk_total": 60.81328406809965,
+   "log2_preprocessing_units": 42.29736339671973,
+   "model_success_at_S": 0.43,
+   "losses": {
+    "premature_truncation_allowance": 0.001,
+    "escape_overhead_above_2eps_and_lost_steps": 0.0005,
+    "report_cap_chernoff_under_H2": 0.0,
+    "chain_visit_cap_markov": 6.986744336816958e-06,
+    "restart_cap_markov": 3.2831521345575546e-07,
+    "false_candidate_cap_markov": 5.3304629034553204e-11,
+    "detection_tail_miss": 2.061153622438558e-09,
+    "first_collision_inside_one_walk": 9.5367431640625e-07,
+    "beta_tie_and_key_tie": 5.659799424266695e-73,
+    "H1_H2_inaccuracy_reserve": 0.01
+   },
+   "success_lower_bound": 0.4184917291516751,
+   "checks": {
+    "K_bits_le_128": true,
+    "tail_bits_le_128": true,
+    "report_cap_bits_le_64": true,
+    "store_below_2^63_bytes": true,
+    "cap_instr_bits_le_192": true,
+    "nonwalk_le_bucket": true,
+    "itemised_common_le_300": true,
+    "claim_ok": true,
+    "success_ok": true
+   }
+  },
+  "partQ_control_primitives": {
+   "failures": [],
+   "cap_limbs_hex": [
+    "0x48b8864137f86b3c",
+    "0x75d2997284593a45",
+    "0x7a9"
+   ],
+   "instructions": {
+    "inc128": 4,
+    "ge128": 4,
+    "meter_precheck": 11,
+    "meter_charge": 7
+   }
+  },
+  "partO_g1_output": {
+   "cases": 73,
+   "failures": 0,
+   "P0_order_r": true,
+   "identity_output": [
+    null,
+    "Q0"
+   ],
+   "per_doubling_instr": 1535,
+   "per_addition_instr": 2186,
+   "inversion_and_affine_instr": 59324,
+   "analytic_worst_instr": 1000737,
+   "loop_instr": 3048,
+   "serialise_instr": 1348,
+   "analytic_total_instr": 1005133,
+   "sample_max_instr": 998551,
+   "sample_argmax_hex": "0x2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "charged_instr": 2020000,
+   "charged_units": 101,
+   "charge_covers_analytic": true
+  },
+  "all_ok": true
+ }
+}

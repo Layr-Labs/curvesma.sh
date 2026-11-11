@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: Frobenius-class rho on GT with a fixed planned search phase and bounded detection tail, output ([x]P0, Q0)",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the algorithm of proof.md returns P=[x]P0 in G1 and Q=Q0 in G2 with e(P,Q)=z, and returns (infinity, Q0) when z=1. It finds x by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT and checks it by g^x=z. Success probability is at least 0.39, and every run uses at most 2^124.65 reference units (W=R/20,000). This is enforced by a 192-bit instruction meter against CAP=floor(20,000*2^124.65), checked before every priced block. The search is a fixed planned phase: each of M=2^20 walks takes exactly K=ceil(S(1+eps)/M) steps (106-bit K, 128-bit counter; S_plan=2^125.29902). Escape steps and steps after restarts consume planned steps, and restarts keep the planned counter. A bounded detection tail follows: each walk runs only to its next distinguished point (theta=2^-70), for at most 20*2^70 steps (E=2^94.32). A run without a verified match then ends by normal no-hit completion (probability about 0.57), which is not a cap or abort event. The meter can end a run before completion (premature truncation) only if the multiply-step fraction over at most S_plan+E steps exceeds 1/2 by 1.5700 points. Under H1/H2 this is bounded below 2^-20 even with arbitrary dependence inside blocks of up to 2^110.5 steps, and 0.001 is charged. Prices come from machine.md: executed four-limb AArch64 leaf listings (Montgomery multiplication 158 instructions, addition 22, subtraction 23, plus 4 per call site and 32 per routine call), a counted Karatsuba Fp12 product (16,841) and a counted Granger-Scott squaring (6,665). A multiply step costs 18,191 instructions and a squaring step 6,965, with 153 itemised bookkeeping instructions (128-bit counters, 192-bit meter) within the 300 charged. The squaring probability is 1/2, R=1024. Nominal complete-run work is c*S_plan + c*E + 2^64.5 = 2^124.62992. Non-walk rows are each capped and total 2^60.81 units: setup, zeroing of 2^57 bucket heads, at most 2^55.44 reports of 96-byte nodes in one 64-bit address space (store 2^62.34 bytes), at most 2^70 chain visits, at most 2^48 restarts, at most 2^16 false candidates, and the G1 output (analytical bound 1,005,133 instructions, charged 101 units). Success lower bound 0.41849 = 0.43 (collision probability of S useful steps under H1 with effective class count N/(1-s^2-(1-s)^2/R)) minus itemised losses, including a 0.01 reserve for H1/H2 inaccuracy. Peak memory is below 2^63 bytes; preprocessing is included and below 2^43 units; nonuniform advice is 0 bytes. Evidence scope: experiment.py supports the kernels, the BN254 identities, the production step rule and toy runs of the inherited run-until-found walk. planned_phase.py supports the exact ledger, the finite-width control primitives and the G1 output. The planned-phase control flow as a whole has not been executed. No production-size run is claimed.",
+      "score": {
+        "numerator": "2493",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "planned_phase.py",
+        "planned-phase-evidence.json",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-bn254-checks",
+      "source": "experiment.py",
+      "purpose": "Inherited follow-up-callable check: execute the AArch64 leaf listings on an instruction simulator for p and r; check the BN254 tower, Frobenius, key, canonical-conjugate, trace-invariance and Granger-Scott identities on the protected GT and count the priced routines; run the production step rule in the real GT; run toy-field runs of the inherited run-until-found walk (not the planned-phase control flow); recompute the inherited ledger. Toy runs are evidence at their own scale only. Recorded declared-run output: development-evidence.json.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kernel_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "q": {
+            "type": "integer",
+            "enum": [
+              151,
+              163,
+              283
+            ],
+            "minimum": 151,
+            "maximum": 283
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              8,
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 12
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "listings": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "planned-phase-ledger-and-g1-output",
+      "source": "planned_phase.py",
+      "purpose": "Initial run. Recompute the complete-run ledger (planned phase, bounded tail, report store, caps, meter cap, truncation margin, success budget); execute the 128-bit counter and 192-bit meter primitives limb by limb at carry, boundary and stop-before-cap values; execute the counted G1 output against an independent affine reference, giving the analytical worst-case bound and the sample maximum separately. Does not run the rho. Exits 1 if any check fails. Standard library only, under 2 s.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261112,
+          "cases": 64
+        }
+      ]
+    }
+  ]
+}
