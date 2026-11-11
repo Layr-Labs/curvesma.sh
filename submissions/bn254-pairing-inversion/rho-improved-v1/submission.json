@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: gated Frobenius-class rho run to its collision, expected work 2^123.63",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the gated parallel distinguished-point Pollard rho of proof.md on the 12-element Frobenius classes of GT returns P=P0 and Q=[x]Q0 with e(P,Q)=z (the reduction named in the track rules; the G2 scalar multiplication is charged) with probability at least 0.39 over uniform challenges and fresh coins, at EXPECTED total work at most 1 + (K/2^64)(c E[T_c](1+eps) + c_mul E + 2^66) < 2^123.63 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run. The attack first draws a fresh uniform 64-bit word v and stops as a failure (below one unit) unless v < K = 7416732153347139310, the least K with (K/2^64) x 0.97 >= 0.39; past the gate it runs to the first useful class collision and succeeds with probability at least 0.97, the only failures being the step cap S_cap = 64 sqrt(N') (probability at most 0.020563 by Markov's inequality), the report cap (at most 2^-8) and events of total probability below 0.001; a work meter at 2^131.08 units, priced at the dearest step, makes every run finite and adds no failure event. The walk, the 4-multiplication canonical key, the 1024 twisted multipliers, the Granger-Scott squaring branch with probability 1/2, the cycle handling and all instruction prices (multiply step 18,191 instructions = 0.90955 unit, squaring step 6,965 = 0.34825 unit, average c = 0.6289 unit; machine.md) are those of submission 3325b532-3112-4cb7-9935-7113b0ecbbdc, whose experiment.py and machine.md are included unchanged. The expected work uses c = 0.6289 per step by Wald's identity under the pseudorandom-bit heuristic H2 and the premise H-mean: the expected number of steps to the first useful collision is at most 1.05 sqrt(pi N'/2) = 2^125.6098, N' = N/(1 - s^2 - (1-s)^2/R) the effective class count of the random-mapping heuristic H1; this mean is supported by toy-field runs of the complete algorithm (pooled 0.994 of the model over 1,100 runs) and extrapolated to production size. Setup, table construction, walk starts, distinguished-point handling, cycle escapes, restarts, the detection delay E = 2^84.32 steps, false-candidate verification and output are included. Peak memory is below 2^81 bytes, preprocessing at most 2^31 units (included), nonuniform advice 0 bytes. No production-size run is claimed.",
+      "score": {
+        "numerator": "12363",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "gate.py",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-bn254-checks",
+      "source": "experiment.py",
+      "purpose": "Base package's experiment, unchanged: Execute the AArch64 leaf listings on an instruction simulator for p and r; check the BN254 tower, Frobenius, key, canonical-conjugate, trace-invariance and Granger-Scott identities on the protected GT and count the priced routines; run the production step rule in the real GT; run the complete algorithm in toy fields of the same tower; recompute the ledger and score exactly. Toy runs are evidence at their own scale only. Its part D recomputes the base ledger and prints the base claim 124.65; here it serves as the check of the counted step prices, eps and E, and its toy runs measure the mean collision time used by H-mean.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kernel_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "q": {
+            "type": "integer",
+            "enum": [
+              151,
+              163,
+              283
+            ],
+            "minimum": 151,
+            "maximum": 283
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              8,
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 12
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "listings": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111
+        }
+      ]
+    },
+    {
+      "id": "gate-ledger",
+      "source": "gate.py",
+      "purpose": "Recompute the gate constant K, the step cap and its Markov bound, the failure budget, the expected run and total work and the declared score in exact decimal arithmetic. Arithmetic only; it does not test the heuristics. Declared with no initial input because the track allows one initial run; available for the follow-up run. Its default output is reproduced in proof.md section 5.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mean_allowance_percent": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "cap_multiple": {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 4096
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}

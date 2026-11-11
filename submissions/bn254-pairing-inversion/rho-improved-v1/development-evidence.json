@@ -1,0 +1,343 @@
+{
+ "declared_run_input": {
+  "seed": 20261111
+ },
+ "declared_run_output": {
+  "seed": 20261111,
+  "partK_kernels": {
+   "modulus_p": {
+    "cases": 519,
+    "failures": 0
+   },
+   "modulus_r": {
+    "cases": 519,
+    "failures": 0
+   },
+   "executed_instructions": {
+    "fp_add": 22,
+    "fp_mul": 158,
+    "fp_sub": 23
+   },
+   "listing_lengths": {
+    "fp_mul": 158,
+    "fp_add": 22,
+    "fp_sub": 23
+   }
+  },
+  "partA_identities": {
+   "p_mod_12": 7,
+   "r_minus_1_factorisation_verified": true,
+   "order_of_p_mod_r": 12,
+   "p6_is_minus1_mod_r": true,
+   "phi12_p_is_0_mod_r": true,
+   "log2_order_of_2_mod_r": 247.311,
+   "smallest_t_with_2^t_in_<p>_log2": 243.726,
+   "zeta_in_Fp_primitive_6th_root": true,
+   "xi_not_square_not_cube_in_Fp2": true,
+   "profile_to_tower_is_ring_map": true,
+   "g_order_r": true,
+   "random_GT_elements": 2,
+   "frob_ok": true,
+   "keys_ok": true,
+   "distinct_ok": true,
+   "canon_ok": true,
+   "inv_ok": true,
+   "sq_ok": true,
+   "mul_ok": true,
+   "trace_inv_ok": true,
+   "stored_canon_ok": true,
+   "op_counts_fp12_mul": {
+    "routine": 22,
+    "fp_mul": 54,
+    "fp_add": 171,
+    "fp_sub": 109
+   },
+   "op_counts_cyclotomic_square": {
+    "routine": 13,
+    "fp_add": 96,
+    "fp_sub": 31,
+    "fp_mul": 18
+   },
+   "op_counts_keys": {
+    "fp_mul": 4,
+    "fp_add": 1,
+    "fp_sub": 8
+   }
+  },
+  "partD_ledger": {
+   "leaf_prices_incl_call_site": {
+    "fp_mul": 162,
+    "fp_add": 26,
+    "fp_sub": 27,
+    "routine": 32
+   },
+   "fp12_mul_instr": 16841,
+   "cyclotomic_square_instr": 6665,
+   "keys_instr": 1050,
+   "common_instr": 300,
+   "multiply_step_instr": 18191,
+   "squaring_step_instr": 6965,
+   "multiply_step_units": 0.90955,
+   "squaring_step_units": 0.34825,
+   "squaring_probability": "1/2",
+   "R_table": 1024,
+   "cbar_units_per_step": 0.6289,
+   "log2_N": 250.011728854281,
+   "sum_q2": 0.250244140625,
+   "log2_N_eff": 250.42723605730512,
+   "log2_S": 125.29809166607768,
+   "eps": 0.0006453196207682291,
+   "log2_E": 84.32192809488737,
+   "log2_nonwalk_bucket": 64.5,
+   "log2_W_nominal": 124.62992490592946,
+   "least_hundredth_at_or_above": "124.63",
+   "claim": "124.65",
+   "claim_minus_nominal_bits": 0.020075094070545342,
+   "claim_ok": true,
+   "cap_slack_units_per_step": 0.008812309694652777,
+   "tolerated_drop_of_squaring_fraction_points": 1.5699821298152108,
+   "success_if_squaring_fraction_drops_by_points": {
+    "1": 0.43,
+    "2": 0.4276,
+    "3": 0.422,
+    "4": 0.4166,
+    "5": 0.4112
+   }
+  },
+  "partC_production_walk": {
+   "steps_run": 1500,
+   "R_table": 16,
+   "squaring_steps": 751,
+   "multiply_steps": 747,
+   "squaring_fraction": 0.5013,
+   "target_fraction": 0.5,
+   "explicit_class_check_failures_in_first_150": 0,
+   "exponent_invariant_y_equals_g^al_z^be": true,
+   "chi2_low3_bits_of_stored_T_7dof": 1.6,
+   "chi2_next4_bits_of_stored_T_15dof": 17.94,
+   "two_cycle_events": 2
+  },
+  "partB_toy": {
+   "q": 151,
+   "r_prime": 8522341,
+   "classes_N": 710195,
+   "R": 64,
+   "squaring_prob": 0.5,
+   "effective_N_over_N": 1.3403,
+   "trials_completed": 60,
+   "logs_recovered_and_verified": 60,
+   "mean_Tc_over_sqrtN": 1.4466,
+   "model_mean_over_sqrtN": 1.451,
+   "fraction_Tc_le_S_model_0.40": 0.417,
+   "fraction_Tc_le_S_model_0.42": 0.433,
+   "fraction_Tc_le_S_model_0.43": 0.467,
+   "events": {
+    "two_cycles": 19,
+    "long_cycles": 1,
+    "restarts": 0,
+    "useless": 1
+   },
+   "two_cycles_per_step": 0.000248,
+   "predicted_two_cycles_per_step": 0.000326
+  },
+  "elapsed_seconds": 4.31,
+  "scope": "Kernel listings are executed instruction by instruction on a simulator of the AArch64 subset they use; tower identities and the step rule run on the protected BN254 GT; collision statistics are toy-field evidence only. No production DLP is run."
+ },
+ "offline_runs": [
+  {
+   "input": {
+    "q": 151,
+    "trials": 400,
+    "R": 64,
+    "sq8": 4,
+    "dp_bits": 3,
+    "walks": 4,
+    "seed": 21,
+    "seconds": 900,
+    "production_checks": 1,
+    "production_steps": 1,
+    "kernel_cases": 5
+   },
+   "partB_toy": {
+    "q": 151,
+    "r_prime": 8522341,
+    "classes_N": 710195,
+    "R": 64,
+    "squaring_prob": 0.5,
+    "effective_N_over_N": 1.3403,
+    "trials_completed": 400,
+    "logs_recovered_and_verified": 400,
+    "mean_Tc_over_sqrtN": 1.3991,
+    "model_mean_over_sqrtN": 1.451,
+    "fraction_Tc_le_S_model_0.40": 0.417,
+    "fraction_Tc_le_S_model_0.42": 0.435,
+    "fraction_Tc_le_S_model_0.43": 0.443,
+    "events": {
+     "two_cycles": 168,
+     "long_cycles": 4,
+     "restarts": 0,
+     "useless": 24
+    },
+    "two_cycles_per_step": 0.000347,
+    "predicted_two_cycles_per_step": 0.000326
+   }
+  },
+  {
+   "input": {
+    "q": 283,
+    "trials": 400,
+    "R": 64,
+    "sq8": 4,
+    "dp_bits": 4,
+    "walks": 8,
+    "seed": 41,
+    "seconds": 900,
+    "production_checks": 1,
+    "production_steps": 1,
+    "kernel_cases": 5
+   },
+   "partB_toy": {
+    "q": 283,
+    "r_prime": 6000157,
+    "classes_N": 500013,
+    "R": 64,
+    "squaring_prob": 0.5,
+    "effective_N_over_N": 1.3403,
+    "trials_completed": 400,
+    "logs_recovered_and_verified": 400,
+    "mean_Tc_over_sqrtN": 1.4516,
+    "model_mean_over_sqrtN": 1.451,
+    "fraction_Tc_le_S_model_0.40": 0.383,
+    "fraction_Tc_le_S_model_0.42": 0.4,
+    "fraction_Tc_le_S_model_0.43": 0.417,
+    "events": {
+     "two_cycles": 119,
+     "long_cycles": 6,
+     "restarts": 0,
+     "useless": 4
+    },
+    "two_cycles_per_step": 0.000261,
+    "predicted_two_cycles_per_step": 0.000326
+   }
+  },
+  {
+   "input": {
+    "q": 163,
+    "trials": 300,
+    "R": 256,
+    "sq8": 4,
+    "dp_bits": 3,
+    "walks": 8,
+    "seed": 31,
+    "seconds": 1200,
+    "production_checks": 1,
+    "production_steps": 1,
+    "kernel_cases": 5
+   },
+   "partB_toy": {
+    "q": 163,
+    "r_prime": 54298861,
+    "classes_N": 4524905,
+    "R": 256,
+    "squaring_prob": 0.5,
+    "effective_N_over_N": 1.3351,
+    "trials_completed": 300,
+    "logs_recovered_and_verified": 300,
+    "mean_Tc_over_sqrtN": 1.4876,
+    "model_mean_over_sqrtN": 1.4481,
+    "fraction_Tc_le_S_model_0.40": 0.41,
+    "fraction_Tc_le_S_model_0.42": 0.42,
+    "fraction_Tc_le_S_model_0.43": 0.437,
+    "events": {
+     "two_cycles": 76,
+     "long_cycles": 0,
+     "restarts": 0,
+     "useless": 6
+    },
+    "two_cycles_per_step": 7.9e-05,
+    "predicted_two_cycles_per_step": 8.1e-05
+   }
+  },
+  {
+   "input": {
+    "q": 151,
+    "trials": 300,
+    "R": 64,
+    "sq8": 0,
+    "dp_bits": 3,
+    "walks": 4,
+    "seed": 12,
+    "seconds": 900,
+    "production_checks": 1,
+    "production_steps": 1,
+    "kernel_cases": 5
+   },
+   "partB_toy": {
+    "q": 151,
+    "r_prime": 8522341,
+    "classes_N": 710195,
+    "R": 64,
+    "squaring_prob": 0.0,
+    "effective_N_over_N": 1.0159,
+    "trials_completed": 300,
+    "logs_recovered_and_verified": 300,
+    "mean_Tc_over_sqrtN": 1.2251,
+    "model_mean_over_sqrtN": 1.2632,
+    "fraction_Tc_le_S_model_0.40": 0.42,
+    "fraction_Tc_le_S_model_0.42": 0.443,
+    "fraction_Tc_le_S_model_0.43": 0.46,
+    "events": {
+     "two_cycles": 454,
+     "long_cycles": 8,
+     "restarts": 0,
+     "useless": 68
+    },
+    "two_cycles_per_step": 0.001403,
+    "predicted_two_cycles_per_step": 0.001302
+   }
+  }
+ ],
+ "offline_pair_law_q151": [
+  {
+   "R": 64,
+   "s": "1/2",
+   "observed": 0.7311,
+   "pairs": 1853,
+   "exact": 0.7497,
+   "conservative": 0.7461
+  },
+  {
+   "R": 8,
+   "s": "1/2",
+   "observed": 0.7126,
+   "pairs": 1806,
+   "exact": 0.7474,
+   "conservative": 0.7188
+  },
+  {
+   "R": 8,
+   "s": "0",
+   "observed": 0.9663,
+   "pairs": 2449,
+   "exact": 0.9896,
+   "conservative": 0.875
+  },
+  {
+   "R": 16,
+   "s": "5/8",
+   "observed": 0.6285,
+   "pairs": 1593,
+   "exact": 0.6086,
+   "conservative": 0.6006
+  }
+ ],
+ "offline_production_walk_seed7_4000_steps": {
+  "squaring_fraction": 0.5004,
+  "class_check_failures_first_150": 0,
+  "exponent_invariant": true,
+  "chi2_low3_7dof": 16.12,
+  "chi2_next4_15dof": 20.51,
+  "two_cycle_events": 7
+ },
+ "note": "Offline runs use the long-budget path (seconds > 14) of the same experiment.py; they are toy-field evidence only."
+}
