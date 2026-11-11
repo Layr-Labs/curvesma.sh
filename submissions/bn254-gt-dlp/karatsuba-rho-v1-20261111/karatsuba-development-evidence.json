@@ -1,0 +1,72 @@
+{
+  "cascading_reduction_check": true,
+  "floyd_cap": "295893513763578638011461384341992519220",
+  "full_bn254_generator_order_check": true,
+  "full_bn254_walk_invariant_check": true,
+  "instructions_per_floyd_iteration_bound": 1847296,
+  "karatsuba_full_width_differential_cases_passed": 121,
+  "karatsuba_per_product_primitives": {
+    "linear": 362,
+    "mul": 81
+  },
+  "montgomery_cases_passed": 544,
+  "peak_bytes_bound": 1048576,
+  "scope": "Full-width Karatsuba versus schoolbook differential checks, field-primitive counts, small prime additive-group walk experiments, Montgomery arithmetic and BN254 invariant checks. No production DLP, production success proof, compiled-C execution, instruction measurement, or verifier acceptance is claimed.",
+  "score_rounded_up": "134.327617",
+  "seed": 20261110,
+  "total_instruction_bound": "546602904401403763684020569449426512296656896",
+  "toy_walks": [
+    {
+      "mean_floyd_iterations": 31.4609375,
+      "outcomes": {
+        "cap": 7,
+        "degenerate": 0,
+        "identity": 0,
+        "success": 121,
+        "verification_failed": 0
+      },
+      "prime_order": 1009,
+      "success_fraction": 0.9453125,
+      "trials": 128
+    },
+    {
+      "mean_floyd_iterations": 98.5390625,
+      "outcomes": {
+        "cap": 4,
+        "degenerate": 0,
+        "identity": 0,
+        "success": 124,
+        "verification_failed": 0
+      },
+      "prime_order": 10007,
+      "success_fraction": 0.96875,
+      "trials": 128
+    },
+    {
+      "mean_floyd_iterations": 322.296875,
+      "outcomes": {
+        "cap": 8,
+        "degenerate": 0,
+        "identity": 0,
+        "success": 120,
+        "verification_failed": 0
+      },
+      "prime_order": 100003,
+      "success_fraction": 0.9375,
+      "trials": 128
+    },
+    {
+      "mean_floyd_iterations": 1002.625,
+      "outcomes": {
+        "cap": 12,
+        "degenerate": 0,
+        "identity": 0,
+        "success": 116,
+        "verification_failed": 0
+      },
+      "prime_order": 1000003,
+      "success_fraction": 0.90625,
+      "trials": 128
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp bounded Pollard-rho with two-level Karatsuba multiplication",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial 32-adding Pollard-rho algorithm with two-level Karatsuba Fp12 multiplication in proof.md can return x with g^x=z with exploratory success probability at least 0.50, using at most 2^134.327617 reference units (20,000 scalar AArch64 instruction equivalents per unit) and at most 2^20 bytes of peak total storage. The success assessment relies on the disclosed standard r-adding collision-time heuristic, supported and limited as explained in proof.md; it is not an unconditional production success theorem. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, hashing, arithmetic, memory access, recovery, verification and output. The uniform capped instruction bound is 2*ceil(sqrt(r))*1847296+2^40, with all costs justified in machine.md. No prior acceptance, searched advice, amortization or actual production-scale attack execution is assumed.",
+      "score": {
+        "numerator": "134327617",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "baseline-development-evidence.json",
+        "karatsuba-development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "bounded-rho-arithmetic-and-walks",
+      "source": "experiment.py",
+      "purpose": "Check full-width Karatsuba against schoolbook multiplication, count field primitives, check Montgomery and BN254 invariants, test the unchanged walk on small prime groups including failures, and reproduce the complete cap. These do not prove production success or measure instructions.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261110,
+          "trials": 128
+        }
+      ]
+    }
+  ]
+}
