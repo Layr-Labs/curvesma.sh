@@ -1,0 +1,55 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: randomized-ball STNFS with single-cell boot, expected work 2^94.817326971",
+ "claims": [
+  {
+   "statement": "For the full-production bn254-gt-dlp target, the algorithm of proof.md, field-map.md, DESCENT.md, KERNELS.md and STORAGE.md returns x with g^x=z with success at least 0.39 over uniform challenges and fresh algorithm coins, under H1-H4, H-EA, H-X, H-FFT and the conditional finite-family positivity and boot-rate hypothesis H5 explicitly stated and supported to its disclosed scope in DESCENT.md. Its expected total classical work, with every preprocessing, failed trial, abort, verification and output charged once for this target, is at most 1+(K/2^64)2^96.175778056 < 2^94.817326971 units, C=20,000 scalar AArch64 instruction equivalents. K=7194244577235879602 is the least integer with (K/2^64)x0.999998>=0.39. The independent 64-bit run gate fails unless v<K. The opened attack has success at least 0.999998. The individual-logarithm expectation is 2^96.055441 units, evaluated by the strictly decreasing-bin randomized-ball recurrence. All non-log work is metered at 2^112 units, both logarithms together at 2^117, so every run costs less than 2^117.044394120 units. Markov and union bounds account for both meter abort probabilities. The claimed score is an expectation, not an every-run cap. No negative-binomial relation-count law, whole-ball waiting-time allowance, child independence or production-scale execution is asserted. No cost is amortized over other targets. Analytic exploratory claim with the limitations stated in DESCENT.md. H-ECM separately assumes probability at least 1/2 of complete factor extraction by the fixed-original-modulus finite schedules and prefix/block replay; the original per-prime smooth-order hit model is not asserted to prove separation.",
+   "score": {
+    "numerator": "94817326971",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md",
+    "KERNELS.md",
+    "STORAGE.md",
+    "field-map.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "Recomputes every ledger row from the shipped statistics and checks each declared number. {} or {\"part\": \"ledger\"}: tower, counts, yield, work, filtering, linear algebra, descent plan, ledger, success, gate, claim; \"pool\", \"filter\", \"descent\", \"laws\" with \"seed\": replays (each under 20 s; \"all\" runs every part locally).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "ledger",
+       "pool",
+       "filter",
+       "descent",
+       "laws",
+       "rebuild",
+       "family",
+       "ecm"
+      ]
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
