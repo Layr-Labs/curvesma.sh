@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: capped distinguished-point rho, emitted AArch64 step",
+  "claims": [
+    {
+      "statement": "For uniform z in the full BN254 (alt_bn128) target group GT under the pinned profile, the capped 1,024-adding distinguished-point Pollard-rho algorithm in proof.md returns P in G1 and Q in G2 with e(P,Q)=z: (null, Q0) when z=1, otherwise P=[x]P0 and Q=Q0 after recovering x with z=g^x and checking g^x=z and the reduced pairing. It has success at least 0.39 over uniform z and fresh algorithm coins. Every run uses at most 2^126.322105 units of 20,000 scalar AArch64 instruction equivalents; this every-run bound is the score, there is no run gate, and no heuristic enters any work bound. Total work includes decoding, rejection sampling, table construction, the walk (13,312 instructions per step, covering an emitted 13,166-instruction sequence executed in the experiment), distinguished-point storage, sorting, recovery, verification, the scalar multiplication and output. Peak memory is below 2^45 bytes with ordinary 64-bit addressing; preprocessing is below 2^23 units and is included; advice is 0 bytes; nothing is amortized. The success bound uses two disclosed heuristics, H1 (r-adding random-mapping model for the walk) and H2 (distinguished points as independent 2^-94 events); non-degeneracy is exact. Classical analytic exploratory claim; no prior acceptance is a premise.",
+      "score": {
+        "numerator": "25264421",
+        "denominator": "200000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "a64.py",
+        "experiment.py",
+        "target-profile.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "kernel-walk-ledger-toy",
+      "source": "experiment.py",
+      "purpose": "Execute the emitted AArch64 kernels and walk step on an emulator (Montgomery arithmetic on edge and random inputs, tower Fp12 product against the pinned basis, 12 production BN254 steps against the reference walk, branches and record append); recompute the cap, work and score exactly and compare every declared figure; run the identical walk rule (16, 64 or 1,024 adders) on a small BN-shape target group with fresh targets and coins, reporting every outcome. Evidence at toy scale only; not a proof of production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1024
+          },
+          "toy_x": {
+            "type": "integer",
+            "enum": [
+              5,
+              -7
+            ]
+          },
+          "adders": {
+            "type": "integer",
+            "enum": [
+              16,
+              64,
+              1024
+            ]
+          }
+        },
+        "required": [
+          "seed",
+          "trials",
+          "toy_x",
+          "adders"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "trials": 256,
+          "toy_x": 5,
+          "adders": 1024
+        }
+      ]
+    }
+  ]
+}
