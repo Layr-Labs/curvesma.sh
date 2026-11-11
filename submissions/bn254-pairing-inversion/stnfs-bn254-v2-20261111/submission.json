@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: SexTNFS via GT-DLP, concrete finite-regime ledger 2^123.304316",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^a, the attack of proof.md returns P in G1 and Q in G2 with e(P,Q)=z, using total classical work at most 2^123.304316 reference units (C=20,000 scalar AArch64 instruction equivalents per unit), with exploratory success probability at least 0.39 over uniform production challenges and fresh coins, and peak storage at most 2^70 bytes. The strategy is the rules-sanctioned GT-discrete-logarithm reduction: recover a with g^a=z by the Special extended Tower Number Field Sieve (SexTNFS) in F_{p^12}, then output P=P0 and Q=[a]Q0 (so e(P0,[a]Q0)=e(P0,Q0)^a=g^a=z). The GT-DLP uses a concrete coprime (eta,kappa)=(4,3) tower with an EXPLICIT polynomial triple: base h(t)=t^4+t+3 irreducible mod p (base field F_{p^4}), special side f(X)=P(X^3)=36X^12+36X^9+24X^6+6X^3+1 of infinity-norm 36, and companion g(X)=X^3-x0; experiment.py verifies h irreducible mod p, x0 a non-cube in F_{p^4} so g irreducible over F_{p^4}, and P(x0)=0 mod p so g divides f mod p, realising F_{p^12}=F_p[t,X]/(h,g) with the common degree-12 structure. The finite-regime ledger is recomputed by experiment.py: the two sieve norms are exact resultants N=|Res_t(Res_X(a,side),h)| on real random sieve elements at radius A=2^9 and sieving degree tau=3 (mean bit-sizes Nf~522, Ng~612, u_f=8.37, u_g=9.81 at B=2^62.4); P_smooth=rho(u_f)*rho(u_g)=2^-60.16 from a self-checked Dickman rho; factor base 2^57.97 primes; candidates=|FB|/P_smooth=2^118.12; relation collection charged a full dense-Fp12 reference unit per candidate (honest 2^110.30, disclosed +7.83-bit over-charge) = 2^118.12; block-Wiedemann linear algebra over Z/r with D=2^57.97, row weight ~18 and 60 Schirokauer columns, instruction-priced, = 2^117.39; capped-Las-Vegas special-q descent for both log_g and log_g z = 2^27 (sub-dominant by >90 bits); and the pairing-inversion output work (one G2 scalar multiplication [a]Q0 and one verification pairing) = 2^9.34 reference units, negligible. The terms sum to a chain of 2^118.804; the claim adds a disclosed 4.5-bit aggregate margin, yielding 2^123.304316 = 123304316/1000000, which is 11.91 bits below the selected Pollard-rho baseline 135.216266. Both output points lie in the stated prime-order subgroups; z=1 is handled by returning two infinities or P0 and the identity. Total work includes all preprocessing, relation collection, filtering, linear algebra, descent, scalar multiplication, verification and output, with no amortization and no free oracles or advice. Success >= 0.39 holds for any per-log descent-boot failure up to 0.30. The claim is a deliberate conservative over-estimate. Analytic exploratory claim, not a production-scale execution.",
+      "score": {
+        "numerator": "123304316",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sextnfs-pairinv-finite-regime-recompute",
+      "source": "experiment.py",
+      "purpose": "Deterministically construct and VERIFY, from the public BN254 parameter x, the concrete F_{p^12} tower and polynomial triple (h=t^4+t+3 irreducible mod p; g=X^3-x0 irreducible over F_{p^4}; f=P(X^3) with P(x0)=0 mod p so g|f mod p). It computes the two sieve norms by exact resultants on real random sieve elements at the production radius, the smoothness probability from a self-checked Dickman rho, the factor base, the candidate count |FB|/P_smooth, the conservative and honest relation-collection costs, the linear-algebra cost from explicit matrix dimension/weight/Schirokauer columns, the capped-Las-Vegas descent ladder with per-level probabilities and success bound, the G2 scalar-multiplication and verification-pairing output charge for returning P0 and [a]Q0, the chain sum, the disclosed margin, the claimed rational, the storage bound, and an independent cross-check re-sample with the caller's seed. The claim chain uses a fixed internal seed and does not depend on the caller's seed. It does not execute, simulate, or prove a production-scale number field sieve.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "samples": 48
+        }
+      ]
+    }
+  ]
+}
