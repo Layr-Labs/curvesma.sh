@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: Frobenius-class rho on GT with a cyclotomic-squaring branch, output (P0, [x]Q0)",
+  "claims": [
+    {
+      "statement": "For uniform z=g^x in the protected BN254 GT (g=e(P0,Q0) from target-profile.json, x uniform in [0,r)), the algorithm of proof.md returns P=P0 and Q=[x]Q0 with e(P,Q)=z (x found by parallel distinguished-point Pollard rho on the 12-element Frobenius classes of GT, then checked by g^x=z; z=1 gives (P0, infinity)) with probability at least 0.39 using at most 2^124.65 reference units (W=R/20,000, R total scalar AArch64 instruction-equivalent work). The walk uses R=1024 twisted table multipliers with a 4-Fp-multiplication canonical-conjugate key, and a Granger-Scott cyclotomic-squaring branch taken with probability 1/2; branch, multiplier, distinguished-point and fingerprint bits are read from the stored Montgomery limbs of the class invariant T=Re(c_0), so squaring steps compute no keys. Every BN254 operation is charged through its implementation (machine.md): executed four-limb AArch64 leaf listings (Montgomery multiplication 158 instructions, addition 22, subtraction 23, plus 4 per call site and 32 per routine call), a counted Karatsuba Fp12 product of 16,841 instructions and a counted cyclotomic squaring of 6,665; a multiply step is charged 18,191 instructions (0.90955 unit) and a squaring step 6,965 (0.34825 unit), average 0.6289 unit per step. The total W = c*S*(1+eps) + c*E + 2^64.5 = 2^124.6299 includes setup, table construction, 2^20 walk starts, distinguished-point handling, deterministic fruitless-cycle escapes, restarts, the detection delay E=2^84.32 steps, false-fingerprint verification and output, including the G2 scalar multiplication [x]Q0 charged at 2^10 units; a metered total-work abort at 2^124.65 makes the work bound hold on every run. Peak memory is below 2^73 bytes, preprocessing at most 2^31 units (included), nonuniform advice 0 bytes. Success relies on the disclosed random-mapping heuristic adjusted for the branch mix (effective class count N/(1-s^2-(1-s)^2/R), model success 0.43 against the required 0.39) and on the no-drift heuristic H1+ (probability at most 0.01 that the abort or a cap fires before the planned S steps and the detection allowance are completed; runs with no collision in S steps abort and are the 0.57 failure of the collision law), supported by toy-field runs of the complete algorithm and by the production step rule executed in the real BN254 GT; no production-size run is claimed.",
+      "score": {
+        "numerator": "2493",
+        "denominator": "20"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "experiment.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-rho-bn254-checks",
+      "source": "experiment.py",
+      "purpose": "Execute the AArch64 leaf listings on an instruction simulator for p and r; check the BN254 tower, Frobenius, key, canonical-conjugate, trace-invariance and Granger-Scott identities on the protected GT and count the priced routines; run the production step rule in the real GT; run the complete algorithm in toy fields of the same tower; recompute the ledger and score exactly. Toy runs are evidence at their own scale only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kernel_cases": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "production_checks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          },
+          "production_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "q": {
+            "type": "integer",
+            "enum": [
+              151,
+              163,
+              283
+            ],
+            "minimum": 151,
+            "maximum": 283
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "R": {
+            "type": "integer",
+            "enum": [
+              8,
+              16,
+              64,
+              256,
+              1024
+            ],
+            "minimum": 8,
+            "maximum": 1024
+          },
+          "sq8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "dp_bits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "walks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 12
+          },
+          "pair_samples": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6000
+          },
+          "listings": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111
+        }
+      ]
+    }
+  ]
+}
