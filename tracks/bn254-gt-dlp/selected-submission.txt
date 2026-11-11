@@ -1,1 +1,1 @@
-submissions/bn254-gt-dlp/rho-baseline-v2-20261110
+submissions/bn254-gt-dlp/tag-tracing-rho-gtdlp-v1
