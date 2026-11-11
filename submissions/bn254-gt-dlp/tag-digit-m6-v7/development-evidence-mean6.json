@@ -1,0 +1,224 @@
+{
+ "description": "Offline runs of walks.py toy_run with m = 6 (the 6-adding walk of this package: selector floor(6t/q), distinguished points, sequential walks to their distinguished point, store keyed by the whole toy element, run to the first verified recovery); per-run ratios of the touch time to sqrt(pi*(6/5)*n/2). Eighteen independent processes, seeds 20261301..20261318 (disjoint from the declared run's 20261113).",
+ "per_seed": [
+  {
+   "n_bits": 16,
+   "dp_bits": 3,
+   "seed": 20261301,
+   "runs": 3000,
+   "mean_touch_over_model": 0.9234,
+   "se": 0.0088,
+   "mean_recovery_steps_over_model": 0.9672
+  },
+  {
+   "n_bits": 20,
+   "dp_bits": 4,
+   "seed": 20261302,
+   "runs": 2000,
+   "mean_touch_over_model": 0.966,
+   "se": 0.0112,
+   "mean_recovery_steps_over_model": 0.9898
+  },
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "seed": 20261303,
+   "runs": 1000,
+   "mean_touch_over_model": 0.9743,
+   "se": 0.0156,
+   "mean_recovery_steps_over_model": 0.9875
+  },
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "seed": 20261304,
+   "runs": 1000,
+   "mean_touch_over_model": 0.9946,
+   "se": 0.016,
+   "mean_recovery_steps_over_model": 1.0053
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "seed": 20261305,
+   "runs": 600,
+   "mean_touch_over_model": 1.0172,
+   "se": 0.0219,
+   "mean_recovery_steps_over_model": 1.0235
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "seed": 20261306,
+   "runs": 600,
+   "mean_touch_over_model": 0.9888,
+   "se": 0.0205,
+   "mean_recovery_steps_over_model": 0.993
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "seed": 20261307,
+   "runs": 600,
+   "mean_touch_over_model": 1.0222,
+   "se": 0.0218,
+   "mean_recovery_steps_over_model": 1.0267
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261308,
+   "runs": 200,
+   "mean_touch_over_model": 1.0185,
+   "se": 0.0381,
+   "mean_recovery_steps_over_model": 1.0255
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261309,
+   "runs": 200,
+   "mean_touch_over_model": 1.0387,
+   "se": 0.0394,
+   "mean_recovery_steps_over_model": 1.0405
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261310,
+   "runs": 200,
+   "mean_touch_over_model": 1.0324,
+   "se": 0.0399,
+   "mean_recovery_steps_over_model": 1.0338
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261311,
+   "runs": 300,
+   "mean_touch_over_model": 0.9955,
+   "se": 0.031,
+   "mean_recovery_steps_over_model": 0.9969
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261312,
+   "runs": 300,
+   "mean_touch_over_model": 1.0722,
+   "se": 0.0315,
+   "mean_recovery_steps_over_model": 1.0741
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261313,
+   "runs": 300,
+   "mean_touch_over_model": 0.9884,
+   "se": 0.0282,
+   "mean_recovery_steps_over_model": 0.9917
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "seed": 20261314,
+   "runs": 300,
+   "mean_touch_over_model": 0.9763,
+   "se": 0.0306,
+   "mean_recovery_steps_over_model": 0.9779
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "seed": 20261315,
+   "runs": 60,
+   "mean_touch_over_model": 1.0293,
+   "se": 0.065,
+   "mean_recovery_steps_over_model": 1.0301
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "seed": 20261316,
+   "runs": 60,
+   "mean_touch_over_model": 1.0578,
+   "se": 0.0651,
+   "mean_recovery_steps_over_model": 1.0585
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "seed": 20261317,
+   "runs": 60,
+   "mean_touch_over_model": 0.9842,
+   "se": 0.0635,
+   "mean_recovery_steps_over_model": 0.985
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "seed": 20261318,
+   "runs": 60,
+   "mean_touch_over_model": 1.0109,
+   "se": 0.0628,
+   "mean_recovery_steps_over_model": 1.0117
+  }
+ ],
+ "pooled_by_size": [
+  {
+   "n_bits": 16,
+   "dp_bits": 3,
+   "runs": 3000,
+   "mean_touch_over_model": 0.9234,
+   "se": 0.0088,
+   "mean_recovery_steps_over_model": 0.9672
+  },
+  {
+   "n_bits": 20,
+   "dp_bits": 4,
+   "runs": 2000,
+   "mean_touch_over_model": 0.966,
+   "se": 0.0112,
+   "mean_recovery_steps_over_model": 0.9898
+  },
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "runs": 2000,
+   "mean_touch_over_model": 0.9844,
+   "se": 0.0111,
+   "mean_recovery_steps_over_model": 0.9964
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "runs": 1800,
+   "mean_touch_over_model": 1.0094,
+   "se": 0.0123,
+   "mean_recovery_steps_over_model": 1.0144
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "runs": 1800,
+   "mean_touch_over_model": 1.0153,
+   "se": 0.0126,
+   "mean_recovery_steps_over_model": 1.0179
+  },
+  {
+   "n_bits": 36,
+   "dp_bits": 8,
+   "runs": 240,
+   "mean_touch_over_model": 1.0205,
+   "se": 0.0319,
+   "mean_recovery_steps_over_model": 1.0213
+  }
+ ],
+ "pooled_n_bits_at_least_28": {
+  "runs": 3840,
+  "mean_touch_over_model": 1.0129,
+  "se": 0.0085,
+  "mean_plus_2se": 1.0299,
+  "mean_plus_3se": 1.0384
+ }
+}
