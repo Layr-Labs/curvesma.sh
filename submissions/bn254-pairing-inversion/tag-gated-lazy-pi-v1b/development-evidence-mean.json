@@ -1,0 +1,55 @@
+{
+ "description": "Offline run of lazy.py part_H (toy mean collision time of the 8-adding walk with distinguished points, sequential walks, run to recovery), seed 20261112, settings (n bits, dp bits, runs) = (16,3,4000), (20,4,3000), (24,5,1500), (28,6,400), (32,7,100); about 12 s on one core. Ratios are per run, normalised by sqrt(pi*(8/7)*n/2) of that run.",
+ "results": [
+  {
+   "n_bits": 16,
+   "dp_bits": 3,
+   "runs": 4000,
+   "mean_touch_over_model": 0.927,
+   "se": 0.0079,
+   "mean_recovery_steps_over_model": 0.9901,
+   "se_recovery": 0.0129,
+   "mean_walks": 38.82
+  },
+  {
+   "n_bits": 20,
+   "dp_bits": 4,
+   "runs": 3000,
+   "mean_touch_over_model": 0.9476,
+   "se": 0.009,
+   "mean_recovery_steps_over_model": 0.9708,
+   "se_recovery": 0.0094,
+   "mean_walks": 75.22
+  },
+  {
+   "n_bits": 24,
+   "dp_bits": 5,
+   "runs": 1500,
+   "mean_touch_over_model": 0.9708,
+   "se": 0.0131,
+   "mean_recovery_steps_over_model": 0.9837,
+   "se_recovery": 0.0133,
+   "mean_walks": 150.28
+  },
+  {
+   "n_bits": 28,
+   "dp_bits": 6,
+   "runs": 400,
+   "mean_touch_over_model": 0.9956,
+   "se": 0.0264,
+   "mean_recovery_steps_over_model": 0.9986,
+   "se_recovery": 0.0264,
+   "mean_walks": 299.9
+  },
+  {
+   "n_bits": 32,
+   "dp_bits": 7,
+   "runs": 100,
+   "mean_touch_over_model": 0.9644,
+   "se": 0.053,
+   "mean_recovery_steps_over_model": 0.966,
+   "se_recovery": 0.053,
+   "mean_walks": 581.88
+  }
+ ]
+}
