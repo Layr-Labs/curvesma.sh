@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: (6,2) special TNFS with a re-randomised, fixed-shape individual logarithm, expected work 2^106.04",
+  "claims": [
+    {
+      "statement": "For uniform z = g^x in the protected BN254 GT (g = e(P0,Q0), x uniform in [0,r), identity included), the algorithm of proof.md (run gate; field map; twisted (6,2) special tower number field sieve with h = y^6 + y^4 - 2y - 1, f = 36x^8 + 36y x^6 + 24y^2 x^4 + 6y^3 x^2 + y^4, g = x^2 - u y, factor-base bound 2^54, cells with twelve coefficients in [-330, 330] restricted to admissible cells; residue-matching sieve with an exact threshold; Wiedemann with 60 full-degree Schirokauer columns; two individual logarithms, each a sequence of independent trials on a target re-randomised by a fresh uniform exponent, boot norm split by stage-1 ECM with a fixed schedule, and a two-level special-q descent whose nodes sweep fixed balls completely with the exact sieve) returns x with g^x = z with success probability at least 0.39 over uniform challenges and fresh coins under the disclosed heuristics H-main, H-boot, H-desc, H-ECM of proof.md section 11, at EXPECTED total classical work at most 1 + (27/64) x 2^107.281 = 2^106.036 < 2^106.04 units of 20,000 scalar AArch64 instruction equivalents. This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run: the attack first draws six uniform bits and stops as a failure (below one unit) unless their value is below 27; past that gate it succeeds with probability at least 0.9374 (under H-main the main phase has no failure above 2^-100; global meter of the two individual logarithms at 2^125.313 instructions reached with probability at most 1/16 by Markov's inequality) and has expected work at most 2^107.281 units. All preprocessing, relation collection, linear algebra, both individual logarithms with all failed trials, verification and output are included; nothing is amortized; no advice is used. Peak storage is below 2^114 bytes (memory has no scalar contribution). Analytic exploratory claim; no production attack and no end-to-end run at any size was executed.",
+      "score": {
+        "numerator": "10604",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "model.py",
+        "lat.py",
+        "ecm.py",
+        "data.json",
+        "spread.json",
+        "ecm_table.json",
+        "declared.json",
+        "ballcount.py",
+        "ballcount.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "E1 tower facts with exact arithmetic; E2 Dickman spot values; E3 small-ideal hit sums; E4 regenerate stored main cells from their seed and draw fresh cells of the production box (admissible fraction, unsieved mass, unit multiplicity); E5 regenerate special-q ideals, LLL bases and ball cells from their seeds and compare with the stored sample, check the radius scaling; E6 rerun one boot lattice; E7 re-measure stage-1 ECM captures and planted splits at small sizes and audit the stored capture table; E8 recompute the whole ledger and compare it with declared.json, with the numbers printed in proof.md and with the manifest score and statement; E9 sweep fresh toy special-q balls completely with the node predicate and audit the stored toy campaign of 16,022 balls (empty fraction against the compound bound). Does not run the attack; the toy is evidence at toy scope only.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "fresh_cells": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 1500
+          }
+        },
+        "required": [
+          "seed",
+          "fresh_cells"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "fresh_cells": 400
+        }
+      ]
+    }
+  ]
+}
