@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: SexTNFS discrete logarithm, concrete finite-regime ledger 2^123.304316",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target group GT (order-r subgroup of F_{p^12}^*, r and p 254-bit, x=0x44e992b44a6909f1) and uniform z=g^a, the Special extended Tower Number Field Sieve (SexTNFS) discrete-logarithm attack of proof.md recovers a with g^a=z using total classical work at most 2^123.304316 reference units (C=20,000 scalar AArch64 instruction equivalents per unit), with exploratory success probability at least 0.39 over uniform production challenges and fresh coins, and peak storage at most 2^70 bytes. The attack uses a concrete coprime (eta,kappa)=(4,3) tower with an EXPLICIT polynomial triple: base h(t)=t^4+t+3 irreducible mod p (base field F_{p^4}), special side f(X)=P(X^3)=36X^12+36X^9+24X^6+6X^3+1 of infinity-norm 36, and companion g(X)=X^3-x0; experiment.py verifies that h is irreducible mod p, that x0 is a non-cube in F_{p^4} so g is irreducible over F_{p^4}, and that P(x0)=0 mod p so g divides f mod p, realising F_{p^12} as F_p[t,X]/(h,g) with the common degree-12 structure. The ledger is finite-regime and every number is recomputed by experiment.py: the two sieve norms are computed by EXACT resultants N=|Res_t(Res_X(a,side),h)| on real random sieve elements at radius A=2^9 and sieving degree tau=3 (mean bit-sizes Nf~522, Ng~612, so u_f=8.37, u_g=9.81 at smoothness bound B=2^62.4); the smoothness probability P_smooth=rho(u_f)*rho(u_g)=2^-60.16 comes from a self-checked Dickman rho; the factor base has 2^57.97 primes; the candidate count is |FB|/P_smooth=2^118.12; relation collection is charged a FULL dense-Fp12 reference unit per candidate (honest instruction cost 2^110.30, a disclosed +7.83-bit over-charge) giving 2^118.12; block-Wiedemann linear algebra over Z/r with matrix dimension D=2^57.97, derived row weight ~18 and 60 Schirokauer columns, instruction-priced, costs 2^117.39; individual-logarithm descent for both log_g and log_g z, a capped Las-Vegas special-q ladder with per-level Dickman probabilities, is sub-dominant (2^27, and the chain is insensitive to it by >90 bits). The three terms sum to a chain of 2^118.804; the claim adds a disclosed 4.5-bit aggregate margin (asymptotic o(1) and norm-model variance, filtering, Schirokauer-map evaluation, setup, amplification), yielding 2^123.304316 = 123304316/1000000, which is 11.91 bits below the selected Pollard-rho baseline 135.216266. Total work includes all preprocessing, relation collection, filtering, linear algebra, descent, verification and output, with no amortization over future targets and no free oracles or advice. Success >= 0.39 holds for any per-log descent-boot failure up to 0.30 (modelled e^-40 per node, success ~1). The claim is a deliberate conservative over-estimate; concrete published estimates for this field are near 2^100, below the claim. Analytic exploratory claim, not a production-scale execution.",
+      "score": {
+        "numerator": "123304316",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "experiment.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sextnfs-finite-regime-recompute",
+      "source": "experiment.py",
+      "purpose": "Deterministically construct and VERIFY, from the public BN254 parameter x, the concrete F_{p^12} tower and polynomial triple (h=t^4+t+3 irreducible mod p; g=X^3-x0 irreducible over F_{p^4} via x0 a non-cube; f=P(X^3) with P(x0)=0 mod p so g|f mod p). It then computes the two sieve norms by EXACT resultants on real random sieve elements at the production radius, the smoothness probability from a self-checked Dickman rho (two step sizes agree; ratios monotone), the factor-base size, the candidate count |FB|/P_smooth, the conservative and honest relation-collection costs, the linear-algebra cost from explicit matrix dimension/weight/Schirokauer columns, the capped-Las-Vegas descent ladder with per-level probabilities and its success bound, the chain sum, the disclosed margin, the claimed rational, the storage bound, and an independent cross-check re-sample with the caller's seed. The claim chain uses a fixed internal seed and does not depend on the caller's seed. It does not execute, simulate, or prove a production-scale number field sieve.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "samples": 48
+        }
+      ]
+    }
+  ]
+}
