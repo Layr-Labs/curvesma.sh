@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion via SexTNFS (6,2) GT discrete log over Q(zeta_7), output P0 and [x]Q0",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z in GT, the algorithm of proof.md recovers x with g^x=z by the special extended tower number field sieve (tower F_p[y]/(Phi_7) of degree 6, f = eps^4 P(x^2/eps) of degree 8 and g = x^2 - u*eps with eps = 2+y, smoothness bound 2^54 on both sides, block Wiedemann over Z/r, ECM boot with bound 2^200 and a four-level special-q descent with fixed retries) and then outputs P = P0 and Q = [x]Q0, which satisfy e(P0,[x]Q0) = e(P0,Q0)^x = g^x = z by bilinearity with both points in the prescribed prime-order subgroups. This returns a valid pair with success probability at least 0.50 (the ledger derives 0.92) over uniform challenges and fresh coins under the disclosed heuristics H1-H8, at total classical work at most 2^108.000000 reference units (20,000 scalar AArch64 instruction equivalents per unit) on every run and at most 2^62 bytes of peak total storage. Every loop, candidate budget, ECM curve count and descent retry is a fixed integer cap, so the work bound holds on every run; each cap's failure probability is charged into the success budget (no search repeats until success). The charged scalar multiplication [x]Q0 and all output and verification work are included; the ledger of machine.md (relation collection, survivor factorisation, Schirokauer maps, linear algebra, two boots, descent, the G2 scalar multiplication, verification and output, all without amortisation over future targets) is recomputed from the protected constants and the shipped measurements by experiment.py, whose rounded-up total is at most the claimed bound. No production-scale attack was executed; the heuristics, their measured support at the stated scales and their limits are explained in proof.md.",
+      "score": {
+        "numerator": "108000000",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "tnfs_common.py",
+        "data.json",
+        "data_cells.json",
+        "data_spq.json",
+        "data_toy.json",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "sextnfs-checks-and-ledger",
+      "source": "experiment.py",
+      "purpose": "Verify the tower, twist, common root and the shipped f-irreducibility (Capelli) certificate at full size; re-verify a reviewer-chosen handful of the shipped measurements (production-cell norms with unit multiplicity, one production special-q lattice sample, the toy-box calibration prefix with its sample rows, a few ECM trials); recompute all summary statistics and the complete ledger (including the charged [x]Q0 output) from the protected constants; report the rounded-up score. This supports the stated heuristics at their stated scales only and does not run a production sieve or prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "recheck_cells": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 200
+          },
+          "spq_index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "toy_index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 64
+          },
+          "ecm_index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          }
+        },
+        "required": [
+          "seed",
+          "recheck_cells",
+          "spq_index",
+          "toy_index",
+          "ecm_index"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "recheck_cells": 60,
+          "spq_index": 5,
+          "toy_index": 40,
+          "ecm_index": 3
+        }
+      ]
+    }
+  ]
+}
