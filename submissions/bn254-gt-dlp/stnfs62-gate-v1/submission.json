@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: twisted (6,2) STNFS, expected work 2^99.28 behind a run gate",
+  "claims": [
+    {
+      "statement": "For the full protected bn254-gt-dlp target and uniform z = g^x, the algorithm of proof.md (run gate; field map; twisted (6,2) special tower number field sieve with h = y^6 + y^4 - 2y - 1, f = 36x^8 + 36y x^6 + 24y^2 x^4 + 6y^3 x^2 + y^4, g = x^2 - u y, smoothness bound 2^54; matching sieve; Wiedemann; two individual logarithms by independent-trial boot and special-q descent) returns x with g^x = z with success probability at least 0.39 over uniform challenges and fresh coins under the disclosed heuristics H1-H7 of proof.md section 10, at expected total classical work at most 1 + (13/32) x 2^100.5759 < 2^99.28 units of 20,000 scalar AArch64 instruction equivalents. This is an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run: the attack first draws five uniform bits and stops as a failure (below one unit) unless their value is below 13; past that gate it succeeds with probability at least 0.96 and has expected work at most 2^100.5759 units. All preprocessing, relation collection, linear algebra, both individual logarithms, failures, verification and output are included; nothing is amortized; no advice is used. Peak storage is below 2^108 bytes. Analytic exploratory claim; no production attack was executed.",
+      "score": {
+        "numerator": "9928",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "tnfs.py",
+        "data_main.json",
+        "data_desc_f.json",
+        "data_desc_g.json",
+        "data_boot.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "Recheck the tower facts with exact arithmetic, replay stored production-size cells, lattices and boot vectors, draw fresh uniform cells of the production box, and recompute every ledger row and the declared score from the data files. Does not run an attack or validate the heuristics.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "fresh_cells": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 4000
+          }
+        },
+        "required": [
+          "seed",
+          "fresh_cells"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261111,
+          "fresh_cells": 2000
+        }
+      ]
+    }
+  ]
+}
