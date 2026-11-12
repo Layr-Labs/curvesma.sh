@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/six-class-stored-leaf-birthday-g2046-123309660191200674
