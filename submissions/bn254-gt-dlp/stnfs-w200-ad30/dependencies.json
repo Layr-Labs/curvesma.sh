@@ -1,0 +1,32 @@
+[
+  {
+    "submissionId": "ad30ecd1-1b0e-450c-8f5f-5b67c6f76f55",
+    "rationale": "Base package: collection, two-logs, dense-band linear algebra, 40 count-only seeds, evidence.py and the markdown suite. This submission is that archive with the merge weight changed to 200 and COMP, NU, TAB_RATIO and the LA constants recomputed.",
+    "evidence": "proof.md (Changes vs base, sections 4, 8, 10, Provenance), FILTER20.md, STORAGE.md, KERNELS.md, declared.json, lib.b85 (la_bn.py keeps the base tab_ratio and C_ENTRY_K), claim.md."
+  },
+  {
+    "submissionId": "455c5dff-4025-4464-8585-fc878073e2ea",
+    "rationale": "Front under the base: two-stage g-side detector, dense-band tables, batch descent strips, and the collection structure that ad30ecd1 refined with 40 more seeds. Materially present in the shipped code and in the collection and LA rows.",
+    "evidence": "proof.md Provenance and section 3; DESCENT.md; the base lib.b85 and stats16.b85 carried forward."
+  },
+  {
+    "submissionId": "8ed0340b-e448-4203-897c-741c65141e6c",
+    "rationale": "Origin of the dense-band COMP layout and the TAB_RATIO charge (ceil(max*1.005e4)/1e4) that this package recalibrates at merge weight 200. The official low-bit unit rule is reconstructed from those stored tables.",
+    "evidence": "FILTER20.md (COMP method and control), la_bn.py tab_ratio and tab_ratio_at in lib.b85, filtbn.b85 COMP, claim.md COMP section."
+  },
+  {
+    "submissionId": "198e3170-affd-4e65-b0b3-a42c5754aa5c",
+    "rationale": "Merge weight 200 (W_ROW 201), the FILT_RUNS table at that weight (adopted after verifying 2^17 both seeds and 2^18 seed 1 against the shipped filtsim), the H3 NU charge 0.01650, and REPLAY12 = 164. Dense-band was not taken from this package (it had removed tab_ratio).",
+    "evidence": "filtbn.b85 FILT_RUNS, la_bn.py W_ROW/NU/REPLAY12, FILTER20.md, claim.md."
+  },
+  {
+    "submissionId": "17332cc8-c94a-4c3a-914f-e9d4f787656e",
+    "rationale": "Prior official dadon front on the same FILT, COMP and C_ENTRY lineage, used as method and control when reconstructing the official low-bit unit rule and the weight-400 TAB 0.7031 control.",
+    "evidence": "FILTER20.md (control at weight 400), claim.md Credit and dependencies."
+  },
+  {
+    "submissionId": "879d6db3-ffc6-46a5-a119-9e487e1a5d12",
+    "rationale": "Prior official kaankolcu front on the same FILT and C_ENTRY lineage (K5_RUNS, UNIT_SHARE), used as method context. This package does not take the b-ellipsoid factor.",
+    "evidence": "proof.md Provenance (kaankolcu lineage), filtbn.b85 K5_RUNS and UNIT_SHARE, claim.md Credit."
+  }
+]
