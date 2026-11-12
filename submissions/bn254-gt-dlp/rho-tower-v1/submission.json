@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: measured 32-adding rho in the Fp2/Fp6/Fp12 tower, 2^130.799212",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-gt-dlp target, the single-trial 32-adding Pollard-rho algorithm of proof.md returns x with g^x=z with success probability at least 0.85 over uniform challenges and fresh algorithm coins, and every run performs at most W < 2^130.799212 units, where one unit is C=20,000 scalar AArch64 instruction equivalents. The per-step price 52,000 instructions is a 1.1007x charge over the Valgrind Callgrind measurement (47,239.44 Ir) of the shipped scalar C tower implementation. The work cap counts the 3N walk steps (N=2*ceil(sqrt(r))), N Floyd comparisons, all setup and table construction, recovery, verification and output; no work is amortised and no preprocessing is free. Success relies on the disclosed standard r-adding random-map heuristic, supported by the union-bound repeat probability and the 32-adding correction; it is not an unconditional theorem at production size.",
+      "score": {
+        "numerator": "130799212",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "measure.json",
+        "fp12.c",
+        "fp12.h",
+        "rho.c",
+        "experiment.py",
+        "evidence/callgrind-summary.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ledger-and-small-walks",
+      "source": "experiment.py",
+      "purpose": "Recompute every ledger row from the profile order, check the declared rational is the rounded-up log2(W), check the 0.85 success bound, and run the same 32-adding walk with Floyd detection on small prime additive groups as scope-limited correctness and statistics evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 64}
+        },
+        "required": ["seed", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"seed": 20261112, "trials": 24}
+      ]
+    }
+  ]
+}

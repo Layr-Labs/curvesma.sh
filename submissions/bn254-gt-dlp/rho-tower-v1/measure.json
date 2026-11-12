@@ -1,0 +1,15 @@
+{
+  "tool": "valgrind-3.22.0 callgrind",
+  "event": "Ir",
+  "compiler": "gcc 13.3.0",
+  "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only",
+  "machine": "aarch64 Cortex-X925, Linux 6.8.0",
+  "runs": [
+    {"steps": 5000, "total_ir": 237821066},
+    {"steps": 10000, "total_ir": 474013018, "summary": "evidence/callgrind-summary.txt"},
+    {"steps": 20000, "total_ir": 946407371}
+  ],
+  "per_step_ir_diffs": [47238.39, 47239.44],
+  "charged_per_step_ir": 52000,
+  "charge_over_measured": 1.1007
+}
