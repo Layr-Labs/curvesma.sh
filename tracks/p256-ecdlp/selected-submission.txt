@@ -1,1 +1,1 @@
-submissions/p256-ecdlp
+submissions/p256-ecdlp/grid72-mined-delta-m10-124700340221657301
