@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: measured GT rho plus G1 scalar multiplication, 2^130.799212",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-pairing-inversion challenge, the single-trial algorithm of proof.md returns a G1 point P and the fixed profile generator Q0 with e(P,Q0)=z, with success probability at least 0.85 over uniform challenges and fresh algorithm coins, and every run performs at most W < 2^130.799212 units, where one unit is C=20,000 scalar AArch64 instruction equivalents. The algorithm recovers x = dlog_g(z) with the 32-adding Pollard-rho walk of the shipped tower implementation, computes P=[x]P0 on the profile curve y^2=x^3+3 with Jacobian double-and-add, sets Q=Q0, and verifies g^x=z, P on-curve and [r]P=O; the pair is valid by bilinearity e(P,Q0)=e(P0,Q0)^x=g^x=z. The per-step price 52,000 instructions is a 1.1007x charge over the Valgrind Callgrind measurement (47,238.44 Ir) of the shipped scalar C tower walk. The capped work counts the 3N walk steps (N=2*ceil(sqrt(r))), N Floyd comparisons, all setup and table construction, the measured G1 scalar multiplication (Callgrind 1,062,076 Ir for the whole point process, charged at 2^24), verification, output and recovery; no work is amortised and no preprocessing is free. Success relies on the disclosed standard r-adding random-map heuristic with the 31/32 correction and is bounded below by 0.85; the protected minimum 0.39 is met. Memory is below 2^20 bytes and no non-uniform advice is used.",
+      "score": {
+        "numerator": "130799212",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "measure.json",
+        "fp12.c",
+        "fp12.h",
+        "rho_pi.c",
+        "vectors.json",
+        "experiment.py",
+        "evidence/callgrind-summary.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ledger-g1-vectors-and-small-walks",
+      "source": "experiment.py",
+      "purpose": "Recompute every ledger row from the profile order, check the declared rational is the rounded-up log2(W) and that the 0.85 success bound holds, recompute the shipped G1 vectors with an independent affine implementation on the real BN254 curve (on-curve, order r, exact match), and run the same 32-adding walk on small prime additive groups as scope-limited correctness and statistics evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 64}
+        },
+        "required": ["seed", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"seed": 20261112, "trials": 24}
+      ]
+    }
+  ]
+}

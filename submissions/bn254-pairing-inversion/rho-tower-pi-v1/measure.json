@@ -1,0 +1,20 @@
+{
+  "tool": "valgrind-3.22.0 callgrind",
+  "event": "Ir",
+  "compiler": "gcc 13.3.0",
+  "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only",
+  "machine": "aarch64 Cortex-X925, Linux 6.8.0",
+  "runs": [
+    {"steps": 5000, "total_ir": 237818071},
+    {"steps": 10000, "total_ir": 474005018, "summary": "evidence/callgrind-summary.txt"},
+    {"steps": 20000, "total_ir": 946389371}
+  ],
+  "per_step_ir_diffs": [47237.39, 47238.44],
+  "charged_per_step_ir": 52000,
+  "charge_over_measured": 1.1007,
+  "g1_point_path": {
+    "command": "./rho_pi point 8000000000000000000000000000000000000000000000000000000000000000",
+    "total_process_ir": 1062076,
+    "note": "includes program startup, profile-generator conversion and output formatting"
+  }
+}
