@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: 32-adding rho in the Fp2/Fp6/Fp12 tower, capped sampler and measured worst-case step, 2^130.665165",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-gt-dlp target, the single-trial 32-adding Pollard-rho algorithm of proof.md returns x with g^x=z with success probability at least 0.85 over uniform challenges and fresh algorithm coins, and every run performs at most W < 2^130.665165 units, where one unit is C=20,000 scalar AArch64 instruction equivalents. The algorithm is changed from the rejected submission bf1247b4 in two declared ways: scalars are drawn by a capped rejection sampler (SHA-256 counter-mode 256-bit word stream, at most K=64 attempts per scalar, abort counted as failure with union-bound probability 66*(1-r/2^256)^64 <= 2^-13.30, charged at its cap of 66*64*2048 = 8,650,752 instructions in the ledger), and the per-step price is the measured worst-case path over 32 production table entries x 22 operand patterns (704 Callgrind configurations, maximum 47,264.24 Ir/step, charged 47,265 with zero padding) instead of a padded average. Every loop in the algorithm has a data-independent trip count, listed in LOOP_BOUNDS.txt; the walk is 3N steps with N=2*ceil(sqrt(r)), Floyd comparison and loop control charged 4,096 instructions per iteration, setup of 64 table exponentiations charged 2^36, verification 2^32 and output 2^20. Success relies on the disclosed standard 32-adding random-map heuristic (recomputed as 0.8559, minus the sampler failure bound, floor 0.855801) and is supported by a measured run of the shipped walk with the shipped mixer in the order-43,913 subgroup of the real BN254 Fp12 (60 of 64 trials recovered x, 4 no-collision, 0 wrong). No work is amortised and no preprocessing is free.",
+      "score": {
+        "numerator": "130665165",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "LOOP_BOUNDS.txt",
+        "machine.md",
+        "measure.json",
+        "fp12.c",
+        "fp12.h",
+        "rho.c",
+        "experiment.py",
+        "evidence/worstcase-sweep.txt",
+        "evidence/production-walk.txt",
+        "evidence/mixer-crosscheck.txt",
+        "evidence/callgrind-summary.txt"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ledger-sampler-and-production-walk",
+      "source": "experiment.py",
+      "purpose": "Recompute every ledger row from the profile order r and the measured worst-case per-step price; check the declared rational is the rounded-up log2(W); recompute and check the capped sampler failure bound, measure the sampler's acceptance rate and attempt counts, verify that the Python mixer transliteration reproduces the shipped binary's hashdump indices; and run the production 32-adding walk (shipped 384-byte encoding, shipped mixer, shipped tower multiplication) in the order-43,913 subgroup of the real BN254 Fp12, reporting the measured success count, no-collision count, wrong-recovery count and Wilson interval.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+          "trials": {"type": "integer", "minimum": 1, "maximum": 64}
+        },
+        "required": ["seed", "trials"],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {"seed": 20261112, "trials": 24}
+      ]
+    }
+  ]
+}

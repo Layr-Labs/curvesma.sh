@@ -1,0 +1,16 @@
+# Production mixer cross-check (shipped C vs experiment.py transliteration)
+#
+# gcc -O3 -fno-tree-vectorize -mgeneral-regs-only -o rho fp12.c rho.c
+# ./rho hashdump 4
+e=0 j=22 wchk=6be84fdc9f6790b2
+e=1 j=2 wchk=16f62808d6efed08
+e=2 j=22 wchk=ccb6b24ca16ea31a
+e=3 j=12 wchk=9cace3c013f5a559
+#
+# Each element e has coefficient i set to the Montgomery form of (e*97 + i + 1),
+# i = 0..11, in the shipped struct order (fp12 -> fp6[2] -> fp2[3] -> fp[4 limbs]).
+# The Python transliteration of hash_index() over the same 384-byte encoding in
+# experiment.py returns j = [22, 2, 22, 12] for e = 0..3, and the check
+# "Python mixer reproduces the C hashdump indices" in experiment.py's output is
+# exactly this comparison. wchk is a FNV-style checksum of the 48 encoded words
+# and is printed so that the Python and C encodings can be compared word for word.
