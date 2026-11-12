@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/ysliced-subring-kasym-net12s-leaf-birthday-subring4042-123293340812408811
