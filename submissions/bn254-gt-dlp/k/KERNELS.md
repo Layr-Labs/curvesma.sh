@@ -1,0 +1,77 @@
+# Kernels
+
+Counts are differential callgrind Ir on linux/arm64 (Debian 12, GCC 12.2 -O3 -fno-tree-vectorize -fno-tree-loop-distribute-patterns,
+Valgrind 3.19). kernels_asm.b85 is base85/lzma text sections: retained listings, sources and measurement logs. Historical run-walk generator gen7.py and patch rec7.ed are omitted; their measurement logs are retained. model16.py holds the charged
+constants. No SIMD is used. Machine premise: FEAT_LSE. The line run adds to an aligned 16-bit cell by one staddh (mod 2^16, no flags), one instruction as Valgrind executes and counts it; as ldrh/add/strh (the carried base table) the claim is 0.026 bit higher.
+
+Two kinds of prices are used, and they are kept apart:
+
+- **Measured at BN254 parameters** (this package): the run walk on g-ideal draws of the production region (rec7bn.txt, rec7own.txt), the exact-norm kernel for
+  this f and g (norms.c, norms.txt), the norm-bound kernel on this field's rows (nb2bn.txt), the filtering ratio and the unit share of
+  matrix entries (la_bn.py), the descent's laws (DESCENT.md).
+- **Carried**: instruction sequences measured for the BLS12-381 instance of the same sieve (same six-dimensional base field degree, same 5-, 6-
+  and 7-dimensional lattices, same record format), whose prices are functions of the hit density only and are read here inside the density
+  range in which they were measured: the line walk (LINE_TAB), the slice record walk (REC_TAB, empty cosets), setup, apply, routing, scan and
+  layout, the FFT products of the batch trees, and the four-limb linear-algebra kernels (r has 254 bits here, four limbs as there). Their
+  measurement logs (and the sieve sources) are in the archive as measured. The kernels are basis-blind: an ideal (p, s, rho) is a(s) = rho b(s) mod p with
+  x(s) = sum x_j e_j(s), and the basis values e_j(s) (here: the power basis for a, common12.SB for b) are loaded from the factor-base entry.
+
+## Main collection (carried)
+
+Line path: a line c_5 = k is its L4 x W0 box (cell = idx4 W0 + r0 + c_0); a walk level keeps one index, the inner run (x8) is staddh at q, then q += 2 D0.
+LINE_TAB (instructions per hit against log2 hits per line): the larger of the base table and pooled groups + 2 SE (measurements12x.txt, cachegrind; base kernel = callgrind on all 281 run pairs), cap
+4.91 above 2^18.78; used here for p in [2^14, 2^40) at 2^5.48 to 2^33.29 hits per line (table range 2^1.83 and up). Slice record
+walk: exact quotients in REC_TAB (measurements12.txt), setup 406.87 + 72 + 21.13 instructions per (slice or run, ideal pair (p, s, +-rho)); g only: 0.5 pairs per prime, as for empty cosets (proof.md section 3); the slice walk is read at the per-ideal density (half the pair's hits), which overstates its per-hit price; 1,600 per empty
+coset; used here only for the cells outside the run rule, inside the table range (table bottom 2^-1.09; below it the
+coset is charged as empty). Apply is 5.76 per record (run walk: 3.63, below); cell residue 0.02 per cell; scan (sieved side only) 1.125 per cell plus 42.88 per leaf (leaf
+lengths 1..64 and 256; slice12oh.c, measurements-oh.txt); layout 28.57 per suffix entry plus 2^21 per slice and 2^17 per 2^32-byte segment.
+Routing: 10.01 per retained record of the slice walk, 1.14 for run-walk records (below).
+
+## Run walk (rec7): kernel carried, price measured at BN254
+
+rec7 (gbotrel's page-emission walk7a: rec7.c + rec7.ed + gen7.py, generator not shipped) and walk7 enumerate the same coset L7 = {(b, t): t = rho b(s) - a(s) mod p} of one canonical a-run (slab t_lo..t_hi, b metric, the run's parabola as radius) and emit the same record stream.
+
+walk7 (dadon's kernel, 258122fe; scalar C, callgrind Ir; source not shipped) is measured on the g ideals of this sieve at the production region (theta = 2189/8000, own pool of 50,703 canonical rows): no f-ideal table and no G7 remain. 1,024 walks per stratum; a draw takes a (row, band) with probability proportional to the ledger's charge and an ideal pair with probability 1/p; seeds fixed first, every draw kept. p < 2^56, l >= 4.99 (rec7bn.txt): kappa = Ir / (H x ref), charged the larger of mean + 2 SE and the hit-weighted sum Ir / sum (H x ref) + 2 SE: [4.99) 0.7887, [8) 0.8113, [10) 0.9455, [12) 0.9157, [14) 0.9069, [16) 0.9617, [18) 0.8509, [20) 0.7591, [22) 0.6929; 1.0 above l = 24.5 ([10k] recomputes, requires equality). [2^56, 2^57) (rec7own.txt, K7TOP), mean + 2 SE: [4.99) 0.7037, [6.5) 0.7411 (hit-weighted; mean + 2 SE 0.7383), [8.5) 0.7219. 2.5 <= l < 4.99 (K7LOW), per charged hit: [2.5) 312.54, [3.5) 265.66, [4) 231.9, [4.5) 203.92 ([10w]). Runs of 2 to 15 a-values (RUN_S) use walk7 with one more stretch class where l >= -0.5, per charged hit (REC7S, K7HS): 1011.38, 545.41, 354.69, 257.91, 188.57, 129.89, 92.36, 71.14, 57.7, 47.88, 40.43, 33.94; a stratum's price is its hit-weighted average, not a per-cell bound. Check: 120 g-ideal cosets against the exact enumeration, 144,370 records, 0 mismatches. Only per-stratum sums are shipped; the SE treats the draws as independent. The f-ideal campaign lines of rec7 and walk7 left the archive: they price nothing.
+
+model16.step7 = ref x REC7_K, ref the reference curve REC7_TAB at the model density l (REC7_K56 on [2^56, 2^57); below l = 4.99 the factor is 1 and REC7_TAB holds whole prices). Owner path: walk7's count includes the emission into the chunk pages (EXTRA7 = 0); the owner copies a page (measured 1.1252 per record + 0.01 hand-off: REC_ROUTE7 = 1.14) and applies it (measured 3.6252: C_APPLY7 = 3.63); 524,288 records, every cell sum equal to the reference (OWNER). Bases: five per ideal at 1.0e9 (largest measured 5.8e8).
+
+rec7 on g ideals (ours; rec7g.txt, [10r]): same region, draw rule and Ir method (Ir(2 cosets) - Ir(1 coset)); 0 mismatches against brute force (2,160 toy g cosets) and an exact enumeration (98 production cosets). REC7_KR (7 strata, p < 2^56, l < 19.96) and REC7_KR56 ([2^56, 2^57)) are charged as REC7_K is; rec7 emits up to 1.5% more records than charged hits, so each rec7 hit pays EXTRA_R = 2.2 >= 2 x 1.0151 + 4.77 x 0.0151. Each cell class (band, stratum) runs the cheaper measured kernel, min(walk7, rec7 + EXTRA_R) (model16.step7); four rec7 bases per ideal at 5.0e6 are added to the bases row.
+
+## Sieved side g
+
+The kernels take an ideal (p, s, rho) of g (rho^2 = u w(s) mod p) as one of f. The line and slice lattices {b : b(s) = c mod p} do not depend on rho (only the coset does): their tables apply unchanged. The run-walk lattice L7 = {(b, t): t = rho b(s) mod p} (determinant p, rho a root of an even polynomial for either side) does; the earlier campaigns drew ideals of f. Paired check (not replayed): 400 random prime ideals (p, s), p in [2^40, 2^57), one root of f and one of g each, L7 LLL-reduced in the metric Q_b + Q_a(1) t^2: mean Gram-Schmidt log2-length differences f - g 0.010, 0.023, 0.012, -0.002, 0.003, -0.026, -0.019 (paired SE 0.012-0.022), all within 2 SE. Since this version the run walk is measured on g ideals (above); G7 = 1.
+
+## Exact norms (measured at BN254)
+
+norms.c (this f and g; limit argument T, 9-limb norms): 27,000 charged; 3,115 pairs (500 uniform to the coordinate caps, 500 uniform on the region box, 1,600 real pool pairs, 512 corners, 3 trivial): largest 26,877 Ir, every output equal to common12.norms (norms.txt).
+
+## Norm bounds (two-level thresholds)
+
+The norm-bound kernel (nb2) is the BLS12-381 package's binary, run on this field's rows: 256 production vectors, every output MATCHes the Python reference; 1187.5 instructions per evaluation and 155.4 per row (mean + 2 SE; nb2bn.txt). It evaluates both norms; the thresholds use its g output. Where a place's interval meets 0 the measured binary returns no bound for that side; the evaluator keeps its certified upper product (formed before the sign test) with lower bound 0; this branch occurs at 398 of 1,068 g evaluations on 300 S rows and is charged +16 per evaluation. Charged: the BLS12-381 package's 1,178 / 378 / 18,500 (evaluation / row / slice) x NB_ALLOW 1.25 = 1472.5 / 472.5 / 23125, plus 16 per evaluation for the zero branch (above): 1488.5.
+
+## Batch trees (carried)
+
+srtf.c: the SRT lemma of proof.md over GMP 6.2.1 (exact vs mpz_mod and a gcd strip; archive fft.txt). FFTPTS N:charged are differential Ir
++ 1000 per allocator call + realloc copies, x 1.10; all are <= F(N) = 8.5 N log2(N)^2 + 1200 ([5t]). Above 2^26 limbs a product is a
+distributed Schoenhage-Strassen multiplication (6 transposes at 84 per record: + 504 N); H-FFT: local work <= F. The trees here are those of
+proof.md section 3 with 9-limb leaves for N_f (below 2^576; N_f < 2^524.9 on the region, [5t]); C_GBATCH = 2^23.05 >= the 9-limb tree cost of the f batch (ntt3 prices through mul_F; 2^24.22 with F alone).
+
+## Descent and linear algebra
+
+DESCENT.md (dsieve16: hit 1100, scan 5, zero 1, bound 2400 per cell; pair setup 2^25.1) and STORAGE.md (owner_part, _row_red, _chi_mul;
+krylov5.s in the archive; the other listings stay with the BLS12-381 package) carry their kernels unchanged: they act on six- and twelve-dimensional integer lattices and on
+four-limb residues mod r and do not depend on the curve.
+
+## Code archive
+
+lib.b85 and libextra.b85 (base85/lzma '@@ name' sections served to import by common12.py) hold every module: counts16, ecm16, filtsim, ideal_canonical, lattice_count_bounds, unit_orbit (byte-identical to the BLS12-381 package's), descent_witness, model16core, ledger16core, model4core, prefix_price, evidence_core (body of evidence.py).
+
+## Composite-modulus ECM extraction evidence
+
+stage2-summary.json reports 24 scaled cases (480 curves) at 36/40-bit factor sizes and composite moduli up to 1746 bits. Curves and their unconditional replay use the original composite modulus; extraction takes stage-1 prime-power prefix gcds and stage-2 giant-block product gcds, without per-term gcds. Planted-factor reductions audit detection separately from extraction. 133 of 135 detected factor events were isolated on that curve; 35 of 36 small factors were separated over their 20-curve schedules, with one zero-hit case. These data support H-SEP at the measured scales, not a proof at 132 bits. The model discounts the per-curve order-hit probability by one half and amplifies the discounted probability to the stated per-prime schedule target; the extrapolation is explicit.
+
+The finalmodel4.py shim loads model4core.py from lib.b85; that section contains the complete fixed plan and evaluator source, not an external dependency. The archive also includes the BN toy/child and PGF replay sources.
+
+The package stores model16core.py and ledger16core.py in lib.b85 with their original top-level module names served by import shims. prefix_price.py and model4core.py are embedded there too. No external evaluator is required. The legacy480-curve separation experiment used replay; the stored-prefix lemma and six exact partition comparisons in DESCENT.md transfer the output partition to the new first-pass algorithm.
+
+ntt3 (dadon's; ntt3.txt, checked line by line in [5t]): three NTTs mod c 2^55 + 1 (c = 131, 174, 197), one limb per point, exact for n <= 2^55; radix 4 (dadon 8cc015a0): Ir = ntt_F (model16core), equal to callgrind on all 49 measured products, 2 <= k <= 22 (37 listed); above 2^26 points + 1640 n, allowances. mul_F = min(F, F_ntt) prices every batch tree here (f batch, descent strip).
