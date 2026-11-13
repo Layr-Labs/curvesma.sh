@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion distinguished-point Pollard rho with tower-Karatsuba arithmetic",
+  "claims": [
+    {
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "development-evidence.json"
+      ],
+      "score": {
+        "denominator": "1000000",
+        "numerator": "129928486"
+      },
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial 32-adding Pollard-rho algorithm in proof.md, with distinguished-point detection and tower-Karatsuba Fp12 arithmetic, can return P0 and [x]Q0 with e(P0,[x]Q0)=z with exploratory success probability at least 0.50, using at most 2^129.928486 reference units (20,000 scalar AArch64 instruction equivalents per unit) and at most 2^31 bytes of peak total storage. The success assessment relies on the disclosed standard r-adding collision-time heuristic plus the quantified distinguished-point terms, supported and limited as explained in proof.md; it is not an unconditional production success theorem. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, hashing, arithmetic, memory access, table lookups, recovery, verification and output. The uniform capped instruction bound is 2*ceil(sqrt(r))*87552+2^40, with all costs justified in machine.md. The walk, partition, and cap follow the track's rho-baseline-v2-20261110 package; the detection method and arithmetic are new to this package. No prior acceptance, searched advice, amortization or actual production-scale attack execution is assumed."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "distinguished-point-rho-arithmetic-and-walks",
+      "initial_inputs": [
+        {
+          "seed": 20261110,
+          "trials": 128
+        }
+      ],
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "seed": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "trials": {
+            "maximum": 256,
+            "minimum": 16,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "type": "object"
+      },
+      "purpose": "Check full-width Montgomery and BN254 invariants, verify the tower/polynomial equality and Karatsuba operation counts, test the actual distinguished-point walk on small prime groups including failures, and reproduce the complete capped cost. These do not prove production success.",
+      "source": "experiment.py"
+    }
+  ]
+}
