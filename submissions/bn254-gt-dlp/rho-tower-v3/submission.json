@@ -1,0 +1,65 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: rho-tower with a constant-time step and a 31,302-instruction static step price, 2^130.091157",
+ "claims": [
+  {
+   "statement": "For the full-production bn254-gt-dlp target, the single-trial 32-adding Pollard-rho algorithm of proof.md returns x with g^x=z with success probability at least 0.85 over uniform challenges and fresh algorithm coins, and every run performs at most W < 2^130.091157 units (log2 W = 130.091156869), where one unit is C=20,000 scalar AArch64 instruction equivalents. The walk step is constant-time: its compiled call graph contains no conditional branch, no loop and no early return, so one step costs exactly 31,302 instructions on every input, a static count from the shipped disassembly (STATIC_BOUND.txt; Callgrind confirms 31,302 Ir on every step of 10 production tables). Scalars are drawn by a capped SHA-256 counter-mode rejection sampler (at most K=64 attempts per scalar, abort counted as failure, union bound 66*(1-r/2^256)^64 <= 2^-13.30). Uniformity, independence, the 1/r degeneracy argument and the delta^K abort bound are exact in the ideal independent-word model and heuristic with additive distinguishing advantage eps under the standard PRF assumption for the SHA-256 counter-mode stream; the sampler accepts strictly v<r, so v=r is rejected. The success probability is a random-map heuristic supported by small-subgroup evidence at order 43,913, not a production measurement. This is a reproducible baseline; we assert no comparison to any other submission or frontier.",
+   "score": {
+    "numerator": "130091157",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md",
+    "LOOP_BOUNDS.txt",
+    "STATIC_BOUND.txt",
+    "machine.md",
+    "measure.json",
+    "fp12.c",
+    "fp12.h",
+    "rho.c",
+    "crosscheck.c",
+    "experiment.py",
+    "static_count.py",
+    "sha256.c",
+    "sha256.h",
+    "evidence/callgrind-identity.txt",
+    "evidence/production-walk.txt",
+    "evidence/mixer-crosscheck.txt",
+    "evidence/clean-checkout.txt"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "ledger-sampler-small-subgroup-v3",
+   "source": "experiment.py",
+   "purpose": "Recompute every ledger row from the profile order r and the static per-step price (31,297 instructions); check the declared rational is the rounded-up log2(W); recompute and check the capped sampler failure bound, measure the sampler's acceptance rate and attempt counts; verify the Python mixer transliteration reproduces the shipped binary's hashdump indices; and run the 32-adding walk (shipped encoding, mixer and tower) in the order-43,913 subgroup of the real BN254 Fp12, reporting successes, no-collision and wrong-recovery counts and the Wilson interval. The constant-time step and its instruction count are checked separately by static_count.py and crosscheck.c.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     }
+    },
+    "required": [
+     "seed",
+     "trials"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 20261112,
+     "trials": 24
+    }
+   ]
+  }
+ ]
+}

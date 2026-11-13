@@ -1,0 +1,104 @@
+REVIEW CHECK -- bn254-gt-dlp rho-tower-v3 (rev 2)
+===================================================
+
+Every objection sentence from the three rejection files for this track
+(~/work/submit/REJECTIONS.txt, REJECTIONS-tenpack-6.txt, REJECTIONS-tenpack-7.txt)
+is quoted below, followed by the file:line in THIS package that answers it.
+Zero unanswered objections.
+
+1. [REJECTIONS.txt / bf1247b4] OBJECTION: "Section 2 draws uniform scalars by rejection sampling 256-bit words without any stated cutoff."
+   ANSWER (proof.md:89): Sampler capped at K=64 attempts per scalar; abort is run failure, with 66*delta^64 <= 2^-13.30 charged against the success bound and the cap charged as its own ledger row.
+
+2. [REJECTIONS.txt / bf1247b4] OBJECTION: "For any finite number m of attempts, the probability that all m draws are rejected is (1-r/2^256)^m>0. Consequently, even sampling the first scalar can exceed any fixed setup or total-work budget."
+   ANSWER (proof.md:134): No run draws more than 66*64 words; the abort path stops inside the same cap, so the per-run work cap holds on both paths.
+
+3. [REJECTIONS.txt / bf1247b4] OBJECTION: "Bounding the Floyd loop does not bound this preprocessing."
+   ANSWER (proof.md:135): Preprocessing is bounded by the cap on both branches; LOOP_BOUNDS.txt rows 2-4.
+
+4. [REJECTIONS.txt / bf1247b4] OBJECTION: "There is also an unresolved cost-support gap: the 52,000-instruction price pads fixed-input average measurements by about 10%; no worst-case instruction analysis establishes that this covers every production table and data-dependent path."
+   ANSWER (proof.md:222): The price is a static disassembly count (31,302) of the arbitrary-salt step, which has no conditional control transfer at all; STATIC_BOUND.txt and evidence/callgrind-identity.txt.
+
+5. [REJECTIONS.txt / bf1247b4] OBJECTION: "The supplied experiment only recomputes that assumed price."
+   ANSWER (proof.md:252): Callgrind is labelled corroboration; the price comes from static_count.py's assertion over the shipped binary.
+
+6. [REJECTIONS.txt / bf1247b4] OBJECTION: "the experiment's success check merely evaluates the assumed formula, and its 22/24 successes concern a small additive group with a different mixer."
+   ANSWER (proof.md:318): Shipped mixer (cross-checked against hashdump) and shipped tower; 0.85 is labelled a random-map heuristic, not a measurement.
+
+7. [REJECTIONS.txt / bf1247b4] OBJECTION: "Thus the entire original claim cannot be accepted, and no score is authorized."
+   ANSWER (proof.md:44): A new claim with the static price is filed; the rejected claim is not re-asserted.
+
+8. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "The alleged worst-case measurement is a maximum of trajectory averages."
+   ANSWER (proof.md:222): No trajectory average: instruction counts x fixed call multiplicities.
+
+9. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "In rho.c, each worstcase iteration mutates y; the selected operand pattern is installed only initially. Thus (Ir(3000)-Ir(1000))/2000 averages 2,000 later steps, rather than bounding any individual step."
+   ANSWER (proof.md:247): The differencing mode and the pattern sweep are deleted. The step is data-independent, so every step executes the same 31,302 instructions.
+
+10. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "Fixed loop bounds do not make 22 initial patterns exhaustive over branch combinations and intermediate arithmetic operands."
+   ANSWER (STATIC_BOUND.txt:38): There are no branches at all: static_count.py fails unless every function in the step's call graph has zero conditional branches, zero loops and zero early returns.
+
+11. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "Even observing each branch arm somewhere would not establish the maximum total path cost."
+   ANSWER (fp12.h:15): No arm exists: the reductions are mask selects (fp12.h, fp12.c fp_mul, rho.c scalar_add_r).
+
+12. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "The ceiling of the largest observed average, 47,265, is therefore not a justified universal step bound."
+   ANSWER (STATIC_BOUND.txt:36): The charged bound is 31,302, a universal equality, not a ceiling.
+
+13. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "build_table constructs M_j = g^(j+1), with deterministic scalar words not reduced modulo r."
+   ANSWER (rho.c:155): build_table is deleted; mktable draws every scalar through the capped sampler.
+
+14. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "It does not construct the algorithm's fresh M_j = g^c_j z^d_j with sampled canonical labels."
+   ANSWER (rho.c:155): mktable builds M_j = g^{c_j} z^{d_j} with sampled canonical labels and stores both.
+
+15. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "Consequently the sweep does not cover all production tables or even the claimed production table construction."
+   ANSWER (evidence/callgrind-identity.txt:23): Ten independent mktable tables, 1,000 steps each, identical 31,302 Ir/step, with a different salt on every step.
+
+16. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "A conservative instruction-path analysis covering valid production operands could address these objections without executing an exponentially large attack; none is supplied."
+   ANSWER (STATIC_BOUND.txt:9): That analysis is shipped: static_count.py plus its recorded output, covering all operands by construction.
+
+17. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "the exact uniformity, independence, abort-probability and conditional degeneracy arguments assume independent uniform words/scalars."
+   ANSWER (proof.md:165): Stated as two models: exact in the ideal independent-word model, heuristic up to eps under the PRF assumption.
+
+18. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "Expanding one 256-bit seed through fixed SHA-256 does not establish those exact premises."
+   ANSWER (proof.md:175): The text says the distributions are not identical and that ellipsis is an assumption.
+
+19. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "An additional pseudorandomness idealization and its applicability must be acknowledged rather than calling these arguments exact."
+   ANSWER (proof.md:165): Acknowledged; the word 'exact' is now reserved for the ideal model and the non-probabilistic step price.
+
+20. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "The experiment's all_pass checks largely recompute assumed constants and formulas; they are not independent validation of a worst-case instruction bound."
+   ANSWER (static_count.py:86): static_count.py parses the shipped binary and fails on any conditional branch; it does not recompute a formula.
+
+21. [REJECTIONS-tenpack-6.txt / b75580bd] OBJECTION: "Exploratory acceptance permits supported heuristics, but it cannot convert sampled average costs into the original every-run cap."
+   ANSWER (proof.md:263): No sampled average enters the cap.
+
+22. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "Standard PRF indistinguishability does not imply the claimed EXACT uniformity and independence."
+   ANSWER (proof.md:165): Accepted and fixed: the two-model paragraph states ideal-model exactness and PRF-based heuristic error eps, and no longer calls the shipped distribution exact.
+
+23. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "Expanding one 256-bit seed deterministically produces at most 2^256 possible accepted 66-scalar tuples, whereas independent uniform scalars range over r^66 tuples."
+   ANSWER (proof.md:165): Stated verbatim in the package: the text says the two distributions are not identical and that only computational indistinguishability is assumed.
+
+24. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "The exact rejection and 1/r degeneracy arguments apply in an ideal independent-word model, not as exact consequences of the stated PRF assumption."
+   ANSWER (proof.md:161): The degeneracy paragraph now says exactly this, and section 3 quantifies the gap as eps.
+
+25. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "rho.c accepts v=r through `if (eq || lt)`, contrary to the specified strict v<r sampler."
+   ANSWER (rho.c:105): Fixed: acceptance is the borrow of v - r, so v < r strictly and v = r is rejected; proof.md section 2 states the strict test.
+
+26. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "STATIC_BOUND.txt audits `rho_step.constprop.0`; the only rho_step call in rho.c passes the fixed salt 0x123456789abcdef. Thus the recorded count concerns a constant-specialized step."
+   ANSWER (rho.c:124): Fixed: rho_step is noinline+noipa (generic arbitrary-salt step), the audit root is `rho_step`, STATIC_BOUND.txt records 317 instructions for it.
+
+27. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "Neither that audit nor the fixed-salt Callgrind runs establishes the identical instruction count for a step accepting arbitrary salts."
+   ANSWER (evidence/callgrind-identity.txt:4): stepwc changes the salt on every step; Ir is 31,302 per step on all 12 runs, equal to the static count for the generic step.
+
+28. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "The original claim also asserts a roughly 42-bit gap to a SexTNFS frontier. NOTE.md supplies a purported board value but no authenticated prior accepted submission or reproduced supporting analysis establishing that frontier."
+   ANSWER (NOTE.md:135): The comparison is removed from NOTE.md and proof.md; we make no frontier claim and treat listed board values as unverified.
+
+29. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "The initial experiment recovered 22/24 small-subgroup logarithms; the frozen evidence reports 60/64. Those results support behavior at order 43,913, not exact production distributions or the arbitrary-salt instruction price."
+   ANSWER (proof.md:318): The text says exactly that: evidence at order 43,913 only, not a production probability, and the step price does not use the experiment at all.
+
+30. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "Recomputing assumed constants and reporting all_pass does not resolve these objections."
+   ANSWER (static_count.py:86): The step price is not recomputed from constants: it is parsed from the shipped binary and asserted branch-free; all_pass is separate.
+
+No objection from any of the three rejection files survives without a
+shipped answer in this package.
+
+28. [REJECTIONS-tenpack-7.txt / 81bae075] OBJECTION: "Claim 0 explicitly asserts that this baseline is about 42 bits above the SexTNFS frontier. No authenticated prior accepted claim or reproduced analysis establishes that frontier, its applicable success/resource assumptions, or the comparison in the protected computation units."
+   ANSWER (submission.json:6, claim statement): the sentence is deleted from the declared claim. The statement now ends "This is a reproducible baseline; we assert no comparison to any other submission or frontier." NOTE.md and proof.md make no numeric comparison; listed board values are called unverified.
+   ANSWER (NOTE.md:135): "we make no numeric comparison to them and do not treat any of them as an authenticated or verified frontier".

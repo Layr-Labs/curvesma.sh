@@ -1,0 +1,8 @@
+# ./rho hashdump 4  (C mixer on four fixed encoded elements)
+e=0 j=22 wchk=6be84fdc9f6790b2
+e=1 j=2 wchk=16f62808d6efed08
+e=2 j=22 wchk=ccb6b24ca16ea31a
+e=3 j=12 wchk=9cace3c013f5a559
+
+# Python transliteration in experiment.py over the same four elements:
+# match: True  indices [22, 2, 22, 12]
