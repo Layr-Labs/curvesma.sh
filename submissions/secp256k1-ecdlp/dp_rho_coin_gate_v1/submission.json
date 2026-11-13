@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: parallel distinguished-point rho (16 walks) with gated expectation scoring",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P with P the protected secp256k1 generator, the sixteen-processor distinguished-point rho construction in proof.md recovers x with a gated expectation score: a fresh 64-bit coin opens the run with probability 2/5; an opened run executes 16 independent walks on 16 processors and recovers x except with probability below 2^-40 (union birthday tail under the disclosed value-sequence heuristic H1, calibrated at kappa=1.9 from the declared experiment's measured merge-time ratios at three toy scales, and DP-uniformity H2); a closed run stops immediately and is charged 64 instructions. Overall success probability is at least 0.39 over uniform challenges and fresh coins. The claimed score is the log2 of the exact total expected computation in target-group-operation equivalents: E[total] = (2/5) * (E_steps * 1062/1000 + 50304) + (3/5) * 64/1000 with E_steps = 836888010852675176618569923281466515683, giving log2 = 128.063158 (rounded up at the sixth decimal; exact rational below). Peak memory is at most 2^96.206 bytes (the shared DP table, included); preprocessing is at most 2^15.585 units, included in the total; nonuniform advice is 0 bytes. This is a classical cold attack with no uncharged advice, no quantum steps, and no amortization over future targets.",
+      "score": {
+        "numerator": "128063158",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-dp-rho",
+      "source": "experiment.py",
+      "purpose": "Measure the first-collision visit count of exactly the claimed walk shape (r-adding walk with power-of-two multiplier bookkeeping and 2^-k distinguished points) on toy prime-order additive groups, and compare the mean against sqrt(pi*N/2). Small-scope evidence only: it validates H1's walk-shape model, not production costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "bits": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4000
+          }
+        },
+        "required": [
+          "bits",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "bits": 20,
+          "trials": 600
+        }
+      ]
+    }
+  ]
+}

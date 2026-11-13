@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "e4db9d7804258c184139beb4a740d751b7f298e1fbbb62b98947f6542aad2043",
+  "cost_model_sha256": "28e49e2edbc41fa4dfa6c05fa1a66cfeb8b28579a5b59af88d9bf672b7dcd987",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "algorithm": "parallel-dp-rho-w16-gated-expectation-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.063158,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 96.205193,
+    "preprocessing_log2": 15.584963,
+    "success_probability": 0.39,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    {
+      "id": "H1",
+      "statement": "The sixteen walks' visit sequences behave as independent uniform sequences over the order-r group up to a calibrated constant kappa=1.9 (the worst measured merge-time ratio across three toy scales: 1.87/1.64/1.25, falling with scale); the first inter-walk value match lands after an expected kappa*sqrt(pi*r/2)*sqrt(W/(W-1)) total visits, with birthday tail exp(-t(t-1)/(2r)).",
+      "support": "Standard Pollard-rho heuristic; measured on toy prime-order groups by the declared experiment at the claimed walk shape; large-scale ECDLP deployments in the literature match the model."
+    },
+    {
+      "id": "H2",
+      "statement": "The distinguished-point test x(Q) Ã¢â€°Â¡ 0 (mod 2^40) fires along the walk like a per-visit independent 2^-40 coin, giving a geometric post-collision detection tail with mean 1/theta = 2^40.",
+      "support": "Standard distinguished-point analysis; the test reads fixed low words of equidistributed x-coordinates (under H1)."
+    }
+  ],
+  "limitations": [
+    "The score is an expectation over uniform challenges and fresh coins; an opened run costs more than the score implies and a closed run proves nothing.",
+    "The DP table needs about 2^95.1 bytes; this is far beyond practical storage and the attack is not executable at production size.",
+    "Beating the deterministic BSGS accounting control does not by itself establish novel cryptanalysis: the negation map and the degree-3 GLV automorphism of secp256k1 would each further reduce the expected work (a further sqrt(2)/sqrt(3) in the walk length) at the cost of fruitless-cycle countermeasures not accounted here; this package deliberately excludes them to keep every heuristic at the standard level.",
+    "No full-size execution or independent qualification of production costs is claimed."
+  ],
+  "lane": "exploratory"
+}
+
+
