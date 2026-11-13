@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: distinguished-point Pollard rho (birthday)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the distinguished-point Pollard rho walk described in proof.md recovers x with probability at least 0.3935 (birthday 1-exp(-1/2)) using at most 2^128.6 total target-group-operation equivalents, including preprocessing, failures, verification and output. Peak memory is at most 2^119 bytes; preprocessing is at most 2^12 target-group-operation equivalents and is included in the total; nonuniform advice is at most 2^0 bytes. This is a classical cold generic attack whose only heuristic assumption is the standard Pollard rho birthday collision (disclosed in proof.md). It is a supported sqrt(r) generic frontier estimate, not a novel sub-exponential or structural break, not a practical production execution, and not a weakened-hardness claim.",
+      "score": {
+        "numerator": "643",
+        "denominator": "5"
+      },
+      "evidence": [
+        "proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-rho",
+      "source": "experiment.py",
+      "purpose": "Run a real Pollard rho (full-table) on prime-order subgroups of small multiplicative groups Z_n^* to exercise the sector-mixing walk, collision extraction, log-vector arithmetic and verification (falling back to exhaustive search only for the degenerate q < 64 subgroups). It does not establish production curve behavior, memory bounds, or operation costs.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 101,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 10007
+        }
+      ]
+    }
+  ]
+}

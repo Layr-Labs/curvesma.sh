@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "target_profile": "production-v2",
+  "target_id": "secp256k1-ecdlp",
+  "cost_model": "classical-group-work-v2",
+  "target_profile_sha256": "18c3338de676f1909715814325bffdb1513f1621d678b942e8a7a9563b8fd086",
+  "cost_model_sha256": "e0edc25a3e8b4a4b116442b2c2eb37f81f4aa0068fb6a1906312b040d5e17294",
+  "submission_state": "ready",
+  "review_status": "pending",
+  "baseline_kind": "generic-accounting-control",
+  "algorithm": "distinguished-point-pollard-rho-birthday-v1",
+  "proof": "proof.md",
+  "claim": {
+    "time_log2": 128.6,
+    "time_unit": "target-group-operations",
+    "memory_log2_bytes": 119,
+    "preprocessing_log2": 12,
+    "success_probability": 0.3935,
+    "nonuniform_advice_log2_bytes": 0
+  },
+  "heuristics": [
+    "Pollard rho birthday collision: P(N) = 1 - exp(-N^2/(2r)); with N = ceil(sqrt(r)) this is 1 - exp(-1/2) = 0.3935 >= 0.39.",
+    "Deterministic sector function of the x-coordinate bits approximates a uniform random walk (standard rho mixing assumption).",
+    "Distinguished-point density 2^-16 sets stored-state memory N_dp = N/2^16; it does not change the work bound."
+  ],
+  "limitations": [
+    "Analytic generic estimate; no full-size execution or independent qualification.",
+    "Success is the supported birthday heuristic (0.3935), not a deterministic proof; failed verification or a rare zero-denominator restart is absorbed by the 0.5H overhead term.",
+    "Beating the conservative BSGS control alone does not establish novel cryptanalysis or a weakened hardness assumption; this is the expected sqrt(r) generic frontier."
+  ],
+  "lane": "exploratory"
+}
