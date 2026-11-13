@@ -1,0 +1,71 @@
+{
+ "tool": "valgrind-3.22.0 callgrind",
+ "event": "Ir",
+ "compiler": "gcc 13.3.0",
+ "flags": "-O3 -fno-tree-vectorize -mgeneral-regs-only",
+ "machine": "aarch64 Cortex-X925, Linux 6.8.0",
+ "step_price": {
+  "method": "composed bound: measured mean step cost on the algorithm's own table + fixed call counts x measured per-call arm ranges",
+  "measured_mean_ir_per_step": 31589.48,
+  "trajectories": 33,
+  "call_counts_per_step": {
+   "fp_mul": 81,
+   "fp_add": 0,
+   "fp_sub": 0
+  },
+  "arm_ranges_ir": {
+   "fp_add": [
+    89.0,
+    105.0
+   ],
+   "fp_sub": [
+    60.0,
+    92.0
+   ],
+   "fp_mul": [
+    282.0,
+    290.0
+   ]
+  },
+  "composed_ir_per_step": 32237.48,
+  "charged_ir_per_step": 32238,
+  "padding_fraction": 0.0,
+  "evidence": [
+   "evidence/step-measurement.txt",
+   "evidence/percall-arms.txt"
+  ],
+  "command": "./rho mktable 20261112 table.bin ; ./rho stepwc K j table.bin"
+ },
+ "v1_arithmetic_worst_case_ir_per_step": 47264.2405,
+ "control_charge_per_iteration_ir": 4096,
+ "sampler": {
+  "construction": "SHA-256(seed || LE64(i)) word stream, capped rejection sampling",
+  "k_max_attempts_per_scalar": 64,
+  "scalars_drawn": 66,
+  "sha256_ir_charge_per_attempt": 2048,
+  "charged_ir_total": 8650752,
+  "failure_bound_log2": -13.30156
+ },
+ "mixer_crosscheck": {
+  "command": "./rho hashdump 4",
+  "indices": [
+   22,
+   2,
+   22,
+   12
+  ]
+ },
+ "production_walk": {
+  "subgroup_order": 43913,
+  "field": "the real BN254 Fp12, shipped tower",
+  "trials": 64,
+  "successes": 60,
+  "no_collision": 4,
+  "wrong": 0,
+  "evidence": "evidence/production-walk.txt"
+ },
+ "ledger": {
+  "log2_total": 130.131912528635,
+  "declared_rational": "130131913/1000000"
+ }
+}
