@@ -1,0 +1,64 @@
+{
+ "version": 1,
+ "title": "bn254-pairing-inversion: GT rho plus G1 scalar multiplication, capped sampler and measured worst-case step, 2^130.851770",
+ "claims": [
+  {
+   "statement": "For the full-production bn254-pairing-inversion challenge, the single-trial algorithm of proof.md returns a G1 point P and the fixed profile generator Q0 with e(P,Q0)=z, with success probability at least 0.85 over uniform challenges and fresh algorithm coins, and every run performs at most W < 2^130.851770 units, where one unit is C=20,000 scalar AArch64 instruction equivalents. The algorithm recovers x = dlog_g(z) with the 32-adding Pollard-rho walk of the shipped tower implementation, computes P=[x]P0 on y^2=x^3+3 with Jacobian double-and-add, sets Q=Q0, and verifies g^x=z, P on-curve and [r]P=O; the pair is valid by bilinearity e(P,Q0)=e(P0,Q0)^x=g^x=z. The algorithm is changed from the rejected submission d887db59 in two declared ways: scalars are drawn by a capped rejection sampler (SHA-256 counter-mode 256-bit word stream, at most K=64 attempts per scalar, abort counted as failure with union-bound probability 66*(1-r/2^256)^64 <= 2^-13.30, charged at its cap of 66*64*2048 = 8,650,752 instructions), and 47,411.27. Every loop has a data-independent trip count, listed in LOOP_BOUNDS.txt; the walk is 3N steps with N=2*ceil(sqrt(r)), Floyd comparison and loop control charged 4,096 per iteration, setup of 64 table exponentiations 2^36, GT verification 2^32, G1 scalar multiplication and [r]P checks 2^24, output 2^20. Success relies on the disclosed standard 32-adding random-map heuristic (0.8559, minus the sampler failure bound, floor 0.855801) and is supported by a measured run of the shipped walk with the shipped mixer in the order-43,913 subgroup of the real BN254 Fp12 (60 of 64 trials recovered x, 4 no-collision, 0 wrong). No work is amortised and no preprocessing is free.",
+   "score": {
+    "numerator": "130851770",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md",
+    "LOOP_BOUNDS.txt",
+    "machine.md",
+    "measure.json",
+    "fp12.c",
+    "fp12.h",
+    "rho_pi.c",
+    "vectors.json",
+    "experiment.py",
+    "evidence/production-walk.txt",
+    "evidence/mixer-crosscheck.txt",
+    "evidence/callgrind-summary.txt",
+    "evidence/step-measurement.txt",
+    "evidence/percall-arms.txt",
+    "sha256.c",
+    "percall.c"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "ledger-sampler-g1-vectors-and-production-walk",
+   "source": "experiment.py",
+   "purpose": "Recompute every ledger row from the profile order r and the measured worst-case per-step price; check the declared rational is the rounded-up log2(W); recompute and check the capped sampler failure bound, measure the sampler's acceptance rate and attempt counts, verify that the Python mixer transliteration reproduces the shipped binary's hashdump indices; regenerate the six G1 vectors from y^2=x^3+3 and P0=(1,2), check on-curve and order r, and compare with the shipped vectors.json when present; and run the production 32-adding walk (shipped encoding, mixer and tower) in the order-43,913 subgroup of the real BN254 Fp12, reporting the measured success count, no-collision count, wrong-recovery count and Wilson interval. The experiment needs no file outside the package.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     }
+    },
+    "required": [
+     "seed",
+     "trials"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 20261112,
+     "trials": 24
+    }
+   ]
+  }
+ ]
+}
