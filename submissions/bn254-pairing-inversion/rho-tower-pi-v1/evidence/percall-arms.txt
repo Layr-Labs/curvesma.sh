@@ -1,0 +1,19 @@
+# Per-call arm measurement for the composition of the step bound
+#
+# gcc -O3 -fno-tree-vectorize -mgeneral-regs-only -o percall percall.c fp12.c
+# valgrind --tool=callgrind --out-file=... ./percall <mode> 100000
+# empty-loop baseline (mode 6, 100000 iterations) subtracted.
+#
+# mode  meaning                                         Ir per call
+#  0    fp_add forced carry + full compare chain         105.00
+#  1    fp_add short arm                                  89.00
+#  2    fp_sub forced borrow                              92.00
+#  3    fp_sub short arm                                  60.00
+#  4    fp_mul dense operands                            282.00
+#  5    fp_mul small operands                            282.00
+#
+# Arm deltas used in proof.md section 4:
+#   fp_add: 105.00 - 89.00 = 16.00 instructions per call
+#   fp_sub: 92.00 - 60.00 = 32.00 instructions per call
+#   fp_mul: 282.00 vs 282.00 = 0.00 (fixed-loop CIOS; the final reduction
+#           comparison is charged 8 instructions per call anyway).
