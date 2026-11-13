@@ -1,0 +1,35 @@
+# Clean-checkout gate transcript (v4 kernel)
+# copy of the package in /tmp/v4clean without .git
+
+$ gcc -O3 -fno-tree-vectorize -fno-stack-protector -mgeneral-regs-only fp12.c sha256.c rho.c -o rho
+built
+
+$ ./rho selftest
+g_is_one=0 g^r_is_one=1
+assoc=1
+
+$ gcc -O3 -fno-tree-vectorize -mgeneral-regs-only -o crosscheck crosscheck.c fp12.c && ./crosscheck
+fp6/fp12 vs schoolbook: 2000 pairs ok
+add/sub round-trip: 2000 ok
+
+$ python3 static_count.py --selftest
+selftest: OK (converging-path count, early return, forward branch, conditional branch, call cycle, nop, trailing padding)
+
+$ python3 static_count.py ./rho rho_step
+root: rho_step
+function                    insns    calls  insns/step
+fp2_mul                       956       18       17208
+fp6_mul                      2982        3        8946
+    fp6_mul              -> fp2_mul                  x6
+rho_step                      317        1         317
+    rho_step             -> fp12_mul                 x1
+fp12_mul                     2581        1        2581
+    fp12_mul             -> fp6_mul                  x3
+TOTAL                                            29052
+
+OK: every reached function is straight-line (no conditional or unconditional branch, no call cycle, exactly one return and it is the last instruction, no nop in the counted range); multiplicities are DAG path sums.
+
+$ python3 experiment.py (summary)
+  "all_pass": true,
+  "declared_score": 129.988202,
+  "per_step_instructions": 29052,

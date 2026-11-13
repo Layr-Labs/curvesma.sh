@@ -1,0 +1,40 @@
+Loop audit -- bn254-gt-dlp rho-tower-v4
+
+The claim is a per-run work cap, so every loop must have a bound that holds for
+every run. "Run" = one execution: one trial, one table, one salt, one capped
+sampler, no restart, no distinguished-point search and no store.
+
+THE WALK STEP HAS NO LOOP AND NO CONDITIONAL BRANCH.  Its fixed loops were
+unrolled by the compiler at -O3 (8-limb fused accumulation in fp2_mul, 4-limb add/sub, the
+24-round mixer), and static_count.py asserts this from the disassembly of the
+shipped binary: no b.cond/cbz/cbnz/tbz/tbnz, no backwards branch, no indirect
+branch anywhere in the step's call graph.  The exact executed count is 29,052
+instructions (STATIC_BOUND.txt).  Callgrind confirms 29,052 Ir on every step of
+10 production tables (evidence/callgrind-identity.txt).
+
+Loops elsewhere in the algorithm, all with data-independent trip counts:
+
+#   loop                          where                       trip count                  bound
+1   OS entropy read               proof sec.2 step 2          1 getrandom call            fixed
+2   SHA-256 counter blocks        sampler, word stream        66*K = 4,224 words at most  4,224
+3   sampler attempts per scalar   sampler S                    at most K = 64              64
+4   scalars drawn                 sampler S, fixed order      64 table scalars + a0+b0  66
+5   table construction            proof sec.2 step 3 / rho.c  32 entries                  32
+6   table exponentiation          fp12_pow, 254-bit exponent  254 squarings + <=254 mults fixed by the exponent
+7   Floyd outer loop              proof sec.2 step 6          N = 2*ceil(sqrt(r))         N (break at first equality only lowers work)
+8   walk steps per iteration      tortoise x1, hare x2        3 per iteration             3N
+9   verification exponent         fp12_pow (g^x = z)          254 squarings               fixed by r
+10  scalar inversion (B-b)^-1     Fermat, exponent r-2        254 squarings + mults       fixed by r
+11  output encoding               12 coefficients             12                          fixed
+
+Loop 6 and 10 branch on the bits of a fixed public/derived exponent; their
+multiplication count is at most 254 per exponentiation and both rows are
+charged at a fixed 2^36 / 2^32 over-estimate, not at an exponent-dependent
+count.  They are not part of the walk step.
+
+The sampler is the only place where the algorithm can stop early.  Its cap is
+K = 64 attempts per scalar; if any of the 67 calls exhausts the cap the run
+aborts and reports failure.  The abort probability (union bound over the 66
+challenge-independent draws of the attack) is 66*(1-r/2^256)^64 <= 2^-13.30,
+charged against the success bound, and the abort path has spent at most the sampler's capped cost,
+so the per-run work cap holds on that path too.
