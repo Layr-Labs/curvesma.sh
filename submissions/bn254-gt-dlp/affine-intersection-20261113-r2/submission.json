@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "BN254 scalar recovery through affine progression intersections",
+  "claims": [
+    {
+      "statement": "For every protected BN254 GT target, the bounded randomized affine-progression intersection described in proof.md returns the exact scalar t=log_g(z) in [0,r) with probability at least 49/100 over fresh algorithm coins, including identity. All samplers have finite caps, and all success/failure work is charged. On the fully specified halfword scalar network, peak aggregate storage is at most 2^154 bytes; under the explicitly disclosed canonical 811-byte scored-input interpretation, W=R/20000<=2^149 including all cold preprocessing, arithmetic, routing, sorting, checks and output without amortization. The rational score is the conservative log2 upper bound 149. Arbitrarily padded JSON is processed with separately charged R(L), not a fixed uniform bound; the fixed score is not established if the scored-input convention instead requires unlimited raw serializations. No random-walk heuristic, practical production run, novelty or improvement over the current baseline is claimed.",
+      "score": {
+        "numerator": "149",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "implementation.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
