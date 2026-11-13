@@ -1,0 +1,87 @@
+REVIEW CHECK -- bn254-gt-dlp rho-tower-v3
+==========================================
+
+Every objection sentence below is quoted from the two rejection files for this
+track (~/work/submit/REJECTIONS.txt, first round, submission bf1247b4; and
+~/work/submit/REJECTIONS-tenpack-6.txt, submission b75580bd). Each entry gives
+the answer and the file:line in THIS package that contains it. Zero unanswered
+objections.
+
+1. [gt-dlp bf1247b4] OBJECTION: "Section 2 draws uniform scalars by rejection sampling 256-bit words without any stated cutoff."
+   ANSWER (proof.md:89): The sampler is capped at K=64 attempts per scalar, abort = run failure, with the union-bound failure probability 2^-13.30 charged against the success bound. The cap is also a ledger row (66 x 64 x 2048 = 8,650,752).
+
+2. [gt-dlp bf1247b4] OBJECTION: "For any finite number m of attempts, the probability that all m draws are rejected is (1-r/2^256)^m>0. Consequently, even sampling the first scalar can exceed any fixed setup or total-work budget."
+   ANSWER (proof.md:133): The run cannot draw more than 66*64 words: after K=64 rejections for any scalar the run stops. The stopping probability is bounded and charged; the work on that path is at most the capped sampler cost.
+
+3. [gt-dlp bf1247b4] OBJECTION: "Bounding the Floyd loop does not bound this preprocessing."
+   ANSWER (proof.md:134): Preprocessing is now bounded on both branches: success path 66*64 words at most, abort path stops inside the same cap. LOOP_BOUNDS.txt rows 2-4.
+
+4. [gt-dlp bf1247b4] OBJECTION: "There is also an unresolved cost-support gap: the 52,000-instruction price pads fixed-input average measurements by about 10%; no worst-case instruction analysis establishes that this covers every production table and data-dependent path."
+   ANSWER (proof.md:210): The price is no longer a padded average. static_count.py derives 31,297 instructions from the disassembly of the shipped step and asserts there is no conditional control transfer to vary with the operands. STATIC_BOUND.txt records the run; evidence/callgrind-identity.txt shows 31,297 Ir on every step of 10 production tables.
+
+5. [gt-dlp bf1247b4] OBJECTION: "The supplied experiment only recomputes that assumed price."
+   ANSWER (proof.md:239): Callgrind is labelled corroboration. The derivation of the price is the disassembly assertion plus the fixed call multiplicities; the ledger row is 3N x the static count.
+
+6. [gt-dlp bf1247b4] OBJECTION: "the experiment's success check merely evaluates the assumed formula, and its 22/24 successes concern a small additive group with a different mixer."
+   ANSWER (proof.md:303): experiment.py now runs the shipped mixer (transliterated and cross-checked against the C hashdump indices, evidence/mixer-crosscheck.txt) and the shipped tower multiplication, and the 0.85 figure is labelled a random-map heuristic, not a measurement. The new run is 60/64 at Q=43,913.
+
+7. [gt-dlp bf1247b4] OBJECTION: "Thus the entire original claim cannot be accepted, and no score is authorized."
+   ANSWER (proof.md:44): The claim filed here is a new claim with the static price; it does not re-assert the rejected one.
+
+8. [gt-dlp b75580bd] OBJECTION: "Reject the complete claim: the deterministic per-run computation cap is not supported."
+   ANSWER (proof.md:44): The cap is now the product of fixed ledger rows, the dominant one being 3N x 31,297 exact instructions; nothing in it is a sampled quantity.
+
+9. [gt-dlp b75580bd] OBJECTION: "The alleged worst-case measurement is a maximum of trajectory averages."
+   ANSWER (proof.md:210): There is no trajectory average and no differencing: the count is read off the compiled function bodies and multiplied by fixed call multiplicities.
+
+10. [gt-dlp b75580bd] OBJECTION: "In rho.c, each worstcase iteration mutates y; the selected operand pattern is installed only initially. Thus (Ir(3000)-Ir(1000))/2000 averages 2,000 later steps, rather than bounding any individual step."
+   ANSWER (proof.md:234): The 3000/1000 differencing mode and the operand-pattern sweep are deleted from rho.c. The step is data-independent, so there is no maximum to take: every step executes the same 31,297 instructions.
+
+11. [gt-dlp b75580bd] OBJECTION: "Fixed loop bounds do not make 22 initial patterns exhaustive over branch combinations and intermediate arithmetic operands."
+   ANSWER (STATIC_BOUND.txt:37): There are no branch combinations: static_count.py fails unless every function in the step's call graph has zero conditional branches, zero loops and zero early returns.
+
+12. [gt-dlp b75580bd] OBJECTION: "Even observing each branch arm somewhere would not establish the maximum total path cost."
+   ANSWER (fp12.h:15): No arm exists to observe. fp_add/fp_sub reduce by a mask select (fp12.h), fp_mul's final reduction by a mask select (fp12.c fp_mul), scalar_add_r likewise (rho.c).
+
+13. [gt-dlp b75580bd] OBJECTION: "The ceiling of the largest observed average, 47,265, is therefore not a justified universal step bound."
+   ANSWER (STATIC_BOUND.txt:35): The charged bound is 31,297, a universal equality for every step, not a ceiling of observations.
+
+14. [gt-dlp b75580bd] OBJECTION: "There is also a concrete mismatch in the claimed measurement scope: build_table constructs M_j = g^(j+1), with deterministic scalar words not reduced modulo r."
+   ANSWER (rho.c:151): build_table is deleted from rho.c. The only table constructor is mktable, which draws every scalar through the capped sampler.
+
+15. [gt-dlp b75580bd] OBJECTION: "It does not construct the algorithm's fresh M_j = g^c_j z^d_j with sampled canonical labels."
+   ANSWER (rho.c:152): mktable builds M_j = g^{c_j} z^{d_j} with c_j, d_j from the capped sampler and stores both labels.
+
+16. [gt-dlp b75580bd] OBJECTION: "Consequently the sweep does not cover all production tables or even the claimed production table construction."
+   ANSWER (evidence/callgrind-identity.txt:21): Ten independent mktable tables (seeds 20261112, 1..9), 1,000 steps each: identical 31,297 Ir per step. Since the step has no data-dependent control flow, per-table variation is impossible by construction, and this shows it.
+
+17. [gt-dlp b75580bd] OBJECTION: "A conservative instruction-path analysis covering valid production operands could address these objections without executing an exponentially large attack; none is supplied."
+   ANSWER (STATIC_BOUND.txt:9): This is that analysis, shipped as static_count.py plus its recorded output; it covers all operands by construction, not by sampling.
+
+18. [gt-dlp b75580bd] OBJECTION: "The capped sampler does bound its number of attempts. However, the exact uniformity, independence, abort-probability and conditional degeneracy arguments assume independent uniform words/scalars."
+   ANSWER (proof.md:163): Accepted. The text now states exactly that assumption and stops calling the arguments unconditional: they are exact conditional on the SHA-256 counter-mode word stream being indistinguishable from independent uniform words.
+
+19. [gt-dlp b75580bd] OBJECTION: "Expanding one 256-bit seed through fixed SHA-256 does not establish those exact premises."
+   ANSWER (proof.md:171): Stated: the seed is fresh per run from the OS CSPRNG, and the PRF assumption is named as an assumption. No claim of unconditional uniformity remains.
+
+20. [gt-dlp b75580bd] OBJECTION: "An additional pseudorandomness idealization and its applicability must be acknowledged rather than calling these arguments exact."
+   ANSWER (proof.md:163): Acknowledged in proof.md section 3 and in NOTE.md. The words 'exact' are used only as 'exact conditional on the PRF assumption'.
+
+21. [gt-dlp b75580bd] OBJECTION: "The frozen 60/64 recoveries and initial 22/24 recoveries are relevant small-subgroup evidence, compatible with the disclosed random-map heuristic."
+   ANSWER (proof.md:316): The new text says the same thing and no longer uses the experiment to support the work cap: the cap is static and independent of the walk's success statistics.
+
+22. [gt-dlp b75580bd] OBJECTION: "The experiment's all_pass checks largely recompute assumed constants and formulas; they are not independent validation of a worst-case instruction bound."
+   ANSWER (static_count.py:86): static_count.py does not recompute a formula: it parses the shipped binary and fails on any conditional branch. The experiment's checks are labelled as ledger and scope checks.
+
+23. [gt-dlp b75580bd] OBJECTION: "Exploratory acceptance permits supported heuristics, but it cannot convert sampled average costs into the original every-run cap."
+   ANSWER (proof.md:248): No sampled average enters the cap. The only non-step charge is a fixed analytic 4,096 per Floyd iteration, which is an over-estimate of a fixed code path.
+
+24. [gt-dlp b75580bd] OBJECTION: "No authenticated prior acceptance supplies the missing premises."
+   ANSWER (proof.md:357): No prior acceptance is invoked anywhere; the argument stands on the shipped binary and the shipped audit.
+
+Sibling track (bn254-pairing-inversion). The same seven objection sentences from
+REJECTIONS.txt / REJECTIONS-tenpack-6.txt are answered in rho-tower-pi-v2; the
+answers are identical in form and are listed in that package's REVIEW_CHECK.txt.
+
+Conclusion: no objection from either rejection file survives without a shipped
+answer. Filing the v3 package.

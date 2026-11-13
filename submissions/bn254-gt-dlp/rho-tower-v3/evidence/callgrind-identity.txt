@@ -1,0 +1,21 @@
+# Callgrind identity check: Ir per shipped step
+# binary: gcc -O3 -fno-tree-vectorize -fno-stack-protector -mgeneral-regs-only
+# command: valgrind --tool=callgrind --toggle-collect='*rho_step*' ./rho stepwc K table.bin
+# table s is ./rho mktable s table.bin (capped sampler, production M_j=g^c_j z^d_j)
+
+table             K   collected_Ir  Ir_per_step
+20261112       1000       31297000        31297
+1              1000       31297000        31297
+2              1000       31297000        31297
+3              1000       31297000        31297
+4              1000       31297000        31297
+5              1000       31297000        31297
+6              1000       31297000        31297
+7              1000       31297000        31297
+8              1000       31297000        31297
+9              1000       31297000        31297
+20261112       2000       62594000        31297
+20261112       5000      156485000        31297
+
+static count (static_count.py): 31,297 instructions per step
+identical per-step Ir on every table and every K: the step is data-independent.

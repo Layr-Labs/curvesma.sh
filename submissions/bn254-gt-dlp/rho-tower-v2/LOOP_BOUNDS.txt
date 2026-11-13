@@ -1,0 +1,39 @@
+Loop audit -- bn254-gt-dlp rho-tower-v2
+Written 2026-11-12 for the resubmission after rejection of submission bf1247b4's review (same uncapped sampler).
+
+The claim is a per-run work cap, so every loop in the algorithm must have a
+bound that holds for every run.  This file lists each loop in proof.md, its trip
+count and why that trip count is data-independent.  "Run" = one execution of the
+algorithm; there is one trial, one table, one salt, no restart, no retry, no
+distinguished-point search and no distinguished-point store.
+
+#   loop                          where                       trip count                          bound
+1   OS entropy read               proof sec.2 step 2          1 getrandom call                    fixed
+2   SHA-256 counter blocks        sampler, word stream        66*K = 4,224 words at most          4,224
+3   sampler attempts per scalar   sampler S                    at most K = 64                     64
+4   scalars drawn                 sampler S, fixed order       64 table scalars + a0 + b0 = 66    66
+5   table construction            proof sec.2 step 3 / rho.c   32 entries                         32
+6   table exponentiation          fp12_pow, 254-bit exponent   254 squarings + <=254 multiplies   fixed by the exponent
+7   Floyd outer loop              proof sec.2 step 6           N = 2*ceil(sqrt(r))                N (break at first equality only lowers the work)
+8   walk steps per iteration      1 tortoise + 2 hare          3 per iteration                    3N
+9   mixer rounds                  hash_index                   24 rounds over 48 words            24
+10  Fp Montgomery multiply        fp_mul                       4 outer x 4 inner limbs            16 inner iterations
+11  Fp add/sub limb loop          fp_add, fp_sub, add4, sub4   4 limbs                            4
+12  scalar add mod r              scalar_add_r                 4 limbs                            4
+13  verification exponent         fp12_pow (g^x = z)           254 squarings                      fixed by r
+14  scalar inversion (B-b)^-1     Fermat, exponent r-2         254 squarings + multiplies        fixed by r
+15  output encoding               encode/output                12 coefficients                    12
+
+No loop in the algorithm has a data-dependent trip count.  The only
+data-dependent decisions are the carry/borrow/comparison arms inside fp_add,
+fp_sub, fp_mul and scalar_add_r.  They select which instruction sequence runs,
+never how many times a loop runs, and they are covered by the measured
+worst-case step sweep in evidence/worstcase-sweep.txt (32 production table
+entries x 22 operand patterns, maximum charged).
+
+The sampler is the only place where the algorithm can stop early.  Its cap is
+K = 64 attempts per scalar; if any of the 66 calls exhausts the cap the run
+aborts and reports failure.  The abort probability (union bound) is
+66*(1-r/2^256)^64 <= 2^-13.30, which is charged against the success bound
+(0.8559 - 2^-13.30 > 0.85), and the abort path has spent at most the sampler's
+capped cost, so the per-run work cap also holds on that path.

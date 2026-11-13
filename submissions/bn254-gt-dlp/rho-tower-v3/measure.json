@@ -1,0 +1,87 @@
+{
+ "tool": "valgrind-3.22.0 callgrind (corroboration only); static instruction count from objdump -d",
+ "event": "Ir",
+ "compiler": "gcc 13.3.0",
+ "flags": "-O3 -fno-tree-vectorize -fno-stack-protector -mgeneral-regs-only",
+ "machine": "aarch64 Cortex-X925, Linux 6.8.0",
+ "step_price": {
+  "method": "static disassembly count of the shipped step; every function in the step's call graph is straight-line, so executed instructions = instruction count x fixed call multiplicity",
+  "per_function_instructions": {
+   "rho_step": 312,
+   "fp12_mul": 2581,
+   "fp6_mul": 2982,
+   "fp2_mul": 274,
+   "fp_mul": 269
+  },
+  "call_multiplicity": {
+   "rho_step": 1,
+   "fp12_mul": 1,
+   "fp6_mul": 3,
+   "fp2_mul": 18,
+   "fp_mul": 54
+  },
+  "static_ir_per_step": 31297,
+  "charged_ir_per_step": 31297,
+  "padding_fraction": 0.0,
+  "evidence": [
+   "STATIC_BOUND.txt",
+   "evidence/callgrind-identity.txt"
+  ],
+  "command": "./rho mktable <seed> table.bin ; valgrind --tool=callgrind --toggle-collect='*rho_step*' ./rho stepwc 1000 table.bin"
+ },
+ "callgrind_corroboration": {
+  "tables": 10,
+  "seeds": [
+   20261112,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "steps_per_table": 1000,
+  "additional_runs": {
+   "20261112": [
+    2000,
+    5000
+   ]
+  },
+  "ir_per_step_observed": 31297,
+  "identical_on_all_runs": true
+ },
+ "control_charge_per_iteration_ir": 4096,
+ "sampler": {
+  "construction": "SHA-256(seed || LE64(i)) word stream, capped rejection sampling",
+  "k_max_attempts_per_scalar": 64,
+  "scalars_drawn": 66,
+  "sha256_ir_charge_per_attempt": 2048,
+  "charged_ir_total": 8650752,
+  "failure_bound_log2": -13.30156
+ },
+ "mixer_crosscheck": {
+  "command": "./rho hashdump 4",
+  "indices": [
+   22,
+   2,
+   22,
+   12
+  ]
+ },
+ "small_subgroup_evidence": {
+  "subgroup_order": 43913,
+  "field": "the real BN254 Fp12, shipped tower",
+  "trials": 64,
+  "successes": 60,
+  "no_collision": 4,
+  "wrong": 0,
+  "evidence": "evidence/production-walk.txt"
+ },
+ "ledger": {
+  "log2_total": 130.090936036,
+  "declared_rational": "130090937/1000000"
+ }
+}

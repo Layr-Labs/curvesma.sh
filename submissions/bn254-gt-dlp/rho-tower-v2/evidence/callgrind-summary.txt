@@ -1,0 +1,13 @@
+# callgrind_annotate summary for ./rho 10000 (Valgrind 3.22.0, event Ir)
+# produced on the shipped binary; reproduce with the commands in machine.md
+
+315,337,750 (100.0%)  PROGRAM TOTALS
+
+Ir                    file:function
+--------------------------------------------------------------------------------
+199,252,666 (63.19%)  ???:fp_mul'2 rho]
+ 86,385,325 (27.39%)  ???:fp2_mul'2 rho]
+ 17,305,208 ( 5.49%)  ???:fp6_mul'2 rho]
+  9,089,482 ( 2.88%)  ???:fp12_mul'2 rho]
+  2,260,128 ( 0.72%)  ???:main'2 rho]
+

@@ -1,0 +1,20 @@
+# Per-call arm measurement for the composition of the step bound
+#
+# gcc -O3 -fno-tree-vectorize -mgeneral-regs-only -o percall percall.c fp12.c
+# valgrind --tool=callgrind --out-file=... ./percall <mode> 100000
+# empty-loop baseline (mode 6, 100000 iterations) subtracted.
+#
+# mode  meaning                                         Ir per call
+#  0    fp_add forced carry + full compare chain           0.00
+#  1    fp_add short arm                                   0.00
+#  2    fp_sub forced borrow                              50.00
+#  3    fp_sub short arm                                  50.00
+#  4    fp_mul dense operands                            282.00
+#  5    fp_mul small operands                            282.00
+#
+# In this kernel fp_add and fp_sub are `static inline` and branchless (mask
+# selects), so modes 0..3 measure the loop only: the compiler emits the same
+# unconditioned add/sub/mask sequence for every input, i.e. the per-call arm
+# delta is 0.  This is why the v2 bound adds only the fp_mul allowance.
+# Measured per-step spread over the 33 table/index trajectories confirms it:
+# see evidence/step-measurement.txt (spread under 2 instructions per step).

@@ -1,0 +1,60 @@
+STATIC BOUND: exact instruction count of one shipped walk step
+==================================================================
+
+Binary: ./rho, built from fp12.c sha256.c rho.c with
+  gcc 13.3.0 -O3 -fno-tree-vectorize -fno-stack-protector -mgeneral-regs-only
+Machine class: AArch64 (Cortex-X925), Linux 6.8.0. Counted instructions, not
+timing: one instruction is one AArch64 instruction slot, as in Callgrind's Ir.
+
+Method (static_count.py, shipped in this package):
+  1. disassemble with 'objdump -d --no-show-raw-insn rho';
+  2. take the transitive call graph from the root rho_step.constprop.0;
+  3. ASSERT that every function in that call graph contains no conditional
+     branch (b.cond / cbz / cbnz / tbz / tbnz), no backwards branch (no loop)
+     and no indirect branch, and that no call leaves the binary;
+  4. count the instructions of each function (prologue, body, ret: all executed
+     once per call; alignment padding after ret is dropped) and multiply by the
+     number of times the call graph enters it.
+
+Because every reached function is straight-line, the executed count of a call
+is exactly its instruction count; there is no arm, no early exit and no loop
+whose trip count could depend on data. The only control transfers in the step
+are the fixed 'bl' call sites below.
+
+root: rho_step.constprop.0
+function                        insns    calls insns/step
+fp_mul                            269       54      14526
+fp2_mul                           274       18       4932
+    fp2_mul                  -> fp_mul                       x3
+fp6_mul                          2982        3       8946
+    fp6_mul                  -> fp2_mul                      x6
+rho_step.constprop.0              312        1        312
+    rho_step.constprop.0     -> fp12_mul                     x1
+fp12_mul                         2581        1       2581
+    fp12_mul                 -> fp6_mul                      x3
+TOTAL                                               31297
+
+OK: every function in the call graph is straight-line (no conditional branch, no loop, no early return).
+
+Per-step composition:
+  312 * 1   (rho_step: inlined mixer, two scalar_add_r, call site, ret)
+  + 2581 * 1  (fp12_mul)
+  + 2982 * 3  (fp6_mul, called three times by fp12_mul)
+  + 274 * 18  (fp2_mul, six per fp6_mul)
+  + 269 * 54  (fp_mul, three per fp2_mul)
+  = 31,297 instructions per step.
+
+Conditional selects are instructions, not branches: the Montgomery conditional
+subtract in fp_mul (fp12.c lines 47-58) and the conditional add of the modulus
+in fp_add/fp_sub (fp12.h) and in scalar_add_r (rho.c) are cset / and / orr / neg
+sequences that execute for every operand. No instruction in the step changes
+control flow on a data-derived condition, because there is no conditional
+control transfer at all.
+
+CORROBORATION (evidence/callgrind-identity.txt): Callgrind, toggle-collect on
+'*rho_step*', Ir per step is 31,297 on 10 independent production tables built
+by the capped sampler (./rho mktable <seed>), 1,000 steps each, and also at
+2,000 and 5,000 steps on one table. Every number is identical and equals the
+static count.
+
+Charged price: C_STEP = 31,297 instructions per step, exact, no padding.
