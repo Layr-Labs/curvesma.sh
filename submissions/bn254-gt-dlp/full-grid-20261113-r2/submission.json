@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "title": "BN254 GT logarithm by a full rectangular search",
+  "claims": [
+    {
+      "statement": "For every full-production BN254 GT target z=g^x, the deterministic rectangular-grid algorithm returns the unique scalar x in [0,r) with success 1, including identity, on the finite scalar-network machine explicitly specified in machine.md. Under the canonical scored-input interpretation of proof.md (811-byte compact JSON representing every mathematical z), total charged W=R/20000 is at most 2^148, peak total storage at most 2^152 bytes, and all preprocessing/advice construction is included without amortization. The first score is the conservative log2 work upper bound 148. Arbitrary whitespace serializations are processed with fully charged R(L), not a uniform constant bound; the fixed score depends on the explicitly disclosed canonical-input interpretation and is not established under an unlimited-raw-serialization interpretation. No heuristic collision assumption, practical execution, novelty or improvement over the published baseline is claimed.",
+      "score": {
+        "numerator": "148",
+        "denominator": "1"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md"
+      ]
+    }
+  ],
+  "experiments": []
+}
