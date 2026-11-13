@@ -1,0 +1,11 @@
+{
+ "command": "./kernel s 2000000 10",
+ "steps": 2000000,
+ "chi2_31": 19.45,
+ "chi2_31_95pct": 50.0,
+ "dp_hits": 1898,
+ "dp_expected": 1953.125,
+ "dp_probability": 0.0009765625,
+ "kernel_sha256": "ea67b2066f67b1697b74e22d822f984b6b0c9df2a909bd84b1404e6cd756a11c",
+ "note": "Production iteration (same multiplier table, same partition, same 128-bit DP window) on the real BN254 GT. The DP threshold is scaled to 2^-10 for measurability."
+}

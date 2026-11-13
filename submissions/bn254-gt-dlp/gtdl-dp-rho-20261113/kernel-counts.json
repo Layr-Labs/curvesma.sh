@@ -1,0 +1,14 @@
+{
+ "artifact": "kernel.c",
+ "artifact_sha256": "634be00708066772014f6cd43cc82f3e63491ab4a1925289fb8c94e7301acde9",
+ "operation": "one dense Fp12 multiplication in the BN254 tower, plus the chained assignment and index XOR of the harness loop",
+ "compiler": "gcc 14.2.0 (Debian 14.2.0-19), -O3 -fno-tree-vectorize -fno-builtin",
+ "counter": "valgrind 3.24.0 --tool=callgrind, event Ir (instructions executed)",
+ "host_isa": "x86-64 (scalar 64-bit integer only, no vector code generated)",
+ "method": "loops of 4096 and 8192 chained multiplications; (Ir(8192)-Ir(4096))/4096 removes startup",
+ "ir_4096": 214427735,
+ "ir_8192": 428701783,
+ "per_fp12_mul": 52313.0,
+ "self_check": "kernel.c 'g' mode: g^r == 1 in Fp12 for the profile generator, g != 1",
+ "note": "Portable C. The ledger charges the benchmark's reference-measured dense Fp12 multiplication (22,996), not this C figure."
+}

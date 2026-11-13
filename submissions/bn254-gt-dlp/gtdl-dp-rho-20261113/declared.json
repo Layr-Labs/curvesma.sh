@@ -1,0 +1,16 @@
+{
+ "claim": "126.888233004",
+ "score_numerator": 126888233004,
+ "score_denominator": 1000000000,
+ "u_steps": 1.6,
+ "p_success_charged": 0.68,
+ "p_open": 0.5735294117647058,
+ "per_step_instructions": 23196.0,
+ "reference_fp12_multiplication": 22996.0,
+ "step_overhead": 200.0,
+ "one_time_instructions": 68719476736,
+ "dp_entries": 12700,
+ "dp_bytes": 80,
+ "unit": 20000.0,
+ "steps_T": 236714811010862895392714499903555895296
+}
