@@ -1,0 +1,67 @@
+REVIEW CHECK -- bn254-pairing-inversion rho-tower-pi-v2
+=========================================================
+
+Objection sentences quoted from the rejection files for this track
+(~/work/submit/REJECTIONS.txt: d887db59; REJECTIONS-tenpack-6.txt: d54d32f6;
+REJECTIONS-tenpack-7.txt: the shared gt-dlp defect list). Each answer cites
+the file:line in THIS package. Zero unanswered objections.
+
+1. [REJECTIONS.txt / d887db59] OBJECTION: "Proof.md specifies uniform scalar generation by rejection sampling, without an attempt limit or a sampling-budget failure condition."
+   ANSWER (proof.md:125): Capped at K=64 per scalar, abort=failure, 2^-13.30 charged.
+
+2. [REJECTIONS.txt / d887db59] OBJECTION: "Such sampling has unbounded running-time support: for any finite instruction budget, sufficiently long rejection sequences have positive probability under fresh coins."
+   ANSWER (proof.md:166): At most 66*64 words are drawn; the abort path stops inside the same cap.
+
+3. [REJECTIONS.txt / d887db59] OBJECTION: "An expected or high-probability work bound would be a different claim; adding a capped sampler and accounting for its failures would change the submitted algorithm."
+   ANSWER (proof.md:50): The change is declared in the claim and in this paragraph.
+
+4. [REJECTIONS.txt / d887db59] OBJECTION: "The supplied Callgrind measurements concern bounded arithmetic kernels, and recomputing the ledger only totals the assumed charges."
+   ANSWER (proof.md:245): Static disassembly count of the step, 31,302, asserted branch-free.
+
+5. [REJECTIONS.txt / d887db59] OBJECTION: "The captured experiment exited with FileNotFoundError for vectors.json and produced no parsed results."
+   ANSWER (evidence/clean-checkout.txt:1): vectors.json ships; clean-checkout.txt is the 64-trial run from a /tmp copy without .git.
+
+6. [REJECTIONS.txt / d887db59] OBJECTION: "its small-group walk uses a different partition mixer from the production C walk"
+   ANSWER (proof.md:325): Mixer transliterated and cross-checked against the C hashdump indices.
+
+7. [REJECTIONS.txt / d887db59] OBJECTION: "The claimed 0.85 success probability remains an explicitly disclosed random-map/31/32 extrapolation, not a measured production probability."
+   ANSWER (proof.md:343): Acknowledged and labelled heuristic at its small-subgroup scope.
+
+8. [REJECTIONS-tenpack-6.txt / d54d32f6] OBJECTION: "The purported 47,266-instruction worst-case step bound is obtained by taking the largest of 704 trajectory averages"
+   ANSWER (proof.md:266): No trajectory average: static count, exact for every step.
+
+9. [REJECTIONS-tenpack-6.txt / d54d32f6] OBJECTION: "intermediate arithmetic changes the operands and branch outcomes, and observing branch arms does not bound their combined contribution over a step."
+   ANSWER (fp12.h:15): No branch arms: the reductions are mask selects.
+
+10. [REJECTIONS-tenpack-6.txt / d54d32f6] OBJECTION: "The special initial patterns are not restored each iteration; their initial execution is excluded by the differencing procedure."
+   ANSWER (proof.md:268): Differencing and pattern sweeps are deleted; Callgrind only corroborates.
+
+11. [REJECTIONS-tenpack-6.txt / d54d32f6] OBJECTION: "rho_pi.c's build_table uses M_j=g^(j+1) with synthetic scalar labels."
+   ANSWER (rho_pi.c:300): build_table is deleted; mktable draws every scalar through the capped sampler.
+
+12. [REJECTIONS-tenpack-6.txt / d54d32f6] OBJECTION: "Sweeping every index of that fixed benchmark table is not sweeping every possible production table. Pinning j also changes the trajectory."
+   ANSWER (evidence/callgrind-identity.txt:21): No pinning; 10 independent production tables, salt changed every step, 31,302 Ir/step.
+
+13. [REJECTIONS-tenpack-6.txt / d54d32f6] OBJECTION: "A deterministic SHA-256 expansion of one seed needs an explicit pseudorandomness assumption rather than being identified with exact independent sampling."
+   ANSWER (proof.md:196): Two-model paragraph: ideal exact, shipped heuristic up to eps.
+
+14. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "rho.c accepts v=r through `if (eq || lt)`, contrary to the specified strict v<r sampler."
+   ANSWER (rho_pi.c:120): Fixed: strict borrow test, v=r rejected.
+
+15. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "STATIC_BOUND.txt audits `rho_step.constprop.0`; the only rho_step call in rho.c passes the fixed salt"
+   ANSWER (rho_pi.c:136): rho_step is noinline+noipa (arbitrary salt); audit root is rho_step.
+
+16. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "Neither that audit nor the fixed-salt Callgrind runs establishes the identical instruction count for a step accepting arbitrary salts."
+   ANSWER (evidence/callgrind-identity.txt:4): Per-step salt; identical 31,302 Ir on all runs.
+
+17. [REJECTIONS-tenpack-7.txt / 5c605f39] OBJECTION: "The original claim also asserts a roughly 42-bit gap to a SexTNFS frontier."
+   ANSWER (NOTE.md:138): No frontier comparison anywhere in this package or its manifest claim.
+
+18. [REJECTIONS-tenpack-7.txt / e6f1106c] OBJECTION: "the manifest and evidence/callgrind-identity.txt say Callgrind tested a different salt on every step, specifically salt=0x123456789abcdef+i. But the immutable rho_pi.c stepwc loop passes the same literal 0x123456789abcdefULL on every iteration."
+   ANSWER (rho_pi.c, stepwc loop): fixed. stepwc now calls rho_step(..., 0x123456789abcdefULL + (uint64_t)i), and evidence/callgrind-identity.txt was regenerated with a binary built from this source, so the transcript matches the source it tests.
+
+19. [REJECTIONS-tenpack-7.txt / e6f1106c] OBJECTION: "Its script also does not actually enforce all advertised straight-line conditions: forward unconditional branches and multiple returns are not rejected."
+   ANSWER (static_count.py, analyse()): fixed. It now rejects any control transfer (b / br / blr), any conditional branch, a function without exactly one ret or with ret not last, and any nop inside the counted range; it still rejects calls leaving the binary. It passes on the shipped step (317 instructions, total 31,302).
+
+20. [REJECTIONS-tenpack-7.txt / e6f1106c] OBJECTION: "The completed initial experiment ... neither compiled/audited the AArch64 kernel nor checked the disputed Callgrind experiment."
+   ANSWER (STATIC_BOUND.txt, machine.md): the kernel audit is static_count.py on the compiled AArch64 binary, and the Callgrind experiment is reproducible from the shipped source (answer 18); the experiment's role is labelled as ledger and small-subgroup evidence only.

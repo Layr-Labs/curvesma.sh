@@ -1,0 +1,26 @@
+# callgrind_annotate summaries (Valgrind 3.22.0, event Ir)
+# produced on the shipped binary rho_pi; reproduce with the commands in machine.md
+
+474,005,018 (100.0%)  PROGRAM TOTALS
+
+Ir                    file:function
+--------------------------------------------------------------------------------
+230,724,329 (48.68%)  ???:fp_mul'2 [rho_pi]
+168,970,289 (35.65%)  ???:fp_add'2 [rho_pi]
+ 62,592,003 (13.20%)  ???:fp_sub'2 [rho_pi]
+  5,265,689 ( 1.11%)  ???:fp_sub [rho_pi]
+  2,260,128 ( 0.48%)  ???:main'2 [rho_pi]
+
+
+## point path (G1 scalar multiplication, 254-bit scalar)
+1,062,076 (100.0%)  PROGRAM TOTALS
+
+Ir                file:function
+--------------------------------------------------------------------------------
+617,370 (58.13%)  ???:fp_mul'2 [rho_pi]
+201,760 (19.00%)  ???:fp_add'2 [rho_pi]
+ 57,201 ( 5.39%)  ???:fp_sub'2 [rho_pi]
+ 29,188 ( 2.75%)  ???:fp_sub [rho_pi]
+ 25,927 ( 2.44%)  ./elf/./elf/dl-tunables.c:__GI___tunables_init'2 [/usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1]
+ 17,898 ( 1.69%)  ./elf/./elf/dl-lookup.c:do_lookup_x'2 [/usr/lib/aarch64-linux-gnu/ld-linux-aarch64.so.1]
+ 11,982 ( 1.13%)  ???:g1_double.part.0'2 [rho_pi]

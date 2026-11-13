@@ -1,0 +1,25 @@
+# Clean-checkout run of the bundled experiment (pairing-inversion package)
+# Recorded 2026-11-12. The whole tree was copied (git metadata excluded) to
+# /tmp/clean-pi/checkout, and the experiment was run from an unrelated working
+# directory (/tmp) with an absolute path, so nothing in the repository or the
+# current directory could satisfy a relative path.
+
+$ mkdir -p /tmp/clean-pi && cp -a bn254-pairing-inversion-1-tree /tmp/clean-pi/checkout
+$ rm -rf /tmp/clean-pi/checkout/.git /tmp/clean-pi/checkout/.yukon
+$ cd /tmp
+$ python3 /tmp/clean-pi/checkout/submissions/bn254-pairing-inversion/rho-tower-pi-v1/experiment.py '{"seed": 20261112, "trials": 24}'
+  -> "all_pass": true
+  -> "g1_vectors": {"all_pass": true, "count": 6,
+                    "source": "vectors.json (compared with the in-package regeneration)"}
+  -> "production_walk": {"successes": 23, "trials": 24, "wrong": 0, ...}
+
+# Same checkout, vectors.json deliberately deleted, to show the experiment does
+# not depend on the file:
+$ rm .../rho-tower-pi-v1/vectors.json && cd /tmp
+$ python3 /tmp/clean-pi/checkout/submissions/bn254-pairing-inversion/rho-tower-pi-v1/experiment.py '{"seed": 20261112, "trials": 24}'
+  -> "all_pass": true
+  -> "g1_vectors": {"all_pass": true, "count": 6,
+                    "source": "regenerated in-package (vectors.json not present)"}
+
+# Both runs printed no failing check. Full JSON of the 64-trial run is
+# evidence/production-walk.txt.
