@@ -1,0 +1,22 @@
+{
+ "claim": "128.296605831",
+ "score_numerator": 128296605831,
+ "score_denominator": 1000000000,
+ "u_steps": 1.6,
+ "p_success_charged": 0.66,
+ "p_open": 0.5909090909090909,
+ "fp_multiplication_bound": 640,
+ "fp_add_bound": 56,
+ "tower_ops": 287,
+ "traffic_bound": 8192,
+ "fp12_multiplication_bound": 58824,
+ "canonical_conversion_bound": 736,
+ "step_overhead": 200,
+ "per_step_instructions": 59760,
+ "one_time_instructions": 1099511627776,
+ "dp_entries": 12700,
+ "dp_bytes": 80,
+ "unit": 20000.0,
+ "steps_T": "236714811010862895392714499903555895296",
+ "measured_c_kernel_fp12_mul": 52313
+}

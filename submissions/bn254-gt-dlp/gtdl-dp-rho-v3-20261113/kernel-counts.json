@@ -1,0 +1,14 @@
+{
+ "artifact": "kernel.c",
+ "artifact_sha256": "5552c6bc9717f14bd13a91fcc12962436dd40d25274385e787711dd3dad33318",
+ "operation": "one dense Fp12 multiplication in the BN254 tower plus the chained assignment/index XOR of the counting loop",
+ "compiler": "gcc 14.2.0 (Debian 14.2.0-19), -O3 -fno-tree-vectorize -fno-builtin",
+ "counter": "valgrind 3.24.0 --tool=callgrind, event Ir",
+ "host_isa": "x86-64, scalar 64-bit integer code only",
+ "method": "chained-multiplication loops of 4096 and 8192; (Ir(8192)-Ir(4096))/4096",
+ "ir_4096": 214428101,
+ "ir_8192": 428702149,
+ "per_fp12_mul": 52313.0,
+ "self_check": "mode g: g^r == 1 in Fp12 for the profile generator, g != 1",
+ "walk_stats_mode": "mode s: production walk from g^a z^b on the real GT, canonical-form partition and DP windows, one Montgomery reduction per step"
+}

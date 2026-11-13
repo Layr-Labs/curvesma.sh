@@ -1,0 +1,11 @@
+{
+ "command": "./kernel s 2000000 10",
+ "steps": 2000000,
+ "chi2_31": 18.51,
+ "chi2_31_95pct": 50.0,
+ "dp_hits": 1995,
+ "dp_expected": 1953.125,
+ "dp_probability": 0.0009765625,
+ "kernel_sha256": "5552c6bc9717f14bd13a91fcc12962436dd40d25274385e787711dd3dad33318",
+ "note": "Production iteration on the real BN254 GT, state initialised as g^a z^b for fixed public labels, partition and DP windows read from the same canonical coefficient (one Montgomery reduction per step). DP threshold scaled to 2^-10 for measurability."
+}

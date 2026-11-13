@@ -1,0 +1,69 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: gated segmented distinguished-point Pollard rho, expected work 2^128.296605831",
+ "claims": [
+  {
+   "statement": "For the full protected bn254-gt-dlp target (BN254 GT of prime order r, fixed generator g=e(P0,Q0)), the algorithm of proof.md returns x with g^x=z with success at least 0.39 over uniform challenges and fresh coins, and expected total classical work E[W] <= 2^128.296605831 units (C=20,000 scalar AArch64 instruction equivalents), under the disclosed heuristics H1-H3. The walk is the standard 32-adding rho walk on GT with one dense Fp12 multiplication per step, public SHA-256-derived increments c_j,d_j, a five-bit partition and a 128-bit distinguished-point window both read from the same canonical first Fp coefficient (one Montgomery reduction per step), a bounded distinguished-point table of 12,700 entries (1,034,432 bytes peak, < 2^20), and a fresh-coin run gate: the run opens with probability p_open=0.39/0.66=0.5909091, a closed run costs one unit and does no group arithmetic, and an opened run executes exactly T=ceil(1.6*floor(sqrt(r)))=236714811010862895392714499903555895296 steps at 59,760 instruction equivalents each, giving W_run=2^129.055598 units; expected work is p_open*W_run+(1-p_open)*1=2^128.296605831 and overall success is p_open*0.66=0.39. The per-step price is an analytic scalar AArch64 bound: 54 Fp multiplications at 640 instructions, 287 counted Fp add/sub/neg operations at 56 each (90 in the 18 Fp2 products, 156 in the three Fp6 layers, 41 at the Fp12 layer including multiplication by xi), and 8,192 instructions of loads, stores, spills and control give 58,824 per dense Fp12 multiplication; 736 for the per-step canonical Montgomery reduction and 200 for the partition, the two four-limb label updates mod r and the distinguished-point test give 59,760. No reference price is borrowed from another field and no cross-architecture measurement is used for the charge. The shipped portable C kernel measures 52,313 instructions per multiplication on x86-64, below the analytic bound, self-checks g^r=1 in Fp12, and its 2,000,000-step walk starts at g^a z^b with canonical-form partition and DP windows. In an opened run the success probability at T is charged 0.66 against the random-map value 1-exp(-1.28)=0.721963; the identical walk code (same SHA-256 increments, same middle-bit partition, same trailing-window DP rule, same segment bookkeeping, same recovery) measured on prime-order subgroups of F_q^* of size about 2^27 and 2^31 with 100 trials each under a hard step-budget clamp returns success fractions 0.69 and 0.71 at u=1.6, and 2,000,000 production steps on the real BN254 GT starting from g^a z^b give a partition chi-square of 18.51 on 31 degrees of freedom and 1,995 distinguished points against 1,953 expected at a 2^-10 threshold. All preprocessing (the 32 multipliers g^{c_j}z^{d_j}), the 12,700 fresh-segment exponentiations and their randomness, all segments, all failures, the distinguished-point bookkeeping, the inversion mod r, the verification g^x=z and the output are charged once for this target in a 2^40 one-time term; nothing is amortised over future targets and no advice is assumed. The identity target is answered as x=0. This is a generic square-root attack: it does not reproduce or approach the published STNFS line near 2^88.4 on this track, and no optimality is asserted.",
+   "score": {
+    "numerator": "128296605831",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "machine.md",
+    "kernel.c",
+    "kernel-counts.json",
+    "gt-stats.json",
+    "declared.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "Recompute the profile and field checks, the tower/w-basis cross-check, the production walk on the real BN254 GT (partition histogram, DP rate, invariant), genuine-collision recovery tests with known logarithms, the toy collision-time campaign with the production walk code and a hard step-budget clamp, and the complete cost ledger. Toy runs are evidence at their size only; no production DLP, no proof of the collision-time heuristic and no verifier acceptance is claimed.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "toys",
+       "ledger",
+       "rebuild",
+       "kernel",
+       "gt"
+      ]
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 4,
+      "maximum": 200
+     },
+     "bits": {
+      "type": "array",
+      "items": {
+       "type": "integer",
+       "minimum": 20,
+       "maximum": 40
+      },
+      "minItems": 1,
+      "maxItems": 3
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
