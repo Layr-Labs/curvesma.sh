@@ -1,0 +1,67 @@
+{
+ "version": 1,
+ "title": "bn254-pairing-inversion: GT rho with a constant-time step and a 29,052-instruction static price, plus [x]P0, time_log2 = 129.988202",
+ "claims": [
+  {
+   "statement": "For the protected BN254 profile, the single-trial algorithm of proof.md recovers x with g^x=z and outputs (P=[x]P0, Q=Q0) with e(P,Q)=z, with success probability at least 0.85 over uniform challenges and fresh algorithm coins, and every run performs at most W < 2^129.988202 units (log2 W = 129.988201857), one unit being C=20,000 scalar AArch64 instruction equivalents. The bilinear reduction and collision recovery are as in the earlier package; the GT walk step is now constant-time (no conditional branch, no loop, no early return in its compiled call graph), so one step costs exactly 29,052 instructions on every input, a static count from the shipped disassembly (STATIC_BOUND.txt; Callgrind confirms 29,052 Ir per step on 10 production tables with a different salt every step). Scalars come from a capped SHA-256 counter-mode sampler (K=64 attempts per scalar, strict v<r, abort counted as failure, union bound 2^-13.30). Uniformity, independence, the 1/r degeneracy and the abort bound are exact in the ideal independent-word model and heuristic with additive distinguishing advantage eps under the PRF assumption. The 0.85 success figure is a random-map heuristic supported by small-subgroup evidence at order 43,913, not a production measurement. The G1 part is deterministic and charged at a fixed 2^24.",
+   "score": {
+    "numerator": "129988202",
+    "denominator": "1000000"
+   },
+   "evidence": [
+    "proof.md",
+    "LOOP_BOUNDS.txt",
+    "STATIC_BOUND.txt",
+    "machine.md",
+    "measure.json",
+    "fp12.c",
+    "fp12.h",
+    "rho_pi.c",
+    "crosscheck.c",
+    "tcheck.c",
+    "experiment.py",
+    "static_count.py",
+    "sha256.c",
+    "sha256.h",
+    "vectors.json",
+    "evidence/callgrind-identity.txt",
+    "evidence/production-walk.txt",
+    "evidence/mixer-crosscheck.txt",
+    "evidence/clean-checkout.txt"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "ledger-sampler-small-subgroup-pi-v2",
+   "source": "experiment.py",
+   "purpose": "Recompute every ledger row from r and the static 29,052-instruction step price; check the declared rational is the rounded-up log2(W); recompute the capped sampler failure bound and measure acceptance; verify the mixer transliteration against the binary's hashdump; run the 32-adding walk in the order-43,913 subgroup of the real BN254 Fp12; and regenerate/compare the G1 vectors from y^2=x^3+3, P0=(1,2). The constant-time step is checked separately by static_count.py.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+     },
+     "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+     }
+    },
+    "required": [
+     "seed",
+     "trials"
+    ],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {
+     "seed": 20261112,
+     "trials": 24
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+# Callgrind identity check: Ir per shipped GT step, arbitrary salt per step
+# binary: gcc -O3 -fno-tree-vectorize -fno-stack-protector -mgeneral-regs-only
+# command: valgrind --tool=callgrind --toggle-collect='*rho_step*' ./rho_pi stepwc K table.bin
+# stepwc varies the salt every step (salt = 0x123456789abcdef + i), see rho_pi.c.
+
+table             K   collected_Ir  Ir_per_step
+20261112        1000        29052000       29052
+1               1000        29052000       29052
+2               1000        29052000       29052
+3               1000        29052000       29052
+4               1000        29052000       29052
+5               1000        29052000       29052
+6               1000        29052000       29052
+7               1000        29052000       29052
+8               1000        29052000       29052
+9               1000        29052000       29052
+20261112        2000        58104000       29052
+20261112        5000       145260000       29052
+
+static count (static_count.py): 29,052 instructions per step

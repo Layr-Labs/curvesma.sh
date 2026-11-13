@@ -1,0 +1,169 @@
+# clean-copy proof: package copied to /tmp/pi4clean (no .git); rebuilt there;
+# run from cwd /tmp/pi4clean.  date: 2026-11-13T10:53:52Z
+# build: gcc -O3 -fno-tree-vectorize -fno-stack-protector -mgeneral-regs-only -o rho_pi fp12.c sha256.c rho_pi.c
+# clean-copy build succeeded; ./rho_pi selftest -> g_is_one=0 g^r_is_one=1
+# hashes of the shipped sources:
+298dc35f632a02cb82192742ca0fadd45524f096a9023c73ec6fac1cded16c4a  fp12.c
+e7a2ad3f2903b20905418393082ed8f60e68b65dd49b2377288f980c930a1dda  rho_pi.c
+5dc0dd8a5affa8936f083af9f981a557aced167da09285dc02f0684b286ce398  static_count.py
+
+$ python3 experiment.py '{"seed": 20261112, "trials": 64}'
+{
+  "all_pass": true,
+  "checks": [
+    {
+      "name": "N = 2*ceil(sqrt(r))",
+      "pass": true
+    },
+    {
+      "name": "declared score >= log2(W)",
+      "pass": true
+    },
+    {
+      "name": "declared score is the rounded-up log2(W)",
+      "pass": true
+    },
+    {
+      "name": "sampler failure bound <= 2^-13.30",
+      "pass": true
+    },
+    {
+      "name": "success floor (collision model - sampler failure) >= 0.85",
+      "pass": true
+    },
+    {
+      "name": "sampler worst case <= 2^24 instructions",
+      "pass": true
+    },
+    {
+      "name": "Python mixer reproduces the C hashdump indices",
+      "pass": true
+    },
+    {
+      "name": "measured sampler acceptance within 0.02 of r/2^256",
+      "pass": true
+    },
+    {
+      "name": "no capped-sampler failure observed",
+      "pass": true
+    },
+    {
+      "name": "sampler cap is enforced",
+      "pass": true
+    },
+    {
+      "name": "walk row uses the exact static step price",
+      "pass": true
+    },
+    {
+      "name": "production-mixer walk: no wrong recovery",
+      "pass": true
+    },
+    {
+      "name": "P0 on curve",
+      "pass": true
+    },
+    {
+      "name": "P0 is the profile base (1,2)",
+      "pass": true
+    },
+    {
+      "name": "[r]P0 = O",
+      "pass": true
+    },
+    {
+      "name": "k=0x1: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x2: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x3: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x7: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x123456789abcdef: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000000: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "vectors.json matches the regenerated vectors",
+      "pass": true
+    }
+  ],
+  "declared_score": 129.988202,
+  "g1_vectors": {
+    "all_pass": true,
+    "count": 6,
+    "source": "vectors.json (compared with the in-package regeneration)"
+  },
+  "ledger_log2": {
+    "control": 6.05989916187809e+37,
+    "g1": 838.8608,
+    "log2": 129.9882018567478,
+    "output": 52.4288,
+    "sampler": 432.5376,
+    "setup": 3436406.3744,
+    "total": 1.3500437458977039e+39,
+    "verify": 214748.3648,
+    "walk": 1.289444754278923e+39
+  },
+  "mixer_crosscheck": [
+    22,
+    2,
+    22,
+    12
+  ],
+  "per_step_instructions": 29052,
+  "production_walk": {
+    "by_outcome": {
+      "no_collision": 4,
+      "ok": 60
+    },
+    "max_steps_allowed": 420,
+    "rate": 0.9375,
+    "steps_to_collision": {
+      "no_collision": 1680,
+      "ok": 11167
+    },
+    "successes": 60,
+    "trials": 64,
+    "wilson95": [
+      0.8500230335750312,
+      0.9754291963252071
+    ]
+  },
+  "sampler": {
+    "failure_bound_log2": -13.301560165445114,
+    "k_max": 64,
+    "measured": {
+      "accepted": 3891,
+      "cap": 64,
+      "draws": 20000,
+      "failures": 0,
+      "max_attempts": 53,
+      "measured_acceptance": 0.19455,
+      "model_acceptance": 0.18903055481604847,
+      "scalars": 2000
+    },
+    "scalars": 66,
+    "worst_case_instructions": 8650752
+  },
+  "success": {
+    "claimed": 0.85,
+    "floor": 0.8558372961620138,
+    "model": 0.8559363408985468,
+    "protected_minimum": 0.39,
+    "sampler_failure": 9.904473653301097e-05
+  },
+  "walk_scope": "32-adding walk, shipped 384-byte encoding, shipped mixer and shipped tower multiplication, in the order-43913 subgroup of the real BN254 Fp12; the subgroup order, not the field, encoding, mixer or walk, differs from production"
+}
