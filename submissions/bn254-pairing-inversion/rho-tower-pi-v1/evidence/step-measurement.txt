@@ -1,0 +1,62 @@
+# Step-cost measurement on the production table, rho_pi.c
+#
+# Machine: AArch64 Cortex-X925, Linux 6.8.0; gcc 13.3.0 -O3 -fno-tree-vectorize
+# -mgeneral-regs-only; Valgrind 3.22.0 Callgrind, event Ir.
+#
+# The table is the algorithm's own: one 256-bit seed sigma, the SHA-256
+# counter-mode word stream, the capped rejection sampler of proof.md
+# section 2, canonical scalars, and M_j = g^{c_j} z^{d_j}:
+#
+#   ./rho_pi mktable 20261112 /tmp/table.bin
+#   -> mktable seed=20261112 words=359   (67 scalars, 359 words, cap 64 each)
+#
+# Each line below is the step cost measured on that table, with the
+# production step and the table entry pinned (j = 32 is the production
+# mixer, i.e. no pinning):
+#
+#   ./rho_pi stepwc 3000 <j> /tmp/table.bin
+#   ./rho_pi stepwc 1000 <j> /tmp/table.bin
+#
+# reported as (Ir(3000) - Ir(1000)) / 2000, the mean cost of the last 2000
+# steps of that trajectory.  This is the *baseline* of the composition in
+# proof.md section 4, not the bound: the bound adds the measured per-call
+# arm deltas of every data-dependent function multiplied by its fixed
+# call count (evidence/percall-arms.txt).
+#
+# j	Ir_per_step
+0	47405.3185
+1	47413.0100
+2	47408.7785
+3	47405.5350
+4	47408.8070
+5	47414.9595
+6	47412.1070
+7	47416.3550
+8	47408.2510
+9	47402.6145
+10	47415.0775
+11	47414.7975
+12	47402.3160
+13	47419.0625
+14	47408.4110
+15	47414.8375
+16	47405.7695
+17	47410.5245
+18	47420.1705
+19	47403.8010
+20	47408.6585
+21	47416.6220
+22	47423.4960
+23	47412.9040
+24	47409.5360
+25	47407.7880
+26	47414.2810
+27	47412.2790
+28	47406.2955
+29	47418.2015
+30	47413.5360
+31	47413.6790
+32	47404.1680
+#
+# summary over the 33 trajectories: min 47402.316  mean 47411.271  max 47423.496
+# charged per step: 53980 instructions (composition of section 4)

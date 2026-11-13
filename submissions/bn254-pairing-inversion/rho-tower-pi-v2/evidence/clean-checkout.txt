@@ -1,0 +1,163 @@
+# clean-copy proof: package copied to /tmp/clean-pi2/checkout (no .git, no binary);
+# run from cwd /tmp.  date: 2026-11-13T04:33:51Z
+
+$ python3 /tmp/clean-pi2/checkout/experiment.py '{"seed": 20261112, "trials": 64}'
+{
+  "all_pass": true,
+  "checks": [
+    {
+      "name": "N = 2*ceil(sqrt(r))",
+      "pass": true
+    },
+    {
+      "name": "declared score >= log2(W)",
+      "pass": true
+    },
+    {
+      "name": "declared score is the rounded-up log2(W)",
+      "pass": true
+    },
+    {
+      "name": "sampler failure bound <= 2^-13.30",
+      "pass": true
+    },
+    {
+      "name": "success floor (collision model - sampler failure) >= 0.85",
+      "pass": true
+    },
+    {
+      "name": "sampler worst case <= 2^24 instructions",
+      "pass": true
+    },
+    {
+      "name": "Python mixer reproduces the C hashdump indices",
+      "pass": true
+    },
+    {
+      "name": "measured sampler acceptance within 0.02 of r/2^256",
+      "pass": true
+    },
+    {
+      "name": "no capped-sampler failure observed",
+      "pass": true
+    },
+    {
+      "name": "sampler cap is enforced",
+      "pass": true
+    },
+    {
+      "name": "walk row uses the exact static step price",
+      "pass": true
+    },
+    {
+      "name": "production-mixer walk: no wrong recovery",
+      "pass": true
+    },
+    {
+      "name": "P0 on curve",
+      "pass": true
+    },
+    {
+      "name": "P0 is the profile base (1,2)",
+      "pass": true
+    },
+    {
+      "name": "[r]P0 = O",
+      "pass": true
+    },
+    {
+      "name": "k=0x1: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x2: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x3: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x7: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x123456789abcdef: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "k=0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000000: on curve, order r, equals k*P0",
+      "pass": true
+    },
+    {
+      "name": "vectors.json matches the regenerated vectors",
+      "pass": true
+    }
+  ],
+  "declared_score": 130.090937,
+  "g1_vectors": {
+    "all_pass": true,
+    "count": 6,
+    "source": "vectors.json (compared with the in-package regeneration)"
+  },
+  "ledger_log2": {
+    "control": 6.05989916187809e+37,
+    "g1": 838.8608,
+    "log2": 130.09093603612078,
+    "output": 52.4288,
+    "sampler": 432.5376,
+    "setup": 3436406.3744,
+    "total": 1.449685886657589e+39,
+    "verify": 214748.3648,
+    "walk": 1.389086895038808e+39
+  },
+  "mixer_crosscheck": [
+    22,
+    2,
+    22,
+    12
+  ],
+  "per_step_instructions": 31297,
+  "production_walk": {
+    "by_outcome": {
+      "no_collision": 4,
+      "ok": 60
+    },
+    "max_steps_allowed": 420,
+    "rate": 0.9375,
+    "steps_to_collision": {
+      "no_collision": 1680,
+      "ok": 11167
+    },
+    "successes": 60,
+    "trials": 64,
+    "wilson95": [
+      0.8500230335750312,
+      0.9754291963252071
+    ]
+  },
+  "sampler": {
+    "failure_bound_log2": -13.301560165445114,
+    "k_max": 64,
+    "measured": {
+      "accepted": 3891,
+      "cap": 64,
+      "draws": 20000,
+      "failures": 0,
+      "max_attempts": 53,
+      "measured_acceptance": 0.19455,
+      "model_acceptance": 0.18903055481604847,
+      "scalars": 2000
+    },
+    "scalars": 66,
+    "worst_case_instructions": 8650752
+  },
+  "success": {
+    "claimed": 0.85,
+    "floor": 0.8558372961620138,
+    "model": 0.8559363408985468,
+    "protected_minimum": 0.39,
+    "sampler_failure": 9.904473653301097e-05
+  },
+  "walk_scope": "32-adding walk, shipped 384-byte encoding, shipped mixer and shipped tower multiplication, in the order-43913 subgroup of the real BN254 Fp12; the subgroup order, not the field, encoding, mixer or walk, differs from production"
+}
