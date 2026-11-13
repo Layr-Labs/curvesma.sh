@@ -1,0 +1,21 @@
+# Filtering scales 2^17..2^27 at merge weight 200
+
+Same profile as [6] (B = 2^58, norms 417 / 471 bits, excess 1.095, purge to 0.0001 U', kmax 64, merge to weight 200, |a|, |b| <= 255); seeds 1..8 at every scale, fixed before any run, none dropped. Explicit band (filtsim.orbit_band): one column per tau-orbit of relative-degree-1 ideals of norm N <= 2^lsmall per side, occurrence min(1, 4 kappa/N); the per-prime counts are an exact formula per base prime, equal to PARI root counts of f(y0, x), g(y0, x) over F_(q^e) at all 82017 good primes q <= 2^20 and all norms q^e <= 2^20; the exceptional primes 2, 3, 5, 7, 13, 29, 983, 11003 come from PARI's maximal order (rnfidealprimedec): only q = 7 has non-tau^2-fixed relative-degree-1 ideals there (f, norm 49, 2 orbits); the tau^2-fixed ones (above 2 on f and g, 3, 5, 29 on g) have log 0 in the chi-eigenpart and no column. Above 2^lsmall the sampled and mid bands keep the average density. Columns f/g: 2^12 24/23, 2^16 184/199, 2^23 14625/14692. Runs: filtL, a C transcription of filtsim.py's build_system, purge and merge (same MT19937 stream, float order, set/dict/heap tie-breaks); it streams the drawn rows to disk and stores the purge's rows as column sets, which changes no value. Identity: with this band filtL reproduces filtsim.run at 2^16 (seeds 1-4: U', rows, purged rows, N, max coefficient and mean weight at weights 200..400) and the unit_entries hook (k5, unit share); with the earlier bands it reproduces the earlier runs. filtbn.data (lib section) ships every run at weight 200; [6] recomputes the table and the charge, [6r] replays filtsim at 2^12.
+
+2^26: N(200) per seed 1:403653 2:399964 3:400663 4:405298 5:404976 6:397343 7:402329 8:399045; mean 0.00599, SE 0.00002, mean + 2 SE 0.006016, s x sqrt(U') 0.351, max coefficient 135.
+2^27: N(200) per seed 1:772380 2:763514 3:765808 4:769640 5:766160 6:757145 7:764039 8:754790; mean 0.00569, SE 0.00002, mean + 2 SE 0.005725, s x sqrt(U') 0.507, max coefficient 145.
+H3 (mean and variance not above the two largest scales): m* = 0.006016 x (1 + 0.0037), v* = 7.941e-09 (7 s^2 / chi2(7, 0.025) = 7 s^2 / 1.689869), charged NU = 0.00604 >= sqrt(m*^2 + v*). Abort above 4 NU U' = 2^46.3367: Cantelli 2.418e-05 <= P_CAP 0.00034. N <= 2^44.3367 in expectation; linear algebra 2^85.272620 (C_CHI 135), generator 2^80.621068 (charged at 4 NU U' x L ratio).
+Weight 200 (the base's). Entry price at weight 200 (unit_entries' hook): 2^16 seeds 1-4 k5 [7.957, 7.977, 7.991, 7.962]; 2^22 seeds 1-8 k5 [7.928, 7.929, 7.93, 7.929, 7.93, 7.929, 7.929, 7.929]; 2^23 seeds 1-8 k5 [7.93, 7.93, 7.93, 7.929, 7.931, 7.93, 7.93, 7.931]; C_ENTRY_K 8.0 >= every measured k5 and every mean + 2 SE; unit share >= 0.9682; row charge 201. Table ratio [6g] from the composition of the same runs (COMP 2^22, 2^23): 2^22 0.8010, 2^23 0.7993 -> TAB_RATIO 0.805.
+
+2^24, 2^25: filt10 (kshitij-hash), an exact C++ transcription of filtsim with this band (same MT19937 stream, float order, tie-breaks); it reproduces this package's stored runs at 2^18 (seeds 1, 2), 2^19 (all 8) and 2^20, 2^21 (seed 1), N and max coefficient. orbit_band above 2^20: the package's band_q loop without its 2^20 range guard (every BADQ prime is below 2^20). Seeds 1..8 fixed in advance, none dropped.
+
+2^26, 2^27: filtfast, equal in law to filtsim, not value-identical: filt10 with the small band of a row drawn by hazard skipping (H_0 = 0, H_(i+1) = H_i - log(1 - pr_i); from s, E = -log(1 - random()), next hit = first j >= s with H_(j+1) - H_s > E; pr_i >= 1 always kept), and 64-bit row offsets. Seeds 1..8 fixed, none dropped. part=fastval checks the law. m* x (1 + 0.0037): the upper 2-SE bound of filtfast's paired understatement of exact N. Validation, N/2^k (seeds); z, pz paired:
+
+| k | exact | filtfast | z | pz |
+|---|---|---|---|---|
+| 20 | 0.00822 (24) | 0.00817 (24) | -0.53 | -0.92 |
+| 21 | 0.00772 (24) | 0.00767 (24) | -0.70 | -1.21 |
+| 22 | 0.00731 (48) | 0.00735 (48) | +1.17 | +2.88 |
+| 23 | 0.00687 (8) | 0.00686 (16) | -0.17 | -0.66 |
+| 24 | 0.00656 (8) | 0.00656 (8) | +0.14 | +0.29 |
+| 25 | 0.00621 (8) | 0.00623 (8) | +0.72 | +2.43 |
