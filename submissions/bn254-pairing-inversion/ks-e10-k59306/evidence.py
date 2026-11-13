@@ -1,0 +1,9 @@
+"""Experiment entry point: the evidence code is evidence_core.py inside the lib (served to import by common12.py)."""
+import sys
+from pathlib import Path
+HERE = Path(__file__).resolve().parent; ROOT = HERE / "files" if (HERE / "files").is_dir() else HERE; sys.path.insert(0, str(ROOT))
+import common12
+import la_bn
+la_bn.C_ENTRY_K=7.9306
+from evidence_core import main
+if __name__ == "__main__": main()
