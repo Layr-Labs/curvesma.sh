@@ -1,0 +1,1 @@
+Initial default JSON documents["RANK-BRIDGE.md"].text: verbatim UTF-8, 7420 bytes, SHA-256 ed3a1f53f0b781e1d3d90b32335fd6d9df7cbfeabd1a2ab0b8d574088be1f395; sibling sha256/encoding. Bundle lib.b126+libextra.b126+libtail.b126; archive format in KERNELS.md.
