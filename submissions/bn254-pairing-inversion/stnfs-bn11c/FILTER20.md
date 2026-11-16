@@ -1,0 +1,1 @@
+Initial default JSON documents["FILTER20.md"].text: verbatim UTF-8, 4651 bytes, SHA-256 3c9414d6f71b051f39b09b00da8a8c305a9f9cd0a7737097e429263971dfb0a8; sibling sha256/encoding. Bundle lib.b126+libextra.b126+libtail.b126; archive format in KERNELS.md. Its H3 paired-correction sentence is superseded by FILTER20-CORRECTION.md.
