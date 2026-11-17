@@ -1,0 +1,73 @@
+{
+  "id": "bn254-gt-dlp",
+  "curve": "BN254 (Ethereum alt_bn128)",
+  "parameter_x": "44e992b44a6909f1",
+  "problem": "gt-discrete-logarithm",
+  "scope": "unrestricted-production",
+  "field_modulus": "30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd47",
+  "subgroup_order": "30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001",
+  "curve_equation_G1": "y^2 = x^3 + 3 over Fp; G1=<P0> of order r",
+  "cofactor_G1": "1",
+  "generator_P0": {
+    "x": "0000000000000000000000000000000000000000000000000000000000000001",
+    "y": "0000000000000000000000000000000000000000000000000000000000000002"
+  },
+  "field_Fp2": "Fp[u]/(u^2+1); [c0,c1] means c0+c1*u",
+  "curve_equation_G2": "y^2 = x^3 + 3/(9+u) over Fp2; G2=<Q0> of order r",
+  "generator_Q0": {
+    "x": [
+      "1800deef121f1e76426a00665e5c4479674322d4f75edadd46debd5cd992f6ed",
+      "198e9393920d483a7260bfb731fb5d25f1aa493335a9e71297e485b7aef312c2"
+    ],
+    "y": [
+      "12c85ea5db8c6deb4aab71808dcb408fe3d1e7690c43d37b4ce6cc0166fa7daa",
+      "090689d0585ff075ec9e99ad690c3395bc4b313370b38ef355acdadcd122975b"
+    ]
+  },
+  "field_Fp12": "Fp[w]/(w^12-18*w^6+82); coefficient list [c0,...,c11] means sum(ci*w^i); u maps to w^6-9",
+  "group_GT": "Nonzero z in Fp12 with z^r=1; identity [1,0,...,0]",
+  "pairing": {
+    "definition": "Reduced pairing e(P,Q)=py_ecc.optimized_bn128.pairing(Q,P,final_exponentiate=True) at the pinned commit; used to define the public fixed GT generator g.",
+    "ate_loop_count": "19d797039be763ba8",
+    "final_exponent": "(p^12-1)/r",
+    "reference": {
+      "repository": "https://github.com/ethereum/py_ecc",
+      "release": "v8.0.0",
+      "commit": "04151f01f59f902ab932a51e0ca0ebce3883fc51",
+      "source_sha256": {
+        "py_ecc/optimized_bn128/optimized_curve.py": "d3cb6a282a9313424edd5b72e7c8fc92e5288888d0336fb508c2bc378ef3b670",
+        "py_ecc/optimized_bn128/optimized_pairing.py": "e67618b43bbd327e3762a4abb14c713ad8902a2a61f5d5044e0df14e623f278e",
+        "py_ecc/fields/field_properties.py": "9636251929dc93b9b9ae93b8aa0f91e14ed829248a0858b0fa881d5ff9105830",
+        "py_ecc/fields/optimized_field_elements.py": "070159688a16c1346a31500f4f1a9d031cb7ce60c8fa1847ab3c534302a22c73"
+      }
+    }
+  },
+  "challenge": "Sample x uniformly from 0..r-1 by rejection sampling. Give only z=g^x in GT, including identity. Recover x. Neither x nor its sampling coins are given. No auxiliary powers, G1 or G2 preimage, or n parameter is supplied.",
+  "input": {
+    "z": "GT element g^x, encoded as 12 Fp coefficients"
+  },
+  "output": {
+    "x": "32-byte scalar"
+  },
+  "acceptance": "Decode z and x canonically. Require z!=0, z^r=1 and 0<=x<r. Accept exactly when g^x=z, comparing all 12 coefficients. x=0 is valid exactly when z=1. Returning a preimage point or relation is not scalar recovery.",
+  "encoding": "UTF-8 JSON with exactly the stated input or output keys. z is a list of exactly 12 Fp coefficients in increasing polynomial degree in the pinned Fp12 basis. Each coefficient is 64 lowercase hex characters without prefix and represents an integer less than p. x is 64 lowercase hex characters representing an integer less than r. Reject duplicate keys, noncanonical encodings, zero, and elements outside GT. This is not EVM calldata.",
+  "source": "https://github.com/ethereum/py_ecc/tree/04151f01f59f902ab932a51e0ca0ebce3883fc51/py_ecc/optimized_bn128",
+  "ethereum_reference": "https://eips.ethereum.org/EIPS/eip-197",
+  "generator_g": {
+    "definition": "g=e(P0,Q0)=py_ecc.optimized_bn128.pairing(Q0,P0,final_exponentiate=True) at the pinned commit; g has order r.",
+    "coefficients": [
+      "28c6e04df059260df7d2d2a1f9b5f77676d1939847852c4ed50d2318744c1d5f",
+      "17bb74adab1705c26133af1dac87044a3833ac011018e8158da48382bbd2dcd6",
+      "0d3bd72f54d742f78ea9e6015c8ea2f2e7fbb728c9c905ec531dcf7de5b246f0",
+      "090cb8ee97e091a667af03882b06c3ecb4e437993cbd1b05b98c7f9dfcfe9c40",
+      "016b6d855b5cbf76f9829a309db52f5c442f65ae29f996af59d65f85f4afe78a",
+      "0a0272204db51dadc0342bd318b9302a44faec12ff500bdd4d4b012ffe45f36f",
+      "084f330485b09e866bc2f2ea2b897394deaf3f12aa31f28cb0552990967d4704",
+      "27ed208e7a0b55ae6e710bbfbd2fd922669c026360e37cc5b2ab862411536104",
+      "2067586885c3318eeffa1938c754fe3c60224ee5ae15e66af6b5104c47c8c5d8",
+      "279db296f9d479292532c7c493d8e0722b6efae42158387564889c79fc038ee3",
+      "2b03614464f04dd772d86df88674c270ffc8747ea13e72da95e3594468f222c4",
+      "108c19d15f9446f744d0f110405d3856d6cc3bda6c4d537663729f5257628417"
+    ]
+  }
+}
