@@ -55,6 +55,7 @@
     "response_format": "json_object"
   },
   "limits": {
+    "max_submission_bytes": 1048576,
     "max_followups": 1,
     "max_initial_runs": 1,
     "total_provider_requests": 6,
