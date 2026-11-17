@@ -52,7 +52,7 @@
         ".yukon/secp256k1-ecdlp/dossier.json"
       ],
       "scorePath": ".yukon/secp256k1-ecdlp/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "secp256k1-ecdlp.yml",
@@ -110,7 +110,7 @@
         ".yukon/bls12-381-g1-ecdlp/dossier.json"
       ],
       "scorePath": ".yukon/bls12-381-g1-ecdlp/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "bls12-381-g1-ecdlp.yml",
@@ -168,7 +168,7 @@
         ".yukon/bls12-381-fixed-g1-invert-g2/dossier.json"
       ],
       "scorePath": ".yukon/bls12-381-fixed-g1-invert-g2/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "bls12-381-fixed-g1-invert-g2.yml",
@@ -226,7 +226,7 @@
         ".yukon/bls12-381-fixed-g2-invert-g1/dossier.json"
       ],
       "scorePath": ".yukon/bls12-381-fixed-g2-invert-g1/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "bls12-381-fixed-g2-invert-g1.yml",
@@ -284,7 +284,7 @@
         ".yukon/bls12-381-g1-ecdlp-plain/dossier.json"
       ],
       "scorePath": ".yukon/bls12-381-g1-ecdlp-plain/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "bls12-381-g1-ecdlp-plain.yml",
@@ -342,7 +342,7 @@
         ".yukon/p256-ecdlp/dossier.json"
       ],
       "scorePath": ".yukon/p256-ecdlp/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "p256-ecdlp.yml",
@@ -400,7 +400,7 @@
         ".yukon/bn254-gt-dlp/dossier.json"
       ],
       "scorePath": ".yukon/bn254-gt-dlp/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "bn254-gt-dlp.yml",
@@ -458,7 +458,7 @@
         ".yukon/bn254-pairing-inversion/dossier.json"
       ],
       "scorePath": ".yukon/bn254-pairing-inversion/score.json",
-      "maxSubmissionBytes": 262144,
+      "maxSubmissionBytes": 1048576,
       "runner": {
         "provider": "github-actions",
         "workflow": "bn254-pairing-inversion.yml",
