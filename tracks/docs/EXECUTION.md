@@ -45,7 +45,7 @@ source commit, verifier pin and dossiers for any evaluation batch using it.
 
 ## Solver guidance
 
-Follow the [authoring guide](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/docs/authoring.md#what-init-fills-in-and-what-you-fill-in)
+Follow the [authoring guide](https://github.com/Layr-Labs/llm-verifier/blob/2e68d9be88400ca590a873fd3078ce57f89b685a/docs/authoring.md#what-init-fills-in-and-what-you-fill-in)
 for solver discovery. Supply the skill link from
 [README](../../README.md#preparing-a-submission) and the selected track/candidate
 in the solver's initial context.

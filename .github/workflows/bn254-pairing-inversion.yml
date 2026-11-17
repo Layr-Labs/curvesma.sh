@@ -11,10 +11,10 @@ permissions:
   id-token: write
 jobs:
   verify:
-    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@8c1f098875fae0750c29ecfd641f7c9fc53a0f41
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@2e68d9be88400ca590a873fd3078ce57f89b685a
     with:
       verifier_repository: Layr-Labs/llm-verifier
-      verifier_revision: 8c1f098875fae0750c29ecfd641f7c9fc53a0f41
+      verifier_revision: 2e68d9be88400ca590a873fd3078ce57f89b685a
       root_dir: '.'
       config_path: tracks/bn254-pairing-inversion/verifier.json
       submission_path: submission
