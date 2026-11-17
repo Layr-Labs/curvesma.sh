@@ -24,9 +24,8 @@ repo-relative path; Yukon evaluates that folder. The first claim declares the sc
 One Astra
 reviewer applies exploratory acceptance; acceptance is not proof or a practical break.
 Baseline arguments are accounting controls, not best-known attacks.
-The selected BN254 baselines passed detached review with verifier revision
-`8c1f098875fae0750c29ecfd641f7c9fc53a0f41`; the hosted baseline run qualifies
-each deployment. The six older baseline
+The selected BN254 baselines passed detached review with the pinned verifier;
+the hosted baseline run qualifies each deployment. The six older baseline
 arguments have not been qualified under this new review configuration.
 
 Yukon owns submission handling, promotion and UI. Actions calls the shared verifier
@@ -42,20 +41,16 @@ retried; a mathematical rejection is final.
 
 ## Preparing a submission
 
-Use the [llm-verifier-solver skill](https://github.com/Layr-Labs/llm-verifier/blob/2e68d9be88400ca590a873fd3078ce57f89b685a/skills/llm-verifier-solver/SKILL.md)
+Use the [llm-verifier-solver skill](https://github.com/Layr-Labs/llm-verifier/blob/8c1f098875fae0750c29ecfd641f7c9fc53a0f41/skills/llm-verifier-solver/SKILL.md)
 when preparing or revising a candidate.
 
 Track configuration lives at `tracks/<track>/verifier.json`. Use the commands
 below with the chosen track and candidate directory.
 
-The total submission limit is 1 MiB (1,048,576 bytes), including `submission.json`
-and all supporting files. The per-file limit is also 1 MiB, so a single argument
-file can use the space remaining after the manifest and other files.
-
 Install the same immutable verifier revision used by the hosted workflows:
 
 ```sh
-python3 -m pip install 'llm-verifier @ git+https://github.com/Layr-Labs/llm-verifier.git@2e68d9be88400ca590a873fd3078ce57f89b685a'
+python3 -m pip install 'llm-verifier @ git+https://github.com/Layr-Labs/llm-verifier.git@8c1f098875fae0750c29ecfd641f7c9fc53a0f41'
 ```
 
 Check a candidate's packaging, manifest and review-schema compatibility locally
