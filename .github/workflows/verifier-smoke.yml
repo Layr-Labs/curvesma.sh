@@ -1,0 +1,18 @@
+# Temporary smoke test: delete this file once testing is complete.
+name: Verifier smoke test
+on: workflow_dispatch
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  verify:
+    uses: Layr-Labs/llm-verifier/.github/workflows/verify.yml@8c1f098875fae0750c29ecfd641f7c9fc53a0f41
+    with:
+      verifier_repository: Layr-Labs/llm-verifier
+      verifier_revision: 8c1f098875fae0750c29ecfd641f7c9fc53a0f41
+      root_dir: '.'
+      config_path: tracks/secp256k1-ecdlp/verifier.json
+      submission_path: submission
+      score_path: .yukon/secp256k1-ecdlp/score.json
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}
