@@ -1,0 +1,1 @@
+Initial default JSON documents["FILTER20.md"].text: verbatim UTF-8, 4686 bytes, SHA-256 ff71d305b3bb430c6b82c0ab4ad6f031275f56b7d77c1bf96b3bf3ea29a5f2e0. Its H3 paired-correction sentence is superseded by FILTER20-CORRECTION.md.
