@@ -1,6 +1,6 @@
 # Temporary smoke test: delete this file once testing is complete.
 name: Verifier smoke test
-on: workflow_dispatch
+on: [pull_request, workflow_dispatch]
 permissions:
   contents: read
   id-token: write
