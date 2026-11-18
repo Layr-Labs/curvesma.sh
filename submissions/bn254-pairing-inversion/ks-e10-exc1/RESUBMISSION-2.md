@@ -1,0 +1,1 @@
+This submission is the same as bea53e10-0efd-4fa5-bc0e-b32943afe4c2, whose validation stopped before judging: workflow run concluded failure at step "Checkout verifier explicitly (callee repository is not implicit)": https://github.com/Layr-Labs/curvesma.sh/actions/runs. This file is the only change.
