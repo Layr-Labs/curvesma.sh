@@ -29,7 +29,8 @@ the hosted baseline run qualifies each deployment. The six older baseline
 arguments have not been qualified under this new review configuration.
 
 Yukon owns submission handling, promotion and UI. Actions calls the shared verifier
-workflow using `OPEN_AI_EIGEN_KEY` and, for private checkout, `VERIFIER_CHECKOUT_TOKEN`.
+workflow using `OPEN_AI_EIGEN_KEY` for review. The public verifier checkout uses
+GitHub's automatically provided `github.token`.
 The manifest commands describe separate phases; local `yukon run` does not orchestrate
 the intervening review. Use the verifier's phase commands or the hosted workflow.
 
