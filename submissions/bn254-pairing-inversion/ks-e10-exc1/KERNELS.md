@@ -1,0 +1,3 @@
+Initial default JSON documents["KERNELS.md"].text: verbatim UTF-8, 22513 bytes, SHA-256 d7063a60794f04a920afc7952486b5c25ce1071f7c6a5f95b22efebab2cf558b; sibling sha256. Bundle lib.b126+libextra.b126+libtail.b126; archive format below.
+
+Archive format (cited by KERNELS.md, Code archive), in plain text: lib.b126 + libextra.b126 + libtail.b126 are one lzma stream as UTF-8 enumerative blocks: 1024 bytes, final block minimal; rank by width, codepoint, suffix. Exclude NUL, surrogates, FEFF. Counts (127,1920,61439,1048576); A(0)=1,A(n<0)=0. Capacity floor(log256 A(B)); big-endian, zero padded. Join binary files before decoding; split only between characters. Decoding is charged 2^50 instructions, within the claim's rounding slack. The decoder is common12._install_lib.d126.
