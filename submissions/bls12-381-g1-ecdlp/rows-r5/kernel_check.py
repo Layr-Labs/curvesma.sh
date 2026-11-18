@@ -1,0 +1,289 @@
+"""Kernel audit (s1, s26, s40): path enumeration, a64.py runs against exact arithmetic, stride footprint."""
+import sys, json, re, random, time
+from pathlib import Path
+root = Path(__file__).resolve().parent
+if (root / 'files').is_dir(): root = root / 'files'
+sys.path.insert(0, str(root))
+import a64, rows as RW
+params = json.loads((root / 'params.json').read_text()); p = int(params['p'], 16)
+R = pow(2, 384, p); RI = pow(R, -1, p); MASK = (1 << 64) - 1; BASE = 0x80000; IV = 117 * p // 100
+WORST = None
+EOLD = ('\tldp\tx0,x29,[x30,#8]\t\t// P, T (T stays in x29 through the second product)\n\tldp\tx19,x20,[x0]\t\t// x1\n\tldp\tx21,x22,[x0,#16]\n\tldp\tx23,x24,[x0,#32]\n'
+ '\tldp\tx25,x26,[x29,#96]\t// v2 = p - x2\n\tldp\tx27,x28,[x29,#112]\n\tldp\tx17,x3,[x29,#128]\n\tadds\tx11,x11,x25\n\tadcs\tx12,x12,x26\n\tadcs\tx13,x13,x27\n'
+ '\tadcs\tx14,x14,x28\n\tadcs\tx15,x15,x17\n\tadc\tx16,x16,x3\n\tsubs\tx11,x11,x19\n\tsbcs\tx12,x12,x20\n\tsbcs\tx13,x13,x21\n\tsbcs\tx14,x14,x22\n\tsbcs\tx15,x15,x23\n'
+ '\tsbcs\tx16,x16,x24\t\t// lo iff X < 0\n\tb.hs\t.Lx_nonneg')
+ENEW = ('\tldp\tx29,x0,[x30,#16]\t// T, buf (s31: e = v2 - x1 at buf+96, 384-bit two\'s complement)\n\tldp\tx19,x20,[x0,#96]\n\tldp\tx21,x22,[x0,#112]\n\tldp\tx23,x24,[x0,#128]\n'
+ '\tldp\tx25,x26,[x29,#96]\t// v2 = p - x2\n\tldp\tx27,x28,[x29,#112]\n\tldp\tx17,x3,[x29,#128]\n\tadds\tx11,x11,x19\n\tadcs\tx12,x12,x20\n\tadcs\tx13,x13,x21\n'
+ '\tadcs\tx14,x14,x22\n\tadcs\tx15,x15,x23\n\tadc\tx16,x16,x24\t\t// X = V + e in (-p, 2.16p): bit 383 is the sign\n\ttbz\tx16,#63,.Lx_nonneg')
+def esum_text(tx):
+ """s32: X = V + e, e precomputed by the batch pass."""
+ assert tx.count(EOLD) == 1; return tx.replace(EOLD, ENEW)
+def drop_parity_text(tx):
+ """Remove four unused output-key blocks; coordinates are already stored."""
+ lines=tx.splitlines(True); out=[]; i=0; blocks=0
+ while i<len(lines):
+  if re.match(r'\ttbz\t(?:x19|x11),#0,\.Lk_[ed]2?',lines[i]):
+   j=i+1
+   while not lines[j].startswith('\tldp\tx0,x1,[x30,#32]!'): j+=1
+   ins=[v.split('//')[0].strip() for v in lines[i:j] if v.startswith('\t')]
+   assert [v.split()[0] for v in ins]==['tbz','subs','sbcs','sbcs','sbc','stp','str']
+   assert ins[-2].endswith('[x2,#96]') and ins[-1].endswith('[x2,#112]')
+   blocks+=1; i=j
+  else: out.append(lines[i]); i+=1
+ assert blocks==4
+ return ''.join(out)
+MU0 = '\n.Llane:\n'
+def mu_text(tx, plus=False):
+ """s46: the batch round supplies mu; the lane start (t = y1 + y2 and the first product) becomes four loads."""
+ i = tx.index(MU0) + len(MU0); j = tx.index('\tstp\tx11,x12,[sp,#96]'); o = RW.OMP if plus else RW.OMM
+ assert tx.count(MU0) == 1 and tx.count('\tstp\tx11,x12,[sp,#96]') == 1 and tx[i:j].count('// ---- end MULNR') == 1
+ tx = tx[:i] + '\tldr\tx2,[x30,#24]\t\t// buf (s46: mu from the batch round)\n' + ''.join('\tldp\tx%d,x%d,[x2,#%d]\n' % (11 + 2 * k, 12 + 2 * k, o + 16 * k) for k in range(3)) + tx[j:]
+ for k, r in enumerate(('x19,x20', 'x21,x22', 'x23,x24')):
+  a = '\tldp\t%s,[x0,#%d]' % (r, 96 + 16 * k); assert tx.count(a) == 1; tx = tx.replace(a, '\tldp\t%s,[x0,#%d]' % (r, RW.OE + 16 * k))
+ return tx
+def rows_text(tx):
+ """s46: a full child stores rows 1..5 of y' (out-240) and of x' (out+192) before the next lane."""
+ nxt = "\tldp\tx0,x1,[x30,#32]!\t// next lane's out (NULL at args[n]) and P\n"
+ parts = tx.split(nxt); assert len(parts) == 5
+ out = parts[0]
+ for k in range(4):
+  y19 = parts[k].rstrip().endswith('stp\tx23,x24,[x2,#80]'); assert y19 or parts[k].rstrip().endswith('stp\tx15,x16,[x2,#80]')
+  R, V, Q, Tm = (['x19', 'x20', 'x21', 'x22', 'x23', 'x24'], ['x0', 'x1', 'x3', 'x4', 'x11', 'x12'], 'x13', 'x14') if y19 else (['x11', 'x12', 'x13', 'x14', 'x15', 'x16'], ['x0', 'x1', 'x3', 'x4', 'x19', 'x20'], 'x21', 'x22')
+  L = RW.rowbuild(R, 'x2', RW.yoff, V, Q, Tm) + RW.ldrow(R, 'x2', 0) + RW.rowbuild(R, 'x2', RW.xoff, V, Q, Tm)
+  out += '\t// s46 rows of y\' and x\'\n' + ''.join('\t' + l.replace(' ', '\t', 1) + '\n' for l in L) + nxt + parts[k + 1]
+ return out
+def base_text(): return drop_parity_text(esum_text((root / 'measure/side_lanes.S').read_text()))
+def kernel_text(plus=False, rows=True):
+ tx = mu_text(base_text(), plus)
+ if plus:
+  for a, b in (('x25,x26,[x29,#144]', '#48'), ('x27,x28,[x29,#160]', '#64'), ('x17,x3,[x29,#176]', '#80')):
+   assert tx.count('ldp\t' + a) == 2; tx = tx.replace('ldp\t' + a, 'ldp\t' + a.split('#')[0] + b + ']')
+ return rows_text(tx) if rows else tx
+def put_e(m, ii, x1, x2): put(m, ii + RW.OE, (p - x2 - x1) % (1 << 384))
+FIXED = 32
+CHARGED = 40
+assert FIXED + 1 + 5 + 2 == CHARGED
+
+def lane_paths(text):
+ lines = text.split("\n"); st = lines.index(".Llane:"); code, labels = [], {}
+ for l in lines[st:]:
+  l = l.split("//")[0].rstrip()
+  if l.startswith(".Lexit:"): break
+  if re.match(r"^\.L\w+:", l): labels[l[:-1]] = len(code); continue
+  if l.startswith("\t") and l.strip(): code.append(l.strip())
+ paths = []
+ def walk(i, n, tr):
+  while True:
+   ins = code[i]; n += 1; op = ins.split()[0]
+   if op == "cbnz": paths.append((n, tr)); return
+   m = re.match(r"(b\.\w+|tbz|tbnz|cbz|b)\b.*?(\.L\w+)$", ins)
+   if m and op == "b": assert labels[m.group(2)] > i; i = labels[m.group(2)]; continue
+   if m: assert labels[m.group(2)] > i; walk(labels[m.group(2)], n, tr + [op + "+"]); tr = tr + [op + "-"]
+   i += 1
+ walk(0, 0, [])
+ return paths
+
+def prepare(text, base=None):
+ code, data = text.split('.section .rodata', 1)
+ vals = []
+ for line in data.splitlines():
+  if '.quad' in line: vals += [int(x.strip(), 0) for x in line.split('.quad', 1)[1].split(',')]
+ assert sum(vals[i] << (64 * i) for i in range(6)) == p and vals[6] == (-pow(p, -1, 1 << 64)) & MASK
+ if base is not None: vals[6] = base
+ code = code.replace('__SIZEOF_POINTER__', '8')
+ code = re.sub(r'(?<![A-Za-z_])(-?\d+)\*(\d+)', lambda m: str(int(m[1]) * int(m[2])), code)
+ code, n = re.subn(r'\badrp\s+x0,\.Lsk_consts', 'mov x0,#' + str(BASE), code); assert n == 1
+ code, n = re.subn(r'\badd\s+x0,x0,:lo12:\.Lsk_consts', 'add x0,x0,#0', code); assert n == 1
+ code = '\n'.join(l for l in code.splitlines() if not l.lstrip().startswith('#'))
+ pr, labels = a64.a64_load(code)
+ return pr, labels, {BASE + 8 * i: v for i, v in enumerate(vals)}
+
+def put(m, a, v):
+ for i in range(6): m[a + 8 * i] = (v >> (64 * i)) & MASK
+def get(m, a): return sum(m.get(a + 8 * i, 0) << (64 * i) for i in range(6))
+
+def add(A, B):
+ x, y = A; u, v = B
+ t = (3 * x * x * pow(2 * y, -1, p) if x == u else (v - y) * pow(u - x, -1, p)) % p
+ xx = (t * t - x - u) % p
+ return xx, (t * (x - xx) - y) % p
+
+def mu_of(y1, y2, iv, rng=None):
+ """a congruent mu in the batch round's output range [0, p + 2^376)."""
+ mu = (y1 + y2) * iv * RI % p
+ return mu + p if rng and mu < (1 << 376) and rng.random() < 0.5 else mu
+def expect_mu(x1, y1, x2, y2, mu):
+ xx = (mu * mu * RI - x1 - x2) % p; yy = (mu * ((xx - x2) % p) * RI + y2) % p
+ return xx, yy
+def expect(x1, y1, x2, y2, iv):
+ mu = (y1 + y2) * iv * RI % p; xx = (mu * mu * RI - x1 - x2) % p
+ yy = (mu * ((xx - x2) % p) * RI + y2) % p
+ return xx, yy
+
+SLOT = RW.XR + 240 - RW.YR
+def lane_mem(m, i, x1, y1, x2, y2, iv, plus, rng, out):
+ pp, tt, ii = 0x30000 + 256 * i, 0x40000 + 256 * i, 0x50000 + 512 * i
+ for j, v in enumerate((out, pp, tt, ii)): m[0x10000 + 32 * i + 8 * j] = v
+ put(m, pp, x1); put(m, pp + 48, y1); put(m, tt, x2); put(m, tt + 48, p - y2 if plus else y2)
+ put(m, tt + 96, p - x2); put(m, tt + 144, y2 if plus else p - y2); put_e(m, ii, x1, x2)
+ mu = mu_of(y1, y2, iv, rng); put(m, ii + (RW.OMP if plus else RW.OMM), mu)
+ return expect_mu(x1, y1, x2, y2, mu)
+def rows_ok(mem, o, xx, yy):
+ return all(get(mem, o + RW.yoff(j)) == RW.rows_of(yy)[j] and get(mem, o + RW.xoff(j)) == RW.rows_of(xx)[j] for j in range(6))
+def stride_audit(prog, labels, cm, rng, stride, n=8, sp=0x7000000, plus=False):
+ """s8/s46 layout: full-child slots [out-240, out+432) under canaries, keys 96..191 untouched; an overlapping stride must fail."""
+ base, m, want = 0x20000 + 256, dict(cm), []
+ for i in range(n):
+  x1, y1, x2, y2, iv = (rng.randrange(p) for _ in range(5)); y2 = y2 or 1
+  want.append(lane_mem(m, i, x1, y1, x2, y2, iv, plus, rng, base + stride * i))
+ for a_ in range(base + RW.YR, base + stride * n + RW.XR + 240 + 128, 8): m[a_] = rng.getrandbits(64)
+ m[0x10000 + 32 * n] = m[0x10000 + 32 * n + 8] = 0
+ regs = {f'x{i}': rng.getrandbits(64) for i in range(31)}; regs.update(x0=0x10000, x1=n, sp=sp)
+ mem = dict(m); ro = {}
+ a64.a64_run(prog, labels, 'side_lanes', regs, mem, limit=50000, out_regs=ro)
+ outs = set()
+ for i in range(n):
+  o = base + stride * i; outs.update(range(o + RW.YR, o + 96, 8)); outs.update(range(o + RW.XR, o + RW.XR + 240, 8))
+ written = {a_ for a_ in mem if a_ not in m or mem[a_] != m[a_]}
+ frame = {a_ for a_ in written if sp - 1024 <= a_ < sp}
+ assert written - frame <= outs, sorted(hex(a_) for a_ in (written - frame) - outs)
+ for i, (xx, yy) in enumerate(want):
+  o = base + stride * i
+  assert get(mem, o) == xx and get(mem, o + 48) == yy and rows_ok(mem, o, xx, yy), i
+ assert ro['sp'] == sp
+ return n
+
+def run(cfg):
+ t0 = time.time(); rng = random.Random(cfg.get('seed', 1)); plus = cfg.get('plus', False)
+ text = kernel_text(plus)
+ paths = lane_paths(text); worst = max(n for n, _ in paths)
+ assert worst == 894, worst
+ prog, labels, cm = prepare(text)
+ vals = [0, 1, p - 1, p - 2, R]; cases = []
+ for i, a in enumerate(vals):
+  for j, b in enumerate(vals):
+   for iv in vals: cases.append((vals[(i + j) % 5], a, vals[(2 * i + j) % 5], b or 1, iv))
+ cases += [tuple(rng.randrange(1 if k == 3 else 0, IV if k == 4 else p) for k in range(5)) for _ in range(cfg.get('samples', 200))]
+ cases += [(0, rng.randrange(p), 0, rng.randrange(1, p), rng.randrange(p)) for _ in range(60)]
+ cases += [(rng.randrange(p), rng.randrange(p), rng.randrange(p), p - rng.randrange(1, 1 << 300), rng.randrange(p)) for _ in range(60)]
+ for k in range(40):
+  y2 = p - 1 if k % 2 else p - 1 - rng.randrange(1 << 64); iv = (p - 1, IV - 1)[k % 2] if k % 4 < 2 else rng.randrange(IV - (1 << 64), IV)
+  mu = (p - 1 + y2) * iv * RI % p; x1 = (mu * mu * RI - (p - 1)) % p
+  cases.append((x1, p - 1, 0, y2, iv))
+ G = (int(params['gx'], 16), int(params['gy'], 16)); A, B = G, add(G, G); curve = []
+ for _ in range(24):
+  A = add(A, G); B = add(B, add(G, G))
+  if A[0] == B[0]: continue
+  D = add(A, (B[0], -B[1] % p)); curve.append(len(cases))
+  cases.append((A[0] * R % p, A[1] * R % p, B[0] * R % p, B[1] * R % p, pow((B[0] - A[0]) % p, -1, p) * R % p))
+  assert expect(*cases[-1])[:2] == (D[0] * R % p, D[1] * R % p)
+ unreduced = sum(c[4] >= p for c in cases); assert unreduced >= 40
+ fixed, lanes, per_call = set(), 0, []
+ lo = labels['.Llane'][0]; hi = labels['.Lexit'][0]
+ body_visits = {i: 0 for i in range(lo, hi)}
+ for begin in range(0, len(cases), 8):
+  grp = cases[begin:begin + 8]; n = len(grp); m = dict(cm); want = []
+  for i, (x1, y1, x2, y2, iv) in enumerate(grp):
+   want.append(lane_mem(m, i, x1, y1, x2, y2, iv, plus, rng, 0x20000 + 256 + 1024 * i))
+  m[0x10000 + 32 * n] = m[0x10000 + 32 * n + 8] = 0
+  regs = {f'x{i}': rng.getrandbits(64) for i in range(31)}; regs.update(x0=0x10000, x1=n, sp=0x7000000)
+  mem = dict(m); ro = {}; vis = {i: 0 for i in range(lo, hi)}
+  c = a64.a64_run(prog, labels, 'side_lanes', regs, mem, limit=50000, out_regs=ro, visits=vis)
+  body = sum(vis.values()); assert body <= worst * n + 1, (body, n)
+  fixed.add(c - body)
+  for i, v in vis.items(): body_visits[i] += v
+  for a_, v in m.items(): assert mem[a_] == v or 0x20000 <= a_ < 0x30000, hex(a_)
+  for i, (xx, yy) in enumerate(want):
+   o = 0x20000 + 256 + 1024 * i
+   assert get(mem, o) == xx and get(mem, o + 48) == yy and rows_ok(mem, o, xx, yy), (begin + i)
+  for reg in ['sp'] + [f'x{i}' for i in range(18, 30)]: assert ro[reg] == regs[reg], reg
+  per_call.append((n, body)); lanes += n
+ assert len(fixed) == 1 and max(fixed) == FIXED, fixed
+ stride_lanes = stride_audit(prog, labels, cm, rng, SLOT, plus=plus)
+ try: stride_audit(prog, labels, cm, rng, SLOT - 32, plus=plus); negative = False
+ except AssertionError: negative = True
+ assert negative
+ branches = 0
+ for i in range(lo, hi):
+  mn, ops = prog[i]
+  if mn.startswith('b.') or mn in ('tbz', 'tbnz', 'cbz'):
+   tgt = labels[ops[-1]][0]
+   assert body_visits[tgt] > 0 and body_visits.get(i + 1, 1) > 0, (i, mn)
+   branches += 1
+ return {'status': 'passed', 'lane_paths': len(paths), 'worst_path_per_lane': worst,
+ 'best_path_per_lane': min(n for n, _ in paths), 'lanes': lanes, 'genuine_curve_cases': len(curve), 'unreduced_inverse_lanes': unreduced,
+ 'fixed_per_call': max(fixed), 'fixed_charged_per_call': CHARGED, 'stride672_footprint_lanes': stride_lanes, 'stride640_negative_control_caught': True, 'rows_checked': True, 'conditional_branches_both_ways': branches,
+ 'max_lane_body_per_lane': max(b / n for n, b in per_call), 'seconds': round(time.time() - t0, 1),
+ 'scope': 'Word-level interpretation (a64.py) of the derived coordinate-only listing against exact arithmetic; '
+ 'static path enumeration of the lane body. Callgrind record: measure/measurement.log.'}
+
+def tmr_leaf_block():
+ """s47: the leaf's reduction (BY1 + H add) and X reduction replaced by the table reduction with e folded in
+ (T_0 carries +p, so the sum stays in (0, 10.2p)), the table correction and one conditional subtraction."""
+ o = ['and x3,x17,#0xffffffffffff', 'add x0,x18,x3,lsl #10', 'ldp x1,x2,[x0,#-256]', 'ldp x3,x4,[x0,#-240]', 'ldp x29,x0,[x0,#-224]',
+  'adds x11,x24,x1', 'adcs x12,x25,x2', 'adcs x13,x26,x3', 'adcs x14,x27,x4', 'adcs x15,x28,x29', 'adcs x16,x16,x0', 'adc x0,xzr,xzr']
+ ext = RW.TMR_EXT; L = ['x17', 'x19', 'x20', 'x21', 'x22', 'x23']
+ for i in range(1, 8):
+  off = 64 * i - 256
+  o += [x.format(C='x3', **{('L%d' % k): L[k] for k in range(6)}) for x in ext[i]] + ['add x2,x18,x3,lsl #10', 'ldp x24,x25,[x2,#%d]' % off, 'ldp x26,x27,[x2,#%d]' % (off + 16), 'ldp x28,x1,[x2,#%d]' % (off + 32),
+   'adds x11,x11,x24', 'adcs x12,x12,x25', 'adcs x13,x13,x26', 'adcs x14,x14,x27', 'adcs x15,x15,x28', 'adcs x16,x16,x1', 'adc x0,x0,xzr']
+ o += ['ldr x1,[x30,#24]', 'ldp x24,x25,[x1,#%d]' % RW.OE, 'ldp x26,x27,[x1,#%d]' % (RW.OE + 16), 'ldp x28,x29,[x1,#%d]' % (RW.OE + 32),
+  'adds x11,x11,x24', 'adcs x12,x12,x25', 'adcs x13,x13,x26', 'adcs x14,x14,x27', 'adcs x15,x15,x28', 'adcs x16,x16,x29', 'lsr x3,x29,#63', 'adc x0,x0,xzr', 'sub x0,x0,x3']
+ o += ['extr x3,x0,x16,#56', 'add x2,x18,x3,lsl #10', 'ldp x24,x25,[x2,#256]', 'ldp x26,x27,[x2,#272]', 'ldp x28,x1,[x2,#288]',
+  'subs x11,x11,x24', 'sbcs x12,x12,x25', 'sbcs x13,x13,x26', 'sbcs x14,x14,x27', 'sbcs x15,x15,x28', 'sbc x16,x16,x1']
+ o += ['subs x19,x11,x5', 'sbcs x20,x12,x6', 'sbcs x21,x13,x7', 'sbcs x22,x14,x8', 'sbcs x23,x15,x9', 'sbcs x24,x16,x10', 'b.lo .Lx_done', 'b .Lx_y']
+ return ''.join('\t' + l.replace(' ', '\t', 1) + '\n' for l in o)
+def leaf_text(tx, plus=False):
+ """s30 leaf kernel cut after the x' store; s47 table reduction (x18 = table base)."""
+ L = tx.split('\n'); i, j, e = L.index('.Lx_done:'), L.index('.Lx_y:'), L.index('.Lexit:')
+ nx = ['\tldp\tx0,x1,[x30,#32]!', '\tcbnz\tx0,.Llane']
+ assert L[i + 1].startswith('\tldr\tx2,[x30]') and L[j + 1].startswith('\tldr\tx2,[x30]') and all(L[k].startswith('\tstp') for k in (i + 2, i + 3, i + 4, j + 2, j + 3, j + 4))
+ t = '\n'.join(L[:i + 5] + nx + ['\tb\t.Lexit'] + L[j:j + 5] + nx + L[e:])
+ sp = '\tstp\tx11,x12,[sp,#96]\n\tstp\tx13,x14,[sp,#112]\n\tstp\tx15,x16,[sp,#128]\n'
+ assert t.count(sp) == 1; t = t.replace(sp, '')
+ for k in range(3) if plus else ():
+  a = '[x2,#%d]' % (RW.OMM + 16 * k); assert t.count(a) == 1; t = t.replace(a, '[x2,#%d]' % (RW.OMP + 16 * k))
+ a, b = t.index('\t// ---- inlined BY1'), t.index('.Lx_done:')
+ t = t[:a] + tmr_leaf_block() + t[b:]
+ a = '\tldr\tx18,[x0,#48]\t\t// n0, pinned in x18'; assert t.count(a) == 1
+ return t.replace(a, '\tldr\tx18,[x0,#48]\t\t// s47 table base (n0 is not used by the leaf)')
+
+def leaf_worst(): return max(n for n, _ in lane_paths(leaf_text(kernel_text())))
+TB = 1 << 40
+def run_leaf(cfg):
+ """s30/s47: leaf kernel executed against exact x' (table entries the lanes read written from the exact model)."""
+ rng = random.Random(cfg.get('seed', 1)); plus = cfg.get('plus', False)
+ text = leaf_text(kernel_text(), plus)
+ assert text == leaf_text(kernel_text(rows=False), plus)
+ paths = lane_paths(text)
+ worst, best = max(n for n, _ in paths), min(n for n, _ in paths); assert (worst, best) == (233, 232)
+ prog, labels, cm = prepare(text, TB); lo, hi = labels['.Llane'][0], labels['.Lexit'][0]; vis = {i: 0 for i in range(lo, hi)}
+ v5 = [0, 1, p - 1, p - 2, R]
+ cs = [(v5[(i + j) % 5], a, v5[(2 * i + j) % 5], b or 1, iv) for i, a in enumerate(v5) for j, b in enumerate(v5) for iv in v5]
+ cs += [tuple(rng.randrange(1 if k == 3 else 0, IV if k == 4 else p) for k in range(5)) for _ in range(cfg.get('samples', 200))]
+ for k in range(40):
+  y2 = p - 1 - (k % 2) * rng.randrange(1 << 64); iv = IV - 1 if k % 2 else p - 1
+  mu = (p - 1 + y2) * iv * RI % p; cs.append(((mu * mu * RI - (p - 1)) % p, p - 1, 0, y2, iv))
+ for b0 in range(0, len(cs), 8):
+  g = cs[b0:b0 + 8]; n = len(g); m = dict(cm)
+  mus = []
+  for i, (x1, y1, x2, y2, iv) in enumerate(g):
+   lane_mem(m, i, x1, y1, x2, y2, iv, plus, rng, 0x20000 + 256 * i)
+   mu = get(m, 0x50000 + 512 * i + (RW.OMP if plus else RW.OMM)); mus.append(mu)
+   e = get(m, 0x50000 + 512 * i + RW.OE); e = e - (1 << 384) if e >> 383 else e
+   RW.tmr_put(m, TB, mu * mu, e, put)
+  m[0x10000 + 32 * n] = m[0x10000 + 32 * n + 8] = 0
+  rg = {f'x{i}': rng.getrandbits(64) for i in range(31)}; rg.update(x0=0x10000, x1=n, sp=0x7000000); mem, ro, vv = dict(m), {}, {i: 0 for i in range(lo, hi)}
+  c = a64.a64_run(prog, labels, 'side_lanes', rg, mem, limit=50000, out_regs=ro, visits=vv); body = sum(vv.values())
+  assert 232 * n <= body <= 233 * n and c - body == FIXED
+  out = {0x20000 + 256 * i + 8 * k for i in range(n) for k in range(6)}
+  assert all(mem[a_] == v or a_ in out for a_, v in m.items()) and {a_ for a_ in mem if a_ not in m} - out <= set(range(0x7000000 - 1024, 0x7000000, 8))
+  assert all(get(mem, 0x20000 + 256 * i) == expect_mu(e[0], e[1], e[2], e[3], mu)[0] for i, (e, mu) in enumerate(zip(g, mus))) and all(ro[r_] == rg[r_] for r_ in ['sp'] + [f'x{i}' for i in range(19, 30)])
+  for i in vv: vis[i] += vv[i]
+ for i in range(lo, hi):
+  mn, ops = prog[i]
+  if mn.startswith('b.'): assert vis[labels[ops[-1]][0]] > 0 and vis[i + 1] > 0, i
+ return {'status': 'passed', 'plus': plus, 'lane_paths': len(paths), 'worst_path_per_lane': worst, 'best_path_per_lane': best,
+ 'lanes': len(cs), 'fixed_per_call': FIXED, 'scope': "s30/s47 leaf kernel with table reduction: x' exact and canonical, footprint [out, out+48)"}
+
+if __name__ == '__main__': print(json.dumps(run(json.load(sys.stdin)), separators=(',', ':')))
