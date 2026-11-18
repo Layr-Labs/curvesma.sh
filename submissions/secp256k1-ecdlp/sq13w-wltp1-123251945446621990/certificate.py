@@ -1,0 +1,215 @@
+import functools,itertools,json,math,os,re,sys;from decimal import Decimal,ROUND_CEILING,getcontext;from fractions import Fraction as Fr;dg=[];rn,en,dc=range,enumerate,dict
+def check(I,ok,o=""):
+ print("%s %s%s"%(I,"ok"if ok else"FAIL","  "+o if o else""))
+ if not ok:dg.append(I)
+def lg(x):f=Fr(x);return math.log2(f.numerator)-math.log2(f.denominator)
+def cd(a,b):return-(-a//b)
+def e_(x,terms=60):
+ assert abs(x)<=1;n,d,S=x.numerator,x.denominator,1<<400;lo=hi=0;I=J=S
+ for k in rn(terms+1):
+  if k:a,b=sorted((I*n,J*n));I,J=a//(d*k),cd(b,d*k)
+  lo,hi=lo+I,hi+J
+ o=cd(max(-I,J)*abs(n)*3,d*(terms+1));return Fr(lo-o,S),Fr(hi+o,S)
+def dV(bits=300):
+ z,J=Fr(1,3),Fr(1,9);I,pw,k=Fr(0),z,0
+ while True:
+  I+=pw/(2*k+1);o=pw*J/((2*k+3)*(1-J))
+  if o<Fr(1,2**bits):return 2*I,2*(I+o)
+  pw*=J;k+=1
+ht=dV()
+@functools.lru_cache(maxsize=None)
+def P2(c):n=c.numerator//c.denominator;f=c-n;lo,hi=e_(f*ht[0])[0],e_(f*ht[1])[1];o=Fr(2)**n;return lo*o,hi*o
+def Z2(n,d):return P2(Fr(n,d))[0]
+def gN(o):
+ if not o:return Fr(1)
+ J,mv=0,o
+ while mv>1:mv/=2;J+=1
+ ij=Fr((mv.numerator<<200)//mv.denominator,2**200);I=e_(-ij,45)[1]
+ for _ in rn(J):I=I*I;I=Fr(cd(I.numerator<<300,I.denominator),1<<300)
+ return I
+p=2**256-2**32-977;r=int("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141",16);C0=2**32+977;dz=int("7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee",16);LAM_R=int("5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72",16);C=1000;NODES=2**66;M_G=1024;N_CLUST=NODES//M_G;D1,D2,D3,D4=40,42,64,22;F1,F2=1<<D1,1<<D2;N_REL,N_HOME=F1,F1*F2;ALLN=NODES+N_REL+N_HOME;MX=6;YPC=33;YROUNDS=63520;L_CHAIN=YROUNDS*YPC;Q2=MX*L_CHAIN;KEYBITS=64+D4;KBF=700;K1,K2B=128,128;K=K1;HB=50;dJ=Fr(39,100);LEAVES=6;FWD_INC,fm,fj=Fr(1445,24),5,(8,369,729,1092)
+def fwd_count(q2):assert q2%6==0;m,c=divmod(q2//6,4);return 9 if q2==0 else fm+fj[c]+1445*m
+BWD_INC,eu,er=Fr(9793,12),17,4897
+def bwd_count(q2):assert q2%6==0;n=q2//6;return eu+9793*(n//2)+er*(n%2)
+CH,B_CAP,CHK=2**22,2**26-1,2;FB_FIX=max(fwd_count(6*c)-6*c*FWD_INC for c in rn(1,5))+eu+max(0,er-6*BWD_INC);cT=dc(SHX=18,FDX=8,FS=2,BLK=2,DF=2,RW=8);FIX_EXTRA=dc(SHX=3,FDX=3,FS=4,BLK=6,DF=6,RW=3);EMIT=7;EMIT_INC=LEAVES*EMIT;fs=Fr(1,1);KFC=10;KEC=Fr(63,6);KEY_INC,KEY_FIX=Fr(851,6),8;FLUSH=10;FLUSH1_X,de=8,14;FLUSH2_X,FLUSH2_D=11,9;dI=FLUSH+1;XEMIT_HOT=14;JPATH,JPATH2,SJOIN=3,2,0;JX=((0,JPATH-1,JPATH2-1),)*2+((1,JPATH,JPATH2-1),);INV=22549;INIT3_BKT,TINIT_ENTRY=4,3;dU,ed,FIN_HELD,FIN_FIX=15,4,2,2;FINH_DEST,FINH_SENT=16,5;H2S_ARR,ey=6,1;H2S_FULL=1;dP=6;H2S_ARR_FIX=17+ey
+def dt(n):
+ if n==K:return H2S_FULL+H2S_ARR*K
+ if n==0:return dP
+ return 17+ey*(n%2)+H2S_ARR*n
+check("c1",dt(K)==769 and max(dt(n)-H2S_ARR*n for n in rn(K))==H2S_ARR_FIX and dP<=H2S_ARR_FIX);check("c2",KEY_INC==8+48+fs+6*(4+EMIT)+KFC+Fr(1,3)-2+KEC and KEY_FIX==8);check("c3",all(fwd_count(6*n)+bwd_count(6*n)<=FB_FIX+6*n*(FWD_INC+BWD_INC)for n in rn(1,9))and CH*512==2**31 and(B_CAP+1)*512==2**35);check("c4",CHK>=1+Fr(L_CHAIN,CH)and 6*CH*512<=2**37);check("c5",(3+3+EMIT+1)-(4+EMIT)==JPATH and(4+1+EMIT+1)-(4+EMIT)==JPATH2 and SJOIN==0 and JX==((0,2,1),(0,2,1),(1,3,1)));check("c6",EMIT==1+1+2+2+1 and XEMIT_HOT==2+4+4+4);DONE=2;RCV,WAKE,WY,EXPECT,SWAP,CTX=1,5,23,39,4+4*15,0;DONE_C=DONE+RCV+WAKE;RCV1,FIN_CNT,H2S_DONE=4,6,4;EXPECTH=78;RDONE=1+H2S_DONE;DONE_C1=DONE+RCV1+WAKE;DLV=6;MSG_LINK=DONE_C+DLV+CTX;FINAL=dU+ed+DONE_C1+H2S_ARR_FIX+FIN_CNT;check("c7",FLUSH1_X<=FLUSH+DONE and de<=dU+ed+DONE and FLUSH2_X<=dI and FLUSH2_D<=dI and FIN_HELD<=FINH_SENT and DONE==2 and(DONE_C,DONE_C1,MSG_LINK,FINAL,RDONE)==(8,11,14,54,5)and H2S_ARR_FIX==18);check("c8",5<=WAKE and 13+2*5<=WY and(SWAP,CTX)==(64,0)and 3+5+5+26<=EXPECT and EXPECTH==2*EXPECT and FIN_FIX==2);GEN_MUL=645410;GEN_MULX=GEN_MUL+4;YR_FIX,YR_BLK,YR_BLK_MINE,YB=22556,62381,40535,256;CHAIN_ADD=2**15;CHAIN_SET=2*GEN_MUL+17*CHAIN_ADD;YSND,YDLV,YDLVE=30,32,23;eO=YSND+3+(M_G-1)*(YDLV+WY)+YDLVE+WY
+def y_group(q):o=cd(q,M_G);J=YROUNDS*(cd(o,YB)*YR_FIX+o*YR_BLK)+o*CHAIN_SET;I=cd(q*L_CHAIN*eO,M_G);return J+I
+e8=dc(A=8,B=6,EB=7);EISR={k:357+31*v for k,v in e8.items()};KCL=dc(E=("A",)*6,F=("A",)*3+("B",)*3,G=("A",)*3+("B",)*3)
+def tbldk_count(n,cl):return 5+n*(197+6*EISR[cl])
+def tbldf_count(n,v):return 4+n*(6+46*v)
+e4=6;eY,eL=43,42;XTBLD_PAIRED=6*(4+2*11)+20*2*(4*2**eY+2*2**eL);XTBLD_ALL=6*XTBLD_PAIRED+2*(5*26+200*2**eY)+sum(tbldk_count(2**(eL if k in(2,5)and c!="F"else eY),KCL[c][k])for c in"EFG"for k in rn(5 if c=="F"else 6));XSETUP=2**17;ENTRY_X=16;COIN_SCALAR=64;BATCH_SETUP=9544;INV_CALL=16;NODE_INIT=2**31;HEADER=80;dM,fH=0xfff8<<48,43;TBLD=tbldf_count(2**fH,7);MSG=128;CAND_CAP=2082000000;MULX,SQRX,ADDX=105+4,80+3,9+2*9;DBL,eH=2*MULX+5*SQRX+10*ADDX,8*MULX+3*SQRX+10*ADDX;ek=6*CHAIN_ADD+12*MULX;CAND_ITEM=4*8*2*MSG+2*ek+36*600+2*(384*200+256*(DBL+eH)+INV);RESOLVE=2*CAND_ITEM+1;REQ_CAP=125*2**39;REQ_SERVE=2**10+GEN_MUL;RELAY_CAP=2**49-2**43+2**41;BARRIER=2**12*ALLN;OUTPUT=2**20;DELTA_F=9223372019674906624;QP,QQ=Q2//2,Q2//4;FIX_BATCH=sum(cT.values())*CH*6//4;P1=Fr(6*(r-1)+1,r*r);g5=Fr(2,r-1);SHX_BAD=2**64*2**33;FOLD_BAD=2**66*C0;SITES=[(3*QP,SHX_BAD,36),(QP,FOLD_BAD,36),(3*QP,SHX_BAD,36),(QP,FOLD_BAD,36),(QP,FOLD_BAD,36),(3*QP,SHX_BAD,36),(QP,FOLD_BAD,36)];SITES_QUAD=dc(SHX=18,FDX=8);D_SITES=sum(Fr(n*bad*e3,r-1)for n,bad,e3 in SITES);D_YGEN=Fr(YROUNDS*(YPC+2*16+2),r-1);D_BATCH=Fr(CH,L_CHAIN)*(D_SITES+Q2*Fr(6*(C0+1),r-1))+CH*D_YGEN;FIX_ROW=C0*2**192;FIX_FOLD=(2**66+1)*2**128*C0;FIX_LK7=21*C0*2**192;FIX_SUB=C0*2**192;FIX_DF63=2**128*(2**63+2)*C0;FIX_RW=C0*2**128;FIXUPS=[("BLK",QP,FIX_LK7,36),("SHX",3*QP,FIX_ROW,36),("FDX",QP,FIX_FOLD,36),("SHX",3*QP,FIX_ROW,36),("FDX",QP,FIX_FOLD,36),("FDX",QP,FIX_FOLD,36),("FS",QP,FIX_SUB,36),("SHX",3*QP,FIX_ROW,36),("FDX",QP,FIX_FOLD,36),("DF",QP,FIX_DF63,6),("RW",2*Q2,FIX_RW,6+191*9)];E_FIX=sum(Fr(n*bad*e3,r-1)for _,n,bad,e3 in FIXUPS)+CHK*D_BATCH*FIX_BATCH;hy=[(12,C0+1,2),(12,6,1),(12,7,1),(12,2**66,2),(6,2,1),(6,2,1)];LW=(2**64-C0)//C0;NW=[2**127*(2**(32*i+1)*(1+Fr(1,2**20))+(i<3)*2**65*C0)+C0*2**192 for i in(1,2,3)];D_WLT=sum(Fr(f*w*C0*cd(p,2**(64*l)),r-1)for f,w,l in hy)+6*sum(NW)/(r-1);D_M=Fr(184*13+8*10,2);KB=functools.lru_cache(None)(lambda fixed:Fr(6*2**(256-fixed)*(KBF+1),(r-1)*KBF));RHO=Fr(r,r-1)**2;SLF=6*RHO*Fr(2**256,r);SL6=6*L_CHAIN*Fr(2**256,r);d4=2*SLF*L_CHAIN/(B_CAP-2*L_CHAIN-SL6)**2;CLUST_BATCH=M_G*LEAVES*Q2;FIXED_LEAVES=2*CLUST_BATCH;PARTNER_PAIRS=CLUST_BATCH*(CLUST_BATCH-1);FA,FB=int("114ca50f7a8e2f3f657c1108d9d44cfd9",16),int("e4437ed6010e88286f547fa90abfe4c3",16);dp,eI,ML=20,21,23
+def dK(*rs):return sum(x[0]for x in rs),sum(x[1]for x in rs)
+def fG():
+ ds,u,v=[],dz,p
+ while u:ds+=[v//u];u,v=v%u,u
+ o,qm,qk,pm,pk=[],0,1,1,0
+ for d in ds:qn,pn=d*qk+qm,d*pk+pm;o+=[(qn,qn*dz-pn*p,d)];qm,qk,pm,pk=qk,qn,pk,pn
+ return o
+gk=fG()
+def eis_cls(X2):
+ for k in rn(1,len(gk)-1):
+  (qk,dk,_),(qm,dm,_),(qn,_,a)=gk[k],gk[k-1],gk[k+1]
+  if qk+qm<=X2-1<qn+qk:g=max(abs(dk),abs(dm)-(min((X2-1-qm)//qk,a)-1)*abs(dk))
+ bb=None
+ for k in rn(1,len(gk)):
+  (qk,dk,_),(qm,dm,_)=gk[k],gk[k-1]
+  if qk+qm>X2:break
+  if(dk>0)==(dm>0):continue
+  for j in rn((X2-qk-qm)//qk+1):
+   dw,qw=dm+j*dk,qm+j*qk
+   if(dw>0)==(dk>0)and dw:break
+   if bb is None or abs(dk)+abs(dw)<bb[0]:bb=(abs(dk)+abs(dw),(-dk,qk),(-dw,qw))
+ _,U,W=bb
+ if U[0]*W[1]<U[1]*W[0]:U,W=W,U
+ lo,hi=min(0,U[0])+min(0,W[0]),max(0,U[0])+max(0,W[0]);o=(-(lo+hi)//2,(X2-U[1]-W[1])//2);C=(g+1)//2;cs=sorted(((i*U[0]+j*W[0],i*U[1]+j*W[1])for i in rn(-4,5)for j in rn(-4,5)if o[0]+lo+i*U[0]+j*W[0]<=C and o[0]+hi+i*U[0]+j*W[0]>=-C and o[1]+i*U[1]+j*W[1]<X2 and o[1]+U[1]+W[1]+i*U[1]+j*W[1]>0),key=lambda t:(abs(t[0])+64*abs(t[1]),t));return dc(X2=X2,C=C,U=U,W=W,o=o,c=cs,kS=(W[0]*o[1]-W[1]*o[0])%p,kT=(U[1]*o[0]-U[0]*o[1])%p)
+def eis_red(c,v):
+ U,W,o=c["U"],c["W"],c["o"];S=(W[1]*v+c["kS"])%p;T=(c["kT"]-U[1]*v)%p;f1,f2=o[0]+(S*U[0]+T*W[0])//p,o[1]+(S*U[1]+T*W[1])//p
+ for l1,l2 in c["c"]:
+  if 0<=f2+l2<c["X2"]and abs(f1+l1)<=c["C"]:return f1+l1,f2+l2
+ return f1,f2
+def eis_cover(c):
+ U,W,(o1,o2),X2,C=c["U"],c["W"],c["o"],c["X2"],c["C"];V=[(o1,o2),(o1+U[0],o2+U[1]),(o1+U[0]+W[0],o2+U[1]+W[1]),(o1+W[0],o2+W[1])];E_=list(zip(V,V[1:]+V[:1]));ys=sorted({y for y in[v[1]for v in V]+[e for _,l in c["c"]for e in(-l,X2-l)]if o2<=y<=o2+U[1]+W[1]})
+ def xs(y):z=[x0+Fr(y-y0)*(x1-x0)/(y1-y0)for(x0,y0),(x1,y1)in E_ if y0!=y1 and min(y0,y1)<=y<=max(y0,y1)];return min(z),max(z)
+ for ya,yb in zip(ys,ys[1:]):
+  cm=[]
+  for a,b in sorted((-C-l1,C-l1)for l1,l2 in c["c"]if-l2<=ya and yb<=X2-l2):
+   if cm and a<=cm[-1][1]+1:cm[-1]=(cm[-1][0],max(cm[-1][1],b))
+   else:cm+=[(a,b)]
+  (La,Ra),(Lb,Rb)=xs(ya),xs(yb)
+  if not any(a<=min(La,Lb)and max(Ra,Rb)<=b for a,b in cm):return False
+ return True
+X2A,X2B=45402545270420317080910594221470922860,64502973549206556628585045361533709079;EIS=dc(A=eis_cls(X2A),B=eis_cls(X2B),EB=eis_cls(2**128-6*(X2A-1)));C_E,C_FG=sum(EIS[c]["C"]for c in KCL["E"])+EIS["EB"]["C"],sum(EIS[c]["C"]for c in KCL["F"]);hk,hc=(0,1+Fr(1,2**30)),(Fr(-3),Fr(3)+Fr(1,2**180))
+def eC(lo,hi,ti,e):t0,t1=(lo>>128,hi>>128)if ti else(0,0);s=[m*x/2**128 for m in(lo,hi)for x in e];return(min(t0,0)-1,max(t1-1,0)+5+ti),(math.floor(min(s)),2+math.ceil(max(s)))
+def g3(C):es=(hk[0]+hc[0],hk[1]+hc[1]);p1,p2,p3=eC(-C,C,1,hk),eC(0,2**128-1,0,hc),eC(-C-2**128,C,1,es);return(dK(p1[0],p2[0]),dK(p1[1],p2[1])),((p3[0][0]-p1[0][1],p3[0][1]-p1[0][0]),(p3[1][0]-p1[1][1],p3[1][1]-p1[1][0]))
+KT=dc(E=g3(C_E),F=g3(C_FG),G=g3(C_FG));ii=[[tuple(dK(KT[c][r][w],(-1,0))if c=="E"else KT[c][r][w]for w in(0,1))for r in(0,1)]for c in"EFG"]
+def _table3(rs):g2=lambda a,b:(a,b,(-2-a[1]-b[1],-a[0]-b[0]));(e0,e1),(f0,f1),(g0,g1)=rs;al=g2(dK(e0,(-1,0)),dK(e1,(-1,0)));bp=g2(*[(-f[1]-2,-f[0]-1)for f in(f0,f1)]);ga=g2(g0,g1);W=lambda m,t:dK(al[m%3],bp[(m+t)%3],ga[(m+2*t+1)%3],(0,2));wr=[[W(o+i,t)for t,o in en((2,2,0))]for i in(0,1)];nr=[(-wr[0][t][1]-wr[1][t][1]-1,-wr[0][t][0]-wr[1][t][0]+1)for t in rn(3)];return[(min(x[0]for x in r),max(x[1]for x in r))for r in(wr[0],wr[1],nr)]
+ERRH,ERRL=_table3([(KT[c][0][0],KT[c][1][0])for c in"EFG"]),_table3([(KT[c][0][1],KT[c][1][1])for c in"EFG"]);fz,fE,fI,fw=5748,([(-241,237),(-136,133),(-361,360)],[(-399,401),(-234,228),(-592,588)]),(1468,2442,722,1181),-765;WDH,WDL=sum(hi-lo for lo,hi in ERRH),sum(hi-lo for lo,hi in ERRL);WH,WL=max(hi-lo for lo,hi in ERRH)+1,max(hi-lo for lo,hi in ERRL)+1;(f9,gh)=(min(ERRH[0][0],ERRH[1][0]),max(ERRH[0][1],ERRH[1][1]));NWIN=2*(gh-f9)+(1-2*f9)+(3+2*gh)+2*(gh+1-f9)+2*(3*gh+3-3*f9);D_WJ=g5*NWIN*2**192;D_LAB=g5*(WDH*2**(256-dp)+WDL*2**(256-ML));D_LAB_SYM=g5*3*((WH-1)*2**(256-dp)+(WL-1)*2**(256-ML));B_HA,B_HB,B_L=2**dp+WH-1,2**eI+WH-1,2**ML+WL-1;B_LA=2**(ML+1)+WL-1;check("c9",FA*FA-FA*FB+FB*FB==p and(FB*dz-(FA-FB))%p==0 and((FA-FB)*dz+FA)%p==0 and B_HA*B_HB*(B_LA*2**128+2*FA)*(B_L*2**128+4*FA-2*FB)<p*2**(dp+eI+2*ML+1)*(1+Fr(1,KBF))and(2*B_HA+1)*(2*B_HB+1)*(2*B_LA*2**128+FA)*(2*B_L*2**128+2*FA-FB)<16*p*2**(dp+eI+2*ML+1)*(1+Fr(1,KBF))and(2**41+WH-1)*(B_LA*2**128+2*FA)*(B_L*2**128+4*FA-2*FB)<p*2**(2*ML+42)*(1+Fr(1,KBF))and B_LA*2**232<p*(1+Fr(1,KBF))and(B_HA*2**192+2*FA)*(B_HB*2**192+4*FA-2*FB)<p*2**(128+dp+eI)*(1+Fr(1,KBF)));check("c10",e8=={k:len(c["c"])for k,c in EIS.items()}and all(eis_cover(c)and all((u[0]+u[1]*dz)%p==0 for u in(c["U"],c["W"]))and c["U"][0]*c["W"][1]-c["U"][1]*c["W"][0]==p for c in EIS.values())and all(sum(EIS[c]["X2"]-1 for c in KCL[k]+(("EB",)if k=="E"else()))<2**128 for k in KCL)and NWIN==fz,"C_E 2^%.4f C_FG 2^%.4f"%(lg(C_E),lg(C_FG)));check("c11",(ERRH,ERRL)==fE and(WDH,WDL,WH,WL)==fI);check("c12",D_WJ<Z2(-5051,100),"2^%.4f"%lg(D_WJ));check("c13",all(sum(n for n,b,_ in SITES if b==B)==SITES_QUAD[k]*QQ for k,B in(("SHX",SHX_BAD),("FDX",FOLD_BAD)))and len(SITES)==7);check("c13b",D_WLT<Z2(-2395,100)and D_WLT*(r-1)==sum(f*w*C0<<256-64*l for f,w,l in hy)+6*sum(NW)and LW*(1+Fr(1,2**20))**2>=C0,"2^%.5f"%lg(D_WLT));eT={m:sum(n for ms,n,_,_ in FIXUPS if ms==m)for m in cT};check("c14",eT=={m:cT[m]*QQ for m in cT}and sum(cT.values())==40);check("c15",FIX_BATCH*C0<2**63 and FIX_BATCH*C0>>32==FIX_BATCH+(FIX_BATCH*977>>32),"2^%.3f"%lg(FIX_BATCH*C0));check("c16",D_LAB<Z2(-820,100)and 3*D_WJ+D_LAB_SYM<P2(Fr(fw,100))[0],"2^%.3f 2^%.4f"%(lg(D_LAB),lg(3*D_WJ+D_LAB_SYM)));check("c17",D_BATCH<Z2(-1258,10)and d4<Z2(-26,1),"2^%.3f"%lg(D_BATCH));cR=12150;dF=19
+def em(q1):
+ ms=[0];o=cR**dF;J=q1**32
+ for g in rn(1,cR):
+  I=J*(g**dF);m=int(q1*((g/cR)**(dF/32.0)))+2
+  while m**32*o>I:m-=1
+  while((m+1)**32)*o<=I:m+=1
+  ms+=[m]
+ ms+=[q1];qs=[ms[_g+1]-ms[_g]for _g in rn(cR)];return qs,ms
+HCHG_NEW,dj,dG,HCHG_VER=4,4,0,5;eX,eg=2,1;HCHG_LS1=5+eg;check("c18",HCHG_NEW==4 and dj==4 and dG==0 and HCHG_VER==5 and HCHG_LS1==6);DLVHB=256
+def gW(n,m):
+ if m==0:return 1
+ I=n%2;o=m-I;return 5+I*5+o//2*6+o%2*4-(o==0)
+def dS(o,I,J=K2B):
+ if o==0 and I==J:return DLVHB
+ return 23-(o>0)+gW(0,o)+gW(o,I)+gW(o+I,J-o-I)
+DLVHS=max(dS(a,b)for a in rn(K2B+1)for b in rn(K2B+1-a)if(a,b)!=(0,K2B));BLOCKH=dI+DONE_C+DLVHB;FINALH=FINH_DEST+FINH_SENT+DONE_C+DLVHS+MSG_LINK+(DLVHS-DLVHB);check("c19",DLVHB==256 and DLVHS==427 and BLOCKH==dI+DONE_C+DLVHB and FINALH==641,"DLVHS %d FINALH %d"%(DLVHS,FINALH));ZW=16384;ZERO_PASS=2*(ZW//256)+2;DLVH0=15;STOP_CHECK=5;NBAR_COUNT=8+19*cR+1;NBAR_ALLOW=230859;PHASE_CTRL_G=8388608;dO=KB(D1+D2+HB);PAD_C=max(3*gh+3,gh+1-f9,1-3*f9);WRAPT_C=483
+def _npad(i,m,d=PAD_C):
+ if not 0<=i<m:return 0
+ lo=max(0,i-d);A,B=(lo,min(m-1,m+d-2*i)),(max(lo,m-d-i),min(m-1,2*m+d-2*i));return sum(max(0,y-x+1)for x,y in(A,B))-(max(0,min(A[1],B[1])-max(A[0],B[0])+1)if A[0]<=A[1]and B[0]<=B[1]else 0)
+_LC=[(0,0),(1,-PAD_C),(0,2**64-1),(-2,2**64+PAD_C),(-1,2**64-PAD_C),(-2,2*2**64+PAD_C)];co=sorted({0,2**64}|{t+e for a,b in _LC for cg,g in _LC if a!=cg for t in[(g-b)//(a-cg)]for e in rn(-3,4)if 0<=t+e<=2**64});NC_C=sum((_npad(s,2**64)+_npad(e-1,2**64))*(e-s)//2 for s,e in zip(co,co[1:]));ROWMAX132=cd(NC_C,1<<42)+(len(co)-1)*2**64;CNT132=cd(B_HA*B_HB*(ROWMAX132+(1<<22)*3*B_HA),1<<50)+(1<<22)*4*B_HA*B_HB+2*WRAPT_C*(1<<14)*B_HB+(1<<22)*B_HA*(6*WRAPT_C+8);DPAR=max(FA,2*FA-FB);KB_C132=Fr(6*CNT132*((B_LA*(1<<128)+2*DPAR)*(B_L*(1<<128)+2*DPAR)),p*(r-1));check("c19c",WRAPT_C>=max(gh,1-f9,1-2*f9,2+2*gh)and all((_npad(e-1,2**64)-_npad(s,2**64))*((s+e-1)//2-s)==(_npad((s+e-1)//2,2**64)-_npad(s,2**64))*(e-1-s)for s,e in zip(co,co[1:]))and max(sum(_npad(h*16+r_,256,12)for h in rn(16))for r_ in rn(16))<=sum(_npad(i,256,12)for i in rn(256))//16+6*256 and KB_C132<Fr(34,100)*dO);fo=KB(64);dQ=5460;fD=38220;CAP_H=((fD*(2**40))//(32*K2B))*K2B;P1_GOOD=Fr(6*(r-1),r*r)*(1-3*D_WJ-D_LAB_SYM)-12*D_WLT/r;K_U_CLUST=LEAVES*M_G*MX;W_ELL=1+47*(3*D_WJ+D_LAB_SYM);SAMEX_FAC=Fr(CLUST_BATCH-K_U_CLUST,CLUST_BATCH-1)*Fr(r,r-2)*W_ELL+Fr(96*(K_U_CLUST-1),CLUST_BATCH-1);EF_Q=E_FIX*C0/(2**32*(DELTA_F-33*FIX_BATCH));cW=KB(KEYBITS+D1+D2);dT=KB(D1);LA=Fr(6,r)/P1_GOOD;DSY=192**2*624*K_U_CLUST;DWS=48*RHO*CLUST_BATCH*D_WLT*(2+D_M)+DSY;SIP=240*RHO*cW;ez=14;N_POOLS=1<<ez;R_POOL=N_POOLS//M_G;K_GEN=NODES//N_POOLS
+def gf1024_mul(a,b):
+ o=0
+ for I in rn(10):
+  if b>>I&1:o^=a<<I
+ for I in rn(18,9,-1):
+  if o>>I&1:o^=0x409<<I-10
+ return o
+def pool_of_gen(g):c,m=divmod(g,M_G);return R_POOL*m+((c&15^gf1024_mul(c>>4&0x3FF,m))&15)
+def _vand_gf1024_ok():
+ b=2
+ for _ in rn(10):b=gf1024_mul(b,b)
+ if b!=2:return False
+ for _d in 2,5:
+  J=2
+  for _ in rn(_d):J=gf1024_mul(J,J)
+  if J==2 or any(gf1024_mul(J^2,z)==0 for z in rn(1,1024)):return False
+ I=0
+ for d in rn(1024):
+  ws=[gf1024_mul(1<<j,d)&15 for j in rn(10)];o=[0]
+  for w in ws:o+=[x^w for x in o]
+  if d and len(set(o))!=16:return False
+  cnt=[0]*16
+  for v in o:cnt[v]+=1
+  for du in rn(16):ks=cnt[du];ns=1024*1024+2*ks*max(0,ks-1);I+=ns*((1<<42)-(d==0 and du==0))
+ return I*2304<9216*1024*1024*((1<<56)-1)
+def _bx_tuples_ok():
+ if(LAM_R*LAM_R+LAM_R+1)%r!=0:return False
+ o=((1,0),(-1,0),(0,1),(0,-1),(-1,-1),(1,1));norms,n2,counts=set(),set(),{}
+ for u0 in o:
+  n2.add(1)
+  for u1 in o:
+   a,b=u0[0]+u1[0],u0[1]+u1[1]
+   if a or b:n2.add(a*a-a*b+b*b)
+ I={}
+ for k in 1,2,3,4:
+  seen=set()
+  for hh in itertools.product(rn(k),repeat=4):
+   if len(set(hh))!=k:continue
+   for u0 in o:
+    for u1 in o:
+     for u2 in o:
+      sums=[[0,0]for _ in rn(k)]
+      for gO,u in en((u0,u1,u2,(1,0))):sums[hh[gO]][0]+=u[0];sums[hh[gO]][1]+=u[1]
+      if any(a==0 and b==0 for a,b in sums):continue
+      for a,b in sums:
+       norms.add(a*a-a*b+b*b)
+       if not(a+b*LAM_R)%r:return False
+      gZ=(sums[-1][0]+sums[-1][1]*LAM_R)%r;J=I.get(gZ)or I.setdefault(gZ,pow(gZ,-1,r));seen.add(tuple(((a+b*LAM_R)*J)%r for a,b in sums[:-1]))
+  counts[k]=len(seen)
+ pm={k:sum(1 for p_ in itertools.product(rn(k),repeat=k)for mb in itertools.product((0,1),repeat=k)if len(set(p_))>=2 and list(dc.fromkeys(p_))==list(rn(len(set(p_))))and len(set(zip(p_,mb)))==k)for k in(2,3,4)};return norms=={1,3,4,7,9,12,13,16}and n2=={1,3,4}and counts=={1:1,2:78,3:252,4:216}and pm=={2:4,3:20,4:76}and max(pm.values())<=96 and 96*(78+252+216)<65536
+SAME_M_NODE_PAIRS=M_G*(N_CLUST*N_CLUST*(R_POOL-1)//R_POOL)//2;SHARED_BOTH_CLUST_PAIRS=(N_CLUST*N_CLUST//(R_POOL*R_POOL)-N_CLUST)//2;ix=N_CLUST*(N_CLUST-1)//2;GOOD_NODE_PAIRS=SAME_M_NODE_PAIRS+SHARED_BOTH_CLUST_PAIRS*(M_G*(M_G-1)//2)+(ix-SHARED_BOTH_CLUST_PAIRS)*(M_G*(M_G-1));YR_MINE=992;PTS_MINE_CHAIN=YR_MINE*YPC;NBATCH_MINE=23750000*YB;PTS_PER_GEN_MINE=NBATCH_MINE*PTS_MINE_CHAIN;M_POOL=K_GEN*PTS_PER_GEN_MINE;S_MINE_TOT=NODES*PTS_PER_GEN_MINE;N_CHAINS_POOL=K_GEN*NBATCH_MINE;ef=PTS_MINE_CHAIN*(PTS_MINE_CHAIN-1)//2;P_BUCKET_MAX=Fr(6*(1<<63),r-1);P_SAME_CHAIN_POOL=N_CHAINS_POOL*ef*P_BUCKET_MAX;P_CHAIN_COUPLE_POOL=N_CHAINS_POOL*ef*(M_POOL*M_POOL+(N_CHAINS_POOL-1)*ef)*(P_BUCKET_MAX**2);GAMMA_MINE_CROSS=M_POOL*(M_POOL-1)//2-N_CHAINS_POOL*ef;P_BDAY_HIT_MIN=Fr((r-1)*(r-1),(1<<193)*r*r)-Fr(6*(r-1),r*r);MU_POOL_LO=GAMMA_MINE_CROSS*P_BDAY_HIT_MIN;CS_POOL=GAMMA_MINE_CROSS*(2*PTS_MINE_CHAIN*M_POOL)*(2*P_BUCKET_MAX*P_BUCKET_MAX);_P_A102=Fr(6*(1<<103),r-1);_P_A174=Fr(6*(1<<(256-D1-D2)),r-1);_P_A215=Fr(6*(1<<256-D1),r-1);P_CELL154_MASK_POOL=(Fr(M_POOL*(M_POOL-1),2)*M_POOL+2*N_CHAINS_POOL*ef*M_POOL)*P_BUCKET_MAX*_P_A102;POIS_LE3=gN(MU_POOL_LO)*sum((MU_POOL_LO**_k)/math.factorial(_k)for _k in rn(4));P_FAIL_POOL=POIS_LE3+CS_POOL+P_CELL154_MASK_POOL+P_SAME_CHAIN_POOL+P_CHAIN_COUPLE_POOL;P_FAIL_ALL_POOLS=N_POOLS*P_FAIL_POOL;LAM_ORD=N_POOLS*(M_POOL*M_POOL)*P_BUCKET_MAX;POINTWISE_X_MAX=M_POOL*M_POOL*P_BUCKET_MAX;SAME_OFF_VAND=(2*LEAVES*MX)**2+(M_G//R_POOL)*(LEAVES*MX)**2+Fr(K_U_CLUST*K_U_CLUST,N_CLUST);P_BAD_X=65536*sum((LAM_ORD**(_d-1))*(2*LAM_ORD/r)for _d in(2,3,4))+65536*sum((LAM_ORD**(_d-1))*N_POOLS*(M_POOL*M_POOL)*Fr(30*(1<<63),r*r)for _d in(2,3));P_X_ORBIT_ALL_POOLS=4*LAM_ORD*(6*LAM_ORD/r);P_MINE_ZERO_ALL=Fr(S_MINE_TOT,r);P_SAME_A_ALL=N_POOLS*Fr(M_POOL*(M_POOL-1)//2*6,r-1);D_XMINE_ALL=NODES*NBATCH_MINE*Fr(YR_MINE*(YPC+34),r-1);_MINE_Y_MEAN=S_MINE_TOT*_P_A174;_MINE_K_CH=CAP_H//PTS_MINE_CHAIN;P_MINE_HOME_CAP=Fr(1,1<<200);fn=N_POOLS*Fr(M_POOL*(M_POOL-1),2)*_P_A102;E_CAND_MINE=cd(fn.numerator,fn.denominator);E_VIS_MINE=cd((S_MINE_TOT*(S_MINE_TOT-1)//2)*6*(1<<(256-131)),r-1);E_K2_MINE=cd(N_POOLS*(M_POOL*(M_POOL-1)//2)*6*(1<<(256-131)),r-1);_OTH_H_OUT=N_POOLS*Fr(M_POOL*(M_POOL-1),2)*_P_A174*_P_A102+2*PTS_MINE_CHAIN*M_POOL*_P_A102;_OTH_G_OUT=2*PTS_PER_GEN_MINE*M_POOL*_P_A102;_M_R_OUT=18*N_POOLS*Fr(M_POOL*(M_POOL-1),2)*_P_A215*_P_A102;cc=1<<20;_RL_CR_MINE=36*PTS_MINE_CHAIN*M_POOL*_P_A102;_VAR_R_OUT=324*N_POOLS*M_POOL*_P_A215*(1+RHO*RHO*PTS_MINE_CHAIN*_P_A215)*(M_POOL*_P_A102)**2+18*PTS_MINE_CHAIN*_M_R_OUT;P_MINE_CAPS=P_MINE_HOME_CAP+LAM_ORD*(_OTH_H_OUT/Fr(CAND_CAP-2*PTS_MINE_CHAIN)+2*_OTH_G_OUT/Fr(REQ_CAP-4*PTS_MINE_CHAIN)+_RL_CR_MINE/cc+_VAR_R_OUT/Fr(RELAY_CAP-36*PTS_MINE_CHAIN-cc-_M_R_OUT)**2);check("c19b",_vand_gf1024_ok()and _bx_tuples_ok()and all(pool_of_gen(1024*(_p&15)+(_p>>4))==_p for _p in rn(N_POOLS))and NBATCH_MINE%YB==0 and ht[0]>Fr(2,3)and _MINE_K_CH-Fr(3,2)*_MINE_Y_MEAN-82>200 and MU_POOL_LO>31 and P_FAIL_ALL_POOLS<Z2(-19,1)and P_BAD_X<Z2(-140,1)and P_MINE_CAPS<Z2(-19,1),"mu_p %.2f p_fail 2^%.2f p_caps 2^%.2f"%(float(MU_POOL_LO),lg(P_FAIL_ALL_POOLS),lg(P_MINE_CAPS)));EXCH_ROW=ALLN*4*2**10;HR_INIT=N_HOME*(INIT3_BKT+1+DLVH0);VISIT=dj+Fr(dG,2);eB=YR_MINE*((NBATCH_MINE//YB)*YR_FIX+NBATCH_MINE*YR_BLK_MINE)+NBATCH_MINE*(CHAIN_SET+2*COIN_SCALAR+64);GEN_MINE_NODE=64+eB+PTS_PER_GEN_MINE*XEMIT_HOT;_P_MINE_DEF=D_XMINE_ALL+P_MINE_ZERO_ALL+NODES*(2*NBATCH_MINE+1)*Fr(1,2**254);W_MINE_DET_MAX=S_MINE_TOT*CAP_H*(VISIT+HCHG_VER)+N_HOME*CAND_CAP*(HCHG_LS1+RESOLVE+2*REQ_SERVE+8*MSG);ce=_P_MINE_DEF*W_MINE_DET_MAX;DEF_MINE=cd(ce.numerator,ce.denominator);PSEL_POOL=16+1024*256;ROUTE_MINE=(S_MINE_TOT*(FLUSH+DONE_C1)//K1+S_MINE_TOT*H2S_ARR+cd(S_MINE_TOT,K1)*H2S_FULL+NODES*(FINAL*F1+FIN_FIX)+cd(S_MINE_TOT*BLOCKH,K2B)+N_REL*(FINALH*F2+FIN_FIX)+N_HOME*EXPECTH+N_REL*(EXPECT+RDONE)+S_MINE_TOT*(HCHG_NEW+RCV)+VISIT*E_VIS_MINE+HCHG_VER*E_K2_MINE+HCHG_LS1*E_CAND_MINE+E_CAND_MINE*(RESOLVE+2*REQ_SERVE+8*MSG)+DEF_MINE+EXCH_ROW+N_POOLS*(PSEL_POOL+1024*(5*MSG+32)+MSG+4+8*(REQ_SERVE+4*MSG))+ALLN*(MSG+STOP_CHECK)+NODES*MX*(4*MSG)+3*N_HOME+6*S_MINE_TOT+HR_INIT+NODES*(INIT3_BKT*F1+2)+N_REL*((INIT3_BKT+TINIT_ENTRY)*F2+64)+5*BARRIER);E_MINE=NODES*GEN_MINE_NODE+ROUTE_MINE;ck=P_FAIL_ALL_POOLS+P_SAME_A_ALL+P_BAD_X+D_XMINE_ALL+P_MINE_ZERO_ALL+P_X_ORBIT_ALL_POOLS+P_MINE_CAPS;d5=P1*P1+Fr(36,(r-1)**2);cf=KB(D1+D2);cz=Fr(K_U_CLUST*L_CHAIN,r-1)*cf**2;cp=SAMEX_FAC*PARTNER_PAIRS+CLUST_BATCH*CLUST_BATCH+96*K_U_CLUST*K_U_CLUST;fc=SAME_OFF_VAND+320*K_U_CLUST*K_U_CLUST*((POINTWISE_X_MAX/MX)**4)*cW+2*CLUST_BATCH*CLUST_BATCH*RHO*cW;cr=1+Fr(1,r)
+def gK(q1p):n0p=LEAVES*q1p*Q2;Sp=NODES*n0p;gamma=GOOD_NODE_PAIRS*(n0p*n0p);I=gamma*P1;mu=gamma*P1_GOOD;cs=gamma*(2*CLUST_BATCH*Sp)*d5;e_hi=gN(mu);d_f=SLF*q1p*(EF_Q+CHK*D_BATCH);m_p2=Sp*cf+1;v_p2=Sp*(K_U_CLUST*cf+cz)+1;d_p2=v_p2/Fr(CAP_H-FIXED_LEAVES-m_p2-CAP_H//4)**2+LA*Sp*D_WLT*cf/(CAP_H//4);lam_int=RHO*(Sp+FIXED_LEAVES)*cW+2*RHO*Sp*D_WLT*cW*(1+D_M);dw=RHO*Sp*D_WLT*(2+D_M)+DWS;alpha_cross=(2*K_U_CLUST+SAMEX_FAC*(CLUST_BATCH-1))*Sp+cp;other_h=RHO*(Fr(Sp)*Sp*cf*cW+alpha_cross*cW+2*L_CHAIN*cf)+SIP*Sp;d_cl=(other_h+cW*dw*(LA*cf*Sp+2*FIXED_LEAVES))/(CAND_CAP-76);other_g=RHO*cW*(Fr(n0p)*Sp*2+2*LEAVES*MX*Sp+96*K_U_CLUST*n0p+96*LEAVES*MX*K_U_CLUST);d_rq=(other_g+2*cW*n0p*dw)/(REQ_CAP-2*L_CHAIN-600);rl_cap_cr=RELAY_CAP//4;rl_cr=18*cW*(FIXED_LEAVES*(Sp+2*dw)+LA*dT*(SPROD_MAX*RHO*D_WLT*(2+D_M)+SG_MAX*DWS));o=RHO*Fr(Sp)*Sp*dT*cW;rl_fdiff=fc+2*CLUST_BATCH*Fr(Sp)*cW;v_rl=648*(o*rl_fdiff+CLUST_BATCH*Fr(Sp)*RL_SAME_PL);d_rl=rl_cr/rl_cap_cr+v_rl/cn;per_leaf=D_BATCH+d_f+d_p2+d_cl+d_rq+d_rl+d4;rows_=I*cr*(Fr(1,r)+lam_int+2*per_leaf);g_def=NODES*q1p*CHK*D_BATCH;glob=ck+NODES*(3*q1p+2*NBATCH_MINE+1)*Fr(1,2**254)+g_def;lo=1-e_hi-cs-rows_-glob;return dc(mu=mu,lo=lo,cs=cs,rows=rows_,glob=glob,Sp=Sp,n0p=n0p,d_p2=d_p2,m_p2=m_p2,d_f=d_f,lam_int=lam_int,d_cl=d_cl,d_rq=d_rq,d_rl=d_rl,g_def=g_def)
+def h6(q):return gK(q)["lo"]
+cV=103079062500;gB,gi=em(cV);RL_SAME_PL=W_ELL*Fr(r,r-2)*(RHO*Fr(CLUST_BATCH-1,2)*dT*cW+96*K_U_CLUST*cW+SIP);cy=[NODES*LEAVES*q*Q2 for q in gB];SG_MAX=max(cy);SPROD_MAX=max(cy[g]*(NODES*LEAVES*gi[g+1]*Q2)for g in rn(cR));M_VG_MAX=18*(RHO*Fr(SPROD_MAX)*dT*cW+Fr(SG_MAX)*RL_SAME_PL);cn=(Fr(RELAY_CAP-18*FIXED_LEAVES-RELAY_CAP//4)-M_VG_MAX)**2;ho=LEAVES*cV*Q2;SG_FULL=NODES*ho;cZ=h6(cV);GB,do=128,256;cX=dJ;K_GATE=cd(cX.numerator*cZ.denominator*(1<<GB),cX.denominator*cZ.numerator);dy=Fr(K_GATE,1<<GB);df=dy*cZ;check("c20 %d"%cV,cZ>=Fr(9985,10000),"lo_run %.12f"%(math.floor(cZ*10**12)/10**12));check("c21",0<K_GATE<(1<<GB)and df>=cX and cX>=dJ and Fr(K_GATE-1,1<<GB)*cZ<cX and 2*COIN_SCALAR+8+3+4+16<=do,"p_gate %.9f gated_lo %.12f"%(float(dy),math.floor(df*10**12)/10**12));check("c22",all((gi[g]**32)*(cR**dF)<=(cV**32)*(g**dF)<((gi[g]+1)**32)*(cR**dF)for g in rn(1,cR)))
+def pq(q):n=LEAVES*q*Q2;g=GOOD_NODE_PAIRS*n*n;return g*P1_GOOD,2*cr*g*P1*(NODES*n*(K_U_CLUST*cf+cz)+1)/Fr(CAP_H-FIXED_LEAVES-NODES*n*cf-1-CAP_H//4)**2
+V=[1-gK(k)["lo"]-gN(pq(k)[0])-pq(k)[1]for k in rn(6)];DF=[]
+while V:DF+=[V[0]];V=[b-a for a,b in zip(V,V[1:])]
+hf=math.lcm(*[x.denominator for x in DF]);hZ=[int(x*hf)for x in DF]
+def fu(q):m,t=pq(q);e=gN(m)+t;return e.numerator*hf+sum(c*math.comb(q,k)for k,c in en(hZ))*e.denominator,e.denominator*hf
+hr=[fu(m)for m in gi[:-1]]
+PHI=[Fr(1)]+[Fr(1)if N>=D else Fr(cd(N<<256,D),1<<256)for N,D in hr[1:]];cS=gK(cV);check("c23 %.6f"%lg(SG_FULL),SG_FULL==NODES*6*cV*Q2==cS["Sp"]);check("c24 %.9f"%float(cS["mu"]),cS["mu"]==GOOD_NODE_PAIRS*(ho*ho)*P1_GOOD and df>=dJ);check("c25",cS["cs"]<Fr(1,2**82),"2^%.4f"%lg(cS["cs"]));check("c26",cS["lam_int"]<Z2(-366,10)and LA<Fr(1006,1000),"2^%.3f"%lg(cS["lam_int"]));check("c27 %.3f"%lg(cV*E_FIX),cV*E_FIX<Z2(39,1)and DELTA_F>2**20*cV*E_FIX+FIX_BATCH);check("c28",cS["d_f"]<Z2(-188,10),"2^%.3f"%lg(cS["d_f"]));check("c29",cS["d_p2"]<Z2(-228,10),"2^%.3f"%lg(cS["d_p2"]));check("c30",cS["d_cl"]<Z2(-152,10)and cS["d_rq"]<Z2(-152,10)and cS["d_rl"]<Z2(-152,10),"2^%.3f 2^%.3f 2^%.3f"%(lg(cS["d_cl"]),lg(cS["d_rq"]),lg(cS["d_rl"])));check("c31",cS["g_def"]<Z2(-217,10)and cS["glob"]<Z2(-18,1),"2^%.3f"%lg(cS["glob"]));check("c32",PHI[0]==1 and all(0<=x<=1 for x in PHI)and all(PHI[g]>=PHI[g+1]for g in rn(cR-1))and all(PHI[g].numerator*hr[g][1]>=min(hr[g])*PHI[g].denominator for g in rn(1,cR))and all(Fr(*fu(q))==1-gK(q)["lo"]for q in(gi[1],gi[cR//2],gi[-2],cV)),"PHI[1] %.4f PHI[16] %.4f PHI[31] %.4f"%(float(PHI[1]),float(PHI[16]),float(PHI[31])));gS=CAP_H;check("c33",gS==CAP_H<2**59,"2^%.4f"%lg(gS));PAIRM=KB_C132+Fr(1,r);PAIRK2=KB(D1+D2+64)+Fr(1,r);PJ_MEAN=Fr(65,54)+JPATH*(2*D_WJ+Fr(1,r-1));check("c34",VISIT==4);SG=[NODES*LEAVES*q*Q2 for q in gB];WG,SAMEX,WGJ,WGK2,WGL,WGR,WGG=[],[],[],[],[],[],[]
+for _g,_q in en(gB):_s=SG[_g];fa=NODES*_q*(CHK*(FB_FIX+COIN_SCALAR+41+INV+INV_CALL+KEY_FIX)+BATCH_SETUP)+NODES*y_group(_q)+cd(NODES*_q*(FWD_INC+BWD_INC+KEY_INC-EMIT_INC)*Q2,1);eN=_s*(EMIT*K+FLUSH+DONE_C1)//K+_s*H2S_ARR+_s//K*H2S_FULL+NODES*(FINAL*F1+FIN_FIX)+_s*BLOCKH//K2B+N_REL*(FINALH*F2+FIN_FIX)+N_HOME*EXPECTH+N_REL*(EXPECT+RDONE)+NODES*(INIT3_BKT*F1+1);it=NODES*LEAVES*gi[_g]*Q2;eJ=N_CLUST*_q*CLUST_BATCH*(CLUST_BATCH-1)//2;e7=_s*it+_s*(_s-1)//2-eJ;e9=e7*PAIRM;e6=_s*HCHG_NEW+ALLN*STOP_CHECK;WGK2+=[HCHG_VER*e7*PAIRK2];fB=e6+VISIT*e9+WGK2[-1];e5=_s*PJ_MEAN+_s//3*SJOIN;WGJ+=[e5];WGL+=[fa];WGR+=[eN];WGG+=[e6+VISIT*e9];WG+=[fa+eN+fB+e5+EXCH_ROW];SAMEX+=[eJ]
+check("c35",sum(gB)==cV and min(gB)>0 and all(s%K==0 for s in SG));check("c36",NODES*2**50<=2**116 and NODES<2**67 and max(gB)*LEAVES*Q2//K+1<2**50);ZERO_INIT=N_HOME*(2**HB//ZW*ZERO_PASS+1);check("c37",ZERO_PASS==130 and 2**HB%ZW==0 and(2**64-2**55)%2048==0);E_PRE=ALLN*NODE_INIT+E_MINE+NODES*(3*cd(cV,M_G)+1)*COIN_SCALAR+NODES*MX*XSETUP+NODES*6*CH*ENTRY_X+NODES*HEADER+N_REL*(INIT3_BKT*F2+1+TINIT_ENTRY*F2+1)+NODES*(INIT3_BKT*F1+2)+ZERO_INIT+HR_INIT+NODES*XTBLD_ALL+NODES*TBLD;_SIPT=240*RHO;fJ=NODES*(3*cV+2*NBATCH_MINE+1)*Fr(1,2**254);P_EXC=P_X_ORBIT_ALL_POOLS+P_BAD_X+D_XMINE_ALL+P_MINE_ZERO_ALL+fJ;W_CORE_DET=sum(WGL[_g]+WGR[_g]+SG[_g]*HCHG_NEW+ALLN*STOP_CHECK+EXCH_ROW for _g in rn(cR))+(SG_FULL//3)*SJOIN;W_DET_MAX=(W_CORE_DET+NODES*cV*(B_CAP//CH+1)*FIX_BATCH*max(FIX_EXTRA.values())+SG_FULL*JPATH+SG_FULL*CAP_H*(VISIT+HCHG_VER+HCHG_LS1)+N_HOME*CAND_CAP*(RESOLVE+2*REQ_SERVE));cj=P_EXC*W_DET_MAX;EXC_WORK=cd(cj.numerator,cj.denominator);c4=2*K_U_CLUST*SG_FULL+SAMEX_FAC*SG_FULL*(CLUST_BATCH-1)+SAMEX_FAC*PARTNER_PAIRS+CLUST_BATCH*CLUST_BATCH+96*K_U_CLUST*K_U_CLUST;ELIST=RHO*(Fr(SG_FULL)*SG_FULL*cW+c4*cW)+_SIPT*cW*SG_FULL+72;EK2=RHO*(c4*fo)+_SIPT*fo*SG_FULL+72;PAIR_SAMEX=Fr(CLUST_BATCH-K_U_CLUST,CLUST_BATCH-1)*Fr(r,r-2)*W_ELL*PAIRM+Fr(96*(K_U_CLUST-1),CLUST_BATCH-1)*(dO+Fr(1,r));SXK2=PAIR_SAMEX*sum(SAMEX);SXV=PAIR_SAMEX*VISIT*sum(SAMEX)+EXC_WORK;fk=RHO*(Fr(SG_FULL)*SG_FULL*KB(D1+D2)+c4)+_SIPT*SG_FULL+72;DEFV=VISIT*D_BATCH*(gS*SG_FULL+sum(SAMEX));DEFL_PAIRS=2*D_BATCH*fk+D_BATCH*gS*SG_FULL;DEFK2=HCHG_VER*DEFL_PAIRS;DEFL=HCHG_LS1*DEFL_PAIRS;DEFJ=JPATH*D_BATCH*SG_FULL;DEFWLT=SG_FULL*(RHO*SG_FULL*D_WLT*(2+D_M)*(VISIT*KB_C132+HCHG_VER*KB(D1+D2+64)+(HCHG_LS1+RESOLVE+2*REQ_SERVE)*cW)+DWS*KB(132)*(VISIT+HCHG_VER+HCHG_LS1+RESOLVE+2*REQ_SERVE)+JPATH*D_WLT);E_FIX_WORK=NODES*cV*E_FIX*max(FIX_EXTRA.values());E_CAND_WORK=(ELIST+DEFL_PAIRS)*RESOLVE;E_REQ_WORK=(ELIST+DEFL_PAIRS)*(2*REQ_SERVE);E_SHARED_REST=E_PRE+NODES*GEN_MUL+(2+2*cR)*ALLN*MSG+NBAR_ALLOW*BARRIER+ALLN*PHASE_CTRL_G+OUTPUT;db=E_SHARED_REST+E_FIX_WORK+E_CAND_WORK+E_REQ_WORK+sum(PHI[_g]*WG[_g]for _g in rn(cR))+SXV+EK2*HCHG_VER+ELIST*HCHG_LS1+DEFV+DEFK2+DEFL+DEFJ+DEFWLT+SXK2*HCHG_VER;dE=do+dy*db;ig=dE/C
+def eD(w):
+ getcontext().prec=80;start=(Decimal(w.numerator).ln()-Decimal(w.denominator).ln())/Decimal(2).ln()*10**15;c=Fr(int(start.to_integral_value(rounding=ROUND_CEILING)),10**15)
+ for _ in rn(400):
+  if P2(c)[0]>=w and P2(c-Fr(1,10**15))[1]<w:return c
+  c+=Fr(1,10**15)if P2(c)[0]<w else-Fr(1,10**15)
+ raise AssertionError("E-claim not certified")
+dD=eD(ig);fv=sum(PHI[_g]*WGJ[_g]for _g in rn(cR))+DEFJ;ff=sum(PHI[_g]*WGK2[_g]for _g in rn(cR))+SXK2*HCHG_VER+EK2*HCHG_VER;dq=db/SG_FULL;gX=dq;hK,UP_BASE=2**55,2**64-2**55
+def valid_va(a):return 0<=a<2**64 and(a<2**55 or a>=2**64-2**55)
+TB=2**40;eK=3*10240*TB;hq=4096*TB;di=16384*TB;gy=19456*TB;gv=2**64-32768*TB;cY=24576*TB;eR=gv+eK;dB=84*TB;gT=90*TB;gV=24576*TB;ec=28672*TB;eS=2**64-32768*TB;g8=[open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"kernels",f)).read()for f in("leaf.s","secp_fe.s")];check("c38",set(re.findall(r"(?:LK1|LKP6_PAIR) (0x[0-9a-f]+)",g8[0]))=={hex(gy),hex(1<<49)}and[tuple(int(x,16)for x in m.split(","))for m in re.findall(r"OFFS7 (?:\w+,){10}(0x[0-9a-f,x]+)",g8[1])]==[tuple(gv+k*10240*TB+d*2**50 for d in(0,2,8,4,6,9))for k in(0,2)]and[tuple(int(x,0)for x in m.split(","))for m in re.findall(r"\nOFF5 (?:\w+,){11}([\w,]+)",g8[1])]==[tuple(gy+k*2**50 for k in(0,1,2,3,4)),tuple(gv+10240*TB+d*2**50 for d in(0,2,4,6,8))]and gy%2**50==0 and cY-gy==5*2**50 and gv%2**50==0 and dM==2**64-2**51 and hq%2**49==0 and di%2**48==0 and gv%2**48==0 and valid_va(eR-1)and all(valid_va(dM|((w<<8)%2**64))for w in(0,1,2**43-1,2**64-1)));eG=2**31;dL=32*TB+eG;dW=42*TB+2**37;dX=dW-6*CH*512;dC=40*TB;gD=34*TB;LINK_GEN,dx,dR=gD,gD+0x1000,gD+0xB000;et=38*TB;ee=96*TB-64;ew=ee+REQ_CAP*64+64;gg=2**55-2**40;eF=gg+0x8000;NEXT_LO=2**64-24576*TB;NEXT_BASE=NEXT_LO+(dQ//2)*TB;eV=dQ*TB;fy=CAP_H*32-eV;dN=2**20+8*2048+4096+CAND_CAP*528;ei=2**20+8*2048+MX*6*e4*64+2048+MX*64+(2*MX+2*cd(cV,M_G)+cV+1)*32+2**30+YB*2304+1024*128+512+2048;REGISTRY=[("G","LC1",0,F1*8,"init1 init3"),("G","YR",dL-64,dL-64+(YB+1)*eG,"yround"),("G","EB",dX,dW,"setup:ENTRY_X fwd"),("G","YQ",dC-64,dC+2**36+2**31,"ydlv"),("G","LG",LINK_GEN,LINK_GEN+4096,"MMIO"),("G","LGM",dx,dx+4096,"MMIO"),("G","PY",dR,dR+1024,"MMIO"),("G","G34",gD+0x10000,et,"setup:NODE_INIT setup:XSETUP setup:COIN_SCALAR ydlv0 ydsp wcnt dlvq psel setup:CHAIN_SET yround"),("G","CN",dB,dB+64*cV,"setup:BATCH_SETUP"),("G","CNM",gT,gT+64*NBATCH_MINE,"setup:COIN_SCALAR"),("G","REQ",ee,ew,"setup:NODE_INIT dlvq"),("G","AXY",hq,cY,"tbld"),("G","XT6",gv,eR,"tbldk"),("G","H1L",gV,gV+4096*TB,"init1"),("G","H1U",ec,ec+4096*TB,"init1"),("G","BT",dM,2**64,"tbldf"),("R","RCS",0x10000,0x10000+2**20+8*2048,"setup:NODE_INIT h2s0"),("R","LC2",2**45,2**45+F2*8,"init3"),("R","RC2",3*2**45,3*2**45+F2*8,"tinit"),("R","E2P",2**47,2**47+2*F2*8,"analytic"),("R","DPW",2**48-4096,2**48,"setup:NODE_INIT h2s0 h2s"),("R","RCB",2**48,2**48+0x10000+RELAY_CAP*64,"setup:NODE_INIT setup:EXCH_ROW dlvq"),("R","LR",gg,gg+0x8000,"MMIO"),("R","LRM",eF,eF+0x8000,"MMIO"),("R","RCT",2**55-8192,2**55-4096,"setup:NODE_INIT dlvq"),("R","H2U",eS,2**64,"init3"),("H","R2L",0,fy,"dlvh"),("H","LH",gg,gg+0x8000,"MMIO"),("H","LHM",eF,eF+0x8000,"MMIO"),("H","HCC",gg+0x10000,gg+0x10000+dN,"setup:NODE_INIT init3 dlvh"),("H","HCS",2**55-16384,2**55,"setup:NODE_INIT dlvh0"),("H","HH",UP_BASE,UP_BASE+2**HB*8,"zero16384 hhclr dlvh"),("H","NX",NEXT_LO,NEXT_LO+CAP_H*16,"dlvh"),("H","R2U",2**64-eV,2**64,"dlvh")];cl=os.path.dirname(os.path.abspath(__file__));d3=set(re.findall(r"\.globl\s+(\w+)","".join(open(os.path.join(cl,"kernels",f)).read()for f in("leaf.s","route.s","secp_fe.s"))))
+def fd(b):t=b.split();return bool(t)and all(x in d3 or x in("MMIO","analytic")or(x[:6]=="setup:"and isinstance(globals().get(x[6:]),int))for x in t)and(len(t)==1 or not{"MMIO","analytic"}&set(t))
+def disjoint_va(I):o=sorted(I);return(all(0<=a<b<=2**64 and valid_va(a)and valid_va(b-1)and((a<hK)==(b-1<hK))for a,b in o)and all(o[i][1]<=o[i+1][0]for i in rn(len(o)-1)))
+RN=dc(G=NODES,R=N_REL,H=N_HOME);ROLE_B={k:sum(hi-lo for r_,_,lo,hi,_ in REGISTRY if r_==k)for k in RN};PG,BLK=2**16,2**28
+def ia(k):
+ iv=sorted((lo//PG*PG,cd(hi,PG)*PG,b=="MMIO",hi-lo)for r_,_,lo,hi,b in REGISTRY if r_==k);pg={};ok=True;l1=set();l2=set();l3=set();I=[];J=[]
+ for lo,hi,m,_ in iv:
+  for a in(lo,hi-PG):ok&=pg.setdefault(a,m)==m
+  t=J if m else I
+  if t and lo<=t[-1][1]:t[-1]=(t[-1][0],max(t[-1][1],hi))
+  else:t+=[(lo,hi)]
+  l1.update(rn(lo>>52,(hi-1>>52)+1));l2.update(rn(lo>>40,(hi-1>>40)+1))
+  if m:l3.update(rn(lo>>28,(hi-1>>28)+1))
+  else:
+   if lo%BLK:l3.add(lo>>28)
+   if hi%BLK:l3.add(hi-1>>28)
+ ok&=all(b1<=a2 or b2<=a1 for a1,b1 in I for a2,b2 in J);T=2+len(l1)+len(l2)+len(l3);o=PG*T+sum(b-a for a,b in I)+sum(b-a for a,b in J);return ok,T,o-ROLE_B[k],o
+PT={k:ia(k)for k in RN};PROG_DELIV,NODE_STATE,MMU_ON,fh=(2**18//32)*2*MSG,2**12,64,4;NI_ITEM={k:PROG_DELIV+NODE_STATE+MMU_ON+8*2**10+fh*4096*PT[k][1]+2**21 for k in RN};check("c39",all(PT[k][0]for k in RN)and PT["G"][1]==65488 and PT["R"][1]==65307 and PT["H"][1]==65543 and max(NI_ITEM.values())<=NODE_INIT and sum(RN[k]*NI_ITEM[k]for k in RN)+NODES*F1<=ALLN*NODE_INIT,"tables "+"/".join(str(PT[k][1])for k in"GRH"));PEAK=sum(RN[k]*PT[k][3]for k in RN);check("c40",len(REGISTRY)==34 and[sum(r_==k for r_,_,_,_,_ in REGISTRY)for k in"GRH"]==[16,10,8]and all(lo<hi and fd(b)for _,_,lo,hi,b in REGISTRY)and all(disjoint_va([(lo,hi)for r_,_,lo,hi,_ in REGISTRY if r_==k])and ROLE_B[k]<PT[k][3]<2**56 for k in RN));check("c41",dL-64+(YB+1)*eG<=33*TB and YROUNDS*YPC*512+64<=eG and gD<dC-2**37 and dC+2**36+2**31<=dX and dW<=dB and et-gD-0x10000>=ei and dB+64*cV<=gT and gT+64*NBATCH_MINE<=ee and ew<=hq and di+12*2**48==gy and gy+2*2560*TB==cY<=gV and fy<gg and UP_BASE+2**HB*8==NEXT_LO and NEXT_LO+CAP_H*16<2**64-eV and dN<2**40-0x10000-16384);check("c42",cV<=2**37 and Q2<2**24 and YROUNDS*YPC==L_CHAIN and PTS_MINE_CHAIN<2**18 and NBATCH_MINE<2**44)
+def hX(d,x,o):return P2(d)[0]>=x and P2(d-Fr(1,o))[1]<x
+def cU(x,o):
+ k=math.ceil(lg(x)*o)
+ for _ in rn(20):
+  d=Fr(k,o)
+  if hX(d,x,o):return d
+  k+=1 if P2(d)[0]<x else-1
+ raise AssertionError("grid bound not certified")
+dH=dc(time_log2=dD,memory_log2_bytes=cU(PEAK,10**4),preprocessing_log2=cU(Fr(E_PRE,C),10**4),success=dJ,per_leaf=Fr(cd(gX.numerator*10**4,gX.denominator),10**4));GEN_ITEM=256*(DBL+eH)+2*(INV+3*MULX+2*SQRX+10*ADDX)+64;GEN_TEST,GEN_CTRL,fF,ib=256*2*13+64,256*6+64,30,9;X_ENTRY=eH+3*SQRX+11*MULX+2*ADDX+2*fF+17*ib+32;check("c43",GEN_ITEM+GEN_TEST+GEN_CTRL+X_ENTRY==GEN_MUL and GEN_MUL+4==GEN_MULX);fi=[14+2*(j&1)for j in rn(MX)];hN=sum(2*cd(w,2)for w in fi)+3+MX//2;TEMPLATE_ITEM=3*MULX+SQRX+24+7+20;check("c44",INV+3*MULX+2*SQRX+10*ADDX+4<CHAIN_ADD and 56*(2*MULX+ADDX+4)+TEMPLATE_ITEM+X_ENTRY<XSETUP and hN<=MX*ENTRY_X,"entries %d/8"%hN);dY=2*(N_HOME+NODES+2*(N_REL-1));eE=11+3*9+2+3+6+3+MSG+4+SWAP+20+8+7+6+2**13;fe=8+8+2+15;eo=7+DONE+DLV+RCV+WAKE+CTX;BARRIER_ITEM=ALLN*(3*13+1)+dY*eo;check("c45",COIN_SCALAR+cd(4*YROUNDS,YB)+eE<=BATCH_SETUP and cR*(12*fe+16+4)<PHASE_CTRL_G and BARRIER>=7*BARRIER_ITEM and NBAR_COUNT<=NBAR_ALLOW and 9+MSG_LINK<=MSG);DLVQ,DLVQ_DROP,DLVQ_CARRY,REQH_C,FWDQ,SENDR,FWDR=14,11,4,17,11,10,15;PH4_HOPS={k:v+DONE+RCV+2*WAKE+CTX for k,v in dc(req_home_relay=cd(REQH_C,2)+DLVQ+DLVQ_CARRY,req_relay_gen=FWDQ+3+DLVQ+DLVQ_CARRY,rep_gen_relay=SENDR+DLVQ+DLVQ_CARRY,rep_relay_home=FWDR+DLV).items()};_h=list(PH4_HOPS.values());check("c46",max(_h)<=MSG and RESOLVE==2*CAND_ITEM+1 and PROG_DELIV<NODE_INIT);COIN_ITEM=2*(4*2+5+4)+16+2+1+2;P_COIN_FAIL=Fr(2**256-r+1,2**256)**2;eQ,eP,ej,eU,PH4_FIX,eZ=2+1+6+6,5,17*4+9,16+12+600+16,2*EXPECT+DONE_C+CTX+32+24,16;check("c47",COIN_ITEM<=COIN_SCALAR and eQ<=INV_CALL and eP<=STOP_CHECK and ej<=HEADER and eU+GEN_MUL<=REQ_SERVE and 4*PH4_FIX*ALLN<=EXCH_ROW and eZ<=OUTPUT and P_COIN_FAIL<Fr(1,2**254));print("q1 %d  q2 %d  S 2^%.6f  mu %.9f  lo_run %.12f  p_gate %.9f  success >= %.12f"%(cV,Q2,lg(SG_FULL),float(cS["mu"]),math.floor(cZ*10**12)/10**12,float(dy),math.floor(df*10**12)/10**12));print("E_mine 2^%.6f  E_run 2^%.6f insns (2^%.6f units)  claim %d/10^15  per leaf %.4f  mem 2^%.7f  pre 2^%.7f  grids %s"%(lg(E_MINE),lg(db),lg(Fr(db,C)),dD*10**15,float(gX),lg(PEAK),lg(Fr(E_PRE,C)),"/".join(format(float(cU(ROLE_B[k],10**4)),".4f")for k in"GRH")))
+def gY(a):return sum(PHI[g]*a[g]for g in rn(cR))
+eb=[ALLN*NODE_INIT,NODES*GEN_MUL,(2+2*cR)*ALLN*MSG,E_MINE,NODES*(3*cd(cV,M_G)+1)*COIN_SCALAR,NODES*MX*XSETUP,NODES*6*CH*ENTRY_X+NODES*HEADER,NODES*XTBLD_ALL,NODES*TBLD,N_REL*((INIT3_BKT+TINIT_ENTRY)*F2+2)+NODES*(INIT3_BKT*F1+2),ZERO_INIT,HR_INIT,gY(WGL),E_FIX_WORK,fv-DEFJ,gY(WGR),gY(WGG),SXV,ff,ELIST*HCHG_LS1,DEFV+DEFK2+DEFL+DEFJ+DEFWLT,E_CAND_WORK,E_REQ_WORK,sum(PHI)*EXCH_ROW,NBAR_ALLOW*BARRIER,ALLN*PHASE_CTRL_G,OUTPUT];dv=[format(float(cU(v,10**4)),".4f")for v in eb];E_RUN_6=cU(db,10**6);E_RUN_U6=cU(Fr(db,C),10**6);E6=cU(dE,10**6);print("E_total %.6f  E_RUN_6 %.6f  E_RUN_U6 %.6f  tables %s"%(float(E6),float(E_RUN_6),float(E_RUN_U6),"/".join(str(PT[k][1])for k in"GRH")));check("c48",len(eb)==27 and sum(eb)==db and P2(dD)[0]>=Fr(dE,C)and P2(E_RUN_6)[0]>=db and P2(E_RUN_U6)[0]>=Fr(db,C)and P2(E6)[0]>=dE,"cells "+" ".join(dv));eM=dc(time_log2=Fr(12325194544662199,100000000000000),memory_log2_bytes=Fr(689999,5000),preprocessing_log2=Fr(29067,250),success=Fr(39,100),per_leaf=Fr(565294,10**4));d8=open(os.path.join(cl,"proof.md")).read();d7=open(os.path.join(cl,"success.md")).read();cq=open(os.path.join(cl,"submission.json")).read();d6=json.loads(cq)["claims"][0]["score"]
+def cnt(text,o):return len(re.findall(r"(?<![0-9])"+re.escape(o)+r"(?![0-9])",text))
+EC=[('123.251945446621990',2,0,2),('12325194544662199',1,0,1),('100000000000000',1,0,1),('137.9998',1,0,1),('116.2680',1,0,1),('56.5294',1,0,1),('0.39',2,2,2),('0.390284391',1,0,1),('0.999271323794',1,1,1),('8.475358528',0,1,0),('134.575133',1,0,0),('124.609348',1,0,1),('133.217730',1,0,0),('128.754203',1,0,1),('1,313,229,200,424,960',1,0,1),('103,079,062,500',1,1,1),('12,576,960',1,0,0),('55.9984',1,0,0),('55.9944',1,0,0),('55.9998',1,0,0),('2048',4,0,0),('12150',3,0,1),('132806896324484946406134670331010067698',1,0,1),('896,373,411,401,731,386,900,480,000,000',1,0,0),('6,080,000,000',1,0,0),('113.0001',1,0,0),('85.2999',1,0,0),('103.5689',1,0,0),('123.8676',2,0,1),('100.1700',1,0,0),('85.5850',1,0,0),('94.5850',1,0,0),('124.8071',1,0,0),('117.3576',1,0,0),('108.0001',1,0,0),('125.0224',1,0,0),('86.3220',1,0,0),('106.4813',1,0,0),('130.9815',1,0,0),('129.0972',1,0,0),('42.0056',1,0,0),('112.3563',1,0,0),('94.6804',1,0,0),('114.8341',1,0,0),('113.8741',1,0,0),('112.3976',1,0,0),('104.8900',1,0,0),('111.8167',1,0,0),('105.0001',1,0,0),('20.0000',1,0,0),('134.3992',1,0,0),('127.3068',1,0,0)];d9=[k for(k,p,s,j)in EC if(cnt(d8,k),cnt(d7,k),cnt(cq,k))!=(p,s,j)];check("c49",not d9,"count mismatch: "+",".join(d9));check("c50",set(dv)<={k for(k,p,s,j)in EC},"unenforced");check("c51",Fr(int(d6["numerator"]),int(d6["denominator"]))==eM["time_log2"]==dH["time_log2"]and math.gcd(int(d6["numerator"]),int(d6["denominator"]))==1);eA={"2^-50.51":(D_WJ,1,1,0),"2^-8.20":(D_LAB,1,1,0),"2^-7.65":(3*D_WJ+D_LAB_SYM,1,0,0),"2^-126":(D_BATCH,1,1,0),"2^-26":(d4,0,2,0),"2^-82":(cS["cs"],0,2,0),"2^-18.8":(cS["d_f"],0,2,0),"2^-36.6":(cS["lam_int"],0,2,0),"2^-22.8":(cS["d_p2"],0,2,0),"2^-23.95":(D_WLT,1,0,0),"2^-28.41":(6*max(NW)/(r-1),1,0,0),"2^-15.2":(max(cS["d_cl"],cS["d_rq"],cS["d_rl"]),0,6,0),"2^-21.7":(cS["g_def"],0,1,0),"2^-18":(max(cS["glob"],P_MINE_CAPS),0,3,0),"2^-19":(P_FAIL_ALL_POOLS,0,2,0),"2^-39":(P_SAME_A_ALL,0,1,0),"2^-140":(max(P_BAD_X,D_XMINE_ALL,P_MINE_ZERO_ALL),1,4,0),"2^-139":(P_EXC,0,1,0),"2^-202":(P_X_ORBIT_ALL_POOLS,0,1,0),"2^-254":(P_COIN_FAIL,1,1,0),"2^-99":(320*K_U_CLUST*K_U_CLUST*((POINTWISE_X_MAX/MX)**4)*cW,0,1,0)};dZ={"2^-200","2^-30","2^-187","2^-190","2^-20"}
+def eW(text,o):return len(re.findall(re.escape(o)+r"(?!\.?[0-9])",text))
+da=[set(re.findall(r"2\^-[0-9.]*[0-9]",t))for t in(d8,d7,cq)];cx=[k for k,(v,p_,s_,j_)in eA.items()if not(v<P2(-Fr(k[3:]))[0]and(eW(d8,k),eW(d7,k),eW(cq,k))==(p_,s_,j_))];check("c52",not cx and set().union(*da)<=set(eA)|dZ,"bad: "+",".join(cx+sorted(set().union(*da)-set(eA)-dZ)));check("c53",K_GATE==132806896324484946406134670331010067698 and CAP_H==1313229200424960 and PSEL_POOL==262160 and DEF_MINE==66718004 and EXC_WORK==4374667244138 and E_RUN_6==Fr(134575133,10**6)and E_RUN_U6==Fr(124609348,10**6)and E6==Fr(133217730,10**6)and eM==dH);print("FAIL: "+", ".join(dg)if dg else"PASS")
+if __name__=="__main__":sys.exit(1 if dg else 0)
