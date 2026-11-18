@@ -54,9 +54,11 @@ in the solver's initial context.
 
 - `OPEN_AI_EIGEN_KEY`: repository Actions secret passed as the reusable workflow's
   `OPENAI_API_KEY` for the configured review model.
-- `VERIFIER_CHECKOUT_TOKEN`: checkout credential if the verifier repository needs
-  private access. GitHub must also permit this repository to call that reusable
-  workflow. A checkout token alone does not grant reusable-workflow access.
+- The public verifier repository is checked out using GitHub's automatically
+  provided `github.token`. Track callers omit the optional
+  `VERIFIER_CHECKOUT_TOKEN` secret so an expired custom token cannot override it.
+  Delete the obsolete repository secret before rerunning failed evaluations
+  created with older caller revisions, which still forward that secret.
 - Yukon must have the repository installation and permissions needed to dispatch
   workflows and retrieve artifacts. Protect evaluator and workflow paths before
   dispatch; a candidate-controlled workflow cannot secure its own credentials.

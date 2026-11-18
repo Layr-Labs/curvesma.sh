@@ -22,4 +22,3 @@ jobs:
       yukon_evaluation: ${{ inputs.yukon_evaluation }}
     secrets:
       OPENAI_API_KEY: ${{ secrets.OPEN_AI_EIGEN_KEY }}
-      VERIFIER_CHECKOUT_TOKEN: ${{ secrets.VERIFIER_CHECKOUT_TOKEN }}
