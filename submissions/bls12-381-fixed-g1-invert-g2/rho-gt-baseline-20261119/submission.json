@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: bounded small-memory GT Pollard-rho via z=e(P,Q0)^x, Q=[x]Q0",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing-inversion target, with uniform nonidentity P and uniform z in GT, the concrete one-trial algorithm in proof.md computes g=e(P,Q0) once with the protected pairing, finds x with g^x=z by a 32-adding Pollard-rho walk with Floyd detection capped at N=2*ceil(sqrt(r)) iterations, verifies g^x=z and returns Q=[x]Q0 (infinity for z=1), so that e(P,Q)=z by bilinearity, with exploratory success probability at least 0.50, using at most 2^136.832576 reference units (20,000 scalar AArch64 instruction equivalents per unit) and at most 2^20 bytes of peak total storage. The success assessment relies on the disclosed standard r-adding collision-time heuristic, supported and limited as explained in proof.md; it is not an unconditional production success theorem. Total work includes the pairing evaluation, all one-target preprocessing, fresh randomness, failed outcomes, hashing, arithmetic, memory access, recovery, verification and G2 output. The uniform capped instruction bound is 2*ceil(sqrt(r))*6774784+2^40, with all costs justified in machine.md. No prior acceptance, searched advice, amortization or production-scale execution is assumed.",
+      "score": {
+        "numerator": "17104072",
+        "denominator": "125000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "bounded-rho-arithmetic-and-walks",
+      "source": "experiment.py",
+      "purpose": "Check full-width six-limb (p) and four-limb (r) Montgomery arithmetic, build a full-size order-r BLS12-381 GT element in the protected basis and check the walk invariant, test the actual walk on small prime groups including failures, and reproduce the complete capped cost. These do not prove production success and do not evaluate the pairing.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261119,
+          "trials": 128
+        }
+      ]
+    }
+  ]
+}
