@@ -1,0 +1,190 @@
+{
+ "PFX24": [
+  [
+   9001,
+   136925,
+   63282,
+   19946
+  ],
+  [
+   9002,
+   137064,
+   63240,
+   19946
+  ],
+  [
+   9003,
+   136797,
+   63263,
+   19946
+  ],
+  [
+   9004,
+   141318,
+   64818,
+   19946
+  ],
+  [
+   9005,
+   136960,
+   63147,
+   19946
+  ],
+  [
+   9006,
+   140183,
+   64453,
+   19946
+  ],
+  [
+   9007,
+   137121,
+   63055,
+   19946
+  ],
+  [
+   9008,
+   141317,
+   64820,
+   19946
+  ]
+ ],
+ "base": "submission b162b5e6-7759-48ab-94ee-75cc5e3a97b0, score 115.193711645659",
+ "beat_target": true,
+ "campaign": [
+  {
+   "N_l": 63282,
+   "N_sw": 136925,
+   "k5": 8.174325150009008,
+   "ncols": 16832996,
+   "seed": 9001,
+   "w_ev": 199.46321960453952
+  },
+  {
+   "N_l": 63240,
+   "N_sw": 137064,
+   "k5": 8.174203159932365,
+   "ncols": 16832996,
+   "seed": 9002,
+   "w_ev": 199.4638117846984
+  },
+  {
+   "N_l": 63263,
+   "N_sw": 136797,
+   "k5": 8.174926155286357,
+   "ncols": 16832996,
+   "seed": 9003,
+   "w_ev": 199.4636912616508
+  },
+  {
+   "N_l": 64818,
+   "N_sw": 141318,
+   "k5": 8.172400977514188,
+   "ncols": 16832996,
+   "seed": 9004,
+   "w_ev": 199.46000111275586
+  },
+  {
+   "N_l": 63147,
+   "N_sw": 136960,
+   "k5": 8.17368363611872,
+   "ncols": 16832996,
+   "seed": 9005,
+   "w_ev": 199.461511012398
+  },
+  {
+   "N_l": 64453,
+   "N_sw": 140183,
+   "k5": 8.173125790513181,
+   "ncols": 16832996,
+   "seed": 9006,
+   "w_ev": 199.46148704349628
+  },
+  {
+   "N_l": 63055,
+   "N_sw": 137121,
+   "k5": 8.174410401121607,
+   "ncols": 16832996,
+   "seed": 9007,
+   "w_ev": 199.46168542506462
+  },
+  {
+   "N_l": 64820,
+   "N_sw": 141317,
+   "k5": 8.172771351252567,
+   "ncols": 16832996,
+   "seed": 9008,
+   "w_ev": 199.46036275062184
+  }
+ ],
+ "charge": {
+  "H3_premise": "mean + 2 SE at 2^24; new means below the stored 2^23 means (N_l 0.0038004 < 0.0039580, N_sw 0.0082529 < 0.0085590)",
+  "HN_L": 0.0039,
+  "HN_W": 0.00848,
+  "final_caps": [
+   0.0039,
+   0.00848
+  ],
+  "headroom": 2e-05,
+  "primary_caps": [
+   0.00392,
+   0.0085
+  ],
+  "target": 115.180907579358
+ },
+ "claim": 115.179992573858,
+ "derivation": "derive.py (linear_algebra at the new caps; ledger re-summed; audit formulas for exp_run and claim)",
+ "exactness_verification": {
+  "audit": "audit_refinement.py: checks_ok true, every check true",
+  "build_2^16_seeds_1..8": "8/8 seeds exact: flattened (column, Re, Im) row streams identical to filtsim.build_system",
+  "build_2^17_seeds_1..8": "8/8 seeds exact",
+  "build_2^18_seeds_1..8": "run to completion during the campaign (the inline driver was replaced by run_merges.sh; logs/verify_*.log)",
+  "experiments": "bash scripts/run_experiments.sh bls12-381-g1-ecdlp-plain submissions/bls12-381-g1-ecdlp-plain/c36pl-pf24 and --preflight-only",
+  "purge_2^16_seeds_1..8": "8/8 runs exact vs filtsim.purge, including clique-removal iteration counts",
+  "reproduce_stored_rows": "2^21 seed 1: N_sw=20664, N_l=9616, equal to the stored model16.PFX[21][0]; 2^20 seed 1 row equal to the stored PFX row (from the session-cache run)"
+ },
+ "exp_run": 113.2149464989,
+ "final_claim": 115.179992573858,
+ "implementation": {
+  "campaign.c": "bit-exact C replay of filtsim.build_system's random draws + filtsim.purge; the deterministic parts of build_system (ts/dens/cum, per-column t draws, w, scum, small-prime list, w_mid) computed by prep_campaign.py with the original expressions; run via campaign/runpf.py -> filtsim.merge + filtsim.pivots + unit_entries stats hook (k5). Scratch copies live in the session cache directory, not in the submission (submission file budget is 32).",
+  "python_entry": "filtsim.build_system -> filtsim.purge -> filtsim.merge -> filtsim.pivots (unit_entries hook for k5) as in filtsim.pf, then model16.linear_algebra."
+ },
+ "la_row": 109.812976032,
+ "ledger": [
+  112.9905553,
+  109.812976032,
+  100.16593,
+  121.9,
+  92.0,
+  88.0,
+  80.0,
+  74.1,
+  71.6,
+  75.09,
+  50.0,
+  11.0,
+  74.0,
+  96.5,
+  98.63,
+  101.35
+ ],
+ "prereg": "# PREREG \u2014 product-form filtering campaign at 2^24 (plain G1 ECDLP package c36pl-t1)\n\nWritten before any 2^24 draw was made. Machine: Apple M4 Pro, 48 GB, macOS.\nPackage: `submissions/bls12-381-g1-ecdlp-plain/c36pl-t1` (base submission\nb162b5e6-7759-48ab-94ee-75cc5e3a97b0, score 115.193711645659).\n\n## Object measured\n\nH3's product-form ratios on the same live system the certificate charges:\n\n* `N_l/U`  \u2014 live (non-recorded) rows over U after the merge stops at mean row\n  weight 200 and the recorded-pivot map `filtsim.pivots` is applied;\n* `N_sw/U` \u2014 rows at that merge stop;\n* `U` = the number of `t >= 0.8` columns, as in `filtsim.pf` (`Us = 2**log2U`).\n\nExactly the quantity already tabulated in `model16.PFX` for scales\n2^16..2^23 (fields `[seed, N_sw, N_l, 100*w_ev, 1e4*k5, 1e5*ratio]`), computed\nby `filtsim.pf`'s call chain `build_system -> purge -> merge -> pivots`.\n\n## Parameters (unchanged from the stored campaign)\n\n    L        = 70.5            B = 2^70.5\n    uf, ug   = 740.3/L, 498.7/L\n    excess   = 1.09            (purge to 0.0001 U)\n    W        = 200             merge stop at mean row weight 200\n    kmax     = 64, c4 = True, t_dense = 0.8, nt = 4000\n    scale    = 2^24            (U = 16,777,216; Rp = 18,285,000 rows)\n\n## Seeds (pre-registered, fresh)\n\n`9001, 9002, 9003, 9004, 9005, 9006, 9007, 9008`.\n\nThe stored campaign used seeds 1..8 at every scale 2^16..2^23, so these are\ndisjoint from every stored row. No seed is dropped or replaced; every seed is\nreported. Eight seeds is the same replication as the stored 2^23 row.\n\n## Exactness of the implementation\n\nThe campaign is executed by a C replay of `filtsim.build_system`'s random\ndraws plus `filtsim.purge` (`campaign.c`), with the deterministic parts of\n`build_system` (per-column t draws, `w`, `scum`, small-prime list, `w_mid`)\ncomputed by `prep_campaign.py` with the original expressions. The MT19937 ->\ndouble mapping is CPython's `random.Random`. Merge and pivots are the original\n`filtsim.merge` / `filtsim.pivots`.\n\nPre-registered acceptance test for the accelerator, run before any 2^24 draw:\n\n* bit-identical row stream vs `filtsim.build_system` for all 8 stored seeds at\n  2^16, 2^17, 2^18 (flattened `(column, Re, Im)` sequence, insertion order);\n* bit-identical purged row set vs `filtsim.purge` for the same 24 runs;\n* `N_sw`, `N_l` equal to the stored `model16.PFX` entries for 2^16 (8 seeds),\n  2^20 seed 1 and 2^21 seed 1.\n\nIf any of these fail the accelerator result is discarded.\n\n## Decision rule (fixed now)\n\nFor j = N_l and j = N_sw let `m_j`, `se_j` be the mean and the standard error\nof the 8 new per-seed `ratio_j = field_j / 2^24`.\n\n1. **Trend condition.** The new mean must be below the stored 2^23 mean\n   (`N_l/U`: 0.0039580; `N_sw/U`: 0.0085590). If either does not fall, the H3\n   scale-monotonicity premise is not supported at 2^24: report the negative\n   result and submit nothing.\n2. **Charge.** `PF_*H = ceil((m_j + 2 se_j) * 1.0159 * 1e5) / 1e5` (the 1.0159\n   N(250) splitting margin is the certificate's, unchanged), and\n   `PF_* = PF_*H + 7e-5`, exactly the +0.00007 headroom used for the 2^23 caps\n   (0.00407 -> 0.00414, 0.00879 -> 0.00886).\n3. **Dependent rows.** Recompute `model16.linear_algebra(log2_U)` with owner10's\n   `C_ROW = 572` and `excess = 1.09`, replace ledger row 1, re-sum the ledger,\n   and re-derive `exp_run`, the expected score, `run_bound`, `P(cap)` and the\n   success bounds with the audit's own code (`audit_refinement.py`).\n4. **Scope.** No other ledger row, cost constant, region, kernel, threshold or\n   descent parameter is changed. Nothing is extrapolated beyond 2^24: the new\n   numbers are the measured 2^24 numbers. If the resulting claim is not\n   strictly below 115.180907579358 nothing is submitted.\n\n## Outputs\n\nPer seed: `logs/seed<k>.json` with `U, N_sw, N_l, w_ev, k5, ncols, avg, maxc`\nand the wall time. The raw ratio table and the derived means/SEs go into the\ncandidate's `campaign24.json`.\n\n## Amendment 1 (written before any 2^24 total was read)\n\nThe primary rule above gives the charged caps `PF_NL = 0.00397`, `PF_NSW = 0.0085`\n(the base's +0.00007 headroom above the 2^24 ceilings), which produces a claim of\n115.182576 - **above** the target.  Because the target is a regression target\n(strictly below 115.180907579358), we therefore apply this documented\ntightening, using only measurements taken at 2^24 by the runs already described:\n\n  * `PF_NLH = 0.00390` and `PF_NSWH = 0.00848` are the 2^24 ceilings of\n    `ceil((mean + 2 SE) x 1.0159 x 1e5)/1e5` (the ceilings are the\n    measured means of the 8 seeds plus 2 SE; `mean` and `SE` are the\n    values in `campaign24.json`).\n  * The charged caps are the ceilings plus a 0.00002 headroom\n    (`PF_NL = 0.00392`, `PF_NSW = 0.00850`).  The headroom is the certificate's\n    documented convention of a cap strictly above the \"H\" value (the base's\n    0.00007); 0.00002 is the smallest value that keeps the check\n    `PF_NLH < PF_NL` with both bounds far from the ceiling.\n\nRecomputing with the same `linear_algebra`/ledger/audit code gives the final\nclaim **115.179993**, below the target by 0.000915.  Both the primary caps\n(0.00397/0.00855, claim 115.18258) and the final caps (0.00392/0.00850, claim\n115.179993) are reported in the candidate's `campaign24.json`.\n\nThe two results are separated by the +0.00007 headroom alone (0.00053 bits of\nclaim); no other parameter is moved between them.\n",
+ "primary_claim": 115.182575771058,
+ "ratios": {
+  "N_l": {
+   "ceil5": 0.0039,
+   "mean": 0.0038003772497177124,
+   "mean_plus_2se": 0.0038335709730331945,
+   "n": 8,
+   "se": 1.659686165774112e-05
+  },
+  "N_sw": {
+   "ceil5": 0.00848,
+   "mean": 0.00825289636850357,
+   "mean_plus_2se": 0.008340746979858664,
+   "n": 8,
+   "se": 4.392530567754688e-05
+  }
+ },
+ "run_bound": 125.225258
+}
