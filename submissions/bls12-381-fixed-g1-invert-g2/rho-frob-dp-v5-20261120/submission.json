@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class distinguished-point GT rho on reference blst Fp12 multiplications, Q=[x]Q0",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing-inversion target, with uniform nonidentity P and uniform z in GT, the concrete one-trial algorithm in proof.md computes g=e(P,Q0) once with the protected pairing. It finds x with g^x=z by a single 256-adding Pollard-rho walk on Frobenius classes {Y^(p^i)} (size 12), with: a class-invariant key from the real part of the constant tower coefficient; an equivariant frame rule; a Frobenius-twisted table; 64-entry short-cycle detection and DP-revisit detection of fruitless cycles, each with escape by squaring; distinguished points; and hard limits on DP events (2^22), verifications (64) and escapes (S/256), so that the work bound holds for every execution. It uses one pinned blst dense Fp12 multiplication (one reference unit) per step, with the walk capped at S=floor(27*(isqrt(floor(r/12))+1)/20)+2^115 steps including escapes. It verifies g^x=z and returns Q=[x]Q0 (infinity for z=1), so that e(P,Q)=z by bilinearity. The exploratory success probability is at least 0.40, using at most 2^126.714197 reference units (W=S*(1+11264/20000)+2^42/20000; 20,000 scalar AArch64 instruction equivalents per unit for non-reference work) and less than 2^29 bytes of peak storage. The success assessment relies on the disclosed standard r-adding collision-time heuristic on r/12 classes, on coefficient bits behaving as random partition and DP bits, and on the explicit random index/frame model. Success is analysed through a label-free comparison walk W*, which escapes at every detected repeat. W* coincides with the algorithm until the first detected repeat with unequal labels. It depends only on the logarithms, so conditional on W* the d_j and b0 are exactly uniform, and every genuine detected repeat yields x with probability 1-1/r. In the random model, proof.md bounds the probability that W* is ever trapped in an undetected structural cycle by 2^-46.9. The analysis is in F_r and uses the exactly computed order of 2 mod r. These bounds are as supported and limited in proof.md. It is not an unconditional production success theorem. Total work includes the pairing evaluation, all one-target preprocessing, fresh randomness, failed outcomes, canonicalization, frame computation, ring buffer, escapes, DP table handling, arithmetic, memory access, recovery, verification and G2 output, all justified in machine.md. No prior acceptance, searched advice, amortization or production-scale execution is assumed.",
+      "score": {
+        "numerator": "126714197",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-class-dp-walks-and-gt-checks",
+      "source": "experiment.py",
+      "purpose": "Run the exact 256-increment Frobenius-class DP walk (with ring and DP-revisit fruitless-cycle escapes and all limits) on toy groups with an order-12 automorphism, reporting all outcomes. Check the tower/protected-basis products, the Frobenius coefficient formula and eigenvalue p mod r, class-key invariance and frame equivariance on all 12 conjugates of full-size GT elements. Run a short real full-size class walk with the production key, frame and twisted table, and reproduce the capped cost. These do not prove production success and do not evaluate the pairing or blst. Also verify the factorization of r-1, compute the order of 2 modulo r, and evaluate the structural-trap bound.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 128
+          },
+          "full_size_walk_steps": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 1024
+          }
+        },
+        "required": [
+          "seed",
+          "trials",
+          "full_size_walk_steps"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261123,
+          "trials": 128,
+          "full_size_walk_steps": 1024
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "title": "bls12-381-fixed-g1-invert-g2: Frobenius-class distinguished-point GT rho on reference blst Fp12 multiplications, Q=[x]Q0",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing-inversion target, with uniform nonidentity P and uniform z in GT, the concrete one-trial algorithm in proof.md computes g=e(P,Q0) once with the protected pairing. It finds x with g^x=z by a single 32-adding Pollard-rho walk on Frobenius classes {Y^(p^i)} (size 12), with: a class-invariant key from the real part of the constant tower coefficient; an equivariant frame rule; a Frobenius-twisted table; 64-entry short-cycle detection with escape by squaring the minimal class; and distinguished points. It uses one pinned blst dense Fp12 multiplication (one reference unit) per step, with the walk capped at S=floor(31*(isqrt(floor(r/12))+1)/20)+2^115 steps including escapes. It verifies g^x=z and returns Q=[x]Q0 (infinity for z=1), so that e(P,Q)=z by bilinearity. The exploratory success probability is at least 0.50, using at most 2^126.959915 reference units (W=S*(1+12288/20000)+2^40/20000; 20,000 scalar AArch64 instruction equivalents per unit for non-reference work) and less than 2^28 bytes of peak storage. The success assessment relies on the disclosed standard r-adding collision-time heuristic on r/12 classes, on coefficient bits behaving as random partition and DP bits, and on fruitless cycles longer than 64 being negligible, as supported and limited in proof.md. It is not an unconditional production success theorem. Total work includes the pairing evaluation, all one-target preprocessing, fresh randomness, failed outcomes, canonicalization, frame computation, ring buffer, escapes, DP table handling, arithmetic, memory access, recovery, verification and G2 output, all justified in machine.md. No prior acceptance, searched advice, amortization or production-scale execution is assumed.",
+      "score": {
+        "numerator": "126959915",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "frobenius-class-dp-walks-and-gt-checks",
+      "source": "experiment.py",
+      "purpose": "Run the exact Frobenius-class DP walk (with fruitless-cycle escapes) on toy groups with an order-12 automorphism, reporting all outcomes. Check the tower/protected-basis products, the Frobenius coefficient formula and eigenvalue p mod r, class-key invariance and frame equivariance on all 12 conjugates of full-size GT elements. Run a short real full-size class walk with the production key, frame and twisted table, and reproduce the capped cost. These do not prove production success and do not evaluate the pairing or blst.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 160
+          },
+          "full_size_walk_steps": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 1536
+          }
+        },
+        "required": [
+          "seed",
+          "trials",
+          "full_size_walk_steps"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261121,
+          "trials": 128,
+          "full_size_walk_steps": 1024
+        }
+      ]
+    }
+  ]
+}
