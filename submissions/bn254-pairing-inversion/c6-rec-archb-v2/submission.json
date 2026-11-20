@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: Self-Contained Pure-Scalar C6-m184_w216-rec (6,2) STNFS (de Bruijn + 4-Cap Z[omega] LA): 2^87.457600841",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-pairing-inversion target, the self-contained 100% pure-scalar AArch64 algorithm of proof.md (C6-m184_w216-rec content-reduced reciprocal CM-sextic tower, order-6 Frobenius tau = Frob^10, Arch B-Hybrid reversed a-table replay with pure-scalar 64-bit SWAR scan+zero and self-contained Band-3 7D Fincke-Pohst coset enumeration, live norm-histogram-weighted full de Bruijn rho_dB and Stage B, B_f = 2^60, B_g = 2^59, excess 0.95, full un-discounted Schirokauer maps, 1-owner 3-bucket Z[omega] Block Wiedemann with deterministic 4-parameter hard-cap abort and hard-cap cost/RAM pricing at (N_sw_cap = 0.00310*U', N_l_cap = 0.00175*U', k5_cap = 11.50, tab_r_cap = 0.85, W_avg <= 201, lazy=0), and live 62-row 12D descent at B_g = 2^59 with live-verified 12D lattice norm envelopes) returns (P0, [x]Q0) with e(P0, [x]Q0) = z with success at least 0.39 over uniform challenges and fresh coins, and expected total classical work E[W] <= 1 + (K/2^64) * 2^88.797676615 <= 2^87.457600841 units (C = 20,000 scalar AArch64 instruction equivalents), under declared heuristics H1-H5, H-EA, H-FFT, H-R, H-X, and H-SEP (proof.md Section 7, explicitly including H3 that production filtered outputs satisfy all four hard caps with failure <= 0.010000, and H5's Gamma-Poisson PGF relation-count envelope, conditional candidate independence psi^k, and uniform <= 1/(li(2^59)/6) tau-orbit collision law). A run gate opens the run only when a fresh 64-bit coin is below K = 7286462227623989591, the least integer with (K/2^64) * 0.987342 >= 0.39; a closed run fails at cost 1 unit. Opened-run success >= 0.987342 is bounded by a strict additive union bound (FIX-U) with conservative single-side tau-orbit count li(2^59)/6 (RT). All preprocessing, failed trials, aborts, verification, and output are charged once for this target; nothing is amortized.",
+      "score": {
+        "numerator": "87457600841",
+        "denominator": "1000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "declared.json",
+        "model_bn254_c6.py",
+        "verify_bn254_c6.py",
+        "descent_bn254_c6.py",
+        "c6_data.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "Self-contained pure-stdlib live verification of: BN254 + C6-m184_w216-rec algebra and mod-r CRT factorization across all 6 roots; exhaustive R^2=50 fundamental-domain bijection (107/107, 0 missed, 0 dups); Arch B-Hybrid 0-mismatch prototype and 64-bit scalar SWAR identity; Band-3 7D Fincke-Pohst coset-walk prototype (0 missed hits and live nodes/leaves bounds); exact 12D C6 special-q (2^65..2^125) and boot lattice determinants, congruences, and norm envelopes; live pure-Python hexagonal Z[omega] filtering simulator with exact kernel check; live norm-histogram-weighted Retention, Stage B, and full de Bruijn yield; 4-parameter hard-cap LA; live 62-row LB=59 descent with RT/FIX-U; and exact rational gate K.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "default",
+              "sensitivity",
+              "full",
+              "filtsim"
+            ]
+          },
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
