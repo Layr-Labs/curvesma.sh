@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "title": "recover-P: (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod 1-Owner Build + Zero-Skip Iterative Q32 dsieve16 + Certified 60-Bit smulh BOUND_CELL_HI + Pure k=1 Boole: expected work 2^110.509622614608",
+  "claims": [
+    {
+      "statement": "For BLS12-381 fixed-G2 invert-G1 (bls12-381-fixed-g2-invert-g1), on any supplied nonidentity Q in G2 and z in G_T, the self-contained (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod 1-owner flat-array build (flag-exact ARMv8-A Band-1a pre/post subs#4/adds#4 wrap + u4 + 1-rec tail & 1-rec-at-a-time Band-1b apply) + ZERO-SKIP complete iterative Q32 dsieve16 (every prime ideal <= 2^70 sieved completely, 1.00*WC_LLL99 expected node budget under H2, 10-op/level bit-exact rank_step 296 Ir/leaf) + certified 60-bit smulh/umulh UPPER-BOUND 2-stage BOUND_CELL_HI (unconditional L_hi >= log2|N_exact| on 100% of cells, ZERO survivor blowup or heuristic near-cancellation surcharge, <=0.6212b gap on well-conditioned cells covering QBINS) + deterministic bit-sum knapsack pure k=1 Boole (declared exploratory premise H5-Empty: P(M_{w_j}=0 | A_{j,b}, Q_boot) <= max(0.001, (1+0.5*mu)^-1), implied via exact one-sided Cantelli by Var(M|A_{j,b},Q_boot) <= max(2*mu, 0.001*mu^2), min_mu=838.21, P_boot_tree=0.56454, NO Gate E, supported diagnostically in ADAPTIVE.md) + pure-Taylor unit_orbit + proved RET_BOOT=1 + PM-Basis algorithm recovers P in G1 with e(P, Q) = z with success probability >= 0.39 (opened-run Boole floor >= 0.999554, run gate K = 7197440247096930362) and expected total classical work E[W] <= 1 + (K/2^64)*(2^111.867433 + 2^66) < 2^110.509622614608 dense-F_(p^12) units (C = 20,000 baseline scalar ARMv8.0-A integer instructions, unified aborting meter t_run = 2^123.0).",
+      "score": {
+        "numerator": "6906851413413",
+        "denominator": "62500000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "filtsim_z12.py",
+        "cm_tables.b85",
+        "q15_adaptive_h5.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 14-check audit: Q(zeta_15) algebra/CRT/NTT, live E2E DLP, Arch2-Prod 4-bank 8B flat-array replay (0 mismatches, 10,878 hits) + 400-draw O_H-coprime pool, Voronoi + proved RET_BOOT=1 + live 381b boot, SRT toy, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator (21 blocks incl. 4-bank x_oidm reset + overflow-proof mod-p at 2^64-59, flag-exact 64-bit (C,Z) Band-1a pre/post subs#4/adds#4 wrap + u4 + tail1 & 1-rec Band-1b simulated across lengths k=0..17 with 0 overreads, 1-rec Band-2 emit, iterative DFS dsieve16_q32_node/ctrl/cstep, 10-op/level dsieve16_rank_step simulated bit-for-bit on 552/552 hits, 60-bit smulh/umulh bound_cell_ball_mul), 2D Retention + 200k pool (+0.031b strict upper-endpoint margin) + 1-owner build <2^63.876 B + PM-Basis <=2^93, theta_1^16 |S_16(R)| + zero-skip iterative Q32/exact dsieve16 vs brute force & R=64 opcode-counted DFS + 8/8 proved primes <0.45*WC_LLL99 + certified 2-stage 60-bit smulh UPPER-BOUND BOUND_CELL_HI (151/151 cells, 0 well-cond fails, p_nc=0) + pure-Taylor unit_orbit yr + 32/185 Det.Knapsack k=1 Boole descent + 80-digit gate, BW + live PM-Basis, 36/36 production (f_9,g_3) lattices + live production u_f=9..24 sp_rho, literal (9,3) B_16 Fano/k_hat (120 + 100/100 non-empty) + live strictly-decreasing zero-recount multi-level Q(zeta_15) adaptive tree O/E fail, selection-bias, C_bday, and 3 bit-exact depth-2 witnesses.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
