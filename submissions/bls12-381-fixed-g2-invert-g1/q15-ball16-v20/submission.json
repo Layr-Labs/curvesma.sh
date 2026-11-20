@@ -1,0 +1,99 @@
+{
+ "version": 1,
+ "title": "recover-P: (4,3) STNFS over Q(zeta_15) behind a run gate: expected work 2^109.401051127011",
+ "claims": [
+  {
+   "statement": "For the full production bls12-381-fixed-g2-invert-g1 target, the algorithm of proof.md (with DESCENT.md, field-map.md, KERNELS.md, STORAGE.md, RANK-BRIDGE.md) returns P with e(P,Q)=z for the exact supplied nonidentity Q with success at least 0.39 over uniform challenges and fresh coins, under heuristics H1-H5, H-EA, H-R, H-X and H-SM, at expected total classical work at most 1+(K/2^64)(2^110.757390+2^66) < 2^109.401051127011 dense-Fp12 units (C=20,000): an expectation over the challenge and the coins of the one attack on the one target, not a bound on every run. A run gate (u < K = 7204785199063352943, (K/2^64) x 0.998535 >= 0.39) precedes an opened run that succeeds with probability at least 0.998535 and is stopped by a work meter at 2^123.0 units. Nothing is amortized. Analytic exploratory claim.",
+   "score": {
+    "numerator": "109401051127011",
+    "denominator": "1000000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "DESCENT.md"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "cm_audit",
+   "source": "audit_cm.py",
+   "purpose": "Audit: algebra, toy pipeline, pool and region, kernels, ledger, gate and claim; descent plan and its recurrence; descent conditioning records and replays (cond_q15.py); generator toy (bm_toy.py). {\"descent_mesh\": 64|96|384} reruns the descent on a finer mesh.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "descent_mesh": {
+      "type": "integer",
+      "enum": [
+       32,
+       64,
+       96,
+       384
+      ]
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  },
+  {
+   "id": "hx_analogue",
+   "source": "hx_z12.py",
+   "purpose": "H-R and H-X on the filtered product-form operator over Z[zeta_12] at 2^12..2^14 (proof.md section 4, RANK-BRIDGE.md).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 14
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     },
+     "m": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 64
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 6,
+      "maximum": 24
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  },
+  {
+   "id": "filtsim_z12",
+   "source": "filtsim_z12.py",
+   "purpose": "Z[zeta_12] product-form filtering simulator: N_l/U', N_sw/U' and unit share at log2U 10..15 (proof.md section 4).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": []
+  }
+ ]
+}
