@@ -1,0 +1,137 @@
+# Zero-Retry Deterministic-DAG Individual-Logarithm Descent (`CM-STNFS` over `Q(zeta_15)`)
+
+Target operating point: `B_f = 2^71.29`, `B_g = 2^71.69`, `LX = 2^70`, twist `w' = omega^2` (`alpha_f = +2.74`, `alpha_g = +0.77`), **de Bruijn local-density correction enabled on BOTH boot and all special-`q` nodes**, **`boot_rels = 1`**, **`k = 1` (ZERO internal retries inside the DAG!)**, **root-only exact conditional i.i.d. fresh-`e_(j,t)` boot attempts (`B_max = 10`, `e_(j,t) in {0..r-1}`)**, **heavy-tailed `NB(r = 1.0, alpha = 1.0)` reached-ideal `H5` (`p0(mu) = (1 + mu)^(-1)`)**, **explicit deterministic per-node special-`q` norm cutoff `|N_f| <= 2^nf_max, |N_g| <= 2^ng_max`**, **expected survivor/ECM work framed under `H-EA`**, **zero-loss degree-preserving excess-row trim + Markowitz deg-0 guard + LIFO `repurge_stack` (`post_peel_cols_lost = post_merge_cols_lost = n_reconstruct_unit = 0`!)**, `RET_BOOT = 0.50`, `UDUP_NODE = 0.95`, `cells_b = 1`, `ball_pair = 0`, explicit `D_skew` boot LLL (`S_boot = 2^21`, **run LIVE from scratch on ALL 8/8 genuine `G_T` targets with ZERO supplied LLL vectors!**), and an explicit pointwise aborting combined logarithm phase meter **`t_desc = 2^124.2`** core units (`P(D >= t_desc) <= E[D] / t_desc` by Markov).
+
+`cm_data.json` stores ONLY the 78 structural node 9-tuples `plan_struct`, empirical `q`-lattice offsets, the 24-base production `(4, 3)` `Q(zeta_15)` special-`q` witness set (`prod_sq24`), the 224-ideal **same-field `Q(zeta_15)` exact-`<tau>`-orbit real-2-core-FB literal-`k = 1`** depth-1 + depth-2 campaign (`q15_v5l_campaign`), and boot config (`G0`, `m_sv = 2560.0`b, `s_boot = 2^21`, ZERO supplied LLL vectors!). `audit_cm.py` calls `cm_models.eval_descent_live` to compute seeded peeling closure `(h, exc_crit)` and every node's `pr`, `sv`, `mu`, `miss`, `sieve`, expected survivors `cells * (sv + pr)`, `surv_cost`, `own`, `p0 = 1/(1+mu)`, `Phi_dag`, `W_det`, `C_det`, single-attempt `Phi_1`, root-retry `2*Q_1^10`, and Wald expected work 100% live from scratch. Because lower Riemann sums are strictly monotone in mesh density (`pr_96 <= pr_384 <= pr_exact`), pricing at default `MESH = 96/192` (`E[D] = 2^111.525535 <= 2^111.526`, `Phi_1 = 0.34198`, `2*Q_1^10 = 4.39e-05 <= 0.000044`) is strictly more conservative than on-demand `{"descent_mesh": 384}` (`E[D] = 2^111.509266`, `Phi_1 = 0.33468`).
+
+## 1. Fresh-Coin Zero-Retry i.i.d. Single-Cell Boot (`boot_rels = 1`, `cells_b = 1`, `D_skew = diag(1..1, 2^21..2^21)`)
+
+For each discrete logarithm (`log g` with `g = e(P0, Q0)` and `log z`), each boot trial draws fresh uniform `e_(j,t) in {0, ..., r - 1}` (inclusive of `0`, fresh coins) and forms `z_(j,t) = z' * g'^(e_(j,t))` (resp. `g_(j,t) = g' * g'^(e_(j,t))`), exact uniform on all of `G_T` (`P(identity) = 1/r < 2^(-254)` charged in `Q_1`).
+
+### Algebraic Non-Degeneracy, Live `F_(p^12) -> F_(p^6)` Subfield Elimination, & Exact `D_skew` 16D LLL (ALL 8/8 LIVE!)
+In `F_(p^12) = F_(p^4)[X]/(X^3 - omega^2 u)` with `F_(p^4) = O_H / P = Fix(tau^4)` and `F_(p^6) = F_(p^2)[X]/(X^3 - omega^2 u) = Fix(tau^6)`:
+- Both `F_(p^4)^*` and `F_(p^6)^*` have orders coprime to `r`, so every nonzero element in `F_(p^4)^* F_(p^6)^*` has discrete log `0 mod r`.
+- Write `z' = z_0 + z_1 X + z_2 X^2` (`z_i in F_(p^4)`). Vanishing of the `X^2`-coefficient of `c_6 z'` (`c_6 in F_(p^6)^*`) is a homogeneous `2 x 3` linear system over `F_(p^2)` and always has a nonzero solution `c_6`. Writing `c_6 z' = w_0 + w_1 X`, setting **`gamma = -w_0 / w_1 in F_(p^4) \ F_(p^2)`** gives `c_6 z' = -w_1 (gamma - X)` for **100% of nonidentity targets**.
+- Define the 16D lattice `L_Guillevic = { (a, b) in O_H^2 : a - gamma b == 0 (mod P) } subset Z^16` (`det = p^4`). Any `(a, b) in L_Guillevic` with `b != 0 (mod P)` gives **`Psi_g(a - b X) = -(b mod P) w_1^(-1) c_6 z'`** with exact relative norm **`N_(K_g/K_H)(a - b X) = a^3 - omega^2 u b^3`**.
+- **Exact `D_skew`-Weighted 16D Integer LLL (`S_boot = 2^21`, `delta = 0.99`):** Multiply the 8 `b`-coordinates by **`S_boot = 2^21 = 2,097,152`**, forming `D_skew * L_Guillevic` (`det = p^4 S_boot^8`), run exact de Weger integer LLL (`cm_models.lll_16d_int`, `delta = 0.99`), and unscale `b = b_scaled / S_boot`. Every reduced basis satisfies the exact `D_skew`-weighted Lovasz bound **`||D_skew b_1||_2 <= (0.99 - 0.25)^(-15/4) (p^4 S_boot^8)^(1/16) = 2^107.30`**.
+- **Single-Relation i.i.d. Boot (`boot_rels = 1`, `e_(j,t) in {0, ..., r - 1}`, ZERO excluded `G_T` element, ZERO `BALL_PAIR`):**
+  1. For root attempt `j in {1..10}` and boot trial `t = 1..T_boot_max`, draw fresh uniform **`e_(j,t) in {0, ..., r - 1}`** (inclusive of `0`, so for ANY fixed nonidentity `(g', z')`, **`z_(j,t) = z' * g'^(e_(j,t))`** — and `g_(j,t) = g' * g'^(e_(j,t))` for `log g'` — is **EXACTLY uniform over ALL of `G_T`**, excluding zero elements!; if `z_(j,t) == 1`, prob exact `1/r < 2^(-254)`, that trial fails cleanly and is charged in `Q_1`), run `F_(p^12) -> F_(p^6)` elimination to obtain `gamma_t`, run `lll_16d_int` on `D_skew * L_Guillevic(gamma_t)`, and take the **single shortest vector `b_1 = (a_1, b_1)`** (`cells_b = 1`).
+  2. Apply the deterministic norm gate **`|N_(K_g/Q)(a_1^3 - omega^2 u b_1^3)| <= 2^2560`** (`m_sv = 2560.0`b). **`RET_BOOT = 0.50`** is declared as a production-law model inequality supported (not proved) by 8 genuine production `G_T` challenges executed LIVE below (`8/8 <= 2543.21`b, Clopper-Pearson 95% LB **`0.6877 >> 0.50`**, plus `32/32 <= 2553.16`b in `[11]`).
+  3. Run worst-case multi-factor ECM + limb-scaled 100-round MR on `b_1`: `k_lx = 129` primes in `(2^20, 2^70]`, `kA = 13` in `(2^70, 2^234.53125]`, `1` in `(n_A, 2^265]` (`mr_instr(2560) = 1.21e10` Ir, `det_b = 0.999^143 = 0.8667`).
+  4. Take the **FIRST** qualifying boot relation (`boot_rels = 1`), cap trials at **`T_boot_max = ceil(ln(10^4) / p_boot_trial)`** (`<= 10^(-4)`/log, `<= 2e-4` for 2 logs), expected two-log boot work **`2^102.8155`** core units.
+- **ALL-8/8 LIVE Genuine Production `G_T` Boot LLL Verification (`audit_cm.py`: `voronoi_and_boot_live`, ZERO supplied LLL vectors!):** (a) Verifies genuine production BLS12-381 `G_T` generator `G_0 != 1, G_0^r == 1` in `F_(p^12)`, generates 8 deterministic seeded exponents `x_t in [1, r-1]` LIVE, and executes exact **`F_(p^12) -> F_(p^6)` subfield elimination LIVE** on ALL 8 challenges `z_t = G_0^(x_t)` to recover `gamma_t`; (b) runs exact de Weger integer **`lll_16d_int(D_skew * B_hnf, delta=0.99)` LIVE FROM SCRATCH ON ALL 8/8 TARGETS** (`boot_supplied_lll_vectors = 0` — ZERO precomputed `v1`/`v2` vectors stored anywhere in the package!), certifying on EVERY SINGLE TARGET `det^2 == p^8 S_boot^16`, all 15 exact Lovasz `99/100` inequalities, all 120 exact size-reduction checks, `b_scaled == 0 mod S_boot`, `a_1 == gamma_t b_1 (mod P)`, `||D_skew b_1||_2 <= 2^106.09 <= 2^107.30`, and **`8/8` first-vector norms `<= 2543.21 <= m_sv = 2560.0`b** (Clopper-Pearson 95% LB **`0.6877 >> RET_BOOT = 0.50`**; on targets `0..3`, finds `v_2` live with `|N(det)| == p^4` and certifies `4/4` 17-cell deciles!), plus constructive 16D LLL on `p_0 = 7207` (`k = 2, index = 1`).
+
+## 2. Exact Seeded Peeling Closure (`h = 0.256845`), Zero-Loss `repurge_stack` Back-Substitution, & `<= LX = 2^70` Discard
+
+- **Seeded Peeling Fixed Point (`cm_models._peel_fixed_point_bls`, live in `audit_cm.py`):** On the two-sided BLS12-381 factor base (`B_f = 2^71.29`, `B_g = 2^71.69`, `lrels = log2(1.09 U') = 63.441701`, `u_f = 548.9 / 71.29`, `u_g = 677.8 / 71.69`), ideals with `lam >= 100.0` form the protected seed. Unprotected ideals satisfy `h = 1 - exp(-sum_(lam < 100) wt * exp(-lam (1 - h)))`, giving **`h = 0.256845`** and **`exc_crit = 0.7625 << exc = 1.09`** (**`+43.0%` margin** above peeling collapse).
+- **Zero-Loss Degree-Preserving Excess-Row Trim + Markowitz Guard + LIFO `repurge_stack` (`RANK-BRIDGE.md` §3):** During excess-row trimming from the post-singleton-peeling 2-core down to `D = N + 4`, CADO-NFS degree-2 clique removal drops a candidate row ONLY when every incident column has degree `>= 2` and every cascading degree-1 peel has a unique degree-1 column in its row (pushed onto LIFO `repurge_stack`; rollback if any row would acquire `>= 2` degree-1 columns), and Markowitz merging rejects any pivot-row cancellation that would drop a nonpivot column to degree `0`. Consequently **`post_peel_cols_lost == post_merge_cols_lost == 0` by deterministic invariant** (`0` unrecovered post-peeling or post-merge columns, `0` back-substitution errors, `n_reconstruct_unit == 0` across `12/1`, `12/6`, `13/1`, `13/2`, `14/1`). After BW solves the `N` active core columns, strictly 3-stack triangular back-substitution (`L_rec` forward -> `merge_stack` reverse -> `repurge_stack` reverse, `< 2^64` u in `filtering_and_misc = 2^80`; **ZERO 4th unit-prop scan and ZERO residual-cycle solver**) recovers **100% of all post-peeling 2-core columns**, making `miss_side`'s post-peeling formula exact with zero post-trim/post-merge loss!
+- **Exact `<= LX = 2^70` Leaf Discard & Conservative `> 2^70` Children:** Leaf threshold is **`LX = 2^70`** (`[70, 76)` has `n_c = 70, kA = kB = 0`). Any prime `<= 2^70` absent from the post-peeling 2-core discards the candidate cleanly (`exp(-miss)` integrated over `[40, 70)`, charging `exp(-x)(1 + x)` at `x = lam(1 - h)` for `lam < 100` and `exp(-lam)` for `lam >= 100`). Every prime **`> 2^70`** (including `(2^70, B_s]`) is conservatively counted as an unknown Window-A/B child in `ss_eval` and descended strictly downward.
+
+## 3. Root-Only i.i.d. Boot Retries (`B_max = 10`), Zero-Internal-Retry DAG (`k = 1`), `NB(r = 1.0)` `H5`, Expected Work under `H-EA`, & Same-Field `Q(zeta_15)` Real-2-Core-FB Evidence
+
+Every degree-1 ideal `q > LX = 2^70` yields a 16D lattice `L_q` (`det = q`); constructive 16D LLL extracts `(v_1 = b_1, v_2 = b_k)` generating a free rank-2 submodule `M <= L_q`, and enumerates `alpha v_1 + beta v_2` (`UDUP_NODE = 0.95`; worst-case offsets `(c_f, c_g) = (+131.66, +46.15)`b; `[7e]` shift `(+3.40, +2.35)`b inside `(+10, +4)`b).
+
+1. **Zero-Internal-Retry DAG (`k = 1`) + Explicit Norm Cutoff + Expected Work under `H-EA` + Ideal-Log Cache (`P(repeat) = 0`):** Inside a single root attempt, every reached special-`q` node `v` enforces the deterministic norm cutoff **`|N_f| <= 2^nf_max, |N_g| <= 2^ng_max`**, sieves its fixed ball ONCE, and cofactors qualifying survivors (with expected survivor count `cells * (sv + pr)` and expected sieve-hit / ECM / 100-round MR work priced under declared expected-work model inequality **`H-EA`**, wrapped globally inside the hard aborting meter `t_desc = 2^124.2`). Each node takes the **FIRST** qualifying usable relation (`M_usable(v) = 0 =>` abort this attempt; zero internal retries). Strictly decreasing child norms + a per-attempt ideal-log hash table give `P(repeat) = 0` and deterministic **`C_det_1log = 4,554` nodes/log** (`P(node cap) = 0`).
+2. **Unconditional Additive Boole Union Bound under Heavy-Tailed Fixed-`FB` `NB(r = 1.0, alpha = 1.0)` `H5`:** Because collection uses a fixed region, fixed polynomials, and a fixed public ECM seed (independent of the challenge and fresh run coins), the post-peeling 2-core factor base **`FB` is a single fixed deterministic set**. Under declared fixed-`FB` reached-ideal ensemble production-law model inequality **`H5`** (**geometric / `NB(r = 1.0, alpha = 1.0)`**: `Pr_(fresh e)(M_usable(q_sigma) = 0 | slot sigma reached; fixed FB) <= p0(mu_model) = (1 + mu_model)^(-1)`, part of the PGF `(1 + mu_model (1 - t))^(-1)` for `t in [0, 0.8]`; `p0_max = 0.00648` at `min_mu = 153.32`, allowing full geometric overdispersion `CV = 1, Var = mu + mu^2` — **`100x+` wider than Poisson**!), Boole's inequality holds unconditionally over the fresh boot coins `e` for arbitrary slot dependence within a single attempt: **`Phi_1 = 0.341982 <= 0.35`** (`0.334684` at `384/384`), giving single-attempt conditional failure **`Q_1 = Phi_1 + 10^(-4) + 2^(-254) = 0.342082 < 0.35`** uniformly for EVERY `(g', z')` given the fixed `FB`.
+3. **Root-Only Exact Conditional i.i.d. Boot Retries (`B_max = 10`, `e_(j,t) in {0..r-1}`) + Exact Conditional Wald Work (`H-EA`) + `t_desc = 2^124.2` Meter (Markov):** For each discrete logarithm, run up to **`B_max = 10` independent root attempts** using fresh uniform **`e_(j,t) in {0, ..., r - 1}`** (clearing the DAG cache between attempts). Conditional on the fixed deterministic `FB` and ANY fixed `(g', z')`, because `z_(j,t) = z' * g'^(e_(j,t))` (resp. `g' * g'^(e_(j,t))`) is **EXACTLY uniform on ALL of `G_T`** (zero excluded element!), attempts `1..B_max` are **100% EXACTLY i.i.d. conditional on `(FB, g', z')`**:
+   - **Exact conditional i.i.d. amplification:** `Pr(all B_max fail | fixed FB, g', z') = Pr(attempt 1 fails | fixed FB)^10 <= Q_1^10` per log -> **`2 * Q_1^10 = 4.39e-05 <= 0.000044`** for BOTH logs uniformly over `(g', z')`!
+   - **Exact conditional Wald's identity (`E[W_j | N_att >= j; fixed FB, g', z'] = E[W_1 | fixed FB] <= boot_own_exp + W_dag_1`):** Expected two-log work is `E[D | fixed FB, g', z'] <= 2 * ((1 - Q_1^10) / (1 - Q_1)) * (boot_own_exp + W_dag_1) = 1.5199x` single-attempt work = **`2^111.525535 <= 2^111.526`** core units (`2^111.509266` at `384/384`) uniformly over `(g', z')`.
+   - **Hard Combined-Log Meter `t_desc = 2^124.2` (Markov):** Pointwise `min(D, t_desc) <= D` preserves `E[min(D, t_desc) | fixed FB, g', z'] <= E[D | fixed FB, g', z']` with **Markov meter-abort `P(D >= t_desc | fixed FB, g', z') <= E[D | fixed FB, g', z'] / t_desc = 0.00015302 <= 0.000157`**.
+4. **Two Scoped Same-Field `Q(zeta_15)` Empirical Compatibility Checks (`q15_v5l_descent_live` + `prod_sq24_live` in `audit_cm.py`):**
+   - **(a) SAME-FIELD `Q(zeta_15)` Exact-`<tau>`-Orbit Real-2-Core-FB Literal-`k = 1` Campaign (`224` ideals; Stage 1 REAL `<tau>`-orbit 2-core FB rebuilt LIVE + `4` full 16D `2,048`-pt balls LIVE!):** Exact base field **`Q(zeta_15)` (`Phi_15`, deg 8) & order-12 `tau: (y, X) -> (y^7, omega X)`** (`g_t = X^3 + 2 omega^2`, `f_t = X^3 - (2 + omega)`). Since `Gal(K_g/Q(omega)) = Gal(K_f/Q(omega)) = <tau> ~= Z/12Z`, Hilbert transitivity puts `<tau>`-orbits in exact 1-to-1 bijection with `Z[omega]` primes `P_3` (**2 distinct orbits `(p, r_1), (p, r_2)`** for `p == 1 mod 3`; bijection verified LIVE on split `p <= 200`), identified via `N_(K/Q(omega))(a - b X) = u + v omega` (`(u + v r_k) == 0 mod p`).
+     - **Stage 1 LIVE:** `18,000` short pairs -> `6,636` `B_FB = 2^14` smooth rels -> **`6,605` exact-`<tau>`-orbit 2-core rels (`|FB_orb_g| = 119, |FB_orb_f| = 110`; `92/84` partial-split primes)** — ZERO prime pooling, ZERO fake missing list/ECM!
+     - **Stage 2 (`16D` LLL, `2,048`-pt balls, literal `M_use == 1` against real `<tau>`-orbit `FB_2core`):** `D1 = [17.5, 19.2)` (`nc = 17.2`, `mu_u = 21.02 g / 18.45 f`), `D2 = [15.5, 17.2)` (`nc = 15.3`, `mu_u = 16.05 g / 14.39 f`):
+
+     | Cohort | N | `M_u` | Empty | `NB(1.0) p0` / `CP95` | `M_u/mu_u` | `var` / `NB(1.0)` | `sv2/sv_up` (max) | PGF `emp/nb10` (`0/.2/.5/.8`) |
+     |---|---:|---|---:|---|---:|---|---:|---:|
+     | `ALL_224` | 224 | `1..150` | **`0/224`** | `0.0499` / **`0.0133`** (`3.8x`) | `1.2465` | `1.307` / `1.619` | **`0.0654`** (`0.3980`) | `0 / .0166 / .0652 / .3424` |
+     | `D1_100` | 100 | `1..127` | **`0/100`** | `0.0484` / `0.0295` (`1.6x`) | `1.2683` | `1.152` / `1.673` | **`0.0694`** (`0.3968`) | `0 / .0352 / .0884 / .3162` |
+     | `D2_24` | 24 | `3..62` | **`0/24`** | `0.0618` | `1.2965` | `1.071` / `1.766` | **`0.0446`** (`0.1228`) | `0 / .0088 / .0961 / .3767` |
+     | `CTRL_100` | 100 | `4..150` | **`0/100`** | `0.0484` / `0.0295` (`1.6x`) | `1.2127` | `1.540` / `1.532` | **`0.0663`** (`0.3980`) | `0 / .0005 / .0327 / .3585` |
+
+     **`0/224` empty (`CP95 0.0133` `3.75x` < `NB(1.0)` `0.0499`)**, **`D1/CTRL = 1.0458`**, **`D2/CTRL = 1.0691`**, `PGF_emp/nb10 <= 0.3767`, `sv2/sv_up = 0.0654` (`max 0.3980 < 1.0`).
+   - **(b) 24-Base Production `(4, 3)` `Q(zeta_15)` `(f_9, g_3)` Special-`q` Check (`prod_sq24_live`):** `12 g + 12 f` actual production primes (`73..258`b, `384` norms): `det % q == 0`, `q | N`, all 6 sextiles `23.87–64`b below `qbins`, smoothness-model survivor ratio mean **`0.0503` (`g`, max `0.1226`)** / **`0.2602` (`f`, max `1.0000`)** (verifies production lattice divisibility, norm-sextile envelopes, and smoothness-model survivor ratios; production `2^70` ideal-orbit FB counts are infeasible at toy scale).
+   - **Scale-Transfer & Exploratory Scope:** Scaling in `Q(zeta_15)` from `(B_FB = 2^14, mu ~ 14..21)` to production `(LX = 2^70, mu >= 153)` grows `|FB|` by `> 10^16x` and ball size from `2,048` to `> 2^90` (concentrating 16D norm ratios, confirmed at `73..258`b by `prod_sq24_live`), while `NB(1.0)` retains full geometric overdispersion (`CV = 1`). Together, `q15_v5l_descent_live` and `prod_sq24_live` provide scoped compatibility evidence (NOT statistical proof of production tails); production transfer rests explicitly on declared exploratory fixed-`FB` `H5` and `H-EA`.
+
+## 4. Complete Live-Computed Deterministic-DAG Plan (All `39` Bins / `78` Nodes, Default `MESH = 96/192`, Full de Bruijn ON)
+
+|Bin|S|How|R|n|nA|kA|kB|mu|p0|Phi_dag|Nf/Ng|own|W_det|C_det|
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|---:|
+|[70,76)|f|sieve|76|70|70|0|0|16983.8|5.9e-5|0.0001|841/816|110.6|110.6|1|
+|[70,76)|g|sieve|80|70|70|0|0|25377.3|3.9e-5|0.0000|916/748|111.7|111.7|1|
+|[76,81)|f|sieve|68|76|76|1|0|45631.2|2.2e-5|0.0001|846/820|108.0|112.3|3|
+|[76,81)|g|sieve|68|76|76|1|0|43766.8|2.3e-5|0.0001|922/744|108.0|112.3|3|
+|[81,86)|f|sieve|72|76|76|1|0|19258.2|5.2e-5|0.0002|870/829|109.3|112.4|3|
+|[81,86)|g|sieve|76|76|76|1|0|29242.7|3.4e-5|0.0001|956/750|110.6|112.6|3|
+|[86,91)|f|sieve|68|76|76|2|0|20379.9|4.9e-5|0.0002|881/835|110.5|113.5|5|
+|[86,91)|g|sieve|72|76|76|2|0|29705.0|3.4e-5|0.0002|973/751|111.2|113.6|5|
+|[91,96)|f|sieve|76|76|76|2|0|14563.3|6.9e-5|0.0003|910/846|111.4|113.6|5|
+|[91,96)|g|sieve|80|76|76|2|0|19078.8|5.2e-5|0.0002|1006/757|112.3|113.9|5|
+|[96,101)|f|sieve|84|76|76|2|0|9030.6|1.1e-4|0.0003|938/857|113.1|114.2|5|
+|[96,101)|g|sieve|84|76|76|2|0|7228.9|1.4e-4|0.0003|1034/761|113.0|114.1|5|
+|[101,106)|f|sieve|84|76|76|2|0|2321.3|4.3e-4|0.0006|956/864|112.9|114.1|5|
+|[101,106)|g|sieve|80|81|76|1|1|4670.7|2.1e-4|0.0006|1051/762|111.8|114.2|9|
+|[106,111)|f|sieve|88|81|76|1|1|3432.0|2.9e-4|0.0006|978/874|114.0|114.9|9|
+|[106,111)|g|sieve|84|81|81|2|0|4850.1|2.1e-4|0.0007|1079/766|112.9|114.8|13|
+|[111,116)|f|sieve|76|81|76|2|1|1512.4|6.6e-4|0.0011|980/876|115.2|115.8|11|
+|[111,116)|g|sieve|80|81|76|2|1|1636.1|6.1e-4|0.0010|1096/767|115.2|115.8|11|
+|[116,121)|f|sieve|84|86|86|2|0|2627.4|3.8e-4|0.0009|1008/887|112.9|114.9|13|
+|[116,121)|g|sieve|80|96|83|1|1|4259.2|2.3e-4|0.0010|1119/769|111.8|115.4|17|
+|[121,126)|f|sieve|84|96|83|1|1|2612.8|3.8e-4|0.0012|1026/894|112.9|115.5|17|
+|[121,126)|g|sieve|84|101|86|1|1|4700.9|2.1e-4|0.0011|1147/773|112.9|115.8|17|
+|[126,131)|f|sieve|84|96|96|2|0|2715.4|3.7e-4|0.0014|1043/902|112.9|115.9|21|
+|[126,131)|g|sieve|88|116|100|2|0|5846.9|1.7e-4|0.0015|1174/778|114.0|116.4|21|
+|[131,136)|f|sieve|80|96|83|2|1|3662.5|2.7e-4|0.0014|1055/908|114.1|116.1|23|
+|[131,136)|g|sieve|84|96|83|2|1|2866.4|3.5e-4|0.0014|1192/778|114.0|116.0|23|
+|[136,141)|f|sieve|84|101|86|2|1|6429.5|1.6e-4|0.0014|1078/917|114.8|116.4|23|
+|[136,141)|g|sieve|88|101|86|2|1|4439.8|2.3e-4|0.0014|1219/783|114.7|116.4|23|
+|[141,146)|f|sieve|72|96|96|3|0|1119.6|8.9e-4|0.0024|1080/919|113.2|116.5|31|
+|[141,146)|g|sieve|88|101|86|2|1|1085.0|9.2e-4|0.0021|1241/785|114.2|116.3|23|
+|[146,151)|f|sieve|68|106|94|2|1|767.3|1.3e-3|0.0035|1091/925|111.5|116.5|35|
+|[146,151)|g|sieve|68|101|101|3|0|434.4|2.3e-3|0.0042|1237/779|111.4|116.8|31|
+|[151,156)|f|sieve|80|106|94|2|1|820.1|1.2e-3|0.0034|1125/938|112.9|116.6|35|
+|[151,156)|g|sieve|84|106|98|2|1|691.4|1.4e-3|0.0039|1282/788|113.5|116.9|35|
+|[156,161)|f|sieve|76|116|100|2|1|2086.2|4.8e-4|0.0039|1138/943|113.4|117.6|45|
+|[156,161)|g|sieve|92|106|106|3|0|1573.2|6.4e-4|0.0042|1313/794|115.7|117.3|43|
+|[161,166)|f|sieve|84|116|100|2|1|1294.9|7.7e-4|0.0042|1166/954|113.9|117.6|45|
+|[161,166)|g|sieve|92|116|106|2|1|1548.1|6.5e-4|0.0052|1336/797|115.4|117.8|53|
+|[166,171)|f|sieve|88|126|98|2|1|1354.8|7.4e-4|0.0043|1188/964|114.4|117.7|55|
+|[166,171)|g|sieve|84|131|100|2|1|806.1|1.2e-3|0.0054|1349/796|113.2|117.8|63|
+|[171,176)|f|sieve|88|126|107|2|1|1607.1|6.2e-4|0.0056|1205/971|115.0|118.0|79|
+|[171,176)|g|sieve|88|131|110|2|1|1390.7|7.2e-4|0.0062|1376/800|114.5|118.2|87|
+|[176,181)|f|sieve|76|141|106|2|1|649.2|1.5e-3|0.0068|1208/973|112.4|118.0|75|
+|[176,181)|g|sieve|64|131|100|3|1|500.5|2.0e-3|0.0068|1366/792|114.6|118.1|73|
+|[181,186)|f|sieve|68|146|108|2|1|179.1|5.6e-3|0.0128|1214/977|110.8|118.2|99|
+|[181,186)|g|sieve|68|131|100|3|1|204.0|4.9e-3|0.0097|1395/796|113.9|118.1|73|
+|[186,191)|f|sieve|72|151|110|2|1|211.7|4.7e-3|0.0151|1237/987|111.7|118.3|111|
+|[186,191)|g|sieve|60|141|106|3|1|219.3|4.5e-3|0.0109|1404/794|112.8|118.2|89|
+|[191,196)|f|sieve|72|161|116|2|1|396.0|2.5e-3|0.0149|1255/994|113.3|119.2|137|
+|[191,196)|g|sieve|72|141|106|3|1|252.6|3.9e-3|0.0103|1446/803|114.0|118.2|89|
+|[196,201)|f|sieve|80|166|118|2|1|644.4|1.5e-3|0.0152|1283/1005|115.0|119.4|159|
+|[196,201)|g|sieve|76|151|110|3|1|1084.9|9.2e-4|0.0126|1474/807|116.0|118.8|133|
+|[201,206)|f|sieve|84|171|120|2|1|679.2|1.5e-3|0.0155|1306/1014|115.7|119.5|179|
+|[201,206)|g|sieve|68|146|120|3|1|627.0|1.6e-3|0.0126|1485/806|116.0|119.2|145|
+|[206,211)|f|sieve|68|181|126|2|1|202.6|4.9e-3|0.0231|1301/1015|114.8|119.6|235|
+|[206,211)|g|sieve|64|161|116|3|1|153.3|6.5e-3|0.0211|1501/807|112.8|119.5|161|
+|[211,216)|f|sieve|80|181|126|2|1|204.5|4.9e-3|0.0230|1335/1028|115.4|119.7|235|
+|[211,216)|g|sieve|68|166|118|3|1|191.8|5.2e-3|0.0210|1530/811|113.4|119.6|189|
+|[216,221)|f|ecm|20|171|136|5|1|128915.8|7.8e-6|0.0240|1209/987|124.2|124.3|349|
+|[216,221)|g|sieve|72|171|120|3|1|237.5|4.2e-3|0.0203|1558/816|114.1|119.6|209|
+|[221,226)|f|ecm|20|176|140|5|1|203540.6|4.9e-6|0.0261|1227/995|125.1|125.1|397|
+|[221,226)|g|sieve|76|181|126|3|1|865.7|1.2e-3|0.0216|1586/820|116.2|119.9|269|
+|[226,231)|f|ecm|20|171|149|5|1|595310.3|1.7e-6|0.0484|1244/1002|126.6|126.6|449|
+|[226,231)|g|sieve|88|181|126|3|1|664.2|1.5e-3|0.0220|1624/828|116.9|120.0|269|
+|[231,236)|f|ecm|20|176|140|6|1|866282.7|1.2e-6|0.0289|1262/1010|125.7|125.7|443|
+|[231,236)|g|sieve|72|176|140|3|1|595.0|1.7e-3|0.0220|1626/823|117.4|120.3|305|
+|[236,241)|f|ecm|20|176|140|6|1|350349.0|2.9e-6|0.0289|1279/1017|125.7|125.7|443|
+|[236,241)|g|sieve|48|191|149|3|1|185.7|5.4e-3|0.0546|1606/812|114.8|120.3|399|
+|[241,246)|f|ecm|20|171|149|6|1|1372964.7|7.3e-7|0.0561|1297/1025|127.3|127.4|515|
+|[241,246)|g|sieve|56|191|149|3|1|180.4|5.5e-3|0.0547|1644/819|115.5|120.3|399|
+|[246,251)|f|ecm|20|191|149|6|1|3991958.1|2.5e-7|0.0724|1314/1032|127.4|127.4|597|
+|[246,251)|g|sieve|68|191|149|3|1|227.1|4.4e-3|0.0536|1687/829|116.8|120.4|399|
+|[251,256)|f|ecm|20|191|149|6|1|1698034.8|5.9e-7|0.0724|1332/1040|127.4|127.4|597|
+|[251,256)|g|sieve|68|196|153|3|1|183.6|5.4e-3|0.0546|1710/831|116.8|120.7|437|
+|[256,261)|f|ecm|20|191|149|6|1|696640.2|1.4e-6|0.0724|1349/1047|127.4|127.4|597|
+|[256,261)|g|sieve|72|201|156|3|1|243.9|4.1e-3|0.0551|1738/836|117.6|120.9|503|
+|[261,266)|f|ecm|20|186|161|6|1|4323408.0|2.3e-7|0.0712|1367/1055|129.6|129.6|715|
+|[261,266)|g|sieve|76|206|159|3|1|310.5|3.2e-3|0.0557|1766/840|118.7|121.4|589|
