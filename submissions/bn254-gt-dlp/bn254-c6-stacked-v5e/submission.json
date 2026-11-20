@@ -1,0 +1,58 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: Self-Contained Pure-Scalar C6-m184_w216-rec (6,2) STNFS (de Bruijn + 4-Cap Z[omega] LA): 2^87.545696539",
+ "claims": [
+  {
+   "statement": "For the full-production bn254-gt-dlp target, the self-contained 100% pure-scalar AArch64 algorithm of proof.md (C6-m184_w216-rec content-reduced reciprocal CM-sextic tower, order-6 Frobenius tau = Frob^10, Arch B-Hybrid reversed a-table replay with pure-scalar 64-bit SWAR scan+zero and analytical Gaussian-volume-ratio Band-3 7D Fincke-Pohst coset enumeration over [2^54.0, 2^58.0) integrated over exact a-dependent b-volume V_b(t), live norm-histogram-weighted full de Bruijn rho_dB and Stage B, B_f = 2^60, B_g = 2^59, excess 0.95, full un-discounted Schirokauer maps, 1-owner 3-bucket Z[omega] Block Wiedemann with deterministic pre-merge weight guard W_avg <= 201.0 and 4-parameter hard-cap abort/pricing at (N_sw_cap = 0.00240*U', N_l_cap = 0.00135*U', k5_cap = 11.00, tab_r_cap = 0.85, lazy=0), and live 62-row 12D descent at B_g = 2^59 using pure QBINS/BOOT_BINS and min_k(P(M < k) + psi^k) with explicit conditional hazard) returns x with g^x = z with success at least 0.39 over uniform challenges and fresh coins, and expected total classical work E[W] <= 1 + (K/2^64) * 2^88.889306984 <= 2^87.545696539 units (C = 20,000 scalar AArch64 instruction equivalents), under declared exploratory heuristics H1-H5, H-EA, H-FFT, H-R, H-X, and H-SEP (proof.md Section 6, including fixed-instance structural premise H3 that the deterministic production filtered matrix satisfies all four caps with P(cap abort | H3) = 0.000000, Padded Rank Bridge H-R/H-X, and H5's pure QBINS/BOOT_BINS norm envelope, overdispersed count tail P(M < k), explicit conditional failure hazard <= psi, and history-conditional orbit collision hazard <= 64.0/(li(2^59)/6), tested directly via live reduced-tower C6 recursive descent campaign replay and THRESHOLD-REPAIR counterexample). A run gate opens the run only when a fresh 64-bit coin is below K = 7268631904925542989, the least integer with (K/2^64) * 0.989764 >= 0.39; a closed run fails at cost 1 unit. Opened-run success >= 0.989764 is bounded by a strict additive union bound (FIX-U). Neither finite-scale simulator outcomes nor sample confidence intervals are substituted for the attack's production success probability. All preprocessing, failed trials, aborts, verification, and output are charged once for this target; nothing is amortized.",
+   "score": {
+    "numerator": "87545696539",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "declared.json",
+    "model_bn254_c6.py",
+    "verify_bn254_c6.py",
+    "descent_bn254_c6.py",
+    "c6_data.json",
+    "c6_adaptive.json"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "evidence.py",
+   "purpose": "Self-contained pure-stdlib live verification of: BN254 + C6-m184_w216-rec algebra and mod-r CRT factorization across all 6 roots; exhaustive R^2=50 fundamental-domain bijection (107/107, 0 missed, 0 dups); Arch B-Hybrid 0-mismatch prototype and 64-bit scalar SWAR identity; 3-regime Band-3 7D Fincke-Pohst coset-walk prototype spanning h in [6, 105] vs exact analytical Gaussian-volume law; finite-sample paired 12D lattice diagnostic on 6 special-q bases (2^66..2^213) and 2 boot bases using exact uniform FULL B_12(4) sampling (13,315,520 cells) and exact 6x6 integer norms; live pure-Python production hexagonal Z[omega] filtering simulator at U'=2^13 (with kernel check), U'=2^14, and U'=2^13 (w_mid=0 conservatism check) with deterministic pre-merge W_avg <= 201.0 guard; live 1D-kernel Rank Bridge (H-R, H-X, deficient-O_e witness, projected Hankel recovery); live replay of 1,360-root reduced-tower C6 recursive descent campaign (959 after-failure rows, 12/12 M-tails, 95% root-cluster CIs) and THRESHOLD-REPAIR counterexample; live norm-histogram-weighted Retention, score-only 8-limb Stage B, and full de Bruijn yield; 4-parameter hard-cap LA under fixed-instance H3; live 62-row LB=59 pure QBINS/BOOT_BINS descent; and exact rational gate K.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
