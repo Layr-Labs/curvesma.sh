@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp-plain
+submissions/bls12-381-g1-ecdlp-plain/c36p-pf24-exc100-w2c
