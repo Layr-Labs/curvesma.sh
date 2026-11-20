@@ -1,0 +1,28 @@
+{
+  "track": "bn254-pairing-inversion",
+  "rows": {
+    "collection": "88.676468",
+    "chi_setup": "65.712288",
+    "la": "84.871384",
+    "gen": "77.836788",
+    "lists": "84.073684",
+    "two_logs": "84.786112",
+    "canon": "72.371961",
+    "sm": "73.834011",
+    "misc": "69.550713",
+    "fb": "65.038073",
+    "bases": "58.711108",
+    "split": "81.841196",
+    "gtree": "60.372479",
+    "cert": "50.000001",
+    "verify": "11.000001",
+    "wrapper": "53.712288",
+    "output": "11.761903"
+  },
+  "exp_run": "88.926802152",
+  "h3_mode": "fixed_instance_deterministic_4cap",
+  "success": "0.999993",
+  "gate_K": 7194280548710566105,
+  "claim": "87.568358280",
+  "score_numerator": "87568358280"
+}

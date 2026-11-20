@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: Pure-Scalar C6-m184_w216-rec STNFS with <2^62 3-Prime NTT, Stack-Reloaded Band-3 Q1.60 Walk, Direct Exact-HNF Nonprimitive Model, & Root-Only I.I.D. B_max=10 NB(r=1) Metered-DAG Descent: 2^87.568358280",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-pairing-inversion target, the self-contained 100% pure-scalar AArch64 algorithm of proof.md (C6-m184_w216-rec content-reduced reciprocal rank-2 totally imaginary sextic tower, order-6 Frobenius tau = Frob^10, exact rational sigma(w) == w twist invariance, exact 3-class disjoint 2-adic yield on the 61,051 exact-HNF primitive cells (7/9:(0,0), 1/9:(0,3), 1/9:(6,0)) with odd-part alphas and class-matched Euler-product Retention, explicit early ideal-primitivity rejection gcd_{O_h}(a,b)==(1) inside C_NORMS = 30,000 + direct empirical 68-bin nonprim_bins modeled expected cofactorization bound over all 28,100 exact-HNF nonprimitive cells under H1/H2 (61,051 + 28,100 == 89,151, zero Dedekind-zeta conditional-weight step, verified live via exact 12x6 O_h HNF on 6 real witnesses), score-only 3-band g-side sieving at B_f = 2^61, B_g = 2^60, excess 0.82 with strict < 2^64 B per-owner buffered hit transfers as primary (C_HIT_LO = 13.25 with explicit 7-op 64-bit x_a linear-index emit, C_HIT_HI = 14.5 at W_SB = 256 max_sb = 5 <= 8, C_BKT_B3 = 20.0), Band-3 [2^55, 2^59) sigma-folded 12D E* Fincke-Pohst walk (VR_12 = 2.238988x) with explicit stack-reloaded 128-bit integer (U, Q, g_U, g_Q) chunk initialization priced at worst-case C_FP12_CHUNK_INIT = 216.0 Ir >= 212 Ir on every internal node + 216/512 per leaf (<= 16 GPRs x0..x15 << 31, explicit ldp reload of interleaved parent g_U[i], g_Q[i], 5-op signed int128*int64 verified bit-exact live), per-orbit LLL width & Higham fp64 MGS guard (kap_F_ub <= 1024, max |G| < 2^60, PAD_INT = 2^-20, EPS_Q60 = 2^-34, verified live on production p = 2^59 & 2^55 ideals against exact Fraction: 0 missed branches, explicit p_num = 1.0e-7 in FIX-U), closed-form 3-prime < 2^62 64-bit radix-2 NTT + Karatsuba above 2^55 with zero Montgomery 128-bit carry overflow (116*2^55+1, 69*2^55+1, 57*2^55+1, verified live on a=b=p-1, p-2, 2p-1; zero H-FFT heuristic), live full de Bruijn rho_dB, un-discounted 5-SM compression, 1-owner Z[omega] Block Wiedemann (bw = (768, 30), 2^59.61 B, W_avg <= 161.0, zero-column-loss excess-row trim + reverse repurge back-sub, deterministic 4-cap under fixed-instance H3), and live 62-row LB=59 zero-retry-DAG (k = 1, boot_rels = 1) + B_max = 10 strictly i.i.d. fresh-e_t root-only boot retries per log under standard geometric NB(r = 1.0, alpha = 1.0) H5 (p0_max = 1.406e-3, Phi_1 = 0.2457 <= 0.35 -> 2*Phi_1^10 = 1.605e-6, E[runs] <= 1.3258x, single-owner < 2^64 B boot tree built once, hard combined-log meter t = 2^112 with Markov tail 6.424e-9 in FIX-U)) recovers x with g^x = z and outputs Q = [x]Q0 in G2 (G2 output scalar multiplication <= 2^11.761903 units, verified e(P0, Q) = z) with success at least 0.39 over uniform challenges and fresh coins, and expected total classical work E[W] <= 1 + (K/2^64) * 2^88.926802152 <= 2^87.568358280 units (C = 20,000 scalar AArch64 instruction equivalents; strictly an expected-work bound, not an every-run bound), under declared exploratory model inequalities H1-H5, H-EA, H-SM, H-R, H-X, and H-SEP (proof.md Section 6 and RANK-BRIDGE.md; zero H-FFT). A run gate opens the run iff a fresh 64-bit coin is below K = 7194280548710566105, the least integer with (K/2^64) * 0.999993 >= 0.39; a closed run fails at cost 1 unit. Opened-run success >= 0.999993 is bounded by a strict additive union bound (FIX-U, including explicit Band-3 numerical guard p_num = 1.0e-7). Finite-scale prototypes provide compatibility evidence (supported, not proved); neither simulator outcomes nor sample confidence intervals are substituted for the attack's production success probability. All preprocessing, failed trials, aborts, verification, and output are charged once for this target; nothing is amortized.",
+      "score": {
+        "numerator": "87568358280",
+        "denominator": "1000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "RANK-BRIDGE.md",
+        "STORAGE.md",
+        "KERNELS.md",
+        "declared.json",
+        "model_bn254_v6.py",
+        "verify_bn254_v6.py",
+        "descent_bn254_v6.py",
+        "hx_z6.py",
+        "c6_data.json",
+        "c6_witnesses.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "audit_bn_cm.py",
+      "purpose": "Self-contained pure-stdlib live verification (19/19 checks) of: BN254 + C6-m184_w216-rec algebra, exact rational sigma(w) == w, 3 explicit <2^62 NTT primes + live uint64 Montgomery zero-carry check (a=b=p-1, p-2, 2p-1 + random), boot identity, mod-r CRT; exhaustive R^2=50 Voronoi FD (107/107); 8-lane SWAR sb_u7 Band-2 (1523/1523), 64-bit a_slot linear arena index, P_2 +48 threshold, 10k uint16 SWAR scan+zero, 417-chunk score-only P_14 Stage-B strip + windows; live sigma-folded 12D E* Fincke-Pohst Band-3 executing exact 128-bit integer (U,Q,g_U,g_Q) Q1.60 recurrence + bit-exact 5-op AArch64 signed int128*int64 check (408/408, 0 drift across 1,916 leaves, 0 false negatives) + production-magnitude 512-step Q1.60 Cauchy-Schwarz check + live production p=2^59 & 2^55 LLL int64/int128 width & Higham fp64 MGS vs exact Fraction audit (PAD_INT=2^-20, 0 missed branches); 24 special-q + 8 G_T boot 12D lattices over full B_12(4); 224-ideal real C6 tau-invariant (6,2) usable-relation (missing-FB + ECM thinning) & depth-2 (100 d1 + 24 d2 + 100 ctrl) NB(r=1) & NB(r=2) PGF + two-sided H-EA campaign with live 16-ball replay (4 full 2-hop chains); exact-HNF 61,051 prim + 28,100 nonprim 68-bin partition (89,151 cells) + 6 live exact 12x6 O_h HNF nonprimitive divisibility witnesses; live Z[omega] filtsim at U'=2^13 (zero-loss excess trim + reverse backsub) & 2^14 + 5-scale ladder; live unplanted 2-sided 5-SM NFS BW + F_1187^* DLP + Z[omega] Schur check (hx_z6.py); full de Bruijn 16-row ledger, H3 4-cap 1-owner LA (bw=[768,30]), live 62-row k=1 DAG + B_max=10 root-only i.i.d. NB(r=1) descent with t=2^112 meter, FIX-U (p_num=1e-7), and exact rational gate K.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "default",
+              "sensitivity",
+              "full",
+              "filtsim",
+              "hx"
+            ]
+          },
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
