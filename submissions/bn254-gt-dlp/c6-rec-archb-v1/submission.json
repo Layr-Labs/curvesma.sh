@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp: Hardened Pure-Scalar C6-m184_w216-rec (6,2) STNFS (de Bruijn + Hard-Cap Z[omega] LA): 2^87.372777743",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-gt-dlp target, the 100% pure-scalar AArch64 algorithm of proof.md (C6-m184_w216-rec content-reduced reciprocal CM-sextic tower, order-6 Frobenius tau = Frob^10, Arch B-Hybrid reversed a-table super-bucket replay with pure-scalar 64-bit SWAR scan+zero, full de Bruijn local-density correction rho_dB, B_f = 2^60, B_g = 2^59, excess 0.95, 1-owner 3-bucket Z[omega] Block Wiedemann with deterministic hard-cap abort and hard-cap cost/RAM pricing at (N_sw_cap, N_l_cap) = 1.75x direct 8-seed U'=2^21 (mean + 2 SE), and live 62-row 12D descent at B_g = 2^59) returns x with g^x = z with success at least 0.39 over uniform challenges and fresh coins, and expected total classical work E[W] <= 1 + (K/2^64) * 2^88.686577254 <= 2^87.372777743 units (C = 20,000 scalar AArch64 instruction equivalents), under declared heuristics H1-H5, H-EA, H-FFT, H-R, H-X, and H-SEP (proof.md Section 7, explicitly including H3 that production filtered dimensions stay within (N_sw_cap, N_l_cap) with failure <= 0.027819, and H5's standard STNFS Poisson/PGF relation-count envelope, conditional candidate independence psi^k, and uniform <= 1/(li(2^59)/6) tau-orbit collision law). A run gate opens the run only when a fresh 64-bit coin is below K = 7420388798548898458, the least integer with (K/2^64) * 0.969522 >= 0.39; a closed run fails at cost 1 unit. Opened-run success >= 0.969522 is bounded by a strict additive union bound (FIX-U) with conservative single-side tau-orbit count li(2^59)/6 (RT). All preprocessing, failed trials, aborts, verification, and output are charged once for this target; nothing is amortized.",
+      "score": {
+        "numerator": "87372777743",
+        "denominator": "1000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "declared.json",
+        "model_bn254_c6.py",
+        "descent_bn254_c6.py",
+        "c6_data.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "evidence.py",
+      "purpose": "Pure-stdlib live verification of BN254 + C6-m184_w216-rec algebra and mod-r CRT factorization of h, f_rec, and g_rec across all 6 roots; exhaustive R^2=50 fundamental-domain bijection (107/107 orbits, 0 missed, 0 dups); Arch B-Hybrid 0-mismatch prototype and 64-bit scalar SWAR identity; live Euler-product retention and full de Bruijn 200k-pool yield; 8-seed direct-2^21 deterministic hard-cap Z[omega] LA and H3 cap bound; complete live 62-row LB=59 bottom-up descent recurrence with RT/FIX-U; and exact rational run gate K.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "default",
+              "sensitivity",
+              "full"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
