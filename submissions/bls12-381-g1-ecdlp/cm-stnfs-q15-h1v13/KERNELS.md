@@ -1,0 +1,527 @@
+# Kernels (Raw-Opcode-Verified Baseline Scalar ARMv8-A: `uint16_t`, `(m-k)&3` Bank Rotation, 1-Step Barrett `row_red5_z12`, Input-Uniform Bareiss LLL)
+
+Every kernel cost is derived from explicit baseline scalar ARMv8-A assembly (`-march=armv8-a -mgeneral-regs-only`, `simd=0`, zero NEON/SVE, zero `FEAT_LSE`, zero `DC ZVA`, zero `bl`). `audit_cm.py` (`kernels_symbolic`) parses every fenced `asm` block directly from this file, validates opcodes & `LDP`/`STP` addressing, counts every instruction (`cmp`+`b.*`=2 ops, loop control included), simulates Band-2 control-flow + `(m-k)&3` + SWAR + `MONT5` + Barrett `row_red5_z12` + Shoup NTT + 4-prime Garner CRT live, and asserts `opcodes/items <= charged`.
+
+## 1. Collection Kernels (`Arch2-Rev-SigmaB-v3-ZeroCopy-U16`, `W_tile = 552`, `W_SB = 64`, `P_lo = 2^55`, `P_m4 = 2^48`, `P_g = 2^63`, `P_f = 2^60`)
+
+- **Zero-wrap `uint16_t` accumulators (`S_g, S_f`):** Quarter-bit weights on `<= 700`b norms reach `<= 2,800 << 32,767` (`0` wraparound; `4 B/cell`, total `4*N_a_tbl = 2^61.829 B < 2^64 B`, indexed via `[x_acc, x_idx, lsl #1]`).
+- **Zero-copy Band-1a/1b/2 with exact `(m - k) & 3` rotation:**
+  - Band-1a (`[2^24, 2^48)`): `m`-partitioned base `acc_base + ((m-k)&3)*2^59` -> `rev_b1a_apply_u4` (`4.00 <= 4.25`).
+  - Band-1b (`[2^48, 2^55)`): 64b `(m<<58)|oid` (`V_a<2^58`), `sub x4,x0,x_k58; and x4,x4,x_mask60` -> `rev_b1b_apply_u4` (`6.00 <= 6.25`).
+  - Band-2 (`[2^55, P_hi)`): `struct.pack("<IIQ", q_key, ka_lo, (m<<58)|oid)`. Register-disjoint partition across all 3 Band-2 blocks (verified automatically in `verify_kernels_symbolic` + 3-SB live register-file simulation!): `§1.2` loop state in callee-saved `x19..x22` (`x19=sb_min_q8`, `x20=lim8`, `x21=rem_sb`, `x22=x19_base`), `§1.3` candidate scratch in `w9..w12`, `§1.6` emit scratch in `x15..x17`. `rev_b2_minkey_enter` (`20 <= C_SB_ENTER = 24.0`, incl. `4`-op gate + `14`-op setup `b .Lcand` + `2`-op `.Lnext_sb` exit on `x21`) -> `rev_b2_scan_cand` (`11 <= 11.5`) -> `b.ls .Lemit` `rev_b2_emit` (`10 <= 11.25`, rotating `(m-k)&3`, `b .Lnext` to shared `cmp x_p,x_pe; b.lo .Lcand`) + `rev_b1a_apply_u4` (`4.00`) = **`14.00 <= C_HIT_HI = 15.25`**.
+
+### 1.1 `rev_sb_probe_fast` (Band-2 row start: `17` Ir/row <= `C_TILE_HDR = 20.0`)
+
+```asm
+; kernel: rev_sb_probe_fast items=1 charged=20.0 key=c_tile_hdr
+sub x0, x_k0, x_p
+mul x1, x0, x_invp
+umulh x2, x0, x_mu
+lsr x2, x2, #4
+msub x3, x2, x_p, x0
+lsr x4, x3, #6
+sub x5, x_end, x3
+cmp x5, x_wmax
+csel x5, x_wmax, x5, hi
+lsl x6, x4, #3
+add x7, x_off, x6
+ldp x8, x9, [x7]
+cmp x8, x9
+b.gt .Lempty
+add x_sb, x_sb, #1
+add x_ptr, x_base, x8
+ret
+```
+
+### 1.2 `rev_b2_minkey_gate` skip (`6` Ir/skip <= `C_SB_SKIP = 6.0`) & full entered-SB path (`20` Ir/enter <= `C_SB_ENTER = 24.0`)
+
+`cmp` and `b.ls` are counted as 2 separate instructions (`q_slack = 2 * s_max / 254.0` covers both `floor`/`ceil` quantization unconditionally). All outer super-bucket loop state lives exclusively in callee-saved registers **`x19` (`sb_min_q8` ptr), `x20` (`lim8` ptr), `x21` (remaining SB count), `x22` (`sb_min_q8` base)** — NEVER written by `§1.3` (`w9..w12`) or `§1.6` (`x15..x17`) (physical-register disjointness asserted automatically + 3-SB live transition simulated in `audit_cm.py`!). On an entered super-bucket, `rev_b2_minkey_enter` accounts for ALL **20 <= 24.0** opcodes executed along the complete path (`4`-op gate prefix + `14`-op setup transferring `b .Lcand` + `2`-op `.Lnext_sb` exit loop-back):
+
+```asm
+; kernel: rev_b2_minkey_skip items=1 charged=6.0 key=c_sb_skip
+ldrb w9, [x19], #1
+ldrb w10, [x20], #1
+cmp w9, w10
+b.ls .Lenter
+subs x21, x21, #1
+b.ne .Lloop
+```
+
+```asm
+; kernel: rev_b2_minkey_enter items=1 charged=24.0 key=c_sb_enter
+; Gate prefix executed before .Lenter (4 ops):
+ldrb w9, [x19], #1
+ldrb w10, [x20], #1
+cmp w9, w10
+b.ls .Lenter
+; .Lenter setup (x_off[] holds 16B-aligned byte offsets written by §1.8) -> explicit transfer b .Lcand to rev_b2_scan_cand (14 ops):
+sub x_j1, x19, x22
+sub x_j, x_j1, #1
+ldr x5, [x_off, x_j, lsl #3]
+ldr x6, [x_off, x_j1, lsl #3]
+subs x7, x6, x5
+b.eq .Lnext_sb
+add x_p, x_ent, x5
+add x_pe, x_ent, x6
+ldr w_lim, [x_lim32, x_j, lsl #2]
+ldr x_qtab, [x_sp, #0]
+ldp x_bptr, x_blim, [x_sp, #8]
+ldp x_base, x_len, [x_sp, #24]
+ldp x_lp, x_tmp, [x_sp, #40]
+b .Lcand
+; .Lnext_sb epilogue reached by fallthrough from .Lnext or early-exit b.hi .Lnext_sb (2 ops):
+subs x21, x21, #1
+b.ne .Lloop
+```
+
+### 1.3 `rev_b2_scan_emit_8b` candidate check (`11` Ir/cand <= `C_CAND = 11.5`)
+
+Entered from `rev_b2_minkey_enter` (`b .Lcand`). Uses ONLY scratch `w9, w10, w11, w12` (physically disjoint from outer loop state `x19..x22` and emit scratch `x15..x17`!). Early-exit (`w9 > w_lim`) branches directly to `.Lnext_sb`; out-of-tile (`w11 >= w_len`) branches to `.Lnext` (`cmp x_p, x_pe; b.lo .Lcand`, falling through to `.Lnext_sb`); qualifying hits (`w9 <= w12`) branch `b.ls .Lemit` to `rev_b2_emit`, which executes `10` emit/rotate opcodes and jumps `b .Lnext` back to `.Lnext` (`9 + 10 + 2 = 21 = 11 (cand) + 10 (emit)` opcodes; verified LIVE across 3 consecutive SBs in `audit_cm.py`):
+
+```asm
+; kernel: rev_b2_scan_cand items=1 charged=11.5 key=c_cand
+ldp w9, w10, [x_p], #16
+cmp w9, w_lim
+b.hi .Lnext_sb
+sub w11, w10, w_base
+cmp w11, w_len
+b.hs .Lnext
+ldr w12, [x_qtab, x11, lsl #2]
+cmp w9, w12
+b.ls .Lemit
+; .Lnext (falls directly through to .Lnext_sb when x_p >= x_pe):
+cmp x_p, x_pe
+b.lo .Lcand
+```
+
+### 1.4 Band-1a & Band-2-apply zero-copy `uint16_t` 4x-unrolled direct apply (`rev_b1a_apply_u4`: `16/4 = 4.00` Ir/hit <= `C_HIT_LO_M4 = 4.25`)
+
+Applies either a Band-1a `m`-partitioned `oid < 2^58` or a pre-rotated Band-2 60-bit word `(((m - k) & 3) << 58) | oid < 2^60` directly into contiguous `uint16_t acc[4 * 2^58]`:
+
+```asm
+; kernel: rev_b1a_apply_u4 items=4 charged=4.25 key=c_hit_lo_m4
+ldp x0, x1, [x_p], #16
+ldp x2, x3, [x_p], #16
+ldrh w4, [x_acc, x0, lsl #1]
+add w4, w4, w_lp
+strh w4, [x_acc, x0, lsl #1]
+ldrh w5, [x_acc, x1, lsl #1]
+add w5, w5, w_lp
+strh w5, [x_acc, x1, lsl #1]
+ldrh w6, [x_acc, x2, lsl #1]
+add w6, w6, w_lp
+strh w6, [x_acc, x2, lsl #1]
+ldrh w7, [x_acc, x3, lsl #1]
+add w7, w7, w_lp
+strh w7, [x_acc, x3, lsl #1]
+subs x_cnt, x_cnt, #4
+b.ne .Lb1a
+```
+
+### 1.5 Band-1b zero-copy `uint16_t` 4x-unrolled 8B packed `{m:2, oid:58}` direct apply (`rev_b1b_apply_u4`: `24/4 = 6.00` Ir/hit <= `C_HIT_LO_U = 6.25`)
+
+Every Band-1b hit packs `(m << 58) | oid` into one 64-bit word (`V_a < 2^58`, `m in {0..3}` -> 60 active bits). Rotating bank `m -> (m - k) & 3` via `sub x_reg, x_in, x_k58; and x_reg, x_reg, x_mask60` (`x_k58 = k << 58`, `x_mask60 = (1 << 60) - 1`, verified LIVE on all 16 `(m, k)` pairs including `m=0, k=1 -> bank 3`!) is followed directly by `ldrh/add/strh` with ZERO intermediate copy:
+
+```asm
+; kernel: rev_b1b_apply_u4 items=4 charged=6.25 key=c_hit_lo_u
+ldp x0, x1, [x_p], #16
+ldp x2, x3, [x_p], #16
+sub x4, x0, x_k58
+and x4, x4, x_mask60
+ldrh w8, [x_acc, x4, lsl #1]
+add w8, w8, w_lp
+strh w8, [x_acc, x4, lsl #1]
+sub x5, x1, x_k58
+and x5, x5, x_mask60
+ldrh w9, [x_acc, x5, lsl #1]
+add w9, w9, w_lp
+strh w9, [x_acc, x5, lsl #1]
+sub x6, x2, x_k58
+and x6, x6, x_mask60
+ldrh w10, [x_acc, x6, lsl #1]
+add w10, w10, w_lp
+strh w10, [x_acc, x6, lsl #1]
+sub x7, x3, x_k58
+and x7, x7, x_mask60
+ldrh w11, [x_acc, x7, lsl #1]
+add w11, w11, w_lp
+strh w11, [x_acc, x7, lsl #1]
+subs x_cnt, x_cnt, #4
+b.ne .Lb1b
+```
+
+### 1.6 Band-2 zero-copy emit with explicit `(m - k) & 3` bank rotation + return to `.Lnext` (`10 + 4.00 = 14.00` Ir/hit <= `C_HIT_HI = 15.25`)
+
+Entered via `b.ls .Lemit` from `rev_b2_scan_cand`. Uses ONLY scratch `x15, x16, x17` (strictly disjoint from outer loop state `x19..x22` in `§1.2` and candidate scratch `w9..w12` in `§1.3`!): loads `oid_m = (m << 58) | oid` into `x15`, rotates bank `m -> (m - k) & 3` (`sub x15, x15, x_k58; and x15, x15, x_mask60`, `m=0, k=1 -> bank 3`), indexes `bucket[t]` via `x11` (the tile offset from `§1.3`), appends to `bucket[t]`, and jumps `b .Lnext` (`10 <= 11.25` opcodes; row apply via `rev_b1a_apply_u4` = `4.00 <= 4.25` -> `14.00 <= 15.25` Ir/hit):
+
+```asm
+; kernel: rev_b2_emit items=1 charged=11.25 key=c_hit_hi_emit
+ldur x15, [x_p, #-8]
+sub x15, x15, x_k58
+and x15, x15, x_mask60
+add x16, x_bptr, x11, lsl #3
+ldr x17, [x16]
+str x15, [x17], #8
+str x17, [x16]
+cmp x17, x_blim
+b.hs .Lflush
+b .Lnext
+```
+
+### 1.7 8-Cell `uint16_t` 64-Bit Borrow-Free SWAR Scan + Zero (`rev_scan_zero_u16`: `14/8 = 1.75` Ir/cell -> `1.75 * 1.0276 + 0.15 = 1.948 <= C_SCAN_ZERO = 2.00`)
+
+Each 64-bit word holds 4 `uint16_t` quarter-bit accumulators (`<= 2,800 << 32,768`). For any threshold `T in [1..32767]`, set `bias16 = (32768 - T) & 0x7fff` broadcast across 4 16-bit lanes (`x_bias16`), `x_7fff = 0x7fff_7fff_7fff_7fff`, `x_8000 = 0x8000_8000_8000_8000`. Then for EVERY `uint16_t` lane `x in [0..65535]`: `x >= T` iff `(((x & 0x7fff) + bias16) | x) & 0x8000 != 0` (verified LIVE across full threshold sweep & boundary edges inside `audit_cm.py`, ZERO borrow between 16-bit lanes!):
+
+```asm
+; kernel: rev_scan_zero_u16 items=8 charged=1.80 key=c_scan_zero_raw
+ldp x0, x1, [x_g]
+stp xzr, xzr, [x_g], #16
+and x2, x0, x_7fff
+add x2, x2, x_bias16
+orr x2, x2, x0
+and x3, x1, x_7fff
+add x3, x3, x_bias16
+orr x3, x3, x1
+orr x4, x2, x3
+tst x4, x_8000
+b.ne .Lhit8
+stp xzr, xzr, [x_f], #16
+subs x_cnt, x_cnt, #8
+b.ne .Lscan8
+```
+
+Including tile padding `p2_mult = 1.0276` + setup `0.10` + hit-branch amortization `< 0.05`: `1.75 * 1.0276 + 0.15 = 1.9483 <= C_SCAN_ZERO = 2.00`.
+
+### 1.8 2-Pass `a_0`-Chord Residue Build (`rev_build_pass12`: `28 + 0.50 = 28.50 <= C_LIST_A = 30.0`, `4 <= C_LBKT = 4.0`)
+
+**Global key-sorted invariant across all 4 banks (`rev_b2_scan_cand` soundness):** Before per-prime table build, the owner sorts `x_meta[0..N_a_tbl-1]` (`16`B `(q_key, oid_m)`) ONCE globally in ascending `q_key = Q_a(a)` order across all 4 banks (`12*N_a_tbl*log2(N_a_tbl)` Ir priced in `bld`), storing `x_imap[chord_idx] -> global_sorted_rank`. Layout `struct.pack("<IIQ", q_key, ka_lo, (m<<58)|oid)`. Pass 1 walks `a_0`-chords (`L_a=233.88`, start `0.26 <= 0.50`), writing `ka` into `x_kbuf[x_pos]` (`x_pos=x_imap[chord_idx]`) and histogramming super-buckets (`12` ops); Pass 2 streams `x_kbuf`/`x_meta` in ascending `x_pos` (`==` non-decreasing `q_key`) order, appending 16B via `add x_tmp,x_out,x2; stp x8,x3,[x_tmp]` and updating `sb_min_q8` (`16` ops -> `28.50 <= 30.0`). Every super-bucket is therefore key-sorted across all 4 banks by construction (`0` extra merge/sort; end-to-end unsorted 4-bank -> global sort -> Pass-1/2 scatter -> `bucket_keys==sorted(bucket_keys)` -> early-exit vs exhaustive scan verified LIVE in `audit_cm.py`):
+
+```asm
+; kernel: rev_build_pass12 items=1 charged=29.5 key=c_list_a_raw
+add x0, x0, x_step
+sub x5, x0, x_p
+cmp x0, x_p
+csel x0, x5, x0, hs
+ldr x_pos, [x_imap], #8
+str x0, [x_kbuf, x_pos, lsl #3]
+lsr x1, x0, #6
+ldr w2, [x_hist, x1, lsl #2]
+add w2, w2, #1
+str w2, [x_hist, x1, lsl #2]
+subs x_n1, x_n1, #1
+b.ne .Lp1
+ldr x0, [x_kbuf], #8
+ldp x7, x3, [x_meta], #16
+orr x8, x7, x0, lsl #32
+lsr x1, x0, #6
+ldr x2, [x_pos_sb, x1, lsl #3]
+add x4, x2, #16
+str x4, [x_pos_sb, x1, lsl #3]
+add x_tmp, x_out, x2
+stp x8, x3, [x_tmp]
+lsr w5, w7, #24
+ldrb w6, [x_minq, x1]
+cmp w5, w6
+csel w6, w5, w6, lo
+strb w6, [x_minq, x1]
+subs x_n2, x_n2, #1
+b.ne .Lp2
+```
+
+```asm
+; kernel: rev_build_sb_min items=1 charged=4.0 key=c_lbkt
+ldrb w0, [x_minq], #1
+cmp w0, w_cur
+csel w_cur, w0, w_cur, lo
+strb w_cur, [x_outq], #1
+```
+
+Band-1b lookup (`rev_b1_early4_find`, `[2^48, 2^55)`): empty early-exit `keys[0] > neg_qb` = `11` Ir (`ldr, add, ldr, cmp, b.gt` + 6 header/return); `+14 + cnt` 4-strided scan when `cnt > 0` (exact Poisson expectation `E[11 + I(cnt > 0)*(14 + cnt)] = 11 + 14*(1 - exp(-lam)) + lam`); binary-search fallback `24 + 8 log2(mu + 1)`. Exactness of 4-orbit `sigma`-shared replay with `D_(omega,sigma)` (`239/239` exact-1), per-SB `q_min_j`, and 1-byte `sb_min_q8` gate is verified live in `audit_cm.py` (`sigmaB_exactness`: 48 real BLS12-381 `w' = omega^2` ideals, `0` mismatches).
+
+## 2. Exact 5-Limb Baseline Scalar ARMv8-A CIOS Montgomery Multiplication (`MONT5 = 270.0`)
+
+One complete carry-exact, shift-included two-chain CIOS outer round executes **`48`** baseline scalar ARMv8-A opcodes (`5 x 48 = 240` across 5 unrolled rounds) + **`27`** load/zero-init/final-sub/store opcodes = **`267 <= 270.0` Ir** (`+3` Ir headroom; bit-exactness of this exact 267-opcode register machine is verified LIVE on 32 random 320-bit `(a, b, p)` triples inside `audit_cm.py`):
+
+```asm
+; kernel: mont5_cios_round items=1 charged=48.0 key=mont5_round
+ldr x5, [x_b], #8
+mul x10, x0, x5
+mul x11, x1, x5
+mul x12, x2, x5
+mul x13, x3, x5
+mul x14, x4, x5
+adds x15, x15, x10
+adcs x16, x16, x11
+adcs x17, x17, x12
+adcs x18, x18, x13
+adcs x19, x19, x14
+adcs x20, x20, xzr
+adc x21, xzr, xzr
+umulh x10, x0, x5
+umulh x11, x1, x5
+umulh x12, x2, x5
+umulh x13, x3, x5
+umulh x14, x4, x5
+adds x16, x16, x10
+adcs x17, x17, x11
+adcs x18, x18, x12
+adcs x19, x19, x13
+adcs x20, x20, x14
+adc x21, x21, xzr
+mul x9, x15, x_n0
+mul x10, x9, x22
+mul x11, x9, x23
+mul x12, x9, x24
+mul x13, x9, x25
+mul x14, x9, x26
+adds xzr, x15, x10
+adcs x15, x16, x11
+adcs x16, x17, x12
+adcs x17, x18, x13
+adcs x18, x19, x14
+adcs x19, x20, xzr
+adc x20, x21, xzr
+umulh x10, x9, x22
+umulh x11, x9, x23
+umulh x12, x9, x24
+umulh x13, x9, x25
+umulh x14, x9, x26
+adds x15, x15, x10
+adcs x16, x16, x11
+adcs x17, x17, x12
+adcs x18, x18, x13
+adcs x19, x19, x14
+adc x20, x20, xzr
+```
+
+```asm
+; kernel: mont5_cios_epilogue items=1 charged=28.0 key=mont5_epi
+ldp x0, x1, [x_a, #0]
+ldp x2, x3, [x_a, #16]
+ldr x4, [x_a, #32]
+ldp x22, x23, [x_p, #0]
+ldp x24, x25, [x_p, #16]
+ldr x26, [x_p, #32]
+mov x15, #0
+mov x16, #0
+mov x17, #0
+mov x18, #0
+mov x19, #0
+mov x20, #0
+subs x10, x15, x22
+sbcs x11, x16, x23
+sbcs x12, x17, x24
+sbcs x13, x18, x25
+sbcs x14, x19, x26
+sbcs xzr, x20, xzr
+csel x15, x10, x15, hs
+csel x16, x11, x16, hs
+csel x17, x12, x17, hs
+csel x18, x13, x18, hs
+csel x19, x14, x19, hs
+stp x15, x16, [x_out, #0]
+stp x17, x18, [x_out, #16]
+str x19, [x_out, #32]
+ret
+```
+
+Total exact `MONT5 = 5 * 48 + 27 = 267 <= 270.0` Ir.
+
+## 3. Explicit Multi-Limb Cyclotomic Tower Norm Kernels, Parsed 4-Prime 62-Bit NTT (`fft_F`) & Garner CRT, Stage B, 2D Cofactorization, & Exact 2nd-Moment ECM Chebyshev
+
+- **Explicit Schoolbook Multi-Limb Scalar ARMv8-A Tower Norm Derivation (`Q(zeta_15) -> Q(omega, sqrt(5)) -> Q(omega) -> Q`, ZERO Karatsuba shortcut):**
+  Explicit schoolbook scalar ARMv8-A `L_1 x L_2` limb multiplication uses `mul_LL(L_1, L_2) = 8 L_1 L_2 + 4 (L_1 + L_2)` (`mul/umulh/adds/adcs` carry chains). On the production sieving region (`|a_j|, |b_j| <= 2^8`), `a^3, b^3 in Z[y]` fit in 1 limb (`<= 27`b; `4` `8x8` 1-limb poly muls + `Phi_15` reduction = `400` Ir), `g(a, b) = a^3 - u w^2 b^3` fits in 2 limbs (`<= 94`b; `+96` Ir), and `f(a, b) = a^9 + (w+1) a^6 b^3 + a^3 b^6 - w b^9` fits in 3 limbs (`<= 128`b; `a^6, b^6` = `2 x 928 = 1,856` Ir, `a^9, b^9, a^6 b^3, a^3 b^6` = `4 x 1,152 = 4,608` Ir, combine = `128` Ir). Using pure schoolbook `mul_LL` across the 3-step tower norm `Q(zeta_15) -> Q(omega, sqrt(5)) -> Q(omega) -> Q`:
+  1. **`_nk_g_only` (`2 -> 4 -> 8 -> 16` limbs):** `32` `2x2` (`1,536`) + `6` `4x4` (`960`) + `3` `8x8` (`1,728`) + adds/subs/setup/cold-scan (`1,544`) = **`5,768 <= 6,500` Ir charged**!
+  2. **`_nk_f_only` (`3 -> 6 -> 12 -> 24` limbs):** reuses `a^3, b^3` -> `a^6, b^6, a^9, b^9, a^6 b^3, a^3 b^6` + combine (`6,592`) + 3-limb schoolbook tower norm (`4,608 + 4,032 + 3,744 = 12,384`) = **`18,976 <= 20,000` Ir charged**!
+- **Parsed 62-Bit Shoup Radix-2 NTT Butterfly (`ntt62_butterfly`: `18` opcodes/butterfly/prime -> `36.0 << 168.0` Ir/elem/stage across 4 primes) & 4-Prime Garner CRT (`fft_F`):**
+  `p_i = c_i * 2^53 + 1 < 2^62` for `c_i in {269, 276, 305, 309}` (`log2(NTT4_PROD) = 244.70`, all 4 verified prime LIVE). One exact baseline scalar ARMv8-A radix-2 Shoup butterfly (`w_s = floor(w * 2^64 / p)` precomputed, `t = w*v - umulh(v, w_s)*p` reduced to `[0, p)`) takes **`18` opcodes per 2 elements (`9.0` Ir/elem/prime -> `36.0` Ir/elem/stage across all 4 primes `<< 168.0` charged in `fft_F`, `4.67x` headroom!)**; 4-prime Garner CRT uses 3 Shoup mod-muls (`15` ops) + 3 multi-limb mul-adds (`<= 75` ops) = `<= 90 << 220` linear term in `fft_F` (`168 M log2(M) + 220 M + 1200 + (504 M if N > 2^26 else 0)`; 2D `168 M_tot log2(M_tot) + 1100 M_tot + 1200`). Both `ntt62_butterfly` (64 random triples) and 4-prime Garner CRT (32 random 240-bit integers) are verified bit-exactly LIVE in `audit_cm.py`, alongside `srt_toy` (128 planted leaves, `0` mismatches):
+
+```asm
+; kernel: ntt62_butterfly items=2 charged=10.0 key=ntt62_elem_prime
+ldr x0, [x_u]
+ldr x1, [x_v]
+ldp x2, x3, [x_w], #16
+mul x4, x1, x2
+umulh x5, x1, x3
+msub x4, x5, x_p, x4
+subs x6, x4, x_p
+csel x4, x6, x4, hs
+add x7, x0, x4
+subs x8, x7, x_p
+csel x7, x8, x7, hs
+subs x9, x0, x4
+add x10, x9, x_p
+csel x9, x9, x10, hs
+str x7, [x_u], #8
+str x9, [x_v], #8
+subs x_cnt, x_cnt, #1
+b.ne .Lntt
+```
+- **Analytical Stage B (`cm_models.stage_b_analytic`):** `gbatch_cost(24197143, L) + 10 * MONT5 * (L/5)^2 + 2 * nb * (12 L + 16)` with `MONT5 = 270.0`.
+- **Live 2D-Histogram Cofactorization (`Q_F_SAFETY = 2.0`):** Under `H1`, `2.0 * rho_exact((bf + alpha_f) / lf)` at left endpoint `bf` gives `>= 2.27x` bin-midpoint `rho_db`, integrated LIVE across 337 bins up to `bg_max = 700`b (`c_cof_2d_upper = 2.9856` ipc).
+- **Exact 2nd-Moment ECM Chebyshev (`cm_models.ecm_mean_var`):** Schedule runs `K_c` curves (`p_1`, `q_s=(1-p_1)^{K_c}<=0.001`, `p_s=1-q_s`). Failed schedule cost `C_fail=K_c*per_c` (`Var=0`); final successful schedule has `S~Bin(K_c,p_1)|S>=1`, `C_succ=C_fail+S*redo_ex`, `E[S|S>=1]=K_c p_1/p_s`, `E[S^2|S>=1]=(K_c p_1(1-p_1)+(K_c p_1)^2)/p_s`. With independent `F~Geom_0(p_s)`, `T=F*C_fail+C_succ` gives exact `E[T]=(q_s/p_s)C_fail+E[C_succ]`, `Var(T)=(q_s/p_s^2)C_fail^2+Var(C_succ)`. Cauchy-Schwarz `sd_rel=13*sqrt(Var_f)+16*sqrt(Var_g)` yields Chebyshev `< 2^-74.4 << 2^-70`.
+
+## 4. `Z[zeta_12]` Block Wiedemann Kernels (Straight-Line 4-Limb Scalar ARMv8-A + Exact 1-Step Barrett `row_red5_z12`)
+
+Over `Z/rZ` (`r` is 255-bit -> 4 `uint64_t` limbs, `phi(12) = 4` coordinates in `Z[zeta_12]`):
+- **`unit_run5_z12` (`43` opcodes / `5` entries = `8.60 <= 8.80` Ir/vec-entry):** Unrolled 5-entry run adding 4-limb entries into 5-limb accumulator (`x10..x14`, carrying cleanly into the 5th limb `x14` via `adc x14, x14, xzr`):
+
+```asm
+; kernel: unit_run5_z12 items=5 charged=8.80 key=unit_run5
+ldp x0, x1, [x_v0, #0]
+ldp x2, x3, [x_v0, #16]
+adds x10, x10, x0
+adcs x11, x11, x1
+adcs x12, x12, x2
+adcs x13, x13, x3
+adc x14, x14, xzr
+ldr x_v1, [x_idx], #8
+ldp x0, x1, [x_v1, #0]
+ldp x2, x3, [x_v1, #16]
+adds x10, x10, x0
+adcs x11, x11, x1
+adcs x12, x12, x2
+adcs x13, x13, x3
+adc x14, x14, xzr
+ldr x_v2, [x_idx], #8
+ldp x0, x1, [x_v2, #0]
+ldp x2, x3, [x_v2, #16]
+adds x10, x10, x0
+adcs x11, x11, x1
+adcs x12, x12, x2
+adcs x13, x13, x3
+adc x14, x14, xzr
+ldr x_v3, [x_idx], #8
+ldp x0, x1, [x_v3, #0]
+ldp x2, x3, [x_v3, #16]
+adds x10, x10, x0
+adcs x11, x11, x1
+adcs x12, x12, x2
+adcs x13, x13, x3
+adc x14, x14, xzr
+ldr x_v4, [x_idx], #8
+ldp x0, x1, [x_v4, #0]
+ldp x2, x3, [x_v4, #16]
+adds x10, x10, x0
+adcs x11, x11, x1
+adcs x12, x12, x2
+adcs x13, x13, x3
+adc x14, x14, xzr
+ldr x_v0, [x_idx], #8
+add x_ptr, x_ptr, #40
+subs x_cnt, x_cnt, #5
+b.gt .Lrun5
+```
+
+- **`row_red5_z12` (`67 <= 68.0` Ir/bucket-vec — Exact 1-Step Signed 5-Limb Barrett Reduction for ALL `|a_4| < 2^60`):**
+  Handles ANY signed 5-limb bucket accumulator `A = (x10..x14)` with `|a_4| < 2^60` (`|A| < 2^316`, covering EVERY `|c| <= 255` row up to `+-2^59 * (R_BLS - 1) > 10^17 * (R_BLS - 1)` with ZERO carry overflow!). Computes branchless `U = |A|`, `top = (u_4 << 2) | (u_3 >> 62)`, `q_hat = umulh(top, mu_r)` where `mu_r = floor(2^318 / R_BLS) = 0x8d54253b7fb78ddf < 2^64` (so `0 <= floor(U / R_BLS) - q_hat <= 2` unconditionally!), `rem = U - q_hat * R_BLS in [0, 3 * R_BLS)`, two branchless conditional `- R_BLS` steps, and branchless sign fix (`if A < 0 and rem != 0: rem = R_BLS - rem`). Verified bit-for-bit LIVE in `audit_cm.py` on `0, +-1, +-3*(R-1), +-200*(R-1), +-51,000*(R-1), +-1,000,000*(R-1), +-2^59*(R-1)`, and 30 random `|A| <= 2^315` inputs:
+
+```asm
+; kernel: row_red5_z12 items=1 charged=68.0 key=row_red5_barrett
+asr x15, x14, #63
+eor x0, x10, x15
+eor x1, x11, x15
+eor x2, x12, x15
+eor x3, x13, x15
+eor x4, x14, x15
+subs x0, x0, x15
+sbcs x1, x1, x15
+sbcs x2, x2, x15
+sbcs x3, x3, x15
+sbc x4, x4, x15
+lsl x5, x4, #2
+orr x5, x5, x3, lsr #62
+umulh x5, x5, x_mu
+mul x6, x5, x22
+mul x7, x5, x23
+mul x8, x5, x24
+mul x9, x5, x25
+umulh x16, x5, x22
+umulh x17, x5, x23
+umulh x18, x5, x24
+umulh x19, x5, x25
+adds x7, x7, x16
+adcs x8, x8, x17
+adcs x9, x9, x18
+adc x19, x19, xzr
+subs x0, x0, x6
+sbcs x1, x1, x7
+sbcs x2, x2, x8
+sbcs x3, x3, x9
+sbc x4, x4, x19
+subs x6, x0, x22
+sbcs x7, x1, x23
+sbcs x8, x2, x24
+sbcs x9, x3, x25
+sbcs x16, x4, xzr
+csel x0, x6, x0, hs
+csel x1, x7, x1, hs
+csel x2, x8, x2, hs
+csel x3, x9, x3, hs
+csel x4, x16, x4, hs
+subs x6, x0, x22
+sbcs x7, x1, x23
+sbcs x8, x2, x24
+sbcs x9, x3, x25
+sbcs xzr, x4, xzr
+csel x0, x6, x0, hs
+csel x1, x7, x1, hs
+csel x2, x8, x2, hs
+csel x3, x9, x3, hs
+orr x6, x0, x1
+orr x7, x2, x3
+orr x6, x6, x7
+cmp x6, #0
+csel x15, xzr, x15, eq
+subs x6, x22, x0
+sbcs x7, x23, x1
+sbcs x8, x24, x2
+sbc x9, x25, x3
+tst x15, x15
+csel x0, x6, x0, ne
+csel x1, x7, x1, ne
+csel x2, x8, x2, ne
+csel x3, x9, x3, ne
+stp x0, x1, [x_out, #0]
+stp x2, x3, [x_out, #16]
+ret
+```
+
+- **`gen_run1_z12` (`23 <= 29.0` Ir/coord -> `4 * 29.0 = 116.0` Ir/non-unit `Z[zeta_12]` entry):** Because a general non-unit element `c = c_0 + c_1 chi + c_2 chi^2 + c_3 chi^3 in Z[zeta_12]` (`phi(12) = 4`, `|c_j| <= 255`) decomposes into up to 4 signed basis-direction scalar updates `(c_0 * 1, c_1 * chi, c_2 * chi^2, c_3 * chi^3)` into the existing buckets `0..3` (with `c_j > 0` using `adds/adcs` and `c_j < 0` using the identical 23-opcode `subs/sbcs` run on `|c_j|` into the same bucket — ZERO extra buckets beyond the 6 `{chi^0..chi^5}` buckets and zero assumption on `nnz(c) < 4`!), we explicitly charge ALL 4 basis coordinates per non-unit entry: `4 * 23 = 92 <= 4 * 29.0 = 116.0` Ir/non-unit entry (verified live in `audit_cm.py`!). Each coordinate update executes `23 <= 29.0` baseline scalar ARMv8-A opcodes:
+
+```asm
+; kernel: gen_run1_z12 items=1 charged=29.0 key=gen_run1_coord
+ldp x0, x1, [x_v0, #0]
+ldp x2, x3, [x_v0, #16]
+mul x4, x0, x_c
+mul x5, x1, x_c
+mul x6, x2, x_c
+mul x7, x3, x_c
+adds x10, x10, x4
+adcs x11, x11, x5
+adcs x12, x12, x6
+adcs x13, x13, x7
+adc x14, x14, xzr
+umulh x4, x0, x_c
+umulh x5, x1, x_c
+umulh x6, x2, x_c
+umulh x7, x3, x_c
+adds x11, x11, x4
+adcs x12, x12, x5
+adcs x13, x13, x6
+adcs x14, x14, x7
+ldr x_v0, [x_idx], #8
+ldr x_c, [x_coef], #8
+subs x_cnt, x_cnt, #1
+b.gt .Lgen1
+```
+
+- **`chi_mul_z12_fast` (`50` Ir), `row_tail_6bucket_z12` (`504` Ir), 1-Owner Arch B Row Overhead (`c_row_chi = 1,000.0` Ir):** `6 * 67 + 504 + 16 = 922 <= 6 * 68 + 504 + 16 = 928 <= c_row_chi = 1,000.0` Ir worst-case (`0` cross-owner sends/combines; `k5_live = eu_lo * 8.80 + (1 - eu_lo) * 116.0 = 16.316 <= k5_charged = 17.50`; `red_row_u_z12 = 18.6` Ir/elem).
+
+## 5. Descent Kernels (`16D` Rank-2 `dsieve16`, 100% Input-Uniform Exact Bareiss LLL Bounds, & Limb-Scaled 100-Round Miller-Rabin)
+
+- **Analytical `dsieve16` counts (`sieve_mult = 1.0`):** `SIEVE_HIT = 1,100`, `SCAN + ZERO = 12`, `BOUND_CELL = 2,400` (per-cell rank-2 norm-bound evaluation in `dsieve16`), `PAIR_SETUP = 1.33 x 2^25.1`, `NORMS = 2^27`, `TDIV = 2^25`, `IDEAL = 2^35`, `ecm_instr` (`MONT5 = 270.0`), and exact limb-scaled 100-round Miller-Rabin **`mr_instr(nb) = 100 * 2 * nb * MONT5 * (ceil(nb/64)/5)^2`** (`<= 4^(-100) = 2^(-200)` error/test, `<= 2^(-80)` over `< 2^120` run calls).
+- **100% Input-Uniform Exact 2-Stage Pure-Integer Bareiss LLL (`11/40 -> 99/100`, ZERO Float/Decimal LLL Anywhere!):**
+  Every lattice reduction (`boot`, `special-q`, `prod_sq24`, `prod_cond_q15`, `q15_samefield`, `constructive_lll16`) runs ONE pure-int Bareiss `lll_16d_int(B)` = `_dw_int(B, 11, 40)` -> `_dw_int(B_1, 99, 100)` with FULL pre-Lovasz size-reduction (`|2*lam[i][j]| <= d[j+1]` invariantly!). Swaps strictly shrink `D = prod_{k=1}^{15} d_k` by `< delta` while keeping `max_k d_k <= D_max` non-increasing. Since `|lam[i][j]| = d_j |<b_i,b*_j>| <= ||b_i|| D_max`, `L_lam = L_b + L_d` and `L_num = 2 L_d + L_b`. After Stage 1 (`beta_1=40`), `d_k <= 40^{k(16-k)/2} d_{16}^{k/16}` (`sum k(16-k)/2 = 340`) and `||b_i||^2 <= 5 D_{max,2}` (asserted symbolically in `verify_kernels_symbolic`!):
+  1. **Special-`q` (`q <= 2^265`, `LLL_NODE = 2^40`):** Stage 1 (`d_k <= 2^544`, `L_d=9,L_b=5,L_lam=14,L_num=23`, `S_1 <= 4,381`): `<= 2^32.41` Ir. Stage 2 (`d_{16} <= 2^530`, `D_{max,2} <= 2^538.3`, `log2(D_1) <= 5,784.5`, `S_2 <= 398,940`): `<= 2^39.00` Ir -> total **`2^39.01 << 2^40`** Ir!
+  2. **381b `G_T` Boot (`d_{16} <= 2^3384`, `LLL_BOOT = 2^48`):** Stage 1 (`d_k <= 2^8399`, `L_d=132,L_b=67,L_lam=199,L_num=331`, `S_1 <= 36,076`): `<= 2^43.16` Ir. Stage 2 (`D_{max,2} <= 2^3384`, `L_d=53,L_b=27,L_lam=80,L_num=133`, `log2(D_1) <= 27,189.5`, `S_2 <= 1,875,188`): `<= 2^46.30` Ir -> total **`2^46.45 << 2^48`** Ir!
