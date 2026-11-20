@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "title": "bn254-pairing-inversion: Pure-Scalar C6-m184_w216-rec STNFS with Strict <2^64B Per-Owner Buffers, Closed-Form 3-Prime NTT, sigma-Folded 12D E* Band-3, W_SB=256 SWAR sb_u7, Score-Only Stage B, & Fixed-Instance H3 4-Cap Z[omega] LA: 2^87.117158188",
+  "claims": [
+    {
+      "statement": "For the full-production bn254-pairing-inversion target, the self-contained 100% pure-scalar AArch64 algorithm of proof.md (C6-m184_w216-rec content-reduced reciprocal totally imaginary sextic tower, order-6 Frobenius tau = Frob^10, exact rational sigma(w) == w twist invariance, score-only 3-band g-side sieving at B_f = 2^61, B_g = 2^60, excess 0.82 with strict < 2^64 B per-owner buffered hit transfers as primary: Band-1 [2^14, 2^44) unrolled-4 apply + 8B per-owner buffer (6.25 Ir/hit) + early4_find, Band-2 [2^44, 2^54) 8-lane 64-bit SWAR sb_u7 per-SB tight q_min_j gate at W_SB = 256 guaranteeing max_sb = 5 <= 8 on every row + 8B per-owner buffer (14.5 Ir/hit), Band-3 [2^54, 2^59) sigma-orbit-folded 12D Optimal Bounding Ellipsoid E* = {0.5*u + v/(2*(1-kap)) <= 1} Fincke-Pohst walk on 1/3 as many ideals with exact provable volume ratio VR_12 = 2.238988x over active R = {u <= 1, v + kap*u <= 1}, chunked<=512 outward-rounded pure-integer Q1.60 -mgeneral-regs-only R-gate (20 Ir worst-case charged on all E* leaves, 0 false negatives) + Voronoi unit-FD, uint16_t 64-bit SWAR scan+zero, 100% score-only Stage B stripping the exact 2^14-smooth part m via 417 64-bit prime-product chunks + disjoint large-prime windows with ZERO sieve prime recording and full 1.451x nonprimitive survivor pricing, closed-form 3-prime 64-bit radix-2 Cooley-Tukey NTT + Karatsuba with ZERO H-FFT heuristic, live norm-histogram-weighted full de Bruijn rho_dB, un-discounted 5-column random-compressed Schirokauer maps W_f(P_chi Lambda_f) and W_g(P_chi Lambda_g), 1-owner 3-bucket Z[omega] Block Wiedemann with deterministic pre-merge guard W_avg <= 161.0 and 4-parameter hard caps (N_sw_cap = 0.00160*U', N_l_cap = 0.00098*U', k5_cap = 12.00, tab_r_cap = 0.85, lazy = 0) under fixed-instance premise H3, and live 62-row LB=59 pure QBINS/BOOT_BINS 12D descent using min_k(P(M < k) + psi^k), recursive CHILD_X = 1.25, single-owner < 2^64 B boot tree (x_EA = 64.42, root 2^62.95 B), and standard 2^6=64 repeat-orbit factor) recovers x with g^x = z and outputs Q = x * Q0 in G2 (cost <= 2^11.761903 units, so e(P0, Q) = z) with success at least 0.39 over uniform challenges and fresh coins, and expected total classical work E[W] <= 1 + (K/2^64) * 2^88.465150850 <= 2^87.117158188 units (C = 20,000 scalar AArch64 instruction equivalents), under declared exploratory heuristics H1-H5, H-EA, H-SM, H-R, H-X, and H-SEP (proof.md Section 6 and RANK-BRIDGE.md; zero H-FFT heuristic). A run gate opens the run iff a fresh 64-bit coin is below K = 7246586778219360007, the least integer with (K/2^64) * 0.992775 >= 0.39; a closed run fails at cost 1 unit. Opened-run success >= 0.992775 is bounded by a strict additive union bound (FIX-U). Neither finite-scale simulator outcomes nor sample confidence intervals are substituted for the attack's production success probability. All preprocessing, failed trials, aborts, verification, and output are charged once for this target; nothing is amortized.",
+      "score": {
+        "numerator": "87117158188",
+        "denominator": "1000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "RANK-BRIDGE.md",
+        "STORAGE.md",
+        "KERNELS.md",
+        "declared.json",
+        "model_bn254_v6.py",
+        "verify_bn254_v6.py",
+        "descent_bn254_v6.py",
+        "hx_z6.py",
+        "c6_data.json",
+        "c6_adaptive.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "evidence",
+      "source": "audit_bn_cm.py",
+      "purpose": "Self-contained pure-stdlib live verification of: BN254 + C6-m184_w216-rec algebra, exact rational sigma(w) == w, 3 explicit 64-bit radix-2 NTT primes, boot identity, and mod-r CRT across all 6 roots; exhaustive R^2=50 Voronoi FD bijection (107/107, 0 missed, 0 dups); 8-lane SWAR sb_u7 Band-2 prototype (1523/1523, 0 mismatches, max_sb <= 8), P_2 +48 threshold check, 10k uint16 SWAR scan+zero, and 417-chunk score-only P_14 Stage-B strip + disjoint windows (0 errors); live sigma-orbit-folded 12D Optimal Bounding Ellipsoid E* Fincke-Pohst Band-3 prototype across 4 real C6 orbits on exact active R executing the outward-rounded Q1.60 integer gate live (408/408, 0 missed, 0 dups, 0 Q1.60 false negatives, VR_12_obs = 2.138 <= 2.239); paired 12D lattice diagnostic on 6 special-q bases (3f+3g, 2^66..2^213) and 2 boot bases via uniform sampling over FULL B_12(4) (13,315,520 cells; 120 draws/sq, 200/boot, 1 exact 6x6 norm spot-check/basis); live replay of 1,360-root / 959-after-failure reduced-tower C6 recursive descent campaign (c6_adaptive.json: 12/12 M-tails, 95% root-cluster CIs) + THRESHOLD-REPAIR counterexample; live pure-Python Z[omega] filtering simulator at U'=2^13 (with kernel check) and U'=2^14 + w_mid -> 0 monotone check + 5-scale ALL4 ladder; live 1D-kernel H-R / H-X / projected Block-Wiedemann Hankel recovery at s_sm=5 (hx_z6.py); full de Bruijn 16-row ledger, fixed-instance H3 4-cap 1-owner LA, live 62-row LB=59 pure QBINS/BOOT_BINS descent, FIX-U, and exact rational gate K.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "default",
+              "sensitivity",
+              "full",
+              "filtsim",
+              "hx"
+            ]
+          },
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
