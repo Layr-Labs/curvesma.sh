@@ -1,0 +1,54 @@
+# Kernels (Explicit Baseline Scalar AArch64 Op-by-Op Accounting: Zero SIMD, Zero `FEAT_LSE`)
+
+Every hot kernel is specified explicitly instruction-by-instruction in baseline scalar ARMv8-A (`-march=armv8-a -mgeneral-regs-only`, zero SIMD/NEON, zero `FEAT_LSE`, zero `bl` libc calls, zero external C measurements as premises). Every charged constant below is asserted symbolically `>=` its explicit op-by-op baseline scalar AArch64 sum **LIVE** inside `audit_cm.py` (`kernel_accounting_exact`).
+
+## 1. Collection Kernels (`Arch2-Rev-SigmaB-v3`, `W_tile = 552`, `W_SB = 64`, `P_lo = 2^55`, `P_m4 = 2^48`, `P_g = 2^63`, `P_f = 2^60`)
+
+Every instruction count is the exact static/dynamic scalar ARMv8-A instruction sum per iteration (verified `>=` in `audit_cm.py`):
+
+| Kernel | Explicit Baseline Scalar ARMv8-A Instruction-by-Instruction Breakdown | Exact Sum | Charged |
+|---|---|---:|---:|
+| `rev_sb_probe_fast` | Branchless mod-`p` step (`add, cmp, csel, sub` = 4), end-offset (`sub, add` = 2), 4x `lsr` SB/word indices (4), `str` updated `k0` (1), 2x `ldr` bitmap words (2), 2x `lsr` + `and` + `bfi` (4), `ret` (1) + 2 caller loop/arg setup = **20** | **20.0** / row | `C_TILE_HDR = 20.0` |
+| `rev_b2_minkey_gate` (skip) | Per-SB 1-byte `sb_min_q8[j] <= lim_q8[j]` gate (`+1/254` quant slack; skips **`85.4%`** of spanned SBs): `ldrb` (`sb_min_q8`), `ldrb` (`lim_q8`), `cmp`, `b.gt`, `add` (`j`), `cmp/b.lo` = **6** | **6.0** / SB | `C_SB_SKIP = 6.0` |
+| `rev_b2_minkey_gate` (enter) | Gate (**6**) + `ldp` (`beg, end`), `sub` (`n_ent`), `cbz`, 2x ptr setup (`add` scaled + `#12`), 2x `mov` init, terminator `ldur/cmp/b.gt` (3), exit branch & ptr advance (4) = **20** | **20.0** / SB | `C_SB_ENTER = 20.0` |
+| `rev_b2_scan_emit_8b` (cand) | Per-entry candidate check: `ldur w13,[x8,#-4]; cmp w13,w4; b.gt` (3), `ldr w12,[x8]; sub w12,w12,w2; cmp w12,w3; b.hs` (4), `ldr w14,[x5,w12,uxtw #2]; cmp w13,w14; b.gt` (3), loop `subs; add #16; b.eq` (3) = **13** | **13.0** / cand | `C_CAND = 13.0` |
+| Band-2 hit end-to-end | (i) 8B `oid_m` emit: `ldur x13; ldr x15; sub w14; bfxil x13; str x13,[x15],#8; str x15; add w0; b` = **8.0**; (ii) 4x-unrolled 8B staging copy (`rev_copy_u64_u4`): `2 ldp + 2 stp + 4 loop` = `8/4` = **2.00**; (iii) 4x-unrolled `log_p`-grouped apply (`rev_apply_8b_u4`, `w3=logp` in reg): `2 ldp + 4*(ldrh+add+strh) + 3 loop` = `17/4` = **4.25** | **14.25** / hit | `C_HIT_HI = 14.5` |
+| Band-1a hit (`[2^24, 2^48)`) | `m`-partitioned 4-bank `a`-tables (`acc_m[(m-m_b)&3]` once/bucket): `rev_copy_u64_u4` (**2.00**) + `rev_apply_8b_u4` (**4.25**) | **6.25** / hit | `C_HIT_LO_M4 = 6.25` |
+| `rev_b1_bsearch` / `early4` | Binary search (`rev_b1_bsearch`): `lsr, add, mvn, ldr, cmp, csinc, adds, b.ne` = **8** / step (`<= 24` header). Early-exit (`[2^48, 2^55)`): `keys[0] > neg_qb` check (`ldr, cmp, b.gt, ptr/len` = **11** empty; `+14 + cnt` nonempty) | **8** / step (`11` empty) | `C_BSEARCH_STEP = 8.0`, `C_BSEARCH_HDR = 24.0` |
+| Band-1b hit (`[2^48, 2^55)`) | 4x-unrolled `rev_b1_apply_u4`: `2 ldp + 4*(sub+and) + 4*(ldrh+add+strh) + 3 loop` = `25/4` = **6.25** + 4x-unrolled 12B slice copy (`3 post-inc ldp + 3 post-inc stp + cmp/b.lo` = `7/4` = **1.75**) | **8.00** / hit | `C_HIT_LO_U = 8.0` |
+| `rev_build_pass1/2/3` | Pass 1 `a0`-chord (`add, str, cmp, csel, subs, sub, b.ne` = **7**) + Pass 2 count+bitmap (`ldr, subs, 2 lsr, and, ldr, lsl, ldr, add, str, orr, str, b.ne` = **13**) + Pass 3 scatter (`3 ldr, subs, ldr, lsr, and, ldr, 2 add, 2 str, stp, b.ne` = **14**) + chord start (**1**) = **35**; SB prefix+min (`ldr, add, str, strb` = **4**) | **35.0** / entry (`4.0`/SB) | `C_LIST_A = 35.0` (`C_LBKT = 4.0`) |
+| `rev_scan_zero_u4` | 64-bit SWAR 4-cell constant-threshold `T_g(b)` scan + zero `S_g, S_f` fast path: `ldr, str xzr, str xzr, add bias4, tst msb4, b.ne, 3 add, cmp, b.ne` = `11/4` = **2.75** / cell x `V_all/V_kept = 1.0276` + `0.10` setup | **2.926** / kept cell | `C_SCAN_ZERO = 2.95` |
+
+Exactness of 4-orbit `sigma`-shared replay with `D_(omega,sigma)` (`239/239` exact-1), per-SB `q_min_j`, and 1-byte `sb_min_q8` gate is verified live in `audit_cm.py` (`sigmaB_exactness`: 48 real BLS12-381 `w'=omega^2` ideals, `0` mismatches).
+
+## 2. Exact Cyclotomic Tower Norm Kernels (`Q(zeta_15) -> Q(omega, sqrt(5)) -> Q(omega) -> Q`)
+
+Fixed-limb pure scalar ARMv8-A (`mul, umulh, adds, adcs, subs, sbcs`; zero division, zero SIMD) on 2-limb (`128`-bit) `a, b in Z[zeta_15]`:
+- **2-limb Karatsuba `mul_z15`:** `310` scalar instructions (`27` 2x2 limb Karatsuba products x `9` Ir + `67` `Phi_15` reduction adds/subs).
+- **Fixed-limb tower norm `norm_z15` (`deg 8 -> 4 -> 2 -> 1`):** `Q(zeta_15) -> Q(omega, sqrt(5))` (4-coeff Eisenstein Karatsuba, 2->4 limbs: `840` Ir) + `Q(omega, sqrt(5)) -> Q(omega)` (2-mul norm, 4->8 limbs: `1,180` Ir) + `Q(omega) -> Q` (`c_0^2 - c_0 c_1 + c_1^2`, 8->16 limbs: `944` Ir) = **`2,964`** Ir.
+- **`_nk_g_only` (`N(a^3 - u omega^2 b^3)`):** `a^2, a^3, b^2, b^3` (`4 x 310 = 1,240` Ir) + `norm_z15` (`2,964` Ir) = **`4,204` Ir <= `4,500` Ir charged** (verified live in `audit_cm.py`).
+- **`_nk_f_only` (`N(a^9 + (omega+1) a^6 b^3 + a^3 b^6 - omega b^9)`):** reuses `a^3, b^3` + `4` multi-limb Karatsuba products (`1,963` Ir) + `norm_z15` (`2,964` Ir) = **`6,167` Ir <= `6,520` Ir charged** (verified live in `audit_cm.py`).
+
+## 3. Closed-Form Non-Recursive 4-Prime 62-Bit Radix-2 NTT (`fft_F`), Analytical Stage B, & 2D Cofactorization
+
+- **Closed-form non-recursive 4-prime 62-bit radix-2 NTT (`cm_models.fft_F`, ZERO recursion & ZERO FFT heuristic):**
+  Fix the 4 explicit 62-bit NTT primes `p_i = c_i * 2^53 + 1 < 2^62` for `c_i in {269, 276, 305, 309}` (`2422936599525326849`, `2485986994308513793`, `2747195772696002561`, `2783224569714966529`; all 4 verified prime LIVE in `audit_cm.py` with `log2(NTT4_PROD) = 244.70`). Every `N`-limb (`64`-bit) product uses ONE of two exact non-recursive branches (both preconditions asserted live inside `fft_F(N)`):
+  1. **1D branch (`2 N <= 2^53`, covering all `P24`, Stage B, and BM generator products up to `18 L ~ 2^51.8` limbs):** Pad to `M = 2^ceil(log2(2 N)) <= 2^53` (asserts `M <= 2^53` and `N * 2^128 < NTT4_PROD`): `4` primes x `3` radix-2 NTTs x `(M/2) log2(M)` Barrett butterflies at `28` Ir (`26` Ir scalar count) = **`168 M log2(M)`** + `4 M` pointwise muls (`80 M`) + `M` 4-prime Garner CRT/carry (`140 M`) + `1200` setup + four-step 2-pass flat-memory transpose past `2^26` limbs (`+504 M`):
+     `fft_F(N) = 168 M log2(M) + 220 M + 1200 + (504 M if N > 2^26 else 0)`.
+  2. **2D polynomial convolution branch (`2 N > 2^53`, covering `gbatch_cost` `P_g, P_f` trees at `N ~ 2^66` up to `N <= 2^100`):** Split the `N`-limb integer into `K_2 = ceil(N / K_1)` rows of width `K_1 = 2^(ceil(log2(N)) // 2)` (`Y = X^(K_1)`), zero-pad BOTH axes by `2x` to `M_1 = 2 K_1 <= 2^53` and `M_2 = 2^ceil(log2(2 K_2)) <= 2^53` (exact `bit_length()`, ZERO circular wrap on either axis, asserts `M_1, M_2 <= 2^53` and `K_1 K_2 * 2^128 < NTT4_PROD` — e.g. `2^195 << 2^244.7` at `N = 2^67`). With `M_tot = M_1 M_2`, run `M_2` length-`M_1` + transpose + `M_1` length-`M_2` NTTs per transform (`168 M_tot log2(M_tot)`), pointwise mul + 4-prime Garner CRT + 2D overlap-add carry (`260 M_tot + 1200`), 4 full 2D transposes (`4 x 84 M_tot = 336 M_tot`), and out-of-core flat-memory streaming (`504 M_tot`):
+     `fft_F(N) = 168 M_tot log2(M_tot) + 1100 M_tot + 1200`.
+  `audit_cm.py` (`srt_toy`) verifies exact scaled-remainder-tree remaindering on 128 planted leaves (`0` mismatches).
+- **Analytical Stage B (`cm_models.stage_b_analytic`):** For an `nb`-bit survivor (`L = ceil(nb / 64)` limbs), `stage_b_analytic(nb) = gbatch_cost(24197143, L) + 10 * MONT5 * (L/5)^2 + 2 * nb * (12 L + 16)` (`MONT5 = 367.76` Ir for 5-limb CIOS Montgomery mul). At `550`b (`L=9`): `5,721,911` Ir; at `700`b (`L=11`): `8,479,620` Ir.
+- **Live 2D-Histogram Cofactorization:** Integrated LIVE across all `337` bins up to `bg_max = 700`b via `cm_models.Retention` + `stage_b_analytic` at `(s_a_g, s_b_g) = (345, 295)`, `(s_a_f, s_b_f) = (405, 345)`, giving `r_eff = 0.68001` and strict bin-wise **`c_cof_2d_upper = 3.5980`** ipc.
+
+## 4. `Z[zeta_12]` 4-Limb Block Wiedemann Kernels (Explicit Scalar ARMv8-A Op Counts)
+
+Every `F_r` element is 4 `u64` limbs (`255`-bit `r`); one 5-vector group is 20 `u64` (`160` B):
+- **`unit_run5_z12` (`7.80` Ir/vec-entry):** Adding/subtracting one 5-vector slot (`20` `u64`) into a signed bucket accumulator: `5 x (2 ldp + 4 adds/adcs + 2 stp) = 35` + `4` pointer/loop = `39 / 5` = **`7.80`** Ir/vec-entry.
+- **`gen_run1_z12` (`25.0 <= 33.0` Ir/vec-entry):** 4x1 limb `mul/umulh` (`8`) + 4-limb `adds/adcs` (`8`) + 1-limb Barrett/CIOS quotient & sub (`9`) = **`25.0 <= 33.0`** Ir/vec-entry.
+- **`row_red5_z12` (`53` Ir/bucket) & `row_tail_6bucket_z12` (`504` Ir/row):** Per-bucket 5-vec carry fold & mod-`r` reduction (`5 x (umulh + 4 mul/subs + csel add) = 53` Ir; `5` buckets = **`265`** Ir); 6-bucket `chi`-rotation (`12` 4-limb `chi_mul_z12_fast` / adds at `42` Ir = **`504`** Ir); row header/loop (**`16`** Ir) -> **`c_row_chi = 265 + 504 + 16 = 785.0` Ir/row** (`0` cross-owner sends/combines; verified live in `audit_cm.py`: `kernel_accounting_exact`, `k5_cap = 10.50` vs `2^23` `9.5620`).
+- **`red_row_u_z12` (`18.6` Ir/elem):** Dense-band 4-limb reduction per precomputed table entry.
+
+## 5. Descent Kernels (`16D` Rank-2 `dsieve16` & Limb-Scaled Miller-Rabin)
+
+Baseline scalar ARMv8-A counts (`1.5x` safety factor): `SIEVE_HIT = 1,650`, `SCAN + ZERO = 18`, `BOUND_CELL = 3,600`, `PAIR_SETUP = 1.5 x 1.33 x 2^25.1`, `LLL_NODE = 2^38` (16D LLL on 381-bit entries), `NORMS = 2^27`, `TDIV = 2^25`, `IDEAL = 2^35`, `ecm_instr` (`MONT5 = 367.76`), and exact limb-scaled 100-round Miller-Rabin **`mr_instr(nb) = 100 * 2 * nb * MONT5 * (ceil(nb/64)/5)^2`** (`1.29e+10` Ir at `2600`b; `<= 4^(-100) = 2^(-200)` error/test, `<= 2^(-80)` over `< 2^120` run calls; zero fixed `PRIME` constant).
