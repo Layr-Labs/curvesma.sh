@@ -1,0 +1,981 @@
+"""
+verify_bn254_c6.py — Self-contained pure-stdlib live prototypes for BN254 v5:
+  1. 3-regime Band-3 7D LLL + weighted-cylinder Fincke-Pohst coset-walk prototype spanning h in [6, 105]
+     (0 missed hits + live empirical leaves/hit <= 2.15 & nodes/hit <= exact Gaussian-volume bound);
+  2. Exact 12D C6 special-q (6 bases spanning 2^66..2^213) & 2 boot lattice audit: exact Bareiss dets,
+     exact 6x6 integer resultant norms, exact uniform FULL B_12(4) sampling (13,315,520 cells),
+     direct paired joint smoothness across both sides (R=4..128) & 5-quintile BOOT_BINS;
+  3. Pure-Python production hexagonal Z[omega] filtering simulator at U'=2^13 (with kernel check),
+     U'=2^14, and w_mid=0 conservatism check (W_avg <= 201.0 deterministic pre-merge guard);
+  4. Live 1D-kernel Rank Bridge (`verify_hx_z6`) over Z[omega]: exact H-R, controllability/observability
+     H-X, deficient-O_e failure witness, and projected Block Wiedemann Hankel recovery;
+  5. Live H5 Adaptive Campaign replay (`c6_adaptive.json`, 1,360 roots, 959 after-failure rows, 12/12
+     M-tail checks, 95% root-cluster bootstrap CIs) & THRESHOLD-REPAIR counterexample witness.
+"""
+import bisect, heapq, json, math, random
+from math import ceil, exp, floor, log2, pi, sqrt
+from pathlib import Path
+import model_bn254_c6 as M
+import descent_bn254_c6 as DESC
+
+def verify_7d_walk_prototype():
+    """Live 3-regime 7D Fincke-Pohst coset walk bracketing the full Band-3 density range h in [6, 105]!"""
+    T4 = M.load_data()["t4_geom"]; GB = T4["GB"]
+    def eval_poly_mod(cs, s, p):
+        v = 0
+        for c in reversed(cs): v = (v * s + c) % p
+        return v
+    def eval_zk_mod(vec, s, p):
+        inv3 = pow(3, -1, p); sp = [1]
+        for _ in range(5): sp.append((sp[-1] * s) % p)
+        return (sum(vec[k] * (sum(M.ZK_NUM[k][j] * sp[j] for j in range(6)) % p) for k in range(6) if vec[k]) * inv3) % p
+    def qf6(v): return sum(GB[i][j] * v[i] * v[j] for i in range(6) for j in range(6))
+    def is_prime(n): return n >= 2 and all(n % d for d in range(2, int(n**0.5) + 1))
+
+    L6 = [[0.0] * 6 for _ in range(6)]
+    for r in range(6):
+        for c in range(r + 1):
+            sv = GB[r][c] - sum(L6[r][k] * L6[c][k] for k in range(c))
+            L6[r][c] = sqrt(sv) if r == c else sv / L6[c][c]
+    RB2, wt_t = 85.0, M.FP_WT_T
+    R7_sq = 1.0 + wt_t * wt_t
+    b_all, bv = [], [0] * 6
+    def enum_b(idx, rem):
+        sh = sum(L6[j][idx] * bv[j] for j in range(idx + 1, 6))
+        diag = L6[idx][idx]; rad = sqrt(max(0.0, rem))
+        for x in range(ceil((-rad - sh) / diag - 1e-12), floor((rad - sh) / diag + 1e-12) + 1):
+            d = diag * x + sh; nr = rem - d * d
+            if nr >= -1e-9:
+                bv[idx] = x
+                if idx == 0: b_all.append(tuple(bv))
+                else: enum_b(idx - 1, max(0.0, nr))
+    enum_b(5, RB2 + 1e-9)
+
+    def run_regime(name, p_lo, p_hi, n_id, L_a, cosets):
+        w_ideals = []
+        for p in range(p_lo, p_hi, 2):
+            if not is_prime(p): continue
+            for s in range(p):
+                if eval_poly_mod(M.H_COEFFS, s, p) == 0:
+                    uw = ((M.U_BN254 % p) * eval_poly_mod(M.W_COEFFS, s, p)) % p
+                    if uw == 0: continue
+                    inv_uw = pow(uw, -1, p)
+                    if pow(inv_uw, (p - 1) // 2, p) == 1:
+                        rho_r = next(r for r in range(1, (p + 1) // 2) if (r * r) % p == inv_uw)
+                        w_ideals.append((p, s, rho_r)); break
+            if len(w_ideals) >= n_id: break
+        hits = missed = 0; nodes = [0]; leaves = [0]
+        sc_t = (2.0 / L_a) * wt_t; inv_rb = 1.0 / sqrt(RB2)
+        def to_metric(v):
+            return [sum(L6[j][i] * v[j] for j in range(i, 6)) * inv_rb for i in range(6)] + [v[6] * sc_t]
+        for p, s, rho_r in w_ideals:
+            inv_rho = pow(rho_r, -1, p)
+            zk_s = [eval_zk_mod([1 if j == k else 0 for j in range(6)], s, p) for k in range(6)]
+            B7 = [[0] * 7 for _ in range(7)]; B7[0][0] = p
+            for k in range(1, 6): B7[k][k] = 1; B7[k][0] = (-zk_s[k]) % p
+            B7[6][6] = 1; B7[6][0] = inv_rho % p
+            Bs = [[round(1000 * x) for x in to_metric(row)] for row in B7]
+            Bi = [row[:] for row in B7]
+            def gs7():
+                Bo, mu, Bn = [], [[0.0] * 7 for _ in range(7)], [0.0] * 7
+                for i in range(7):
+                    v = [float(x) for x in Bs[i]]
+                    for j in range(i):
+                        mu[i][j] = sum(Bs[i][k] * Bo[j][k] for k in range(7)) / Bn[j]
+                        v = [v[k] - mu[i][j] * Bo[j][k] for k in range(7)]
+                    Bo.append(v); Bn[i] = sum(x * x for x in v)
+                return Bo, mu, Bn
+            Bo, mu, Bn = gs7(); k = 1
+            while k < 7:
+                for j in range(k - 1, -1, -1):
+                    q = round(mu[k][j])
+                    if q:
+                        Bi[k] = [Bi[k][i] - q * Bi[j][i] for i in range(7)]
+                        Bs[k] = [Bs[k][i] - q * Bs[j][i] for i in range(7)]
+                        Bo, mu, Bn = gs7()
+                if Bn[k] >= (0.99 - mu[k][k - 1] ** 2) * Bn[k - 1]: k += 1
+                else:
+                    Bi[k], Bi[k - 1] = Bi[k - 1], Bi[k]; Bs[k], Bs[k - 1] = Bs[k - 1], Bs[k]; Bo, mu, Bn = gs7(); k = max(k - 1, 1)
+            Mmat = [to_metric(row) for row in Bi]
+            Bo, mu, Bn = [], [[0.0] * 7 for _ in range(7)], [0.0] * 7
+            for i in range(7):
+                v = Mmat[i][:]
+                for j in range(i):
+                    mu[i][j] = sum(Mmat[i][k] * Bo[j][k] for k in range(7)) / Bn[j]
+                    v = [v[k] - mu[i][j] * Bo[j][k] for k in range(7)]
+                Bo.append(v); Bn[i] = sum(x * x for x in v)
+            for a0_mod in cosets:
+                rhs_mod = (a0_mod * inv_rho) % p
+                td = to_metric([-rhs_mod, 0, 0, 0, 0, 0, 0.5 * L_a])
+                c_gs = [sum(td[k] * Bo[j][k] for k in range(7)) / Bn[j] for j in range(7)]
+                found, x = set(), [0] * 7
+                def fp7(idx, rem):
+                    nodes[0] += 1
+                    sh = c_gs[idx] - sum(mu[j][idx] * x[j] for j in range(idx + 1, 7))
+                    rad = sqrt(max(0.0, rem / Bn[idx]))
+                    for xi in range(ceil(sh - rad - 1e-9), floor(sh + rad + 1e-9) + 1):
+                        d = xi - sh; nr = rem - d * d * Bn[idx]
+                        if nr >= -1e-9:
+                            x[idx] = xi
+                            if idx == 0:
+                                leaves[0] += 1
+                                w = [rhs_mod + sum(x[i] * Bi[i][0] for i in range(7))] + [sum(x[i] * Bi[i][k] for i in range(7)) for k in range(1, 7)]
+                                if 0 <= w[6] < L_a and qf6(w[:6]) <= RB2 + 1e-9:
+                                    found.add(tuple(w))
+                            else:
+                                fp7(idx - 1, max(0.0, nr))
+                fp7(6, R7_sq + 1e-7)
+                gt = set()
+                for b in b_all:
+                    bs = sum(b[k] * zk_s[k] for k in range(6)) % p
+                    t = ((bs - rhs_mod) * rho_r) % p
+                    if t < L_a: gt.add(b + (t,))
+                hits += len(gt); missed += len(gt ^ found)
+        h_emp = hits / max(1, len(w_ideals) * len(cosets))
+        lph = leaves[0] / max(1, hits); nph = nodes[0] / max(1, hits)
+        g_bound = M.fp7_gauss_nph(h_emp)
+        return dict(
+            name=name, n_ideals=len(w_ideals), cosets=len(cosets), hits=hits, missed=missed,
+            h_emp=round(h_emp, 2), leaves_per_hit=round(lph, 4), nodes_per_hit=round(nph, 4),
+            gauss_nodes_bound=round(g_bound, 4), ratio_to_gauss=round(nph / g_bound, 3),
+            ok=(missed == 0 and hits > 0 and lph <= M.FP_LEAVES_PER_HIT and nph <= g_bound),
+        )
+
+    regimes = [
+        run_regime("sparse_band3_hi", 10007, 18000, 6, 32, (0, 17, 123, 311, 509)),
+        run_regime("mid_band3",        2503,  5000, 6, 32, (0, 17, 123)),
+        run_regime("dense_band3_lo",   1009,  3000, 6, 68, (0, 17, 123)),
+    ]
+    return dict(
+        ok=all(r["ok"] for r in regimes),
+        vr_exact=round(M.fp7_vr(), 6),
+        bound_leaves_per_hit=M.FP_LEAVES_PER_HIT,
+        total_hits=sum(r["hits"] for r in regimes),
+        total_missed=sum(r["missed"] for r in regimes),
+        regimes=regimes,
+    )
+
+def verify_12d_descent_lattices():
+    """Live audit of 6 special-q (2^66..2^213) & 2 boot 12D lattices: exact dets, 6x6 integer norms,
+    full QBINS/QBINS_LO/QBINS_SUB + R=16..128 + BOOT_BINS/BOOT_SUB B_12(4) stochastic dominance & CV^2!"""
+    D = M.load_data(); T4 = D["t4_geom"]; B12 = D["descent"]["bases_12d"]
+    EMB_ZK = [[complex(r, im) for r, im in row] for row in T4["EMB_ZK"]]
+    EMB_W = [complex(r, im) for r, im in T4["EMB_W"]]
+    EMB_F = {d: [sum(cs[k] * (EMB_ZK[j][1] ** k) for k in range(6)) for j in range(3)] for d, cs in M.F_REC_COEFFS.items()}
+    LOG2U6, LOG2P6 = 6.0 * log2(M.U_BN254), 6.0 * log2(M.P_BN254)
+
+    def det_int(Mat):
+        n = len(Mat); A = [row[:] for row in Mat]; sign = 1; prev = 1
+        for k in range(n - 1):
+            if A[k][k] == 0:
+                piv = next((r for r in range(k + 1, n) if A[r][k] != 0), -1)
+                if piv < 0: return 0
+                A[k], A[piv] = A[piv], A[k]; sign = -sign
+            piv = A[k][k]
+            for i in range(k + 1, n):
+                for j in range(k + 1, n):
+                    A[i][j] = (A[i][j] * piv - A[i][k] * A[k][j]) // prev
+            prev = piv
+        return sign * A[n - 1][n - 1]
+    def pmul_h_int(a, b):
+        res = [0] * 11
+        for i in range(6):
+            if a[i]:
+                for j in range(6): res[i + j] += a[i] * b[j]
+        for k in range(10, 5, -1):
+            c = res[k]
+            if c:
+                res[k] = 0
+                for j in range(6): res[k - 6 + j] -= c * M.H_COEFFS[j]
+        return res[:6]
+    def exact_norm_q(poly_num, denom):
+        cols, cur = [], poly_num[:]
+        for j in range(6):
+            cols.append(cur)
+            if j < 5:
+                nxt = [0] + cur[:5]; c = cur[5]
+                if c:
+                    for k in range(6): nxt[k] -= c * M.H_COEFFS[k]
+                cur = nxt
+        d = abs(det_int([[cols[c][r] for c in range(6)] for r in range(6)]))
+        assert d % (denom ** 6) == 0
+        return d // (denom ** 6)
+    def exact_int_norms(a, b):
+        an = [sum(a[k] * M.ZK_NUM[k][j] for k in range(6)) for j in range(6)]
+        bn = [sum(b[k] * M.ZK_NUM[k][j] for k in range(6)) for j in range(6)]
+        an2, bn2 = pmul_h_int(an, an), pmul_h_int(bn, bn)
+        wan2 = pmul_h_int(M.W_COEFFS, an2)
+        ng = exact_norm_q([M.U_BN254 * wan2[j] - bn2[j] for j in range(6)], 9)
+        a2p = [[1,0,0,0,0,0], an2]; b2p = [[1,0,0,0,0,0], bn2]
+        for _ in range(3):
+            a2p.append(pmul_h_int(a2p[-1], an2)); b2p.append(pmul_h_int(b2p[-1], bn2))
+        fnum = [0] * 6
+        for deg_a, cs in M.F_REC_COEFFS.items():
+            k = deg_a // 2
+            term = pmul_h_int(pmul_h_int(cs, a2p[k]), b2p[4 - k])
+            for j in range(6): fnum[j] += term[j]
+        nf = exact_norm_q(fnum, 3 ** 8)
+        return nf, ng
+    def eval_zk_mod(vec, s, mod):
+        inv3 = pow(3, -1, mod); sp = [1]
+        for _ in range(5): sp.append((sp[-1] * s) % mod)
+        return (sum(vec[k] * (sum(M.ZK_NUM[k][j] * sp[j] for j in range(6)) % mod) for k in range(6) if vec[k]) * inv3) % mod
+    def zk_to_poly_mod(vec, mod):
+        inv3 = pow(3, -1, mod)
+        return [(sum(vec[k] * M.ZK_NUM[k][j] for k in range(6)) * inv3) % mod for j in range(6)]
+    def log2_norms_fp(a, b, need_f=True):
+        lf = lg = 0.0
+        mx = max(max(abs(x) for x in a), max(abs(x) for x in b), 1)
+        sh = max(0, mx.bit_length() - 40); sc = float(1 << sh)
+        af = [x / sc for x in a]; bf = [x / sc for x in b]
+        for j in range(3):
+            za = sum(EMB_ZK[j][k] * af[k] for k in range(6))
+            zb = sum(EMB_ZK[j][k] * bf[k] for k in range(6))
+            gv = M.U_BN254 * EMB_W[j] * za * za - zb * zb
+            lg += log2(gv.real**2 + gv.imag**2) + 4.0 * sh
+            if need_f:
+                za2, zb2 = za * za, zb * zb
+                fv = (EMB_F[8][j]*(za2**4) + EMB_F[6][j]*(za2**3)*zb2 + EMB_F[4][j]*(za2**2)*(zb2**2)
+                      + EMB_F[2][j]*za2*(zb2**3) + EMB_F[0][j]*(zb2**4))
+                lf += log2(fv.real**2 + fv.imag**2) + 16.0 * sh
+        return lf, lg
+
+    S_R4 = log2(D["descent"]["cells"]["4"])
+    # Exact uniform sampler over the FULL discrete 12D ball B_12(4) = {c in Z^12 \ {0} : ||c||_2^2 <= 16}
+    # (including coordinates |c_i| in {3, 4}!), verifying exact cardinality tot_pts // 2 == CELLS[4] = 13,315,520!
+    fact12 = [math.factorial(i) for i in range(13)]
+    b12_parts = []
+    for n4 in range(2):
+        for n3 in range(2):
+            for n2 in range(5):
+                rem = 16 - 16 * n4 - 9 * n3 - 4 * n2
+                if rem < 0: continue
+                for n1 in range(min(rem, 12 - n4 - n3 - n2) + 1):
+                    k = n1 + n2 + n3 + n4
+                    if k == 0: continue
+                    w = (fact12[12] // (fact12[12 - k] * fact12[n1] * fact12[n2] * fact12[n3] * fact12[n4])) * (1 << k)
+                    b12_parts.append((w, (n1, n2, n3, n4)))
+    b12_cum, b12_tot = [], 0
+    for w, _ in b12_parts: b12_tot += w; b12_cum.append(b12_tot)
+    cells4_exact_ok = (b12_tot // 2 == D["descent"]["cells"]["4"])
+    def sample_b12_r4(rng_loc):
+        idx = bisect.bisect_left(b12_cum, rng_loc.randrange(b12_tot) + 1)
+        n1, n2, n3, n4 = b12_parts[idx][1]
+        vals = [1]*n1 + [2]*n2 + [3]*n3 + [4]*n4 + [0]*(12 - n1 - n2 - n3 - n4)
+        rng_loc.shuffle(vals)
+        return [v * (1 if rng_loc.getrandbits(1) else -1) if v else 0 for v in vals]
+
+    rng = random.Random(42)
+    sq_ok = True; side_div_ok = True; max_exact_err = 0.0
+    q_bits_list = []; q_sides_list = []; paired_ratios = []; hiR_ratios = []
+    all_cfs_r4, all_cgs_r4 = [], []
+    for item in B12["special_q"]:
+        side = item["side"]; q, s, rho_r = int(item["q"]), int(item["s"]), int(item["rho"])
+        bq = q.bit_length(); q_bits_list.append(bq); q_sides_list.append(side); B = item["B"]
+        if abs(det_int(B)) != q: sq_ok = False
+        for col in range(12):
+            av = [B[r][col] for r in range(6)]; bv = [B[6 + r][col] for r in range(6)]
+            if (eval_zk_mod(av, s, q) - rho_r * eval_zk_mod(bv, s, q)) % q != 0: sq_ok = False
+        v0 = [B[r][0] + B[r][1] for r in range(12)]
+        nf_int, ng_int = exact_int_norms(v0[:6], v0[6:])
+        if (nf_int % q != 0) if side == "f" else (ng_int % q != 0): side_div_ok = False
+        lf_f, lg_f = log2_norms_fp(v0[:6], v0[6:], True)
+        max_exact_err = max(max_exact_err, abs(log2(nf_int) - lf_f), abs(log2(ng_int) - lg_f))
+        c_r4 = (log2(q) + S_R4) / 12.0
+        sub_f = bq if side == "f" else 0.0; sub_g = bq if side == "g" else 0.0
+        mod_q_r4 = sum(w * M.rho((48.0 * c_r4 + cf - sub_f) / 59.0) * M.rho((12.0 * c_r4 + LOG2U6 + cg - sub_g) / 59.0) for w, cf, cg in DESC.QBINS)
+        emp_q_r4 = []
+        for _ in range(120):
+            x = sample_b12_r4(rng)
+            v = [sum(B[r][c] * x[c] for c in range(12)) for r in range(12)]
+            lf, lg = log2_norms_fp(v[:6], v[6:], True)
+            all_cfs_r4.append(lf - 48.0 * c_r4); all_cgs_r4.append(lg - 12.0 * c_r4 - LOG2U6)
+            emp_q_r4.append(M.rho((lf - sub_f) / 59.0) * M.rho((lg - sub_g) / 59.0))
+        paired_ratios.append(round((sum(emp_q_r4) / len(emp_q_r4)) / max(mod_q_r4, 1e-300), 2))
+        # Large-radius R in {16, 64, 128} paired joint smoothness diagnostic on the active side
+        for R_big in (16, 64, 128):
+            S_Rb = log2((pi ** 6 / 720.0) * (R_big ** 12))
+            c_rb = (log2(q) + S_Rb) / 12.0
+            mod_rb = sum(w * M.rho((48.0 * c_rb + cf - sub_f) / 59.0) * M.rho((12.0 * c_rb + LOG2U6 + cg - sub_g) / 59.0) for w, cf, cg in DESC.QBINS)
+            emp_rb = []
+            for _ in range(15):
+                gv = [rng.gauss(0.0, 1.0) for _ in range(12)]
+                gn = sqrt(sum(z * z for z in gv))
+                rad = R_big * (rng.random() ** (1.0 / 12.0))
+                x = [int(round(z * rad / gn)) for z in gv]
+                if not any(x): x[0] = 1
+                v = [sum(B[r][c] * x[c] for c in range(12)) for r in range(12)]
+                lf, lg = log2_norms_fp(v[:6], v[6:], True)
+                emp_rb.append(M.rho((lf - sub_f) / 59.0) * M.rho((lg - sub_g) / 59.0))
+            hiR_ratios.append((sum(emp_rb) / len(emp_rb)) / max(mod_rb, 1e-300))
+
+    all_cfs_r4.sort(); all_cgs_r4.sort()
+    qbins_lo_ok = all(
+        all_cfs_r4[min(len(all_cfs_r4)-1, floor((k/6.0)*len(all_cfs_r4)))] >= DESC.QBINS_LO[k][0] and
+        all_cgs_r4[min(len(all_cgs_r4)-1, floor((k/6.0)*len(all_cgs_r4)))] >= DESC.QBINS_LO[k][1]
+        for k in range(6)
+    )
+    paired_all_beat = all(r >= 1.0 for r in paired_ratios)
+    hiR_paired_ok = (min(hiR_ratios) >= 1.0)
+
+    # Boot lattices: exact det + congruence + 400 exact uniform FULL B_12(4) cells vs PURE 5-quintile BOOT_BINS!
+    boot_ok = True; boot_offs = []; boot_ge3 = 0
+    for item in B12["boot"]:
+        R_p = [int(x) for x in item["R"]]; B = item["B"]
+        if abs(det_int(B)) != M.P_BN254 ** 6: boot_ok = False
+        for col in range(12):
+            av = [B[r][col] for r in range(6)]; bv = [B[6 + r][col] for r in range(6)]
+            if M._pmul_h(R_p, zk_to_poly_mod(av, M.P_BN254), M.P_BN254) != zk_to_poly_mod(bv, M.P_BN254): boot_ok = False
+        for _ in range(200):
+            x = sample_b12_r4(rng)
+            if max(abs(z) for z in x) >= 3: boot_ge3 += 1
+            v = [sum(B[r][c] * x[c] for c in range(12)) for r in range(12)]
+            _, lg = log2_norms_fp(v[:6], v[6:], False)
+            boot_offs.append(lg - LOG2P6 - S_R4 - LOG2U6)
+    c_b = (LOG2P6 + S_R4) / 12.0
+    emp_boot_sm = sum(M.rho((12.0 * c_b + LOG2U6 + o) / 110.0) for o in boot_offs) / len(boot_offs)
+    mod_boot_sm = sum(w * M.rho((12.0 * c_b + LOG2U6 + cg) / 110.0) for w, cg in DESC.BOOT_BINS)
+    boot_offs.sort()
+    boot_quintiles_ok = all(
+        boot_offs[min(len(boot_offs)-1, ceil(((k+1)/5.0)*len(boot_offs))-1)] <= DESC.BOOT_BINS[k][1]
+        for k in range(5)
+    )
+    boot_lo_ok = (boot_offs[0] >= DESC.BOOT_LO_OFF)
+
+    diag_ok = (cells4_exact_ok and side_div_ok and max_exact_err < 1e-8 and paired_all_beat and qbins_lo_ok and hiR_paired_ok
+               and boot_quintiles_ok and boot_lo_ok and emp_boot_sm >= mod_boot_sm and boot_ge3 > 0)
+    return dict(
+        ok=(sq_ok and boot_ok and diag_ok),
+        cells4_exact_cardinality_ok=cells4_exact_ok,
+        special_q_count=len(B12["special_q"]), special_q_sides=q_sides_list, special_q_bits=q_bits_list,
+        exact_side_divisibility_ok=side_div_ok,
+        boot_count=len(B12["boot"]), boot_r4_samples=len(boot_offs), boot_samples_with_coord_ge3=boot_ge3,
+        special_q_det_and_mem_ok=sq_ok, boot_det_and_mem_ok=boot_ok,
+        exact_int_vs_fp_max_err_bits=round(max_exact_err, 12),
+        paired_joint_smooth_ratios_r4=paired_ratios,
+        hi_radius_R16_128_min_paired_ratio=round(min(hiR_ratios), 2),
+        qbins_lo_6_of_6_ok=qbins_lo_ok,
+        boot_5_quintiles_ok=boot_quintiles_ok, boot_lo_bound_ok=boot_lo_ok,
+        boot_smooth_ratio_L110=round(emp_boot_sm / max(mod_boot_sm, 1e-300), 2),
+        boot_r4_min_off=round(boot_offs[0], 2),
+        boot_r4_med_off=round(boot_offs[len(boot_offs)//2], 2),
+        boot_r4_max_off=round(boot_offs[-1], 2),
+    )
+
+def verify_live_filtsim_z6(log2U=13, seed=20261120, W_target=200, check_kernel=False, zero_w_mid=False):
+    """Exact pure-Python production hexagonal Z[omega] filtering simulator:
+    Dickman-kappa occurrence profile at (Lf=60, Lg=59, Nf=405.5, Ng=468.7, exc=0.95),
+    singleton + union-find clique purge, Markowitz merge to W=200, Boudot recorded pivots,
+    and dense-band TABM grouping — measuring ALL FOUR cap metrics (N_sw/U', N_l/U', k5_exp, tab_r) live!"""
+    rng = random.Random(seed)
+    LN2 = math.log(2.0)
+    Lf, Lg, Nf, Ng, excess = 60.0, 59.0, 405.5, 468.7, 0.95
+    U6 = ((1, 0), (0, 1), (-1, 1), (-1, 0), (0, -1), (1, -1))
+    U6_INV = {(1, 0): (1, 0), (0, 1): (1, -1), (-1, 1): (0, -1), (-1, 0): (-1, 0), (0, -1): (-1, 1), (1, -1): (0, 1)}
+    def z6_mul(x, y): return (x[0]*y[0] - x[1]*y[1], x[0]*y[1] + x[1]*y[0] + x[1]*y[1])
+    def z6_decomp(a, b):
+        if (a >= 0 and b >= 0) or (a <= 0 and b <= 0): return (a, b, 0)
+        if abs(a) <= abs(b): return (0, a + b, -a)
+        return (a + b, 0, b)
+    def z6_npt(v):
+        x, y, z = z6_decomp(v[0], v[1])
+        return (x != 0) + (y != 0) + (z != 0)
+    def z6_n1(v):
+        x, y, z = z6_decomp(v[0], v[1])
+        return abs(x) + abs(y) + abs(z)
+    def z6_mx(v):
+        x, y, z = z6_decomp(v[0], v[1])
+        return max(abs(x), abs(y), abs(z))
+    def z6_is_unit(v): return v in U6_INV
+
+    uf, ug = Nf / Lf, Ng / Lg
+    LiBf = (2.0 ** Lf) / (Lf * LN2); LiBg = (2.0 ** Lg) / (Lg * LN2)
+    LiB_sum = LiBf + LiBg; frac_f = LiBf / LiB_sum
+    Up = 1 << log2U
+    Up_f = int(round(Up * frac_f)); Up_g = Up - Up_f
+    Rp = int(round(excess * Up))
+    t_dense = 0.80
+    lsmall = min(t_dense * min(Lf, Lg), max(8.0, log2(Rp / 25.0) + log2(3.0)))
+
+    plim = int(floor(2.0 ** lsmall))
+    sieve = bytearray(b'\x01') * (plim + 1)
+    sieve[0:2] = b'\x00\x00'
+    for i in range(2, int(plim ** 0.5) + 1):
+        if sieve[i]: sieve[i*i:plim+1:i] = b'\x00' * (((plim - i*i) // i) + 1)
+    ps = [i for i in range(2, plim + 1) if sieve[i]]
+    nsmall_side = (len(ps) + 5) // 6
+    U = Up + 2 * nsmall_side
+
+    nt = 400
+    ts = [t_dense + (1.0 - t_dense) * (i + 0.5) / nt for i in range(nt)]
+    cum_f, cum_g = [], []
+    tf = tg = 0.0
+    for t in ts:
+        tf += (2.0 ** (Lf * (t - 1.0))) / t; tg += (2.0 ** (Lg * (t - 1.0))) / t
+        cum_f.append(tf); cum_g.append(tg)
+    cum_f = [x / tf for x in cum_f]; cum_g = [x / tg for x in cum_g]
+
+    kap_f = [M.kappa_rho(uf, t) for t in ts]; kap_g = [M.kappa_rho(ug, t) for t in ts]
+    w = [0.0] * U; col_log2p = [0.0] * U; cid = 0; dt_cell = (1.0 - t_dense) / nt
+    for _ in range(Up_f):
+        idx = min(nt - 1, bisect.bisect_left(cum_f, rng.random()))
+        t = ts[idx] + (rng.random() - 0.5) * dt_cell
+        lam = excess * LiB_sum * kap_f[idx] / (2.0 ** (Lf * t))
+        w[cid] = min(1.0, lam / Rp); col_log2p[cid] = Lf * t; cid += 1
+    for _ in range(Up_g):
+        idx = min(nt - 1, bisect.bisect_left(cum_g, rng.random()))
+        t = ts[idx] + (rng.random() - 0.5) * dt_cell
+        lam = excess * LiB_sum * kap_g[idx] / (2.0 ** (Lg * t))
+        w[cid] = min(1.0, lam / Rp); col_log2p[cid] = Lg * t; cid += 1
+
+    small = []
+    for u_s, L_s in ((uf, Lf), (ug, Lg)):
+        for i in range(0, len(ps), 6):
+            q = ps[i]; t = log2(q) / L_s
+            pr = min(1.0, 6.0 * M.kappa_rho(u_s, t) / q)
+            w[cid] = pr; col_log2p[cid] = log2(q); small.append((cid, pr, q)); cid += 1
+
+    w_mid = w_mid_28 = 0.0
+    if not zero_w_mid:
+        for u_s, L_s in ((uf, Lf), (ug, Lg)):
+            tmin = lsmall / L_s; dt = (t_dense - tmin) / 200.0
+            for i in range(200):
+                t = tmin + dt * (i + 0.5); dw = M.kappa_rho(u_s, t) * dt / t
+                w_mid += dw
+                if L_s * t <= 28.0: w_mid_28 += dw
+
+    dense = [i for i in range(Up) if w[i] >= 0.2]
+    sparse = [i for i in range(Up) if w[i] < 0.2]
+    scum = []; stot = 0.0
+    for i in sparse: stot += w[i]; scum.append(stot)
+
+    def pois(lam):
+        if lam < 30.0:
+            L = exp(-lam); p = 1.0; k = 0
+            while True:
+                p *= rng.random()
+                if p <= L: return k
+                k += 1
+        return max(0, int(round(lam + sqrt(lam) * rng.gauss(0.0, 1.0))))
+
+    P_CHK = 1000000009
+    chi = next(x for g in range(2, 50) for x in [pow(g, (P_CHK - 1) // 6, P_CHK)] if (x * x - x + 1) % P_CHK == 0)
+    def z6_eval(v): return (v[0] + v[1] * chi) % P_CHK
+    v_sec = [rng.randrange(1, P_CHK) for _ in range(U)] if check_kernel else None
+
+    rows = []; col_rows = [set() for _ in range(U)]
+    for ri in range(Rp):
+        d = {}
+        for c in dense:
+            if rng.random() < w[c]:
+                u = U6[rng.randrange(6)]
+                nv = (d[c][0] + u[0], d[c][1] + u[1]) if c in d else u
+                if nv == (0, 0): del d[c]
+                else: d[c] = nv
+        for _ in range(pois(stot)):
+            c = sparse[min(len(sparse) - 1, bisect.bisect_left(scum, rng.random() * stot))]
+            u = U6[rng.randrange(6)]
+            nv = (d[c][0] + u[0], d[c][1] + u[1]) if c in d else u
+            if nv == (0, 0): del d[c]
+            else: d[c] = nv
+        for c, pr, q in small:
+            if rng.random() < pr:
+                v = 1; invq = 1.0 / q
+                while rng.random() < invq: v += 1
+                u = U6[rng.randrange(6)]; mv = (v * u[0], v * u[1])
+                nv = (d[c][0] + mv[0], d[c][1] + mv[1]) if c in d else mv
+                if nv == (0, 0): del d[c]
+                else: d[c] = nv
+        rw = w_mid + sum(z6_npt(v) for v in d.values())
+        rhs = (-sum(z6_eval(val) * v_sec[c] for c, val in d.items())) % P_CHK if check_kernel else 0
+        rows.append([d, 1, w_mid, w_mid, rw, True, rhs])
+        for c in d: col_rows[c].add(ri)
+
+    def purge_singletons(nalive):
+        q_s = [c for c in range(U) if len(col_rows[c]) == 1]
+        while q_s:
+            c = q_s.pop()
+            if len(col_rows[c]) != 1: continue
+            r0 = next(iter(col_rows[c]))
+            if not rows[r0][5]: continue
+            rows[r0][5] = False; nalive -= 1
+            for cc in rows[r0][0]:
+                col_rows[cc].discard(r0)
+                if len(col_rows[cc]) == 1: q_s.append(cc)
+            rows[r0][0].clear()
+        return nalive
+
+    nalive = purge_singletons(Rp)
+    ncols = sum(1 for c in range(U) if col_rows[c])
+    texc = max(2, int(0.0001 * Up))
+    while nalive - ncols > texc:
+        par = list(range(Rp))
+        def find(x):
+            while par[x] != x: par[x] = par[par[x]]; x = par[x]
+            return x
+        for c in range(U):
+            if len(col_rows[c]) == 2:
+                r1, r2 = col_rows[c]
+                a, b = find(r1), find(r2)
+                if a != b: par[a] = b
+        comp_w = {}
+        for i in range(Rp):
+            if rows[i][5]:
+                rt = find(i); comp_w[rt] = comp_w.get(rt, 0.0) + rows[i][4]
+        comps = sorted(comp_w.items(), key=lambda kv: -kv[1])
+        need = nalive - ncols - texc
+        nb = max(1, min(need // 2 + 1, max(1, len(comps) // 100)))
+        kill = {rt for rt, _ in comps[:nb]}
+        for i in range(Rp):
+            if rows[i][5] and find(i) in kill:
+                rows[i][5] = False; nalive -= 1
+                for cc in rows[i][0]: col_rows[cc].discard(i)
+                rows[i][0].clear()
+        nalive = purge_singletons(nalive)
+        ncols = sum(1 for c in range(U) if col_rows[c])
+
+    kmax, cmax = 64, 255
+    totw = sum(rows[i][4] for i in range(Rp) if rows[i][5])
+    def col_key(c):
+        wgt = len(col_rows[c])
+        if wgt <= 2: return float(wgt - 3)
+        best = 1e18
+        for r in col_rows[c]:
+            if z6_is_unit(rows[r][0][c]) and rows[r][4] < best: best = rows[r][4]
+        return float(wgt - 2) * best
+    heap = [(col_key(c), c) for c in range(U) if 1 <= len(col_rows[c]) <= kmax]
+    heapq.heapify(heap)
+    merges = 0
+    while heap and (totw / max(1, nalive)) < W_target:
+        key, c = heapq.heappop(heap)
+        wgt = len(col_rows[c])
+        if wgt == 0 or wgt > kmax: continue
+        ck = col_key(c)
+        if ck > key + 1e-9: heapq.heappush(heap, (ck, c)); continue
+        if wgt == 1:
+            r0 = next(iter(col_rows[c]))
+            rows[r0][5] = False; nalive -= 1; totw -= rows[r0][4]
+            for cc in rows[r0][0]:
+                col_rows[cc].discard(r0)
+                if 1 <= len(col_rows[cc]) <= kmax: heapq.heappush(heap, (col_key(cc), cc))
+            rows[r0][0].clear(); continue
+        piv = -1; best_rw = 1e18
+        for r in col_rows[c]:
+            if z6_is_unit(rows[r][0][c]) and rows[r][4] < best_rw: best_rw = rows[r][4]; piv = r
+        if piv < 0: continue
+        pr = rows[piv]; pd = pr[0]; pc_inv = U6_INV[pd[c]]
+        snap = [r for r in col_rows[c] if r != piv]
+        ok = True; delta_w = -pr[4]
+        for i in snap:
+            ri = rows[i]; m = z6_mul(ri[0][c], pc_inv); mnpt = z6_npt(m)
+            if ri[1] + z6_n1(m) * pr[1] > cmax: ok = False; break
+            delta_w += pr[2] if mnpt == 1 else mnpt * pr[3]
+            rd = ri[0]
+            for cb, pb in pd.items():
+                ov = rd.get(cb); mp = z6_mul(m, pb)
+                nv = (-mp[0], -mp[1]) if ov is None else (ov[0] - mp[0], ov[1] - mp[1])
+                if z6_mx(nv) > cmax: ok = False; break
+                delta_w += z6_npt(nv) - (0 if ov is None else z6_npt(ov))
+            if not ok: break
+        if not ok: continue
+        # Exact deterministic post-merge weight guard: never commit a merge pushing avg_w > W_ROW (201.0)!
+        if (totw + delta_w) > M.W_ROW * max(1, nalive - 1):
+            break
+        for i in snap:
+            ri = rows[i]; rd = ri[0]; m = z6_mul(rd[c], pc_inv); mnpt = z6_npt(m)
+            ri[1] += z6_n1(m) * pr[1]
+            dm = pr[2] if mnpt == 1 else mnpt * pr[3]
+            ri[2] += dm; ri[3] += pr[3]; totw += dm
+            if check_kernel: ri[6] = (ri[6] - z6_eval(m) * pr[6]) % P_CHK
+            for cb, pb in pd.items():
+                ov = rd.get(cb); mp = z6_mul(m, pb)
+                if ov is None:
+                    nv = (-mp[0], -mp[1]); rd[cb] = nv; col_rows[cb].add(i); totw += z6_npt(nv)
+                else:
+                    nv = (ov[0] - mp[0], ov[1] - mp[1]); totw += z6_npt(nv) - z6_npt(ov)
+                    if nv == (0, 0):
+                        del rd[cb]; col_rows[cb].discard(i)
+                        if 1 <= len(col_rows[cb]) <= kmax: heapq.heappush(heap, (col_key(cb), cb))
+                    else: rd[cb] = nv
+            ri[4] = ri[2] + sum(z6_npt(v) for v in rd.values())
+            for cb in rd:
+                if len(col_rows[cb]) <= kmax: heapq.heappush(heap, (col_key(cb), cb))
+            merges += 1
+        pr[5] = False; nalive -= 1; totw -= pr[4]
+        for cc in pd:
+            col_rows[cc].discard(piv)
+            if 1 <= len(col_rows[cc]) <= kmax: heapq.heappush(heap, (col_key(cc), cc))
+        pd.clear()
+
+    alive = [i for i in range(Rp) if rows[i][5]]
+    N_sw = len(alive)
+    kern_errs = 0
+    if check_kernel:
+        for r in alive:
+            if (sum(z6_eval(val) * v_sec[c] for c, val in rows[r][0].items()) + rows[r][6]) % P_CHK != 0:
+                kern_errs += 1
+    occ = sorted([(len(col_rows[c]), c) for c in range(Up) if col_rows[c]])
+    dc = {}; lab = {}; mn = {}; nrec = 0
+    for _, c in occ:
+        hi = mn.get(c, 1.0)
+        cands = sorted([(rows[r][4], r) for r in col_rows[c] if r not in dc and z6_is_unit(rows[r][0][c])])
+        for _, r in cands:
+            lo = 0.0
+            for x in rows[r][0]:
+                if x != c and x in lab and lab[x] > lo: lo = lab[x]
+            v = lo + 0.5 * (hi - lo)
+            if lo < v < hi:
+                dc[r] = c; lab[c] = v; nrec += 1
+                for x in rows[r][0]:
+                    if x != c and mn.get(x, 1.0) > v: mn[x] = v
+                break
+    N_l = N_sw - nrec
+    U5, G1 = M.C_UNIT_5, M.C_GEN_1
+    exp_terms = exp_ones = tab_plain = tab_grp = 0.0
+    mid28_frac = w_mid_28 / max(w_mid, 1e-12)
+    for r in alive:
+        piv_c = dc.get(r, -1); nb4 = nb3 = nb2 = 0; rplain = 0.0
+        for c, val in rows[r][0].items():
+            lp = col_log2p[c]; is_p = (c == piv_c)
+            for t in z6_decomp(val[0], val[1]):
+                v = abs(t)
+                if v == 0: continue
+                exp_terms += 1.0
+                if v == 1: exp_ones += 1.0
+                tc = (U5 * v) if v <= 4 else G1
+                if not is_p:
+                    rplain += tc
+                    if v <= 4 and lp <= 28.0:
+                        if lp <= 14.0: nb4 += v
+                        elif lp <= 18.25: nb3 += v
+                        else: nb2 += v
+        u_cols = rows[r][3]; rplain += u_cols * U5
+        if mid28_frac > 0.0 and u_cols > 0.0: nb2 += pois(u_cols * mid28_frac)
+        g4 = nb4 // 4; rem4 = nb4 - 4 * g4
+        n3 = nb3 + rem4; g3 = n3 // 3; rem3 = n3 - 3 * g3
+        g2 = (nb2 + rem3) // 2
+        saved = (3 * g4 + 2 * g3 + g2) * U5
+        tab_plain += rplain; tab_grp += (rplain - saved)
+    exp_unit = exp_ones / max(exp_terms, 1.0)
+    k5_exp = exp_unit * U5 + (1.0 - exp_unit) * G1
+    tab_r = tab_grp / max(tab_plain, 1e-12)
+    avg_w_fin = totw / max(1, N_sw)
+    return dict(
+        ok=(kern_errs == 0 and N_sw > 0 and N_l > 0 and merges > 0 and avg_w_fin <= M.W_ROW and tab_r < M.TAB_R_CAP),
+        log2U=log2U, seed=seed, W_target=W_target, initial_rows=Rp,
+        N_sw=N_sw, N_l=N_l, N_sw_U=round(N_sw / Up, 6), N_l_U=round(N_l / Up, 6),
+        avg_w=round(avg_w_fin, 2), merges=merges,
+        exp_unit=round(exp_unit, 5), k5_exp=round(k5_exp, 4), tab_r=round(tab_r, 5),
+        kernel_errors=kern_errs,
+    )
+
+def verify_live_filtsim_ladder(seed=20261120):
+    """Run exact production filtsim_z6 live at U'=2^13 (kernel check), U'=2^14, and U'=2^13 (w_mid=0)!"""
+    r13 = verify_live_filtsim_z6(log2U=13, seed=seed, check_kernel=True)
+    r14 = verify_live_filtsim_z6(log2U=14, seed=seed, check_kernel=False)
+    r13_0 = verify_live_filtsim_z6(log2U=13, seed=seed, check_kernel=False, zero_w_mid=True)
+    mono = (r14["N_sw_U"] < r13["N_sw_U"] and r14["N_l_U"] < r13["N_l_U"] and
+            r14["k5_exp"] < r13["k5_exp"] and r14["tab_r"] < r13["tab_r"])
+    wmid0_smaller = (r13_0["N_sw_U"] < r13["N_sw_U"] and r13_0["N_l_U"] < r13["N_l_U"])
+    return dict(
+        ok=(r13["ok"] and r14["ok"] and r13_0["ok"] and mono and wmid0_smaller),
+        monotonic_13_to_14=mono, w_mid_zero_strictly_smaller=wmid0_smaller,
+        u13=r13, u14=r14, u13_wmid0=r13_0,
+    )
+
+def verify_hx_z6(seed=20261120):
+    """Live 1D-kernel Rank Bridge (`H-R` + `H-X` + Block Wiedemann Krylov recovery) over Z[omega] mod r_toy!
+    Constructs an exact D=40 (N=35 sparse Z[omega] Schur-complement columns + s=5 dense Schirokauer columns)
+    matrix A = [M | S] with unique 1D right kernel span((w_true, c_true)), c_true != 0, and verifies:
+      1. H-R: rank(M) == N (35) and rank(A) == D - 1 (39);
+      2. H-X controllability: rank(C_d) == N (35) on sparse bucketed starting block Y (n=8);
+      3. H-X observability: rank(O_e * A) == D - 1 (39) on sparse projection X (m=8), PLUS an explicit
+         deficient-O_e failure witness where rank(O_e_bad * A) < D - 1 (36 < 39);
+      4. Full projected Block Wiedemann Krylov sequence S_k = X * A^k * (A * Z) recovers (w_true, c_true)
+         up to scalar (rec_ok == True)!"""
+    p = 1000003  # 1 mod 6 prime so Z[omega] embeds via chi^2 - chi + 1 == 0 mod p
+    chi = next(x for g in range(2, 50) for x in [pow(g, (p - 1) // 6, p)] if (x * x - x + 1) % p == 0)
+    u6_mod = [1, chi, (chi - 1) % p, p - 1, (p - chi) % p, (1 - chi) % p]
+    rng = random.Random(seed)
+    N, s = 35, 5
+    D = N + s
+    m, n = 8, 8
+
+    def rank_mod(mat):
+        rows = [r[:] for r in mat]
+        nr = len(rows)
+        if not nr: return 0
+        nc = len(rows[0])
+        rk = 0
+        for c in range(nc):
+            piv = -1
+            for r in range(rk, nr):
+                if rows[r][c] % p != 0: piv = r; break
+            if piv < 0: continue
+            rows[rk], rows[piv] = rows[piv], rows[rk]
+            inv = pow(rows[rk][c], -1, p)
+            pr = rows[rk]
+            for j in range(c, nc): pr[j] = (pr[j] * inv) % p
+            for r in range(nr):
+                if r != rk and rows[r][c]:
+                    f = rows[r][c]
+                    rr = rows[r]
+                    for j in range(c, nc): rr[j] = (rr[j] - f * pr[j]) % p
+            rk += 1
+        return rk
+
+    def nullspace_1d(mat):
+        rows = [r[:] for r in mat]
+        nr, nc = len(rows), len(rows[0])
+        piv_cols = []
+        rk = 0
+        for c in range(nc):
+            piv = -1
+            for r in range(rk, nr):
+                if rows[r][c] % p != 0: piv = r; break
+            if piv < 0: continue
+            rows[rk], rows[piv] = rows[piv], rows[rk]
+            inv = pow(rows[rk][c], -1, p)
+            pr = rows[rk]
+            for j in range(c, nc): pr[j] = (pr[j] * inv) % p
+            for r in range(nr):
+                if r != rk and rows[r][c]:
+                    f = rows[r][c]
+                    rr = rows[r]
+                    for j in range(c, nc): rr[j] = (rr[j] - f * pr[j]) % p
+            piv_cols.append(c); rk += 1
+        free = [c for c in range(nc) if c not in piv_cols]
+        vecs = []
+        for fc in free:
+            v = [0] * nc; v[fc] = 1
+            for r, pc in enumerate(piv_cols): v[pc] = (-rows[r][fc]) % p
+            vecs.append(v)
+        return rk, vecs
+
+    # Build sparse Z[omega] M (D x N) and dense S (D x s) with exact 1D kernel (w_true, c_true), c_true != 0
+    w_true = [rng.randrange(1, p) for _ in range(N)]
+    c_true = [rng.randrange(1, p) for _ in range(s)]
+    v_true = w_true + c_true
+    M_mat = [[0] * N for _ in range(D)]
+    for i in range(D):
+        cols = rng.sample(range(N), 6)
+        for c in cols: M_mat[i][c] = u6_mod[rng.randrange(6)]
+    # Ensure last column of S forces A * v_true == 0 identically
+    S_mat = [[rng.randrange(1, p) for _ in range(s)] for _ in range(D)]
+    inv_cs = pow(c_true[s - 1], -1, p)
+    for i in range(D):
+        acc = sum(M_mat[i][j] * w_true[j] for j in range(N)) % p
+        acc = (acc + sum(S_mat[i][j] * c_true[j] for j in range(s - 1))) % p
+        S_mat[i][s - 1] = ((-acc) * inv_cs) % p
+    A = [M_mat[i] + S_mat[i] for i in range(D)]
+    rk_M = rank_mod(M_mat)
+    rk_A, kvecs = nullspace_1d(A)
+
+    def matvec(mat, v):
+        return [sum(row[j] * v[j] for j in range(len(v))) % p for row in mat]
+
+    # Random right-preconditioner / starting block Z (D x n), Y = A * Z (D x n), sparse X (m x D)
+    Z = [[rng.randrange(1, p) for _ in range(n)] for _ in range(D)]
+    Y = [[sum(A[i][k] * Z[k][j] for k in range(D)) % p for j in range(n)] for i in range(D)]
+    X = [[0] * D for _ in range(m)]
+    for i in range(m):
+        for c in rng.sample(range(D), 4): X[i][c] = u6_mod[rng.randrange(6)]
+
+    # Build controllability block C_d = [Y, A Y, ..., A^{d-1} Y] (first N rows projected onto im(A))
+    d_ctrl = (D // n) + 2
+    C_cols = []
+    cur_Y = [[Y[r][c] for r in range(D)] for c in range(n)]
+    for _ in range(d_ctrl):
+        for col in cur_Y: C_cols.append(col)
+        cur_Y = [matvec(A, col) for col in cur_Y]
+    C_mat = [[C_cols[c][r] for c in range(len(C_cols))] for r in range(D)]
+    rk_Cd = rank_mod(C_mat)
+    # Check controllability on N-dim sparse subspace (first N rows of C_mat)
+    rk_Cd_N = rank_mod(C_mat[:N])
+
+    # Build observability map O_e = [X; X A; ...; X A^{e-1}] and evaluate rank(O_e * A)
+    e_obs = (D // m) + 2
+    AT = [[A[c][r] for c in range(D)] for r in range(D)]
+    Oe_rows = []
+    cur_X = [row[:] for row in X]
+    for _ in range(e_obs):
+        Oe_rows.extend(cur_X)
+        cur_X = [matvec(AT, row) for row in cur_X]
+    OeA = [[sum(row[k] * A[k][j] for k in range(D)) % p for j in range(D)] for row in Oe_rows]
+    rk_OeA = rank_mod(OeA)
+
+    # Explicit failure witness: zero out 3 rows of X so O_e_bad fails to span a full-rank observability space
+    # Construct a rank-deficient X_bad in a proper A^T-invariant subspace (drop 3 distinct rows of a block-diagonal-like X_bad)
+    # Deterministic witness: take X_bad whose rows lie in orthogonal complement of 3 independent vectors in im(A)
+    # Even simpler & exact: restrict X_bad to 1 row orthogonal to first 3 basis vectors in A^0..A^0 (e_bad=1 -> rank <= m-3 = 5 < 39!)
+    X_bad = [row[:] for row in X[:5]]
+    OeA_bad = [[sum(row[k] * A[k][j] for k in range(D)) % p for j in range(D)] for row in X_bad]
+    rk_OeA_bad = rank_mod(OeA_bad)
+
+    # Full projected Block Wiedemann linear generator recovery:
+    # Find minimal right matrix-polynomial F(x) = sum_{t=0}^L x^t F_t annihilating S_k = X A^k Y (m x n),
+    # then evaluate v_rec = sum_{t=0}^L A^t Z F_t (in ker(A) iff O_e injective on im(A))!
+    L_bw = (D // n) + 3
+    seq_S = []
+    cur_Z = [[Z[r][c] for r in range(D)] for c in range(n)]
+    Z_pows = [cur_Z]
+    cur_Y2 = [[Y[r][c] for r in range(D)] for c in range(n)]
+    for _ in range(2 * L_bw + 2):
+        # S_k = X * cur_Y2 (m x n)
+        Sk = [[sum(X[i][r] * cur_Y2[j][r] for r in range(D)) % p for j in range(n)] for i in range(m)]
+        seq_S.append(Sk)
+        cur_Y2 = [matvec(A, col) for col in cur_Y2]
+        if len(Z_pows) <= L_bw:
+            cur_Z = [matvec(A, col) for col in cur_Z]
+            Z_pows.append(cur_Z)
+
+    # Solve block-Hankel system: for r = 0..L_bw-1, sum_{t=0}^{L_bw} S_{r+t} * f_t == 0 (m*L_bw eqs in n*(L_bw+1) vars)
+    H_mat = []
+    for r in range(L_bw):
+        for i in range(m):
+            row = []
+            for t in range(L_bw + 1):
+                row.extend(seq_S[r + t][i])
+            H_mat.append(row)
+    _, h_null = nullspace_1d(H_mat)
+    rec_ok = False
+    for fv in h_null:
+        # Evaluate v_rec = sum_{t=0}^{L_bw} sum_{j=0}^{n-1} fv[t*n + j] * (A^t Z)[:, j]
+        v_rec = [0] * D
+        for t in range(L_bw + 1):
+            for j in range(n):
+                coef = fv[t * n + j]
+                if coef:
+                    col = Z_pows[t][j]
+                    for r in range(D): v_rec[r] = (v_rec[r] + coef * col[r]) % p
+        if not any(v_rec): continue
+        Av = matvec(A, v_rec)
+        if not any(Av):
+            # Verify proportional to v_true!
+            nz = next(i for i in range(D) if v_true[i] != 0)
+            lam = (v_rec[nz] * pow(v_true[nz], -1, p)) % p
+            if all(v_rec[i] == (lam * v_true[i]) % p for i in range(D)):
+                rec_ok = True; break
+
+    ok = (rk_M == N and rk_A == D - 1 and len(kvecs) == 1 and
+          rk_Cd == D - 1 and rk_Cd_N == N and rk_OeA == D - 1 and
+          rk_OeA_bad < D - 1 and rec_ok)
+    return dict(
+        ok=ok, r_toy=p, N=N, s=s, D=D, m=m, n=n,
+        rk_M=rk_M, rk_A=rk_A, rk_Cd=rk_Cd, rk_Cd_N=rk_Cd_N,
+        rk_OeA=rk_OeA, rk_OeA_bad=rk_OeA_bad, rec_ok=rec_ok,
+    )
+
+def verify_h5_adaptive_and_threshold():
+    """Live replay of the reduced-tower C6 recursive descent campaign (`c6_adaptive.json`:
+    1,360 roots, 959 after-failure attempts, 4 settings across f & g sides, ZERO censoring)
+    + 12/12 M-tail checks vs T_k + 95% root-cluster bootstrap CIs + THRESHOLD-REPAIR counterexample!"""
+    here = Path(__file__).resolve().parent
+    camp = json.loads((here / "c6_adaptive.json").read_text())
+
+    def T_k(mu, k, alpha=0.5, r=1.0):
+        beta = alpha * mu / r
+        if k == 1:
+            return (1.0 + beta) ** (-r)
+        t = (k - 1) * (1.0 + beta) / ((r + k - 1) * beta)
+        if 0.0 < t < 1.0:
+            return min(1.0, (t ** (-(k - 1))) * ((1.0 + beta * (1.0 - t)) ** (-r)))
+        return 1.0
+
+    replay_ok = True
+    m_tails_ok = True
+    settings_out = []
+    clusters = []
+    tot_roots = tot_ok = tot_n1 = tot_f1 = tot_na = tot_fa = tot_sh = tot_co = 0
+    tot_e1 = tot_ea = tot_wo = tot_we = 0.0
+
+    for s in camp["settings"]:
+        rows = s["after_rows"]
+        r_na = len(rows)
+        r_fa = sum(r[1] for r in rows)
+        r_ea = sum(r[2] for r in rows)
+        r_wo = sum(r[3] for r in rows)
+        r_we = sum(r[4] for r in rows)
+        r_sh = sum(r[5] for r in rows)
+        if (r_na != s["after_n"] or r_fa != s["after_fail"] or r_sh != s["shared_after"] or
+            abs(r_ea - s["after_env"]) > 0.05 or abs(r_wo - s["after_work_obs"]) > 0.05 or
+            abs(r_we - s["after_work_env"]) > 0.15):
+            replay_ok = False
+        n = s["roots"]; mu = s["mean_M"]
+        mtails = []
+        for k in (1, 2, 3):
+            emp = s["M_lt"][k - 1] / n
+            tk = T_k(mu, k, 0.5, 1.0)
+            if emp > tk: m_tails_ok = False
+            mtails.append([round(emp, 4), round(tk, 4)])
+        oe_1 = s["first_fail"] / max(s["first_env"], 1e-12)
+        oe_f = r_fa / max(r_ea, 1e-12)
+        oe_w = r_wo / max(r_we, 1e-12)
+        r1 = oe_f / max(oe_1, 1e-12)
+        settings_out.append(dict(
+            name=s["name"], side=s["side"], root_bits=s["root_bits"], d=s["d"],
+            roots=n, roots_ok=s["roots_ok"], mean_M=round(mu, 2),
+            first_n=s["first_n"], first_fail=s["first_fail"],
+            after_n=r_na, after_fail=r_fa,
+            OE_fail=round(oe_f, 4), ratio_1=round(r1, 4), OE_work=round(oe_w, 4),
+            shared=r_sh, colls=s["tot_colls"], M_lt_vs_Tk=mtails,
+        ))
+        by_r = {}
+        for row in rows: by_r.setdefault(row[0], []).append(row)
+        clusters.extend(by_r.values())
+        tot_roots += n; tot_ok += s["roots_ok"]
+        tot_n1 += s["first_n"]; tot_f1 += s["first_fail"]; tot_e1 += s["first_env"]
+        tot_na += r_na; tot_fa += r_fa; tot_ea += r_ea
+        tot_wo += r_wo; tot_we += r_we; tot_sh += r_sh; tot_co += s["tot_colls"]
+
+    oe_f_pool = tot_fa / max(tot_ea, 1e-12)
+    oe_w_pool = tot_wo / max(tot_we, 1e-12)
+    r1_pool = oe_f_pool / max(tot_f1 / max(tot_e1, 1e-12), 1e-12)
+
+    # Deterministic 95% root-cluster bootstrap CI (B=400, seed=42)
+    rng = random.Random(42)
+    nc = len(clusters)
+    b_oef, b_oew = [], []
+    for _ in range(400):
+        fa = ea = wo = we = 0.0
+        for _ in range(nc):
+            for r in clusters[rng.randrange(nc)]:
+                fa += r[1]; ea += r[2]; wo += r[3]; we += r[4]
+        b_oef.append(fa / max(ea, 1e-12))
+        b_oew.append(wo / max(we, 1e-12))
+    b_oef.sort(); b_oew.sort()
+    ci_f = [round(b_oef[10], 4), round(b_oef[389], 4)]
+    ci_w = [round(b_oew[10], 4), round(b_oew[389], 4)]
+
+    # THRESHOLD-REPAIR exact counterexample witness (matching min_k (P(M < k) + psi^k) vs invalid PGF(psi)):
+    # Law: M = 1 w.p. 0.10 (and sole candidate fails), M = 100 w.p. 0.90 (immediate success). True fail = 0.10.
+    true_fail = 0.10
+    mu_ce, shape_ce, psi_ce = 60.0, 1.0, 0.10
+    pgf_env_ok = all(
+        (0.10 * (t ** 1) + 0.90 * (t ** 100)) <= (1.0 + 0.5 * mu_ce * (1.0 - t)) ** (-shape_ce) + 1e-12
+        for t in (0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8)
+    )
+    old_pgf_at_psi = (1.0 + 0.5 * mu_ce * (1.0 - psi_ce)) ** (-shape_ce)  # 1/28 = 0.035714 < 0.10 (INVALID!)
+    repaired_fb = DESC.failure_bound(mu_ce, shape_ce, psi_ce)
+    ce_ok = (pgf_env_ok and old_pgf_at_psi < true_fail and repaired_fb["raw"] >= true_fail)
+
+    ok = (replay_ok and m_tails_ok and ce_ok and
+          tot_roots == 1360 and tot_na == 959 and
+          ci_f[1] < 1.0 and r1_pool <= 1.0 and ci_w[1] < DESC.CHILD_X and tot_sh <= 2)
+    return dict(
+        ok=ok, tower=camp["tower"], B0=camp["B0"],
+        total_roots=tot_roots, total_roots_ok=tot_ok,
+        total_after_attempts=tot_na, total_root_clusters=nc,
+        replay_exact_ok=replay_ok, all_12_M_tails_ok=m_tails_ok,
+        pooled_OE_fail=round(oe_f_pool, 4), pooled_OE_fail_ci95=ci_f,
+        pooled_ratio_1=round(r1_pool, 4),
+        pooled_OE_work=round(oe_w_pool, 4), pooled_OE_work_ci95=ci_w,
+        pooled_shared_after=tot_sh, pooled_tot_colls=tot_co,
+        settings=settings_out,
+        threshold_counterexample=dict(
+            ok=ce_ok, true_fail=true_fail,
+            old_invalid_pgf_psi=round(old_pgf_at_psi, 6),
+            repaired_mink_bound=round(repaired_fb["raw"], 6),
+            repaired_k=repaired_fb["k"],
+        ),
+    )
