@@ -1,0 +1,174 @@
+# recover-P: (4,3) CM-STNFS over Q(zeta_15) with tiled Arch2-Rev-SigmaB behind a run gate: expected work `2^109.583612281860`
+
+Track `bls12-381-fixed-g2-invert-g1`. Input: a nonidentity Q in G2 and z in GT; output P in G1 with e(P,Q) = z for the exact supplied Q (P = infinity for z = 1). Reference unit: one dense F_p12 multiplication, C = 20,000. No advice, smaller targets, SIMD, `FEAT_LSE`, hand-written assembly, or amortization are used. **Full de Bruijn local-density correction** (`rho_dB(u, x) = rho(u) - gamma rho(u-1)/ln x`) is explicitly baked into **both** Main Collection and Individual-Logarithm Descent. Every cost constant, smoothness integral, filtering check, and descent recurrence is derived and verified self-contained inside this package (no prior verdict or external constant is a premise; predecessor work is credited in Section 9).
+
+## Claim
+
+`W` is the total classical work of the one attack on the one target. Step 0 is a run gate (kaankolcu's device, Section 9): draw a uniform 64-bit word `u`; unless `u < K = 7359833809289549279`, stop immediately as a failure (`< 1` unit). `K` is the least integer with `K x 0.977499 >= 0.39 x 2^64`. Under heuristics `H1`, `H1'`, `H-EA`, `H-FFT`, `H2`, `H3`, `H-SM`, `H4`, `H4u`, `H-X`, and `H5` (Section 8), an opened run succeeds with probability `>= 0.977499` (strict additive union bound, Section 6); because `u` is independent of the challenge and all remaining coins, overall algorithmic success is `>= 0.39` over uniform full-production challenges and fresh coins, and
+
+    E[W] <= 1 + (K / 2^64) x (2^110.9092333844 + 2^66) < 2^109.583612281860  dense-Fp12 units (C = 20,000).
+
+Here `2^110.9092333844` core units (`C = 20,000` scalar AArch64 instructions) is the sum of Section 7's rows with every-run bounds on collection, replay tables, 4-parameter hard-capped linear algebra, generator, Schirokauer maps, ECM split meter (`2^96.5`), and fixed rows, and expected work on the two individual logarithms (`2^102.908`, Section 5). The score `109.583612281860` is an expectation over the challenge and fresh coins of the single attack, not a bound on every opened run; every opened run is strictly metered at:
+
+    W <= 2^115.6545972953 + 2^66 < 2^115.654597295301  dense-Fp12 units (C = 20,000).
+
+Analytic, exploratory claim. All declared numbers round conservatively upward (or downward for success floors) and are audited live from `cm_data.json` + `boot_witness.json` + `toy_e2e.json` by `audit_cm.py` + `cm_models.py` + `filtsim_z12.py` + `hx_z12.py` (`checks_ok = true`, pure Python stdlib).
+
+## 1. Reduction (fixed `Q`: two `G_T` logarithms) and field map
+
+With the pinned reduced pairing `e` (`py_ecc.optimized_bls12_381.pairing(Q, P)`) and public generator `P0` of `G1`:
+
+0. **Run gate (Claim):** draw uniform 64-bit `u`; if `u >= K`, abort as failure (`< 1` unit).
+1. **Validate inputs:** check `Q` on twist `E'(F_(p^2))`, `[r]Q = infinity`, `Q != infinity`, and `z in F_(p^12)^*` with `z^r = 1`. If `z = 1`, return `P = infinity`.
+2. **Pairing:** compute `g = e(P0, Q)` (`pairing(Q, P0)` in protected encoding).
+3. **Field map:** construct the explicit isomorphism `F_(p^12) -> F_p[y, X]/(h_pi, X^3 - omega^2 u)` (`field-map.md`) and map `(g, z)`.
+4. **Fresh-coin randomization & core solve:** draw independent uniform `e_1, e_2 in {1, ..., r - 1}`, set `g' = g^(e_1)`, `z' = z^(e_2)` (making BOTH boot inputs exact uniform on `G_T \ {1}` from fresh coins alone), run the core under its meter and node counter to recover `log(g')` and `log(z')`, and set `a = (e_1 * log(z')) * (e_2 * log(g'))^(-1) mod r`.
+5. **Output & check:** compute `P = [a]P0`; output `P` iff `e(P, Q) = z`, else fail.
+
+Because `G_T` has prime order `r` and `e` is nondegenerate, `g` generates `G_T`, `z = g^a` for a unique `a mod r`, and `e([a]P0, Q) = z`. Wrapper work (`2` pairings, field map `< 2^67`, scalar mul, check) is `< 2^80` instructions = `2^65.71 < 2^66` core units; wrapper failure `< 2^(-48)`.
+
+## 2. CM-Split `Q(zeta_15)` Tower, `w' = omega^2` Isometry, & Order-12 Frobenius
+
+For BLS12-381, `u = -0xd201000000010000 = -2^16 x 906349 x 254760293`, `r = u^4 - u^2 + 1` (255-bit prime, `r == 13 mod 15`), and `p = (u - 1)^2 r / 3 + u` (381-bit prime, `p == 7 mod 15`).
+
+### CM Splitting Over `K_H = Q(zeta_15)` and Exact `w = y <=> w' = omega^2` Isometry
+
+Because BLS12-381 has CM discriminant `-3`, its degree-6 polynomial `F(z) = (z - 1)^2 (z^4 - z^2 + 1) + 3 z` splits over `Q(omega)` (`omega^2 + omega + 1 = 0`) into two degree-3 conjugates `F(z) = F_1(z) F_2(z)` with `F_1(z) = z^3 - z^2 - (omega + 1) z - omega`. Taking the cyclotomic base field `K_H = Q(zeta_15) = Q[y]/(Phi_15(y))` (`[K_H : Q] = 8`, `O_H = Z[zeta_15]`, `D_H = 3^4 x 5^6 = 1,265,625`, PID `h(K_H) = 1`, `omega = y^5`, `zeta_5 = y^3`):
+- **Split prime base:** Because `p == 7 mod 15` (`ord_15(p) = 4`), `Phi_15(y) == h_pi(y) h_pibar(y) (mod p)` splits into two degree-4 irreducibles over `F_p`, where `h_pi = gcd(Phi_15, y^5 - w_pi)` (`w_pi = (u^3 - u^2 - u)/(u + 1) mod p`) selects the factor with `F_1(u) == 0 (mod P)`, `P = (p, h_pi(y))`, `O_H / P ~= F_(p^4)`.
+- **`sigma`-fixed cubic twist `w' = omega^2`:** Applying the unimodular `T_2`-isometry `(X, b_tilde) = (zeta_5 x, zeta_5^(-1) b)` to the `w = y` twist (`y = omega^2 zeta_5^2`) produces the **100% `sigma`-fixed polynomials**:
+  `g(X) = X^3 - omega^2 u` (deg 24 over `Q`),  `f(X) = F_1(omega X^3) = X^9 + (omega + 1) X^6 + X^3 - omega` (deg 72 over `Q`).
+- **Exact order-12 Frobenius (`audit_cm.py`: `algebra_bls12`):**
+  1. `(u omega^2)^((p^4 - 1)/3) != 1` in `F_(p^4)`, so `g(X)` is irreducible over `F_(p^4)` and `F_(p^12) ~= O_H[X] / (P, g(X))` with `f(X) == 0 (mod P, g(X))`.
+  2. The automorphism `sigma(y) = y^7` (`ord(sigma) = 4`) fixes `omega = y^5` (hence fixes `P`, `f`, and `g` identically) and satisfies `sigma(y) == y^p (mod h_pi)`.
+  3. Since `(u omega^2)^((p - 1)/3) == omega^2 (mod P)`, the order-12 automorphism `tau(y, X) = (y^7, omega^2 X)` acts as **exact `Frob^1`** on `F_(p^12)`. Thus `log_r(tau(I)) == chi log_r(I) (mod r)` with `chi = p == u (mod r)`, `ord_r(chi) = 12`, and `Phi_12(chi) = chi^4 - chi^2 + 1 == 0 (mod r)`. One relation stands for its 12-element `tau`-orbit and the factor base is quotiented into `Z[zeta_12]` orbits.
+
+### Split-Base Virtual-Log Theorem & Pigeonhole Zero-Log Theorem
+
+1. **Split-base localization (`P` vs `P_bar`):** The NFS homomorphisms `Psi_f, Psi_g` localize **only** at the single prime ideals `P_f, P_g` above `P`, which `tau` fixes individually (`sigma(P) = P`). Prime ideals above the conjugate `P_bar = (p, h_pibar)` are coprime to `P` and have absolute norm `>= N(P_bar) = p^4 ~= 2^1524 >> N_f, N_g ~= 2^680` (cannot divide any main-sieve relation) and `>> B_boot = 2^265` (rejected if ever dividing a boot norm).
+2. **Maximal orders & Pigeonhole Zero-Log Theorem:** `O_(K_f)` (`w'=omega^2`) is maximal away from `3` (`N(Disc f) = 3^72 19^12 67^12`); `O_(K_g)` has `Disc(O_(K_g)) = 2^16 3^36 5^18 906349^16 254760293^16`, `gcd(r, Disc) = 1`. Every ramified or non-maximal rational prime `ell in {2, 3, 5, 19, 67, 906349, 254760293}` (and every rational prime `ell !== 1, 11, 14 (mod 15)`) has `tau`-orbit length `d | 12` strictly `< 12` (`d in {1, 2, 3, 4, 6}`). Because `gcd(chi^d - 1, r) = 1` for all `d in {1, 2, 3, 4, 6}` (verified by `audit_cm.py`), equivariance `(chi^d - 1) vlog(Q) == 0 (mod r)` forces **`vlog(Q) == 0 (mod r)` identically**. Thus **zero** ramified, non-maximal, or short-orbit prime ideals ever enter the `Z[zeta_12]` linear system. (Verified `0 / 1,950` valuation mismatches at `2, 3, 5` in `O_(K_g)`.)
+3. **Free `C_12`-action & 4 Schirokauer columns (`3 + 1`):** Complex conjugation `y -> y^14` does not lie in `<sigma> = {1, 7, 4, 13} mod 15`, so `<tau> ~= C_12` acts freely on the 36 complex places of `K_f` (3 free orbits) and 12 complex places of `K_g` (1 free orbit). By Dirichlet's unit theorem over `F_r[C_12]`, `dim((O_(K_f)^x / r)^chi) = 3`, `dim((O_(K_g)^x / r)^chi) = 1`, and `dim((O_H^x / r)^chi) = 0` (`tau^4 = 1` on `K_H`, `chi^4 != 1`), giving **4 Schirokauer columns** total.
+4. **Exact Murphy `alpha` (`w' = omega^2`):** Analytic at `ell = 2, 5` (`v_2(N_f) = v_5(N_f) = v_5(N_g) = 0`, `E[v_2(N_g)] = 1.505881` exact, `kappa_2(9.6, 71.69) = 0.0525`), 40k MC at `ell = 3`, and exact Kummer-Dedekind over `[7, 100k]` (all residue degrees `f_p in {1, 2, 4}`): exact `alpha_f = +2.718`b (charged **`+2.74`b**), `alpha_g = +0.762`b (`alpha_(g,>=3) = +1.267`b, charged **`+1.28`b**; total charged `+0.77`b in descent).
+5. **Live End-to-End `(4, 3)` `Q(zeta_15)` Split-Base Tower DLP Audit (`audit_cm.py`: `toy_e2e_dlp`):** On real toy BLS12 parameters `u_0 = -5, p_0 = 7207 == 7 (mod 15)` (`Phi_15 == h_pi h_pibar mod 7207` with `P_bar` explicitly present), `r_0 = 601` prime, `chi = 596` (`ord = 12`), `audit_cm.py` executes live BSGS in `F_(7207^12)`, live CRT mod `601^2` Schirokauer maps, and live mod-601 linear algebra: `0` `P_bar` hits, `27` omitted short-orbit prime factors producing `0` errors, **`25/25`** `K_g` left-kernel deps annihilating true BSGS logs (`0` fail), negative control A (drop 1 `SM_g` col) failing `20/26`, negative control B (wrong `chi = p_0^2`) failing `40/40`, **`5/5` fresh unseen target DLP recoveries** exact match, and **`57/57`** `K_f` (exact deg-72 BLS12 polynomial, `3` `SM_f` cols) left-kernel deps annihilating true BSGS logs (`0` fail, `62/62` exact virtual-log fit).
+
+## 3. Relation Collection: Tiled `Arch2-Rev-SigmaB` & Exact de Bruijn Yield
+
+Operating point **`B71.5_d04_e109`**: asymmetric smoothness bounds `B_f = 2^71.29`, `B_g = 2^71.69` (`U' = (li(B_f) + li(B_g))/12 = 2^63.317373` 12-orbits), filtering excess `1.09`, collection target `1.148 U' = 2^63.516495` relations.
+
+### Geometry, Explicit 10-Facet `min-T2` Voronoi FD, & Complete `100%` `b_0`-Invariant `1/12` FD `D_(omega,sigma)`
+
+In the unimodular `Z[omega]`-module basis `B_(1,omega) = {1, omega, zeta_5, omega zeta_5, zeta_5^2, omega zeta_5^2, zeta_5^3, omega zeta_5^3}`, the `T_2` Gram matrix is the exact root-lattice tensor product `G = A_4 x A_2` (`det G = 1,265,625`, `W^T G W = G`, `S^T G S = G`, verified live in `audit_cm.py`).
+- **Canonical `a` (explicit 10-facet `min-T2` Voronoi cone, verified LIVE in `audit_cm.py`):** In `O_H^x / mu_30 ~= Z^3`, the Voronoi cell around `1` in logarithmic `T_2` space is cut out by the **10 explicit neighbor units** `U_10 = {(y^3+1)^(+-1), (y-1)^(+-1), (y^2-1)^(+-1), ((y^3+1)(y-1))^(+-1), ((y^3+1)^(-1)(y^2-1))^(+-1)}` (stored in `cm_data.json`: `voronoi_units_10`). `audit_cm.py` (`voronoi_and_boot_live`) verifies LIVE that all 10 have `N_(K_H/Q)(u) = +-1` and that all `12/12` integer anchors satisfy `T_2(a) <= T_2(u a)` for every `u in U_10` (asymptotic `p_can = 0.268857`; `N_a^can = 2^57.6666` canonical `a`-orbits).
+- **2-adic class regions (`s = (1.00, 1.20, 1.36)`):** Because `2 O_(K_g) = P_(2,1)^3 P_(2,2)^3` and `v_2(N_g(a, b)) = 4 sum_i min(3 v_(p_(2,i))(a), 16)` depends **solely on `a`** (and is `sigma`-invariant), scaling class radii `(s_0, s_1, s_2) = (1.00, 1.20, 1.36)` for classes `(v_1=v_2=0)`, `(v_1+v_2=1)`, `(v_1+v_2>=2)` (exact densities `225/256`, `225/2048`, `23/2048`) gives `Q_a(a) <= 0.65 s_c R_a^2` and `Q_b(b) <= (s_c - q_a) R_b^2` (`r_(ab) = R_a/R_b = 1.20`, `A^2 = 508676.3`), with unified 2-adic key `key_a(a) = q_a(a) - s_c(a)` so the region condition is `key_a(a) <= -q_b(b)`.
+- **Swapping `<sigma>` onto `b` (`D_(omega,sigma)` 1/12 FD, `239/239` exact-1):** All 12 group matrices in `G_12 = <W, S>` have **zero** bottom-left `6 x 2` block (verified live in `audit_cm.py`), so `t = (b_2, ..., b_7)` transforms completely independently of `(b_0, b_1)` under the `6 x 6` restriction `G_(12,6)`. Define `U = b_2 - b_4 - b_6`, `V = b_3 - b_5 - b_7`. Then `b in D_(omega,sigma)` iff:
+  - When `(U, V) != (0, 0)`: `(U > V >= 0)` and (`(b_2, b_3) >_lex (0, 0)` if nonzero, else `(b_4-b_6, b_5-b_7) >_lex (0, 0)`).
+  - When `U == V == 0` and `t != 0`: `t == min_{M in G_(12,6)} (M t)` lexicographically (`t = 0` is the rank-2 `Q(omega)` subspace of orbit size `<= 3`, never 12).
+  This predicate is **100% independent of `(b_0, b_1)`** (zero chord cutting) and verified exhaustively live in `audit_cm.py` on `Q <= 30`: `2,940` points, `239` full 12-orbits, **`239/239` exact-1, `0` duplicates, `0` misses**. Moving `<sigma>` onto `b` gives `N_7 = 2^56.9989` rows (`L_max = 2 sqrt(1.36 R_b^2 / 8) = 536.89`, mean chord `L_b = 230.60`) and `N_a^tbl = 4 N_a^can = 2^59.6666` slots.
+
+### Tiled `Arch2-Rev-SigmaB` Reversed `a`-Table Replay (`P_lo = 2^54`, `W_tile = 256`, `W_SB = 128`)
+
+For any 4-orbit of `sigma`-conjugate ideals `(p, s_k, r)` (`s_k = s_0^(7^k)`, `k in {0,1,2,3}`), a hit `a(s_k) == r b(s_k) (mod p)` is equivalent to `(sigma^k(a))(s_0) == r b(s_k) (mod p)`. Thus **ONE** 4-orbit `a`-table built at `s_0` over all `N_a^tbl` slots `a_slot = (m << 58) | oid` serves all 4 `sigma`-conjugates simultaneously (`m' = (m - k) mod 4`). Every `b_0`-row (`L_b <= L_max = 536.89`) is partitioned into `ceil(L_b / 256) in {1, 2, 3}` contiguous tiles of width `<= W_tile = 256` (`1.405` tiles/row, `3.200` spanned super-buckets/row):
+- **3-Pass `a_0`-chord + `perm[]` build (`C_LIST_A = 35.0` Ir/entry, `KERNELS.md`):** Total build for `g` to `P_g = 2^64` and `f` to `P_f = 2^60`: **`2^107.1850`** units, peak table storage **`2^120.39`** bytes (`STORAGE.md`).
+- **Band 1 (`[2^24, 2^54)`):** Unified `key_a`-sorted buckets (`12` B/entry, `<= 2^63.29` B/table); exact integrated branchless `rev_b1_bsearch` (`8` Ir/step + `24` header) + contiguous 12B slice copy (`1.50` Ir/hit) + `rev_b1_apply_u4` with 2-instr conjugate rotation (`6.25` Ir/hit, charged `C_HIT_LO = 8.0`).
+- **Band 2 (`[2^54, P_hi)`):** Super-buckets of width `W_SB = 128` with 64-bit occupancy bitmap (`<= 2^63.778` B/table `< 2^64` B). Per tile: `rev_sb_probe_fast` (`C_TILE_HDR = 20.0` Ir) + **`P(occ) = 1.0`** occupied-SB header/terminator overhead (`C_SB_HDR = 18.0` Ir on every spanned SB). Exact 16D ellipsoid integration over all tiles and chord `q_b(t)` variation (verified live in `audit_cm.py`) gives `E[cands]/E[hits] = 3.9804`, conservatively charged **`4.021`** (`+1%` discrete safety) at `C_CAND = 13.0` Ir/cand, plus full emit + 1 MiB page-copy/handoff + `rev_b2_apply_u4` (`18.75 <= C_HIT_HI = 19.0` Ir/hit).
+- **Zero 9D walk, exact prefix `rev_scan_zero_u4`, & live 2D-histogram analytical cofactorization:** `P_g = X_2 = 2^64` eliminates the entire 9D walk, 106-bit LLL, contamination, and hand-written ASM. Because `N_g(a, b) = N_g(0, b)` to `0.000000` bits (`0 / 4,976` rows `> 1/16`b) and `oid` is globally sorted by `key_a`, `rev_scan_zero_u4` scans and zeroes **ONLY** the exact active prefixes `[0, N_act_orb(t))` (`V_all = 1.0276 V_kept`, `C_SCAN_ZERO = 2.95` Ir/kept cell). Survivors pass `_nk_g_only` (`4,500` Ir), `_nk_f_only` (`6,500` Ir), self-contained analytical Stage B (`stage_b_analytic(nb)`, `KERNELS.md` §3, evaluated at every bin's upper norm endpoint up to `bg_max = 700`b, `(s_a_g, s_b_g) = (360, 295)`, `(s_a_f, s_b_f) = (420, 345)`), `fbatch`, `batch2`, trial division, 40-round MR, and `99.9%` ECM — integrated **LIVE across ALL `1,108` bins** of the 2D norm histogram via `cm_models.Retention` (`max_bits = 800/660`) inside `audit_cm.py` (exact effective retention `r_eff = 0.77662`, strict bin-wise cofactorization upper bound **`c_cof_2d_upper = 3.8776`** ipc charged in full).
+
+### Exact 2D-Retained de Bruijn Pool Yield, Band/ECM Split + Chebyshev, & Collection Cost
+
+Evaluated on the pre-registered `200,000`-sample duplicate-free pool `P2_wy_2ad` (seed `900003`; 12 integer anchor pairs verified live to `< 5e-11` bits in `audit_cm.py`) with **de Bruijn `rho_dB(u, x)` AND per-row `Retention(nf, ng - v_2(ng))` integrated jointly across all 200,000 samples**:
+- **Kept cells & joint work SE:** `V = 2^119.2663` (`SE_c = 0.00290`, exact 200k joint collection-work SE incl. per-row cofactorization `SE_w = 0.00297`, `1 + 2 max(SE_c, SE_w) = 1.00593 <= H2_ALLOW = 1.00774`), mean norms `(N_f, N_g) = (548.66, 677.73)`b (max `(585.29, 699.43)`b, relation-weighted `(542.92, 673.35)`b).
+- **2D-retained relation count & strict margin:** Exact 200k retained yield `2^63.516495` (`SE_y = 0.01006` bits; live 2D histogram midpoint `2^63.517580` agrees to `0.00108` bits). Even at **strict bin-upper-endpoint retention** `(bf_lo + 2, bgo_lo + 2)` (`2^63.513748`), after deducting the `0.009`-bit band-miss allowance, net margin above `1.09 U' = 2^63.44170` is **`0.06305` bits (`>= 0.060` bits)**, and its 2-SE lowered count `2^63.4846` strictly exceeds the descent input `2^63.46`.
+- **Per-cell collection cost:** `g`-replay `27.60` + `f`-replay `16.68` (Band 1 `17.05`, tile+SB overhead `7.07`, Band 2 `20.16`) + scan/zero `2.95` + live 2D-upper analytical cofactorization `3.88` = **`51.10` instructions/kept cell** (estimate `2^110.653896`, times `H2` allowance `1.00774` <= **`2^110.665020`** core units).
+- **Band split & first-principles ECM split + Chebyshev tail (verified live in `audit_cm.py`):** Across `<= 2^(log2_rels + 0.55) = 2^64.066` kept relations with conservative max norms `(640b, 768b)` (`10, 12` limbs): band split `<= 2^100.543` units; first-principles Suyama-Montgomery ECM (`13` f-factors `<= 2^71.29` + `16` g-factors `<= 2^71.69`, `p >= 0.999`, plus MR + `2^26` ideal lookups) gives expected work `E[W_ecm] = 2^95.6178` core units. Metering at **`2^96.5`** core units (reached = failure) leaves gap `0.8431 E[W_ecm]`, max single-schedule cost `2^26.94` units, variance `Var(W_ecm) <= 0.00201 x 2^26.94 x E[W_ecm] = 2^113.60`, and Chebyshev tail **`P(W_ecm > 2^96.5) <= 2^-77.14 < 2^(-70)`** (added to the Section 6 union bound).
+
+## 4. `Z[zeta_12]` Filtering & 4-Parameter Hard-Capped 1-Owner Block Wiedemann LA
+
+Because `Phi_12(chi) = chi^4 - chi^2 + 1 = 0`, setting `omega = chi^2` splits `Z[zeta_12] = Z[omega] (+) chi Z[omega]` into two orthogonal Eisenstein hexagonal lattices. Using the 6-bucket signed hexagonal basis `{1, chi, chi^2, chi^3, chi^2 - 1, chi^3 - chi}`, all 12 units have weight 1, and only `1/12` of unit+unit Markowitz collisions creates a coefficient-2 non-unit (vs `1/4` in `Z[i]`).
+
+### Direct `2^16 .. 2^23` `filtsim_z12` Campaign (`B71.5_d04_e109`, `W = 200`, Cell-Mean Norms `548.9 / 677.8`)
+
+The bundled pure-Python `filtsim_z12.py` (runnable on demand as a hosted experiment) mirrors our compiled C `filtsim_z12` campaign executed for 6 seeds at every doubling `U' = 2^16 .. 2^23` at `Lf = 71.29, Lg = 71.69, excess = 1.09, W = 200` with conservative cell-mean norms `(548.9, 677.8)` strictly above smooth-relation means `(542.9, 673.3)`:
+
+| Scale `U'` | Seeds | `N_l / U'` (SE) | `N_sw / U'` (SE) | `sd_l U'^(1/4)` | Depth | Unit % (Exp.) | `k5` | `tab_ratio` |
+|---|---:|---:|---:|---:|---:|---|---:|---:|
+| `2^16` | 6 | `0.003260` (`0.000227`) | `0.006462` (`0.000482`) | `0.0089` | `13.7` | `95.61%` (`89.15%`) | `10.5342` | `0.80659` |
+| `2^17` | 6 | `0.003050` (`0.000112`) | `0.006089` (`0.000219`) | `0.0052` | `15.2` | `96.63%` (`90.47%`) | `10.2017` | `0.80554` |
+| `2^18` | 6 | `0.002857` (`0.000088`) | `0.005747` (`0.000173`) | `0.0049` | `16.7` | `96.96%` (`91.30%`) | `9.9914` | `0.80212` |
+| `2^19` | 6 | `0.002533` (`0.000074`) | `0.005111` (`0.000118`) | `0.0049` | `16.7` | `97.18%` (`91.82%`) | `9.8616` | `0.79984` |
+| `2^20` | 6 | `0.002399` (`0.000032`) | `0.004857` (`0.000049`) | `0.0025` | `18.7` | `97.35%` (`92.32%`) | `9.7354` | `0.79839` |
+| `2^21` | 6 | `0.002172` (`0.000035`) | `0.004377` (`0.000067`) | `0.0033` | `18.5` | `97.42%` (`92.61%`) | `9.6628` | `0.79684` |
+| `2^22` | 6 | `0.001999` (`0.000021`) | `0.004057` (`0.000039`) | `0.0024` | `19.7` | `97.43%` (`92.77%`) | `9.6218` | `0.79508` |
+| `2^23` | 6 | `0.001889` (`0.000013`) | `0.003846` (`0.000026`) | `0.0017` | `20.5` | `97.45%` (`93.01%`) | `9.5620` | `0.79485` |
+
+- **Strict monotonicity (`2^16 -> 2^23`):** Both `N_l / U'` and `N_sw / U'` decrease at every single doubling (checked by `audit_cm.py`); `N(250)/U'` at `2^23` is `0.003552 +- 0.000024`; explicit unit share rises monotonically to **`93.01%`** (`97.45%` total, giving `k5_exact = 9.5620`); dense-band `tab_ratio` decreases monotonically (slope `+ 2 SE = -0.00160 < 0`).
+- **4-Parameter Deterministic Hard Abort Caps & Frozen-`2^23` Chebyshev (`P_CAP = 0.020`, `H3`):** To eliminate ANY reliance on asymptotic `U'^(-1/4)` variance concentration OR unbounded `k5`/`tab_r` drift, the algorithm enforces **four deterministic post-filtering hard abort caps** before launching Block Wiedemann:
+  1. `N_l <= N_cap = 0.00225 U' = 2^54.5215` (`+11.4 sd` above `2^23` mean `0.001889`),
+  2. `N_sw <= N_sw_cap = 0.00450 U' = 2^55.5215` (`+10.1 sd` above `2^23` mean `0.003846`),
+  3. `k5 <= k5_cap = 10.50` (`> 150 sd` above `2^23` mean `9.5620`),
+  4. `tab_r <= tab_r_cap = 0.85` (`> 220 sd` above `2^23` mean `0.79485`).
+  Even if production variances **froze completely at their `U' = 2^23` values** (`0%` additional concentration across 40 doublings!), the 4-way Chebyshev union bound is **`0.01761 < P_CAP = 0.020`** (verified live in `audit_cm.py`). Any run exceeding ANY of the 4 caps aborts immediately (charged in `P_CAP = 0.020`), so BOTH quadratic LA work `O(N_l^2)` AND 1-owner Arch B memory are bounded **deterministically** on every non-aborted run (zero Jensen/variance gap).
+
+### 1-Owner Architecture B Block Wiedemann, Generator, 4-Col Mod-`r` CRT Schirokauer, & Live Filtered `H-X`
+
+- **1-Owner Architecture B (`< 2^64` B incl. output block `y` at hard caps):** Holding BOTH input `x` (`N_sw_cap x 160 B = 2^62.843` B) AND output `y` (`2^62.843` B) plus all 22 dense-band tables (`2^59.497` B) totals **`2^63.913` B `< 2^64` B** on ONE single 64-bit owner (zero cross-owner sends/combines, verified live in `audit_cm.py`). With `C_ROW + C_CHI = 785`, `k5_cap = 10.50`, `tab_r_cap = 0.85`, `(m, n) = (8192, 110)`, `N_SM = 4`, `BW_SIG = 2^(-7)`:
+  - **Linear Algebra:** `<= 2^107.174671` core units (`-2.78` bits below `c36`'s `109.952`).
+  - **Matrix BM Generator:** `<= 2^98.808` core units.
+- **Exact 4-Column Mod-`r` CRT Schirokauer Maps (`<= 2^84` units, verified live in `audit_cm.py`):** Because `r == 13 mod 15`, `Phi_15 == h_(r,1) h_(r,2) (mod r)` splits into two irreducible quartics (`[4, 4]`), with `w_1 = -u^2 == u^8 (mod r)` and `w_2 = u^4 (mod r)`:
+  - *`K_f` side:* Over both `F_r[y]/(h_(r,i)) ~= F_(r^4)`, `f(X) = X^9 + (w_i + 1) X^6 + X^3 - w_i in F_r[X]` is irreducible of degree 9 (verified live by Rabin `9 x 9` Frobenius check + `gcd(9, 4) = 1`), giving exact residue degrees **`[36, 36]`** and annihilator `eps_f = r^36 - 1` (`9,175` bits).
+  - *`K_g` side:* On component 1 (`w_1 = -u^2`), `u w_1^2` is a non-cube in `F_r` and `F_(r^4)`, so `g(X) = X^3 - u w_1^2` stays irreducible of degree 3 (`[12]`); on component 2 (`w_2 = u^4`), `u w_2^2 = u^9 = (u^3)^3` is an exact cube in `F_r`, so `g(X) = (X - u^3)(X - u^3 w_2)(X - u^3 w_2^2)` splits into three linear factors (`[4, 4, 4]`). Exact `K_g` CRT degree list is **`[4, 4, 4, 12]`** (`lcm = 12`, annihilator `eps_g = r^12 - 1` annihilates every component; `r !| Disc`), well inside **`<= 2^84`** core units.
+- **Live Real-Filtered Product-Form `H-X` Check (`audit_cm.py` & `hx_analogue`):** Rather than testing synthetic random matrices, `hx_z12.py` invokes `filtsim_z12.run_filtsim_z12` LIVE to construct a **real filtered product-form `Z[zeta_12]` matrix** (with recorded pivots and 4 dense Schirokauer columns), forms `A = M (I - Q)^(-1) mod 1,000,033`, and verifies `rank M = N`, `rank A = D`, `rank C_d = N`, `rank O_e A = D`, and exact `-3` rank drop on the 1-block pad negative control. Executed live at `log2U = 13` (`D = 74, N = 70`) inside `audit_cm.py` and runnable on demand up to `log2U = 15` via `hx_analogue` (complementing our 14 larger sparse/product-form checks up to `D = 3,000`).
+
+## 5. Individual Logarithms
+
+Detailed in `DESCENT.md` (all `39` bins / `78` nodes listed and computed **100% LIVE** from `plan_struct` by `cm_models.eval_descent_live` inside `audit_cm.py` — ZERO precomputed `mu`, `miss`, `sieve`, `own`, or `boot pr_log2`!). Using our **16D Guillevic Rank-2 Torus Boot (`det = p^4`, `UDUP_BOOT = 1.0`, `BOOT_RELS = 48` from 48 independent fresh target-rerandomization exponents `e_1..e_48`, deterministic 50% norm-certificate discard filter `RET_BOOT = 0.50` at `m_max = 2600.0`b)** and **16D Rank-2 Canonical Special-`q` Tree (`UDUP_NODE = 0.95`, full de Bruijn enabled everywhere)**:
+- **Live 4-target BLS12-381 `w'=omega^2` boot witness (`boot_witness.json`):** `audit_cm.py` verifies exact `F_(p^4)` congruence, `|det| = p^4`, and all 68 exact 2,550-bit norms (`max = 2563.01`b `< 2600`b) live inside Docker.
+- **Expected two-log work (charged at stricter `96/192` lower sum):** `2^102.907298` <= **`2^102.908`** core units (`2^102.799364` at on-demand `{"descent_mesh": 384}`).
+- **Metered cap & conditional-independence premise (`H5`):** `t = 2^115.6` core units (`P(cap) <= 2^(102.908 - 115.6) = 1.511219e-04`). Under standard STNFS descent heuristic `H5`, the 48 independent rerandomized boot candidate relations fail with probability `phi_boot <= psi^48 = 1.0385e-08 <= 2e-08` (`6.6644e-09` at `MESH = 384`).
+- **Additional live checks:** `[11]` across 32 fresh BLS12-381 `w'=omega^2` boot targets (`544` norms, max `2575.73`b `< 2600`b): `kappa_hat = 0.7076 << BALL_PAIR = 2^24`; `[7e]` child-conditioning shift `(+3.40, +2.35)`b inside `(+10, +4)`.
+
+## 6. Success Probability & Strict Additive Union Bound
+
+Every single failure event across main phase, ECM meter, descent, target randomization, and wrapper is summed in a **strict additive union bound** `P(success) >= 1 - sum_i P(fail_i)` (verified in 80-digit `Decimal` inside `audit_cm.py`):
+- **Main-phase & ECM-meter failures:** Block Wiedemann Schwartz-Zippel `<= 4 N / 2^128 < 2^(-66)` (conditional on `H-X`, `H-SM`; `4/r < 2^(-252)` for random `W_f, W_g`), 4-parameter hard-cap abort `P_CAP = 0.020` (strictly above frozen-`2^23` 4-way Chebyshev `0.01761`), and ECM-split Chebyshev meter tail `< 2^(-77.1) < 2^(-70)`.
+- **Descent & target failures (2 logs, `H5`):** Two boots failing all 48 relations `<= 2 x 2e-08`, metered cap `<= 1.511219e-04` (evaluated at `+10%` headroom: `1.662340e-04`), node counter abort (`E[N] = 2^16.3104`, `N_MAX = 2^25.8`) `<= 2^-9.4896`, conservative `tau`-orbit repeat collision (smallest bin `[70, 76)` holds `>= 2^67.64 > 2^66.66` orbits) `<= 2^-10.05`, and degenerate target/randomizer `<= 2/r`.
+- **Wrapper failure:** Field map + rejection sampling `< 2^(-50) < 2^(-48)` (`field-map.md`).
+- **Opened-run floor (strict additive union bound):** Core success `>= 0.977514`; with `+10%` cap headroom and wrapper `< 2^(-48)`, opened-run success `>= 0.977499 >= 0.977499`.
+- **Run gate:** `K = 7359833809289549279` satisfies `(K / 2^64) x 0.977499 >= 0.39 > ((K - 1) / 2^64) x 0.977499` (`audit_cm.py`: `ledger_gate_claim`).
+
+## 7. Complete Ledger
+
+| Component | `log2` core units (`C = 20,000`) |
+|---|---:|
+| relation collection (tiled `Arch2-Rev-SigmaB`, sec. 3, `H-EA`; est. `110.653896` + `0.774%` H2 allow.) | <= 110.665020 |
+| replay 4-orbit `a`-tables build (`g` to `2^64` + `f` to `2^60`, 3-pass `a_0`-chord; sec. 3) | <= 107.1850 |
+| linear algebra (`1-owner Arch B Z[zeta_12] BW`, `W=200`, 4-param hard caps `k5<=10.5, tr<=0.85`, `(8192,110)`; sec. 4) | <= 107.174671 |
+| matrix Berlekamp-Massey generator (`half-gcd FFT`; sec. 4) | <= 98.808 |
+| both individual logarithms (metered cap; expected `102.908`; sec. 5) | <= 115.6 |
+| band split of kept relations (`(2^20, 2^48]`, 10/12 limbs; sec. 3) | <= 100.543 |
+| ECM split of kept relations (`(2^48, B]`; metered cap; exp. `95.62`, Cheb. `< 2^-77`; sec. 3) | <= 96.5 |
+| canonical `a`-list enumeration + global `key_a` pre-sort | <= 86 |
+| 4-column `chi`-Schirokauer maps (mod-`r` CRT `f: [36,36]`, `g: [4,4,4,12]`; meas. `<= 82.8`) | <= 84 |
+| filtering streams, product-form pivot selection, back-substitution, misc | <= 80 |
+| `P_g`, `P_f` product trees (`< 2^89` instructions) | <= 75.5 |
+| factor base, roots, 12-orbit ideals (`U' = 2^63.32`) | <= 75 |
+| numerical certificate construction | <= 50 |
+| final verification | <= 11 |
+| wrapper (sec. 1; `<= 2^80` instructions = `2^65.71` core units) | <= 66 |
+
+Core cap sum (`80`-digit `Decimal`): `2^115.654597295233 <= 2^115.6545972953` core units (with wrapper `2^66`: `< 2^115.654597295301` core units = `< 2^118.976525390188` G1 units). Replacing the metered cap `2^115.6` by expected two-log descent `2^102.908` gives opened-run expected core work `2^110.909233384391 <= 2^110.9092333844` core units. Behind the run gate `K / 2^64 = 0.3989773903`, total expected work is `< 2^109.583612281860` dense-`F_(p^12)` units (`C = 20,000`) and `< 2^112.905540376747` G1 units (`C = 2,000`).
+
+## 8. Heuristics
+
+- **`H1` (Smoothness & Local Laws):** Two-sided smoothness with **explicit de Bruijn `rho_dB(u, x)`** on both Collection and Descent, certified Murphy `alpha = (+2.74, +1.28)` (`w'=omega^2`), exact `v_2(N_g)` and `kappa_2`, and boot pair ratio `kappa <= 2^24` (measured `0.7076`, `[11]`).
+- **`H1'` & `H-EA` (Detector Retention & Survivor Work):** Two-stage Euler-product retention and survivor-upper laws on `(g, f)` (computed live via `cm_models.Retention` + self-contained `stage_b_analytic`) with `0.009`-bit band-miss margin; `f/g` stage-B dependence bounded by `q_f = min(1, 10 rho(u_f))`.
+- **`H-FFT` (Work only):** `F(N) = 8.5 N (log2 N)^2 + 1200 + 504 N` (`N > 2^26`) bounds local SSA Fermat-ring NTT integer multiplication (`KERNELS.md` §3).
+- **`H2` (Region & Pool Estimation):** Pre-registered `200,000`-sample duplicate-free `min-T2` pool `P2_wy_2ad` (`SE_y = 0.0101`b, `SE_c = 0.0029`, `SE_w = 0.0030`, `H2` allowance `1.00774 >= 1 + 2 max(SE_c, SE_w)`); exact 16D ellipsoid concentration (`+1%` discrete safety on `C/H`).
+- **`H3` & `H-SM` (Matrix & Class Numbers):** `r` unramified (proved), `r !| h(K_f), h(K_g)`, `P_chi Lambda` injective on the 4-dim `chi`-unit space (verified on `u_0 = -5` toy tower), and standard STNFS filtering extrapolation: at production `U' = 2^63.32`, the four `Z[zeta_12]` product-form filtering parameters `(N_l/U', N_sw/U', k5, tab_r)` do not worsen relative to the monotone `2^16..2^23` `filtsim_z12` campaign and stay within the frozen-`2^23` variance envelope bounded by the 4-parameter hard-cap abort budget `P_CAP = 0.020` (`N_l/U' <= 0.00225`, `N_sw/U' <= 0.00450`, `k5 <= 10.50`, `tab_r <= 0.85`).
+- **`H4` & `H4u` (Kernel & Unit Share):** Pure baseline scalar AArch64 compiled & analytical counts (`KERNELS.md`, zero SIMD, zero `FEAT_LSE`, explicit transfer pricing); `Z[zeta_12]` hexagonal 6-bucket unit share (`97.45%` total, `93.01%` explicit at `2^23`) bounded by the hard caps `k5 <= 10.50`, `tab_r <= 0.85`.
+- **`H-X` (Krylov Controllability & Observability):** For the live filtered product-form system with 4 fixed Schirokauer columns and block-diagonal `X` placing the 4 pad coords in distinct blocks, `rank C_d = N` and `rank O_e A = D` at the charged `d, e` (verified live on real filtered `Z[zeta_12]` product-form matrices via `audit_cm.py` and `hx_analogue`, plus 14 checks up to `D = 3,000`).
+- **`H5` (Descent Conditional Independence & Tree Model):** Standard STNFS descent model: lower-sum semismoothness with de Bruijn (`MESH = 96/192` default, `384` on demand), deterministic 50% boot-ball norm-certificate pass rate (`RET_BOOT = 0.50` at `m_max = 2600`b; supported by `32/32` targets in `[11]` and `4/4` live witnesses in `boot_witness.json`), lazy cofactorization, negative-binomial recurrence, conditional independence of successive candidate relations at a node/boot (`phi_boot <= psi^48` across 48 independent rerandomization exponents) and independent subtrees of distinct ideals (`[7e]` shift `(+3.40, +2.35)`b), uniform orbit collision rate, Poisson missing-ideal model, random-integer ECM orders, `UDUP_BOOT = 1.0`, `UDUP_NODE = 0.95`.
+
+## 9. Memory & Provenance
+
+**Peak memory:** `< 2^120.5` bytes (`2^120.39` B replay `a`-tables during collection; `< 2^105` B in descent; `2^63.913` B `< 2^64` B on 1 owner in LA; `< 2^30` B wrapper; `STORAGE.md`). All preprocessing is target-specific and charged once in `W`.
+
+**Provenance:** CM-split cyclotomic towers over `Q(zeta_15)` build on Kim-Barbulescu (CRYPTO 2016), Guillevic-Singh (2020), Zhu-Liu (2025), and APT26; filtering follows CADO-NFS and Boudot (ePrint 2017/758). Prior CurveSmash lineage (`c24..c36`, `stnfs-bn15r`; gbotrel, Claude Opus 5.5 / Fable 5.2) and credited community ideas: run gate, expected work reading, and high descent cap (kaankolcu `c613ae01`, `3359b9e2`), truncated-Shoup `chi`-mul idea (soispoke `cf131637`), carry-chain combine (yukonautominer `9a7df12c`), and `(m, n)` block sizing (mpjunior92 `ea928ab4`). New here: the `w' = omega^2` `sigma`-fixed isometry, Split-Base & Pigeonhole Zero-Log Theorems, live `(4, 3)` `Q(zeta_15)` E2E DLP audit, tiled `Arch2-Rev-SigmaB` zero-9D-walk pure-C reversed `a`-table replay with complete `1/12` `b_0`-invariant `D_(omega,sigma)`, self-contained analytical Stage B & H-FFT, 4-parameter hard-capped 1-owner Arch B `Z[zeta_12]` BW with live `filtsim_z12` + real-filtered-matrix `H-X`, 4-col mod-`r` CRT Schirokauer maps (`[36,36]` / `[4,4,4,12]`), and 16D Guillevic Rank-2 Torus Boot (live 4-target witness + 50% norm filter) + 100% live 78-node descent with full de Bruijn enabled everywhere. No prior verdict is a premise.
