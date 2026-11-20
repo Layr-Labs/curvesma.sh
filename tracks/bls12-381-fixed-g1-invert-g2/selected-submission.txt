@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g1-invert-g2
+submissions/bls12-381-fixed-g1-invert-g2/c36q-b71-pf25-gb8-ssa35-slab27-w2h
