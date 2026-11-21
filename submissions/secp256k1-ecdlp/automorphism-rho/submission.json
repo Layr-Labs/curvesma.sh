@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: automorphism-aware Pollard rho (order-6 classes, distinguished points)",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P for the fixed standard secp256k1 generator P, the single-shot classical automorphism-aware Pollard rho algorithm in proof.md (negation map plus the j=0 cube-root automorphism (x,y)->(zeta^i x, +/-y) with [lam]P = zeta(P), order-6 classes of size 6, 2^16 parallel distinguished-point walkers, 32-adding walk) recovers x with success probability at least 0.39 using at most 2^127.723944 total target-group-operation equivalents (time_log2 = 127.723944 = 15965493/125000), including setup, all trials and failures, walk computation, canonicalization, representation updates, distinguished-point processing, post-merge detection lag, extraction, verification and output. Every walk step is charged at worst case 1.839 units: one reference batched incomplete affine addition plus 839 instruction equivalents of canonicalization and bookkeeping; the step budget is 1.1*sqrt((r-1)/6). Peak memory is at most 2^70.9 bytes (memory_log2_bytes = 70.9), dominated by the distinguished-point table; preprocessing is at most 2^25.4 target-group-operation equivalents (preprocessing_log2 = 25.4) and is included in the total; nonuniform advice is 0 bytes because all tables are constructed and charged at runtime. This is a classical cold attack on one target with no uncharged advice, no quantum steps and no amortization over targets; the only heuristic is the standard random-walk birthday model for the first class collision (disclosed and supported in proof.md, with a >= 14% efficiency margin against the claimed 0.39 lower bound). The algebraic structure (p mod 3 = 1, primitive cube root zeta of Fp, lam with [lam]P = zeta(P) and lam^3 = 1 mod r, class count (r-1)/6, canonicalization representation bookkeeping) is verified exactly at production parameters by experiment.py Part A; Part B demonstrates the complete attack end-to-end on a 20-bit j=0 toy curve at the same budget shape (84/200 successes vs 0.4545 ideal, zero extraction-verification failures).",
+      "score": {
+        "numerator": "15965493",
+        "denominator": "125000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json",
+        "experiment.py",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "automorphism-rho-toy",
+      "source": "experiment.py",
+      "purpose": "Part A verifies at full production secp256k1 parameters (exact stdlib arithmetic): p mod 3 = 1, r mod 6 = 1, a primitive cube root zeta of Fp with zeta^3 = 1 that preserves the curve, lam with [lam]P = zeta(P) and lam^2 giving the zeta^2 image, lam^3 = 1 mod r, the class count (r-1)/6, and the canonicalization-with-representation bookkeeping on 12 random points [a]P+[b]Q. Part B runs the complete attack (constants, walkers, canonical 32-adding walk, distinguished points, collision extraction, verification, degenerate reseeds) on a 20-bit j=0 toy curve of prime order with the same budget shape ceil(1.1*sqrt((n-1)/6)) and reports the single-shot success rate against the ideal birthday prediction, plus extraction-verification failures and degenerate-restart counts. Toy evidence is evidence at toy scope only; it does not establish production costs or constants.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "trials": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400
+          },
+          "dp": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "trials",
+          "dp"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "trials": 200,
+          "dp": 1
+        }
+      ]
+    }
+  ]
+}
