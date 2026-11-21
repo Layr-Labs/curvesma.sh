@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "title": "recover-Q: (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod 1-Owner + Constructive Saturated |N(det)|==q + Full 16..2^70 Zero-Skip dsieve16 + Bit-Simulated Coprime Stage-1 F_Vor/mu_30 S_cert (H1-cert + H5-Cert): expected work 2^109.607232874413",
+  "claims": [
+    {
+      "statement": "For BLS12-381 fixed-G1 invert-G2 (bls12-381-fixed-g1-invert-g2), on any supplied nonidentity P in G1 and z in G_T, the self-contained (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod 1-owner flat-array build (flag-exact ARMv8-A Band-1a wrap+u4+tail1 & 1-rec Band-1b apply) + constructive exact-saturated |N_(H/Q)(det_(O_H)(v1,v2))| == q special-q O_H-basis (obpair/obasis Hermite complement + Babai reduction; M == L_q identically, unconditionally proving ZERO fixed prime-ideal divisors P != Q via min N(P) = 16 > 9 = deg(f_9) > 3 = deg(g_3)) + COMPLETE ZERO-SKIP iterative Q32 dsieve16 over ALL prime ideals 16 <= N(Q) <= 2^70 (including ALL 150 small ideals N(Q) < 256 explicitly priced & sieved, 1.00*WC_LLL99 expected node budget under H2, full 40-op dsieve16_leaf_vec + 10-op/level rank_step = 316 <= 340 Ir/leaf) + certified 60-bit smulh/umulh UPPER-BOUND BOUND_CELL_HI (p_nc = 0) integrated with Stage-1 exact-integer F_Vor/mu_30 coprime runtime norm certificate S_cert(node) >= T_cert = 10.0 (BOUND_CELL_g = 3,420 Ir/cell 100% worst-case pointwise, ZERO amortization, ZERO Stage-2 f_9 evals, 7 raw-opcode-verified & bit-exact-simulated ARMv8.0-A blocks incl. branchless signed-30b abs/clamp, sign-aware F_Vor, 64b Galois norm N(c_i) + 48-step Euclid gcd==1 + carry-exact 5-limb Q !| (a,b) proving 100% unique O_H^*-orbits & O_H-coprimality; under standard size-bound-conditioned H1-cert, P(M=0 | size profile, S_cert>=10) <= exp(-10) = 4.54e-5; under declared exploratory lattice-geometry premise H5-Cert P(S_cert<10 | A_{j,b}, Q_boot) <= eps_cert = 0.0008, supported by 36/36 live-regenerated full-production 381-bit lattices clearing exact discrete-cell 99.9% Clopper-Pearson LCB >> 10.0, yielding p0 = 0.00084540 and P_boot_tree = 0.4548 < 0.50 over <= 538 det. knapsack slots, NO Gate E) + proved RET_BOOT=1 + PM-Basis algorithm recovers Q in G2 with e(P, Q) = z with success probability >= 0.39 (opened-run Boole floor >= 0.999761, run gate K = 7195950020801696736) and expected total classical work E[W] <= 1 + (K/2^64)*(2^110.965342 + 2^66) < 2^109.607232874413 dense-F_(p^12) units (C = 20,000 baseline scalar ARMv8.0-A integer instructions, unified aborting meter t_run = 2^123.0).",
+      "score": {
+        "numerator": "109607232874413",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "obpair.py",
+        "obasis.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "cm_tables.b85",
+        "q15_adaptive_h5.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 14-check audit: Q(zeta_15) algebra/CRT/NTT + exact finite-field root count across all 56 O_H ideals N(P)<256 (min N(P)=16>9 & 150 small ideals matching SMALL_150), live E2E DLP, Arch2-Prod 4-bank 8B flat-array replay + 400-draw O_H-coprime pool, Voronoi + proved RET_BOOT=1 + live 381b boot, SRT toy, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator (29 blocks incl. flag-exact Band-1a wrap+u4+tail1, 1-rec Band-1b & Band-2, iterative DFS dsieve16, full 40-op dsieve16_leaf_vec + 10-op rank_step 316<=340 Ir/leaf, 60-bit smulh bound_cell_ball_mul, and all 7 Stage-1 F_Vor/mu_30 coprime S_cert kernels bound_cell_scert_* <= 3,420 Ir/cell worst-case pointwise), 2D Retention + 200k pool + 1-owner build <2^63.876 B + PM-Basis <=2^93, theta_1^16 |S_16(R)| + full 16..2^70 zero-skip dsieve16 + certified BOUND_CELL_HI (p_nc=0) + pure-Taylor unit_orbit + 32/185 Det.Knapsack S_cert k=1 Boole descent + 80-digit gate, BW + live PM-Basis, unitdomain F_Vor cone + Sinnott full unit group + live obasis constructive fallback + 36/36 live-regenerated exact-saturated production lattices (12 encountered + 24 fresh) each running exact discrete-cell integer bound_cell_scert_* on 6,144 uniform S_16(R) points with 99.9% Clopper-Pearson LCB >> 10.0 and 0 L_cert_f violations, literal (9,3) B_16 q15_93 (100/100 non-empty) + 410-slot strict adaptive tree O/E_p0=0.4324, C_bday=0.899, and 3 live exact-saturated depth-2 witnesses.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
