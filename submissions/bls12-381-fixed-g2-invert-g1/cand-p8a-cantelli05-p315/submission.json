@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod-ZeroCopy-U32 + 1-Owner 4-Vec Arch B LA + Pure k=1 Boole & Wald i.i.d. Boot (Cantelli max(0.0004, 1/(1+0.5*mu)), expected work 2^110.304889445963)",
+  "claims": [
+    {
+      "statement": "Under declared exploratory STNFS heuristics H1/H2, H3, H-R, H-SM, H4, H4u, H-X, H5, the self-contained BLS12-381 recover-P algorithm under unified meter t_run = 2^123.0 u (expected opened run <= 2^111.6619 u, opened success >= 0.99961179 >= 999/1000 via pure k=1 Boole union bound + unbounded fresh-e i.i.d. Wald boot retries) behind outer gate K = 7201431620367092223 achieves overall success >= 0.39 with expected work < 2^110.304889445963 dense F_(p^12) units (C = 20,000).",
+      "score": {
+        "numerator": "110304889445963",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "cm_tables.b85",
+        "w8_verifiers.py",
+        "q15_low_p0_24b_w8.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Fast (<6.8s) pure-stdlib 18-check audit: Q(zeta_15) algebra/CRT/NTT, exact local-root Murphy-alpha (p<=50,000 + empirical-variance tail RMS) & odd-integer kap2_g, exact-degree (72,24) (9,3) real-FB joint smoothness calibration (1,200 non-unit pairs, U_toy=-14 === U_BLS mod 30), live E2E DLP, Arch2-Prod-ZeroCopy-U32 1-owner flat-array build + 200k-draw exact-O_H-coprime pool (+8.4% strict-hi margin), Voronoi + live 381b G_T boot (1 target / 136 pairs, m_sv=2592.0), SRT toy, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator, zero-column-loss Z[zeta_12] filtering (2^16..2^24, >=1.67x caps, inverse-log fit) + live 100% unscreened zero-oracle two-sided Q(zeta_15) filtering & UNPLANTED H-X + post-hoc BSGS recovery + matched-scale synthetic calibration + TRUE same-underlying-matrix full-vs-proxy check, 1-owner < 2^64 B 4-vec Arch B LA + classic PM-Basis, pure k=1 Boole + Wald i.i.d. boot descent (Cantelli max(0.0004, 1/(1+0.5*mu)), Phi=0.5879, N1=1103, 32/185 & 384/370) + 80-digit ledger, 24+12 live 381b single-special-q Bareiss-LLL lattices, 120-ideal (9,3) fixed-band dispersion + hi100, 120-ideal U_BLS encountered-child check, LIVE immediate-abort strict-k=1 boundary campaign (64 roots), and UNSCALED 24-bit real-2-core-FB 240-ideal campaign (ZERO in-sample fitting, 0/240 zeros, 6/6 live replayed).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand operator-equivalence check on recorded-pivot product-form operator vs Schur complement over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
