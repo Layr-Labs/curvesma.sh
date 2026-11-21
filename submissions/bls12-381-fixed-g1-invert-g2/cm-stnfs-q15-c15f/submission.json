@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "title": "recover-Q: (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod 1-Owner + Direct Z-Basis L_q (p_sat=0) + Prime-Power 16..2^70 dsieve16 + NC-Guarded BOUND_CELL_HI + Clean k=1 Boole H5: expected work 2^111.125952726456",
+  "claims": [
+    {
+      "statement": "For BLS12-381 fixed-G1 invert-G2 (bls12-381-fixed-g1-invert-g2), on any supplied nonidentity P in G1 and z in G_T, the self-contained (4,3) Q(zeta_15) CM-STNFS + Arch2-Prod 1-owner flat-array build (flag-exact ARMv8-A Band-1a wrap+u4+tail1 & 1-rec Band-1b apply) + direct exact Bareiss-LLL 16x16 Z-basis R[0..15] of L_q (det_Z(R) == q unconditionally -> [L_q : L_q] = 1, p_sat_abort = 0.0 proved, ZERO restricted ob_pair search, ZERO floating-point fallback; unconditionally ruling out fixed prime-ideal divisors P != Q via min N(P) = 16 > 9 = deg(f_9) > 3 = deg(g_3)) + COMPLETE prime-and-prime-power iterative Q32 dsieve16 over ALL relative-degree-1 prime ideals AND prime powers Q^e (e >= 2, N(Q)^e <= 2^70) including ALL 150 small ideals N(Q) < 256 AND exact 2-adic g-side sublattices P_i^k | a (k = 1..6, weights 12,12,12,12,12,4 -> exact 128-bit v_2(N_g) recovery with 0 deficit, verified LIVE on a = 2^6, b = 1 and P_1^k | a, plus general f x 16 F_p-linear residue-field kernel HNF det=p^f=N(P) verified LIVE on both F_16=(Z/2Z)^4 ideals P1,P2 with 1,010 & 1,142 exact S_16(2) hits [0 mismatches] and B_int/WC_LLL99 = 0.4310 & 0.3531 << 1.0, 1.00*WC_LLL99 under H2, full 40-op dsieve16_leaf_vec + 10-op/level rank_step = 316 <= 340 Ir/leaf) + certified 60-bit smulh/umulh UPPER-BOUND BOUND_CELL_HI with deterministic 4-op near-cancellation guard (1,696 <= 1,800 Ir Stage 1, 1,712 <= 1,800 Ir Stage 2; whenever sq - (e30 + 1) >= 64*(e30 + 1) at all 4 places [nc==0], unconditionally 0 <= L_hi - log2|N| <= 0.5343 < 0.625b + Q4 score rounding <= 41.0b leaving > 54.3b unused slack inside T-T0 = 96.0b -> 0 false negatives for all cells with prime-power excess <= 54.3b above 2^70, with the < 2^-35 higher-excess tail absorbed inside charged ret_node = 0.90 under H2; whenever nc==1, cell is NEVER dropped and deterministically routed to Stage 2 + exact NORMS with p_nc = 2^-24 explicitly priced, verified LIVE on a literal -57.3b near-cancellation witness gap_bits = 23.09) + clean k = 1 Boole descent under declared exploratory STNFS premise H5 (P(M=0 | slot) <= p_0(b) = max(0.001, (1 + 0.5*mu(b))^{-1}), min_mu = 888.99 [32/185] / 1061.88 [384/370], max_p0 = 0.00224 [32/185] / 0.00188 [384/370], P_boot_tree = 0.55967 [32/185] / 0.55191 [384/370] over <= 538 det. knapsack slots, NO Gate E, backed by direct-R full-depth squarefree strict k=1 Q(zeta_15) (3,3) adaptive descent [469 fresh ideals incl. q==1 mod 9, 300 roots -> 298 == 242 completed + 56 empty-slot aborts up to max_depth=7, 978 reached slots O/E_p0 = 0.1806, C_bday = 1.284, hi200 lower-tail 1/200 zeros E[0.8^M] = 0.10466, 3 live complete depth-2 witnesses + live 32-root full-depth strict k=1 run inside audit: 32 == 27 + 5, max_depth=6, 93 slots, O/E_p0 = 0.1647], real-FB q15_93 0/100 empty hi100, and 36/36 live-LLL direct-Z-basis production lattices with modeled joint-pr >= 20.87x charged) + proved RET_BOOT=1 + PM-Basis algorithm recovers Q in G2 with e(P, Q) = z with success probability >= 0.39 (opened-run Boole floor >= 0.999317, run gate K = 7199147206288620258) and expected total classical work E[W] <= 1 + (K/2^64)*(2^112.483421 + 2^66) < 2^111.125952726456 dense-F_(p^12) units (C = 20,000 baseline scalar ARMv8.0-A integer instructions, unified aborting meter t_run = 2^123.0).",
+      "score": {
+        "numerator": "111125952726456",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "cm_tables.b85",
+        "q15_adaptive_h5.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 14-check audit: Q(zeta_15) algebra/CRT/NTT + exact finite-field root count across all 56 O_H ideals N(P)<256 (min N(P)=16>9 & 150 small ideals matching SMALL_150), live E2E DLP, Arch2-Prod 4-bank 8B flat-array replay + 400-draw O_H-coprime pool, Voronoi + proved RET_BOOT=1 + live 381b boot, SRT toy, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator (23 blocks incl. flag-exact Band-1a wrap+u4+tail1, 1-rec Band-1b & Band-2, iterative DFS dsieve16, full 40-op dsieve16_leaf_vec + 10-op rank_step 316<=340 Ir/leaf, and 60-bit smulh/umulh bound_cell_ball_mul + 4-op near-cancellation guard 1,696<=1,800 Ir Stage 1 / 1,712<=1,800 Ir Stage 2), 2D Retention + 200k pool + 1-owner build <2^63.876 B + PM-Basis <=2^93, theta_1^16 |S_16(R)| + full 16..2^70 prime-and-prime-power dsieve16 (incl. live F_16 P1,P2 kernel HNF det==16, 1,010 & 1,142 hits, + live 128-bit 2-adic g-side zero-deficit check) + NC-guarded BOUND_CELL_HI (p_nc=2^-24, live -57.3b near-cancellation witness gap_bits=23.09, ret_node=0.90) + 32/185 Det.Knapsack k=1 Boole H5 descent + 80-digit gate, BW + live PM-Basis, pure Decimal(50) + exact-O_H-identity unitdomain.py F_Vor & Sinnott check, 36/36 live-LLL direct-Z-basis R[0..15] production lattices (det_Z(R)==q, p_sat_abort=0.0 proved, 12/12 enc12 parent divisibility & modeled sextile/joint-pr >= 20.87x headroom diagnostics), literal (9,3) B_16 q15_93 (0/100 empty hi100), and true full-depth squarefree direct-R strict k=1 Q(zeta_15) (3,3) adaptive descent (469 fresh ideals incl. q==1 mod 9, 300 roots -> 298 == 242 comp + 56 abort up to max_depth=7, 978 reached slots O/E_p0=0.1806, C_bday=1.284, hi200 lower-tail 1/200 zeros E[0.8^M]=0.10466, 3 live complete depth-2 witnesses + live 32-root full-depth strict k=1 descent inside audit: 32 == 27 + 5, max_depth=6, 93 slots, O/E_p0=0.1647).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
