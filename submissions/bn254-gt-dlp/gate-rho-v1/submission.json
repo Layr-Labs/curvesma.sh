@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "title": "bn254-gt-dlp gated bounded small-memory Pollard-rho",
+  "claims": [
+    {
+      "statement": "For the full protected BN254 target and uniform z=g^x, the concrete one-trial 32-adding Pollard-rho algorithm, preceded by one fresh gate coin per execution (a closed gate halts immediately and is charged at most its 2^7 scalar instructions), can return x with g^x=z with exploratory success probability at least 0.40. The expected total computation of one execution, over the gate coin and all walk coins under classical-group-work-v2's probability space with closed-gate runs charged as all trials and failures requires, is at most (295893513763578638011461384341992519220*3420160+2^40)/2+128 scalar AArch64 instruction equivalents (20,000 per reference unit), using at most 2^20 bytes of peak total storage on one processor; the per-run worst-case open-gate walk work is 295893513763578638011461384341992519220*3420160+2^40. The success assessment relies on the disclosed standard r-adding collision-time heuristic halved by the gate, supported and limited as explained in proof.md; it is not an unconditional production success theorem. Total work includes all one-target preprocessing, fresh randomness, failed outcomes, hashing, arithmetic, memory access, recovery, verification and output, with every operation justified in machine.md. No prior acceptance, searched advice, amortization or actual production-scale attack execution is assumed.",
+      "score": {
+        "numerator": "134216266",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "machine.md",
+        "arithmetic.c",
+        "rho.py",
+        "development-evidence.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "bounded-rho-arithmetic-and-walks",
+      "source": "experiment.py",
+      "purpose": "Check full-width Montgomery and BN254 invariants, test the gated walk on small prime groups including gate halts and failures, and reproduce the expected capped cost. These do not prove production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "trials": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 256
+          }
+        },
+        "required": [
+          "seed",
+          "trials"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261110,
+          "trials": 128
+        }
+      ]
+    }
+  ]
+}
