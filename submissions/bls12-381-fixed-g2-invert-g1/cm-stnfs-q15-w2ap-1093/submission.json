@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: 2^109.324930268015 Equivalent Units (CM-STNFS Q(zeta_15), 1-Owner 4-Vec Arch B LA, Per-E H5-Blind R_tree=44)",
+  "claims": [
+    {
+      "statement": "Expected computation <= 2^109.324930268015 equivalent units at algorithmic success >= 0.39 (full-run expected cost <= 2^110.6831 u, unified meter t_run = 2^123.0 u, p_floor = 999803/1000000, K_gate = 7195647731349801042).",
+      "score": {
+        "numerator": "21864986053603",
+        "denominator": "200000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "cm_tables.b85",
+        "q15_blind_h5.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib audit: Q(zeta_15) algebra/CRT/NTT + exact poly-GCD 192 pairwise-O_H-coprime unramified f-side blinding pool in [2048,8192] + exact local-root Murphy-alpha (p<=10,000, exact p=2,3,5, kap2_g err 0.0001b) + live real-FB joint smoothness calibration (800 pairs), live E2E DLP, Arch2-Prod 1-owner flat-array replay + 200k exact-O_H-coprime pool (+0.1171b strict-hi, h2_allow=1.08), zero-column-loss 2^16..2^24 H3 ladder + 1-owner <2^64 B 4-vec Arch B LA (n=112, m=8192, te=0, tab_ratio=1.00, nl_cap=0.0025, sw_cap=0.00505, k5=11.8), live algebraic Q(zeta_15) zero-loss filter, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator, lx=71.0 per-environment H5-Blind(a,b) descent (no local scan cutoff, p_bcap=0.35, K_blind=16, eps_exc=0.12, single T_tree=4.5*W_tree_1, R_tree=44, p_desc_loss<=1.0000e-18), live 100% per-parent p_hat(Q) audit on 8 depth-5 (3,3) trees + 120-root campaign, LIVE actual-production-U_BLS (9,3) CRT-blinded counting (32 balls, 0 empty) + 432 u=-5 (9,3) balls, 48 live 381b CRT LLL geometry stability checks, and 80-digit gate.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
