@@ -1,1 +1,1 @@
-submissions/bn254-gt-dlp/rho-baseline-v2-20261110
+submissions/bn254-gt-dlp/bn254-v19-band3c-85450205160
