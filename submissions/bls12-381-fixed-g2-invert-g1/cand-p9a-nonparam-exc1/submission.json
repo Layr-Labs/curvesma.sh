@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS + 1-Owner Arch B LA + Nonparametric G_min=64/192 K_blind=32 Descent at 2^109.977558904418",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-Q / recover-P (`e(P, Q) -> P`) reduction via two G_T logarithms in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0), achieving opened-run expected work E[W_run] <= 2^111.3272 u behind T_run = 2^123 u and T_desc = 2^117.5 u with opened-run success >= 0.99391, and gated cold-run expected work E[W] <= 2^109.977558904418 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "54988779452209",
+        "denominator": "500000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "h3_coll_bridge.py",
+        "cm_tables.b85",
+        "q15_blind_h5.b85",
+        "w9_hx_h3.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: Q(zeta_15) algebra/CRT/NTT + exact 192=192 pairwise-O_H-coprime f-side blinding pool in [2048,8192], live E2E DLP, Arch2-Prod-ZeroCopy-U32 replay + 4-scale 4,800-pair real-FB joint collection + 200-semiprime 0.999 Suyama ECM + Murphy-alpha, Voronoi + proved RET_BOOT=1 + live 381b boot + 150-exponent live G_T boot smoothness check, SRT toy, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator (26 blocks), 2D Retention + 200k pool + 1-owner build <2^64 B, 1-owner (<2^64 B) 4-vec Arch B LA calibrated to the 2^16..2^24 Zero-Column-Loss ladder (nl_cap=0.00297, sw_cap=0.00605, hex6 k5=13.7, c_xown=0.0) + w9_hx_h3 (100% unscreened zero-oracle two-sided Q(zeta_15) H-X + matched-scale cal + TRUE same-underlying-matrix full-vs-proxy H3), and lx=71.0 FB-blinded CRT k_bt=4 nonparametric G_min=64/192 K_blind=32 (p_exc=0.01) descent behind T_scan_Ir=2.0*own_1 and T_desc=2^117.5 + 80-digit gate.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
