@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: (4,3) Q(zeta_15) CM-STNFS, Zero-Assumption Det-m_boot & Armored H5 (p0=0.0025, N1=196), E[W_G1] < 2^114.307168872801 G1 units",
+  "claims": [
+    {
+      "statement": "For BLS12-381 plain G1 ECDLP (bls12-381-g1-ecdlp-plain), on any supplied T = [x]P0 in G1 (uniform x in 0..r-1, including T = infinity for x = 0, with no auxiliary powers), under explicitly declared exploratory-v1 STNFS premises (H1, H2, H3, H-X, H-EA, H5 at weakened p0_floor=0.0025 over N_tree=196 slots; ZERO empirical boot-norm distribution premise via deterministic Lovasz m_boot=2592.0 and Bin-Conditioned Mediant + Wald Theorem over 318 contiguous norm bins covering [0,2592]), the self-contained (4,3) Q(zeta_15) CM-STNFS algorithm transfers (P0, T) to G_T via the public pairing e(., Q0) and recovers the 64-hex scalar x with [x]P0 = T with cold-run success probability >= 0.39 and expected total classical work E[W_G1] <= 1 + (K/2^64)*10*(2^112.3428 + 2^66) < 2^114.307168872801 G1 units (C = 2,000 baseline scalar ARMv8.0-A integer instructions; core rows in C_core = 20,000 = 10 G1 units, core 2^110.985240777914, unified aborting meter t_run = 2^123 core units giving deterministic pointwise cap < 2^126.3219282 G1 units).",
+      "score": {
+        "numerator": "114307168872801",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py",
+        "boot_lll_0.b85",
+        "boot_lll_1.b85",
+        "boot_lll_2.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Self-contained live verification of BLS12-381 (4,3) Q(zeta_15) algebra, Murphy-alpha, toy e2e DLP, Sigma-B exactness, 2D collection pool, 32-target 381-bit G_T deterministic-Lovasz b_0 boot (n_scratch=1 + 32 certified bases), 16-owner LA streaming placement & H3 zero-loss filtering ladder, genuine Q(zeta_15) H-X & gamma_0 lambda-cancellation, TOTAL-capped dsieve16 (internal+leaf, 32 genuine Q(zeta_15) roots), strict zero-omitted-children 240-ideal & 64-root k=1 H5 diagnostics, and 80-digit Decimal ledger/gate.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
