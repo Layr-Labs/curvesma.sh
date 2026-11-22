@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS + 1-Owner Arch B LA + Pure k=1 Boole/Wald b_best2 EA Boot (p0_floor=0.001) at 2^109.578792317464",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-Q / recover-P (`e(P, Q) -> P`) reduction via two G_T logarithms in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0), achieving opened-run expected work E[W_run] <= 2^110.9369 u behind unified hard meter T_run = 2^123 u with opened-run success >= 0.99976, and gated cold-run expected work E[W] <= 2^109.578792317464 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "13697349039683",
+        "denominator": "125000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 18-check audit: Q(zeta_15) algebra/CRT/NTT, Murphy-alpha + real-FB joint collection, live E2E DLP, Voronoi + proved RET_BOOT=1 + 24-target b_best2 boot quintiles (live from-scratch 381-bit 16D Bareiss-LLL target 0), SRT toy, raw-opcode ARMv8.0-A integer parser + bit-exact 64b simulator, 2D Retention + 200k pool (det_credited=0.95) + 1-owner build <2^64 B, 1-owner (<2^64 B) 4-vec Arch B LA calibrated to the 2^16..2^24 zero-column-loss ladder (nl_cap=0.00297, sw_cap=0.00605, hex6 k5=13.7, zero TABM) + 100% unscreened zero-oracle two-sided Q(zeta_15) H-X + matched-scale calibration + TRUE same-underlying-matrix full-vs-proxy H3, and pure k=1 zero-retry Boole + Wald i.i.d. fresh-e b_best2 P_71 Early-Abort Boot descent (p0_floor=0.001, min_mu>=500, Phi_tree<=0.52, N1=451, unified T_run=2^123) + 80-digit gate.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
