@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-Q: (4,3) Q(zeta_15) CM-STNFS + 1-Owner Arch B LA + Gated Single-b0 Calibrated gamma_0-Blinded Pure k=1 Boole/Wald Descent at 2^109.691421178580",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-P / recover-Q (`e(P, Q) -> Q`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms (exact lambda-cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0), achieving opened-run expected work E[W_run] <= 2^111.0495 u behind unified hard meter T_run = 2^123 u with opened-run success >= 0.99974, and gated cold-run expected work E[W] <= 2^109.691421178580 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "5484571058929",
+        "denominator": "50000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py",
+        "boot_lll_0.b85",
+        "boot_lll_1.b85",
+        "boot_lll_2.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 18-check audit: Q(zeta_15) algebra/CRT/NTT + gcd(r,(p^12-1)/r)==1, Murphy-alpha + real-FB joint collection, live E2E DLP, Voronoi + proved RET_BOOT=1 + single-b0 two-sided gated boot [2490,2555] (p_band=0.85, surv_x=4.0; 4 targets recomputed live from scratch via deterministic Bareiss-LLL + all 32 real 381-bit G_T (99/100)-LLL bases live-certified + P_10000 & toy P_1024 EA diagnostics), SRT toy, raw-opcode ARMv8.0-A parser + 64b sim, 2D Retention + 200k pool (det_credited=0.95), 1-owner (<2^64 B) 4-vec Arch B LA (2^16..2^24 zero-loss ladder, zero TABM) + unscreened two-sided Q(zeta_15) H-X with live zero-BSGS gamma_0-blinding/unblinding lambda-cancellation + TRUE same-matrix H3, capped_fp_gso_h2 per-prime FP cap with 32 genuine Q(zeta_15) root-constructed (16 f_9 + 16 g_3) 12..71-bit L_p sublattices embedded in 381-bit special-q bases, strict zero-omitted-children 240-ideal 24-bit campaign + literal deg-(72,24) 100-ideal strict k=1 adaptive campaign (97 live witness relations), and pure k=1 Boole/Wald descent (p0_floor=0.001, unified T_run=2^123).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
