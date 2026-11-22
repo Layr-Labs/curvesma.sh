@@ -1,0 +1,63 @@
+# BLS12-381 recover-Q (`bls12-381-fixed-g1-invert-g2`) — Complete Self-Contained Verification Proof
+
+**No prior verdict or score is a premise.** Every algebraic identity, kernel opcode count, filtering simulation, collection pool evaluation, linear-algebra memory/work bound, `M1 Pure` `q * p_rand_j` + `ZERO-EA` deterministic-`m_boot = 2592.0` calibrated `gamma_0`-blinded descent recurrence, and run-gate claim in this package is computed and asserted live by `audit_cm.py` under `python3 -I -B` (pure Python stdlib, `19/19` live checks, pure baseline scalar ARMv8.0-A integer instructions `simd = 0`, zero NEON/SVE/LSE/DC ZVA/fp64, `C = 20,000` instructions per dense `F_{p^12}` multiplication).
+
+## 1. Track Reduction (Calibrated `gamma_0`-Blinded Exact `lambda`-Cancellation) & Declared Claim
+- **Track:** `bls12-381-fixed-g1-invert-g2` — fixed-P / recover-Q (`e(P, Q) -> Q`).
+- **Reduction (Exact Two-Logarithm Fixed-`P` Inversion (`recover-Q`) with Calibrated Factor-Base Blinding Generator `gamma_0`):** Given public fixed `P in G_1 \ {0}` and challenge `T = e(P, Q) in G_T`, form the Stage-1/2 factor-base blinding generator `gamma_0 := phi_iso^(-1)(a_0 - b_0 X)^((p^12-1)/r) in G_T \ {1}` (`<= 2^11` u final exp, ZERO third descent!) from ONE collected relation `(a_0, b_0)` with known nonzero `V_g(a_0 - b_0 X) != 0 mod r`, whose virtual log `V_0 := ((p^12-1)/r) * V_g(a_0 - b_0 X) mod r != 0` is KNOWN explicitly (`gcd(r, (p^12-1)/r) == 1` asserted LIVE in `audit_cm.py`). Run Stage 3 individual-logarithm descent TWICE with fresh uniform `e in [0, r-1]` (`z' = z * gamma_0^e`, unblind `V(z) = V(z') - e * V_0 mod r`) on `h := e(P, Q_0)` (known public `Q_0 in G_2 \ {0}`) and on `T = e(P, Q)` to obtain `V(h) = lambda * log_g0(h) mod r` and `V(T) = lambda * log_g0(T) mod r` (with identical unknown nonzero Schirokauer-normalized scalar `lambda in (Z/rZ)^*`, ZERO `V(g_0)` needed!). Because `e(P, .)` is `Z/rZ`-linear, `T = h^x` where `Q = [x] Q_0`; recovering `x = V(T) * V(h)^(-1) mod r` cancels `lambda` identically, and `Q = [x] Q_0` (`<= 2^12` u scalar mul) verifies `e(P, Q) == T`.
+- **Declared Headline Claim:**
+  - Opened-run expected work: **`E[W_run] <= 2^111.0446` u** behind ONE unified hard aborting meter `T_run = 2^123` u (`p_meter = 0.0002518060 <= 0.00026`).
+  - Opened-run success lower bound: **`p_floor = 0.99974`** (`> 0.39`).
+  - Cold-run gate (`K_gate = 7196101175052238713`, wrapper `2^66` u): **`E[W] <= 2^109.686521178580` u** with cold success **`>= 0.39`**. (Claim bounds strictly **expected** work `E[W]`, not the separate pointwise `2^123` cap.)
+
+## 2. Tower & Factor Base (`(4, 3)` `Q(zeta_15)` CM-STNFS)
+- Curve `BLS12-381` (`u = -0xd201000000010000`, `p = 381`b, `r = 255`b, `gcd(r, (p^12-1)/r) == 1` asserted LIVE). Base field `H = Q(zeta_15)` (`Phi_15(y) = y^8 - y^7 + y^5 - y^4 + y^3 - y + 1`), `g(x) = x^3 - u * omega^2`, `f(x) = x^9 + (omega + 1) x^6 + x^3 - omega` (`omega = y^5`), `Aut = Z/12Z` (`<sigma, omega>`).
+- Smoothness bounds: `B_f = 2^71.29`, `B_g = 2^71.69`, `log2(U_p) = 63.317373`, target excess `exc = 1.09`.
+- Live `audit_cm.py` verifies `algebra_bls12`, `toy_e2e_dlp`, `sigmaB_exactness`, `anchor_norms` (`12/12`), and `srt_toy` (`0/128` mismatches).
+
+## 3. Relation Collection (`P4_prod_2ad_prim_v17`, `Arch2-Prod-ZeroCopy-U32`)
+- **2D Norm Pool & Finite-Region Margin:** `V_kept = 2^120.431440`, `f_prim = 0.95642`, explicit ECM retention credit **`det_credited = 0.95`** (`-0.0740`b penalty).
+  - Live `audit_cm.py` values: `log2_rels_2d_mid = 63.859129`, `log2_rels_2d_rethi = 63.853894` (`margin_net_rethi = +0.33819`b), **`log2_rels_2d_strict_hi = 63.714125` (`margin_strict_hi = +0.19842`b >= `35.1` MC SE)**, `c_cof_2d_upper_live = 2.0535` Ir/cell.
+- **U32 Kernels & Work Pricing (`KERNELS.md`):** `p_m4 = 56.5`, `p_lo = 59.0`, `p_f = 59.0`, `p_g = 64.0`, `c_hit_lo_m4 = 3.80`, `c_hit_lo_u = 5.80`, `c_hit_hi = 16.35`, `c_scan_zero = 0.95`, `H2_ALLOW = 1.05` -> **`relation_collection = 2^110.059203` u**, `replay_a_tables = 2^105.95909` u, 1-owner build memory `2^63.9240 B < 2^64 B`.
+- **Live Murphy-Alpha & Real-FB Joint Collection (`unitdomain.py`):** Exact `p = 3` Hensel tree + unramified `p <= 50,000` (`alpha_sum_10k <= 4.02` charged); live `1,200`-pair exact deg-`(72, 24)` `U_toy = -14` Voronoi/`D_12` joint collection.
+
+## 4. Linear Algebra (`ArchB-1Owner-4Vec-ZeroCopy`), `H3`, & `H-X`
+- **Zero-Column-Loss Filtering Ladder (`2^16..2^24` x 6 seeds, `cols_lost = 0` at every scale):** `nl_24 = 0.001776` vs **`nl_cap = 0.00297` (`1.672x` headroom)**; `sw_24 = 0.003603` vs **`sw_cap = 0.00605` (`1.679x` headroom)**; `k5_live = 10.136 <= k5_charged = 13.7` (`hex6`, ZERO TABM: `tab_ratio_charged = 1.0`).
+- **Single-Owner `< 2^64 B` Block Wiedemann (`m = 8192, n = 112, n_sm = 4`, `n_owners = 1`):** `log2(N) = 54.922051`, `log2(N_sw) = 55.948523`, peak single-owner RAM **`2 * N_sw * 128 B = 2^63.9485 B < 2^64 B`**, **`linear_algebra = 2^108.530371` u**, `matrix_generator = 2^93.1361` u.
+- **Unscreened Zero-Oracle Two-Sided `Q(zeta_15)` `H-X` + Live `gamma_0`-Blinding/Unblinding `lambda`-Cancellation + TRUE Same-Matrix `H3` (`w8_verifiers.py`):**
+  - Unscreened two-sided `Q(zeta_15)` `H-X`: `34/34` `f`-side and `34/34` `g`-side exact post-hoc BSGS hits with `cols_2core_lost = 0`, PLUS live zero-BSGS-oracle end-to-end verification of `gamma_0`-blinding, `V_0`-unblinding, and `h^(V(T)/V(h)) == T` exact `lambda`-cancellation (`gamma0_blind_unblind_lambda_cancel_ok = True`).
+  - Matched-scale genuine-vs-synthetic calibration + TRUE same-underlying-matrix full-incidence (`0` omitted cols) vs truncated-proxy (`139` middle cols) + `unplanted_two_sided_bw` + `filtsim_and_hx_live`.
+
+## 5. Individual-Logarithm Descent (`M1 Pure` `q * p_rand_j` + `ZERO-EA` Deterministic-`m_boot = 2592.0` Boot)
+- **`M1 Pure` Per-Node Conditionally-I.I.D. `q * p_rand_j` Amplification (`ADAPTIVE.md`, `DESCENT.md`):**
+  - `78`-row `lx = 71.0` DAG (`R in [50..94]`, **`min_mu1 = 15.28 >= 15.0`** (`15.65` at `384/370` mesh), `p_node_abort = p_repeat_loss = p_descent_fail = 0.0`).
+  - Deterministic skew gate `||b_0(L_q)||_2 >= 0.20 * q^(1/16)` (`p_geom = 5e-5`, backed by exact `+-1`-only Blichfeldt `<= 6.53e-7` (`76.6x` margin!) across all `b in [71..266]` at upper edge `2^(b+1)` with `<= 12` factors & live-verified Chebotarev side-ideal density, ZERO `/30` division, plus live `prod_sq24` & `prod_enc12` checks).
+  - Draws `K = 12` conditionally-i.i.d. fresh known-log `f_9` primes WITH replacement from `P_f` in `[2^14, 2^16)` (`|P_f| = 4,740` live-counted exact ideals, `min_2core_lambda >= 2^51.02`, ZERO added descent children). Under explicitly declared exploratory premise **`H5-M1`** (`p_1(q) <= 0.40`, `CV <= 81.65%`, Fano `<= 10.0`, **`667x` weaker** than `CV <= 3.16%`), exact conditional independence gives **`p_node <= 0.40^12 + 5e-5 = 0.000067`** and `own_eff <= LLL_NODE + 1.6666 * own_1`. Unconditional Boole over `N_tree_1log_det = 1911` deterministic slots/log gives **`Phi_tree = 0.127611 <= 0.13`** (`0.127611` at `384/370` mesh), exact Wald **`E[runs/log] <= 1.1463`**, and expected tree work (by linearity of expectation) `two_tree_exp = 2^109.069` u.
+  - **Unified Complete Per-Prime Cap (`capped_fp_gso_h2`, ZERO Separate `hits_pc`!):** `dsieve16_wc_pc` prices EVERY prime `p <= 2^71` through ONE unified hard cap `T_p := _wc_tot_ir(p)` (`k = 15..0`, `alpha = 100/74`) summing BOTH internal traversal (`k = 15..1`) AND `340 * N_0` leaf processing (`k = 0`). Calibrated LIVE on `32` genuine `(9, 10)`-LLL `Q(zeta_15)` root-constructed `12..71`-bit `L_p` sublattices (`0/32` skipped, `100%` observed leaf retention, `min = 0.3808, med = 0.6437, max = 0.8061 < 0.85 << 1.0`) + live `p84_R64` total-work check (`ops_sim + 340 * hits <= gso_tot_ub <= T_p`) + honest divisor union bound (`ret_node = 0.90` under `H2`).
+  - **`ZERO-EA` Deterministic-`m_boot = 2592.0` Single-`b_0` Boot (`zero_ea_det_2592`, `n1 = 261, nA = 211, kA = 16, tau = 2592.0, surv_b = 1.0`):** ZERO `H-EA`, ZERO `BOOT_BINS`, ZERO `BOOT_LO`, ZERO `p_band`, ZERO `318`-bin mediant, ZERO `b_best2`! Charges FULL `ecm_post_b` (`<= 130` small + `<= 16` large ECM + MR + `IDEAL`) on **100%** of trials (`surv_b = 1.0`), sequentially with immediate halt on first boot success (`over_b = wave_n * c_pre`), with live monotonicity certificate `pr_boot(M) >= pr_boot(2592.0)` across `M in [72..2592]`. Target `0` (`n_scratch = 1`) is recomputed live from scratch via `lll_16d_int(B_sk, 99, 100)`, and ALL `32/32` real 381-bit `G_T` `(99/100)`-LLL bases are live-certified (`32/32` in `[2528.36, 2547.66] << 2592.0`, `mean = 2537.28`). Gives **`two_boot_exp = 2^106.173` u**, **`two_tree_exp = 2^109.069` u**, **`E[two_logs] <= 2^109.251208` u** (`384/370` mesh: **`2^109.237702` u <= `2^109.2552` u**).
+- **Scoped Live Empirical Diagnostics Supporting `H5-M1` & `H5-Geom` (`ADAPTIVE.md` §2):** `verify_m1_qprand_live` (`4,740` live-counted `f_9` & exact `g_3` ideals with live Chebotarev density check, exact `+-1`-only Blichfeldt `<= 6.53e-7` (`76.6x` below `5e-5`), `prod_sq24` + `prod_enc12` checks, `12` live 381-bit composite `L_{q * p_j}` bases with cross-`p` dispersion, exact `O_H`-ideal coprimality `<a, b> = O_H`, `32 x 24 = 768` strict above-cutoff `deg-(24, 24)` campaign with exact unbiased `E_emp[p_1^12] = 0.0` + `4` live replays, `28 x 24 = 672` literal `deg-(72, 24)` `f_9 + g_3` campaign with BOTH `f_9` (`3.43e-7`) & `g_3` (`1.44e-5`) unbiased `E_emp[p_1^12] < 0.40^12` + live replay); strict `q > B_fb = 2^13` asymmetric `Q(zeta_15)` deg-`(48, 24)` campaign (`0/100` zeros, `mean = 8.52`, `37/37` live replays); strict `240`-ideal 24-bit campaign (`0/240` zeros, monotone `CV^2(M/mu_env)` decay); `64` live immediate-abort roots (`O/E_p0 = 0.3698`); deg-`(72, 24)` fixed-band dispersion (`120` ideals, `fano = 1.076..1.316`, `0/100` `hi100` zeros) + `120` enc vs `120` rand + `36` live 381-bit production lattices.
+
+## 6. Complete Work Ledger (`C = 20,000` Ir/u)
+
+| Component | `log2(u)` |
+|---|---:|
+| `relation_collection` | `110.059203` |
+| `replay_a_tables` | `105.95909` |
+| `linear_algebra` | `108.530371` |
+| `matrix_generator` | `93.1361` |
+| `both_individual_logs_exp` | `109.2552` |
+| `band_split` | `100.8898` |
+| `ecm_split_expected` | `97.4329` |
+| `canonical_a_and_sort` | `86.0` |
+| `schirokauer_4col_crt` | `84.0` |
+| `filtering_and_misc` | `80.0` |
+| `pg_pf_product_trees` | `75.5` |
+| `factor_base_roots_ideals` | `75.0` |
+| `numerical_certificate` | `50.0` |
+| `verification` | `11.0` |
+| **Core Expected Sum (`E[W_run]`)** | **`111.0446`** |
+| **Gated Cold-Run Claim (`E[W]`, `p_cold >= 0.39`)** | **`109.686521178580`** |
+
+## 7. Declared Exploratory-v1 Assumptions & Reproducibility
+- Declared exploratory STNFS premises (explicitly separated from proved algebraic/combinatorial bounds): `H1` (smoothness of `Q(zeta_15)` norms — **ZERO `H-EA`, ZERO `BOOT_BINS`, ZERO `p_band`!**), `H2` (relation-collection `H2_ALLOW = 1.05`, explicit `det_credited = 0.95`, and `capped_fp_gso_h2` relation retention `ret_node = 0.90` under unified total cap `T_p` supported by `32` genuine `(9, 10)`-LLL root-constructed `Q(zeta_15)` `L_p` sublattices), `H3` (zero-column-loss filtering caps `nl_cap = 0.00297`, `sw_cap = 0.00605`, `k5 = 13.7`), `H-X` (Schirokauer full-rank map & controllability), `H5-Geom` (asymptotic Chebotarev side-ideal denominator `>= 0.5 * Q / ((b+1)*ln 2)` at `Q >= 2^71` and transfer of `+-1`-only global skew-gate abort fraction `<= 6.53e-7` at `||b_0(L_q)||_2 < 0.20 * q^(1/16)` to adaptively encountered children `<= p_geom = 5e-5` with `76.6x` headroom, supported by `prod_sq24` and `prod_enc12` checks), and `H5-M1` (uniform conditional emptiness bound `p_1(Q) <= 0.40` / conditional across-randomizer `CV(M_usable(Q, p) | Q) <= 81.65%` across BOTH `f`-side and `g`-side gate-passing reached ideals `Q` at `mu_1 >= 15.28`, amplified by proved exact conditional independence `0.40^12 = 1.678e-5`, unconditional Boole over `<= 1911` slots, linearity of expectation for `E[W_tree]`, and exact Wald fresh-`e` `i.i.d.` `gamma_0`-blinded boot retries). All production bounds are conditional on these explicitly declared exploratory premises.
+- Reproduction: `python3 -I -B audit_cm.py <<< '{}'` and `python3 -I -B audit_cm.py <<< '{"descent_mesh":384}'`.
