@@ -1,0 +1,32 @@
+# Storage and Addressing
+
+Every object is partitioned into 64-bit owner address spaces (`< 2^64` bytes per owner) with every cross-owner byte transfer priced in `KERNELS.md`.
+
+## 1. Relation Collection (`Arch2-Prod-ZeroCopy-U32`, Pure Product `qa <= s_c R2_a` & `qb <= R2_b`, `W_tile = 416`, `W_SB = 32`, `P_m4 = 2^56.5`, `P_lo = P_f = 2^59`, `P_g = 2^64`)
+
+- **Canonical `a` packing & exact `2^57` power-of-2 bank stride (ZERO `q_key`, ZERO `x_meta`, ZERO `x_imap`, ZERO global sort):** `N_a^can = V_a = 2^56.8437 < 0.90 * 2^57` canonical `a`-orbits (`10.2%` headroom below `2^57` for finite-lattice boundary points); `N_a^tbl = 4 V_a = 2^58.8437`. Packing `a_slot = (m << 57) | oid` (`59` active bits, exact bank stride `2^57`) matches column-owner accumulators `uint16_t S_g[4 * 2^57]` (`2^60` B) + `S_f[4 * 2^57]` (`2^60` B) = **`2^61.0` B `<< 2^64` B** per column owner (`416` column owners, ZERO stride mismatch!).
+- **1-Owner Simultaneous Flat-Array Build (`< 2^63.924 B < 2^64 B` for ALL primes, ZERO cross-owner build transfers, ZERO global sorting invariant):**
+  - *Build algorithm (`rev_build_prod_pass12` + `rev_build_prod_prefix`, `KERNELS.md` §1.7):* Because `Arch2-Prod` has NO `q_key` ordering requirement, ONE single 64-bit owner builds each prime's complete replay table in two linear passes in deterministic `oid_m = (m << 57) | oid` counter order (NO `x_meta`, NO `x_imap`, NO multi-owner merge!). Pass 1 writes `x_kbuf` (`8 B * N_a^tbl = 2^61.844 B`) and increments **64-bit `uint64_t` `x_hist`** (`0` overflow at all `p >= 2^24`). Prefix sum writes both immutable `x_off` (`8 B/bkt`) and mutable `x_pos` (`8 B/bkt`). Pass 2 scatters 8-byte records into `x_out` (`8 B * N_a^tbl = 2^61.844 B`).
+  - *Simultaneous 1-owner peak RAM (asserted LIVE in `audit_cm.py`, `max_1own_bld_log2_B = 63.924 < 64.0`):*
+    - Band-1a (`p <= 2^56.5`, 4 `m`-partitioned banks): `16 B * N_a^tbl + 64 B * 2^56.5 + 416 MiB =` **`<= 2^63.70` B `< 2^64` B**!
+    - Band-1b (`p <= 2^59`, `f`- and `g`-side): `16 B * N_a^tbl + 16 B * 2^59 + 416 MiB =` **`<= 2^63.924` B `< 2^64` B**!
+    - Band-2 (`g`-side only, `p <= 2^64`, `W_SB = 32` -> `<= 2^59` SBs): `16 B * N_a^tbl + 16 B * (2^64 / 32) + 416 MiB =` **`<= 2^63.924` B `< 2^64` B**!
+  - *Total replay `a`-table storage (`g` to `2^64` + `f` to `2^59`):* **`2^119.121` bytes** (`< 2^120.0` B), built once per target and freed immediately after collection.
+- **Full-Chord Rows & `416` Column Owners (`L_max = 404.76 < W_tile = 416`):** Every `b_0`-row (`N_7 = 2^54.1460` rows in `D_(omega,sigma)`, `L_b = 173.85`, `N_a^tbl * N_7 * L_b = V_kept = 2^120.4314` exact!) fits in one full-chord tile (`1` tile/row, `6.96` SBs/row). Each of the `416` column owners holds `S_g` + `S_f` = **`2^61.0` B `<< 2^64` B**.
+- **Stage B, SRT, & Gate G `P_71` product trees:** `P24` product (`3.1` MiB), waves `< 2^27` B; `P_g` (`2^62.53` B), `P_f` (`2^57.53` B), and Gate G `P_71` (`2^69.53` B, partitioned across `128` 64-bit owners of `2^62.53 B < 2^64 B` each, 2D NTT transpose transfers covered inside `fft_F`'s `168 M(k1+k2) + 1100 M`) total `< 2^76` B.
+
+### 2. Linear Algebra Storage — 1 Dense-Vector Owner + 16 Read-Only Matrix-Shard Owners (All `< 2^64 B`, Priced Streaming)
+
+Each Block Wiedemann bundle runs `4` 256-bit vectors (`128 B/slot`) over `N_sw = sw_cap * U' = 0.00605 * 2^63.3174 = 2^55.9485` structured-Gaussian slots (`>= 1.68x` the measured zero-column-loss `2^24` value `0.00360`):
+
+- **Dense-vector owner (`1` owner):** Double-buffered 4-vector state `2 * N_sw * 128 B = 2^63.9485 B < 2^64 B` (`17.81 EiB < 18.45 EiB`); Horner evaluation state `2 * N_sw * 32 B = 2^61.9485 B < 2^64 B` (asserted LIVE in `audit_cm.py`).
+- **Read-only sparse-matrix shard owners (`16` owners):** The read-only structured matrix (`201` nonzeros/row x `N_sw` rows x `8 B/entry = 2^66.597 B`) is partitioned across `K_mat = 16` read-only 64-bit shard owners, each holding **`2^62.597 B < 2^64 B`** (asserted LIVE in `audit_cm.py`).
+- **Explicit priced cross-owner streaming transfer:** During each 4-vector SpMV of all `28` independent bundles (`n = 112 = 28 * 4`, `m = 8192`, `tab_ratio_charged = 1.00`), the `16` matrix-shard owners stream each 8-byte matrix entry sequentially into the dense-vector owner (`8 B` amortized over `4` vectors = `2 B` per vector-nonzero), explicitly charged **`c_stream_mat = 201.0` Ir/row** (`4.0` Ir per 8-byte streamed entry = `1.0` Ir per vector-nonzero) inside `c_prod` (`audit_cm.py` live check).
+
+## 3. Descent, Wrapper, & Aggregate Peak Memory
+
+- **Peak Memory:** `< 2^120.0 B` (`2^119.121 B` replay `a`-tables during collection; `< 2^104.0 B` during descent).
+
+## Exact Production 2-Adic Class Rule `c(a)` (`w_cls = (225/256, 225/2048, 23/2048)`)
+
+Over `F_2`, `Phi_15(y) = P_1(y) P_2(y) = (y^4+y+1)(y^4+y^3+1)` splits `(2) = P_1 P_2` in `O_H` (`N(P_1)=N(P_2)=16`). Since `v_2(u)=16`, `g(a,b) = a^3 - u w^2 b^3 == a^3 (mod 2^16)`, so `v_2(N_g) = 3 v_2(N(a))` depends solely on `a mod 4` and is `<sigma, omega>`-invariant: `c(a)=0` iff `v_2(N(a))=0` (`P_1, P_2 !| a`, density `225/256`, `s_0=1.0`, `v_2(N_g)=0`); `c(a)=1` iff `v_2(N(a))=4` (`v_{P_1}+v_{P_2}=1`, density `225/2048`, `s_1=1.5`, `v_2(N_g)=12`); `c(a)=2` iff `v_2(N(a))>=8` (density `23/2048`, `s_2=2.0`, `v_2(N_g)>=24`). Pure-product region: `q_a <= s_{c(a)} R2_a`, `q_b <= R2_b`, `a in F_Vor / mu_30`, `b in D_(omega,sigma)`. Verified LIVE in `check_sigmaB_exactness` (`10,878` hits, `0` mismatches) and `pool_2adic_live` (`400` live draws verifying exact `v_2(N_g)`, exact `O_H`-coprimality `383/400`, `z_prim = 0.13`, `prim_yield_ratio = 1.0049`, `nf_mean`, `ng_mean`, class shares, `log2_Va`, `log2_Vb_all`, and `V_kept`).
