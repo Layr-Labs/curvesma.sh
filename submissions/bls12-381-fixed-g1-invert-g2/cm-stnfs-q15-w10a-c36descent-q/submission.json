@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-Q: (4,3) Q(zeta_15) CM-STNFS + 1-Dense/16-Shard Arch B LA + Uncapped 16D Special-q Descent at 2^109.490561654823",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-P / recover-Q (`e(P, Q) -> Q`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms using the exact F_(p^12) -> F_(p^4) boot lift z'*c_6 = A - B*X (c_6 in F_(p^6)^*, phi_pi(a-bX)^(e_cof) == (z')^(e_cof), exact e_cof*lambda cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0), with 1-dense + 16-matrix-shard streamed Arch B LA (c_stream_mat=201.0 Ir/row), and uncapped 16D Q(zeta_15) special-q descent (76 sieve nodes on [71, 261) at 384-mesh, BOUND_CELL live yield certificate, exact monogenic O_H q15_retain16 retention, declared exploratory H5 per-node discard <= DISC=0.001 + NegBin r=0.5/1.0, 100% eager cofactorization (frac=1.0), 100% missing-ideal discard (zero Q*q' fallback lattices anywhere), whole-ball renewal boot R_boot=2 with BOOT_RELS=18, phi_boot=2.570e-08, E[two_logs]=2^105.889640 u), achieving opened-run expected work E[W_run] <= 2^110.8475 u behind unified hard meter T_run = 2^123 u with opened-run success >= 0.99895, and gated cold-run expected work E[W] <= 2^109.490561654823 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "109490561654823",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "q15_stats.b85",
+        "q15_cond_7e.b85",
+        "cm_models.py",
+        "bw_pm_verify.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "verify_q15_descent.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Self-contained pure-stdlib 15-check audit: Q(zeta_15) algebra/CRT/NTT + gcd(r,(p^12-1)/r)==1 + live 381-bit BLS12-381 boot lift, Murphy-alpha + real-FB joint collection, live E2E DLP, Voronoi + constructive 16D LLL, SRT toy, raw-opcode ARMv8.0-A parser + 64b sim (incl. explicit cross-owner Band-1a/1b stream rev_b1_stream_u8=1.25<=1.30 Ir/hit) + proved input-uniform Bareiss LLL caps (PAIR_SETUP=2^35.2, LLL_NODE=2^40, LLL_BOOT=2^47, BOUND_CELL=3600), 2D Retention + 200k pool (det_credited=0.95), 1-dense + 16-matrix-shard (<2^64 B/owner, c_stream_mat=201.0 Ir/row) 4-vec Arch B LA (2^16..2^24 zero-loss ladder, zero TABM) + unscreened two-sided Q(zeta_15) H-X with live zero-BSGS end-to-end F_(7^12) boot lift (x=47) + TRUE same-matrix H3 + unplanted two-sided BW, and full 384-mesh uncapped 16D Q(zeta_15) descent audit (16D ball counts, 76-node plan, exact q15_retain16 12-probe live check & loss < 2e-3, live BOUND_CELL complex-embedding check, live 90-bit encountered-child offset check, [7e] (A)+(B)+(C) conditioning, 3,116 top-edge diagnostic + live 10x DISC stress check, R_boot=2 32x48 E[S^2]/E[S]^2=1.00078 & UDUP yr=0.9739, q15_ecm16 schedules, N_MAX=2^27.2 overflow/repeat bounds, and exact 80-digit Decimal ledger + cold-run gate check).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              96,
+              192,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
