@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-Q: (4,3) Q(zeta_15) CM-STNFS + 1-Dense/16-Shard Arch B LA + Two-Level T_cap-Capped K=7 q*p_rand_j (eta_bad=0.5%, pe=0.30) & Zero-EA det-2592 Descent at 2^110.314608789909",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-P / recover-Q (`e(P, Q) -> Q`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms (exact lambda-cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0), with 1-dense + 16-matrix-shard streamed Arch B LA (c_stream_mat=201.0 Ir/row), pure M1 two-level conditionally-i.i.d. q*p_rand_j internal-retry descent with deterministic adversarial node cap T_cap(b,s) (K=7, bp=[12,14], conditional eta_bad=0.5%, pe_good=0.30, mu_1>=25.5, 12x pointwise post-sieve cap), Zero-EA deterministic-m_boot=2592 single-b0 boot (surv_b=1.0), and unified total-capped dsieve16 (k=15..0), achieving opened-run expected work E[W_run] <= 2^111.6725 u behind unified hard meter T_run = 2^123 u with opened-run success >= 0.99961, and gated cold-run expected work E[W] <= 2^110.314608789909 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "110314608789909",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py",
+        "boot_lll_0.b85",
+        "boot_lll_1.b85",
+        "boot_lll_2.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Self-contained pure-stdlib 19-check audit: Q(zeta_15) algebra/CRT/NTT + gcd(r,(p^12-1)/r)==1, Murphy-alpha + real-FB joint collection, live E2E DLP, Voronoi + proved RET_BOOT=1 + ZERO-EA deterministic-m_boot=2592 single-b0 boot (surv_b=1.0, full ecm_post_b charging <=130 small + <=15 medium + 1 top = <=16 large ECM+MR+IDEAL; target 0 recomputed live from scratch via Bareiss-LLL + all 32 real 381-bit G_T bases live-certified + monotonicity check + P_10000 check), SRT toy, raw-opcode ARMv8.0-A parser + 64b sim, 2D Retention + 200k pool (det_credited=0.95), 1-dense + 16-matrix-shard (<2^64 B/owner, c_stream_mat=201.0 Ir/row) 4-vec Arch B LA (2^16..2^24 zero-loss ladder, zero TABM) + unscreened two-sided Q(zeta_15) H-X with live zero-BSGS gamma_0-blinding/unblinding lambda-cancellation + TRUE same-matrix H3, unified total-capped dsieve16 (k=15..0, internal + 340*N_0, ZERO hits_pc) calibrated live on 32 genuine (9,10)-LLL Q(zeta_15) 12..71-bit L_p sublattices + p84_R64 total check, Pure-M1 Two-Level Conditionally-IID q*p_rand_j + Deterministic Adversarial Node Cap T_cap(b,s) (K=7, bp=[12,14], conditional eta_bad=0.5%, pe_good=0.30, mu_1>=25.5, 12x pointwise post-sieve cap) verification (1,344 f_9 & 1,344 g_3 ideals in [2^12,2^14) with live Chebotarev check, exact +-1-only Blichfeldt <=6.45e-7 subsumed 7,750x inside eta_bad=0.5%, prod_sq24 + prod_enc12 checks, 12 live 381-bit composite L_{q*p_rand} bases, exact O_H-ideal coprimality <a,b>=O_H, 680x20 (13,600 lattices) strict above-cutoff i.i.d. detection-power campaign (f: 0.01176, g: 0.00088, max_zeros=3/20, 0/680 flagged Z>=4 -> exact power-adjusted 95% CP UB=0.00492 < 0.005 at exact pe=0.30 + 2 live replays), SEPARATELY reported 128x16 (2,048 lattices) parent-selected encountered-child campaign (f: 0.2246, g: 0.0762 < 0.30 + 2 live 2-hop parent->child->grandchild replays verifying all earlier parent candidates), 32x24 campaign (f: 0.2630, g: 0.0677 < 0.30 + 2 live replays), strict q>B_fb asymmetric deg-(48,24) campaign, strict 240-ideal 24-bit campaign, deg-(72,24) fixed-band dispersion).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
