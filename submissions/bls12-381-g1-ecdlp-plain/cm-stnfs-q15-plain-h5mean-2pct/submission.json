@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp-plain: (4,3) Q(zeta_15) CM-STNFS, Zero-Gap H5-Mean Internal-Retry M1 (p_bar=2%, K=6, mu>=20) & ZERO-EA Det-2592 Boot, E[W_G1] < 2^113.052349273957 G1 units",
+  "claims": [
+    {
+      "statement": "For BLS12-381 plain G1 ECDLP (bls12-381-g1-ecdlp-plain), on any supplied T = [x]P0 in G1 (uniform x in 0..r-1, including T = infinity for x = 0, with no auxiliary powers), under explicitly declared exploratory-v1 STNFS premises (H1, H2, H3, H-R, H-SM, H-X, and Zero-Gap Telescoping Internal-Retry H5-Mean requiring only a single scalar mean effective single-trial empty rate E[p_eff(Q) | Q reached] <= p_bar = 0.02 at modeled mu_1 >= 20.15 across K=6 fresh i.i.d. WITH-REPLACEMENT known-log f-ideals p_j in [2^12, 2^14) behind a 4.0x pointwise survivor cap and deterministic single-factor ECM, with NO good/bad ideal split and exact telescoping child-work bound cW/(1-cPhi); ZERO H-EA and ZERO boot-norm distribution premise via ZERO-EA deterministic Lovasz M_boot = 2592.0 with surv_b = 1.0), the self-contained (4,3) Q(zeta_15) CM-STNFS algorithm transfers (P0, T) to G_T via the public pairing e(., Q0) and recovers the 64-hex scalar x with [x]P0 = T with cold-run success probability >= 0.39 and expected total classical work E[W_G1] <= 1 + (K/2^64)*10*(2^111.0885 + 2^66) < 2^113.052349273957 G1 units (C = 2,000 baseline scalar ARMv8.0-A integer instructions; core rows in C_core = 20,000 = 10 G1 units, core 2^109.730421179070, unified aborting meter t_run = 2^123 core units giving deterministic pointwise cap < 2^126.3219282 G1 units).",
+      "score": {
+        "numerator": "113052349273957",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py",
+        "m1_qprand.py",
+        "boot_lll_0.b85",
+        "boot_lll_1.b85",
+        "boot_lll_2.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Self-contained live verification of BLS12-381 (4,3) Q(zeta_15) algebra, Murphy-alpha, toy e2e DLP, Sigma-B exactness, 2D collection pool, 32-target 381-bit G_T ZERO-EA deterministic-Lovasz b_0 boot (surv_b=1.0, ZERO H-EA), 16-owner LA streaming placement & H3 zero-loss filtering ladder, genuine Q(zeta_15) H-X & gamma_0 lambda-cancellation, TOTAL-capped dsieve16 (k=15..0, 32 genuine Q(zeta_15) roots), M1 q*p_rand_j live pool/skew/above-cutoff suite, strict zero-omitted-children 240-ideal & 64-root k=1 diagnostics, and 80-digit Decimal ledger/gate.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
