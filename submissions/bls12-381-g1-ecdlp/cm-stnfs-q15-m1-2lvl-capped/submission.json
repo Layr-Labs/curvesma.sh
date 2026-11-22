@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: (4,3) Q(zeta_15) CM-STNFS, Pure M1 Two-Level Capped (K=7, eta_bad=0.5%, pe=0.30) & ZERO-EA Det-m_boot, E[W(n)] < 2^113.676151317439 G1 units",
+  "claims": [
+    {
+      "statement": "For BLS12-381 G1 ECDLP with auxiliary powers (bls12-381-g1-ecdlp), on any supplied instance (n, A, T) with 1 <= n < r, A_i = [s^i mod r]P_0, and target T = A_1 = [s]P_0 in G_1 \\ {infinity} (uniform 1 <= s < r; ignoring A_2..A_n with zero auxiliary-power accesses, constant work bound W(n) valid for all 1 <= n < r, scored at n = 2^20 = 1,048,576), under explicitly declared exploratory-v1 STNFS premises (H1, H2, H3, H-X, and Pure M1 Two-Level Capped H5-2lvl with ZERO Trial 0, K=7 conditionally-i.i.d. f_9-side q*p_rand_j internal retries in [2^14, 2^16) [4,740 live-counted ideals] at min_mu>=15, pe=0.30, eta_bad=0.5% conditional on M>=1, boot success, and reached-child selection, deterministic per-node adversarial work cap T_cap(b)=min(nat_wc, M_cap*W_good) with exact Markov p_mk=1/M_cap and post_cap_mult=16.0x, inductive closure phi<=0.015, and unconditional Boole ONLY over <=16 top-level ZERO-EA surv_b=1.0 deterministic-Lovasz m_boot=2592.0 boot children), the self-contained (4,3) Q(zeta_15) CM-STNFS algorithm transfers (P_0, T) to G_T via the public pairing e(., Q_0) and recovers the 64-hex scalar 1 <= s < r (verified via [s]P_0 = T) with cold-run success probability >= 0.39 and expected total classical work E[W(n)] <= 1 + (K/2^64)*10*(2^111.7121 + 2^66) < 2^113.676151317439 G1 target-group-operation units for all 1 <= n < r, in particular log2(W(2^20)) < 113.676151317439 (C = 2,000 baseline scalar ARMv8.0-A integer instructions; core rows in C_core = 20,000 = 10 G1 units, core 2^110.354223222551, unified aborting meter t_run = 2^123 core units giving deterministic pointwise cap < 2^126.3219282 G1 units).",
+      "score": {
+        "numerator": "113676151317439",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py",
+        "boot_lll_0.b85",
+        "boot_lll_1.b85",
+        "boot_lll_2.b85",
+        "qprand_verify.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Self-contained live verification of BLS12-381 (4,3) Q(zeta_15) algebra, Murphy-alpha, toy e2e DLP, Sigma-B exactness, 2D collection pool, 32-target 381-bit G_T ZERO-EA deterministic-Lovasz b_0 boot (n_scratch=1 + 32 certified bases, surv_b=1.0), 16-owner LA streaming placement & H3 zero-loss filtering ladder, genuine Q(zeta_15) H-X & gamma_0 lambda-cancellation, TOTAL-capped dsieve16 (internal+leaf, 32 genuine Q(zeta_15) roots), Pure M1 Two-Level Capped recurrence (K=7, eta_bad=0.5%, pe=0.30, T_cap=min(nat_wc, M_cap*W_good), post_cap_mult=16.0x, eps_gate=0.20 +-1 factor-12 Blichfeldt, exact O_H-coprimality unit test, Cantelli/Fano bridge, separate Campaign A 32 raw_M==0 parents, Campaign B 28 literal deg-(72,24) parents, Campaign C 40 reached first-usable-relation LP children x 16 retries, and 8 real 381-bit G_T boot children), strict zero-omitted-children 240-ideal & 64-root diagnostics, and 80-digit Decimal ledger/gate.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
