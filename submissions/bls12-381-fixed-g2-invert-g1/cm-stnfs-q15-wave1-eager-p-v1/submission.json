@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS (Wave-1 Streamed 1-Pass Band-2 + P_min=32 3-Prime NTT + 4-Vec 16-Shard LA + 100%-Eager Uncapped 384-Mesh Descent behind Run Gate) at 2^108.822176096911",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-Q / recover-P (`e(P, Q) -> P`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms (exact lambda-cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18), combining 1,000,000-draw r_ab=0.83 Zero-Slice Streamed 1-Pass Band-2 (W_SB=16, oid<2^56, 62b direct apply + rev_b1_stream on Band-1a/1b/2) + P_min=32 KH=0.08 3-prime Radix-4 Lazy Shoup NTT Stage-B + Ordered Norms collection (2^109.748629 u, replay_a_tables 2^104.7482 u), 1-dense (2^63.668 B < 2^64 B) + 16-matrix-shard (2^62.346 B < 2^64 B each, priced streaming c_stream_mat=205.0 Krylov / c_stream_mat_1vec=820.0 Horner) 4-vec 4-col LA (2^107.742319 u, 1.45x 2^25 caps, zero TABM), and exact 384-mesh Q(zeta_15) uncapped dsieve16 + BOUND_CELL yield-certificate + q15_retain16 + NegBin(r=0.5/1.0) 100%-eager descent (zero Q*q' fallback lattices, 0.02b right-endpoint upper-sum miss_side, single-side repeats N_MAX=2^26.8, live 10x DISC=0.010 stress clearing p_floor, BOOT_RELS=18 whole-ball renewal boot, two_log_exp <= 2^105.8199 u, proved input-uniform PAIR_SETUP=2^35.2, LLL_NODE=2^40.0, LLL_BOOT=2^47.0 with S_boot=2^21 scaling), achieving opened-run expected work E[W_run] <= 2^110.1791 u behind hard meter T_run = 2^123 u (every run W <= 2^123 + 2^66 u) with opened-run success >= 0.99894 (even at +10% meter sensitivity and 10x DISC stress), and gated cold-run expected work E[W] <= 2^108.822176096911 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "108822176096911",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_cond_7e.b85",
+        "verify_q15_descent.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: Q(zeta_15) algebra/CRT/NTT + gcd(r,(p^12-1)/r)==1, Murphy-alpha + real-FB joint collection, live E2E DLP, sigma/B exactness (W_SB=16 62b direct apply), anchor norms + 2-adic pool live check, Voronoi + constructive 16D LLL + 4x 381b G_T F_{p^6}-subfield elimination, SRT toy, 2D Retention + 1,000,000-draw r_ab=0.83 Wave-1 collection (P_min=32, KH=0.08, 3-prime Radix-4 Lazy Shoup NTT, Ordered Norms, explicit Band-1a/1b/2 streaming, det_credited=0.99, h2_allow=1.01 [9.2 SE], margin_strict_hi=+0.0351b [15.2 SE]) + 1-dense (2^63.668 B) + 16-matrix-shard (2^62.346 B each, c_stream_mat=205.0 Krylov / c_stream_mat_1vec=820.0 Horner) 4-vec Arch B LA (2^16..2^25 zero-loss ladder, 1.45x caps, zero TABM) + [6b] missing_recon + unscreened two-sided Q(zeta_15) H-X + unplanted two-sided BW, raw-opcode baseline scalar ARMv8.0-A parser + 64b sim (simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18; 3-prime NTT n=16/24, 552/552 dsieve16_rank_step, proved input-uniform PAIR_SETUP=2^35.2, LLL_NODE=2^40.0, LLL_BOOT=2^47.0 with S_boot=2^21 scaling), and exact 384-mesh Q(zeta_15) 100%-eager descent (q15_cells16, q15_retain16 live 5-prime residue check, uncapped dsieve16, BOUND_CELL yield certificate DISC=0.001 + live 10x DISC=0.010 stress clearing p_floor, NegBin r=0.5/1.0 + 100% eager cofactorisation, zero Q*q' fallback lattices, 0.02b right-endpoint upper-sum miss_side, BOOT_RELS=18 whole-ball renewal boot at R_b=2 with UDUP yr=0.9739 & pair ratio 1.0008, [7e] (A)+(B)+(C), N_MAX=2^26.8, single-side repeat bound, global Markov meter T_run=2^123 + 10% sensitivity, and exact cold-run gate).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}

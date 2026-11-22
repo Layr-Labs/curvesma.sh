@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g2-invert-g1
+submissions/bls12-381-fixed-g2-invert-g1/cm-stnfs-q15-wave1-eager-p-v1

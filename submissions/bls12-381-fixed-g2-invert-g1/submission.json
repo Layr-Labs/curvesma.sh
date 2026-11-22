@@ -1,8 +1,0 @@
-{
-  "version": 1,
-  "title": "bls12-381-fixed-g2-invert-g1: submission template",
-  "claims": [
-    "Incomplete template: supply an attack, its success argument and a justified total computation bound. No score is claimed."
-  ],
-  "experiments": []
-}
