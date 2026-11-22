@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "bls12-381-g1-ecdlp: (4,3) Q(zeta_15) CM-STNFS + Uncapped 16D c36p-Style Descent, E[W_G1(2^20)] < 2^111.92142 G1 units",
+  "claims": [
+    {
+      "statement": "For bls12-381-g1-ecdlp (Powers-of-Tau, valid for all 1 <= n < r with zero auxiliary-power accesses, W(n) constant in n, scored at n = 2^20 = 1,048,576, C = 2,000 Ir/G1-op = 10x F_p12 units), (4,3) Q(zeta_15) CM-STNFS with box102 collection, 1-Dense + 16-Shard LA, uncapped 16D c36p-style descent (100% input-uniform Bareiss LLL PAIR_SETUP = 2^35.2, LLL_NODE = 2^40.0, LLL_BOOT = 2^46.5), unified T_run = 2^123 core u meter (opened-run E[W_run] <= 2^109.9565 F_p12-u, p_floor = 0.9990), and cold-run gate achieves E[W_G1(n)] < 2^111.92142 G1 units with success probability >= 0.39.",
+      "score": {
+        "numerator": "11192142",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_stats.b85",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_cond_7e.b85",
+        "verify_q15_descent.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Self-contained live verification of BLS12-381 (4,3) Q(zeta_15) algebra, Murphy-alpha, toy e2e DLP, Sigma-B exactness, 2D collection pool (box102), 1-Dense + 16-Shard LA streaming placement & H3 zero-loss filtering ladder, genuine Q(zeta_15) H-X & gamma_0 lambda-cancellation, unplanted two-sided BW, symbolic ARMv8.0-A kernels, complete 384-mesh uncapped 16D Q(zeta_15) c36p-style descent ([7]/[7l]/[7e]/[11]/[11b]/[12]), and 80-digit Decimal ledger/gate (C = 2,000 G1 units = 10x F_p12 units) for bls12-381-g1-ecdlp.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
