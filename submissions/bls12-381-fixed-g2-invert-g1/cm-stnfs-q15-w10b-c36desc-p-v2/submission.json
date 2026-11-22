@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS (box102 + 16-Shard LA + Uncapped 384-Mesh c36p-Style Descent behind Run Gate) at 2^108.599317240806",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-Q / recover-P (`e(P, Q) -> P`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms (exact lambda-cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64), combining 200k box102 relation collection (2^109.435 u), 1-dense + 16-matrix-shard (<2^64 B each, priced streaming c_stream_mat=268.0 Ir/row) 3-vec LA (2^107.823 u), and exact 384-mesh Q(zeta_15) uncapped dsieve16 + BOUND_CELL yield-certificate + q15_retain16 + NegBin(r=0.5/1.0) lazy descent with BOOT_RELS=18 whole-ball renewal boot (two_log_exp <= 2^103.0698 u, proved input-uniform PAIR_SETUP=2^35.2, LLL_NODE=2^40.0, LLL_BOOT=2^46.5), achieving opened-run expected work E[W_run] <= 2^109.9564 u behind hard meter T_run = 2^123 u (every run W <= 2^123 + 2^66 u) with opened-run success >= 0.99905 (even at +10% meter sensitivity), and gated cold-run expected work E[W] <= 2^108.599317240806 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "54299658620403",
+        "denominator": "500000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_cond_7e.b85",
+        "verify_q15_descent.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: Q(zeta_15) algebra/CRT/NTT + gcd(r,(p^12-1)/r)==1, Murphy-alpha + real-FB joint collection, live E2E DLP, sigma/B exactness, anchor norms + 2-adic pool live check, Voronoi + constructive 16D LLL, SRT toy, 2D Retention + 200k box102 collection (100% deterministic c_gbatch_full, det_credited=0.99, margin_strict_hi=+0.1558b) + 1-dense + 16-matrix-shard (<2^64 B each, c_stream_mat=268.0) 3-vec Arch B LA (2^16..2^25 zero-loss ladder, 1.45x caps, zero TABM) + unscreened two-sided Q(zeta_15) H-X with live zero-BSGS gamma_0-blinding/unblinding & unplanted two-sided BW, raw-opcode baseline scalar ARMv8.0-A parser + 64b sim (simd=0, zero LSE/NEON/SVE/DC ZVA/fp64; proved input-uniform PAIR_SETUP=2^35.2, LLL_NODE=2^40.0, LLL_BOOT=2^46.5), and exact 384-mesh Q(zeta_15) c36p-style descent (q15_cells16, q15_retain16 exact O_H local laws, uncapped dsieve16, BOUND_CELL yield certificate DISC=0.001, NegBin r=0.5/1.0 + lazy cofactorisation, BOOT_RELS=18 whole-ball renewal boot at R_b=2 with UDUP yr=0.9739 & pair ratio 1.0008, [7e] (A)+(B)+(C) conditioning, N_MAX=2^27.8 node counter, repeat bound, global Markov meter T_run=2^123 + 10% sensitivity, and exact cold-run gate).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
