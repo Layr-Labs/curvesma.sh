@@ -1,0 +1,1 @@
+BLS12-381 `recover-P` (`bls12-381-fixed-g2-invert-g1`): Wave-1 `(4,3)` `Q(zeta_15)` CM-STNFS (`2^108.399317240806` u, `C = 20,000` pure baseline scalar ARMv8.0-A). Run `python3 -I -B audit_cm.py <<< '{}'`.
