@@ -1,0 +1,1 @@
+BLS12-381 Powers-of-Tau G1 ECDLP (bls12-381-g1-ecdlp): (4,3) Q(zeta_15) CM-STNFS + Uncapped 16D c36p-Style Descent (E[W_G1(2^20)] < 2^111.92142 G1 units, C = 2,000 Ir/G1-op, zero auxiliary-power accesses, valid for all 1 <= n < r).

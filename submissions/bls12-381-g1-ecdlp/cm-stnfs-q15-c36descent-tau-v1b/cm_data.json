@@ -1,0 +1,62 @@
+{
+  "operating_point": {
+    "tag": "B71.5_d04_e109",
+    "lf": 71.29,
+    "lg": 71.69,
+    "exc": 1.09,
+    "exc_coll": 1.148,
+    "log2_Up": 63.31737254309461,
+    "debruijn": true,
+    "twist": "w'=omega^2",
+    "alpha_f": 2.74,
+    "alpha_g_ge3": 1.28,
+    "alpha_g_total": 0.77,
+    "kap2_g": 0.05253400706806133
+  },
+  "ledger": {
+    "rows": [
+      ["relation_collection", 109.434964],
+      ["replay_a_tables", 106.01666],
+      ["linear_algebra", 107.822657],
+      ["matrix_generator", 95.6908],
+      ["both_individual_logs_exp", 103.06],
+      ["band_split", 100.674],
+      ["ecm_split_expected", 96.4533],
+      ["canonical_a_and_sort", 86.0],
+      ["schirokauer_4col_crt", 84.0],
+      ["filtering_and_misc", 80.0],
+      ["pg_pf_product_trees", 75.5],
+      ["factor_base_roots_ideals", 75.0],
+      ["numerical_certificate", 50.0],
+      ["verification", 11.0]
+    ],
+    "t_run_log2": 123.0,
+    "exp_run_claim": "109.9565",
+    "cap_abort": 0.0,
+    "p_meter_exact": "0.0001184445",
+    "p_meter_upper": "0.00012",
+    "p_floor": "0.9990",
+    "K_gate": 7201431620367092223,
+    "wrapper_log2": 66.0,
+    "claim_p": "108.59950",
+    "claim_g1": "111.92142"
+  },
+  "descent_kernels": {
+    "lll_node": 1099511627776.0,
+    "lll_boot": 99516432383215.2,
+    "pair_setup": 39468974941.45019,
+    "bound_cell": 3600.0,
+    "sieve_hit": 2200.0,
+    "scan": 10.0,
+    "zero": 2.0,
+    "norms": 134217728.0,
+    "tdiv": 33554432.0,
+    "ideal": 34359738368.0,
+    "prime": 16777216.0,
+    "c_leaf": 340.0,
+    "c_node": 196.0,
+    "c_node_base": 156.0,
+    "c_center_step": 6.0,
+    "k1_rej": 244.0
+  }
+}
