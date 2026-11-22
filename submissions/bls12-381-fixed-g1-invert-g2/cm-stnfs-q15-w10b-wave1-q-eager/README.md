@@ -1,0 +1,1 @@
+BLS12-381 `recover-Q` (`bls12-381-fixed-g1-invert-g2`): Wave-1 Eager Fortress `(4,3)` `Q(zeta_15)` CM-STNFS + `BALL_PAIR = 0` 1-Cell Boot (`2^108.821676096911` u, `C = 20,000` pure baseline scalar ARMv8.0-A). Run `python3 -I -B audit_cm.py <<< '{}'`.
