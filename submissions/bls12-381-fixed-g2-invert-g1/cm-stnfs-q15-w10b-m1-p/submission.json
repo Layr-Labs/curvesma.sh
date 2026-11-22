@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS + Pure M1 q*p_rand Descent + ZERO-EA Det-2592 Boot + Total-Capped dsieve16 + U=2^25 1-Owner LA at 2^108.972977878763",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-Q / recover-P (`e(P, Q) -> P`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms (exact lambda-cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS (C = 20,000 pure baseline scalar ARMv8.0-A integer instructions/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64), using Pure M1 conditionally-i.i.d. q -> q*p_rand_j descent (ZERO deterministic Trial 0; K=15 fresh draws from 1,344 exact known-log f_9-primes in [2^12, 2^14), p_1 <= 0.45, min_mu1 >= 12.0, mandatory entry LLL_NODE on L_q charged explicitly, b0_gate_c = 0.30, +-1-only ceil Blichfeldt <= 3.03e-6 << p_geom = 5e-5), ZERO-EA deterministic-norm M_boot = 2592.0 boot (surv_b = 1.0, over_b = 0.0), and total-capped k=15..0 dsieve16, achieving opened-run expected work E[W_run] <= 2^110.3312 u behind unified hard meter T_run = 2^123 u with opened-run success >= 0.99984, and gated cold-run expected work E[W] <= 2^108.972977878763 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "108972977878763",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "ADAPTIVE.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "toy_e2e.b85",
+        "boot_witness.json",
+        "boot_lll_0.b85",
+        "boot_lll_1.b85",
+        "boot_lll_2.b85",
+        "cm_models.py",
+        "pm_adaptive.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "cm_tables.b85",
+        "q15_low_p0_24b_w8.b85",
+        "w8_verifiers.py",
+        "m5_qprand.py",
+        "m1_qprand_camp.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 19-check audit: Q(zeta_15) algebra/CRT/NTT + gcd(r,(p^12-1)/r)==1, Murphy-alpha + real-FB joint collection, live E2E DLP, Voronoi + proved RET_BOOT=1 + unconditional deterministic Lovasz M_boot=2592.0 + live certification of ALL 32/32 real 381-bit G_T (99/100)-LLL bases (target 0 from scratch via Bareiss-LLL, ZERO-EA surv_b=1.0, over_b=0.0, P_10000 smoothness), SRT toy, raw-opcode baseline scalar ARMv8.0-A parser + 64b sim (u16/1-rec/u64/3-vec-4-col LA/9-op LUT isqrt + uniform (99/100)-LLL PAIR_SETUP=2^35.2 & LLL_NODE=2^39.5), 2D Retention + 200k box102 pool (100% deterministic c_gbatch_full, det_credited=0.99, live split-prime Stage-B census), 1-owner (<2^64 B) 3-vec Arch B LA (2^16..2^25 zero-loss ladder, 1.45x caps, zero TABM) + unscreened two-sided Q(zeta_15) H-X with live zero-BSGS gamma_0-blinding/unblinding, total-capped dsieve16 (k=15..0, gate_frac=1.0, alpha=100/74) calibrated LIVE on 32 genuine Q(zeta_15) 12..71b root L_p bases + 8 complete root-to-leaf FP runs, and Pure M1 conditionally-i.i.d. q->q*p_rand_j descent (ZERO Trial 0; exact |P_f|=1,344 in [2^12,2^14), +-1-only ceil Blichfeldt <= 3.03e-6 << p_geom=5e-5, 8 live 381-bit CRT L_{q,p_j} + 4 live prod_enc12 checks, 32x24=768 above-cutoff exact O_H-coprime deg-1-root campaign + 8 live replays, and 24x24=576 literal deg-(72,24) exact O_H-coprime campaign + 6 live replays).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              32,
+              64,
+              96,
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
