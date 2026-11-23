@@ -1,0 +1,334 @@
+{
+  "version": 1,
+  "title": "BLS powers: s52 TMR full-child kernel, zero-spill batch round, pinned-stride leaf and aligned beta chunk (expected work 114.555827625256)",
+  "claims": [
+    {
+      "statement": "For the protected BLS12-381 auxiliary-powers G1 target at n=2^20, one cold run of the supplied run-gated, interleaved round-stopped paired class-walk Cheon algorithm with row-product batch rounds, table reductions with zero high words and lazy backward inverse, and s52 scalar arithmetic tightening (proof.md s46-s52, s52-proof.md) recovers s with probability at least 0.39 over the uniform challenge and fresh algorithm coins, conditional on H1' (two-sided prefix coverage, proof.md s45; H1 is its last case), H2-H5 in source-proof.md (H4 as per-class pair fraction 998/1000 and leaf share 193/200, checked before group work). The run first draws one fresh 64-bit coin: with probability 1-K/2^64 it stops there at charged cost 64 and fails (a closed gate is a failure, never a success); K=7202289315256142731 is the least integer with (K/2^64) lo_run>=0.39, lo_run=0.998881032661053135617344479879202675175312219278308417488720 being the lower bound of an opened run's success at the realized K = 6 N_b N_g/m >= K_T = 7389/1000 (proof.md s2). An opened run walks its baby and giant bases in at most 2^16 interleaved rounds, every owner record inserting into its own side's table and looking up the other's, and stops at the first round that yields a verified s. W(n) is the expected total work of this one run over that probability space, every trial, failure and closed gate included: W(n)<=2^114.555827625256 G1-reference units (C=2000) for 2^20<=n<r, namely (64+(K/2^64) E_run)/2000 with E_run=156393769900452761460168430827153090219 instructions bounding an opened run's mean work (proof.md s45, s52-proof.md). This bounds the mean, not one run: every run does at most 2^117.530191309914 units, and an opened run can cost more than W(n). It reads only A_1,A_(2^20). Challenge-independent preprocessing<2^105.3247 units, included; peak memory<2^125.0002 bytes; no advice. All failures, transfers, verification and output are charged. Nodes use the disclosed flat unsigned 64-bit address model with permitted DC ZVA zeroing of 256-byte blocks (DCZID_EL0.BS=6,DZP=0) in Normal writable mapped memory; each such scalar system instruction is counted once as discussed in init-proof.md (proof section 50). C and all other instruction prices are unchanged. This implementation parameter is supported by A64FX, but a physical A64FX is not claimed to hold the production arrays. This cost-model interpretation is a material review question; no bound on a 64-byte-only machine is claimed. This is an analytic conditional bound, not a production execution. Q=125517/100000 and K_T=7389/1000 are the design values selected by the fresh ledger scan of proof.md s51b at this package's prices, not proved minima. H1' and H2-H5 are not closed.",
+      "score": {
+        "numerator": "114555827625256",
+        "denominator": "1000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "source-proof.md",
+        "evidence.py",
+        "measure/side_lanes.S",
+        "measure/measurement.log",
+        "kernel_check.py",
+        "nocarry_witness.py",
+        "a64.py",
+        "combined_lazy.py",
+        "log_bound.py",
+        "params.json",
+        "planner.py",
+        "batch_audit.py",
+        "smx_audit.py",
+        "rows.py",
+        "table_trade_audit.py",
+        "range_audit.py",
+        "init_audit.py",
+        "owner_init.S",
+        "init-proof.md",
+        "scan-proof.md",
+        "s52-proof.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "interleaved-rounds",
+      "source": "combined_lazy.py",
+      "purpose": "Declared input (mode declared = all but the planner and h2 sweeps): exact ledger, owner-loop, row-product, arithmetic and listing audits, character check, curve recovery with interleaved stopping, transport and the two-sided round-order census. On this input the manifest and the quoted hypothesis bounds are asserted against the ledger. Optional KT and ratio (fractions) re-evaluate the ledger at another point (mode ledger: ledger only); proof.md s51 records the K_T/Q scan that selects the current design point (K_T=14717/2000, Q=5/4) and its rejected neighbours; proof.md s51b records the further joint (K_T,Q) scan that selects K_T=7389/1000, Q=125517/100000 and its rejected neighbours. The declared-census K equals the adopted K_T so no census from an older K is reused. The manifest score check compares the adapter-reduced declared rational with Fraction(S,10**12). Finite evidence only. Also executes the exact new table construction, MADD alias, packed address and negative-control audit. Includes exact range inequalities, full-384-bit RP6 emitter boundaries, raw inverses above2p and signed-prefix checks. Also executes the literal zero-initialization model on finite arrays, capability rejection and mutated stride/block controls, and exact production address/count algebra. This is not native DC ZVA execution.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8
+          },
+          "planner": {
+            "type": "object",
+            "properties": {
+              "specs": {
+                "type": "array",
+                "maxItems": 16,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "d": {
+                      "type": "integer",
+                      "minimum": 2,
+                      "maximum": 256,
+                      "enum": [
+                        2,
+                        4,
+                        8,
+                        16,
+                        32,
+                        64,
+                        128,
+                        256
+                      ]
+                    },
+                    "logX2": {
+                      "type": "integer",
+                      "minimum": 10,
+                      "maximum": 21
+                    },
+                    "seed": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 1000000
+                    },
+                    "classes": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 32
+                    },
+                    "max_tree": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1048576
+                    },
+                    "kappa": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 64
+                    }
+                  },
+                  "required": [
+                    "d",
+                    "logX2",
+                    "seed"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "specs"
+            ],
+            "additionalProperties": false
+          },
+          "ec": {
+            "type": "object",
+            "properties": {
+              "bits": {
+                "type": "integer",
+                "minimum": 18,
+                "maximum": 28
+              },
+              "logd": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 8
+              },
+              "K": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              },
+              "trials": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2000
+              },
+              "seed": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              },
+              "keybits": {
+                "type": "integer",
+                "minimum": 8,
+                "maximum": 32
+              },
+              "nodebits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "headbits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "head_cap": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4096
+              },
+              "cand_cap": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1048576
+              },
+              "logX2": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 20
+              },
+              "logG": {
+                "type": "integer",
+                "minimum": 8,
+                "maximum": 22
+              },
+              "spotchecks": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "q": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              }
+            },
+            "required": [
+              "bits",
+              "logd",
+              "K",
+              "trials",
+              "seed",
+              "keybits",
+              "nodebits",
+              "headbits",
+              "head_cap",
+              "cand_cap",
+              "logX2",
+              "logG",
+              "spotchecks"
+            ],
+            "additionalProperties": false
+          },
+          "census": {
+            "type": "object",
+            "properties": {
+              "m_bits": {
+                "type": "integer",
+                "minimum": 12,
+                "maximum": 23
+              },
+              "k": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 16
+              },
+              "K": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              },
+              "seed": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              "window": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4
+              },
+              "multiplicity": {
+                "type": "boolean"
+              },
+              "q": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              },
+              "nbar": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              },
+              "gpc": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "lit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5000
+              }
+            },
+            "required": [
+              "m_bits",
+              "k",
+              "K",
+              "seed"
+            ],
+            "additionalProperties": false
+          },
+          "KT": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12
+          },
+          "ratio": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12
+          }
+        },
+        "required": [
+          "mode",
+          "planner",
+          "ec",
+          "census"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "mode": "declared",
+          "planner": {
+            "specs": [
+              {
+                "d": 4,
+                "logX2": 14,
+                "seed": 0,
+                "classes": 2,
+                "kappa": 8
+              },
+              {
+                "d": 4,
+                "logX2": 14,
+                "seed": 0,
+                "classes": 1,
+                "kappa": 8,
+                "max_tree": 64
+              }
+            ]
+          },
+          "ec": {
+            "bits": 23,
+            "logd": 5,
+            "K": "7.389",
+            "trials": 4,
+            "seed": 2026,
+            "keybits": 18,
+            "nodebits": 5,
+            "headbits": 6,
+            "head_cap": 64,
+            "cand_cap": 4096,
+            "logX2": 12,
+            "logG": 11,
+            "spotchecks": 6,
+            "q": "59/50"
+          },
+          "census": {
+            "m_bits": 21,
+            "k": 6,
+            "K": "7.389",
+            "seed": 0,
+            "q": "59/50",
+            "nbar": 6
+          }
+        }
+      ]
+    }
+  ]
+}
