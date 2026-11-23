@@ -1,1 +1,1 @@
-submissions/secp256k1-ecdlp
+submissions/secp256k1-ecdlp/s1-permission-fault-blocks-123216802973012036
