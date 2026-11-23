@@ -1,0 +1,108 @@
+{
+ "version": 1,
+ "title": "bn254-pairing-inversion: scalar ARMv8.1-A (STADDH) C6-m184_w216-rec STNFS with mod-3 primitivity wheel, 10-op b_tab emit (2^35 live score nodes), executed Band-1 address transport, pooled leaf calibration and kept-candidate boot: 2^84.102620174",
+ "claims": [
+  {
+   "statement": "For full-production bn254-pairing-inversion, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing the scalar FEAT_LSE instruction STADDH Ws,[Xn] with base-register-only addressing, priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint16_t scores of logical cells <= 41,234 < 65,536 never wrap; no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page, copied at 1.007-1.05 Ir per 8 B or, for Band 1, written directly by the List Node's counted stores) runs the (6,2) C6-m184_w216-rec STNFS of proof.md (12D coupled ellipsoid E12+JointVor, W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), log2_V=95.5075; B_a=4 equal-count Q(a) shells): Band 1 [2^24,2^41.5) uses the exact mod-3 ideal-primitivity wheel (three ring maps phi_0,phi_1,phi_2: O_h->F_3, each of rank 1, jointly of rank 3, cyclically permuted by sigma, uniform-residue keep fraction 512/729 under H2 with zero loss of primitive pairs): 8 lists per prime indexed by z in {0,1}^3 (uniform-residue mean replication 125/27=4.6296x under H2 in lists and byt_lo), stored as global ranks ordered by (residue, z, shell, ai) with K_B1=256 checkpoint words per (residue, z, shell) (exact cover 1.01129 <= 1.0120; all 8,192 checkpoint words per (p,residue) charged), so each (p,b) row is one contiguous slice; the List Node writes each hit as the record (row_block<<35)+2*ai straight into the Score Node's link page and C[s] applies whole pages (kernels_v28.s //@seg b1_*, executed instruction by instruction by v25_verify.py check 2): C_HIT_LO=3.5699 >= 3.569824, C_B1_ROW=26.2 per (p,b) row, 64 per (p,line,shell), C_LIST_B1=24.70 per stored entry (itemized), terminal partial pages per (prime, Score Node) in misc; v27's uint32_t delta runs and its unitemized per-row allowance are gone; Lower Band 2 [2^41.5,2^48.0) with a_0-chord kta scatter, x4 entries (ai<<17)|j_rel (C_B2_INT_X4=6.55) and v23b ll tier; 6-ideal tau_6-orbit 12D Lattice Band 2 [2^48.0,2^61.0] with 2-stage Bareiss LLL(9/10)->LLL(99/100) (<=2^34.5 Ir/orbit), native 64-bit Q38/Q32 Fincke-Pohst (word-width theorem, 5-op LUT4 radius lookup, finite-difference rem_0 at k=1, Theorems A/B eps_or<=0.0023389, Lemma E exact-level fallback C_LAT_EXC=2^31.2 >= 177,313 exact nodes x 12,288 + 85,265 fixed-point nodes x 115 (fd_bounds.py), 4-plane cyclic cone), extended with per-orbit STEP_K[1..11] and STEP1_TAB 6-trit F_3^6 state tracking (x23=(cnt<<12)|st_1 updated by bfi + sub #1,lsl #12; FP node prices 41/100/115/100..86/115 counted from kernels_v28.s), whole-chord skip for mask m=7, 5-op computed-goto dispatch via wtab[0..447] (plus 3-op skip stubs and 60-step chunk loop) into loop-free straight-line emit chains C12/C21/C3, and 10-op leaf emit on E_0 using N_sc=2^35 direct live Score Nodes C[s] (<=2^63.419 B each < 2^64 B, <=2^28.419 < 2^29 blocks) with b_tab=(s<<29)|row_block unpacked by lsr #29 and add x7,x0,x3,lsl #35 (C_LAT_APPLY=1.80 Ir/kept record; v27's 256-orbit HT estimator pooled over 16 runs, 4,096 orbits, 677,264 leaves, stored in ht_pool.b85 with one complete run regenerated live: R_hat=24.4514, SE=0.0698, 1.03*(R_hat+3*SE)=25.4006<=25.50=C_LAT_LEAF). Total collection <= 15.408 Ir/cell (collection <= 2^85.170129, lists <= 2^80.686716, misc <= 2^72.647299); plain-sparse 8-vec Z[omega] BW LA bw=(1024,48) (la <= 2^81.561897, 1-owner RAM <= 2^63.412 B incl. PM-Basis workspace); pure k=1 zero-retry Boole + Wald i.i.d. kept-candidate boot (two_logs <= 2^81.357003, ADAPTIVE.md); total machine storage <= 2^98.705 B < 2^100 B pointwise (stor_bound.py, every node < 2^64 B). Under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0..H-EB3, H-SM, H-R, H-X, H-SEP, the algorithm returns (P,Q) in G1 x G2 with e(P,Q)=z w.p. >= 0.39 (opened-run success >= 0.999998 via FIX-U, K=7,194,244,577,235,879,602) with expected total work E[W] <= 1 + (K/2^64)*2^85.461071259 <= 2^84.102620174 units (C=20,000 Ir).",
+   "score": {
+    "numerator": "84102620174",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "ht_pool.b85",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "kernels_v28.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier (default run: 32/32 checks, incl. FP node prices and mod-3 wheel / 10-op emit segment counts read directly from kernels_v28.s). Changes over v27 (collection wheel, 10-op emit, Band-1 address transport, pooled leaf calibration, PM-Basis mem_1own): v25_verify.py check 9 checks the O_h->F_3^3 ring-homomorphism (0/36 errs), joint rank 3 (det3=1 mod 3), sigma-cyclic permutation ([2,0,1]), the residue-class counts 217/729 (bad) and 125/27 (list replication), 0 false discards among 250 random box pairs (HNF), bit-exact wtab[0..447] + C12/C21/C3 + 60-chunk loop across all 6 masks and edge lengths [0..63,120,121,125], pairwise-disjoint sp regions (v28_sp_alias_errs=0), x23 BFI+SUB#1,LSL#12 and Barrett mod-3 checks, and extreme (s,row_block,ai) 64-bit address validity for N_sc=2^35; verify_bn254_v6.py's live pool subsample finds 0 false discards among its 660 sampled E12+JointVor cells (194 bad, fraction 0.2939 vs 217/729, z=-0.21). v25_verify.py check 2 executes the Band-1 listing of kernels_v28.s (//@seg b1_*: line setup, rows, transform-copy into link pages, flushes, stream switches, terminal pages, receiver page apply) instruction by instruction on a synthetic instance (3 primes, the smallest at production K = 256; 56 lines, 1,237 rows, 37,222 entries, 22 pages): score memory equal to a direct reference, sender 106,430 <= 110,631.19 and receiver 56,347 <= 56,409.80 instructions charged at the instance's own counts, the flush threshold read from the listing with T + 1,024 <= 16,384, C_HIT_LO >= 3.569824 and C_B1_ROW >= 26.2 from the listing's segment counts. v20_lat_b2.py verifies the STEP_K[1..11] + x23 + STEP1_TAB state machine across all 14,650 leaves of the 7 complete root-to-leaf trees (0 errors) and regenerates one complete run of the 256-orbit rejection-sampled Haldane-UMVUE Horvitz-Thompson sample (chosen at run time; input ht_run selects one), which must equal its stored records in ht_pool.b85 (a change to another stored run is found only when that run is replayed); v25_verify.verify_ht_pool pools the 16 stored runs (4,096 orbits, 677,264 leaves): R_hat=24.4514, SE=0.0698, 1.03*(R_hat+3*SE)=25.4006<=25.50=C_LAT_LEAF. stor_bound.py certifies all single-node RAM bounds < 2^64 B (Score Node <= 2^63.419 B, 29-bit row_block, max record address < 2^64; List Node <= 2^60.225 B incl. 2^56 B build scratch, stream states and Band-1 descriptors; LA 1-owner <= 2^63.412 B incl. PM-Basis workspace) and total machine RAM <= 2^98.705 B < 2^100 B. All v27 boot (boot_dp.py, boot_mini.py), H5 diagnostics (part=diagnostics), sensitivity (part=sensitivity), dag_survivors (part=dag_survivors) and v23b checks remain live. hx_z6.py and RANK-BRIDGE.md are v27's (H-SM, H-R, H-X unchanged). Additional evidence for H-EB1/H-EB0: 2-bit-binned boot evaluation without the log-linear step on all 21,836 production kept norms (F_nl=1.2038, R_nl=0.9993) in default; plus part=boot_evidence (production (2^16,2^20] rough-part audit on 338 real 1,719-bit kept norms and scaled miniature joint EA+RF check).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "boot_evidence",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     },
+     "ht_run": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
