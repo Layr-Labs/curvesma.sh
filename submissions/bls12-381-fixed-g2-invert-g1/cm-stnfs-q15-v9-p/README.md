@@ -1,0 +1,1 @@
+BLS12-381 `recover-P` (`bls12-381-fixed-g2-invert-g1`): `(4,3)` `Q(zeta_15)` CM-STNFS (expected work `< 2^108.960989445958` u behind cold-run gate `p_cold >= 0.39`, `C = 20,000` pure baseline scalar ARMv8.0-A, 28 hot-loop ASM blocks). Run `python3 -I -B audit_cm.py <<< '{}'`.
