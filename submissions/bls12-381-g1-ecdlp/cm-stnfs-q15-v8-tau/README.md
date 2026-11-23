@@ -1,0 +1,1 @@
+BLS12-381 powers-of-tau `G_1` ECDLP (`bls12-381-g1-ecdlp`, all `1 <= n < r`, scored at `n = 2^20`): `(4,3)` `Q(zeta_15)` CM-STNFS (expected work `< 2^112.282917540845` G1 u = `< 2^108.960989445958` core `F_{p^12}` u behind cold-run gate `p_cold >= 0.39`, `C_G1 = 2,000` pure baseline scalar ARMv8.0-A, 28 hot-loop ASM blocks). Run `python3 -I -B audit_cm.py <<< '{}'`.
