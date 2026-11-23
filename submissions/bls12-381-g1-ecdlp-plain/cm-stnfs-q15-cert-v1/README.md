@@ -1,0 +1,1 @@
+BLS12-381 plain `G_1` ECDLP (`bls12-381-g1-ecdlp-plain`): pairing transfer to two `G_T` logarithms solved by `(4,3)` `Q(zeta_15)` CM-STNFS; expected work `< 2^112.334717540845` G1 units (`C = 2,000`), i.e. `2^110.3698` core `F_{p^12}` units (`C = 20,000`) per opened run behind a cold-run gate (`p_cold >= 0.39`). Run `python3 -I -B audit_cm.py <<< '{}'`.
