@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "title": "BLS12-381 plain G1 ECDLP (bls12-381-g1-ecdlp-plain): pairing transfer to two G_T logarithms, (4,3) Q(zeta_15) CM-STNFS with a certified single-trial descent, at expected work 2^112.373317540845",
+  "claims": [
+    {
+      "statement": "Exploratory-v1 analytic claim for track bls12-381-g1-ecdlp-plain: given T = [x]P_0 in G_1 (uniform x in 0..r-1, T = O -> x = 0, no auxiliary powers), transfer through the public pairing to z_T = e(T, Q_0) and h = e(P_0, Q_0), recover two gamma_0-blinded virtual logarithms in (4,3) Q(zeta_15) CM-STNFS and return x = V(z_T) V(h)^-1 mod r (checked by [x]P_0 = T). Rows are kept in dense F_p12 multiplication units (C = 20,000 baseline scalar ARMv8.0-A Ir) and converted exactly x10 to G1 units (C = 2,000). Opened-run expected work E[W_run] <= 2^110.4084 core units = sum of the section-8 rows: relation collection 2^110.0006, linear algebra 2^107.2484, two individual logarithms 2^107.1360 (76-node plan; every descent slot sieves one lattice L_{Q,p_rand}, p_rand uniform from the 4,740-ideal pool, that first passes a per-lattice yield certificate mu(L) >= 15 (exact norms, admission rules, exact unit-orbit sizes; error 1e-9/64 per draw, at most 64 draws); abort-only recovery: a slot whose ideal does not certify, whose ball has <= 3 usable relations, or whose first 4 relations are rejected aborts to its parent, which takes its next relation, and the boot skips relations with an aborting child, so no descent event makes a run fail; premises H5 (<= 3 usable relations in a certified ball with probability <= 0.004; 830 distinct toy ideals, 0 hits) and H6 (a reached ideal is not good with probability <= 0.01; 45,600 production draws with the algorithm's trial law on uniform ideals, 600 per plan entry, 0 failures) bound the expected work only: slot abort <= 0.0144, boot relation rejection 0.2302), and smaller rows. Every run is cut by a hard meter at 2^123 core units; opened-run success >= 0.9990; a run gate with K = 7201431620367092223 gives cold success >= 0.39 and E[W] <= 1 + (K/2^64) * 10 * (2^110.4084 + 2^66) < 2^112.373317540845 G1 units. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "22474663508169",
+        "denominator": "200000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_cert16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_cond_7e.b85",
+        "q15_cert_prod.b85",
+        "q15_toy_cond.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib audit: Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions and survival coupling, toy end-to-end DLP, Band-2 exactness, 2-adic pool cross-check, Voronoi + 16D LLL + 381-bit F_{p^6} boot lifts, SRT toy, retention integration, product trees, collection ECM bound, Stage-B-capped LA, filtering simulator + H-X, missing-log reconstruction, Q(zeta_15) H-X, ARMv8.0-A kernel parser and simulations, 384-mesh descent evaluation with the per-lattice yield certificate (912-lattice production archive re-checked, two lattices recomputed live), ECM ladder, boot archive, UDUP, BOUND_CELL, retention, G1/G2 generator checks, and the 80-digit Decimal ledger/gate/G1-conversion and manifest check.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
