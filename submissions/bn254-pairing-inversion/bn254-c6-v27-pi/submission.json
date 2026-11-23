@@ -1,0 +1,101 @@
+{
+ "version": 1,
+ "title": "bn254-pairing-inversion: scalar ARMv8.1-A (STADDH) C6-m184_w216-rec STNFS with direct live score nodes and a kept-candidate boot: 2^84.215669649",
+ "claims": [
+  {
+   "statement": "For full-production bn254-pairing-inversion, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing the scalar FEAT_LSE instruction STADDH Ws,[Xn] with base-register-only addressing, priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint16_t scores of logical cells <= 41,234 < 65,536 never wrap (guard, trap and sink cells may wrap and are never used as scores); no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page charged at 1.007-1.05 Ir per 8 B) runs the (6,2) C6-m184_w216-rec STNFS of proof.md (12D coupled ellipsoid E12+JointVor, W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), log2_V=95.5075; B_a=4 equal-count Q(a) shells): Band 1 [2^24,2^41.5) with K_B1=512 prefix checkpoints (exact cover 1.00549 <= 1.0060) and uint32_t delta runs on [2^24,2^29.5) (C_HIT_LO=3.3667<=3.371); Lower Band 2 [2^41.5,2^48.0) with kta(a) stepped along a_0-chords and scattered to kta_arr[ai] (C_LIST_B1/B2/LL=28.70/27.70/21.90), x4 entries (ai<<17)|j_rel for power-of-two row strides (C_B2_INT_X4=6.55 both signs) and the v23b ll tier; 6-ideal tau_6-orbit 12D Lattice Band 2 [2^48.0,2^61.0] with 2-stage Bareiss LLL(9/10)->LLL(99/100) (<=2^34.5 Ir/orbit for all p<=2^61), native 64-bit Q38/Q32 Fincke-Pohst (word-width theorem from min v^T G_sym v = 753,729 and Lovasz), 5-op radius lookup umulh;clz;lsl;extr;ldr from a 1,048,584 B table LUT4 (outward rounded on every r2' in [0,2^40), checked per bucket), finite-difference rem_0 at k=1 (pad floor(2 R1 ec1 A1/2^32)+2+R1^2) with completeness against exact Q12<=T (Theorem A) and over-radius eps_or<=0.0023389 for every input (Theorem B, fd_bounds.py; levels with B_k>=T, possible only at k>=3 by Lemma E, run an exact-integer body charged on every orbit at <=177,313 nodes x 12,288 Ir, tested in exact_levels.py), 4-plane cyclic cone, FP node prices 37/84 (k=0/k=1) and 94..65 (k=2..10) counted live from the complete node bodies assembled in kernels_v26.s; direct live score nodes (STORAGE.md): all score rows on 2^36 Score Nodes C[s] (<=2^62.417 B each) in W=64-row sub-bands with power-of-two strides and an exact-count row capacity cap=#{a in E_a+: Q(a)<=u_sb+delta}+D_B1+16 (delta=0.005>=2 eps_or; D_B1<=2^37.274 covers the Band-1 checkpoint overshoot; out-of-domain a to the row's trap cell, b to the sink), emitter E_0 (<=2^63.457 B) writing 8 B records (row_block<<35)+(ai<<1) into one 16 KiB staging slot per C[s] (tbnz #14 flush every 2,046 records; 12.35 Ir per fast leaf, 52.05 per boundary leaf) and C[s] applying them with STADDH straight out of link_E_to_C[s] (<=1.80 Ir/record), one-time score initialisation = v23b's scan8 pass 2 run before collection (549/1024 ops/cell unchanged), partial pages charged in misc, total machine storage <=2^98.667 B < 2^100 B for every input; C_LAT_LEAF=28.27 Ir/leaf budgeted under H2 by 7-orbit complete scaled-T' trees (14,650 leaves/30,198 nodes, nodes within 1.43%, weighted FP Ir within 2.19%), 2,135 exact-T12 leaves and the live 32x8=256-orbit rejection-sampled Haldane-UMVUE Horvitz-Thompson sample on [48.0,61.0] (27,043 leaves, R_hat=26.679, SE=0.253, R_hat+3SE=27.438, 1.03x extrapolation 28.261 <= 28.27); collection 17.054 Ir/cell; P_min=24 0-LP Stage B sl=116.0 with 8-limb 0.17-cap g_rec batched Bernstein SRT + exact 1/16-bit sb=0 gate, 9-prime split-CRT norms, split caps 0.08/0.17/0.20, SPLIT_Q=2^46; conservative >=1.15x fixed-instance zero-loss H3 caps 0.000312/0.000261/9.60/1.00 + 64b-indexed 8-vec Z[omega] BW (C_UNIT_5=7.40, bw=(1024,48), la=2^81.561897) + 5-SM shifted sigma-basis; constrained-DP 62-row LB=59 pure k=1 zero-retry Boole descent + Wald i.i.d. fresh-e boot that tests every kept vector (pre-norm gated, O_K-primitive, |N_g| not seen earlier) of the 144 fixed-rule vectors of each reduced boot lattice, priced per lattice on 256 stored production lattices with the first moment charged x1/2 and the minimum retention over all sizes (two_logs<=2^81.357003); unified pointwise meter t_run=2^112. It returns (P,Q) in G1xG2 with e(P,Q)=z (P=P0, Q=[x]Q0; if z=1, (P0,inf)) w.p. >=0.39 with expected work E[W] <= 1 + (K/2^64)*2^85.574120734 <= 2^84.215669649 units (C=20,000 Ir; strictly expected; opened-run expected scalar instructions 2^99.862 < 2^100), K=7194244577235879602, opened-run success >=0.999998 (FIX-U), under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0, H-EB1, H-EB2, H-EB3, H-SM, H-R, H-X, H-SEP (proof.md §6, RANK-BRIDGE.md, ADAPTIVE.md). This is a revision of gbotrel's bn254-c6-v23b-pi (2^84.329545377); parts not listed as changed in proof.md §2 and §4 are that package's. Finite prototypes are scoped evidence, not proofs; kernel counts are in KERNELS.md and checked live by audit_bn_cm.py (30/30 in the default run; the 3 H5 scoped diagnostics of ADAPTIVE.md section 2 with input {\"part\":\"diagnostics\"}).",
+   "score": {
+    "numerator": "84215669649",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "kernels_v26.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier (default run: 30/30 checks, incl. FP node prices counted from kernels_v26.s). v27 change (boot, ADAPTIVE.md section 1.2): boot_dp.py regenerates one randomly chosen stored production boot lattice from scratch (fresh e, Bareiss LLL, 144 candidates, gate, exact |N_g|, O_K-primitivity, kept rule, small-prime parts, kept pairs sharing a prime > 2^16) and compares it with boot_dp.b85/boot_s16.b85; the small-prime statistics are recomputed from all 256 stored lattices and the miniature census ratios from all stored records of the two miniature towers, every distinct lattice once (u=-3: 1,044 lattices, u=5: 13,740; boot_mini.py, boot_mini*.b85; tower_ok run live); the ledger prices the boot per lattice from the 256 stored lattices (cst_min retention, full pair term) and prints the first-moment factor, the survival margin, the pair term and the claim at boot charge 4 and at 4x survivors. Collection changes against v23b (developed in unpublished steps v25/v26): v25_verify.py (Band-1 K_B1=512 exact cover and uint32_t delta-run apply replay; a_0-chord kta scatter on 3,072 (p,a) pairs (genuine 42..48b primes, synthetic a_0-chords) with ai-order check; 4-plane cyclic cone S-invariance and 447-orbit bijection; finite-difference rem_0 r2<2^40 bound on 48..61b lattices; tbnz #14 single-slot replay; x4 (ai<<17)|j_rel replay for k_s in {35,42,48,50}; b_0 sub-band nesting, outward storage bound stor_bound.py and input-uniform eps_or bound fd_bounds.py (eps_or<=0.0023389<=delta/2; Lemma E; exact-node count and price), exact_levels.py (exact-integer level body vs exact-rational enumeration on 16 synthetic lattices with B_k>=T levels, with a fixed-point-only negative control), 8-row group scan overhead, sink, init copy + read-only scan8 replay) and v20_lat_b2.py (5-op LUT4 radius checked on all 31,744 buckets and 21,113 inputs; beta>=1 census; complete scaled-T' trees on 7 orbits with per-level FP prices and failed child tests charged; 2,135 exact-T12 leaves; live 32x8=256-orbit Haldane-UMVUE Horvitz-Thompson sample asserting 1.03*(R_hat+3SE)=28.261<=28.27=C_LAT_LEAF; direct-live-score-node replay E_0->link_E_to_C->C[s] and L[k]->link_L_to_C->C[s] against a reference on 16 Score Nodes and 208 bands, production-width b_tab packing and 2^35-block addressing, greedy per-node bound). Unchanged v23b checks: algebra/CRT, FD and JointVor proof, NTT/SRT, 200k pool + HNF, norm suprema, Barrett kta, Lower-B2 replays, STADDH, orbit exactness, word width, SRT gate, Bareiss LLL bounds, unit4 SpMV, ECM ladder, H3 ladder, 5-SM BW, 16-row ledger, FIX-U, gate K. Input {\"part\":\"diagnostics\"} (about 7 s; not in the default run because of the board's per-run time limit; v23b code, refactored for speed) runs the 3 H5 scoped diagnostics of ADAPTIVE.md section 2: descent lattices (24 stored 254b GT boot lattices, all 144 candidates of each gated, + 24 special-q lattices), adaptive h5, deg-8 dispersion and production yield. Inputs {\"part\":\"boot_dp\",\"j0\":j,\"n\":<=8} and {\"part\":\"boot_mini\",\"u\":-3|5,\"j0\":j,\"n\":<=40} regenerate any stored range. Input {\"part\":\"dag_survivors\"} prints the claim with twice the DAG survivor envelope (H5-W sensitivity). Other optional parts: sensitivity, full, filtsim, hx.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
