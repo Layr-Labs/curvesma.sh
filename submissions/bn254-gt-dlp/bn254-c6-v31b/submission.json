@@ -1,0 +1,108 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: scalar ARMv8.1-A (STADDH/LDADD) C6-m184_w216-rec STNFS with Zero-Split 4-plane B_TAB[0..3], 11-op EXTR+LDADD emit, 2-word Z/2^64Z FP tree (P_lat=45.5), truncated E12 (B_a=2, 2M pool) and kept-candidate boot: 2^83.702328779",
+ "claims": [
+  {
+   "statement": "For full-production bn254-gt-dlp, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing the scalar ARMv8.1-A FEAT_LSE atomic integer instructions STADDH Ws,[Xn] and LDADD Xs,Xt,[Xn] with base-register-only addressing, each priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint16_t scores of logical cells <= 41,234 < 65,536 never wrap; no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page, copied at 1.007-1.05 Ir per 8 B or, for Band 1 and Lattice Band 2, written directly into the link page by the producer's counted stores) runs the (6,2) C6-m184_w216-rec STNFS of proof.md on the truncated coupled ellipsoid E_{12,trunc} = {Q(a)+Q(b)<=1, Q(a)<=17/20, Q(b)<=17/20} cap JointVor (W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), slack=114.0, 2,000,000-active exact-HNF pool, SE=0.001332 b, margin=0.005 b > 3.75*SE, work_allow=1.0, log2_V=95.5037, R_a=589.36 < 589.43, B_a=2 equal-count Q(a) shells, N_{a,sh}=2^46.490 < 2^47): Band 1 [2^24,2^41.5) uses the exact mod-3 ideal-primitivity wheel (keep fraction 512/729, mean replication 125/27 under H2, 0 loss of primitive pairs), K_B1=256 checkpoints per (residue, z, shell) (exact truncated-E12 cover 1.00742 <= B1_PREF_COV=1.0075), and executed direct-to-link-page address transport (kernels_v31.s //@seg b1_*, executed instruction by instruction by v25_verify.py check 2: C_HIT_LO=3.5699, C_B1_ROW=26.2, C_LIST_B1=24.70); Lower Band 2 [2^41.5,2^45.5) uses only x4 bands (W in {8, 16}, C_B2_INT_X4=6.55, C_SB_ENTER_X4=20.05; entire Lower-B2 ll tier eliminated); 6-ideal tau_6-orbit 12D Lattice Band 2 [2^45.5,2^61.0] with 2-stage Bareiss LLL(9/10)->LLL(99/100) (<=2^34.5 Ir/orbit), native 64-bit Q38/Q32 Fincke-Pohst with Zero-Split Mixed-Radix 4-plane B_TAB[0..3] (full E12+DELTA box: prod_Ma=2^56.1355, prod_Mb=2^58.5957 < 2^59, 4 planes at stride 2^59 entries: k in {0,1,2} for S*a!=a and k=3 for the rank-2 fixed subspace S*a==a, exact bijection with _canon_cone_ref on every nonzero leaf, 0 chord splits, 0 cone walls, 0 boundary leaves, 0 clips; exact-rational E_0 RAM <= 2^63.9615 B < 2^64 B), 2-word Z/2^64Z linear cur (x24=pack_a, x25=pack_b<<5; exact ring homomorphism with zero intermediate overflow constraint, 0 errors across 14,650 leaves), (da, db5) pinned in x26/x27, (3*da, 3*db5), x1=#8, mod3_tab and wtab hoisted to body_2, Theorems A/B (eps_or<=0.0023389), Lemma E exact-level fallback (C_LAT_EXC=2^31.2 > 177,313*12,288 + 85,265*105), FP_CL=[26,91,105,90..76,105] counted from kernels_v31.s, and 11-op EXTR+LDADD direct-to-link-page emit (a_tab=((2*ai)<<5)|k; extr x6,x0,x5,#5; lsr x0,x0,#5; add x7,x0,x3,lsl #38; N_sc=2^35 Score Nodes, BLK=38, blocks<=2^25.393 < 2^26 => bits [28:26]==000; emit10_step1/2/3=11, emit10_last=9 falling into .Lk0_back, chord_enter=2, wheel_m0_disp=4, emit_direct_flush=8 -> 0.014663 <= 0.015 Ir/rec, x128-unrolled C[s] apply C_LAT_APPLY=1.55, all executed instruction by instruction by v25_verify.py lat_apply_e2e with 0 unlisted analytical constants; 16-run pooled HT calibration on [45.5,61.0], 4,096 orbits, 0/4,096 beta>=1, max log2 beta=-4.7780: R_hat=14.1464, SE=0.0318, 1.03*(R_hat+3*SE)=14.6691 <= 14.70=C_LAT_LEAF). Total collection <= 11.497 Ir/cell (collection <= 2^84.739068, lists <= 2^78.436457, canon <= 2^76.002226, misc <= 2^72.513159); plain-sparse 8-vec Z[omega] BW LA bw=(1024,48) with live-verified C_UNIT_5=7.20 (7.130<=7.20) and K5_CAP=9.30 on the unchanged 2^20..2^26 ladder (la <= 2^81.531977, 1-owner RAM <= 2^63.412 B incl. PM-Basis workspace); pure k=1 zero-retry Boole + Wald i.i.d. kept-candidate boot (two_logs <= 2^81.360715, ADAPTIVE.md); total machine storage <= 2^98.674 B < 2^100 B pointwise (stor_bound.py, every node < 2^64 B). Under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0..H-EB3, H-SM, H-R, H-X, H-SEP, the algorithm returns x in [0, r-1] with g^x=z w.p. >= 0.39 (opened-run success >= 0.999998 via FIX-U, K=7,194,244,577,235,879,602) with expected total work E[W] <= 1 + (K/2^64)*2^85.060779864 <= 2^83.702328779 units (C=20,000 Ir).",
+   "score": {
+    "numerator": "83702328779",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "ht_pool.b85",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "kernels_v31.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier for bn254-gt-dlp (default run: 32/32 checks, incl. FP node prices and every Lattice Band 2 emit/wheel segment count read directly from kernels_v31.s, which assembles with clang -arch arm64 -march=armv8.1-a with 0 errors and leaves 0 unlisted analytical constants). Verifies: (1) Truncated E12 (Q(a),Q(b)<=17/20, B_a=2, slack=114.0) 2,000,000-active exact-HNF pool (live 1,000-sample HNF subsample |z|<=0.81 across all 5 stats, 0 false discards; exact closed-form B1_PREF_COV=1.00742<=1.0075); (2) Zero-Split Mixed-Radix 4-plane B_TAB[0..3] + 2-word Z/2^64Z linear cur exact bijection with _canon_cone_ref across all 14,650 complete-tree leaves, 2,135 production leaves, and all 7 tie cases incl. S-fixed a_fix (0 errors), plus Theorems A/B/C, Lemma E and exact-level work <= C_LAT_EXC; (3) Instruction-by-instruction execution of kernels_v31.s Band-1 transport (//@seg b1_*) AND Lattice Band 2 11-op EXTR+LDADD direct-to-link-page emit + 8-op flush (2,100 records across all 4 B_TAB planes k in {0,1,2,3}, s in {0, 1, 2^35-1}, row_block = 44,031,850, full production-width ai up to 2^48-1, exact 16,384 B / 2,046-record rollover) + x128-unrolled C[s] apply (//@seg lat_apply_page, lat_apply; 3,509<=3,516.0 Ir) in v25_verify.py check 2; (4) Exact-rational stor_bound.py certifying Score Node <= 2^63.393 B (BLK=38, blocks<=2^25.393 < 2^26, bits [28:26]==000), List Node <= 2^60.176 B, Emitter E_0 <= 2^63.962 B (full E12+DELTA box, prod_Ma=2^56.1355, prod_Mb=2^58.5957 < 2^59, 4 planes), LA 1-owner <= 2^63.412 B, and total machine RAM <= 2^98.674 B < 2^100 B; (5) Live regeneration and exact match of 1 of the 16 runs in ht_pool.b85 on [45.5, 61.0] (pooled 4,096 orbits, 0/4,096 beta>=1: R_hat=14.1464, SE=0.0318, 1.03*(R_hat+3*SE)=14.6691<=14.70=C_LAT_LEAF); (6) Live 8-vec Z[omega] LA unit4 kernel (7.130<=7.20=C_UNIT_5, K5_CAP=9.30 on unchanged 2^20..2^26 ladder), boot_dp/boot_mini, H5 diagnostics (part=diagnostics), sensitivity (part=sensitivity), dag_survivors (part=dag_survivors), and boot_evidence (part=boot_evidence).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "boot_evidence",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     },
+     "ht_run": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
