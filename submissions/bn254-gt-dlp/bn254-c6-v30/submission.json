@@ -1,0 +1,108 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: scalar ARMv8.1-A (STADDH/LDADD) C6-m184_w216-rec STNFS with truncated E12 (Q(a),Q(b)<=17/20, B_a=2, 2M pool), 3x21-bit SWAR FP tree, 9-op LDADD direct-link emit (BLK=38, P_lat=47.0), executed Band-1 transport and kept-candidate boot: 2^83.977261321",
+ "claims": [
+  {
+   "statement": "For full-production bn254-gt-dlp, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing the scalar ARMv8.1-A FEAT_LSE atomic integer instructions STADDH Ws,[Xn] and LDADD Xs,Xt,[Xn] with base-register-only addressing, each priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint16_t scores of logical cells <= 41,234 < 65,536 never wrap; no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page, copied at 1.007-1.05 Ir per 8 B or, for Band 1 and Lattice Band 2, written directly into the link page by the producer's counted stores) runs the (6,2) C6-m184_w216-rec STNFS of proof.md on the truncated coupled ellipsoid E_{12,trunc} = {Q(a)+Q(b)<=1, Q(a)<=17/20, Q(b)<=17/20} cap JointVor (W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), 2,000,000-active exact-HNF pool, SE=0.001332 b, margin=0.005 b > 3.75*SE, work_allow=1.0, log2_V=95.4990, B_a=2 equal-count Q(a) shells, N_{a,sh}=2^46.488 < 2^47): Band 1 [2^24,2^41.5) uses the exact mod-3 ideal-primitivity wheel (keep fraction 512/729, mean replication 125/27 under H2, 0 loss of primitive pairs), K_B1=256 checkpoints per (residue, z, shell) (exact truncated-E12 cover 1.00742 <= B1_PREF_COV=1.0075), and executed direct-to-link-page address transport (kernels_v30.s //@seg b1_*, executed instruction by instruction by v25_verify.py check 2: C_HIT_LO=3.5699, C_B1_ROW=26.2, C_LIST_B1=24.70); Lower Band 2 [2^41.5,2^47.0) with a_0-chord kta scatter (128.32 continuum points/piece >> 34), x4 entries (C_B2_INT_X4=6.55) and [2^45.5,2^47.0) ll tier; 6-ideal tau_6-orbit 12D Lattice Band 2 [2^47.0,2^61.0] with 2-stage Bareiss LLL(9/10)->LLL(99/100) (<=2^34.5 Ir/orbit), native 64-bit Q38/Q32 Fincke-Pohst with 3x21-bit biased SWAR cur (x24..x27; input-uniform Theorem C in fd_bounds.py proving |cur_{k,c}| <= 296,159.71 < 2^20 across all FP levels k=0..11, 0 errors on 14,650 leaves), (2*A1, mu10) pinned in x28/x29, sp-indexed biased STEP1_TAB ([sp, x9, lsl #1]), Theorems A/B (eps_or<=0.0023389), Lemma E exact-level fallback (C_LAT_EXC=2^31.2 > 177,313*12,288 + 85,265*110), FP_CL=[33,93,110,95..81,110] counted from kernels_v30.s, and 9-op LDADD direct-to-link-page emit on E_0 using N_sc=2^35 Score Nodes with 2^38 B block alignment (BLK=38, blocks<=2^25.393 < 2^26 => bits [28:26]==000 in b_tab=(s<<29)|row_block, unpacked via add x8,x17,x3,lsr #26 and add x7,x0,x3,lsl #38, ldadd x1,x9,[x8] with x1=#8, exact 16,384 B / 2,046-record page flush in 8 ops -> 0.014663 <= 0.015 Ir/rec, and x128-unrolled C[s] apply C_LAT_APPLY=1.55, both executed instruction by instruction by v25_verify.py lat_apply_e2e; 16-run pooled HT calibration on [47.0,61.0], 4,096 orbits, 0/4,096 beta>=1, max log2 beta=-5.3411: R_hat=21.5462, SE=0.0671, 1.03*(R_hat+3*SE)=22.4000 <= 22.45=C_LAT_LEAF). Total collection <= 14.452 Ir/cell (collection <= 2^85.064362, lists <= 2^79.241802, canon <= 2^75.999869, misc <= 2^72.512798); plain-sparse 8-vec Z[omega] BW LA bw=(1024,48) with live-verified C_UNIT_5=7.20 (7.130<=7.20) and K5_CAP=9.30 on the unchanged 2^20..2^26 ladder (la <= 2^81.531977, 1-owner RAM <= 2^63.412 B incl. PM-Basis workspace); pure k=1 zero-retry Boole + Wald i.i.d. kept-candidate boot (two_logs <= 2^81.360673, ADAPTIVE.md); total machine storage <= 2^98.674 B < 2^100 B pointwise (stor_bound.py, every node < 2^64 B). Under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0..H-EB3, H-SM, H-R, H-X, H-SEP, the algorithm returns x in [0, r-1] with g^x=z w.p. >= 0.39 (opened-run success >= 0.999998 via FIX-U, K=7,194,244,577,235,879,602) with expected total work E[W] <= 1 + (K/2^64)*2^85.335712406 <= 2^83.977261321 units (C=20,000 Ir).",
+   "score": {
+    "numerator": "83977261321",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "ht_pool.b85",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "kernels_v30.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier for bn254-gt-dlp (default run: 32/32 checks, incl. FP node prices and 9-op LDADD emit / mod-3 wheel segment counts read directly from kernels_v30.s, which assembles with clang -arch arm64 -march=armv8.1-a with 0 errors). Verifies: (1) Truncated E12 (Q(a),Q(b)<=17/20, B_a=2) 2,000,000-active exact-HNF pool (live 1,000-sample HNF subsample |z|<=0.81 across all 5 stats, 0 false discards; exact closed-form B1_PREF_COV=1.00742<=1.0075); (2) Input-uniform Theorem C in fd_bounds.py proving 3x21-bit biased SWAR cur |cur_{k,c}|<=296,159.71<2^20 across all FP levels k=0..11 (and 0 errors across 14,650 complete-tree leaves in v20_lat_b2.py), plus Theorems A/B, Lemma E and exact-level work <= C_LAT_EXC; (3) Instruction-by-instruction execution of kernels_v30.s Band-1 transport (//@seg b1_*) AND Lattice Band 2 9-op LDADD direct-to-link-page emit + 8-op flush (2,100 records across s in {0, 1, 2^35-1}, row_block up to 2^26-1, exact 16,384 B / 2,046-record rollover) + x128-unrolled C[s] apply (//@seg lat_apply_page, lat_apply; 3,509<=3,516.0 Ir) in v25_verify.py check 2; (4) Exact-rational stor_bound.py certifying Score Node <= 2^63.393 B (BLK=38, blocks<=2^25.393 < 2^26, bits [28:26]==000), List Node <= 2^60.176 B, Emitter E_0 <= 2^63.457 B, LA 1-owner <= 2^63.412 B, and total machine RAM <= 2^98.674 B < 2^100 B; (5) Live regeneration and exact match of 1 of the 16 runs in ht_pool.b85 on [47.0, 61.0] (pooled 4,096 orbits, 0/4,096 beta>=1: R_hat=21.5462, SE=0.0671, 1.03*(R_hat+3*SE)=22.4000<=22.45=C_LAT_LEAF); (6) Live 8-vec Z[omega] LA unit4 kernel (7.130<=7.20=C_UNIT_5, K5_CAP=9.30 on unchanged 2^20..2^26 ladder), boot_dp/boot_mini, H5 diagnostics (part=diagnostics), sensitivity (part=sensitivity), dag_survivors (part=dag_survivors), and boot_evidence (part=boot_evidence).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "boot_evidence",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     },
+     "ht_run": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
