@@ -1,0 +1,94 @@
+{
+  "track": "bls12-381-fixed-g2-invert-g1",
+  "unit_ir": 20000.0,
+  "operating_point": {
+    "tag": "B71.0_d04_e109_v12",
+    "lf": 70.79,
+    "lg": 71.19,
+    "exc": 1.09,
+    "exc_coll": 1.148,
+    "log2_Up": 62.827711356333246,
+    "debruijn": true,
+    "twist": "w'=omega^2",
+    "alpha_f": 2.74,
+    "alpha_g_ge3": 1.28,
+    "alpha_g_total": 0.77,
+    "kap2_g": 0.05253400706806133
+  },
+  "ledger": {
+    "rows": [
+      [
+        "relation_collection",
+        110.0006
+      ],
+      [
+        "replay_a_tables",
+        105.3423
+      ],
+      [
+        "linear_algebra",
+        107.2484
+      ],
+      [
+        "matrix_generator",
+        98.2717
+      ],
+      [
+        "both_individual_logs_exp",
+        109.4087
+      ],
+      [
+        "band_split",
+        100.0217
+      ],
+      [
+        "ecm_split_expected",
+        95.3025
+      ],
+      [
+        "canonical_a_and_sort",
+        86.0
+      ],
+      [
+        "schirokauer_4col_crt",
+        84.0
+      ],
+      [
+        "filtering_and_misc",
+        80.0
+      ],
+      [
+        "pg_pf_product_trees",
+        75.5
+      ],
+      [
+        "factor_base_roots_ideals",
+        75.0
+      ],
+      [
+        "numerical_certificate",
+        50.0
+      ],
+      [
+        "verification",
+        11.0
+      ]
+    ],
+    "exp_run_claim": "110.8904",
+    "t_run_log2": 123.0,
+    "wrapper_log2": 66.0,
+    "p_meter_upper_8d": "0.00022629",
+    "p_meter_upper": "0.00024",
+    "cap_abort": 0.0,
+    "p_floor": "0.9990",
+    "K_gate": 7201431620367092223,
+    "claim_p": "109.533389445958"
+  },
+  "descent_kernels": {
+    "lll_node": 1099511627776.0,
+    "lll_boot": 140737488355328.0,
+    "pair_setup": 39468974941.45019,
+    "bound_cell": 5000.0,
+    "sieve_hit": 2600.0
+  }
+}
