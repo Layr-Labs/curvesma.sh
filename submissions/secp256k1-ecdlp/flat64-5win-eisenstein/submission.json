@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "Flat 64-bit 5-window Eisenstein stored-leaf birthday search on secp256k1 with explicit scalar services",
+  "claims": [
+    {
+      "statement": "For uniform unrestricted production secp256k1 ECDLP challenges and fresh algorithm coins, the grouped stored-leaf search in proof.md has success probability at least 0.39 and an upper bound 123.149553803893875 on log2(total expected classical computation in the fixed C=1000 scalar AArch64 instruction normalization). All preprocessing, failed paths, arithmetic, address/control work, transfers, verification and output are included across processors. Peak reserved memory is below 2^138 bytes; there is no free advice or future-target amortization. The estimate uses an explicitly disclosed uniform 64-bit flat analytical address space per processor (under COST_MODEL.md's scalar 64-bit instruction basis, matching accepted submission 4e2d5241) with five-window (52,51,51,51,51) BT/P1/E/G tables and five-window (45,45,45,44,44) F/fwd tables at NODES=2^58, explicit TBZ block ends (zero VMSAv9 stage-1 permission faults), a 128-bit cumulative fixup meter (DELTA_F=2^71) integrated in ytransport.s:ychunk, and the explicit scalar memory-fabric services (MSG=256, GEN_MUL=2^20), denominator-cleared selected-X fiber bound (selected-x.md), self-contained five-window Lemmas E/F/M/K/R/V and pointwise joint-label derivation (success.md Section 7), and global pair-inverse exclusion. The finite experiment establishes only its stated exact-rational certificate, assembly, finite EC label, routing-flush, production-driver, meter, bit-extraction, map, and negative-control checks, not production execution, RTL synthesis, or a production collision law.",
+      "score": {
+        "numerator": "985196430431151",
+        "denominator": "8000000000000"
+      },
+      "evidence": [
+        "callbacks.md",
+        "certificate.py",
+        "experiment.py",
+        "fabric.md",
+        "kernels/a64.py",
+        "kernels/generic.s",
+        "kernels/leaf.s",
+        "kernels/pointer_init.s",
+        "kernels/route.s",
+        "kernels/secp_fe.s",
+        "kernels/ystage.s",
+        "kernels/ytransport.s",
+        "proof.md",
+        "selected-x.md",
+        "success.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "verify",
+      "source": "experiment.py",
+      "purpose": "Recompute exact-rational certificate and claim (123.149553803893875), assemble all 7 AArch64 kernels, execute 144-leaf secp256k1 EC cross-check (fwd/bwd/keys), execute EM/h2s TBZ flushes, dlvh 0-hit/1-hit, fin1/fin, ychunk 128-bit meter (carry wrap + threshold skip), ycmd_gen (Q1GD accept + 2^45+1 trap), yboot_g/yboot_bank/sweeps 2^58 topology bounds, verify 5000-vector 5-window bit extraction and disjoint 64-bit flat maps, and run 7 negative controls.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261123
+        }
+      ]
+    }
+  ]
+}
