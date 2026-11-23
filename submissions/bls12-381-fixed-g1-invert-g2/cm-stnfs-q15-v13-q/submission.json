@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-Q: (4,3) Q(zeta_15) CM-STNFS (Sequential 64 KiB-Buffered Band-2 + Stage-B Row-Rejected Ladder & nonunit_ub=0.25 LA + Exact 2-State Wald-Boole & Self-Normalized H1 Paley-Zygmund WALD_K24_G90_KAP200_MU30 Descent) at expected work 2^110.960689445958",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-P / recover-Q (`e(P, Q) -> Q`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (70.79, 71.19) (C = 20,000 pure baseline scalar ARMv8.0-A Ir/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18; AAPCS64 MONT5=279<=280; 47-op mont2_cios<=48<58.84 Ir for L=2; ZERO undefined ASM labels and per-kernel disjoint GPR maps across all 30 hot-loop blocks), combining 1,000,000-draw r_ab=0.83 Zero-Slice Band-2 (W_SB=16, 1-prime-per-owner <=14.981 EiB peak / <=7.491 EiB resident, 33/4=8.25<=10.0 rev_b2_row_k0_step4 + 19-op probe + 10-op SB hdr + sequential 64 KiB-buffered 15-op emit + 6-op recv + 0.004 flush = 21.004<=22.0 + 28 row-end drains, 47-op scan + blunt 1,000-Ir cold <=0.84, static 3-class Tg=(299,287,275) + Tf=118b, c_cof=1.0557, coll<=2^110.0006 u, replay<=2^105.3423 u, n_rels_upper=2^63.530 + Cauchy-Schwarz collection ECM Chebyshev<2^-70, 2,048-owner product trees <2^64 B with all three L-11 subtrees <2^62 B), conservative-cap Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.25, k5_charged=12.00, k5_horner_charged=14.00, full-matrix exp_unit_hex6=0.93443..0.9618, W_max=4096 guard, true whole-row Stage-B-rejected missing_recon >3.3x all 5 bands, 1-dense 10.323 EiB + 16-proj 10.263 EiB + 16-shard 4.358 EiB + 2,048-purge 5.866 EiB @ 1,040 B/rel + 8,192-merge 5.498 EiB + 2,048-seq 10.224 EiB + 2^22-PM-basis 8.623 EiB, la<=2^107.2484 u, gen<=2^98.2717 u), and Exact 2-State Wald-Boole + Zero-c_1 Self-Normalized H1 Paley-Zygmund WALD_K24_G90_KAP200_MU30 descent (76 eager uncapped dsieve16 nodes with R in {12..96}, max R=96, LB=LX=68.5, composite L_{Q,p_rand} over live-counted P_4740 of 4,740 known-log f_9 ideals across 579 split primes in [2^14, 2^16) with up to K=24 i.i.d. retries given Q so phi(Q)=q(Q)^24 literally, min_mu=31.46>=30.0=mu_0, zero-c_1 self-normalized H1 Paley-Zygmund Z(p)=(M/Lambda_true)*1_{Lambda_hat>=mu_0} under H5(i) kappa_cell<=2.00 giving p_1(Q)<=1-0.90/(2.00+1/30.0)=0.557377<=0.56=P1_CAP on good ideals g(Q)>=0.90, parent-conditioned adverse-child premise H5(ii) Pr[A(Q_i)|Q,M(Q,p_1)>=1]<=P_ADVERSE=0.010 uniformly over all parents Q with conservative upper bounds W_good<=(own_1+ChildExp)/(1-q) and W_bad<=K*(own_1+ChildExp) and pure Boole union bound over det max 2*(kA+kB) children, supported by 243,200 production deg-(72,24) lattices across all 38 bins [68.5..260] via 32-cell MC + 512-cell audit <1.50x (0 triggers, min=6.49x mu_0) with 0/243,200 draws failed and individual 95% per-bin det-adj CP95=0.009158<0.010 in each bin alongside pooled 0.000242, 450 genuine unplanted reached production >=68.5b children (400 hop-1 + 50 hop-2) x 32 p_rand = 14,400 lattices with 0/450 failed, det-adj CP95=0.006871<0.010, min=8.81x mu_0, KS=0.0444<<0.0905, and deg32_24_v13 dimensionless H1 diagnostics Cohort A pooled kappa_cell=1.1847<<2.00, Cohort B pooled kappa_cell=1.7203<2.00, max p_1=0.46875<0.56, Cohort C 128/128 live multi-level v13 trees archived at K_max=16 across 1,081 slots max_trials=8<=16<24, linear max(0,1-miss) missing-leaf retention, BOUND_CELL=5000 on both sieve and direct-ECM code paths, L_min=2 b_min=32 branch-tree DP + 12b geometric ECM ladder sep=0.5 p_r=0.0043 + 2^26 Newton precheck, unbounded i.i.d. fresh-e Wald boot BOOT16=(230,276,16,2) with BOOT_KEEP_FRAC=0.90<CP95 LB=0.9395, max_q_node=0.640143, max_phi_good=2.24e-5, psi_boot=0.170380, E[boot_runs/log]<=1.2054, boot_phi=0.0, two_log<=2^111.9242 u), achieving opened-run expected work E[W_run] <= 2^112.3177 u behind hard pointwise meter W <= 2^124 + 2^66 u with opened-run success >= 0.99969571 (>= 0.99966528 with +10% meter + 2^-48 wrapper, and >= 0.99946429 >= 0.9990 = p_floor in a separate modeled-success headroom diagnostic P1_CAP=0.59, P_ADVERSE=0.015) and gated cold-run expected work E[W] < 2^110.960689445958 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "55480344722979",
+        "denominator": "500000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_cond_7e.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: live Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions + non-vacuous survival coupling, toy E2E DLP, sigma/B Band-2 exactness, 400-draw 2-adic pool cross-check, Voronoi + 16D LLL + 4x 381b F_{p^6} boot lift, SRT toy, 0.25b-mesh 2D Retention + odd-k-exact ntt3_F + 2,048-owner product trees + n_rels_upper=2^63.530 & Cauchy-Schwarz collection ECM Chebyshev < 2^-70 + Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.25, k5=12.00/14.00, 1,040 B/rel purge, 8,192-merge, W_max=4096), 2^12 filtsim + H-X (prod_eq_schur=True, 1-pass PM-Basis [:s_sm] selector + negative control) + [6b] true whole-row Stage-B-rejected missing_recon + unscreened Q(zeta_15) H-X (R0=181 BSGS + full-matrix exp_unit_hex6), raw-opcode ARMv8.0-A parser (30 hot-loop blocks incl. rev_b2_row_k0_step4 & 47-op mont2_cios, 0 undefined labels, disjoint GPR maps) + 64-bit simulations (incl. mont2_cios 128b odd-modulus check), Exact 2-State Wald-Boole + Zero-c_1 Self-Normalized H1 Paley-Zygmund 384-mesh WALD_K24_G90_KAP200_MU30 descent (K=24 i.i.d. p_rand over live-counted P_4740 in [2^14,2^16), g_0=0.90, kappa_cell=2.00, mu_0=30.0, p_1_pz=0.557377<=0.56, P_ADVERSE=0.010, linear max(0,1-miss), live conditional-on-H1 per-bin elementary volume+divisibility bound <2^-22 across all 38 bins [68.5..260], live regeneration of 4 production 70/120/180/240b deg-(72,24) L_{Q,p_rand} Q_CM-LLL + 16-cell B_16(R) Lambda_hat/mu_0>=2.0x at actual charged R & 4 L_{Q,p_rand} K=24 strict deg-(32,24) parents + 4 reached children, live P1_CAP=0.59 P_ADVERSE=0.015 modeled-success headroom diagnostic, L_min=2 branch-tree DP + 12b ladder + Suyama/Newton guard, live checks on prod_perbin_v13 243,200 lattices individual per-bin CP95=0.009158<0.010 + pooled 0.000242, prod_reached_v13 450 reached production children det-adj CP95=0.006871<0.010, deg32_24_v13 Cohorts A/B/C with K_max=16 asserted, 16-cal/48-holdout boot, multi-bin exact-DP UDUP=0.40, integer BOUND_CELL +6, (135,g) counterexample rejection, q15_retain16), and 80-digit Decimal ledger/gate + manifest check.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
