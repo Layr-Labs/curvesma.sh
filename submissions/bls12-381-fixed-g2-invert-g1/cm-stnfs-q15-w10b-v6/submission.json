@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-P: (4,3) Q(zeta_15) CM-STNFS (Sequential 64 KiB-Buffered Band-2 + 100%-Fresh 16/48 Boot + 16-Proj Z+Y+X LA + 2^22 PM-Basis + 2048-Owner PT + Conditioned Ladder) at expected work 2^108.960989445958",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-Q / recover-P (`e(P, Q) -> P`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms (exact lambda*e_cof cancellation without V(g_0) or a third descent) in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (70.79, 71.19) (C = 20,000 pure baseline scalar ARMv8.0-A Ir/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18; AAPCS64 sub/add sp MONT5=280; ZERO undefined ASM labels and per-kernel disjoint GPR maps across all 28 hot-loop blocks), combining 1,000,000-draw r_ab=0.83 Zero-Slice Band-2 (W_SB=16, 19-op wraparound/L_b=0-safe probe + cbz-guarded 10-op SB hdr + sequential incrementing-pointer 15-op prime-shard stp [x7],#16 emitter with tst #0xffff 64 KiB buffer-full drain + 6-op slab-owner ldp [x_rx],#16 exact-bound apply + 0.004 flush = 21.004 <= 22.0 = c_hit_hi + 28 row-end partial drains, cbz-guarded 47-op scan + explicit .Lscan_done: ret before .Lhit64 + blunt 1,000-Ir cold scan <= c_scan_zero=0.84, scalar build bounds c_list_a=32.0 / c_lbkt=10.0, 4-bank Band-1a wrappers 384/40/12 with cbz k=0 guards, static 3-class Tg=(299,287,275) + constant Tf=118b pre-gates eliminating all norm predictors, c_cof=1.0557, coll <= 2^110.0006 u [+0.0155b slack], replay_a_tables <= 2^105.3423 u [+0.0160b slack], deterministic relation-split cap at n_rels_upper=2^63.530 + exact Wald random-sum ECM Chebyshev < 2^-70 with perfect-power precheck, 2,048 distributed product-tree owners < 2^64 B each with ALL THREE L-11 subtrees < 2^62 B), 1-dense (2^63.368 B) + 16-projection (2^63.359 B holding Z + Y=[S,BZ] + X simultaneously) + 16-byte-balanced-shard (2^62.107 B, 64B 24-bucket header with expanded W_max=4096 guard in BOTH H-X and ladder, 100%-fresh conditioned 2^16..2^25 ladder at [547, 671] live-asserting max_row_w <= 4096 and avg_w < 201 for U >= 2^18, c_stream_mat=73.0/291.0, explicit 1-vec Horner lsr #2 ASM k5_horner=11.80, full d slack + Y=[S,BZ] stream, c_xproj=70.0) + 256-purge + 16-mutable-filtering (<= 7.33 EiB/owner) + 2,048-Krylov-seq + 2^22-PM-basis (8.62 EiB/owner incl. 3-plane x 4-prime NTT workspace) 4-vec 4-col LA (<= 2^107.0832 u [+0.0160b slack], gen <= 2^98.2717 u), and 100%-eager zero-fallback Q(zeta_15) descent (scalar bounds SIEVE_HIT=2600 / BOUND_CELL=5000 with measured 16D Fincke-Pohst traversal ratios & ambient sign canonicalization, +-16-ULP Dickman enclosure, direct-ECM nodes charging counted_fraction=0.906510, full 0.02b-grid collection-cut-conditioned miss_side ret_mult=0.90/0.82, 100%-fresh production-HNF 16-cal/48-holdout Q_CM-LLL R=2 boot with 0/48 holdout targets / 0/819,456 cells exceeding cal16_cutoff and CP95 LB=0.9395 > BOOT_KEEP_FRAC=0.90, multi-bin [100/130/200] + boot exact-DP UDUP=0.40, BOOT_RELS=26, 96-cell exact-norm q^2-filtered DISC=0.001 0/3,116 with all 299,136 exact gap checks, Part C with planted-side p_kA-1 decrement, perfect-power + Suyama guard, N_MAX=2^26.0, two_log <= 2^106.2192 u [+0.0160b slack]), achieving opened-run expected work E[W_run] <= 2^110.3180 u behind hard pointwise meter W <= 2^123 + 2^66 u with opened-run success >= 0.9990 (clearing headroom under +10% meter AND 10x DISC stress) and gated cold-run expected work E[W] < 2^108.960989445958 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "54480494722979",
+        "denominator": "500000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_cond_7e.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: live Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions + non-vacuous (T_surv_cap_f=56, T_surv_cap_g=28) (f,g) survival coupling check, toy E2E DLP, sigma/B full-slab Band-2 exactness, exact discrete-uniform R+7 envelope 400-draw 2-adic pool cross-check, Voronoi + 16D LLL + 4x 381b F_{p^6} boot lift, SRT toy, 0.25b-mesh 2D Retention + odd-k-exact ntt3_F with static 3-class Tg=(299,287,275) & constant Tf=118b pre-gates (c_cof=1.0557, strict-hi 2se=62.9822, full 0.02b-grid ret_mult_f/g live-asserted >= 0.90/0.82) + 4-bank Band-1a (384/40/12) + 2,048-owner product trees (ALL THREE L-11 subtrees < 2^62 B) + deterministic relation-split cap n_rels_upper=2^63.530 & exact Wald random-sum ECM Chebyshev < 2^-70 + 16-projection-owner (Z+Y+X), 256-purge / 16-mutable-filtering, 2,048-seq, 2^22-PM-basis (incl. 3-plane x 4-prime NTT workspace), & 16-shard W_max=4096 LA (conditioned 2^16..2^25 ladder live-asserting max_row_w <= 4096, avg_w < 201 for U >= 2^18, nf/ng/excess binding), 2^12 filtsim (expanded W_max=4096) + Stage-B-capped conditioned [6b] missing_recon + unscreened Q(zeta_15) H-X (toy R0=181 BSGS + algebraic gamma_0 blinding ratio) + unplanted BW, raw-opcode ARMv8.0-A parser (28 hot-loop blocks, 0 undefined labels, per-kernel disjoint GPR maps) + simulations (sequential incrementing-pointer 64 KiB buffered Band-2 full & row-end drains across interleaved w_lp, cbz-guarded 47-op scan + blunt 1,000-Ir .Lhit64 cold bound <= 0.84, AAPCS64 sub/add sp MONT5=279, 1-vec Horner lsr #2, exact 4D DFS vs brute-force + ambient sign canonicalization, 55b SQ_LUT, half-ball 0..17071 rank, Decimal perturbed-ball bound_cell +6 witness, S_boot=2^21 Boot LLL < 2^47.0), and Q(zeta_15) descent (384-mesh 100%-eager zero-fallback, direct-ECM counted_fraction=0.906510, +-16-ULP Dickman enclosure, 100%-fresh production-HNF 16-cal/48-holdout 64-target Q_CM-LLL exhaustive R=2 boot with 0/48 holdout exceedances & CP95 LB=0.9395 > 0.90, live multi-bin [100/130/200] + boot exact-DP UDUP=0.40 recomputation, Part C with planted-side p_kA-1 decrement & 96-cell q^2-filtered DISC=0.001 + live 10x DISC stress clearing p_floor=0.9990, perfect-power + Suyama guard, N_MAX=2^26.0, and exact 80-digit Decimal cold-run gate).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
