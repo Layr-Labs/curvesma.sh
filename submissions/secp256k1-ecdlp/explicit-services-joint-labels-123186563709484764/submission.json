@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "title": "Stored-leaf secp256k1 search with explicit scalar push/ACK transport",
+  "claims": [
+    {
+      "statement": "For uniform unrestricted production secp256k1 ECDLP challenges and fresh algorithm coins, the grouped stored-leaf search in proof.md has success probability at least 0.39 and an upper bound 123.186563709484764 on log2(total expected classical computation in the fixed C=1000 scalar AArch64 instruction normalization). All preprocessing, failed paths, arithmetic, address/control work, transfers, verification and output are included across processors. Peak reserved memory is below 2^138 bytes; there is no free advice or future-target amortization. The estimate retains the reference arithmetic and collision hypotheses, supplies the denominator-cleared selected-X fiber bound in selected-x.md, derives the relay joint events through pointwise ideal labels and ordered-distinct affine-chain kernels, charges the global pair-inverse canonicality exception and its complete capped work, recomputes capacity and persistent-meter losses, and uses the explicit memory-fabric construction, per-processor publication events, and counted scalar services in proof.md and fabric.md. It assumes the stated architectural extensions and platform event/LS64 endpoint conditions, including absence of unrelated/spurious wait events; the specific two-publication control wait is separately charged. The finite experiments establish only their stated source, arithmetic and routing checks, not production execution, RTL synthesis or a production collision law. The runtime archive is lossless in-package evidence with an inspect experiment; current mathematical proofs, generic/initializer assembly and score evaluator remain plain; leaf, route, field, Y-service and chunk-driver sources have exact archive inspection.",
+      "score": {
+        "numerator": "123186563709484764",
+        "denominator": "1000000000000000"
+      },
+      "evidence": [
+        "base/proof.md",
+        "base/submission.json",
+        "base/success.md",
+        "callbacks.md",
+        "costs.py",
+        "experiment.py",
+        "fabric.md",
+        "kernels/generic.s",
+        "kernels/pointer_init.s",
+        "proof.md",
+        "runtime-0.txt",
+        "runtime-1.txt",
+        "runtime-2.txt",
+        "runtime-3.txt",
+        "runtime.json",
+        "scalar_costs.py",
+        "selected-x.md",
+        "service_costs.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "current-package-checks",
+      "source": "experiment.py",
+      "purpose": "Recompute exact reference/current success and work; replay current arithmetic, meter, home, bulk, generic, Y, joint-label, selected-X and map/fabric checks with negative controls. Inspect mode exposes exact archived source; optional sections permit deeper bounded replay.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "run",
+              "roundtrip",
+              "inspect",
+              "costs"
+            ]
+          },
+          "member": {
+            "type": "string",
+            "enum": [
+              "base/certificate.py",
+              "base/encoding_fuzz.py",
+              "base/experiment.py",
+              "base/kernels/a64.py",
+              "base/kernels/leaf.s",
+              "base/kernels/route.s",
+              "base/kernels/secp_fe.s",
+              "base/machine.py",
+              "base/sites.py",
+              "bulk_checks.py",
+              "callback_checks.py",
+              "composition_check.py",
+              "exact_accel.py",
+              "exact_sum.py",
+              "fabric.py",
+              "fault_check.py",
+              "generic_checks.py",
+              "home_checks.py",
+              "kernels/a64.py",
+              "kernels/leaf.s",
+              "kernels/route.s",
+              "kernels/secp_fe.s",
+              "kernels/ystage.s",
+              "kernels/ytransport.s",
+              "leaf_check.py",
+              "map_check.py",
+              "meter_check.py",
+              "relay_checks.py",
+              "suite.py",
+              "transport_map.py",
+              "ydriver_check.py",
+              "ystage_checks.py"
+            ]
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "all",
+              "arithmetic",
+              "bulk",
+              "generic",
+              "y",
+              "maps",
+              "joint",
+              "selectedx"
+            ]
+          },
+          "full": {
+            "type": "boolean"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 60000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}

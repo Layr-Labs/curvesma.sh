@@ -1,0 +1,54 @@
+.text
+.globl card44_init
+card44_init:
+mov x0,#0x2a1d00000000
+mov x3,#4194304
+1:
+add x1,x0,#384
+add x2,x0,#448
+stp x1,x2,[x0,#176]
+add x1,x0,#1024
+add x2,x0,#2048
+stp x1,x2,[x0,#128]
+add x1,x0,#960
+add x2,x0,#1472
+stp x1,x2,[x0,#144]
+add x1,x0,#704
+add x2,x0,#1216
+stp x1,x2,[x0,#160]
+add x0,x0,#512
+add x1,x0,#384
+add x2,x0,#448
+stp x1,x2,[x0,#176]
+add x1,x0,#384
+add x2,x0,#896
+stp x1,x2,[x0,#128]
+add x0,x0,#512
+add x1,x0,#384
+add x2,x0,#448
+stp x1,x2,[x0,#176]
+add x0,x0,#512
+add x1,x0,#384
+add x2,x0,#448
+stp x1,x2,[x0,#176]
+add x1,x0,#960
+add x2,x0,#1472
+stp x1,x2,[x0,#144]
+add x1,x0,#704
+add x2,x0,#1216
+stp x1,x2,[x0,#160]
+add x0,x0,#512
+add x1,x0,#384
+add x2,x0,#448
+stp x1,x2,[x0,#176]
+add x1,x0,#384
+add x2,x0,#896
+stp x1,x2,[x0,#128]
+add x0,x0,#512
+add x1,x0,#384
+add x2,x0,#448
+stp x1,x2,[x0,#176]
+add x0,x0,#512
+subs x3,x3,#1
+b.ne 1b
+ret

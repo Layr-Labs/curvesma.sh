@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "title": "Stored-leaf search with reusable addresses and owner-held Y buffers at 123.186685455428241",
+  "claims": [
+    {
+      "statement": "For the full production secp256k1 ECDLP, the grouped stored-leaf search described by proof.md and its in-package reference derivations recovers the uniformly sampled scalar with probability at least 0.39. The exact current upper bound on log2(total expected classical computation in the fixed C=1000 scalar AArch64 instruction normalization) is 123.186685455428241. All preprocessing, transport, failures, verification and output are charged; memory is at most 2^138 bytes; no advice is assumed. It retains the original arithmetic, schedule and success hypotheses, with the relay request cap reduced to 277059750328320 and the exact gate recomputed as 132779993089935549111530536030583029479/2^128. The current machine uses reusable table addresses, seed links, synchronous owner-held Y-buffer apertures,256-record relay output blocks and serialized direct home pair heads with bounded singleton clones. Material premises include the explicitly described scalar AArch64 extensions, exception lowering, nonspurious isolated WFE monitors and synchronous sender-backed link apertures. Finite experiments test only their stated scale; the claim remains a supported analytic/heuristic estimate.",
+      "score": {
+        "numerator": "123186685455428241",
+        "denominator": "1000000000000000"
+      },
+      "evidence": [
+        "proof.md",
+        "costs.py",
+        "base/proof.md",
+        "base/success.md",
+        "experiment.py",
+        "leaf_check.py",
+        "map_check.py",
+        "ydriver_check.py",
+        "kernels/leaf.s",
+        "kernels/route.s",
+        "kernels/secp_fe.s",
+        "kernels/ytransport.s",
+        "kernels/pointer_init.s",
+        "kernels/a64.py",
+        "relay_checks.py",
+        "home_checks.py",
+        "fault_check.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "current-package-checks",
+      "source": "experiment.py",
+      "purpose": "Recompute the unchanged reference certificate and current exact success/costs; check current leaf, transport, home/routing and map with negative controls. These finite executions are evidence at their actual scale.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000000
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 1
+        }
+      ]
+    }
+  ]
+}
