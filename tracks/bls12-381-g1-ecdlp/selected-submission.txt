@@ -1,1 +1,1 @@
-submissions/bls12-381-g1-ecdlp
+submissions/bls12-381-g1-ecdlp/q15_pot_v6_0435565f_live
