@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g1-invert-g2
+submissions/bls12-381-fixed-g1-invert-g2/bls12-381-rq-v12b-h5-exact
