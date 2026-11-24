@@ -1,0 +1,109 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: sub-83 scalar ARMv8.1-A (STADDB/LDADD) MONIC_M1 C6 STNFS with uint8_t 2D Retention, dual Lower-B2 + explicit copy, per-orbit branchless wheel, & C_SRT_G_LEAF=25k: 2^82.988940158",
+ "claims": [
+  {
+   "statement": "For full-production bn254-gt-dlp, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing the scalar ARMv8.1-A FEAT_LSE atomic integer instructions STADDB Ws,[Xn] and LDADD Xs,Xt,[Xn] with base-register-only addressing, each priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint8_t scores at scale=0.35 with w_p=round(0.35*log2 p) in [8,21] and threshold t=round(0.35*(L0-114.0)), init_a in [1,128] and max_val <= 179 <= 255 never underflow or wrap; no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page) runs the (6,2) MONIC_M1 C6 STNFS of proof.md (monic even deg-8 f_M1 with CONTENT_BITS=0.0, g_M1=((u+1)w+2)a^2+b^2 with epsilon_g=r-1, ALPHA_F_RAW=-1.075+0.08, ALPHA_G_RAW=-1.026+0.08 verified to Q=400k/200k) on E_{12,trunc} = {Q(a)+Q(b)<=1, Q(a)<=17/20, Q(b)<=17/20} cap JointVor (W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), slack=114.0, 2,000,000-active exact-HNF MONIC_M1 pool verified live against M.F_REC_COEFFS and g_M1 by verify_live_c6_pool_hnf_subsample: z_lnf=0.20, z_lng=-0.81, SE=0.001337 b, margin=0.005 b > 3.73*SE, work_allow=1.0, exact CRT 2-adic x 3-adic class split over 167 classes with ex_f=5.76119 b, ex_g=4.27450 b, exact mean re-centering and conservative tail/slack subtraction, log2_V <= 95.0880 [computed 95.087500], R_a <= 575.40 [computed 575.36 < 589.43], R_{b,GA} <= 764.20 [computed 764.16], B_a=2 equal-count Q(a) shells, N_{a,sh}=2^46.2819 < 2^47): Band 1 [2^24,2^40.5) uses the mod-3 wheel (512/729 keep, 125/27 replication), K_B1=256 checkpoints (cover 1.00742 <= 1.0075), 32-bit 1-byte rank delta-packed transport on [2^24,2^29.5) (2.82 Ir/hit + 24*P_ov sub-segment splits on rank gaps >= 2^32) and direct-to-link-page transport on [2^29.5,2^40.5) (C_HIT_LO=3.5699, C_B1_ROW=26.2, rep_lo <= 1.975 Ir/cell); Lower Band 2 [2^40.5,2^45.5) stores dual pre-complemented pos/neg lists on L[k] (C_LIST_B2=29.70, 2x Lower-B2 list bytes) with entry=(ai<<4)|j_rel (entry>>4 == ai exact 1-byte offset), explicitly streams them via x16_bfi_copy (130/128 + 59/2046 = 1.0445 <= 1.05 Ir/rec incl. flush+doorbells), and runs STADDB x16_bfi_pos_w8/w16 (3.625 + 1.05 copy = 4.675 <= 4.70 = C_B2_INT_X4), x16_bfi_bnd1_w16 (7.675 <= 7.75 hit, 4.675 <= 4.75 miss), and x16_bfi_bnd2_w16 (8.675 <= 8.75 hit, 5.675 <= 5.75 miss) with pre-clipped x24 (C_SB_ENTER_X4=20.05, C_B2_PREF_EX=0.0, occ_sb <= 0.179, hi_ap <= 0.920 Ir/cell); 6-ideal tau_6-orbit 12D Lattice Band 2 [2^45.5,2^61.0] uses 2-stage Bareiss LLL(9/10)->LLL(99/100) (<=2^34.5 Ir/orbit, lat_lll <= 0.00356 Ir/cell), 2-op Direct Q12 isqrt LUT (2^37 entries = 1 TiB on E_0, Lambda=(1+2^-26)^2, eps_or <= 0.0003844, unconditional r2_max < 2^36.16 < 2^37), unconditional 0-branch centered mod3_tab (8 MiB, ldrb w9,[x11,w0,sxtw]) & 2-op 2s-complement rot_tab (64 MiB, bfi w6,w4,#23,#3; ldrb w4,[x10,w6,uxtw]), per-orbit certified lv_max <= 128 branchless wheel_m0_disp (2 ops) & wheel_seg_disp0 (3 ops), permuted r=1-at-offset-0 level wheel tables, subs+cneg & subs+b.lo FP-tree peepholes, hoisted x26..x29, zero-op chord_enter, zero-branch wheel_skip1/2_stub, 16-byte a_tab=(ai, &B_TAB[k][0]) + contiguous 4-plane B_TAB[0..3]=(s<<30)|row_block (N_sc=2^34, BLK=38, E_0 <= 2^63.7218 B < 2^64 B, 2.805 EiB headroom), 9-op LDP+LDADD direct-to-link-page emit (FP_CL=[21,77,94,79..65,94] counted from kernels_v32.s, x128 STADDB apply C_LAT_APPLY=1.53, 16-run 4,096-orbit HT calibration evaluated at the exact operating-point radius R_a=575.36: 0/4,096 beta>=1, R_hat=11.2462, SE=0.0316, 1.03*(R_hat+3*SE)=11.6811 <= 11.70=C_LAT_LEAF, lat_b2 <= 5.209 Ir/cell). Counted uint8_t init8_u8 + read-only 8-row ORR scan8_u8 (271/1024 <= 272/1024 = C_SCAN_G8, C_SCAN_ZERO=0.40 >= 0.375, scan_zero <= 0.426 Ir/cell), exact one-sided 2D generating-series Retention2D (bstep=0.5, dstep=0.25, sl_step=0.25, m_margin=1.6946 b: squarefree-sieve-part lower bound r_g=0.975835 and all-integer survivor upper envelope sf=1.5098e-6, s0=7.8209e-8), and proved CRT norm / 9-squaring Bernstein SRT leaf bounds (C_NORM_G=8400, C_NORM_F=16800, C_SRT_G_LEAF=25000 >= 23,032 worst-case ops, cof <= 0.649 Ir/cell). Total collection <= 9.358 Ir/cell [computed 9.357683] (all operating-point and per-cell inequalities verified live by manifest_subbounds_ok in audit_bn_cm.py; collection <= 2^84.025939, lists <= 2^77.972715). Deterministic ntt3_F Bernstein recursive split with 2x safety gives split <= 2^71.482193 (1-owner RAM <= 2^57.0 B). Plain-sparse 16-vec 15-entry-blocked Z[omega] BW LA bw=(768,40) with C_UNIT_5=6.82 (6.8057 <= 6.82), extended 8-scale 2^20..2^27 zero-loss H3 ladder (40/40 runs monotone, beta=5.732, max_rel_err=0.1001, min_ncols=15,034 at 2^27, conservative >=1.15x caps NU_SW_CAP=0.000264, NU_L_CAP=0.000234, K5_CAP=8.60, TAB_R_CAP=1.00), and lazy 2-Barrett5 + 4-limb CIOS MontMul(chi_R) c_tail_z6=328 (323 <= 328) gives la <= 2^80.777256 (1-owner RAM <= 2^62.756 B). Pure k=1 zero-retry Boole + Wald i.i.d. kept-candidate boot (boot=[185,80,11,1], ea=[3,1185], x_EA=62.9375, cap=1.0 ALL rational primes <= 2^62.9375 constructed depth-first post-order: retained root |P|=2^60.4663 B = 1.382 EiB with zero internal prime-tree levels retained and zero recomputation, peak 8*|P|=2^63.4663 B = 11.06 EiB < 2^64 B construction/FFT/Garner workspace, live boot_df_tree_ok check, MONIC_M1 plan59 + exact CIOS5 _mulmod_instr under declared exploratory H-SEP >= 0.60 matching SEPARATION=0.60 in descent_bn254_v6.py) gives two_logs <= 2^81.006579 (phi=0.44865 <= 0.50, mu_min=502.04 >= 500). Total machine storage <= 2^97.907 B < 2^100 B pointwise (stor_bound.py, N_sc=2^34, every node < 2^64 B). Under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0..H-EB3, H-SM, H-R, H-X, H-SEP (>= 0.60), the algorithm returns x in [0, r-1] with g^x=z w.p. >= 0.39 (opened-run success >= 0.999998 via FIX-U, K=7,194,244,577,235,879,602) with expected total work E[W] <= 1 + (K/2^64)*2^84.347391243 <= 2^82.988940158 units (C=20,000 Ir).",
+   "score": {
+    "numerator": "82988940158",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "ht_pool.b85",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "v32_verify.py",
+    "kernels_v32.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier for bn254-gt-dlp (default run: 34/34 checks, incl. manifest_subbounds_ok, sf_uses_survivor_upper_ok, boot_df_tree_ok, srt_g_leaf_ok, filtsim_8scale_ladder_ok, FP node prices [21,77,94,79..65,94], and every Lattice Band 2 emit/wheel/Lower-B2-copy/Lower-B2-pos/bnd1/bnd2/delta-B1/init8_u8/scan8_u8 segment count read directly from kernels_v32.s, which assembles with clang -arch arm64 -march=armv8.1-a with 0 errors). Verifies: (1) MONIC_M1 tower algebra, live pool subsample against M.F_REC_COEFFS & g_M1 (z_lnf=0.20, z_lng=-0.81), nonprim HNF g_M1 witnesses (12/12), exact CRT 2-adic x 3-adic class split (167 classes, ex_f=5.76119 b, ex_g=4.27450 b, 1,500 random O_h-primitive checks) and exact one-sided 2D generating-series Retention2D (bstep=0.5, dstep=0.25, sl_step=0.25, m_margin=1.6946 b) for uint8_t STADDB scoring (scale=0.35, r_g=0.975835, all-integer sf=1.5098e-6, s0=7.8209e-8, init_min=1 >= 0, max_val=179 <= 255, counted init8_u8+scan8_u8 = 271/1024 <= 272/1024 = C_SCAN_G8); (2) 2-op Direct Q12 isqrt LUT (2^37 entries = 1 TiB, eps_or <= 0.0003844), unconditional centered mod3_tab & 2-op 2s-complement rot_tab, per-orbit certified lv_max<=128 branchless wheel_m0_disp (2) & wheel_seg_disp0 (3), 4 exact scalar ARMv8.1-A FP-tree peepholes, hoisted x26..x29, zero-op chord_enter, zero-branch wheel_skip1/2_stub, 9-op LDP+LDADD direct-to-link-page emit across 4 contiguous B_TAB planes via 16-byte a_tab=(ai,&B_TAB[k][0]), x128 STADDB apply (C_LAT_APPLY=1.53), explicit Lower-B2 x16_bfi_copy (1.0445 <= 1.05 Ir/rec) + dual pos/neg x16_bfi_pos_w8/w16 (4.675 <= 4.70) + x16_bfi_bnd1/bnd2 (240 cases), 32-bit 1-byte rank delta Band 1 on [2^24, 2^29.5), and 9-squaring 8-limb Bernstein SRT leaf verification (0/64 errs, 23,032 <= 25,000=C_SRT_G_LEAF); (3) Exact-rational stor_bound.py certifying N_sc=2^34 Score Node <= 2^63.390 B (blocks=43,963,476 < 2^26), List Node <= 2^60.176 B, Emitter E_0 <= 2^63.722 B (2.805 EiB headroom), LA 1-owner <= 2^62.756 B, depth-first post-order all-primes boot root retained |P|=2^60.4663 B & peak 8*|P|=2^63.4663 B < 2^64 B (boot_df_tree_ok), and total machine RAM <= 2^97.907 B < 2^100 B; (4) Live regeneration and exact match of 1 of 16 runs in ht_pool.b85 on [45.5, 61.0] evaluated at exact R_a=575.36 (4,096 orbits, 0/4,096 beta>=1: R_hat=11.2462, SE=0.0316, 1.03*(R_hat+3*SE)=11.6811 <= 11.70=C_LAT_LEAF); (5) Extended 8-scale 2^20..2^27 zero-loss H3 ladder (40/40 runs monotone, beta=5.732, max_rel_err=0.1001, NU_SW_CAP=0.000264, NU_L_CAP=0.000234, K5_CAP=8.60, TAB_R_CAP=1.00, bw=(768,40)), lazy c_tail_z6=328 (323 <= 328), NTT3 split (<= 2^71.482), and MONIC_M1 pure k=1 descent + DF post-order boot under declared H-SEP >= 0.60 (two_logs <= 2^81.0066, phi=0.44865, mu_min=502.04); part='diagnostics' verifies the authentic MONIC_M1 u=5 100-ideal deg-8+g_M1 zero-tail & H5-W survivor campaign (0/100 zeros, surv_d1/ctrl=0.9763).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "boot_evidence",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     },
+     "ht_run": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
