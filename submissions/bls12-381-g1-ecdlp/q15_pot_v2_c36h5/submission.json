@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1 ECDLP (PoT, n=2^20, W(n)=W_cold): (4,3) Q(zeta_15) CM-STNFS (U32/bfi-B2 + +8.57% Pool + Multi-Retry NB phi=0.02 & BOOT18) at expected work 2^112.122157",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 BLS12-381 G_1 ECDLP with auxiliary powers (`T = [s] P_0`, `A_i = [s^i] P_0` for `1 <= i <= n`, scored at `n = 2^20 = 1048576`, ignoring all auxiliary powers so `W(n) = W_cold` holds for every `n >= 0`) reduction via pairing transfer (`g = e(P_0, Q_0), z_T = e(T, Q_0)`) and two calibrated gamma_0-blinded G_T virtual logarithms in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (70.79, 71.19) (C = 20,000 pure baseline scalar ARMv8.0-A Ir/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18; AAPCS64 MONT5=279<=280; 47-op mont2_cios<=48<58.84 Ir for L=2; ZERO undefined ASM labels and per-kernel disjoint GPR maps across all 40 hot-loop blocks), combining 1,000,000-draw 0.25-bit r_ab=0.83 A^2=320,500 Zero-Slice Band-2 Arch2-Prod-ZeroSlice-Buf64K-B2-U32-Orb1b (W_SB=16, 28 slab owners 8.50 EiB < 16 EiB, 1-prime-per-owner <=14.95 EiB peak / <=7.48 EiB resident, p_m4_s=50.5, p_m4=52.0, p_1bs=55.5, p_lo=p_f=58.0, p_g=63.5, 45-op post-indexed scan + blunt 1,000-Ir cold 0.8135<=0.82, relaxed static 3-class Tg=(285,273,261) + Tf=106b, c_cof=2.2729, ipc_tot=12.8800, coll<=2^109.8066 u, replay<=2^105.3180 u, production collection yield sufficiency governed by declared exploratory-v1 heuristics H1-H2 with +0.11867b / +8.57% / 51.6-SE 1M-draw 0.25b smoothness-model estimation margin backed by 700,000-pair / 25,434-joint-hit Q(zeta_15) deg-(72,24) joint-smoothness calibration obs/mod=1.02186+-0.00641 [SE=0.64%, 13.4x tighter than +8.57% margin], n_rels_upper=2^63.565 + deterministic Stepped-GCD Stage-2 binary-product-tree H-ECM ladder var=0 with parallel active-branch extraction <=tree_branch_caps(b) per curve, Stage-1 prime-by-prime pi_pp_upper(B1) stepping, Stage-2 zero-leaf skip, and 0.999999^29 yield discount directly in collection yield, 2,048-owner product trees <2^64 B with all three L-11 subtrees <2^62 B), conservative-cap Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.11, k5_charged=10.35, k5_horner_charged=11.80, c_stream_mat=72.0/287.0, W_max=4096 guard, true whole-row Stage-B-rejected missing_recon >3.3x all 5 bands, all owners <16 EiB, la<=2^107.1054 u, gen<=2^98.2718 u), and standard multi-retry negative-binomial descent + 2-stage post-ecm(LX) zero-slack T0 node gate + capped BOOT_RELS=18 upfront 2-stage tau=2,000 boot (C36H5_Q15_Q25_C4W: 76 single-special-q raw-L_Q eager uncapped dsieve16 nodes with R<=80, LB=LX=68.5, SIEVE_HIT=1400, BOUND_CELL=4200 on both sieve and direct-ECM code paths, outward-rounded bound_cell_check_and_cap + exact-NORMS lower-norm floor deterministically excluding sub-floor cells with 0.0 acceptance while the asymptotic Buchstab-Dickman density inequality P_BD(u,v)<=min(1,max(1,v)*rho(u-v))<=surv_upper(m,B,T) for all u,v>=0 [live DDE comparison over all (u,v) regimes incl. m=T=2B: 174.61x/181.32x over P_BD at boot and 402.99x median across all 76 nodes, complemented by 2.6M-random-integer and 9,931-pair O_H-coprime Q(zeta_15) finite-scale calibration] supports surv_upper under H1/H-EA, standard STNFS negative-binomial descent heuristic H5 phi(node)=max((1+mu*(1-psi)/r)^-r, 0.02) with r=0.5 for <=1 window prime and r=1.0 otherwise at LOG2_RELS=62.952, linear max(0,1-miss) retention, mu_min=200.10, max_phi=0.049555<=0.05, max_psi=0.3850<=0.80, standard random-integer H-ECM Stepped-GCD + Stage-2 binary-product-tree L_min=2 b_min=32 branch-tree DP + 12b geometric ladder + parallel active-branch extraction + 2^26 Newton precheck + live 3-regime composite proper-split 20b*41b, 20b*20b, 20b*20b*20b Suyama P1 & W=210 J=24 Stage-2 tree bisection & [0,p,q,1] check, capped BOOT_RELS=18 upfront 2-stage tau=2,000 boot BOOT16=(255, 320, 11, 2) with exact z'==1 zero-work shortcut, pre-ECM exact-norm window [m_min, m_max]=[2515.01, 2589.79], BOOT_KEEP_FRAC=0.90<CP95 LB=0.9395, psi_b=0.560338, boot_phi=2.9655e-5, global node counter N_MAX=2^23.75 with E[N]_2log=49,781.72, P(node_abort)=0.0035286, dynamic per-window >=6.5b width check across all 76 nodes & boot and H5 conditional 1/p-weighted child-orbit repeat bound with C_REP=64 [25.7x above max C_bday=2.4897, 3.12x above max C_emp=20.49] giving p_max_orbit=2^-55.437 & P(repeat)=0.0020402, p_descent_fail=0.0056282, two_log<=2^105.9442 u, supported by scoped raw-L_q exploratory diagnostics: 12,802-root real-2-core-FB multi-level Q(zeta_15) campaign measuring 6,393 depth-2 after-failure attempts [O/E fail=0.8288, O/E work=0.9961, max C_bday=2.4897, max C_emp=20.49, 3 live witnesses], live reproducible full-16D raw-L_q deg-(32,24) generator >=32 ideals 0 empty + 31,000-ideal cohort 0/31,000 empty, 30,400-ideal 38-bin prod deg-(72,24) survey + 416 unplanted reached prod children KS p=0.9702 + 4 live exact-R checks + high-bit [100..245]b diagnostic [8 live bit-exact prod deg-(72,24) witnesses 71..104b at exact log2(q_c) bin radii all >=9.77x, 384 CRT-intersection 105..231b pairs 0/384<1.0x, 200 unplanted deg-(32,24) 102..244b children KS p=0.9154]), achieving opened-run expected work E[W_run] <= 2^110.1500 u behind ONE unified hard pointwise meter W <= 2^124 + 2^66 u with opened-run success >= 0.99430407 (>= 0.99429730 >= 0.9940 with +10% meter + 2^-48 wrapper) and gated cold-run expected work E[W_G1(n)] < 2^112.122157 G_1-reference units (C_G1 = 2,000 Ir/u = 10x dense-F_{p^12} core units, 2^108.800229 core u, hard meter 10*(2^124 + 2^66) < 2^127.321929 G_1 u, constant for all n >= 0) with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "112122157",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_calib_checks.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 19-check audit: live Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions + survival coupling, toy E2E DLP, sigma/B Band-2 exactness, 400-draw 2-adic cross-check of 0.25b A^2=320,500 pool, Voronoi + 16D LLL + 4x 381b F_{p^6} boot lift, SRT toy, 0.25b-mesh 2D Retention + Arch2-Prod-ZeroSlice-Buf64K-B2-U32-Orb1b collection pricing (relaxed static Tg=(285,273,261) + Tf=106b, +8.57% / 51.6-SE margin, ipc=12.8800, coll<=109.8066, replay<=105.3180) + odd-k-exact ntt3_F + 2,048-owner product trees + n_rels_upper=2^63.565 & deterministic Stepped-GCD Stage-2 binary-product-tree H-ECM collection ladder + Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.11, k5=10.35/11.80, W_max=4096), 2^12 filtsim + H-X + [6b] missing_recon + unscreened Q(zeta_15) H-X, raw-opcode ARMv8.0-A parser (40 hot-loop blocks) + 64-bit differential simulations, live 384-mesh multi-retry NB descent (r=0.5/1.0, phi_floor=0.02, mu_min=200.10, max_phi=0.049555, max_psi=0.3850, BOOT_RELS=18 upfront, psi_b=0.560338, boot_phi=2.9655e-5, N_MAX=2^23.75, C_REP=64, dynamic per-window >=6.5b width check, p_node_abort=0.0035286, p_repeat=0.0020402, p_descent_fail=0.0056282, LOG2_RELS=62.952, live full-16D raw-L_q deg-(32,24) generator, live BOUND_CELL+exact-NORMS exact-R 4-bin check, miniature real-2-core-FB multi-level campaign + 3 live witnesses, live 3-regime composite proper-split 20b*41b, 20b*20b, 20b*20b*20b Suyama P1 & W=210 J=24 Stage-2 tree bisection & [0,p,q,1] check, 16-cal/48-holdout boot, UDUP=0.40, BOUND_CELL +6, (135,g) counterexample, q15_retain16), live asymptotic Buchstab-Dickman H-EA DDE comparison across all (u,v) regimes incl. m=T=2B + 2.6M-int / 9,931-pair empirical calibration, 700,000-pair Q(zeta_15) joint-smoothness calibration (obs/mod=1.02186+-0.00641), 8 live genuine unplanted prod deg-(72,24) reached-child witnesses at exact log2(q_c) bin radii + high-bit [100..245]b summaries, and 80-digit Decimal ledger/gate + manifest sub-bounds check.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
