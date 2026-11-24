@@ -1,1 +1,1 @@
-submissions/bn254-gt-dlp/rho-baseline-v2-20261110
+bn254-c6-v32f
