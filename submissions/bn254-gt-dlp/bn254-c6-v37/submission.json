@@ -1,0 +1,109 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: sub-83 scalar ARMv8.1-A (STADDB/LDADD) MONIC_M1 C6 STNFS with 4-clamp lazy radix-4 & 2-prime 52-bit mixed-radix NTT: 2^82.932562286",
+ "claims": [
+  {
+   "statement": "For full-production bn254-gt-dlp, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing scalar ARMv8.1-A FEAT_LSE STADDB Ws,[Xn] and LDADD Xs,Xt,[Xn] with base-register-only addressing, each priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint8_t scores at scale=0.35 with w_p=round(0.35*log2 p) in [8,21] and threshold t=round(0.35*(L0-114.0)), init_a in [1,128] and max_val <= 179 <= 255 never underflow or wrap; no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page) runs the (6,2) MONIC_M1 C6 STNFS of proof.md (monic even deg-8 f_M1 with CONTENT_BITS=0.0, g_M1=((u+1)w+2)a^2+b^2 with epsilon_g=r-1, ALPHA_F_RAW=-1.075+0.08, ALPHA_G_RAW=-1.026+0.08 verified to Q=400k/200k) on E_{12,trunc} = {Q(a)+Q(b)<=1, Q(a)<=17/20, Q(b)<=17/20} cap JointVor (W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), slack=114.0, 2,000,000-active exact-HNF MONIC_M1 pool verified live: z_lnf=0.20, z_lng=-0.81, SE=0.001338 b, margin=0.005 b > 3.73*SE, exact CRT 2-adic x 3-adic split over 167 classes with ex_f=5.76119 b, ex_g=4.27450 b, log2_V <= 95.0920 [computed 95.091378], R_a <= 575.55 [575.49 < 589.43], R_{b,GA} <= 764.40 [764.34], B_a=2 shells, N_{a,sh}=2^46.2838 < 2^47): Band 1 [2^24,2^40.5) uses mod-3 wheel (512/729 keep, 125/27 replication), K_B1=256 (1.00742 <= 1.0075), 32-bit 1-byte rank delta on [2^24,2^29.5) and direct-to-link-page on [2^29.5,2^40.5) (rep_lo <= 1.975 Ir/cell); Lower Band 2 [2^40.5,2^45.5) uses dual pre-complemented pos/neg lists on L[k] (C_LIST_B2=29.70), explicit x16_bfi_copy (1.0445 <= 1.05 Ir/rec), and STADDB x16_bfi_pos/bnd1/bnd2 (occ_sb <= 0.179, hi_ap <= 0.920 Ir/cell); 6-ideal tau_6-orbit 12D Lattice Band 2 [2^45.5,2^61.0] uses 2-stage Bareiss LLL (lat_lll <= 0.00356), 2-op Direct Q12 isqrt LUT (2^37=1 TiB, eps_or <= 0.0003844), centered mod3_tab, step1_tab[8192], unified 4-op branchless signed-SXTW wheel_disp4 (uncond_l0_max < 2^22), per-orbit lv_max <= 128, body_2=76, 16-byte a_tab + 4-plane B_TAB (N_sc=2^34, BLK=38, E_0 <= 2^63.7218 B), 9-op LDP+LDADD emit + x128 STADDB apply (FP_CL=[21,76,94,79..65,94], 16-run 4,096-orbit HT at R_a=575.49: R_hat=11.0259, SE=0.0245, 1.03*(R_hat+3*SE)=11.4323 <= 11.45=C_LAT_LEAF, lat_b2 <= 5.098 Ir/cell). Counted uint8_t init8_u8 + scan8_u8 (271/1024 <= C_SCAN_G8, scan_zero <= 0.426), discretized 2D scoring model Retention2D under H1/H2 (r_g=0.974190, sf=1.6335e-6, s0=7.8816e-8, 4,000-sample MC validated), proved CRT norms (C_NORM_G=8400, C_NORM_F=16800), hybrid 4-clamp [0,4p) lazy radix-4 Shoup NTT (r4_4clamp_inner_tw=45, r4_4clamp_hoist_tw_x2=74, 50/50 blend 46.125 <= 46.5*n*k, r3_shoup_bfly=36 -> 328 <= 364*n3, r5_shoup_bfly=93 -> 387.4 <= 420*n5) + local 2-prime 52-bit {1,3,5}*2^k NTT (m52 <= 2^18, NTT2_52_PRIMES CRT margin 3.9998x, 16*m bit-pack/unpack) + Comba/Karatsuba mul_F (mul4_sb=105 <= 160; optimal-L c_srt_g=254,891.8, c_gb=2,019,376.4), and assembled 4-kernel Bernstein SRT leaf (C_SRT_G_LEAF=63000 >= 61,542 exact worst-case ops incl. register-resident 8-limb bingcd8 44,053 with <=1,024 iter proof; cof=0.454681 <= 0.456 Ir/cell). Total collection <= 9.054 Ir/cell [9.052813] (manifest_subbounds_ok; collection <= 2^83.982032, lists <= 2^77.974513). Deterministic ntt3_F Bernstein split gives split <= 2^71.337607 (1-owner RAM <= 2^57.0 B). Plain-sparse 16-vec 15-entry Z[omega] BW LA bw=(768,40) with C_UNIT_5=6.82, 9-scale 2^20..2^28 zero-loss H3 ladder (44/44 monotone, beta=5.787, NU_SW_CAP=0.000211, NU_L_CAP=0.000200, K5_CAP=8.52, TAB_R_CAP=1.00), and lazy c_tail_z6=328 (323 <= 328) gives la <= 2^80.221054, gen <= 2^74.258797 (1-owner RAM <= 2^62.554 B). Pure k=1 zero-retry Boole + Wald i.i.d. kept-candidate boot (x_EA=62.9375, cap=1.0 DF post-order root |P|=2^60.4663 B, exact 3-level Karatsuba + sequential 3-prime NTT3 peak 4.2714*|P|=2^62.5610 B << 8*|P| < 2^64 B, Dickman tail kmax=42, MONIC_M1 plan59 + CIOS5 under H-SEP >= 0.60) gives two_logs <= 2^81.181487 (phi=0.448651 <= 0.50, mu_min=502.04). Total machine storage <= 2^97.907 B < 2^100 B pointwise (every node < 2^64 B). Under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0..H-EB3, H-SM, H-R, H-X, H-SEP (>= 0.60), the algorithm returns x in [0, r-1] with g^x=z w.p. >= 0.39 (opened-run success >= 0.999999 via FIX-U, K=7,194,237,382,984,108,115) with expected total work E[W] <= 1 + (K/2^64)*2^84.291014814 <= 2^82.932562286 units (C=20,000 Ir).",
+   "score": {
+    "numerator": "82932562286",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "ht_pool.b85",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "v32_verify.py",
+    "kernels_v32.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier for bn254-gt-dlp (default: 34/34 checks, incl. manifest_subbounds_ok, sf_uses_survivor_upper_ok, boot_df_tree_ok, srt_g_leaf_ok, mul_kar_sb_ok, v37_ntt_ok, rho_tail_ok, ret2d_mc_ok, filtsim_8scale_ladder_ok [9 scales 2^20..2^28], FP prices [21,76,94,79..65,94], and every segment count read directly from kernels_v32.s, which assembles with clang -arch arm64 -march=armv8.1-a with 0 errors). Verifies: (1) MONIC_M1 tower algebra, live pool subsample vs M.F_REC_COEFFS & g_M1 (z_lnf=0.20, z_lng=-0.81), nonprim HNF (12/12), exact 2-adic x 3-adic CRT split (167 classes, 1,500 checks), Retention2D under H1/H2 (0/3,702 per-prime errs, r_g=0.974190, sf=1.6335e-6, 4,000-sample MC validated, init_min=1, max_val=179<=255, init8_u8+scan8_u8=271/1024<=C_SCAN_G8), and Dickman tail through u=42 (boot_miss=0.567196, cst_min=0.075657); (2) 2-op Direct Q12 isqrt LUT (2^37=1 TiB, eps_or<=0.0003844), centered mod3_tab, step1_tab[8192], unified 4-op signed-SXTW wheel_disp4 (uncond_l0_max<2^22), body_2=76, 9-op LDP+LDADD emit + x128 STADDB apply, Lower-B2 x16_bfi_copy (1.0445<=1.05) + dual pos/neg x16_bfi_pos/bnd1/bnd2 (240 cases), 32-bit delta Band 1, Comba mul4_sb (105<=160) + 200 Karatsuba tests, Kit A hybrid 4-clamp [0,4p) lazy radix-4 Shoup NTT (r4_4clamp_inner_tw=45, r4_4clamp_hoist_tw_x2=74, blend 46.125<=46.5*n*k, r3=36 -> 328<=364*n3, r5=93 -> 387.4<=420*n5, 0 bf_errs) + local 2-prime 52-bit {1,3,5}*2^k NTT (NTT2_52_PRIMES CRT margin 3.9998x, 16*m pack/unpack, 0 conv_errs across n in {12,20,24,30,48,60}), and assembled 4-kernel Bernstein SRT leaf (61,542<=63,000 incl. bingcd8 44,053, 0/70 errs, max_iters=768); (3) Exact-rational stor_bound.py certifying Score Node<=2^63.390 B, List Node<=2^60.176 B, E_0<=2^63.722 B, LA<=2^62.554 B, DF post-order boot root |P|=2^60.4663 B & Karatsuba+seq-NTT3 peak 4.2714*|P|=2^62.5610 B << 8*|P| < 2^64 B, and total RAM<=2^97.907 B < 2^100 B; (4) Live replay of 1/16 ht_pool.b85 runs at R_a=575.49 (4,096 orbits: 1.03*(R_hat+3*SE)=11.4323<=11.45); (5) 9-scale 2^20..2^28 zero-loss H3 ladder (44/44 monotone, NU_SW_CAP=0.000211, NU_L_CAP=0.000200, K5_CAP=8.52, TAB_R_CAP=1.00, bw=(768,40)), lazy c_tail_z6=328 (323<=328), NTT3 split (<=2^71.338), and MONIC_M1 pure k=1 descent + DF boot under H-SEP>=0.60 (two_logs<=2^81.1815, phi=0.448651, mu_min=502.04); part='diagnostics' verifies the MONIC_M1 u=5 100-ideal campaign (0/100 zeros, surv_d1/ctrl=0.9763).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "boot_evidence",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     },
+     "ht_run": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
