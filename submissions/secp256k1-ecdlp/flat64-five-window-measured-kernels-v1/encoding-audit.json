@@ -1,0 +1,95 @@
+{
+  "schema": "expanded-instruction-assembly-v1",
+  "scope": "The seven source templates expanded by the isolated candidate parser; every resulting instruction assembled independently by LLVM, with exact text byte counts. This does not prove parser semantics or full linked callback implementation. Raw leaf macros require space-argument quoting for GNU syntax; source expansion used as in predecessor audits.",
+  "assembler": "LLVM21 llvm-mc",
+  "assembler_sha256": "22543da43693916bb21ab089399d3560200c19993c1e574390a28a538fa542b8",
+  "flags": [
+    "-triple=aarch64",
+    "-mattr=+lse,+rand,+ls64,+rcpc-immo,+cmpbr",
+    "-filetype=obj"
+  ],
+  "input_kernel_sha256": {
+    "generic.s": "b77079fe37b7ff8980313f6ba807cc48613e024b934847397bcee9870e00df0f",
+    "leaf.s": "e173e69db9b4afe9b680103415f5401a01e297d9b5897902152a11c0417da1af",
+    "pointer_init.s": "23fdbd3fe93599637e4e715ccee6bfa833e9d1ec5b6d3d21ecaa7f26c6ea3826",
+    "route.s": "bbfc1be3319f5ae9c94bf7399dedda2fb500fd873627254f9b267615542cd272",
+    "secp_fe.s": "a099c78ed20776493d349c2898d08068ff8e407633d3a6b920a327f22577cdf2",
+    "ystage.s": "604d5e3eb7acecfeadc32e7218d9d87b193c3185242ccf3be8b2948886d641d7",
+    "ytransport.s": "a1799247c8a62cdee5f87f10eb83445445969bb27d26707832964d5f41874e0d"
+  },
+  "assemblies": 69,
+  "all_exit_zero": true,
+  "templates": [
+    {
+      "name": "leaf",
+      "source_sha256": "1a397759efa918f00a448e8857e5b0bf4bfe2c90acb26c50bf3300462d07268e",
+      "object_sha256": "3e09c85a04a8eb2847b188d9bddfd98d973706c1a83ac4da8ba01a1debdd58eb",
+      "executable_bytes": 112884,
+      "insns": 28221,
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "name": "secp_fe",
+      "source_sha256": "0079ee2e343c7840da52c237d84c2c7d5f445c80760b605fc4bb49f20e720c73",
+      "object_sha256": "71afad6f9b1ffd0d2fd4df9a5e17d2bae4adef3f47057ce2ef9431e447b31c97",
+      "executable_bytes": 14712,
+      "insns": 3678,
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "name": "pointer_init",
+      "source_sha256": "66564c3be43fdf75b08e4ad9d982a8ee3b039f3ec84ef58cbfd9273df98ae98f",
+      "object_sha256": "4dfe7d65970c6c4c83799a3f667e4dc568eb2003da677a0ff69710d5917738fb",
+      "executable_bytes": 200,
+      "insns": 50,
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "name": "ystage_ytransport",
+      "source_sha256": "bf849f6c9ff70955ca45162e47700c508eb0c28847cf96234b7d2d77f8dee585",
+      "object_sha256": "c8f1b7708a76d0167e7cd7a35ac8fe2749dfc6c781327c6e98682405fdc3a07c",
+      "executable_bytes": 5320,
+      "insns": 1330,
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "name": "generic_route",
+      "source_sha256": "6b2830aa966d38247f147269c6b7953836a9fb408838d6ffefff198b4938a682",
+      "object_sha256": "01ef5d6449d049e78701c6b030da0792f156574571a50526c9606f64decc9539",
+      "executable_bytes": 186120,
+      "insns": 46530,
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "generic_bindings": {
+    "roles": 4,
+    "PE_indices_per_role": 16,
+    "instruction_count_each": 185,
+    "bytes_each": 740,
+    "all_exit_zero": true,
+    "aggregate_record_sha256": "a0e027495475b0c285a36de897adbe5fbcf29c9219ad13dc8054dff0e2a8a526"
+  },
+  "code_bytes": {
+    "leaf": 112884,
+    "secp_fe": 14712,
+    "pointer_init": 200,
+    "ystage_ytransport": 5320,
+    "generic_route": 186120
+  },
+  "additional_generic_bytes_per_endpoint": 11100,
+  "assembled_bytes_per_endpoint": 330336,
+  "analytic_reserved_bytes": 262144,
+  "total_constructive_bytes": 592480,
+  "charged_program_bytes": 1048576,
+  "limitations": [
+    "Source macro expansion used the isolated Python parser; LLVM independently checked each emitted instruction and its size.",
+    "Raw macros with spaced arguments require quoting; the expanded source is the tested LLVM input.",
+    "No claim of a linked complete production executable or synthesized hardware.",
+    "The default experiment validates hashes and counts; it does not invoke LLVM."
+  ]
+}
