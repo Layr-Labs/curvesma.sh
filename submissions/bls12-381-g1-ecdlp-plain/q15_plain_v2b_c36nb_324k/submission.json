@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Plain G1 ECDLP: (4,3) Q(zeta_15) CM-STNFS (A^2=324k +10.26% Margin + 700k Joint-Smooth Cal + U32/Orb1b/bfi-B2 Kernels + nonunit_ub=0.11 LA + 3-Regime Stepped-GCD ECM + Buchstab-Dickman H-EA + 100%-Eager Multi-Retry NB Descent) at expected work 2^112.030606 G1 units",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 Plain G_1 ECDLP (`T = [x] P_0 -> x in 0..r-1`, `x = 0` for `T = O`, NO auxiliary powers, NO `n` parameter) reduction via pairing transfer (`g = e(P_0, Q_0)`, `z_T = e(T, Q_0)`) and two calibrated gamma_0-blinded G_T virtual logarithms in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (70.79, 71.19) (track unit C_G1 = 2,000 = 10x core C = 20,000 pure baseline scalar ARMv8.0-A Ir/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18; 40 verified hot-loop blocks, 0 undefined ASM labels, disjoint GPR maps), combining fresh 1,000,000-draw 0.25-bit r_ab=0.83 A^2=324,000 Zero-Slice Band-2 Arch2-Prod-ZeroSlice-Buf64K-B2-U32-Orb1b collection (Va<0.95*2^56, L_max=441.79<448, 28 slab owners 8.50 EiB<16 EiB, 1-prime-per-owner<=15.10 EiB<16 EiB, static 3-class Tg=(299,287,275)+Tf=118b, c_cof=1.0406, ipc_tot=11.5383, coll<=2^109.7735 core u, replay<=2^105.3594 core u, margin_strict_hi=+0.14086b / +10.26% / 61.2 MC SE supported by 700,000-pair 25,434-hit Q(zeta_15) deg-(72,24) joint-smoothness calibration obs/mod=1.0219+-0.0064 SE=0.64% and conditional coupling 1.012-1.032 across 5 configs, n_rels_upper=2^63.635 + deterministic Stepped-GCD Stage-2 binary-product-tree H-ECM ladder var=0 with pi_pp_upper, zero-leaf skip, parallel active-branch all-factors extraction bounded by tree_branch_caps, 0.999999^29 yield discount, Hoeffding collection-ECM bound <=2^-100, and 3-regime live composite proper-split verification), conservative-cap deterministic Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.11, k5=10.35/11.80, c_stream_mat=72.0/287.0, W_max=4096, all owners<16 EiB, la<=2^107.1054 core u, gen<=2^98.2718 core u; preprocessing event F passes with P(F|open)>=1-2^-100-2^-66-2^-80-2/r under H1,H3,H-ECM,H-R,H-SM,H-X), and 100%-eager standard multi-retry negative-binomial descent + 2-stage post-ecm(LX) zero-slack T0 node gate + 1-cell-per-fresh-blind BOOT_RELS=18 2-stage tau=2,000 boot (C36NB_EAGER_MU200_Q25_C4: 76 single-special-q raw-L_Q eager uncapped dsieve16 nodes R<=84, LB=LX=68.5, SIEVE_HIT=1400, BOUND_CELL=4200 on both sieve and direct-ECM paths, exact-NORMS sub-floor exclusion + exact universal Buchstab-Dickman H-EA bound P_BD(u,v)=rho(u)+1_{min(u,v)>=1}int_1^{min(u,v)}omega(t)rho(u-t)dt<=min(1,max(1,v)*rho(u-v))<=surv_upper live-verified for all u,v>=0 with zero v>=u bypass and >174x boot cushion, LOG2_RELS=62.952<=log2(1.09*U'), phi(node)=max((1+mu*(1-psi)/r)^(-r)+0.001,0.02) with r=0.5(<=1-prime)/1.0(>=2-prime), DISC=0.001, PHI_FLOOR=0.02, mu_min=209.39, max_phi=0.02892<=0.05, max_psi=0.226<=0.80, linear max(0,1-miss) retention, BOOT16=(250,288,13,2) with z'==1 shortcut, [m_min,m_max]=[2515.01,2589.79], BOOT_KEEP_FRAC=0.90<CP95=0.9395, BALL_PAIR=0.0 exact, BOOT_RELS=18, psi_b=0.40488<=0.80, phi_boot=8.548e-08, E[N]=25018.05=2^14.6107<<N_MAX=2^25.8, two_log<=2^103.5714 core u, supported by 30,400-ideal 38-bin prod survey 0/30,400<1x CP95<1e-4<<DISC, 416 prod children KS p=0.9702, high-bit [100..245]b diagnostics incl. 384 CRT-weighted prod pairs, 200 unplanted deg-(32,24) children KS p=0.9154, and 8 live prod [71..104]b witnesses, live full-16D deg-(32,24) generator + 31,000-ideal cohort, and 12,802-root real-2-core-FB multi-level retry campaign 6,393 after-failure attempts O/E fail=0.8288 + 3 live witnesses), achieving opened-run expected work E[W_run]<=2^110.0599 core u behind ONE unified hard pointwise meter W_G1<=10*(2^124+2^66)<2^127.321929 G_1 u with opened-run success>=0.99929247 (>=0.99928610>=0.9950=p_floor with +10% meter + 2^-48 wrapper + 2^-100 pre-ECM, +0.004286 slack, ZERO P_CAP, ZERO 2^-70) and gated cold-run expected work E[W_G1]<2^112.030606 G_1 u (<2^108.708678 core u) with cold success>=0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "56015303",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check Plain G1 ECDLP audit: live Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions + 700,000-pair (25,434-hit, SE=0.64%) joint-smoothness calibration, toy E2E DLP, sigma/B Band-2 exactness, 400-draw 2-adic cross-check of 0.25b A^2=324,000 pool (+10.26% margin_strict_hi), Voronoi + 16D LLL + 4x 381b F_(p^6) boot lift, srt_toy, collection + LA pricing (coll<=109.7735, replay<=105.3594, la<=107.1054, gen<=98.2718), filtsim + H-X + [6b] missing_recon + unscreened Q(zeta_15) H-X + PM-Basis, 40-block ARMv8.0-A raw-opcode/GPR/label/sim audit, live 384-mesh 100%-eager multi-retry NB + 2-stage T0/tau=2000 BOOT_RELS=18 descent recomputation (LOG2_RELS=62.952, max_phi=0.02892<=0.05, phi_boot=8.548e-08, E[N]=25018.05<<2^25.8, two_log<=103.5714, live universal Buchstab-Dickman H-EA DDE check P_BD(u,v)<=min(1,max(1,v)*rho(u-v))<=surv_upper with min(u,v) integral upper limit & zero bypass, live 3-regime composite proper-split H-ECM check, live high-bit [71..104]b 8-witness check, live full-16D generator, miniature multi-level retry campaign + 3 witnesses, UDUP=0.40, BOUND_CELL +6, q15_retain16), and 80-digit Decimal Plain G1 ledger/gate (p_floor=0.9950, p_pre_ecm=2^-100) + manifest_subbounds_ok verification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
