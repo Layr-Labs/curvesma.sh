@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-Q: (4,3) Q(zeta_15) CM-STNFS (Sequential 64 KiB-Buffered Band-2 + Stage-B Row-Rejected Ladder & nonunit_ub=0.25 LA + Stepped-GCD Ladder ECM + Pure k=1 Zero-Retry Boole, 2-Stage T0 Node Gate & tau=2000 Wald Boot) at expected work 2^109.201490",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-P / recover-Q (`e(P, Q) -> Q`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (70.79, 71.19) (C = 20,000 pure baseline scalar ARMv8.0-A Ir/F_p12 mul; simd=0, zero LSE/NEON/SVE/DC ZVA/fp64/x18; AAPCS64 MONT5=279<=280; 47-op mont2_cios<=48<58.84 Ir for L=2; ZERO undefined ASM labels and per-kernel disjoint GPR maps across all 30 hot-loop blocks), combining 1,000,000-draw r_ab=0.83 Zero-Slice Band-2 (W_SB=16, 1-prime-per-owner <=14.981 EiB peak / <=7.491 EiB resident, 33/4=8.25<=10.0 rev_b2_row_k0_step4 + 19-op probe + 10-op SB hdr + sequential 64 KiB-buffered 15-op emit + 6-op recv + 0.004 flush = 21.004<=22.0 + 28 row-end drains, 47-op scan + blunt 1,000-Ir cold <=0.84, static 3-class Tg=(299,287,275) + Tf=118b, c_cof=1.0557, coll<=2^110.0006 u, replay<=2^105.3423 u, n_rels_upper=2^63.530 + deterministic Stepped-GCD H-ECM ladder var=0 with 0.999999^29 yield discount directly in collection yield, 2,048-owner product trees <2^64 B with all three L-11 subtrees <2^62 B), conservative-cap Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.25, k5_charged=12.00, k5_horner_charged=14.00, full-matrix exp_unit_hex6=0.93443, W_max=4096 guard, true whole-row Stage-B-rejected missing_recon >3.3x all 5 bands, 1-dense 10.323 EiB + 16-proj 10.263 EiB + 16-shard 4.358 EiB + 2,048-purge 5.866 EiB @ 1,040 B/rel + 8,192-merge 5.498 EiB + 2,048-seq 10.224 EiB + 2^22-PM-basis 8.623 EiB, la<=2^107.2484 u, gen<=2^98.2717 u), and pure k=1 zero-retry Boole + 2-stage post-ecm(LX) zero-slack T0 node gate + unbounded i.i.d. fresh-e 2-stage tau=2,000 Wald boot descent (MODEA_V02_A2_GLOBAL_2X: 76 single-special-q raw-L_Q eager uncapped dsieve16 nodes with R<=104, LB=LX=68.5, explicit global pre-ECM lower-norm floor (nf_floor, ng_floor) from min(QBINS_LO) rejecting sub-floor cells immediately with 0.0 acceptance probability before Stage-1 ecm(LX) so post-ecm(LX) zero-slack residual survival to (R_f<=2^T0, R_g<=2^T0) with T0=kA*nA+kB*n is unconditionally <= sv0 for every m>=0 and enters unconditional 2.0*ecm(nA, T0) with e_s2=0 when kA+kB=0, declared exploratory-v1 premise H5 P(M=0 or discarded|slot)<=p_0(b)=max(0.001,(1+0.5*mu(b))^-1) across reached slots incl. any node discarded by online BOUND_CELL screening, NB_R=1.0, NB_ALPHA=0.5, mu_min=898.07, p0_max=0.002222, unconditional Boole Phi_tree=0.513765<=0.60 over c_det_one=487 deterministic slots, ZERO internal retries, linear max(0,1-miss) missing-leaf retention, BOUND_CELL=5000 on both sieve and direct-ECM code paths, deterministic Stepped-GCD L_min=2 b_min=32 branch-tree DP + 12b geometric H-ECM ladder per_curve_stepped=ops*mul+(pi_upper(B1)+G)*gcd + 2^26 Newton precheck + live random-prime Suyama P1 check, unbounded i.i.d. fresh-e 2-stage tau=2,000 Wald boot BOOT16=(245, 264, 12, 2) with exact z'==1 zero-work shortcut before F_{p^6} elimination, explicit pre-ECM norm window [m_min, m_max]=[2515.01, 2589.79] rejecting m<m_min immediately with 0.0 acceptance probability before Stage-1 ecm(68.5, 2590) + log2(R_g)<=2000 gate for unconditional surv_b<=4.7330e-6 across every m>0, and BOOT_KEEP_FRAC=0.90<CP95 LB=0.9395, E[runs/log]<=2.056619, boot_phi=0.0, p_descent_fail=0.0, two_log<=2^108.1779 u, supported by scoped raw-L_q exploratory diagnostics in ADAPTIVE.md/q15_mini_adaptive.b85/verify_q15_descent.py: 30,400-ideal 38-bin prod deg-(72,24) survey + 416 genuine unplanted reached prod children KS p=0.9702 + 4 live exact-R BOUND_CELL-screened checks, live reproducible full-16D raw-L_q pure k=1 deg-(32,24) generator >=32 ideals 0 empty + 31,000-ideal archived cohort 0/31,000 empty, and 12,802-root real-2-core-FB B_FB=2^14 multi-level campaign + 3 live bit-exact multi-level witnesses), achieving opened-run expected work E[W_run] <= 2^110.5585 u behind ONE unified hard pointwise meter W <= 2^124 + 2^66 u with opened-run success >= 0.99991011 (>= 0.99990112 >= 0.9990 with +10% meter + 2^-48 wrapper) and gated cold-run expected work E[W] < 2^109.201490 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "10920149",
+        "denominator": "100000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: live Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions + non-vacuous survival coupling, toy E2E DLP, sigma/B Band-2 exactness, 400-draw 2-adic pool cross-check, Voronoi + 16D LLL + 4x 381b F_{p^6} boot lift, SRT toy, 0.25b-mesh 2D Retention + odd-k-exact ntt3_F + 2,048-owner product trees + n_rels_upper=2^63.530 & deterministic Stepped-GCD H-ECM collection ladder (var=0, 0.999999^29 yield discount) + Stage-B row-rejected LA (nl_cap=0.00278, sw_cap=0.00568, nonunit_ub=0.25, k5=12.00/14.00, 1,040 B/rel purge, 8,192-merge, W_max=4096), 2^12 filtsim + H-X (prod_eq_schur=True, 1-pass PM-Basis [:s_sm] selector + negative control) + [6b] true whole-row Stage-B-rejected missing_recon + unscreened Q(zeta_15) H-X (R0=181 BSGS + full-matrix exp_unit_hex6), raw-opcode ARMv8.0-A parser (30 hot-loop blocks incl. rev_b2_row_k0_step4 & 47-op mont2_cios, 0 undefined labels, disjoint GPR maps) + 64-bit simulations, live 384-mesh pure Mode-A k=1 zero-retry Boole + 2-stage post-ecm(LX) zero-slack T0 node gate + unbounded i.i.d. fresh-e 2-stage tau=2,000 Wald boot descent recomputation (p_0=max(0.001,(1+0.5*mu)^-1), Phi_tree<=0.60 over c_det_one slots, boot_phi=0.0, explicit pre-ECM [nf_floor, nf_max]x[ng_floor, ng_max] node window & [m_min, m_max] boot window, linear max(0,1-miss), live reproducible full-16D raw-L_q pure k=1 deg-(32,24) generator, live BOUND_CELL-screened exact-R 4-bin check, scoped miniature real-2-core-FB multi-level Q(zeta_15) campaign + 3 live bit-exact multi-level witnesses, deterministic Stepped-GCD L_min=2 branch-tree DP + 12b H-ECM ladder + live random-prime Suyama P1 check, 16-cal/48-holdout boot, multi-bin exact-DP UDUP=0.40, integer BOUND_CELL +6, (135,g) counterexample rejection, q15_retain16), and 80-digit Decimal ledger/gate + manifest check.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
