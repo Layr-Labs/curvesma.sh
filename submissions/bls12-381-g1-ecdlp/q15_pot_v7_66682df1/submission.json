@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1 ECDLP (PoT, n=2^20, W(n)=W_cold): (4,3) Q(zeta_15) CM-STNFS (K=2 Shells + L_1(b) + STADDH + exc=1.02 LA + k=1 2.0*psurv512 T2-1Rung Boot) at 2^110.859618",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 BLS12-381 G_1 ECDLP with auxiliary powers (`T = [s] P_0`, `A_i = [s^i] P_0` for `1 <= i <= n`, scored at `n = 2^20 = 1048576`, ignoring all auxiliary powers so `W(n) = W_cold` holds for every `n >= 0`) reduction via pairing transfer (`g = e(P_0, Q_0), z_T = e(T, Q_0)`) and two calibrated gamma_0-blinded G_T virtual logarithms in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (71.20, 71.60) (C = 20,000 scalar ARMv8.1-A GPR integer Ir/F_p12 mul, -march=armv8.1-a -mgeneral-regs-only, simd=0, zero NEON/SVE/DC ZVA/fp64/x18, plus one disclosed scalar FEAT_LSE instruction STADDH Ws,[Xn] at 1 Ir; MONT5=279<=280; 47-op mont2_cios<=48<58.84 Ir for L=2; ZERO undefined ASM labels and per-kernel disjoint GPR maps across all 60 unchanged hot-loop blocks), combining a 1,000,008-draw 0.25-bit discrete O_{Q(zeta_15)} K=2 disjoint equal-a-volume radial-shell + complex-place L_1(b)-ball pool (t_cut=2^{-1/4}, R2_a=319,600, R2_b=323,000, b_alphas=[1.0, 0.72], Shell 0: 0<T_2(a)<=t_cut*s_c*R2_a with b in K_1(R_{1,0}=719.01), Shell 1: t_cut*s_c*R2_a<T_2(a)<=s_c*R2_a with b in K_1(R_{1,1}=610.10), each shell holding Va_k=2^55.9155<0.9432*2^56 in bp=[1,1], exact Vol_8(K_1)/Vol_8(L_2)=1/105, L_max=(359.50, 305.05)<448, deterministic 256-vertex rounding envelope Delta_1=sqrt(60)=7.745967<8.0, deterministic Cauchy projection bound L_b_avg/R_1>=0.216505>=0.2165 charged => L_b=(155.67, 132.09) & L_b_harm=149.99, live 1,000-pt/shell direct-rejection in_D12(b) Horvitz-Thompson discrete occupied-row checks Shell 0 L_b0_d12=159.04 (>=155.67, z=0.97) / L_b1_d12=211.77 (25/211.77<=0.119<<0.303) & Shell 1 L_b0_d12=132.91 (>=132.09, z=0.24) / L_b1_d12=168.32 (25/168.32<=0.149<<0.303), live Vandermonde C_1 limb bounds |a^3_j|<=2^26.81 / |b^3_j|<=2^27.85 / |g_j|<=2^91.57 / |f_j|<=2^85.44, 100% convex b_0-chords and Aut=C_12 invariance) on unchanged Zero-Slice Band-2 Arch2-Prod-ZeroSlice-Buf128K-B2-U32-Bin21-Defer8-LSE (bp=[1,1], W_SB=16, 28 slab owners 8.50 EiB < 16 EiB reused sequentially across shells, 1-prime-per-owner <=15.086 EiB peak / <=7.543 EiB resident, P_min=33, p_m4_s=51.0, p_m4=52.5, p_1bs=56.5, p_lo=p_f=58.0, p_g=63.5, static 3-class Tg=(298,286,274) + Tf=124b, c_cof=0.7446, c_scan_zero=0.77, ipc_tot=8.7554, coll<=2^108.6208 u, replay<=2^105.2963 u, margin_strict_hi=+0.0727b / +5.17% / 34.6-SE, n_rels_upper=2^63.865 + deterministic Stepped-GCD Stage-2 binary-product-tree parallel-active-frontier H-ECM ladder var=0 with 1 - 29*10^-6 yield discount), conservative-cap Stage-B row-rejected exc=1.02 LA (nl_cap=0.00080, sw_cap=0.00140, 2.04x headroom over 2^25 means, nonunit_ub=0.13, k5_charged=9.57, k5_horner_charged=11.52, la<=2^103.8224 u, gen<=2^96.7988 u), and pure k=1 zero-retry Boole + clamped uniform min(1, 2.0*psurv512_hi) IEEE-754 outward-rounded interval Buchstab-Dickman 2-stage post-ecm(LX) zero-slack T0 node gate (standard BOUND_CELL=4,200 on all 76/76 nodes + unconditional sequential Stage-1 ECM + 1-rung Theorem T2 +0.05b continuous real-interval dominance & full recursive Stage-2 binary-product-tree splitting with unchanged MONT5=367.76 & exact Binary Stein GCD) + unbounded i.i.d. fresh-e K=1 (BALL_PAIR=0.0 exact) 2-stage tau=2,100 Wald boot descent (LX=69.0, MAIN_NG=665.5<=666.166, LOG2_RELS=63.255, MAIN_LB=71.60, MU_MIN=800.0, mu_min=808.57, R<=84<=104, Phi_tree=0.495482<=0.50 over c_det_one=473 slots, boot_phi=0.0, p_descent_fail=0.0, two_log<=2^104.7708 u, accompanied by an authentic exact-degree deg-(72,24) u=-5 fixed-2-window EA-gated H5/H5-W campaign across 100 disjoint C_12 orbits with independent DS.ss_lower2_tau mu_pred calibration 1.0314x + live bit-exact 2-hop depth-2 replays), achieving opened-run expected work E[W_run] <= 2^108.8947 u behind ONE unified hard pointwise meter W <= 2^124 + 2^66 u with conditional opened-run success >= 0.999971 (>= 0.999968 >= 0.9990 with +10% meter + 2^-48 wrapper) and gated cold-run expected work E[W_G1(n)] <= 2^110.85961755 < 2^110.859618 G_1-reference units (C_G1 = 2,000 Ir/u = 10x dense-F_{p^12} core units, 2^107.537690 core u, hard meter 10*(2^124 + 2^66) < 2^127.321929 G_1 u, constant for all n >= 0) with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "55429809",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py",
+        "q15_exact_h5_data.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit: live Q(zeta_15) algebra/CRT/NTT, Murphy-alpha, real-FB joint collisions + non-vacuous survival coupling, toy E2E DLP, sigma/B Band-2 exactness, 400-draw live discrete O_{Q(zeta_15)} K=2 equal-a-vol radial-shell + L_1(b) (t_cut=2^{-1/4}, R_{1,k}=(719.01, 610.10), deterministic 256-vertex rounding envelope Delta_1=sqrt(60)<8.0, deterministic Cauchy projection bound L_b/R_1>=0.216505>=0.2165, live 1,000-pt/shell direct-rejection in_D12(b) Horvitz-Thompson discrete checks on both shells, exact L_max=(359.50, 305.05)<448, 200/200 convex b_0-chords) 2-adic cross-check of 0.25b R2_a=319,600 R2_b=323,000 alpha_1=0.72 pool (cm_tables.b85 + cm_hist2.b85), Voronoi + 16D LLL + 4x 381b F_{p^6} boot lift, SRT toy, 0.25b-mesh 2D Retention + unchanged Arch2-Prod-ZeroSlice-Buf128K-B2-U32-Bin21-Defer8-LSE K=2 collection pricing (P_min=33, ipc=8.7554, coll<=108.6208, replay<=105.2963) + odd-k-exact ntt3_F + 2,048-owner product trees + n_rels_upper=2^63.865 & deterministic Stepped-GCD Stage-2 binary-product-tree H-ECM collection ladder (var=0, 1 - 29*10^-6 yield discount) + Stage-B row-rejected exc=1.02 LA (nl_cap=0.00080, sw_cap=0.00140, nonunit_ub=0.13, k5=9.57/11.52, 57-op row_red5_z12 c_row_chi=600.0, c_stream_mat=63.0/251.0), 2^12 filtsim + H-X + [6b] true whole-row Stage-B-rejected missing_recon + unscreened Q(zeta_15) H-X, raw-opcode ARMv8.1-A + disclosed STADDH parser (60 unchanged hot-loop blocks, 0 undefined labels, disjoint GPR maps) + 64-bit differential simulations, live 384-mesh pure Mode-A k=1 zero-retry Boole + clamped uniform min(1, 2.0*psurv512_hi) interval-BD 2-stage post-ecm(LX) zero-slack T0 node gate (standard BOUND_CELL=4,200 on all 76/76 nodes + sequential Stage-1 + 1-rung Theorem T2 +0.05b continuous real-interval dominance & full recursive Stage-2 binary-product-tree splitting with unchanged MONT5=367.76 & exact Binary Stein GCD) + unbounded i.i.d. fresh-e K=1 (BALL_PAIR=0.0) 2-stage tau=2,100 Wald boot descent recomputation (LX=69.0, MAIN_NG=665.5<=666.166, mu_min=808.57, R<=84<=104, Phi_tree=0.495482<=0.50 over c_det_one=473 slots, two_log<=104.7708) + authentic exact-degree deg-(72,24) u=-5 fixed-2-window EA-gated H5/H5-W campaign (q15_exact_h5_diag.py, usable=>surv deterministically, 100 archived disjoint C_12 orbits, independent DS.ss_lower2_tau mu_pred calibration 1.0235x raw / 1.0314x post-2-core, 9/100 raw & 15/100 post-2-core empty vs independent 39.57/45.34, mu-adj Fano<=1.297, surv_d1/ctrl=1.0170, live 2-hop depth-2 replay & live mu_pred recomputation in {} and all 6 replays in part=diagnostics), and 80-digit Decimal ledger/gate + manifest check (110.859618 G_1 units = 10x core 107.537690).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          },
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
