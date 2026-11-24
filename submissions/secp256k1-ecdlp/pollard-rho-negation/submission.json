@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "title": "secp256k1-ecdlp: negation-class small-memory Pollard rho",
+  "claims": [
+    {
+      "statement": "For uniform x in [0,r), input Q=[x]P on the standard secp256k1 curve, the 32-adding Pollard rho algorithm operating on negation equivalence classes {R,-R} succeeds with exploratory probability at least 0.632 using at most 2^128.000038 total target-group-operation equivalents under the reference price C=78037248 word operations. Peak memory is at most 2^20 bytes; preprocessing is at most 2^32 word operations and is included in total work; nonuniform advice is 0 bytes. The success rate relies on the disclosed standard r-adding collision-time heuristic on negation equivalence classes.",
+      "score": {
+        "numerator": "64000019",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "claim.json"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "toy-pollard-rho-negation",
+      "source": "experiment.py",
+      "purpose": "Verify Pollard rho with negation equivalence classes on toy cyclic additive groups, checking scalar recovery and collision characteristics.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 11,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "order": 101
+        }
+      ]
+    }
+  ]
+}
