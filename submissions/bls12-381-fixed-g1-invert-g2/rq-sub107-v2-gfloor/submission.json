@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Fixed-G1 Invert-G2 (recover-Q) at 2^107.007600 Units (Mode-A K=2 Equal-Va L1(b) + M=13 Full-Chord Slab Owners W_B=1/W_B=8/Direct1-W32 Bit-58 Fused-U8 STADDB/STADD + Lazy-8p Shoup61 NTT + Hex6 SpMV + Global-Floor Uniform 2.0*psurv512_hi Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 Fixed-G1 Invert-G2 (recover-Q) is solved with success probability >= 0.39 (post-headroom floor p_floor = 0.9990, K_gate = 7201431620367092223) in expected cost < 2^107.007600 units (core E[W_run] <= 2^108.3645 units, hard core meter 2^124 units plus <= 2^66 wrapper < 2^(124 + 2^-57) units).",
+      "score": {
+        "numerator": "267519",
+        "denominator": "2500"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default {} in initial_inputs, plus on-demand part='diagnostics' and part='all' in input_schema) for recover-Q (bls12-381-fixed-g1-invert-g2) verifying K=2 equal-Va radial shells (bp=1) + Complex-Place L_1(b) ball (direct-rejection D_12 HT, 256-vertex rounding envelope, 4-fold Cauchy projection LB, Vandermonde limb bounds, full-canonical G_120 a_0 sub-chord/fiber HT overhead) + M=13 collision-free full-chord slab owners (416 cols > L_max+31, 9.25 EiB/slab, 3-tier Band-2 W_B=1 [52.0,60.0) / W_B=8 [60.0,61.3) / Direct 1-Slot W_SB=32 [61.3,p_{g,k}) with Bit-58 4-bank rotation, straight-line binary tails, in-loop tbnz #17 register-disjoint rev_b2_rx_drain flush guaranteeing occ<=131,216 B < 256 KiB for arbitrary slice lengths, Fused uint8_t S_b1/S_b2 128-cell SWAR scan 0.7960<=0.798 with deterministic zero-overflow proof and exact 2D Newton-banded QuantizedRetention DP) on fresh 1,000,008-draw 0.25b A^2=295,300 r_ab=1.080 pool (lf=71.20, lg=71.56, exc=1.02, p_lo=52.0, p_w1=60.0, p_dir=61.3, p_f=60.0, p_g=[64.0,62.6], ipc=7.0551, coll<=107.9922, replay<=104.9150, 9.25 EiB slab, 11.796 EiB max build, 2^118.874 B global tables), 2^16..2^25 Stage-B row-rejected LA with Hex6 SpMV (k5=9.45, k5h=11.25, la<=103.8331), 72 clang-verified ARMv8.1-A + STADDB/STADD raw-opcode blocks across KERNELS.md+KERNELS_LA.md + 64-bit differential simulations, pure Mode-A K=1 pre-admission sv_norms + global-floor Stage-1/Stage-2 interval 2.0*psurv512_hi descent uniformly across T>=0 (ZERO sextile averaging in node_cost; LX=69.0, P_SIEVE=(60.0,62.6), BOOT16=(225,297,12,2), TAU_BOOT=2070, standard BOUND_CELL=4,200 on all 76/76 nodes, MONT5=367.76, continuous 0.05b Theorem T2 dominance, two_log<=104.8576) + authentic exact-degree deg-(72,24) u=-5 fixed-2-window EA-gated H5/H5-W campaign with independent DS.ss_lower2_tau mu_pred calibration (obs/mu_pred=1.0314x, 15/100 vs 45.34, surv_d1/ctrl=1.0170, q15_exact_h5_diag.py), and 80-digit Decimal ledger/gate (E[W_run]<=2^108.3645, E[W]<2^107.007600).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}

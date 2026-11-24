@@ -1,0 +1,39 @@
+# Storage and Addressing
+
+Every node is a flat 64-bit scalar machine with `< 2^64` bytes (`16.00 EiB`) of RAM, addressed by unit-cost scalar ARMv8.1-A + disclosed `STADDB`/`STADD` instructions under `COST_MODEL.md`, with every cross-owner byte transfer explicitly priced in `KERNELS.md` / `KERNELS_LA.md`.
+
+## 1. Relation Collection (`Arch3-K2-L1b-M13-W1W8Dir32-Bit58-U8Fused-Shoup61-Hex6`, `K = 2` Equal-`V_a` Radial Shells `bp = 1` + Complex-Place `L_1(b)` Ball, `M = 13` Slab Owners `W_tile = 416`, `P_min = 2^33`, `P_lo = 2^52.0`, `P_w1 = 2^60.0`, `P_dir = 2^61.3`, `P_f = 2^60.0`, `P_g = [2^64.0, 2^62.6]`)
+
+- **Sequential `K = 2` Equal-`V_a` Radial Shells (`bp = 1`, exact `2^56` power-of-2 bank stride):** Total 8D `a`-ellipsoid volume (`A^2 = 295,300, r_ab = 1.080`) is split in half at `u_cut = 0.5` in `Q_CM(a)^4`, giving `V_{a,k} = 0.9351 * 2^56 < 0.95 * 2^56` canonical `a`-orbits per shell (`N_{a,k} = 4 V_{a,k} = 2^{57.903}`). With `bp = 1`, ALL 4 Galois banks `m in {0, 1, 2, 3}` live inside ONE slab owner (bits `[57:56]` = bank `m`, bits `[55:0]` = `oid`). Canonical `a`-entries are partitioned into `3` contiguous static 2-adic classes `c(a) in {0, 1, 2}` with quantized `uint8_t` thresholds `T_g_u8 = (85, 82, 79)` (`3.50`b `round`, `bias_g = (43, 46, 49)`) and `T_f_u8 = 45` (`2.75`b `round`, `bias_f = 0`).
+- **Collision-Free `M = 13` Full-Chord Slab Owners (`9.250 EiB < 16.000 EiB` Each — `6.750 EiB` Spare Headroom; `120.25 EiB` Total Across 13 Slabs!):** Slab owner `s in {0, 1, ..., 12}` owns chord columns `[32*s .. 32*s + 31]` (`13 * 32 = 416 > L_max + 31 = 384.37`), guaranteeing ZERO cross-column ring collisions across an entire chord. Guard bit `58` cleanly partitions each slab owner's 64-bit space into 100% byte-disjoint regions:
+  - `S_b2[0..31]` (`32` columns × `4` banks × `2^56` B `uint8_t` = **`8.000 EiB`**): virtual addresses `(col_local << 59) | (0 << 58) | (m << 56) | oid` (`bit 58 == 0`, `col_local in 0..31`). Records store exact 5-bit `r = k & 31` in bits `[63:59]` via `ubfiz #59, #5`; adding `x_t0 = (delta << 59) | (c << 56)` wraps `col_local` mod `32` (with carry `C = 1` routing to slab `s + 1` on `W_B=8` boundary buckets and Direct 1-Slot) AND rotates bank `m` mod `4` in bits `[57:56]` with any carry absorbed cleanly by guard bit `58` and cleared by `and x0, x0, #0xfbffffffffffffff`.
+  - `S_b1` (`4` banks × `2^56` B `uint8_t` = **`0.250 EiB`**): virtual addresses `(0 << 59) | (1 << 58) | (m << 56) | oid` (`bits [63:58] == 0b000001`), shared across Pass 1 (`g`) and Pass 2 (`f`).
+  - `M_g[0..31]` (`32` columns × `1`-bit `g`-survivor bitmap = **`1.000 EiB`**): virtual addresses `bits [63:58] in {0b000011, 0b000101, 0b000111, 0b001001}` (100% disjoint from `S_b2` and `S_b1`).
+  - Plus `15` `512 KiB`-aligned TX buffers `tx_tbl[-1..13]` (`7.5 MiB` total; `tx_tbl[-1] = sink_lo` and `tx_tbl[13] = sink_hi` discard overhang without touching any slab): total **`9.250 EiB` main arrays + `< 8 MiB` scratch `<< 16.000 EiB`**.
+- **Prime-Owner Build Peak & Sequential-Shell Global Table Storage (`<= 11.796 EiB < 16.000 EiB` per Owner, `2^{118.874} B < 2^{120} B` Global):**
+  - Read-only precomputed `sub_chords[]` + `fib_carry[]` stream (`<= 0.055 EiB`, built ONCE per shell during `canonical_a_and_sort <= 2^{86.0}` u) is included in EVERY 1-owner build peak below. All dense builds (Band-1a, `W_B=1`, `W_B=8`) overlay `uint64_t` byte-count histograms directly in-place on `pos[1..B_pad]` via `STADD Xs, [Xn]` (`8 * N_{a,k} < 2^{61} << 2^{64}` -> overflow mathematically impossible!) followed by in-place `rev_build_prefix_u64_8x` (`2.25 + 0.65 = 2.90 <= 3.0 = c_lbkt`), eliminating any separate `hist[]` array!
+  - Band-1a (`[2^{33}, 2^{52.0})`): `16 * N_{a,k} + 32 * 2^{52.0} + 0.055 EiB = 3.921 EiB`.
+  - Tier 2a `W_B = 1` (`[2^{52.0}, 2^{60.0})`, zero-copy in-place `pos[0..p]` -> `off[0..p]`): `uint64_t pos[]/STADD` (`5.90`) + in-place `prefix_u64_8x` (`2.25 + 0.65 <= 3.0`) + `scatter_w1_u8` (`7.75`, `ubfiz #59, #5`) + live full-`G_120` HT `bld_ovh_shells = [2.10, 2.75]` Ir/entry, peak 1-owner RAM at `p = 60.0` is `16 * N_{a,k} + 8 * 2^{60.0} + 0.055 EiB = 11.796 EiB < 16.000 EiB`.
+  - Tier 2b `W_B = 8` (`[2^{60.0}, 2^{61.3})`, `g`-only): `15.65 + bld_ovh_shells[k]`, peak 1-owner RAM at `p = 61.3` is `16 * N_{a,k} + 8 * (2^{61.3} / 8) + 0.055 EiB = 6.258 EiB < 16.000 EiB`.
+  - Tier 2c Direct 1-Slot Sparse Band-2 (`[2^{61.3}, p_{g,k})`, `W_SB = 32`, `EMPTY = -1`, `OVF = (1 << 58) | node_idx` with 58-bit `node_idx < N_{a,k} = 0.9351 * 2^{58} < 2^{58}` decoded in `1` op via `add x4, x_ovf_adj, tag, lsl #4` supporting up to `4.000 EiB` contiguous 16-byte overflow RAM with zero bit-58 boundary conflicts!): peak 1-owner RAM at `p_{g,0} = 64.0` is `8 * (2^{64.0} / 32) + 16 * N_{a,k} * (1 - exp(-lam)) + 0.055 EiB = 5.452 EiB < 16.000 EiB` (and at `p = 2^{61.3}`, `4.233 EiB < 16.000 EiB` with `< 2^{57.91} < 2^{58}` nodes!).
+  - Because Shells `0` and `1` execute sequentially, peak global replay table memory is `max_k(mem_{g,k} + mem_{f,k}) = 2^{118.874} B` (and `mem_tbl_peak + 13 * 9.25 EiB < 2^{120} B` asserted live; `build_u = 104.9125 <= 104.9150` u).
+- **Distributed `2,048`-Owner Product Trees (`P_f = 2^{71.20}` + `P_g = 2^{71.56}` + Retained `g`-Batch Candidate Tree):** Partitioned across `2,048` 64-bit owners at **`0.2278 * 2^{64} B = 3.645 EiB << 16.00 EiB`** per owner, with ALL THREE `L - 11` local subtrees `<= 2^{60.074} B < 2^{62} B` asserted live in `audit_cm.py`.
+
+## 2. Linear Algebra Storage — Complete Owner Map Across ALL Phases (All `< 2^64 B = 16.00 EiB`, `nl_cap = 0.00080`, `sw_cap = 0.00147`, `nonunit_ub = 0.113`, `W_max = 4,096` Guard)
+
+Each Block Wiedemann bundle runs `4` 256-bit vectors (`128 B/slot`) over `N_sw = sw_cap * U' = 0.00147 * 2^{63.2071} = 2^{53.7972}` structured-Gaussian slots and `N = nl_cap * U' = 0.00080 * 2^{63.2071} = 2^{52.9194}` logical columns (`nonunit_ub = 0.113`):
+
+- **Dense-vector owner (`1` owner, sequential Krylov -> Horner reuse):** `2 * N_sw * 128 B = 2^{61.797} B = 3.475 EiB < 16.00 EiB` (`0.869 EiB` reused sequentially for 1-vector Horner via `lsr #2`).
+- **Dedicated row-sharded projection owners (`16` owners, holding `Z + Y=[S,BZ] + X` simultaneously):** `2^{61.942} B = 3.842 EiB < 16.00 EiB` per owner.
+- **Krylov sequence owners (`2,048` owners):** `2^{61.936} B = 3.826 EiB < 16.00 EiB` per owner.
+- **PM-Basis generator owners (`2^{22}` owners + `1` owner for final `F(z)`):** Coeff arrays + 3-plane x 4-prime NTT workspace = **`2^{61.308} B = 2.476 EiB < 16.00 EiB`** per owner; final `F(z)` = `2^{57.936} B = 0.239 EiB`.
+- **Mutable filtering owner map (against deterministically capped `N_rels <= n_rels_upper = 2^{63.800}`):**
+  - **Purge (`2,048` owners):** `2^{62.822} B = 7.070 EiB <= 8.0 EiB < 16.00 EiB` per owner.
+  - **Merge (`8,192` owners):** `2^{62.719} B = 6.584 EiB <= 8.0 EiB < 16.00 EiB` per owner.
+- **Read-only sparse-matrix shard owners (`16` byte-balanced owners, deterministic `W_max = 4,096` guard):** **`2^{60.530} B = 1.444 EiB << 16.00 EiB`** per owner incl. max-row bytes.
+- **Explicit aggregate priced cross-owner burst streaming:** `w_row_avg = 8 + 201 + 201 * 0.113 / 8 + 7/8 = 212.714` words -> `1.0625 * w_row_avg + 24.0 = 250.009 <= 251.0 = c_stream_mat_1vec` Ir/row and `62.502 <= 63.0 = c_stream_mat` Ir/vec-row (asserted live in `audit_cm.py`).
+
+## 3. Peak Memory & 2-Adic Class Rule
+
+- **Peak Memory:** `< 2^{120.0} B` (`2^{118.874} B` sequential-shell peak tables + `120.25 EiB` across `13` slab owners during collection; `< 2^{105.0} B` during descent — max node radius `R = 84`, streamed/tiled in `<= 2^{40}`-entry tiles `<< 2^{64} B`; wrapper `< 2^{30} B`).
+- **2-Adic Class Rule `c(a)` (`w_cls = (225/256, 225/2048, 23/2048)`):** Identical `<sigma, omega>`-invariant rule (`s = (1.0, 1.5, 2.0)` -> `v_2(N_g) = 0, 12, >= 24`), verified live in `sigmaB_exactness` and `pool_2adic_live`.
