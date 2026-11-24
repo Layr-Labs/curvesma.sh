@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Plain G1 ECDLP at 2^110.751618 G1 Units (Sub-104.8 Pure Mode-A K=1 Interval 2.0*psurv512_hi Descent + Complex-Place L1(b) Convex Ball + BP2-W28 STADDH)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H5-W, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDH cost model, BLS12-381 Plain G_1 ECDLP (`bls12-381-g1-ecdlp-plain`: given ONLY `T = [x] P_0 in G_1` with no auxiliary powers and no `n` parameter, recover `x in 0..r-1` with `[x] P_0 = T`, `x = 0` for `T = O`) is solved via pairing transfer (`g = e(P_0, Q_0), z_T = e(T, Q_0)`) with cold success probability >= 0.39 (post-headroom floor p_floor = 0.9990, K_gate = 7201431620367092223) in expected work E[W_G1] < 2^110.751618 G_1-reference units (live 2^110.7516175408... < 2^110.751618, log2 bound 110.751618 = 55375809/500000, where 1 internal dense-F_{p^12} core unit at C = 20,000 Ir equals 10 G_1-reference units at C_G1 = 2,000 Ir; core opened-run E[W_run] <= 2^108.7867 core units, hard pointwise meter W_G1 <= 10*(2^124 + 2^66) < 2^127.321929 G_1 units). No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "55375809",
+        "denominator": "500000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py",
+        "q15_exact_h5_data.b85"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib audit for Plain G_1 ECDLP (bls12-381-g1-ecdlp-plain): default initial input {} (part='core') verifies Q(zeta_15) algebra, sigma/B exactness, anchor norms, SRT toy, 0.25b-mesh 2D Retention + Complex-Place L1(b) Convex Ball + BP2-W28-2Pass STADDH collection (coll<=108.4743, replay<=105.424), 2^16..2^25 Stage-B row-rejected LA ladder fit (la<=103.8331), unplanted two-sided BW, 73 ARMv8.1-A + STADDH raw-opcode blocks, Pure Mode-A K=1 Sub-104.8 Descent (LX=69.0, fine integer R<=84 verified via Kronecker theta_3(q)^16, IEEE-754 outward-rounded interval 2.0*psurv512_hi, standard per-cell BOUND_CELL sieving, sequential Stage-1 ECM, continuous real-interval 1-rung Theorem T2 ECM dominance, BOOT16=(215,316,12,2), TAU_BOOT=2100, Phi_tree=0.493626<=0.50, c_det_one=473, min_mu=800.6, two_log=104.768827<=104.7689), authentic exact-degree deg-(72,24) u=-5 H5/H5-W campaign with independent DS.ss_lower2_tau mu_pred calibration (100 disjoint C_12 orbits, obs/mu_pred=1.0314x post-2-core, 15/100 empty vs independent 45.34, surv_d1/ctrl=1.0170, live 2-hop depth-2 replay + live mu_pred recomputation), and 80-digit Decimal ledger/gate (E[W_run]<=2^108.7867, E[W]<2^107.429800 core u, E[W_G1]<2^110.751618 G_1 u with 1 core u = 10 G_1 u); on-demand {'part':'diagnostics'} runs Murphy-alpha, real-FB joint collisions, toy E2E DLP, live 400-draw 2-adic L1(b) pool cross-check, Voronoi + 16D LLL + 381b F_{p^6} boot lift, filtsim + H-X + [6b] missing_recon, genuine Q(zeta_15) H-X, and full 6-lattice exact_deg72_h5_full replay (or {'part':'all'} for all checks combined).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          },
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
