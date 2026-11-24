@@ -1,0 +1,109 @@
+{
+ "version": 1,
+ "title": "bn254-gt-dlp: scalar ARMv8.1-A (STADDH/LDADD) C6-m184_w216-rec STNFS with 16-B a_tab 9-op LDP+LDADD emit, Direct Q12 isqrt LUT, uint16_t 1D retention + survivor_upper, exact 3-adic split, NTT3 split, all-primes boot & lazy CIOS LA/descent: 2^83.367026687",
+ "claims": [
+  {
+   "statement": "For full-production bn254-gt-dlp, the self-contained scalar ARMv8.1-A machine of proof.md (-march=armv8.1-a -mgeneral-regs-only, simd=0, disclosing the scalar ARMv8.1-A FEAT_LSE atomic integer instructions STADDH Ws,[Xn] and LDADD Xs,Xt,[Xn] with base-register-only addressing, each priced at 1 scalar AArch64 instruction = 1/20,000 units under COST_MODEL.md; uint16_t scores at scale=16.0 with ceil threshold t=ceil(16*(L0-113.0)), init_a in [26896, 32767] and max_val <= 34592 <= 65535 never wrap; no NEON/SVE, DC ZVA, fp64, TABM or external C; every node has < 2^64 B flat 64-bit RAM and every cross-node byte goes through an explicit 1-hop 16 KiB link page) runs the (6,2) C6-m184_w216-rec STNFS of proof.md on E_{12,trunc} = {Q(a)+Q(b)<=1, Q(a)<=17/20, Q(b)<=17/20} cap JointVor (W_a=1764, W_b=1000, (Lf,Lg)=(61.0,61.0), slack=113.0, 2,000,000-active exact-HNF pool, SE=0.001330 b, margin=0.005 b > 3.75*SE, work_allow=1.0, exact CRT 2-adic x 3-adic class split over P_2^2 and P_1,P_2,P_3,Q_3 with exact mean re-centering and conservative tail/slack subtraction, log2_V <= 95.3856 [computed 95.385572], R_a <= 585.36 [computed 585.35 < 589.43], B_a=2 equal-count Q(a) shells, N_{a,sh}=2^46.4309 < 2^47): Band 1 [2^24,2^41.5) uses the mod-3 wheel (512/729 keep, 125/27 replication), K_B1=256 checkpoints (cover 1.00742 <= 1.0075), 32-bit even-byte delta-packed transport on [2^24,2^28.5) (2.82 Ir/hit + 24*P_ov sub-segment splits on byte gaps >= 2^32, i.e. rank gaps >= 2^31) and direct-to-link-page transport on [2^28.5,2^41.5) (C_HIT_LO=3.5699, C_B1_ROW=26.2, rep_lo <= 2.174 Ir/cell); Lower Band 2 [2^41.5,2^45.5) uses aligned-sub-band bfi x16 STADDH kernels with entry=(ai<<5)|j_rel (entry>>4 == 2*ai exact 2-byte offset) dispatched by (k_s, W, sgn) with width w_bits = log2(W) (3-bit bfi #k_s,#3 for W=8 and 4-bit bfi #k_s,#4 for W=16 for both sgn=+1 and sgn=-1, k_s in 38..49, matching W*2^k_s alignment without touching bit k_s+w_bits; C_B2_INT_X4=5.30, occ_sb <= 0.153, hi_ap <= 0.858 Ir/cell); 6-ideal tau_6-orbit 12D Lattice Band 2 [2^45.5,2^61.0] uses 2-stage Bareiss LLL(9/10)->LLL(99/100) (<=2^34.5 Ir/orbit, lat_lll <= 0.002891 Ir/cell), 2-op Direct Q12 isqrt LUT (2^37 entries = 1 TiB on E_0, Lambda=(1+2^-26)^2, eps_or <= 0.0003844, unconditional r2_max < 2^36.16 < 2^37 across all k=0..11), unconditional 0-branch mod3_tab (8 MiB) & rot_tab (64 MiB) certified by fd_bounds.py (|x_k| <= 2^21.13 < 2^22), 16-byte a_tab=(2*ai, &B_TAB[k][0]) + contiguous 4-plane B_TAB[0..3] (E_0 <= 2^63.7219 B < 2^64 B, 2.805 EiB headroom), 9-op LDP+LDADD direct-to-link-page emit (emit9_step1/2/3=9, emit9_last=7, FP_CL=[21,84,99,84..70,99] counted from kernels_v32.s, 16-run 4,096-orbit HT calibration: 0/4,096 beta>=1, R_hat=11.7024, SE=0.0266, 1.03*(R_hat+3*SE)=12.1356 <= 12.15=C_LAT_LEAF, lat_b2 <= 5.409 Ir/cell). uint16_t read-only 8-row ORR scan (scan_zero <= 0.843 Ir/cell) and exact 1D Retention(step=0.25, odd=2) with squarefree-sieve-part lower bound Retention.at(n, floor(sl_c - 0.50)) (ret_rg.at already subtracts rb=(cap(n)+1)/16 internally, extra >=0.50 b covers |log2 N_g - L0| + 1/16 <= 0.078003 b, r_g=0.97503) and full all-integer (squarefree + squareful) survivor upper envelope Retention.survivor_upper(n, ceil(sl_c) + 0.50, ex=0.0) (sf=False, no rb subtraction, no selection_normalizer, covering sl_c + 0.015503 < ceil(sl_c) + 0.50 unconditionally, sf=1.3670e-6, s0=7.5054e-8, cof <= 0.638 Ir/cell). Total collection <= 10.076 Ir/cell [computed 10.075509] (all operating-point and per-cell inequalities verified live by manifest_subbounds_ok in audit_bn_cm.py; collection <= 2^84.430641, lists <= 2^78.389691). Deterministic ntt3_F Bernstein recursive split with 2x safety gives split <= 2^71.482192 (1-owner RAM <= 2^57.0 B). Plain-sparse 16-vec 15-entry-blocked Z[omega] BW LA bw=(768,32) with C_UNIT_5=6.82 (6.8057 <= 6.82), K5_CAP=8.85 on the unchanged 2^20..2^26 H3 ladder, and lazy 2-Barrett5 + 4-limb CIOS MontMul(chi_R) c_tail_z6=340 (323 ops <= 340) gives la <= 2^81.210553 (1-owner RAM <= 2^63.158 B). Pure k=1 zero-retry Boole + Wald i.i.d. kept-candidate boot (boot=[185,80,11,1], ea=[4,1185], x_EA=64.25, stripping ALL rational primes <= 2^64.25 at cap=1.0 in both batch_per and product tree with zero Chebotarev restriction, unchanged plan59, exact proved CIOS5 _mulmod_instr) gives two_logs <= 2^81.091592 (phi=0.4490 <= 0.50, full 2x all-primes boot product tree <= 2^62.7788 B < 2^64 B, root product alone 2^61.7788 B). Total machine storage <= 2^98.674 B < 2^100 B pointwise (stor_bound.py, every node < 2^64 B). Under declared exploratory STNFS premises H1, H2, H3, H5, H5-W, H-EB0..H-EB3, H-SM, H-R, H-X, H-SEP, the algorithm returns x in [0, r-1] with g^x=z w.p. >= 0.39 (opened-run success >= 0.999998 via FIX-U, K=7,194,244,577,235,879,602) with expected total work E[W] <= 1 + (K/2^64)*2^84.725477772 <= 2^83.367026687 units (C=20,000 Ir).",
+   "score": {
+    "numerator": "83367026687",
+    "denominator": "1000000000"
+   },
+   "evidence": [
+    "proof.md",
+    "RANK-BRIDGE.md",
+    "STORAGE.md",
+    "KERNELS.md",
+    "ADAPTIVE.md",
+    "declared.json",
+    "model_bn254_v6.py",
+    "verify_bn254_v6.py",
+    "descent_bn254_v6.py",
+    "hx_z6.py",
+    "c6_adaptive.py",
+    "v20_lat_b2.py",
+    "ht_pool.b85",
+    "c6_data.b85",
+    "c6_witnesses.b85",
+    "c6_adaptive_h5.b85",
+    "v25_verify.py",
+    "v32_verify.py",
+    "kernels_v32.s",
+    "stor_bound.py",
+    "fd_bounds.py",
+    "exact_levels.py",
+    "boot_dp.py",
+    "boot_mini.py",
+    "boot_dp.b85",
+    "boot_s16.b85",
+    "boot_mini.b85",
+    "boot_mini5a.b85",
+    "boot_mini5b.b85",
+    "boot_mini5c.b85"
+   ]
+  }
+ ],
+ "experiments": [
+  {
+   "id": "evidence",
+   "source": "audit_bn_cm.py",
+   "purpose": "Self-contained pure-stdlib live verifier for bn254-gt-dlp (default run: 34/34 checks, incl. manifest_subbounds_ok verifying all declared operating-point and per-cell inequalities, sf_uses_survivor_upper_ok verifying all-integer Retention.survivor_upper, exact cap=1.0 all-rational-primes boot tree byte check in ram_ok, FP node prices, and every Lattice Band 2 emit/wheel/Lower-B2/delta-B1 segment count read directly from kernels_v32.s, which assembles with clang -arch arm64 -march=armv8.1-a with 0 errors). Verifies: (1) Exact CRT 2-adic x 3-adic class split (ring homomorphisms O_h -> Z/729Z, mod-729 f_rec/g_rec residues, 1,500 random O_h-primitive valuation checks, zero double-counting) and exact 1D Retention(step=0.25, odd=2) for uint16_t STADDH scoring (scale=16.0, ceil threshold t=ceil(16*(L0-113.0)), unconditional |log2 N_g - L0| <= 0.015503 b, squarefree-sieve-part lower bound Retention.at(n, floor(sl_c - 0.50)) whose internal rb=(cap(n)+1)/16 + extra 0.50 b strictly covers 0.015503 + 1/16 = 0.078003 b, all-integer survivor upper envelope Retention.survivor_upper(n, ceil(sl_c) + 0.50, ex=0.0) strictly covering sl_c + 0.015503, init_min=26896 >= 0, max_val=34592 <= 65535, read-only scan8_u16); (2) 2-op Direct Q12 isqrt LUT (2^37 entries = 1 TiB, Lambda=(1+2^-26)^2, eps_or <= 0.0003844, r2_max < 2^36.16 < 2^37) and unconditional |x_k| <= 2^21.13 < 2^22 in fd_bounds.py; (3) Instruction-by-instruction execution of kernels_v32.s Band-1 transport (//@seg b1_*), 9-op LDP+LDADD direct-to-link-page emit + 8-op flush across all 4 contiguous B_TAB planes via 16-byte a_tab=(2*ai, &B_TAB[k][0]) at full production-width 2*ai up to 2^49-2 and rb=44,048,381, and x128-unrolled STADDH apply (v25_verify.py check 2), plus bit-exact verification of aligned-bfi Lower-B2 across 240 cases (all k_s in 38..49, W in {8,16} with exact w_bits=log2(W) in {3,4} for both sgn in {+1,-1}, entry=(ai<<5)|j_rel with entry>>4 == 2*ai exact even byte offset, and 5 non-zero aligned bases including base=2^55+2^49 at W=8, k_s=46) and 32-bit even-byte delta Band 1 with forced >=2^32 sub-segment splits (v32_verify.py); (4) Exact-rational stor_bound.py certifying Score Node <= 2^63.393 B (uint16_t, BLK=38, blocks=44,031,851 < 2^26), List Node <= 2^60.176 B, Emitter E_0 <= 2^63.722 B (2.805 EiB headroom incl. 1 TiB Q12 LUT), LA 1-owner <= 2^63.158 B, full 2x all-rational-primes boot product tree <= 2^62.7788 B (root 2^61.7788 B at x_EA=64.25, cap=1.0), and total machine RAM <= 2^98.674 B < 2^100 B; (5) Live regeneration and exact match of 1 of 16 runs in ht_pool.b85 on [45.5, 61.0] (4,096 orbits, 0/4,096 beta>=1: R_hat=11.7024, SE=0.0266, 1.03*(R_hat+3*SE)=12.1356 <= 12.15=C_LAT_LEAF); (6) Deterministic NTT3 Bernstein recursive split prototype (64 ints, 0 errs, split <= 2^71.482), lazy 2-Barrett5 + 4-limb CIOS MontMul(chi_R) c_tail_z6 (323 <= 340, 0/200 errs), 16-vec 15-entry SpMV (6.8057 <= 6.82=C_UNIT_5, K5_CAP=8.85 on unchanged 2^20..2^26 ladder), and boot=[185,80,11,1], ea=[4,1185] (cap=1.0 all rational primes <= 2^64.25) + exact CIOS5 (two_logs <= 2^81.0916).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "part": {
+      "type": "string",
+      "enum": [
+       "default",
+       "sensitivity",
+       "full",
+       "filtsim",
+       "hx",
+       "diagnostics",
+       "boot_dp",
+       "boot_mini",
+       "boot_evidence",
+       "dag_survivors"
+      ]
+     },
+     "log2U": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 15
+     },
+     "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+     },
+     "j0": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 13739
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+     },
+     "u": {
+      "type": "integer",
+      "enum": [
+       -3,
+       5
+      ]
+     },
+     "ht_run": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+     }
+    },
+    "required": [],
+    "additionalProperties": false
+   },
+   "initial_inputs": [
+    {}
+   ]
+  }
+ ]
+}
