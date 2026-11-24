@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "title": "BLS12-381 recover-Q: (4,3) Q(zeta_15) CM-STNFS (2-Bank-Pair {0,2}/{1,3} W_SB=30 +2<<59 M30 Disclosed Scalar ARMv8.1-A STADDH + 1.57x/1.61x LA Caps + Pure K=1 2.0*psurv Buchstab-Dickman Descent) at expected work 2^107.915800",
+  "claims": [
+    {
+      "statement": "Self-contained exploratory-v1 fixed-P / recover-Q (`e(P, Q) -> Q`) reduction via two calibrated gamma_0-blinded G_T virtual logarithms in (4,3) Q(zeta_15) CM-STNFS at (lf, lg) = (70.79, 71.19) (C = 20,000 scalar ARMv8.1-A GPR integer Ir/F_p12 mul, -march=armv8.1-a -mgeneral-regs-only, simd=0, zero NEON/SVE/DC ZVA/fp64/x18, plus one disclosed scalar FEAT_LSE instruction STADDH Ws,[Xn] at 1 Ir across 63 raw-opcode-verified hot-loop blocks with 0 undefined labels and disjoint GPR maps), combining: (1) 2-bank-pair {0,2}/{1,3} (bp=2) W_SB=30 (+2<<59, 15.50 EiB < 16.00 EiB slab owners, exact Barrett M30=0x8888888888888889 div-by-30, bfi scatter c_list_a_b2=18.5, 1-bit-XOR STADDH Band-1b 4.00/8.50 f & 5.00/9.50 g, 100%-worst-case c1 Band-2 u2 [55.5,61.0) 7.58 + u1 [61.0,63.5) 9.08, c_scan_zero=0.81) on 1M-draw 0.25-bit pool A^2=316,100, r_ab=0.985 (V_kept=120.2323, V_a/2^57=0.8495<0.95, margin_strict_hi=+0.06781b, c_cof=0.7658, ipc_tot=8.3542, coll<=109.0217 u, replay<=105.1101 u); (2) conservative 1.57x/1.61x Stage-B row-rejected LA caps (nl_cap=0.00078, sw_cap=0.00144, >14.6x over inv-log projection, above every 2^20..2^25 mean, 2.617 EiB dense RAM, la<=103.0078 u, gen<=96.3617 u); and (3) pure K=1 (BALL_PAIR=0.0 exact, ZERO H-EB) 2.0*psurv Buchstab-Dickman descent (MODEA_V09_PSURV_ALL_K1_Q25_C4, BOOT16=(205,341,12,2), TAU_BOOT=2060, Phi_tree=0.489174<=0.50 over c_det_one=459 slots, two_log=105.780134<=105.7803 u, boot_surv_over_PBD=2.1666x, alpha_g-shifted 2.246x, median_prod_cushion=4.65x across all 76 nodes + boot, hardened scan_first_usable ideal extraction), achieving opened-run expected work E[W_run] <= 2^109.2728 u behind ONE unified hard pointwise meter W <= 2^124 + 2^66 u with conditional opened-run success >= 0.99996313 (>=0.99995943 >= 0.9990 with +10% meter + 2^-48 wrapper) and gated cold-run expected work E[W] < 2^107.915800 u with cold success >= 0.39. No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "539579",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "toy_e2e.b85",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_cells16.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_counts16.py",
+        "q15_ecm16.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_bound_cell.py",
+        "q15_diag_extra.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib 16-check audit for recover-Q (bls12-381-fixed-g1-invert-g2) verifying 2-bank-pair {0,2}/{1,3} W_SB=30 (+2<<59, M30, bfi scatter) Arch2-Prod-ZeroSlice-BP2-W30-Buf128K-B2-U32-Bin21-Defer8-LSE collection on 1M-draw 0.25b A^2=316,100 r_ab=0.985 pool (ipc=8.3542, coll<=109.0217, replay<=105.1101), 1.57x/1.61x Stage-B row-rejected LA (nl_cap=0.00078, sw_cap=0.00144, 2.617 EiB dense RAM, la<=103.0078), 63 ARMv8.1-A + STADDH raw-opcode blocks + 64-bit differential simulations, pure K=1 (ZERO H-EB) 2.0*psurv Buchstab-Dickman descent (BOOT16=(205,341,12,2), TAU_BOOT=2060, Phi_tree=0.489174<=0.50, c_det_one=459, two_log<=105.7803), and 80-digit Decimal ledger/gate (E[W_run]<=2^109.2728, E[W]<2^107.915800).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
