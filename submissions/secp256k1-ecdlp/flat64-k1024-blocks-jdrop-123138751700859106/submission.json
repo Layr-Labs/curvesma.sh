@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "title": "Flat 64-bit 5-window Eisenstein stored-leaf birthday search on secp256k1 with 1024-record hop-1 blocks and explicit scalar services",
+  "claims": [
+    {
+      "statement": "For uniform unrestricted production secp256k1 ECDLP challenges and fresh algorithm coins, the grouped stored-leaf search in proof.md has success probability at least 0.39 and an upper bound 123.138751700859106 on log2(total expected classical computation in the fixed C=1000 scalar AArch64 instruction normalization). All preprocessing, failed paths, arithmetic, address/control work, transfers, verification and output are included across processors. Peak reserved memory is below 2^138 bytes; there is no free advice or future-target amortization. The estimate uses an explicitly disclosed uniform 64-bit flat analytical address space per processor (under COST_MODEL.md's scalar 64-bit instruction basis, matching the disclosed convention of submission 4e2d5241) with five-window (52,51,51,51,51) BT/P1/E/G tables and five-window (45,45,45,44,44) F/fwd tables at NODES=2^58, explicit TBZ block ends (zero VMSAv9 stage-1 permission faults) on 1024-record hop-1 and 512-record hop-2 blocks, a 128-bit cumulative fixup meter (DELTA_F=2^100) integrated in ytransport.s:ychunk, and the explicit scalar memory-fabric services (MSG=256, GEN_MUL=912688), denominator-cleared selected-X fiber bound (selected-x.md), self-contained five-window Lemmas E/F/M/K/R/V and pointwise joint-label derivation (success.md Section 7), and global pair-inverse exclusion. The finite experiment establishes only its stated exact-rational certificate, instruction-form, finite simulated EC label, six-X resolver-model, hop-1 delivery, routing-flush, production-driver, meter, bit-extraction, map, and negative-control checks, not production execution, RTL synthesis, or a production collision law.",
+      "score": {
+        "numerator": "61569375850429553",
+        "denominator": "500000000000000"
+      },
+      "evidence": [
+        "archive_check.py",
+        "callbacks.md",
+        "certificate.py",
+        "encoding-audit.json",
+        "fabric.md",
+        "math_checks.py",
+        "numeric_check.py",
+        "proof.md",
+        "run.py",
+        "runtime.json",
+        "runtime2.json",
+        "selected-x.md",
+        "success.md",
+        "table_check.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "verify",
+      "source": "run.py",
+      "purpose": "Run exact certificate plus independent schedule/logarithm/gate/memory/cost/fiber checks, finite GF1024 and selected-X algebra, 144 exact EC leaves carried through modelled hop-1 blocks and the relay's h2s into hop-2 windows and checked there, production archive and forwarding boundaries, scalar kernel counts with every hop-2 trampoline and the cap-clamp return, a finite six-X resolver model, and listed negative controls. Simulate the table builders across classes and compare actual per-row counts with the charged bounds. The wrapper restores nine hashed runtime sources from two archives and tests four codec failures on each. Optional source returns one restored source file without running the suite.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "none",
+              "kernels/a64.py",
+              "kernels/generic.s",
+              "kernels/leaf.s",
+              "kernels/pointer_init.s",
+              "kernels/route.s",
+              "kernels/secp_fe.s",
+              "kernels/ystage.s",
+              "kernels/ytransport.s",
+              "experiment.py"
+            ]
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {
+          "seed": 20261123
+        }
+      ]
+    }
+  ]
+}

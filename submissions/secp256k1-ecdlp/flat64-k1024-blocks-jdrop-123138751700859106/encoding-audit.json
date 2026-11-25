@@ -1,0 +1,102 @@
+{
+ "schema": "expanded-instruction-assembly-v1",
+ "scope": "The seven source templates expanded by the isolated candidate parser; every resulting instruction assembled independently by LLVM, with exact text byte counts. This does not prove parser semantics or full linked callback implementation. Raw leaf macros require space-argument quoting for GNU syntax; source expansion used as in predecessor audits.",
+ "assembler": "llvm-mc (LLVM version 23.1.5)",
+ "assembler_sha256": "689e9baa131debefdb2f45da0b4209882fc3c7507e16a690cf4922b83f424784",
+ "flags": [
+  "-triple=aarch64",
+  "-mattr=+lse,+rand,+ls64,+rcpc-immo,+cmpbr",
+  "-filetype=obj"
+ ],
+ "input_kernel_sha256": {
+  "generic.s": "b77079fe37b7ff8980313f6ba807cc48613e024b934847397bcee9870e00df0f",
+  "leaf.s": "df8b97f49a84a0df34b48360ce4a7cfc387112dc672b6c529b3c9fc613255bcb",
+  "pointer_init.s": "23fdbd3fe93599637e4e715ccee6bfa833e9d1ec5b6d3d21ecaa7f26c6ea3826",
+  "route.s": "dd04c71de65c36610b958a9cfe43c1b089dccfc27bbd2d4c5df3aca457a2438b",
+  "secp_fe.s": "dbb816df16cc8acf481f815876f61a1687a399d4df18b2f8077a78e6f1b3e7b7",
+  "ystage.s": "604d5e3eb7acecfeadc32e7218d9d87b193c3185242ccf3be8b2948886d641d7",
+  "ytransport.s": "a1799247c8a62cdee5f87f10eb83445445969bb27d26707832964d5f41874e0d"
+ },
+ "assemblies": 69,
+ "all_exit_zero": true,
+ "templates": [
+  {
+   "name": "leaf",
+   "source_sha256": "c475052504724fea13d8527010cfebbbb932fd8ccd1abec22d94bfdfccb9dfe6",
+   "object_sha256": "7d5d4f2633ad518fb3f9b5cf5101d6883493466269101423e28b532695bb34c5",
+   "executable_bytes": 113528,
+   "insns": 28382,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "secp_fe",
+   "source_sha256": "8d528e6dc1b17649dff68189769ca0bb7d3dc851cb0d28e98d00ea0e4e3ebce1",
+   "object_sha256": "7ab5fd069267bd8b5516270884df1f99c7d8b3862c3a3a74b4094e658b48192c",
+   "executable_bytes": 14684,
+   "insns": 3671,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "pointer_init",
+   "source_sha256": "28c879c770d3ac7d2ffd71feae42d77c390b144bc6cdc2defa16b0069abe3b39",
+   "object_sha256": "91c5fd50cd7592b8b8ed445f89b6b1d4a8f227671f6a86efca0ee14b8c87e044",
+   "executable_bytes": 200,
+   "insns": 50,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "ystage_ytransport",
+   "source_sha256": "31684e1544d2f3c766910ecb4804c6002731ca5ee2a2a097b51ab5f7d803fc86",
+   "object_sha256": "19b0ffd03c89239ffb3f87315f8614c01bc05d2b34ff0551082b309928400981",
+   "executable_bytes": 5320,
+   "insns": 1330,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "generic_route",
+   "source_sha256": "c8d12898f962a7a071dd4d3cf456d1cd487928f79f931306fb5ee06e3285a0b5",
+   "object_sha256": "d50d621c51a6136c1faf57d3e78e0a5929bf5736ea17e60e89335d0662992b32",
+   "executable_bytes": 373728,
+   "insns": 93432,
+   "exit_code": 0,
+   "stderr": ""
+  }
+ ],
+ "generic_bindings": {
+  "roles": 4,
+  "PE_indices_per_role": 16,
+  "instruction_count_each": 185,
+  "bytes_each": 740,
+  "all_exit_zero": true,
+  "aggregate_record_sha256": "a1400057be1415d03a745626151c67861c11ce625c5e2de86793121b9269585b"
+ },
+ "code_bytes": {
+  "leaf": 113528,
+  "secp_fe": 14684,
+  "pointer_init": 200,
+  "ystage_ytransport": 5320,
+  "generic_route": 373728
+ },
+ "isa_additions": {
+  "adr": {
+   "a64_py": "ADR Xd,label (base A64): shape rl, reach +-1 MiB, writes 4 x the label's instruction index",
+   "generic_route_count": 2048,
+   "llvm_mc": "assembled with every other instruction of generic_route"
+  }
+ },
+ "additional_generic_bytes_per_endpoint": 11100,
+ "assembled_bytes_per_endpoint": 518560,
+ "analytic_reserved_bytes": 262144,
+ "total_constructive_bytes": 780704,
+ "charged_program_bytes": 1048576,
+ "limitations": [
+  "Source macro expansion used the isolated Python parser; LLVM independently checked each emitted instruction and its size.",
+  "Raw macros with spaced arguments require quoting; the expanded source is the tested LLVM input.",
+  "No claim of a linked complete production executable or synthesized hardware.",
+  "The default experiment validates hashes and counts; it does not invoke LLVM."
+ ]
+}
