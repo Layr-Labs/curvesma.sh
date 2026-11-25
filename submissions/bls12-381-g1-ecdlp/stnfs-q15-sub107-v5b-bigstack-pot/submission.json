@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "title": "BLS12-381 G1 ECDLP (n=1048576, W(n)=W_cold) at 2^110.113119 G1 Units (Mode-A K=2 L_{3/4}(b) + Adaptive T_g_u8 + Split p_rot=56.5 4-Rot W_B=1 + 4-Tier f-Batch + M=15 Slabs + U=2^26 Hex6 LA + E_16 Gram-Ellipsoid & Superadditive Kronecker-NTT3 BLS Stage-2 ECM Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 G_1 ECDLP with auxiliary powers (bls12-381-g1-ecdlp: given 1 <= n < r, A_i = [s^i mod r] P_0 for 1 <= i <= n, and T = [s] P_0 = A_1 with uniform s in 1..r-1; scored at n = 1048576 = 2^20; ignoring all higher auxiliary powers A_2..A_n so W_G1(n) = W_cold holds identically for every 1 <= n < r) is solved via pairing transfer (g = e(P_0, Q_0), z_T = e(T, Q_0)) and two calibrated gamma_0-blinded G_T virtual logarithms with cold-run success probability >= 0.39 (post-headroom floor p_floor = 0.9999, K_gate = 7194949683715096640) in gated expected cost E[W_G1(n)] <= 2^110.11311840 < 2^110.113119 G_1-reference units (log2 bound 110.113119 = 110113119/1000000 at n = 1048576, where C_G1 = 2,000 Ir/u = 10x dense-F_{p^12} core units at C = 20,000 Ir/u; core E[W_run] <= 2^108.1495 core units, core E[W] < 2^106.791500 core units, hard pointwise meter W_G1(n) <= 10*(2^124 + 2^66) < 2^127.321929 G_1 units for all 1 <= n < r). No prior verdict or score is a premise.",
+      "score": {
+        "numerator": "110113119",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "cm_hist4.b85",
+        "toy_e2e.b85",
+        "audit_algebra.py",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_ecm16.py",
+        "q15_ecm_ntt3.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default {} in initial_inputs, plus on-demand part='diagnostics' and part='all' in input_schema) for G_1 ECDLP with auxiliary powers (bls12-381-g1-ecdlp, C_G1=2,000 Ir/u = 10x core, all 1<=n<r, scored at n=1048576, W_G1(n)=W_cold) verifying K=2 equal-Va radial shells (bp=1) + Complex-Place L_{3/4}(b) ball (q=0.75, sum|sigma_m(b)|^{3/4}<=R_k^{3/4}, deterministic span L_max = 2^(-4/3)*R_k = [421.85, 345.91] < 480-31 = 449, M=15 full-chord slab owners at 9.25 EiB/slab) + optimized 2-adic radii s_vals=[1.0, 1.40, 1.82] + per-column odd-norm B_{g,odd,max}(b,c,k)-adaptive T_g_u8(b,c,k) (hist_enc='cls_tgu_v1', S_b1+S_b2<=246<=255) + split Band-2 W_B=1 at p_rot=56.5 ([53.0,56.5) 4-pre-rotated calling existing rev_b2_emit_id_u16 at 3.735 Ir/hit, [56.5,60.4) shared at 4.485 Ir/hit; ZERO Stage-1 ASM edits) + unfiltered-Tier-1 100%-deterministic ZERO-MR bit-length-window 4-tier f-batch cofactorization (62.5->65.5->68.5->71.2 with untruncated i+j<=D=2048>=u_lim exact 4-band QuantizedRetention DP identity < 1e-6, c_cof=0.72391, 5-tree pt_mem_own=3.44 EiB << 16 EiB) on fresh 1,000,008-draw 0.25b pool (lf=71.20, lg=71.56, exc=1.02, p_lo=53.0, p_rot=56.5, p_w1=60.4, p_dir=61.3, p_f=60.4, p_g=[63.6,62.4], kh=(0.060,0.075), h2_allow=1.005, ipc=6.7722, coll<=107.9190, replay<=104.8450, 14.395 EiB max build, 2^118.656 B global tables), 2^16..2^26 4-seed Stage-B row-rejected zero-col-loss LA ladder (nl_cap=0.0006680, sw_cap=0.0011976, 1.488x over 2^26 means, 1.470x > 1.45x over 2^26+2se, la<=103.2731, gen<=96.5166), 72 clang-verified ARMv8.1-A + STADDB/STADD raw-opcode blocks, pure Mode-A K=1 determinant-normalized E_16(R_gram) cap C_30 cap F_Vor(a,b) Gram-ellipsoid descent (Vol=30*C_R -> Vol(cap C_30)=C_R, line_base[ell]+x_0 flat addressing live-verified, 160 real Q_CM-LLL ideals, 61,440 points, f_JV=0.57383, UDUP_NODE=0.55*0.95=0.5225, E16_COUNT_HI=1.05 on all cell work, BOUND_CELL=4400, unchanged R_boot=2 boot with UDUP_BOOT=0.40) + superadditive Kronecker-NTT3 + BLS Middle-Product Stage-2 Torsion-16 Edwards (a=+1) ECM (reusing ntt61_r4_u2, worst RAM 1.463 GiB << 16 EiB, MR_ROUNDS=110, Phi_tree=0.467796<=0.48, c_det_one=444, max_R=69, BOOT16=(235,279,13,2), TAU_BOOT=2095, i.i.d. uniform k_i~Unif([1,2^256]) STEPPER_MULS=2900 strictly-Stage-2-only ECM credit with zero Stage-1 credit, tf_u8=45 margin_strict_hi=+0.02981b, two_log<=101.0540, ecm_split<=96.8794) + authentic exact-degree deg-(72,24) H5/H5-W campaign (q15_exact_h5_diag.py), and 80-digit Decimal ledger/gate (E[W_run]<=2^108.1495, p_floor=0.9999, E[W]<2^106.791500 core u, E[W_G1(1048576)]<2^110.113119 G_1 u, manifest_subbounds_ok=True).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
