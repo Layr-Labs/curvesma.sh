@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "title": "BLS12-381 FAPI-1 via Guard4 Band-Pass Q(zeta_15) CM-STNFS and Snell Stopping",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing inversion into G2 target (independent uniform nonidentity P in G1 and uniform z in GT), the cold single-target Guard4 x16 Dual Band-Pass Q(zeta_15) Mode-A (4,3) CM-STNFS algorithm with sequential single-slab active-only masked scan, Snell-envelope stopping (eta=0.82), 12D subfield M_g=Q(zeta_5)[Y]/(Y^3-x) Hilbert-90 descent (including explicit Layer-0 and inert-prime norm-squaring nodes), and pre-gate K_gate = 7194374076228249696 (0x63d78d1adadd2860) in proof.md returns Q in G2 with e(P,Q)=z with exploratory success probability at least 0.39 (p_cold = p_gate * p_open >= 0.3900078 * 0.99998444 >= 0.39) and expected cold-run classical computation at most 2^(10667/100) = 2^106.670000 target-group-operation equivalents (charged gated ledger 2^106.669708 u; opened-run charged 2^108.028134 u; unconditional Markov pointwise aborting meter W_pointwise = 2^124 u giving P(abort) <= 1.556e-5 and p_open >= 0.99998444 > 0.99998), normalized at C = 20,000 scalar ARMv8.1-A general-purpose-register instructions per unit (flags -march=armv8.1-a -mgeneral-regs-only, simd = 0, explicitly disclosing scalar LSE STADDB). Under the unified classical-group-work-v2 RAM model, peak total storage is at most 2^117.50 bytes (Stage 1 peak 2^117.2595 B combining global replay tables and one reused 14.9616 EiB slab; Stage 2 SGE 2^69.08 B; Stage 3 LA 2^64.42 B; Stage 1b 2^66.22 B); nonuniform advice is 0 bytes (2^0 B); all preprocessing, trials, failures, transfers, verification and tails are charged in full for one cold target without amortization. Production extrapolation relies on the explicitly disclosed exploratory heuristics H1-H5, H-R, H-SM and H-ECM justified in proof.md.",
+      "score": {
+        "numerator": "10667",
+        "denominator": "100"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS_SIEVE.md",
+        "KERNELS_LA_ECM.md",
+        "FILTER_RANK.md",
+        "DESCENT_ECM.md",
+        "ledger_data.json",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "Independently verify exact BLS12-381, Q(zeta_15) and 12D M_g algebra, live 248-length Guard4 x16 active-only masked scan with 0xFF guard poison, exact 2D Panjer floor-quantized smooth-recall and survival DP with zero-wraparound proof, exact Guard4/Stage-1b/SGE/BW(d_mksol=N_l/32+32)/unified-RAM recomputation, live F_q algebraic 2-merge rank tests, 12D M_g descent and q=2^70..2^275 ECM table (<1e-12) with live Torsion-16 Stage-2 witnesses, assembly ISA audit (simd=0), unconditional Markov meter, K_gate exact minimality, and full 14-row ledger consistency.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
