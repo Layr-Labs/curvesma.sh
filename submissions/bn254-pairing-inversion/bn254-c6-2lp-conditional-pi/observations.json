@@ -1,0 +1,30 @@
+{
+  "c4_m1a": {
+    "field_bits": 255.78,
+    "field_degree": 24,
+    "subgroup_bits": 78,
+    "zero_large_prime_relations": 14313,
+    "post_graph_2core_rows": 32664
+  },
+  "c4_m1b": {
+    "field_bits": 305.69,
+    "field_degree": 24,
+    "subgroup_bits": 93,
+    "zero_large_prime_relations": 16874,
+    "post_graph_2core_rows": 47821,
+    "post_graph_2core_columns": 47139,
+    "post_sge_rows": 10313,
+    "post_sge_columns": 10237
+  },
+  "true_bn_degree_48_redteam": [
+    {"field_bits": 322.90, "post_graph_2core_rows": 0, "raw_unique_rows": 41},
+    {"field_bits": 602.68, "post_graph_2core_rows": 0, "raw_unique_rows": 13}
+  ],
+  "c6_u5_pilot": {
+    "p": 27631,
+    "sampled_pairs": 100000,
+    "factor_base_bound": 100000,
+    "strict_projected_core_rows_columns": [35, 81],
+    "simplified_projected_core_rows_columns": [130, 225]
+  }
+}

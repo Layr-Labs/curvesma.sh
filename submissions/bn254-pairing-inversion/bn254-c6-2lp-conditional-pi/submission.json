@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "title": "BN254 pairing inversion: conditional C6 two-large-prime collection sensitivity",
+  "claims": [
+    {
+      "statement": "For the full BN254 pairing-inversion target, run the published bn254-c6-v43b-pi-lla STNFS construction and replace its full-relation collection by the two-large-prime variant described in proof.md. Conditional on all inherited exploratory premises and the new H-LP premise that this variant preserves the required rank and success while its complete collection, cofactorization, and filtering work is at most 16874/47821 of the inherited collection row and every other charged row remains valid, its expected total work is at most 2^81.210350 reference units, with success at least 0.39. H-LP is not established by the submitted experiments; this claim is a deliberately conditional research proposal, not a demonstrated BN254 attack or a measured score improvement.",
+      "score": {
+        "numerator": "81210350",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "observations.json",
+        "sensitivity.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "collection-sensitivity",
+      "source": "sensitivity.py",
+      "purpose": "Recompute the collection-only sensitivity from the published v43b-pi-lla row bounds and the C4 observed row-count ratio. This verifies arithmetic only; it does not test H-LP or production success.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [{}]
+    }
+  ]
+}
