@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Fixed-G1 Invert-G2 (recover-Q) at 2^106.788321 Units (ce6527bd T1 Data Derivative: Mode-A K=2 L_{3/4}(b) + Adaptive T_g_u8 + Split p_rot=56.5 4-Rot W_B=1 + 4-Tier f-Batch + M=15 Slabs + U=2^26 Hex6 LA + E_16 Gram-Ellipsoid & Superadditive Kronecker-NTT3 BLS Stage-2 ECM Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 Fixed-G1 Invert-G2 (recover-Q) is solved with success probability >= 0.39 (post-headroom floor p_floor = 0.99998, K_gate = 7194374076228249696) in expected cost < 2^106.788321 units (core E[W_run] <= 2^108.146746 units, hard core meter 2^124 units plus <= 2^66 wrapper < 2^(124 + 2^-57) units).",
+      "score": {
+        "numerator": "106788321",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "README.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "cm_hist4.b85",
+        "toy_e2e.b85",
+        "audit_algebra.py",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_ecm16.py",
+        "q15_ecm_ntt3.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default {} in initial_inputs, plus on-demand part='diagnostics' and part='all' in input_schema) for recover-Q (bls12-381-fixed-g1-invert-g2) verifying K=2 equal-Va radial shells (bp=1) + Complex-Place L_{3/4}(b) ball (q=0.75, sum|sigma_m(b)|^{3/4}<=R_k^{3/4}, deterministic span L_max = 2^(-4/3)*R_k = [421.85, 345.91] < 480-31 = 449, M=15 full-chord slab owners at 9.25 EiB/slab) + optimized 2-adic radii s_vals=[1.0, 1.40, 1.82] + per-column odd-norm B_{g,odd,max}(b,c,k)-adaptive T_g_u8(b,c,k) (hist_enc='cls_tgu_v1', S_b1+S_b2<=246<=255) + split Band-2 W_B=1 at p_rot=56.5 ([53.0,56.5) 4-pre-rotated calling existing rev_b2_emit_id_u16 at 3.735 Ir/hit, [56.5,60.4) shared at 4.485 Ir/hit; ZERO Stage-1 ASM edits) + unfiltered-Tier-1 100%-deterministic ZERO-MR bit-length-window 4-tier f-batch cofactorization (62.5->65.5->68.5->71.2 with untruncated i+j<=D=2048>=u_lim exact 4-band QuantizedRetention DP identity < 1e-8, c_cof=0.72392, 5-tree pt_mem_own=3.44 EiB << 16 EiB) on fresh 1,000,008-draw 0.25b pool (lf=71.20, lg=71.56, exc=1.02, p_lo=53.0, p_rot=56.5, p_w1=60.4, p_dir=61.3, p_f=60.4, p_g=[63.6,62.4], kh=(0.060,0.075), h2_allow=1.005, ipc=6.7722, coll<=107.9187, replay<=104.8347, 14.395 EiB max build, 2^118.656 B global tables), 2^16..2^26 4-seed Stage-B row-rejected zero-col-loss LA ladder (nl_cap=0.0006589, sw_cap=0.0011814, 1.468x over 2^26 means, 1.45004x > 1.45x over 2^26+2se (policy floor), la<=103.233475, gen<=96.496659), 72 clang-verified ARMv8.1-A + STADDB/STADD raw-opcode blocks, pure Mode-A K=1 determinant-normalized E_16(R_gram) cap C_30 cap F_Vor(a,b) Gram-ellipsoid descent (Vol=30*C_R -> Vol(cap C_30)=C_R, line_base[ell]+x_0 flat addressing live-verified, 160 real Q_CM-LLL ideals, 61,440 points, f_JV=0.57383, UDUP_NODE=0.55*0.95=0.5225, E16_COUNT_HI=1.05 on all cell work, BOUND_CELL=4400, unchanged R_boot=2 boot with UDUP_BOOT=0.40) + superadditive Kronecker-NTT3 + BLS Middle-Product Stage-2 Torsion-16 Edwards (a=+1) ECM (reusing ntt61_r4_u2, worst RAM 1.463 GiB << 16 EiB, MR_ROUNDS=110, Phi_tree=0.467796<=0.48, c_det_one=444, max_R=69, BOOT16=(235,279,13,2), TAU_BOOT=2095, i.i.d. uniform k_i~Unif([1,2^256]) STEPPER_MULS=2900 strictly-Stage-2-only ECM credit with zero Stage-1 credit, tf_u8=45 margin_strict_hi=+0.02981b, two_log<=101.052988, ecm_split<=96.8794) + authentic exact-degree deg-(72,24) H5/H5-W campaign (q15_exact_h5_diag.py), and 80-digit Decimal ledger/gate (E[W_run]<=2^108.146746, p_floor=0.99998, E[W]<2^106.788321).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15. With mode=capmatch: matched-cap A/B of the archived Stage-B row-rejected ladder (run_filtsim_z12_ladder at the archived-ladder parameters) and of missing_recon_z12 (log2U=14), each at Stage-B caps (362, 315) and at the production caps (340, 282), same seed. With mode=ewcomb: self-contained check of the priced projective E_W curve generator of proof.md 6a (affine-reference agreement, instrumented M/S/C/A counts, table/pp_budget ratio; deterministic, about 2-5 s).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "capmatch",
+              "ewcomb"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
