@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Fixed-G1 Invert-G2 (recover-Q) at 2^106.757427 Units (bd853c58 + Adaptive Stop + H-R' Repair: Mode-A K=2 L_{3/4}(b) + Adaptive T_g_u8 + Split p_rot=56.5 4-Rot W_B=1 + 4-Tier f-Batch + M=15 Slabs + U=2^26 Hex6 LA + E_16 Gram-Ellipsoid & Superadditive Kronecker-NTT3 BLS Stage-2 ECM Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R' (corrected rank premise, proof.md 4b), H-STOP (adaptive stop, proof.md 3b), H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 Fixed-G1 Invert-G2 (recover-Q) is solved with success probability >= 0.39 (post-headroom floor p_floor = 0.99487 including the H-R' LA failure p_hr = 0.00511, K_gate = 7231326895721777851) in expected cost < 2^106.757427 units (core E[W_run] <= 2^108.108460 units, hard core meter 2^124 units plus <= 2^66 wrapper < 2^(124 + 2^-57) units).",
+      "score": {
+        "numerator": "106757427",
+        "denominator": "1000000"
+      },
+      "evidence": [
+        "proof.md",
+        "README.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "field-map.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "cm_hist4.b85",
+        "toy_e2e.b85",
+        "audit_algebra.py",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_ecm16.py",
+        "q15_ecm_ntt3.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default, part='diagnostics'/'all' on demand) for recover-Q: live recomputation of the K=2 L_{3/4}(b) collection model, replay tables (two-shell resident 2^119.295 B), adaptive-stop charge (coll_u + log2 phi <= relation_collection), Stage-B LA ladder and caps (nl_cap=0.0008171, sw_cap=0.0014649), LA/generator, descent, ECM, kernels, the new adaptive/repair rows, and the 80-digit Decimal ledger/gate (E[W_run]<=2^108.108460, p_hr=0.00511, p_floor=0.99487, E[W]<2^106.757427) with manifest checks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on the recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033. With mode=hrrepair: the H-R' check and LA-output repair of proof.md 4b on 5 fixed toy runs (parent H-R, virtual-log-line uniqueness, DM/local suspects, taint + closure + full verification; reports silent and detected runs; deterministic, about 6 s).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "hrrepair"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15. With mode=capmatch: matched-cap A/B of the archived Stage-B row-rejected ladder (run_filtsim_z12_ladder at the archived-ladder parameters) and of missing_recon_z12 (log2U=14), each at Stage-B caps (362, 315) and at the production caps (340, 282), same seed. With mode=ewcomb: self-contained check of the priced projective E_W curve generator of proof.md 6a (affine-reference agreement, instrumented M/S/C/A counts, table/pp_budget ratio; deterministic, about 2-5 s). With mode=adaptstop (log2U 12..15, optional tau 0.85..1.02, default 0.95): paired ladder N_l/N_sw at excess 1.02 and tau (caps 340/282), the C3 missing-log census of proof.md 3b, and the production 2-core fixed point (deterministic, about 3 s).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "capmatch",
+              "ewcomb",
+              "adaptstop"
+            ]
+          },
+          "tau": {
+            "type": "number",
+            "minimum": 0.85,
+            "maximum": 1.02
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
