@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "BLS12-381 FAPI-1 via 64-Bit Banked Fixed-VA W16 Q(zeta_15) CM-STNFS, Radix-4 Shoup61 NTT & 576-Bit Horner-SM4 BW",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing inversion into G2 target (independent uniform nonidentity P in G1 and uniform z in GT), the cold single-target 100% 64-bit banked Fixed-VA Q(zeta_15) Mode-A (4,3) CM-STNFS algorithm (L_{0.65}(a) cap F_Vor x K=2 radial L_{0.65}(b) shells with asymmetric Shell-0/Shell-1 sieve bands, M=248 independent 64-bit slab owners at fixed VA SLAB_BASE=2^56=0x0100_0000_0000_0000 each <= 0.0585 EiB << 16 EiB, P_banks=10,058,276,997,840,928 independent 64-bit prime-bank owners each <= 12.000 EiB < 16 EiB, zero unified 2^117-byte addressing and zero uncharged DMA, 15 compiled bit-exact scalar ARMv8.1-A kernels totaling 1,948 static instructions with 0 forbidden ISA, 0 udiv/sdiv, 0 helper calls, and 0 in-loop spills — including Tier-3 W_B=16 zero-AND demux_w16_window using bits 57..59=000, reloaded-pointer Tier-2 w4_packed_tx_window + true 4-slice header builder replay_build_w4_prefix, rbit/clz col_scan_swar_128_fast, 2-line pure algebraic continuous norm bounds N_f <= 2^651.67 < 2^656 and N_g <= 2^685.92 < 2^688 with ZERO g-side cofactor cap and live Buchstab-Dickman f-cap 408 b giving cof_cap_pad=+0.005339 b, shortfall_pad=+0.002054 b, 3-prime 2^54-smooth Radix-4 u2 Shoup61 NTT Stage 1b with dmult=1.67 Bernstein scaled-remainder-tree forward-NTT caching and explicit pow2-rounded cached NTT RAM <= 4.8532 EiB/owner < 10 EiB, 6-rung 4-seed U=2^16..2^24 L_CALIB STRICT SGE ladder at eta=0.88 explicitly disclosed as exploratory-v1 scaling premise H3 with 2.19x combined LA-product headroom nl_cap=0.00150 & sw_cap=0.190, Block Wiedemann (2048,32) with compiled 11.00 Ir/nnz spmv_x4_monomial_add and compiled 872 Ir 576-bit r<<256-biased Horner+SM4+Barrett row kernel proven zero-underflow/overflow up to A_k < 2^315 charged at rovh=920.0 Ir/row, Snell resume tail including replay rebuild, 12D M_g Hilbert-90 descent, and pre-gate K_gate=7194374076228249696 = 0x63d78d1adadd2860) in proof.md returns Q in G2 with e(P,Q)=z with exploratory success probability at least 0.39 (p_cold = p_gate * p_open >= 0.39000780 * 0.99998324 = 0.39000126 >= 0.39 under the complete Stage 1-4 union-bound failure budget conditional on exploratory heuristics H1-H5, H-R, H-SM, H-ECM) and expected cold-run classical computation at most 2^(5339/50) = 2^106.780000 target-group-operation equivalents (charged gated ledger 2^106.776865 u; live gated 2^106.776801 u; opened-run charged 2^108.135290 u; slack to claim +0.003135 b; Markov pointwise aborting meter W_pointwise = 2^124 u giving P(abort) <= 1.6758939e-5 and p_open >= 0.99998324 > 0.99998), normalized at C = 20,000 scalar ARMv8.1-A general-purpose-register instructions per unit (flags -march=armv8.1-a -mgeneral-regs-only, simd = 0, explicitly disclosing scalar LSE STADDB in Consumer RX emit only). Under the 100% 64-bit banked classical-group-work-v2 model, peak total storage across all processors is at most 2^117.50 bytes (Stage 1 peak 2^116.7442 B for Shell 0 freed before Shell 1 2^114.3913 B, every processor <= 12.000 EiB < 16 EiB; Stage 1b pow2-rounded cached 56-level 3-prime NTT-domain product tree 2^73.2789 B = 4.8532 EiB/owner across 2,048 owners; Stage 2 SGE 2^70.3557 B; Stage 3 LA incl. full Thome Lingen pi(z) 2^76.4613 B); nonuniform advice is 0 bytes (2^0 B); all preprocessing, trials, failures, explicit scalar CPU transfers, verification, and tails are charged in full for one cold target without amortization.",
+      "score": {
+        "numerator": "5339",
+        "denominator": "50"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md",
+        "KERNELS_STAGE1B_LA.md",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "100% standalone Docker-safe pure-Python 3.11+ stdlib verifier (reads ZERO external files) verifying BLS12-381 & Q(zeta_15) Mode-A algebra, exhaustive finite-group proof of Chebotarev Theorems 2A/2B (23/81 & 2131/34992), exact 2-line pure algebraic continuous domain norm bounds (q_a=q_b=0.65: N_f <= 2^651.67 < 2^656, N_g <= 2^685.92 < 2^688) and live Buchstab-Dickman f-cofactor exceedance + norm check, live bit-exact 3-prime 2^54-smooth Radix-4 u2 Shoup61 NTT & 2D multiplication, genuine end-to-end 32-column Tier-2 W_B=4 4-slice header packing/unpacking + Tier-3 W_B=16 zero-AND (SLAB_BASE=2^56, e>>57==col*8) + 128B rbit/clz SWAR slab + 576-bit r<<256 Horner+SM4+Barrett mod-r (up to A_k=2^314-1) differential audits, exact 3-tier Poisson sieve & compiled replay integrals, Radix-4 Stage 1b, 6-rung 4-seed SGE ladder, BW (2048,32), exact multiplicative Chernoff lower/upper tails, banked RAM audit, union-bound failure budget, K_gate minimality, and Stage 4 12D M_g + Torsion-16 ECM verification.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}

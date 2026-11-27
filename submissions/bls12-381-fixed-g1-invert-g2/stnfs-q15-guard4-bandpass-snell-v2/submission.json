@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "title": "BLS12-381 FAPI-1 via 2D-Adaptive Guard4 x64 Q(zeta_15) CM-STNFS, 2D Shoup61 NTT & Zero-Extrap SGE",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing inversion into G2 target (independent uniform nonidentity P in G1 and uniform z in GT), the cold single-target 2D-Adaptive Guard4 x64 Dual Band-Pass Q(zeta_15) Mode-A (4,3) CM-STNFS algorithm with exact Poisson x64/x8/x1 emission pricing, unconditional Galois Chebotarev f-side splitting (d_ok_f = 23/81, dens_f = 2131/34992), exact 1D+2D Bivariate 3-Prime 61-Bit Shoup NTT Stage 1b (2.00x uncached Bernstein, 2^54-smooth primes p1,p2,p3, unconditional leaf widths 560/675/385/405 b with k_pack-way bottom super-leaf packing, L_own_2d and 9*N_2d transposes), Zero-Extrapolation U=2^24-certified SGE pricing (Bf = 70.00, Bg = 70.36, eta = 0.85, nl_cap = 0.00205 > mean_24+2*SE, w_cap = 190.0, Horner BW 512x32 with x1 Mksol SpMVs), 12D subfield M_g=Q(zeta_5)[Y]/(Y^3-x) Hilbert-90 descent (explicit Layer-0 and inert-prime norm-squaring nodes), and pre-gate K_gate = 7194374076228249696 (0x63d78d1adadd2860) in proof.md returns Q in G2 with e(P,Q)=z with exploratory success probability at least 0.39 (p_cold = p_gate * p_open >= 0.39000780 * 0.99998430 = 0.39000168 >= 0.39 under the complete Stage 1-4 union-bound failure budget conditional on exploratory heuristics H1-H5, H-R, H-SM, H-ECM) and expected cold-run classical computation at most 2^(21337/200) = 2^106.685000 target-group-operation equivalents (charged gated ledger 2^106.682627 u; live gated 2^106.682499 u; opened-run charged 2^108.041052 u; pure first-principles excl. +0.06544 b anchor pad 2^106.628735 u; Markov pointwise aborting meter W_pointwise = 2^124 u giving P(abort) <= 1.5699e-5 and p_open >= 0.99998430 > 0.99998), normalized at C = 20,000 scalar ARMv8.1-A general-purpose-register instructions per unit (flags -march=armv8.1-a -mgeneral-regs-only, simd = 0, zero stack spills in _emit_u64_x64_direct and slab hot loops, explicitly disclosing scalar LSE STADDB). Under the unified classical-group-work-v2 flat-RAM model, peak total storage is at most 2^117.50 bytes (Stage 1 peak 2^117.0082 B combining global replay tables and one reused 14.9616 EiB slab; Stage 1b stored-tree peak 2^69.4261 B; Stage 2 SGE 2^69.5220 B; Stage 3 LA incl. full Thome Lingen pi(z) 2^72.3056 B); nonuniform advice is 0 bytes (2^0 B); all preprocessing, trials, failures, transfers, verification and tails are charged in full for one cold target without amortization.",
+      "score": {
+        "numerator": "21337",
+        "denominator": "200"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS_SIEVE.md",
+        "KERNELS_LA_ECM.md",
+        "BANDPASS_ADAPTIVE.md",
+        "SGE_CHEBOTAREV_STAGE4.md",
+        "ledger_data.json",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "100% standalone pure-Python 3.11+ stdlib verifier (zero required sibling files) checking BLS12-381 & Q(zeta_15) algebra, exhaustive finite-group proof of Chebotarev Theorems 2A/2B (23/81 & 2131/34992), live bit-exact 2D Bivariate 3-Prime 61-Bit Shoup NTT multiplication & CRT headroom, 16D Mode-A MC & Guard4 x64 / 0xFF-poisoned 248/248 SWAR adaptive slab differential tests, 2D Panjer floor-quantized DP & wrap-safety, exact Poisson x64 emission, k_pack-packed Stage 1b, Zero-Extrap U=2^24-certified BW (512x32, x1 Mksol) / unified RAM (incl. stored-tree & Lingen pi(z)) / union-bound failure budget / K_gate minimality, plus diagnostics for live F_q 2-merge rank, 9-rung U=2^16..2^24 SGE ladder, and 12D M_g Stage 4 + Torsion-16 ECM witnesses.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
