@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "BLS12-381 FAPI-1 via 64-Bit Banked Fixed-VA W16 Q(zeta_15) CM-STNFS, Zero-Spill SWAR, 64-Bit Signed LA & Radix-4 Shoup61 NTT",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing inversion into G2 target (independent uniform nonidentity P in G1 and uniform z in GT), the cold single-target 100% 64-bit banked Fixed-VA Q(zeta_15) Mode-A (4,3) CM-STNFS algorithm (L_{0.65}(a) cap F_Vor x K=2 radial L_{0.65}(b) shells with asymmetric Shell-0/Shell-1 sieve bands, M=248 independent 64-bit slab owners at fixed VA SLAB_BASE=2^56=0x0100_0000_0000_0000 each <= 0.0585 EiB << 16 EiB, P_banks=10,058,276,997,840,928 independent 64-bit prime-bank owners each <= 12.000 EiB < 16 EiB, zero unified 2^117-byte addressing and zero uncharged DMA, 16 compiled bit-exact scalar ARMv8.1-A kernels totaling 1,602 executable scalar instructions with 0 forbidden ISA, 0 udiv/sdiv, 0 helper calls, and LITERALLY 0 in-loop stack spills anywhere across all 16 functions — including Tier-3 W_B=16 zero-AND demux_w16_window, reloaded-pointer Tier-2 w4_packed_tx_window + replay_build_w4_prefix, zero-spill col_scan_swar_128_nospill [fast 30/128=0.234375 Ir/cell, slow 142+8=150 Ir/surv, slab_live=0.415659, slab_ch=0.417659 Ir/cell], unconditional algebraic Chebotarev proof via cubic discriminant Delta_Q=41+24*omega of norm 19*67, Kummer witness prime p=991, and disjoint discriminant support proving Gal(L_omega/K)=C_3 wr S_3 and L_omega cap L_{omega^2}=K(zeta_9) unconditionally, 2-line pure algebraic continuous norm bounds N_f <= 2^651.67 < 2^656 and N_g <= 2^685.92 < 2^688 with ZERO g-side cofactor cap and live Buchstab-Dickman f-cap 408 b giving cof_cap_pad=+0.005339 b, shortfall_pad=+0.002054 b, 3-prime 2^54-smooth Radix-4 u2 Shoup61 NTT Stage 1b with dmult=1.67 forward-NTT caching and explicit pow2-rounded cached NTT RAM <= 4.8532 EiB/owner < 10 EiB, 6-rung 4-seed U=2^16..2^24 L_CALIB STRICT SGE ladder at eta=0.88 explicitly classified as exploratory-v1 scaling premises H3/H4 with 2.19x combined LA-product headroom nl_cap=0.00150 & sw_cap=0.190 and live F_r Gaussian elimination in experiment.py, production 64-bit P_LA=4 row-striped banked signed+non-monomial Block Wiedemann (2048,32) [vector V=0.3309 EiB in one native 64-bit address space, 3.2143 EiB/owner << 16 EiB, compiled 0-spill 64-bit LDR X spmv_mono_add_ptr64 10.00 Ir/nnz (81.43%) + spmv_nonmono_muladd_ptr64 25.00 Ir/nnz (18.57%) + 0.063 bcast = 12.8487 <= 12.90 Ir/nnz charged, signed split A_k^+ + (r<<60) - A_k^- (+56 Ir) + 872 Ir 576-bit r<<256-biased Horner+SM4+Barrett = 928 <= 940.0 Ir/row charged], explicit Stage 4 12D Hilbert-90 lifting lattice L_{t'} + 16D special-q descent lattice + live-verified Dickman-de Bruijn branching recurrence terminating in <= 5 layers at 2^64.45 u << 2^95.60 u budget, Snell resume tail including replay rebuild, and pre-gate K_gate=7194374076228249696 = 0x63d78d1adadd2860) in proof.md returns Q in G2 with e(P,Q)=z with exploratory success probability at least 0.39 (p_cold = p_gate * p_open >= 0.39000780 * 0.99998313 = 0.39000122 >= 0.39 under the explicit exploratory-v1 conditional union-bound failure budget under heuristics H1-H5, H-R, H-SM, H-ECM) and expected cold-run classical computation at most 2^(106787/1000) = 2^106.787000 target-group-operation equivalents (charged gated ledger 2^106.786141 u; live gated 2^106.785696 u; opened-run charged 2^108.144566 u; opened-run live 2^108.144121 u; slack to claim +0.000859 b; Markov pointwise aborting meter W_pointwise = 2^124 u giving conditional P(abort) <= 1.6867035e-5 and p_open >= 0.99998313 > 0.99998), normalized at C = 20,000 scalar ARMv8.1-A general-purpose-register instructions per unit (flags -march=armv8.1-a -mgeneral-regs-only, simd = 0, explicitly disclosing 73 scalar LSE STADDB in Consumer RX emit only). Under the 100% 64-bit banked classical-group-work-v2 model, peak total storage across all processors is at most 2^117.50 bytes (Stage 1 peak 2^116.7442 B for Shell 0 freed before Shell 1 2^114.3913 B, every processor <= 12.000 EiB < 16 EiB; Stage 1b pow2-rounded cached 56-level 3-prime NTT-domain product tree 2^73.2789 B = 4.8532 EiB/owner across 2,048 owners; Stage 2 SGE 2^70.3557 B; Stage 3 64-bit banked LA incl. full Thome Lingen pi(z) 2^76.4613 B, 3.2143 EiB/owner across P_LA=4 matrix owners); nonuniform advice is 0 bytes (2^0 B); all preprocessing, trials, failures, explicit scalar CPU transfers, verification, and tails are charged in full for one cold target without amortization.",
+      "score": {
+        "numerator": "106787",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md",
+        "KERNELS_STAGE1B_LA.md",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "100% standalone Docker-safe pure-Python 3.11+ stdlib verifier (reads ZERO external files) verifying: (1) BLS12-381 & Q(zeta_15) Mode-A algebra; (2) unconditional algebraic Chebotarev proof (Delta_Q=41+24*omega, N=19*67, Kummer witness p=991, disjoint discriminant support, exhaustive Gal order 162, AND live polynomial factoring of f_omega, f_{omega^2} mod 300+ split primes); (3) exact 2-line pure algebraic continuous norm bounds (q_a=q_b=0.65: N_f<=2^651.67, N_g<=2^685.92, ZERO g-side cap) + live Buchstab-Dickman f-cofactor exceedance & normalization + LIVE 16D Mode-A Monte Carlo (N=6,000 core / 16,000 all) reproducing R_a, f_vor, mean_nf, mean_ng, Vk within 3*SE; (4) live bit-exact 3-prime 2^54-smooth Radix-4 u2 Shoup61 NTT & 2D mul; (5) genuine end-to-end 32-col Tier-2 W_B=4 header pack/unpack + Tier-3 W_B=16 zero-AND + 128B zero-spill rbit/clz SWAR + 64-bit signed+non-monomial P_LA=4 SpMV + 576-bit r<<256 Horner+SM4+Barrett mod-r; (6) LIVE L_CALIB STRICT SGE filter at eta=0.88 + EXACT Gaussian elimination over actual BLS12-381 prime field F_r; (7) LIVE Stage 4 Dickman-de Bruijn branching recurrence (5 layers, 2^64.45 u << 2^96 u) + small-prime 12D Hilbert-90 target-lattice LLL demo + Torsion-16 ECM; and (8) full Cand4 14-row ledger, banked RAM, conditional Chernoff, failure budget, and K_gate minimality.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
