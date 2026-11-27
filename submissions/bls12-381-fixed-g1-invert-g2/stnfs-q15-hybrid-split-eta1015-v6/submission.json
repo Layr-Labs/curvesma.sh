@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "title": "BLS12-381 FAPI-1 via 100% 64-Bit Banked Hybrid Split-Slab Q(zeta_15) CM-STNFS, Overdetermined eta=1.015, 4-Basis Expanded Z[zeta_12] SpMV & Banked Lingen",
+  "claims": [
+    {
+      "statement": "For the full protected BLS12-381 fixed-G1 pairing inversion into G2 target (independent uniform nonidentity P in G1 and uniform z in GT), the cold single-target 100% 64-bit banked Hybrid Split-Slab Q(zeta_15) Mode-A (4,3) CM-STNFS algorithm (Dusart 2010 Thm 6.9 GRH-safe Prime Ideal Theorem degree-1 bound plus unconditional inertia-degree>=2 prime-ideal bound 36*pi_Dus(Bf^{1/2})+12*pi_Dus(Bg^{1/2}) without /12 giving U <= 1.26184490e19 = 2^63.452168 orbits at Bf=2^71.45, Bg=2^71.81 with standard overdetermined excess eta = 1.015 > 1.000 [R_req = 1.015*U, zero sub-1.0 Snell retry premise] and Dusart Thm 5.2 theta(x) product lengths; live algebraic Murphy shifts computed up to p <= 20,000 in core / p <= 50,000 in all with conservative -0.010 b cushion = 3.88x the 5000 < p <= 50000 tail and >20x the p > 50000 tail; L_{0.65}(a) cap F_Vor x K=2 radial L_{0.65}(b) shells with live-reproduced 4-table 2D Panjer DP, discrete Lagrange (T_g, T_f) policy with deterministic max_byte <= 255, out-of-sample 16D MC evaluation with zero assumed retention constant, and live L_{0.65}(b) chord sampling corroborating the 4M-draw C / 200k-chord calibration; Hybrid Split-Slab 100% 64-bit banked architecture with sequential g-then-f slab reuse on Tier-1 W_B=1 M=248 Fixed-VA 1-col owners at SLAB_BASE=2^56 [0.058444 EiB/owner] and Tier-2 W_B=16 / Tier-3 W_B=32 zero-demux M=2 Guard31 Half-Slab owners with STRIDE=2^56 [186*2^56 = 11.6250 EiB/owner << 16 EiB] fed by P_banks=15,070,660,892,071,486 prime-bank owners [<= 12.000 EiB/bank], unified 2-pass off64=((r&mask)<<56)|a_idx replay scatter across all 3 tiers [_replay_build_scatter_off64_x4: 21.50 Ir/ent + 5.5 Ir/bkt], fused S_lo_g TX+prebias reset [_tx_copy_prebias_x128: 28/128 = 0.21875 Ir/cell], zero-carry 64-bit ADD fused 128B SWAR scan + S_hi_g zero [_merge_scan_swar_128_exact: 64/128 = 0.50000 Ir/cell, 200 Ir/g-surv slow path incl. Pass-2 cross-owner f-probe, 0 in-loop spills, slab_live=0.946083, slab_ch=0.950083 Ir/cell]; 15 verbatim compiled bit-exact scalar ARMv8.1-A kernels totaling 1,406 executable instructions with 0 forbidden ISA, 0 udiv/sdiv, 0 helper calls, and literally 0 in-loop stack spills anywhere; unconditional algebraic Chebotarev proof via Delta_Q=41+24*omega of norm 19*67, Kummer witness p=991, and disjoint discriminant support proving Gal(L_omega/K)=C_3 wr S_3 and L_omega cap L_{omega^2}=K(zeta_9) unconditionally; 2-line pure algebraic continuous norm bounds N_f <= 2^651.1858 < 2^656 and N_g <= 2^685.5781 < 2^688 with zero g-side cofactor cap and live Buchstab-Dickman 408-b f-cap pad +0.006471 b; 3-prime 2^54-smooth Radix-4 u2 Shoup61 NTT Stage 1b [1.58 b 1D / 4.66 b 2D CRT headroom at LtM=2^67.77] with dmult=1.67 forward-NTT caching and 7.5823 EiB/owner < 10 EiB pow2-rounded cached RAM; explicit 4-basis Z[zeta_12] component-expanded Stage 3 SpMV where every entry (c0,c1,c2,c3) including z^4=z^2-1 and general 4-tuples is expanded across 8 signed streams (A_k^+, A_k^-) and verified live on 60/60 general 4-tuple rows in experiment.py, grounded by our 6-rung U=2^16..2^24 exact 4-basis STRICT SGE ladder at eta=1.015 [U=2^23 4-seed: N_l/U=0.000529, N_comp/U=0.00966, 97.0% +-1; U=2^24 2-seed: N_l/U=0.000595, N_comp/U=0.01405, 96.7% +-1, max|c|=32, 0 overflows] with charged nl_cap=0.00080, comp_cap=0.045 [4.31x-7.04x combined LA headroom], full 8 Ir/word 4-owner all-gather of 256-bit V [96*N_l/N_c = 1.7067 Ir/comp] giving blended 13.2067 <= 13.25 Ir/comp, 948 <= 960.0 Ir/row, P_LA=4 SpMV owners [4.1163 EiB/owner << 16 EiB incl. Krylov vectors], AND dedicated 64-bit banked BW (512,32) Thome Lingen across P_lingen=512 owners [6.6238 EiB/owner << 16 EiB incl. A_seq, full geometric E-stack, and 4x pi(z) FFT workspace = 3,391.37 EiB = 2^71.7277 B, with all inter-owner E-stack and pi(z) transfers charged at 8 Ir/word across all 49 recursion levels]; explicit Stage 4 target-dependent 12D Hilbert-90 LLL lift live-verified on genuine Mode-A (4,3) BLS12 toy curve x=-56, r=9831361, p=10647363907 with random order-r target t' in G_T [rank 6, alpha/Frob6(alpha)==t', alpha^(p^6-1)==t'^-1, log2(N_Mg)=222.50 <= 223.09] + first-principles derived 16D special-q descent engine [det=(1125/16)^2*2^Q, 1.25x BKZ-20 defect, deg-(72,24) norms, 6,000 Ir/trial + 2^22 BKZ setup, terminating strictly at Bf=71.45, Bg=71.81 with 0 outgoing nodes on both sides, 2^94.9777 u live / 96.6500 charged, ECM 2^92.9777 u live / 96.0500 charged]; and pre-gate K_gate=7194374076228249696 = 0x63d78d1adadd2860) in proof.md returns Q in G2 with e(P,Q)=z with exploratory success probability at least 0.39 (p_cold = p_gate * p_open >= 0.39000780 * 0.99998323 = 0.39000126 >= 0.39 under standard exploratory-v1 NFS/STNFS heuristics H0-H5, H-R at overdetermined eta=1.015, H-SM, H-ECM) and expected cold-run classical computation at most 2^(106781/1000) = 2^106.781000 target-group-operation equivalents (charged gated ledger 2^106.777867 u; live gated 2^106.776305 u; opened-run charged 2^108.136292 u; opened-run live 2^108.134730 u; headline slack to claim +0.003133 b; Markov pointwise aborting meter W_pointwise = 2^124 u giving conditional P(abort) <= 1.6770583e-5 and p_open >= 0.99998323 > 0.99998), normalized at C = 20,000 scalar ARMv8.1-A general-purpose-register instructions per unit (flags -march=armv8.1-a -mgeneral-regs-only, simd = 0, explicitly disclosing 73 scalar LSE STADDB in Consumer RX emit only). Under the 100% 64-bit banked classical-group-work-v2 model, peak total storage across all processors is at most 2^118.00 bytes (Stage 1 peak 2^117.3276 B for Shell 0 freed before Shell 1 2^115.2338 B, every prime-bank <= 12.000 EiB, sequential g-then-f reuse on Tier-1 slabs 0.0584 EiB and Half-Slabs 11.6250 EiB; Stage 1b pow2-rounded cached 3-prime NTT tree 2^73.9226 B = 7.5823 EiB/owner across 2,048 owners; Stage 2 SGE 2^71.2285 B = 0.937 EiB/owner across 2,560 owners; Stage 3 combined SpMV + banked Lingen 2^71.7346 B with P_LA=4 SpMV owners at 4.1163 EiB/owner and P_lingen=512 Lingen owners at 6.6238 EiB/owner); nonuniform advice is 0 bytes (2^0 B); all preprocessing, trials, failures, explicit scalar CPU transfers, verification, and tails are charged in full for one cold target without amortization.",
+      "score": {
+        "numerator": "106781",
+        "denominator": "1000"
+      },
+      "evidence": [
+        "proof.md",
+        "KERNELS.md",
+        "KERNELS_STAGE1B_LA.md",
+        "README.md"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "audit",
+      "source": "experiment.py",
+      "purpose": "100% standalone Docker-safe pure-Python 3.11+ stdlib verifier (reads ZERO external files) verifying: (1) BLS12-381 & Q(zeta_15) Mode-A algebra and |x| factorization; (2) unconditional algebraic Chebotarev proof (Delta_Q=41+24*omega, N=19*67, Kummer witness p=991, disjoint discriminant support, Gal order 162, AND live factoring of f_omega, f_{omega^2} mod 353 split primes); (3) live algebraic Murphy alpha_f, alpha_g across p <= 20,000 (core) / p <= 50,000 (all) + exact 2-line continuous norm bounds (N_f<=2^651.19, N_g<=2^685.58, zero g-cap) + live Buchstab-Dickman 408-b f-cap; (4) live 4-table 2D Panjer DP + live discrete Lagrange (T_g, T_f) policy solver with max_byte<=255 + independent out-of-sample 16D MC evaluation (zero assumed ret) + live L_{0.65}(b) chord sampling; (5) live bit-exact 3-prime 2^54-smooth Radix-4 u2 Shoup61 NTT & 2D mul; (6) genuine end-to-end Hybrid Split-Slab off64=((r&mask)<<56)|a_idx chord TX + zero-carry 64-bit ADD 128B SWAR scan (verified at 255 next to 127) + 576-bit r<<256 Horner+SM4+Barrett + 60/60 general 4-tuple Z[zeta_12] expanded SpMV rows (all 12 monomials incl. z^4=z^2-1, z^5=z^3-z + arbitrary 4-tuples); (7) finite-scale pipeline & 4-basis expansion sanity check of faithful Z[zeta_12] STRICT SGE at standard overdetermined eta=1.015 with 4 dense mod-r Schirokauer columns; (8) real target-dependent 12D Hilbert-90 LLL lift on genuine Mode-A (4,3) BLS12 toy curve x=-56, r=9831361, p=10647363907 + first-principles derived 16D special-q Stage 4 engine terminating strictly at (Bf=71.45, Bg=71.81) with 0 outgoing nodes + Torsion-16 ECM; and (9) full Dusart-exact 13-row ledger, 100% 64-bit banked RAM incl. P_lingen=512 Lingen owners with full E-stack, conditional Chernoff, failure budget, and K_gate minimality.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ],
+            "maxLength": 16
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    }
+  ]
+}
