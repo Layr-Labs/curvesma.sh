@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Fixed-G1 Invert-G2 (recover-Q) at 2^106.735800 Units (Mode-A K=2 L_{3/4}(b) + Single-Tier 2D-56b NTT3 + Deterministic T_48 Binary-Split + E_16 Gram-Ellipsoid & Kronecker-NTT3 Stage-2 ECM Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 Fixed-G1 Invert-G2 (recover-Q) is solved with success probability >= 0.39 (post-headroom floor p_floor = 0.9999, K_gate = 7194949683715096640) in expected cost < 2^106.735800 units (core E[W_run] <= 2^108.0939 units, hard core meter 2^124 units plus <= 2^66 wrapper < 2^(124 + 2^-57) units).",
+      "score": {
+        "numerator": "533679",
+        "denominator": "5000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "cm_hist4.b85",
+        "toy_e2e.b85",
+        "audit_algebra.py",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "canary1_verifiers.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_ecm16.py",
+        "q15_ecm_ntt3.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default {} in initial_inputs, plus on-demand part='diagnostics' and part='all') for recover-Q (bls12-381-fixed-g1-invert-g2) verifying all 72 raw-opcode ARMv8.1-A + STADDB/STADD blocks in KERNELS.md + KERNELS_LA.md, single-tier [71.2] 2D-56b NTT3 f-batch/g-batch cofactorization (c_cof=0.45709, ipc_tot=6.5054, coll<=107.8610, pg_pf<=73.0, 2048-owner 3.513 EiB/owner) and 100%-deterministic H=44 T_48 binary-split prime-tree band_split (80.9982<=82.0 u, factoring every p<=2^48 with exact multiplicity), 400-draw live discrete O_H pool cross-check with paired ret_ctx, 2^16..2^26 4-seed zero-column-loss Z[zeta_12] Block Wiedemann & PM-Basis linear algebra (nl_cap=0.0006680, sw_cap=0.0011976, la<=103.2731, gen<=96.5166, 2.831 EiB << 16 EiB dense RAM), Mode-A E_16 Gram-ellipsoid + Kronecker-NTT3 BLS Stage-2 Torsion-16 Edwards ECM descent (two_log<=101.0540, Phi_tree=0.467796<=0.48), programmatic 8-doc sync, and 80-digit Decimal ledger/gate (E[W_run]<=2^108.0939, p_floor=0.9999, E[W]<2^106.735800).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
