@@ -1,0 +1,123 @@
+{
+ "schema": "expanded-instruction-assembly-v1",
+ "scope": "The seven source templates expanded by kernels/a64.py; every non-FEAT_CMPBR instruction assembled independently by Apple LLVM clang -cc1as (17.0.0) with exact .text byte counts, and all FEAT_CMPBR (cbhs/cbhi/cbeq) instructions verified for syntax, operand widths, and +-255-instruction reach by kernels/a64.py (replaced 1:1 by 4-byte nop placeholders solely during the LLVM-17 -cc1as syntax/size pass because Apple LLVM 17 predates FEAT_CMPBR). This does not prove parser semantics or a full linked callback executable.",
+ "assembler": "Apple clang version 17.0.0 (clang-1700.0.13.5) (-cc1as)",
+ "assembler_sha256": "4c458256bcdf913774de1bb4a37768244d3b41f32ad55afb2dfec3432f46f4fe",
+ "flags": [
+  "-cc1as",
+  "-triple",
+  "aarch64-unknown-none-elf",
+  "-target-feature",
+  "+lse",
+  "-target-feature",
+  "+rand",
+  "-target-feature",
+  "+ls64",
+  "-target-feature",
+  "+rcpc-immo",
+  "-filetype",
+  "obj"
+ ],
+ "input_kernel_sha256": {
+  "generic.s": "b77079fe37b7ff8980313f6ba807cc48613e024b934847397bcee9870e00df0f",
+  "leaf.s": "8132a2afa044df67efa4b2f58cc43171ba0d1b0b697a79fb5fae645f0d9f3654",
+  "pointer_init.s": "23fdbd3fe93599637e4e715ccee6bfa833e9d1ec5b6d3d21ecaa7f26c6ea3826",
+  "route.s": "65e234c2798a279b16e7f992b035e4117e5d2d096b3b3a06b1b988d1c521edb3",
+  "secp_fe.s": "dbb816df16cc8acf481f815876f61a1687a399d4df18b2f8077a78e6f1b3e7b7",
+  "ystage.s": "604d5e3eb7acecfeadc32e7218d9d87b193c3185242ccf3be8b2948886d641d7",
+  "ytransport.s": "a1799247c8a62cdee5f87f10eb83445445969bb27d26707832964d5f41874e0d"
+ },
+ "assemblies": 69,
+ "all_exit_zero": true,
+ "templates": [
+  {
+   "name": "leaf",
+   "source_sha256": "059dc0117b5cb548d1c5bb36d2c601175f4b65e35700623ece40b842c80bbc12",
+   "object_sha256": "44785b80cebc83e1e3a0ccff807e0bd21f3052df35053e9c5b1818d951111e23",
+   "executable_bytes": 118680,
+   "insns": 29670,
+   "cmpbr_insns_checked_by_a64_py": 352,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "secp_fe",
+   "source_sha256": "555d3e1f6f27af88f8f45071336b68eb5d4adb40be6324970689d7051f5d8829",
+   "object_sha256": "7ab5fd069267bd8b5516270884df1f99c7d8b3862c3a3a74b4094e658b48192c",
+   "executable_bytes": 14684,
+   "insns": 3671,
+   "cmpbr_insns_checked_by_a64_py": 0,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "pointer_init",
+   "source_sha256": "23fdbd3fe93599637e4e715ccee6bfa833e9d1ec5b6d3d21ecaa7f26c6ea3826",
+   "object_sha256": "91c5fd50cd7592b8b8ed445f89b6b1d4a8f227671f6a86efca0ee14b8c87e044",
+   "executable_bytes": 200,
+   "insns": 50,
+   "cmpbr_insns_checked_by_a64_py": 0,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "ystage_ytransport",
+   "source_sha256": "711cf6b5ca9aa1a7a2787c9977f6a5e5085b4a61ffd59494336bcad25f8ae1a1",
+   "object_sha256": "19b0ffd03c89239ffb3f87315f8614c01bc05d2b34ff0551082b309928400981",
+   "executable_bytes": 5320,
+   "insns": 1330,
+   "cmpbr_insns_checked_by_a64_py": 0,
+   "exit_code": 0,
+   "stderr": ""
+  },
+  {
+   "name": "generic_route",
+   "source_sha256": "2765c560bd9c39f3bc0912a136f0aab1c46cbe2fdd39679409e04fc8867974c5",
+   "object_sha256": "49aec18fa8647668a6951d30798c218fd3435de6eb5789d409d8d3ace6148eff",
+   "executable_bytes": 379236,
+   "insns": 94809,
+   "cmpbr_insns_checked_by_a64_py": 6264,
+   "exit_code": 0,
+   "stderr": ""
+  }
+ ],
+ "generic_bindings": {
+  "roles": 4,
+  "PE_indices_per_role": 16,
+  "instruction_count_each": 185,
+  "bytes_each": 740,
+  "all_exit_zero": true,
+  "aggregate_record_sha256": "e538bb22b074278f6cf62c9ef8bff6804d30f44df7b5ee40ed6eba52949faa3a"
+ },
+ "code_bytes": {
+  "leaf": 118680,
+  "secp_fe": 14684,
+  "pointer_init": 200,
+  "ystage_ytransport": 5320,
+  "generic_route": 379236
+ },
+ "isa_additions": {
+  "adr": {
+   "a64_py": "ADR Xd,label (base A64): shape rl, reach +-1 MiB, writes 4 x the label's instruction index",
+   "generic_route_count": 2176,
+   "llvm_cc1as": "assembled natively with every other instruction of generic_route"
+  },
+  "cmpbr": {
+   "a64_py": "FEAT_CMPBR cbhs/cbhi/cbeq: 4-byte instructions, reach +-255 instructions (verified by a64_load and simulated in experiment.py)",
+   "total_count": 6616,
+   "llvm_cc1as": "Apple LLVM 17.0.0 predates LLVM 21 FEAT_CMPBR; replaced 1:1 with 4-byte nop in the -cc1as pass and verified natively by a64.py"
+  }
+ },
+ "additional_generic_bytes_per_endpoint": 11100,
+ "assembled_bytes_per_endpoint": 529220,
+ "analytic_reserved_bytes": 262144,
+ "total_constructive_bytes": 791364,
+ "charged_program_bytes": 1048576,
+ "limitations": [
+  "Source macro expansion used kernels/a64.py; Apple LLVM 17.0.0 -cc1as independently assembled every non-FEAT_CMPBR instruction and checked exact .text byte counts.",
+  "Apple LLVM 17.0.0 predates Armv9.6-A FEAT_CMPBR (cbhs/cbhi/cbeq); those instructions (all in leaf.s) were verified by kernels/a64.py (reach +-255 insns, simulated in experiment.py) and substituted 1:1 by 4-byte nop placeholders during the -cc1as pass.",
+  "Raw macros with spaced arguments require quoting; the expanded source is the tested input.",
+  "No claim of a linked complete production executable or synthesized hardware.",
+  "The default experiment validates hashes and counts; it does not invoke clang."
+ ]
+}
