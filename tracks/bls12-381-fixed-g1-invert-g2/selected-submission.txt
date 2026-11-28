@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g1-invert-g2
+submissions/bls12-381-fixed-g1-invert-g2/stnfs-q15-v6-ntt2bls-t48-rcov
