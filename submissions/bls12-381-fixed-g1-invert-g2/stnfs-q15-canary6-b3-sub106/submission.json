@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Fixed-G1 Invert-G2 (recover-Q) at 2^105.820300 Units (Mode-A K=2 L_{3/4}(b) Exact-R_cov + Cold-Path 2D NP Gate No-Direct1 + Surplus-6 L-LA Trimming at B=(71.90,72.26)/exc=0.641 + Single-Tier 2D-56b NTT3 + E_16 Gram-Ellipsoid LX=68.0 & Kronecker-NTT3 Stage-2 ECM Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 Fixed-G1 Invert-G2 (recover-Q) is solved with cold-run success probability >= 0.391 > 0.39 (post-headroom floor p_floor = 0.999, K_gate = 7219896829650084767) in expected cost < 2^105.820300 units (core E[W_run] <= 2^107.1734 units, hard core meter 2^124 units plus <= 2^66 wrapper < 2^(124 + 2^-57) units).",
+      "score": {
+        "numerator": "1058203",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "cm_hist4.b85",
+        "toy_e2e.b85",
+        "audit_algebra.py",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "canary1_verifiers.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_ecm16.py",
+        "q15_ecm_ntt3.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default {} in initial_inputs, plus on-demand part='diagnostics' and part='all') for recover-Q (bls12-381-fixed-g1-invert-g2) verifying all 72 raw-opcode ARMv8.1-A + STADDB/STADD blocks in KERNELS.md + KERNELS_LA.md, unconditional 256-vertex convexity + sub-additivity rounding-cell coverage R_cov=[1077.28,891.96] (E_q=8.535383, 0% leakage) with 400-draw live discrete O_H pool cross-check and exact 2D-NP paired ret_ctx at B=(71.90,72.26) and exc=0.641, cold-path column-constant 2D Neyman-Pearson gate (q=4.0, sl_g_tgt=428.0, S_g>=T_g_lo(b,c) and S_f+S_g>=T_g_lo(b,c)+54, .Lhit128_f entry reload ldp x0, x1, [x_mg, #-16] after rev_scan_f_u8_128 orr clobber with live (0,1) edge-case test, p_g=[61.3,61.3]==p_dir with Direct1 inactive, c_scan_zero=1.1768 at 2300 Ir/block + 24 Ir/set-bit, replay_a_tables<=103.5237) + single-tier [71.9] 2D-56b NTT3 f-batch/g-batch cofactorization (c_cof=0.75926, ipc_tot=6.4265, coll<=106.7218, margin_strict_hi=+0.10282b, pg_pf<=73.0, 2048-owner 6.392 EiB/owner) and 100%-deterministic H=44 T_48 binary-split prime-tree band_split (81.0082<=82.0 u, factoring every p<=2^48 with exact multiplicity), 53-run matched coupled-2D-NP L-LA surplus-6 trimming (texc=6, sbf=sbg=348.0, pf_s=60.4, pg_s=61.3, sl_g=428, djw=54, q=4.0) 2^16..2^26 zero-column-loss Z[zeta_12] Block Wiedemann & PM-Basis linear algebra plus paired 2^18..2^24 trimming verification (nl_cap=0.0005100 / 2.2040x, sw_cap=0.0009700 / 2.1862x, live U=8192 matched parity check, la<=103.9479, gen<=96.8129, 3.688 EiB << 16 EiB dense RAM), Mode-A E_16 Gram-ellipsoid + Kronecker-NTT3 BLS Stage-2 Torsion-16 Edwards ECM descent at LX=68.0 and c_thin=0.32 with live-verified projective v=x/2 10M/bit E_W ladder + Okeya-Sakurai recovery (<=2596<=3800 muls, <=0.9599x honest ARMv8.1-A CIOS+spills+adds Ir at L=2, 2 ext-GCDs <=4 plain GCDs) under declared exploratory-v1 STNFS premise H5 (NB_R=1.0, NB_ALPHA=0.5, P0_FLOOR=0.001, mu_min=985.85, two_log<=103.5372, Phi_tree=0.459211<=0.48, miss_side dominance >=1.2963x on f and >=1.3769x on g across 200..3000-bit norms, supported by multi-regime finite-scale diagnostics in ADAPTIVE.md), programmatic 8-doc sync, and 80-digit Decimal ledger/gate (E[W_run]<=2^107.1734, p_floor=0.999, p_cold>=0.391>0.39, E[W]<2^105.820300).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
