@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "title": "BLS12-381 Fixed-G1 Invert-G2 (recover-Q) at 2^105.549100 Units (K=2 L_{3/4}(b) Exact-R_cov + Pure-ARMv8.1-A 2x/4x Cold-Path 2D NP Scan + Surplus-6 L-LA at B=(72.00,72.36)/exc=0.605 + LX=68.25 E_16 & NTT3 ECM Descent)",
+  "claims": [
+    {
+      "statement": "Under the declared exploratory-v1 STNFS heuristics (H1, H2, H3, H4, H5, H-EA, H-ECM, H-R, H-SM, H-X, H-FFT) and the abstract flat-RAM scalar ARMv8.1-A + disclosed FEAT_LSE STADDB/STADD cost model, BLS12-381 Fixed-G1 Invert-G2 (recover-Q) is solved with cold-run success probability >= 0.391 > 0.39 (post-headroom floor p_floor = 0.999, K_gate = 7219896829650084767) in expected cost < 2^105.549100 units (core E[W_run] <= 2^106.9022 units, hard core meter 2^124 units plus <= 2^66 wrapper < 2^(124 + 2^-57) units).",
+      "score": {
+        "numerator": "1055491",
+        "denominator": "10000"
+      },
+      "evidence": [
+        "proof.md",
+        "ADAPTIVE.md",
+        "DESCENT.md",
+        "KERNELS.md",
+        "KERNELS_LA.md",
+        "STORAGE.md",
+        "RANK-BRIDGE.md",
+        "cm_data.json",
+        "cm_tables.b85",
+        "cm_hist2.b85",
+        "cm_hist3.b85",
+        "cm_hist4.b85",
+        "toy_e2e.b85",
+        "audit_algebra.py",
+        "cm_models.py",
+        "unitdomain.py",
+        "filtsim_z12.py",
+        "hx_z12.py",
+        "w8_verifiers.py",
+        "canary1_verifiers.py",
+        "q15_retain16.py",
+        "q15_descent16.py",
+        "q15_ecm16.py",
+        "q15_ecm_ntt3.py",
+        "q15_stats.b85",
+        "q15_mini_adaptive.b85",
+        "verify_q15_descent.py",
+        "q15_diag_extra.py",
+        "q15_exact_h5_diag.py"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "cm_audit",
+      "source": "audit_cm.py",
+      "purpose": "Pure-stdlib split-part audit (part='core' default {} in initial_inputs, plus on-demand part='diagnostics' and part='all') for recover-Q (bls12-381-fixed-g1-invert-g2) verifying all 74 raw-opcode pure-ARMv8.1-A + STADDB/STADD blocks in KERNELS.md + KERNELS_LA.md, unconditional 256-vertex convexity + sub-additivity rounding-cell coverage R_cov=[1046.77,866.88] (E_q=8.535383, 0% leakage) with 400-draw live discrete O_H pool cross-check and exact 2D-NP paired ret_ctx at B=(72.00,72.36) and exc=0.605, assembled 2x/4x pure-ARMv8.1-A cold-path column-constant 2D Neyman-Pearson scan suite (rev_scan_g_u8_fused_256 134/256 + rev_scan_g_cold_128 <=22/blk+48/hit + rev_scan_f_u8_512 78/512 + rev_scan_f_cold_128 <=7/blk+14/hit with ldp x0, x1, [x23, #-16] reload, live-emulated instruction-by-instruction in canary1_verifiers.py::verify_scan_asm_live, c_scan_zero=0.7222 vs live 0.72190, replay_a_tables<=103.3338) + single-tier [72.0] 2D-56b NTT3 f-batch/g-batch cofactorization (c_cof=0.66798, ipc_tot=5.7460, coll<=106.4252, margin_strict_hi=+0.08265b, pg_pf<=73.0, 2048-owner 6.621 EiB/owner) and 100%-deterministic H=44 T_48 binary-split prime-tree band_split (81.0082<=82.0 u), 53-run matched coupled-2D-NP L-LA surplus-6 trimming (texc=6, nl_cap=0.0004800 / 2.2430x, sw_cap=0.0009100 / 2.2255x, live U=8192 matched parity check, la<=103.9644, gen<=96.8233, 3.703 EiB << 16 EiB dense RAM), Mode-A Bottom-Up Lagrangian-DP E_16 Gram-ellipsoid + Kronecker-NTT3 BLS Stage-2 Torsion-16 Edwards ECM descent at LX=68.25 and c_thin=0.32 under declared exploratory-v1 STNFS premise H5 (mu_min=905.26, max_R=77, two_log<=102.9493, Phi_tree=0.460526<=0.48, miss_side dominance >=1.1937x on f and >=1.2304x on g across 200..3000-bit norms), programmatic 8-doc sync, and 80-digit Decimal ledger/gate (E[W_run]<=2^106.9022, p_floor=0.999, p_cold>=0.391>0.39, E[W]<2^105.549100).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "part": {
+            "type": "string",
+            "enum": [
+              "core",
+              "diagnostics",
+              "all"
+            ]
+          },
+          "descent_mesh": {
+            "type": "integer",
+            "enum": [
+              384
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": [
+        {}
+      ]
+    },
+    {
+      "id": "hx_analogue",
+      "source": "hx_z12.py",
+      "purpose": "On-demand unscreened H-R & H-X check on recorded-pivot product-form operator over Z[zeta_12] mod 1,000,033.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 12,
+            "maximum": 14
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "m": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 64
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 6,
+            "maximum": 24
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    },
+    {
+      "id": "filtsim_z12",
+      "source": "filtsim_z12.py",
+      "purpose": "On-demand pure-Python Z[zeta_12] product-form filtering simulator at log2U in 10..15.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "log2U": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 15
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "W_target": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 300
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "initial_inputs": []
+    }
+  ]
+}
