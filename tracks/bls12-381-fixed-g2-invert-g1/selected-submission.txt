@@ -1,1 +1,1 @@
-submissions/bls12-381-fixed-g2-invert-g1
+submissions/bls12-381-fixed-g2-invert-g1/stnfs-q15-canary6-b3-sub106-recp-r2
